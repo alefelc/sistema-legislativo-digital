@@ -1,0 +1,20 @@
+## Ejemplo de configuracion para conectarse a postgresql
+## Para conectarse, NO renombrar este archivo, sino modificar
+## username y password y guardarlo en config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+# Base de datos para desarrollo
+development:
+  <<: *default
+  database: sld_development
+
+# Base de datos para produccion
+production:
+  <<: *default
+  database: sld_production
+  username: postgres
+  password: root
