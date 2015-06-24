@@ -6,6 +6,9 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
+  host: localhost
+  username: nombre_usuario
+  password: contraseña_usuario
 
 # Base de datos para desarrollo
 development:
@@ -16,5 +19,3 @@ development:
 production:
   <<: *default
   database: sld_production
-  username: postgres
-  password: root
