@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625115116) do
+ActiveRecord::Schema.define(version: 20150625142554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,11 +31,38 @@ ActiveRecord::Schema.define(version: 20150625115116) do
   add_index "bloques_periodos", ["bloque_id"], name: "index_bloques_periodos_on_bloque_id", using: :btree
   add_index "bloques_periodos", ["periodo_id"], name: "index_bloques_periodos_on_periodo_id", using: :btree
 
+  create_table "comisions", force: :cascade do |t|
+    t.string   "denominacion"
+    t.string   "codigo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "comisions_periodos", id: false, force: :cascade do |t|
+    t.integer "comision_id"
+    t.integer "periodo_id"
+  end
+
+  add_index "comisions_periodos", ["comision_id"], name: "index_comisions_periodos_on_comision_id", using: :btree
+  add_index "comisions_periodos", ["periodo_id"], name: "index_comisions_periodos_on_periodo_id", using: :btree
+
+  create_table "dependencia_municipals", force: :cascade do |t|
+    t.string   "denominacion"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
     t.date     "hasta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reparticion_oficials", force: :cascade do |t|
+    t.string   "denominacion"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
