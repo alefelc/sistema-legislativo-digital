@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624142848) do
+ActiveRecord::Schema.define(version: 20150625115116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20150624142848) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "bloques_periodos", id: false, force: :cascade do |t|
+    t.integer "bloque_id"
+    t.integer "periodo_id"
+  end
+
+  add_index "bloques_periodos", ["bloque_id"], name: "index_bloques_periodos_on_bloque_id", using: :btree
+  add_index "bloques_periodos", ["periodo_id"], name: "index_bloques_periodos_on_periodo_id", using: :btree
+
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
     t.date     "hasta"
