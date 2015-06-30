@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625143804) do
+ActiveRecord::Schema.define(version: 20150630133448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20150625143804) do
     t.text     "codigo"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "vice"
+    t.integer  "presidente"
   end
 
   create_table "bloques_periodos", id: false, force: :cascade do |t|
@@ -46,6 +48,14 @@ ActiveRecord::Schema.define(version: 20150625143804) do
   add_index "comisions_periodos", ["comision_id"], name: "index_comisions_periodos_on_comision_id", using: :btree
   add_index "comisions_periodos", ["periodo_id"], name: "index_comisions_periodos_on_periodo_id", using: :btree
 
+  create_table "comisions_personas", id: false, force: :cascade do |t|
+    t.integer "comision_id"
+    t.integer "persona_id"
+  end
+
+  add_index "comisions_personas", ["comision_id"], name: "index_comisions_personas_on_comision_id", using: :btree
+  add_index "comisions_personas", ["persona_id"], name: "index_comisions_personas_on_persona_id", using: :btree
+
   create_table "dependencia_municipals", force: :cascade do |t|
     t.string   "denominacion"
     t.datetime "created_at",   null: false
@@ -59,6 +69,31 @@ ActiveRecord::Schema.define(version: 20150625143804) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "periodos_personas", id: false, force: :cascade do |t|
+    t.integer "persona_id"
+    t.integer "periodo_id"
+  end
+
+  add_index "periodos_personas", ["periodo_id"], name: "index_periodos_personas_on_periodo_id", using: :btree
+  add_index "periodos_personas", ["persona_id"], name: "index_periodos_personas_on_persona_id", using: :btree
+
+  create_table "personas", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "apellido"
+    t.integer  "tipo_doc"
+    t.string   "nro_doc"
+    t.string   "telefono"
+    t.string   "email"
+    t.string   "domicilio"
+    t.integer  "cargo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "type"
+    t.integer  "bloque_id"
+  end
+
+  add_index "personas", ["bloque_id"], name: "index_personas_on_bloque_id", using: :btree
+
   create_table "reparticion_oficials", force: :cascade do |t|
     t.string   "denominacion"
     t.datetime "created_at",   null: false
@@ -70,6 +105,14 @@ ActiveRecord::Schema.define(version: 20150625143804) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "rols_usuarios", id: false, force: :cascade do |t|
+    t.integer "usuario_id"
+    t.integer "rol_id"
+  end
+
+  add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
+  add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -84,17 +127,11 @@ ActiveRecord::Schema.define(version: 20150625143804) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "persona_id"
   end
 
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
+  add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
-
-  create_table "usuarios_rols", id: false, force: :cascade do |t|
-    t.integer "usuario_id"
-    t.integer "rol_id"
-  end
-
-  add_index "usuarios_rols", ["rol_id"], name: "index_usuarios_rols_on_rol_id", using: :btree
-  add_index "usuarios_rols", ["usuario_id"], name: "index_usuarios_rols_on_usuario_id", using: :btree
 
 end
