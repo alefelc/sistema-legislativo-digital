@@ -22,5 +22,8 @@ module Sld
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Load subfolder models
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
   end
 end
