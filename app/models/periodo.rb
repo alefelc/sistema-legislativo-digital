@@ -1,4 +1,8 @@
 class Periodo < ActiveRecord::Base
-	has_and_belongs_to_many :bloques
+
+  #== Associations
+  has_and_belongs_to_many :bloques
 	has_and_belongs_to_many :comisions
+  has_and_belongs_to_many :concejals
+
 end
