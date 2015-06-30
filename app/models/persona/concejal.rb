@@ -1,0 +1,3 @@
+class Concejal < Persona
+
+end
