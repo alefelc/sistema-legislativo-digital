@@ -4,6 +4,9 @@ class Usuario < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #== Associations
   has_and_belongs_to_many :rols
+  belongs_to :persona
+
 
 end
