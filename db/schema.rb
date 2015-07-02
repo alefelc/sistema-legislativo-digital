@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630133448) do
+ActiveRecord::Schema.define(version: 20150702115912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,18 @@ ActiveRecord::Schema.define(version: 20150630133448) do
 
   add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
   add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
+
+  create_table "tramites", force: :cascade do |t|
+    t.integer  "nro_fojas"
+    t.text     "asunto"
+    t.integer  "responsable"
+    t.integer  "tipo_contribucion"
+    t.integer  "condicion_contribuyente"
+    t.text     "observaciones"
+    t.string   "type"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
