@@ -1,0 +1,2 @@
+class ActuacionAdministrativa < Tramite
+end

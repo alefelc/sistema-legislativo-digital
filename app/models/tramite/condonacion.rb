@@ -1,0 +1,2 @@
+class Condonacion < Tramite
+end

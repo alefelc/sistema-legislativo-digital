@@ -1,0 +1,2 @@
+class Peticion < Tramite
+end

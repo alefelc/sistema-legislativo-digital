@@ -1,0 +1,2 @@
+class Eximicion < Tramite
+end

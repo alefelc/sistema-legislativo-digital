@@ -1,0 +1,2 @@
+class Despacho < Tramite
+end
