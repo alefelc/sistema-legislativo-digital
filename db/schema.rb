@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702115912) do
+ActiveRecord::Schema.define(version: 20150702123022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,17 +50,26 @@ ActiveRecord::Schema.define(version: 20150702115912) do
 
   create_table "comisions_personas", id: false, force: :cascade do |t|
     t.integer "comision_id"
-    t.integer "persona_id"
+    t.integer "concejal_id"
   end
 
   add_index "comisions_personas", ["comision_id"], name: "index_comisions_personas_on_comision_id", using: :btree
-  add_index "comisions_personas", ["persona_id"], name: "index_comisions_personas_on_persona_id", using: :btree
+  add_index "comisions_personas", ["concejal_id"], name: "index_comisions_personas_on_concejal_id", using: :btree
 
   create_table "dependencia_municipals", force: :cascade do |t|
     t.string   "denominacion"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "documentacion_presentadas", force: :cascade do |t|
+    t.string   "tipo"
+    t.integer  "condonacion_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -70,12 +79,12 @@ ActiveRecord::Schema.define(version: 20150702115912) do
   end
 
   create_table "periodos_personas", id: false, force: :cascade do |t|
-    t.integer "persona_id"
+    t.integer "concejal_id"
     t.integer "periodo_id"
   end
 
+  add_index "periodos_personas", ["concejal_id"], name: "index_periodos_personas_on_concejal_id", using: :btree
   add_index "periodos_personas", ["periodo_id"], name: "index_periodos_personas_on_periodo_id", using: :btree
-  add_index "periodos_personas", ["persona_id"], name: "index_periodos_personas_on_persona_id", using: :btree
 
   create_table "personas", force: :cascade do |t|
     t.string   "nombre"
@@ -86,10 +95,10 @@ ActiveRecord::Schema.define(version: 20150702115912) do
     t.string   "email"
     t.string   "domicilio"
     t.integer  "cargo"
+    t.integer  "bloque_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
-    t.integer  "bloque_id"
   end
 
   add_index "personas", ["bloque_id"], name: "index_personas_on_bloque_id", using: :btree
