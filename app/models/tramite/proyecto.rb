@@ -1,0 +1,2 @@
+class Proyecto < Tramite
+end

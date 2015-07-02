@@ -10,6 +10,9 @@ class CreatePersonas < ActiveRecord::Migration
       t.string :domicilio
       t.integer :cargo
 
+      ## Un concejal pertenece a un bloque
+      t.belongs_to :bloque, index: true
+
       t.timestamps null: false
     end
   end
