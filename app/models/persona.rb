@@ -7,5 +7,6 @@ class Persona < ActiveRecord::Base
 
   #== Persona Associations
   has_one :usuario
+  has_and_belongs_to_many :tramites
 
 end
