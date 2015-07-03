@@ -40,5 +40,17 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Print rails objects in the cool way
+  gem "awesome_print", require:"ap"
+
+  # This is very usefull for rails panel extension of google chrome
+  gem 'meta_request'
+
+  # Better error page for Rack apps
+  gem "better_errors"
+
+  # Take off assets in rails console
+  gem 'quiet_assets'
 end
 
