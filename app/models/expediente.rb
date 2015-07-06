@@ -4,6 +4,6 @@ class Expediente < ActiveRecord::Base
 	has_many :despachos
 	has_many :expediente_administrativos
 	has_many :circuitos
-	has_many :voz_claves
+	has_many :tags
 
 end

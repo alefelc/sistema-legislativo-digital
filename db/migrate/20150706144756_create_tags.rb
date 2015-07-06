@@ -1,9 +1,8 @@
-class CreateVozClaves < ActiveRecord::Migration
+class CreateTags < ActiveRecord::Migration
   def change
-    create_table :voz_claves do |t|
+    create_table :tags do |t|
       t.string :nombre
 
-      ## VozClave tiene un expediente
       t.belongs_to :expediente, index: true
 
       t.timestamps null: false
