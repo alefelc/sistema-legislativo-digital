@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706122456) do
+ActiveRecord::Schema.define(version: 20150706134226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,14 +41,27 @@ ActiveRecord::Schema.define(version: 20150706122456) do
   add_index "bloques_tramites", ["bloque_id"], name: "index_bloques_tramites_on_bloque_id", using: :btree
   add_index "bloques_tramites", ["tramite_id"], name: "index_bloques_tramites_on_tramite_id", using: :btree
 
+  create_table "circuitos", force: :cascade do |t|
+    t.integer  "expediente_id"
+    t.integer  "tramite_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
+  add_index "circuitos", ["tramite_id"], name: "index_circuitos_on_tramite_id", using: :btree
+
   create_table "comisions", force: :cascade do |t|
     t.string   "denominacion"
     t.string   "codigo"
+    t.integer  "despacho_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.date     "vig_desde"
     t.date     "vig_hasta"
   end
+
+  add_index "comisions", ["despacho_id"], name: "index_comisions_on_despacho_id", using: :btree
 
   create_table "comisions_despachos", id: false, force: :cascade do |t|
     t.integer "despacho_id"
@@ -105,6 +118,19 @@ ActiveRecord::Schema.define(version: 20150706122456) do
 
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
+  create_table "estado_expedientes", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "especificacion1"
+    t.text     "especificacion2"
+    t.integer  "id_ref"
+    t.string   "tipo"
+    t.integer  "circuito_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
+
   create_table "estado_tramites", force: :cascade do |t|
     t.string   "nombre"
     t.text     "especificacion"
@@ -116,6 +142,29 @@ ActiveRecord::Schema.define(version: 20150706122456) do
   end
 
   add_index "estado_tramites", ["tramite_id"], name: "index_estado_tramites_on_tramite_id", using: :btree
+
+  create_table "expediente_administrativos", force: :cascade do |t|
+    t.string   "nro_exp"
+    t.integer  "nro_fojas"
+    t.integer  "bis"
+    t.text     "tema"
+    t.text     "observacion"
+    t.integer  "expediente_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "expediente_administrativos", ["expediente_id"], name: "index_expediente_administrativos_on_expediente_id", using: :btree
+
+  create_table "expedientes", force: :cascade do |t|
+    t.string   "nro_exp"
+    t.integer  "nro_fojas"
+    t.integer  "bis"
+    t.text     "tema"
+    t.text     "observacion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -142,12 +191,14 @@ ActiveRecord::Schema.define(version: 20150706122456) do
     t.string   "domicilio"
     t.integer  "cargo"
     t.integer  "bloque_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "despacho_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "type"
   end
 
   add_index "personas", ["bloque_id"], name: "index_personas_on_bloque_id", using: :btree
+  add_index "personas", ["despacho_id"], name: "index_personas_on_despacho_id", using: :btree
 
   create_table "personas_tramites", id: false, force: :cascade do |t|
     t.integer "persona_id"
@@ -185,9 +236,16 @@ ActiveRecord::Schema.define(version: 20150706122456) do
     t.integer  "condicion_contribuyente"
     t.text     "observaciones"
     t.string   "type"
+    t.integer  "comision_id"
+    t.integer  "concejal_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "expediente_id"
   end
+
+  add_index "tramites", ["comision_id"], name: "index_tramites_on_comision_id", using: :btree
+  add_index "tramites", ["concejal_id"], name: "index_tramites_on_concejal_id", using: :btree
+  add_index "tramites", ["expediente_id"], name: "index_tramites_on_expediente_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -208,5 +266,14 @@ ActiveRecord::Schema.define(version: 20150706122456) do
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
+
+  create_table "voz_claves", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "expediente_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "voz_claves", ["expediente_id"], name: "index_voz_claves_on_expediente_id", using: :btree
 
 end
