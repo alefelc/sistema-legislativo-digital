@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703122511) do
+ActiveRecord::Schema.define(version: 20150706122456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150703122511) do
     t.string   "codigo"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.date     "vig_desde"
+    t.date     "vig_hasta"
   end
 
   create_table "comisions_despachos", id: false, force: :cascade do |t|
@@ -102,6 +104,18 @@ ActiveRecord::Schema.define(version: 20150703122511) do
   end
 
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
+
+  create_table "estado_tramites", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "especificacion"
+    t.integer  "id_ref"
+    t.string   "tipo"
+    t.integer  "tramite_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "estado_tramites", ["tramite_id"], name: "index_estado_tramites_on_tramite_id", using: :btree
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
