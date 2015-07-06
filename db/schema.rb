@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706122456) do
+ActiveRecord::Schema.define(version: 20150706144756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 20150706122456) do
 
   add_index "bloques_tramites", ["bloque_id"], name: "index_bloques_tramites_on_bloque_id", using: :btree
   add_index "bloques_tramites", ["tramite_id"], name: "index_bloques_tramites_on_tramite_id", using: :btree
+
+  create_table "circuitos", force: :cascade do |t|
+    t.integer  "expediente_id"
+    t.integer  "tramite_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
+  add_index "circuitos", ["tramite_id"], name: "index_circuitos_on_tramite_id", using: :btree
 
   create_table "comisions", force: :cascade do |t|
     t.string   "denominacion"
@@ -105,6 +115,19 @@ ActiveRecord::Schema.define(version: 20150706122456) do
 
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
+  create_table "estado_expedientes", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "especificacion1"
+    t.text     "especificacion2"
+    t.integer  "id_ref"
+    t.string   "tipo"
+    t.integer  "circuito_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
+
   create_table "estado_tramites", force: :cascade do |t|
     t.string   "nombre"
     t.text     "especificacion"
@@ -116,6 +139,29 @@ ActiveRecord::Schema.define(version: 20150706122456) do
   end
 
   add_index "estado_tramites", ["tramite_id"], name: "index_estado_tramites_on_tramite_id", using: :btree
+
+  create_table "expediente_administrativos", force: :cascade do |t|
+    t.string   "nro_exp"
+    t.integer  "nro_fojas"
+    t.integer  "bis"
+    t.text     "tema"
+    t.text     "observacion"
+    t.integer  "expediente_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "expediente_administrativos", ["expediente_id"], name: "index_expediente_administrativos_on_expediente_id", using: :btree
+
+  create_table "expedientes", force: :cascade do |t|
+    t.string   "nro_exp"
+    t.integer  "nro_fojas"
+    t.integer  "bis"
+    t.text     "tema"
+    t.text     "observacion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -177,6 +223,15 @@ ActiveRecord::Schema.define(version: 20150706122456) do
   add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
   add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
 
+  create_table "tags", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "expediente_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "tags", ["expediente_id"], name: "index_tags_on_expediente_id", using: :btree
+
   create_table "tramites", force: :cascade do |t|
     t.integer  "nro_fojas"
     t.text     "asunto"
@@ -187,7 +242,10 @@ ActiveRecord::Schema.define(version: 20150706122456) do
     t.string   "type"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "expediente_id"
   end
+
+  add_index "tramites", ["expediente_id"], name: "index_tramites_on_expediente_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
