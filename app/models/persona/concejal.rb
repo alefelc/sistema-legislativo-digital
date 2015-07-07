@@ -7,7 +7,7 @@ class Concejal < Persona
   belongs_to :bloque
 
   #== Association recursive suplencia
-  has_many :suplentes, class_name: "relationship_concejal", foreign_key: "suplente_id"
-  has_one :titular, class_name: "relationship_concejal", foreign_key: "titular_id"
+  has_many :suplentes, class_name: "RelationshipConcejal", foreign_key: "suplente_id"
+  has_one :titular, class_name: "RelationshipConcejal", foreign_key: "titular_id"
 
 end
