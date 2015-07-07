@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707114556) do
+ActiveRecord::Schema.define(version: 20150707134821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,14 @@ ActiveRecord::Schema.define(version: 20150707114556) do
 
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
+
+  create_table "relationship_concejals", force: :cascade do |t|
+    t.integer "suplente_id"
+    t.integer "titular_id"
+  end
+
+  add_index "relationship_concejals", ["suplente_id"], name: "index_relationship_concejals_on_suplente_id", using: :btree
+  add_index "relationship_concejals", ["titular_id"], name: "index_relationship_concejals_on_titular_id", using: :btree
 
   create_table "reparticion_oficials", force: :cascade do |t|
     t.string   "denominacion"
