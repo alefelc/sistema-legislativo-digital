@@ -3,7 +3,7 @@ class CrateTableRelationShipConcejal < ActiveRecord::Migration
   	create_table :relationship_concejals do |t|
   		t.belongs_to :suplente, index: true
   		t.belongs_to :titular, index: true
-  		t.timestamp
-  	end	
+      t.timestamps null: false
+  	end
   end
 end
