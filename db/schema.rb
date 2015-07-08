@@ -225,8 +225,10 @@ ActiveRecord::Schema.define(version: 20150708115919) do
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
 
   create_table "relationship_concejals", force: :cascade do |t|
-    t.integer "suplente_id"
-    t.integer "titular_id"
+    t.integer  "suplente_id"
+    t.integer  "titular_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "relationship_concejals", ["suplente_id"], name: "index_relationship_concejals_on_suplente_id", using: :btree
