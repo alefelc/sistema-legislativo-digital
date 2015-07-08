@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708115919) do
+ActiveRecord::Schema.define(version: 20150708134012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(version: 20150708115919) do
 
   add_index "bloques_tramites", ["bloque_id"], name: "index_bloques_tramites_on_bloque_id", using: :btree
   add_index "bloques_tramites", ["tramite_id"], name: "index_bloques_tramites_on_tramite_id", using: :btree
+
+  create_table "circuito_ordens", force: :cascade do |t|
+    t.integer  "seccion_id"
+    t.integer  "sub_seccion_id"
+    t.string   "destino"
+    t.integer  "circuito_id"
+    t.integer  "orden_del_dia_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "circuito_ordens", ["circuito_id"], name: "index_circuito_ordens_on_circuito_id", using: :btree
+  add_index "circuito_ordens", ["orden_del_dia_id"], name: "index_circuito_ordens_on_orden_del_dia_id", using: :btree
 
   create_table "circuitos", force: :cascade do |t|
     t.integer  "expediente_id"
@@ -127,6 +140,11 @@ ActiveRecord::Schema.define(version: 20150708115919) do
   add_index "despachos_concejals", ["concejal_id"], name: "index_despachos_concejals_on_concejal_id", using: :btree
   add_index "despachos_concejals", ["despacho_id"], name: "index_despachos_concejals_on_despacho_id", using: :btree
 
+  create_table "diario_de_sesions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "documentacion_presentadas", force: :cascade do |t|
     t.string   "tipo"
     t.integer  "condonacion_id"
@@ -183,6 +201,25 @@ ActiveRecord::Schema.define(version: 20150708115919) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "orden_del_dia", force: :cascade do |t|
+    t.integer  "nro"
+    t.date     "fecha"
+    t.text     "observacion"
+    t.integer  "sesion_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "orden_del_dia", ["sesion_id"], name: "index_orden_del_dia_on_sesion_id", using: :btree
+
+  create_table "orden_del_dia_seccions", id: false, force: :cascade do |t|
+    t.integer "orden_del_dia_id"
+    t.integer "seccion_id"
+  end
+
+  add_index "orden_del_dia_seccions", ["orden_del_dia_id"], name: "index_orden_del_dia_seccions_on_orden_del_dia_id", using: :btree
+  add_index "orden_del_dia_seccions", ["seccion_id"], name: "index_orden_del_dia_seccions_on_seccion_id", using: :btree
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -253,6 +290,33 @@ ActiveRecord::Schema.define(version: 20150708115919) do
 
   add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
   add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
+
+  create_table "seccions", force: :cascade do |t|
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sesions", force: :cascade do |t|
+    t.integer  "nro"
+    t.text     "observacion"
+    t.string   "tipo1"
+    t.string   "tipo2"
+    t.integer  "diario_de_sesion_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "sesions", ["diario_de_sesion_id"], name: "index_sesions_on_diario_de_sesion_id", using: :btree
+
+  create_table "sub_seccions", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "seccion_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "sub_seccions", ["seccion_id"], name: "index_sub_seccions_on_seccion_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "nombre"
