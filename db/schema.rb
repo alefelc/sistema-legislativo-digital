@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707134821) do
+ActiveRecord::Schema.define(version: 20150708115919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "acumulas", force: :cascade do |t|
+    t.integer  "acumulado_id"
+    t.integer  "acumula_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "acumulas", ["acumula_id"], name: "index_acumulas_on_acumula_id", using: :btree
+  add_index "acumulas", ["acumulado_id"], name: "index_acumulas_on_acumulado_id", using: :btree
+
+  create_table "adjunta_fisicamentes", force: :cascade do |t|
+    t.integer  "adjuntado_id"
+    t.integer  "adjunta_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
+  add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
 
   create_table "bloques", force: :cascade do |t|
     t.text     "denominacion"
