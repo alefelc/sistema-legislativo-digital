@@ -1,0 +1,2 @@
+class OtraNorma < Norma
+end

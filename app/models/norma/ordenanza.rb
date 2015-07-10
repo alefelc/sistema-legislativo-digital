@@ -1,0 +1,2 @@
+class Ordenanza < Norma
+end

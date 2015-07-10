@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708134012) do
+ActiveRecord::Schema.define(version: 20150710142800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,36 @@ ActiveRecord::Schema.define(version: 20150708134012) do
   add_index "bloques_tramites", ["bloque_id"], name: "index_bloques_tramites_on_bloque_id", using: :btree
   add_index "bloques_tramites", ["tramite_id"], name: "index_bloques_tramites_on_tramite_id", using: :btree
 
+  create_table "boletin_oficials", force: :cascade do |t|
+    t.integer  "nro"
+    t.date     "publicacion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "boletin_oficials_normas", id: false, force: :cascade do |t|
+    t.integer "boletin_oficial_id"
+    t.integer "norma_id"
+  end
+
+  add_index "boletin_oficials_normas", ["boletin_oficial_id"], name: "index_boletin_oficials_normas_on_boletin_oficial_id", using: :btree
+  add_index "boletin_oficials_normas", ["norma_id"], name: "index_boletin_oficials_normas_on_norma_id", using: :btree
+
+  create_table "capitulos", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "titulo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "capitulos_normas", id: false, force: :cascade do |t|
+    t.integer "capitulo_id"
+    t.integer "norma_id"
+  end
+
+  add_index "capitulos_normas", ["capitulo_id"], name: "index_capitulos_normas_on_capitulo_id", using: :btree
+  add_index "capitulos_normas", ["norma_id"], name: "index_capitulos_normas_on_norma_id", using: :btree
+
   create_table "circuito_ordens", force: :cascade do |t|
     t.integer  "seccion_id"
     t.integer  "sub_seccion_id"
@@ -84,6 +114,29 @@ ActiveRecord::Schema.define(version: 20150708134012) do
 
   add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
   add_index "circuitos", ["tramite_id"], name: "index_circuitos_on_tramite_id", using: :btree
+
+  create_table "circuitos_normas", id: false, force: :cascade do |t|
+    t.integer "circuito_id"
+    t.integer "norma_id"
+  end
+
+  add_index "circuitos_normas", ["circuito_id"], name: "index_circuitos_normas_on_circuito_id", using: :btree
+  add_index "circuitos_normas", ["norma_id"], name: "index_circuitos_normas_on_norma_id", using: :btree
+
+  create_table "clasificacions", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "tipo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "clasificacions_normas", id: false, force: :cascade do |t|
+    t.integer "clasificacion_id"
+    t.integer "norma_id"
+  end
+
+  add_index "clasificacions_normas", ["clasificacion_id"], name: "index_clasificacions_normas_on_clasificacion_id", using: :btree
+  add_index "clasificacions_normas", ["norma_id"], name: "index_clasificacions_normas_on_norma_id", using: :btree
 
   create_table "comisions", force: :cascade do |t|
     t.string   "denominacion"
@@ -145,6 +198,13 @@ ActiveRecord::Schema.define(version: 20150708134012) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "digestos", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "observacion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "documentacion_presentadas", force: :cascade do |t|
     t.string   "tipo"
     t.integer  "condonacion_id"
@@ -202,6 +262,42 @@ ActiveRecord::Schema.define(version: 20150708134012) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "libros", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "digesto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "normas", force: :cascade do |t|
+    t.string   "letra"
+    t.integer  "nro"
+    t.integer  "bis"
+    t.text     "sumario"
+    t.text     "observaciones"
+    t.date     "sancion"
+    t.date     "entrada_vigencia"
+    t.date     "finaliza_vigencia"
+    t.integer  "plazo_dia"
+    t.integer  "plazo_mes"
+    t.integer  "plazo_anio"
+    t.string   "organismo_origen"
+    t.string   "type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "expediente_id"
+  end
+
+  add_index "normas", ["expediente_id"], name: "index_normas_on_expediente_id", using: :btree
+
+  create_table "normas_otra_publicacions", id: false, force: :cascade do |t|
+    t.integer "norma_id"
+    t.integer "otra_publicacion_id"
+  end
+
+  add_index "normas_otra_publicacions", ["norma_id"], name: "index_normas_otra_publicacions_on_norma_id", using: :btree
+  add_index "normas_otra_publicacions", ["otra_publicacion_id"], name: "index_normas_otra_publicacions_on_otra_publicacion_id", using: :btree
+
   create_table "orden_del_dia", force: :cascade do |t|
     t.integer  "nro"
     t.date     "fecha"
@@ -220,6 +316,14 @@ ActiveRecord::Schema.define(version: 20150708134012) do
 
   add_index "orden_del_dia_seccions", ["orden_del_dia_id"], name: "index_orden_del_dia_seccions_on_orden_del_dia_id", using: :btree
   add_index "orden_del_dia_seccions", ["seccion_id"], name: "index_orden_del_dia_seccions_on_seccion_id", using: :btree
+
+  create_table "otra_publicacions", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "observacion"
+    t.date     "publicacion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -326,6 +430,13 @@ ActiveRecord::Schema.define(version: 20150708134012) do
   end
 
   add_index "tags", ["expediente_id"], name: "index_tags_on_expediente_id", using: :btree
+
+  create_table "titulos", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "libro_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tramites", force: :cascade do |t|
     t.integer  "nro_fojas"

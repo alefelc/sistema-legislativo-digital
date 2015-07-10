@@ -1,0 +1,2 @@
+class Decreto < Norma
+end
