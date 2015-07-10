@@ -1,0 +1,2 @@
+class Resolucion < Norma
+end

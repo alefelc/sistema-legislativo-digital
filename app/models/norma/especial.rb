@@ -1,0 +1,2 @@
+class Especial < Norma
+end

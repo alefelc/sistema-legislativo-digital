@@ -1,0 +1,2 @@
+class Declaracion < Norma
+end
