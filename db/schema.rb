@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713144728) do
+
+ActiveRecord::Schema.define(version: 20150713145814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -668,5 +669,39 @@ ActiveRecord::Schema.define(version: 20150713144728) do
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
+
+  create_table "veto_parcial_relationships", force: :cascade do |t|
+    t.integer  "veta_parcial_id"
+    t.integer  "me_veta_parcial_id"
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "dia"
+    t.integer  "mes"
+    t.integer  "anio"
+    t.integer  "dia_habil"
+    t.text     "observacion"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "veto_parcial_relationships", ["me_veta_parcial_id"], name: "index_veto_parcial_relationships_on_me_veta_parcial_id", using: :btree
+  add_index "veto_parcial_relationships", ["veta_parcial_id"], name: "index_veto_parcial_relationships_on_veta_parcial_id", using: :btree
+
+  create_table "veto_total_relationships", force: :cascade do |t|
+    t.integer  "veta_total_id"
+    t.integer  "me_veta_total_id"
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "dia"
+    t.integer  "mes"
+    t.integer  "anio"
+    t.integer  "dia_habil"
+    t.text     "observacion"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "veto_total_relationships", ["me_veta_total_id"], name: "index_veto_total_relationships_on_me_veta_total_id", using: :btree
+  add_index "veto_total_relationships", ["veta_total_id"], name: "index_veto_total_relationships_on_veta_total_id", using: :btree
 
 end

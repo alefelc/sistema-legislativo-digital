@@ -65,4 +65,15 @@ class Norma < ActiveRecord::Base
   has_many :ad_referendum, through: :relationship_ad_referendum, source: :ad_referendum
   has_many :relationship_me_ad_referendumn, class_name: 'AdReferendumRelationship', foreign_key: 'tiene_ad_referendum_id'
   has_many :tiene_ad_referendum, through: :relationship_me_ad_referendumn, source: :tiene_ad_referendum
+
+  has_many :relationship_veta_parcial, class_name: 'VetoParcialRelationship', foreign_key: 'veta_parcial_id'
+  has_many :veta_parcialmente, through: :relationship_veta_parcial, source: :veta_parcial
+  has_many :relationship_me_vetan_parcialmente, class_name: 'VetoParcialRelationship', foreign_key: 'me_veta_parcial_id'
+  has_many :me_vetan_parcialmente, through: :relationship_me_vetan_parcialmente, source: :me_veta_parcial
+
+  has_many :relationship_veta_total, class_name: 'VetoTotalRelationship', foreign_key: 'veta_total_id'
+  has_many :veta_totalmente, through: :relationship_veta_total, source: :veta_total
+  has_many :relationship_me_vetan_totalmente, class_name: 'VetoTotalRelationship', foreign_key: 'me_veta_total_id'
+  has_many :me_vetan_totalmente, through: :relationship_me_vetan_totalmente, source: :me_veta_total
+
 end
