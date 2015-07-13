@@ -55,4 +55,14 @@ class Norma < ActiveRecord::Base
   has_many :suspende_vigencia, through: :relationship_suspende_vigencia, source: :suspende
   has_many :relationship_me_suspenden_vigencia, class_name: 'SuspendeVigenciaRelationship', foreign_key: 'me_suspende_id'
   has_many :me_suspenden_vigencia, through: :relationship_me_suspenden_vigencia, source: :me_suspende
+
+  has_many :relationship_promulga, class_name: 'PromulgaRelationship', foreign_key: 'promulga_id'
+  has_many :promulgacion, through: :relationship_promulga, source: :promulga
+  has_many :relationship_me_promulgan, class_name: 'PromulgaRelationship', foreign_key: 'me_promulga_id'
+  has_many :me_promulgan, through: :relationship_me_promulgan, source: :me_promulga
+
+  has_many :relationship_ad_referendum, class_name: 'AdReferendumRelationship', foreign_key: 'ad_referendum_id'
+  has_many :ad_referendum, through: :relationship_ad_referendum, source: :ad_referendum
+  has_many :relationship_me_ad_referendumn, class_name: 'AdReferendumRelationship', foreign_key: 'tiene_ad_referendum_id'
+  has_many :tiene_ad_referendum, through: :relationship_me_ad_referendumn, source: :tiene_ad_referendum
 end
