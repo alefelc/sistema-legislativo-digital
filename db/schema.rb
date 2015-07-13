@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713142416) do
+ActiveRecord::Schema.define(version: 20150713144728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,23 @@ ActiveRecord::Schema.define(version: 20150713142416) do
 
   add_index "acumulas", ["acumula_id"], name: "index_acumulas_on_acumula_id", using: :btree
   add_index "acumulas", ["acumulado_id"], name: "index_acumulas_on_acumulado_id", using: :btree
+
+  create_table "ad_referendum_relationships", force: :cascade do |t|
+    t.integer  "ad_referendum_id"
+    t.integer  "tiene_ad_referendum_id"
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "dia"
+    t.integer  "mes"
+    t.integer  "anio"
+    t.integer  "dia_habil"
+    t.text     "observacion"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "ad_referendum_relationships", ["ad_referendum_id"], name: "index_ad_referendum_relationships_on_ad_referendum_id", using: :btree
+  add_index "ad_referendum_relationships", ["tiene_ad_referendum_id"], name: "index_ad_referendum_relationships_on_tiene_ad_referendum_id", using: :btree
 
   create_table "adjunta_fisicamentes", force: :cascade do |t|
     t.integer  "adjuntado_id"
@@ -441,6 +458,23 @@ ActiveRecord::Schema.define(version: 20150713142416) do
 
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
+
+  create_table "promulga_relationships", force: :cascade do |t|
+    t.integer  "promulga_id"
+    t.integer  "me_promulga_id"
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "dia"
+    t.integer  "mes"
+    t.integer  "anio"
+    t.integer  "dia_habil"
+    t.text     "observacion"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "promulga_relationships", ["me_promulga_id"], name: "index_promulga_relationships_on_me_promulga_id", using: :btree
+  add_index "promulga_relationships", ["promulga_id"], name: "index_promulga_relationships_on_promulga_id", using: :btree
 
   create_table "prorroga_suspencion_relationships", force: :cascade do |t|
     t.integer  "suspendida_id"
