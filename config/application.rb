@@ -25,5 +25,7 @@ module Sld
 
     # Load subfolder models
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+    # Load subfolder legacy models
+    config.autoload_paths += Dir[Rails.root.join('lib', 'tasks', '{**}')]
   end
 end
