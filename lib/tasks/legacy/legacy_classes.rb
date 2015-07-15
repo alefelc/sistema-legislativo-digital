@@ -11,6 +11,18 @@ class LegacyJuridica < ActiveRecord::Base
   self.table_name = 'PJUR'
 end
 
+# Model concejal
+class LegacyConcejal < ActiveRecord::Base 
+  establish_connection :legacy 
+  self.table_name = 'CONCEJAL'
+end
+
+# Model comision
+class LegacyComision < ActiveRecord::Base 
+  establish_connection :legacy 
+  self.table_name = 'COMIS'
+end
+
 # Model periodos
 class LegacyPeriodo < ActiveRecord::Base 
   establish_connection :legacy 
