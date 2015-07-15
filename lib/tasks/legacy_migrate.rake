@@ -35,7 +35,8 @@ namespace :legacy_migrate do
         end
       else
         p.periodos << find  
-      end   
+      end
+      p.save   
       puts "creo concejal #{p.nombre}"
     end
   end  
@@ -45,22 +46,22 @@ namespace :legacy_migrate do
   task comisiones: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+    
+    
     # Iteramos por todos las comisiones legacy
     LegacyComision.all.each do |com|
-      c = Comision.create
-      c.denominacion = com.DENOMINAC
-      c.codigo = com.CODIGO
-      find = Periodo.find_by_year(com.PERIODOD, com.PERIODOH)
-      if find.empty?   
-        c.periodos.create do |per|
-          per.desde = Date.new.change year: com.PERIODOD
-          per.hasta = Date.new.change day: 31, month: 12, year: com.PERIODOH
+      c_legadas = LegacyComision.where(CODIGO: com.CODIGO)
+      c_actuales = Comision.where(codigo: com.CODIGO)
+      if !c_legadas.empty? and c_actuales.count == 0
+        c = Comision.create
+        c.denominacion = com.DENOMINAC
+        c.codigo = com.CODIGO
+        c_legadas.each do |cm|
+          c.periodos << Periodo.find_by_year(cm.PERIODOD, cm.PERIODOH)
         end
-      else
-        c.periodos << find  
-      end
-      c.save   
-      puts "creo comision #{c.denominacion}"
+        c.save
+        puts "creo comision #{c.denominacion}"        
+      end    
     end
   end
 
