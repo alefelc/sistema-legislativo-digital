@@ -47,13 +47,10 @@ namespace :legacy_migrate do
     end
   end
 
-  # Falta agregar la condicion para que no agregue comisiones repetidas
   desc "Migracion de comisiones"
   task comisiones: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
-
-
     # Iteramos por todos las comisiones legacy
     LegacyComision.all.each do |com|
       c_legadas = LegacyComision.where(CODIGO: com.CODIGO)
