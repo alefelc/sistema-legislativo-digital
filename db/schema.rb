@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714142603) do
+ActiveRecord::Schema.define(version: 20150716132317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,22 +70,25 @@ ActiveRecord::Schema.define(version: 20150714142603) do
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
 
+  create_table "bloque_periodos", id: false, force: :cascade do |t|
+    t.integer  "bloque_id"
+    t.integer  "periodo_id"
+    t.integer  "id"
+    t.integer  "vice_id"
+    t.integer  "presidente_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "bloque_periodos", ["bloque_id"], name: "index_bloque_periodos_on_bloque_id", using: :btree
+  add_index "bloque_periodos", ["periodo_id"], name: "index_bloque_periodos_on_periodo_id", using: :btree
+
   create_table "bloques", force: :cascade do |t|
     t.text     "denominacion"
     t.text     "codigo"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "vice"
-    t.integer  "presidente"
   end
-
-  create_table "bloques_periodos", id: false, force: :cascade do |t|
-    t.integer "bloque_id"
-    t.integer "periodo_id"
-  end
-
-  add_index "bloques_periodos", ["bloque_id"], name: "index_bloques_periodos_on_bloque_id", using: :btree
-  add_index "bloques_periodos", ["periodo_id"], name: "index_bloques_periodos_on_periodo_id", using: :btree
 
   create_table "bloques_tramites", id: false, force: :cascade do |t|
     t.integer "bloque_id"
