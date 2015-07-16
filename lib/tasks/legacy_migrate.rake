@@ -95,11 +95,44 @@ namespace :legacy_migrate do
     end
   end
 
+  desc "Migracion de bloques"
+  task bloques: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+    # Iteramos por todos los periodos legacy
+    LegacyBloque.all.each do |bloque|
+
+      if bloque_exists? bloque
+        b = Bloque.find_by codigo: bloque.CODIGO
+      else
+        b = Bloque.create do |x|
+          x.denominacion = bloque.DENOMINAC
+          x.codigo = bloque.CODIGO
+        end
+      end
+
+      b.periodos << Periodo.find_by_year bloque.PERIODOD, bloque.PERIODOH
+
+      LegacyConcejal.where(PARTIDO: bloque.CODIGO).each do |c|
+        concejal = Concejal.find_by(nombre: c.NOMBRE, apellido: c.APELLIDO)
+        concejal.bloque = b
+        concejal.save
+      end
+
+      b.save
+      puts "creo bloque #{b.inspect}"
+    end
+  end
+
   desc "ejecutar todas las tareas"
-  task :tareas => [:particulares, :juridicas, :periodos, :concejales, :comisiones]
+  task :tareas => [:particulares, :juridicas, :periodos, :concejales, :comisiones, :bloques]
 
   def concejal_exists? concej
     Concejal.where(nombre: concej.NOMBRE, apellido: concej.APELLIDO).present?
+  end
+
+  def bloque_exists? bloque
+    Bloque.where(codigo: bloque.CODIGO).present?
   end
 
 end
