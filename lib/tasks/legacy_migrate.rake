@@ -25,12 +25,11 @@ namespace :legacy_migrate do
     LegacyConcejal.all.each do |c|
 
       if concejal_exists? c
-        p = Concejal.where(nombre: c.NOMBRE, apellido: c.APELLIDO).first
+        p = Concejal.find_by nombre: c.NOMBRE, apellido: c.APELLIDO
       else
         p = Concejal.create do |x|
           x.nombre = c.NOMBRE
           x.apellido = c.APELLIDO
-          x.partido = c.PARTIDO
         end
       end
 
@@ -84,7 +83,6 @@ namespace :legacy_migrate do
       puts "creo persona juridica #{p.nombre}"
     end
   end
-
 
   desc "Migracion de periodos"
   task periodos: :environment do
