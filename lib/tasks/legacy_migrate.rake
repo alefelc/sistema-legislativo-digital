@@ -124,8 +124,22 @@ namespace :legacy_migrate do
     end
   end
 
+  desc "Migracion de reparticiones oficiales y dependencias municipales"
+  task repart_oficiales_depend_municipal: :environment do
+  	# requerimos los modelos legacy
+  	require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyReparticionOficial.select(:DENOMINAC).distinct.each do |x|
+      puts ReparticionOficial.create denominacion: x.DENOMINAC
+    end
+
+    LegacyDependenciaMunicipal.select(:DENOMINAC).distinct.each do |x|
+      puts DependenciaMunicipal.create denominacion: x.DENOMINAC
+    end
+  end
+
   desc "ejecutar todas las tareas"
-  task :tareas => [:particulares, :juridicas, :periodos, :concejales, :comisiones, :bloques]
+  task :tareas => [:particulares, :juridicas, :periodos, :concejales, :comisiones, :bloques, :repart_oficiales_depend_municipal]
 
   def concejal_exists? concej
     Concejal.where(nombre: concej.NOMBRE, apellido: concej.APELLIDO).present?

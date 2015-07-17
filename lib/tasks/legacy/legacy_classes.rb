@@ -34,3 +34,15 @@ class LegacyBloque < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'BLOQUES'
 end
+
+# Model reparticion oficial
+class LegacyReparticionOficial < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'REPART'
+end
+
+# Model dependencia municipal
+class LegacyDependenciaMunicipal < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'DEPEND'
+end
