@@ -111,7 +111,7 @@ namespace :legacy_migrate do
         end
       end
 
-      b.periodos << Periodo.find_by_year bloque.PERIODOD, bloque.PERIODOH
+      b.periodos << Periodo.find_by_year(bloque.PERIODOD, bloque.PERIODOH)
 
       LegacyConcejal.where(PARTIDO: bloque.CODIGO).each do |c|
         concejal = Concejal.find_by(nombre: c.NOMBRE, apellido: c.APELLIDO)
