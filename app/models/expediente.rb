@@ -8,10 +8,14 @@ class Expediente < ActiveRecord::Base
 	has_many :normas
 
 	#== Association recursive expediente acumula
-  has_many :acumulados, class_name: "Acumula", foreign_key: "acumulado_id"
-  has_one :acumula, class_name: "Acumula", foreign_key: "acumula_id"
+  has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumulado_id"
+  has_many :acumulados, through: :acumulados_relationship
+  has_one :acumula_relationship, class_name: "Acumula", foreign_key: "acumula_id"
+  has_one :acumula, through: :acumula_relationship
 
   #== Association recursive expediente acumula
-  has_many :adjuntados, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
-  has_one :adjunta, class_name: "AdjuntaFisicamente", foreign_key: "adjunta_id"
+  has_many :adjuntados_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
+  has_many :adjuntados, through: :adjuntados_relationship
+  has_one :adjunta_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjunta_id"
+  has_one :adjunta, through: :adjunta_relationship
 end
