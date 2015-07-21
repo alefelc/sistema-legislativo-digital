@@ -212,16 +212,20 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
-    LegacyExpedienteAdministrativo.each do |e|
-      ea = ExpedienteAdminitrativo.create do |ea|
+    LegacyExpedienteAdministrativo.all.each do |e|
+      ea = ExpedienteAdministrativo.create do |ea|
         ea.nro_exp = e.NUMEROEA
         ea.letra = e.LETRAEA
         ea.sub_indice = e.SUBEA
         ea.anio = Date.new.change year: e.NUMEROEA
       end
       exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
-      exp.expediente_administrativo << ea
-      puts "Expediente administrativo  #{ea.id}"
+      if exp.nil?
+        puts "soy nil #{e.IND_EXP}"
+      else  
+        exp.expediente_administrativos << ea
+        puts "Expediente administrativo  #{ea.id}"
+      end
     end
   end
 
