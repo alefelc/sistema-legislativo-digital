@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150720122528) do
+ActiveRecord::Schema.define(version: 20150721140053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -328,6 +328,9 @@ ActiveRecord::Schema.define(version: 20150720122528) do
     t.integer  "expediente_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "sub_indice"
+    t.string   "letra"
+    t.date     "anio"
   end
 
   add_index "expediente_administrativos", ["expediente_id"], name: "index_expediente_administrativos_on_expediente_id", using: :btree

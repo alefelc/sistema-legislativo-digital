@@ -1,15 +1,16 @@
 namespace :legacy_migrate do
 
-  TAREAS = %w[  particulares 
-                juridicas 
-                periodos 
-                concejales 
-                comisiones 
-                bloques 
-                repart_oficiales_depend_municipal 
+  TAREAS = %w[  particulares
+                juridicas
+                periodos
+                concejales
+                comisiones
+                bloques
+                repart_oficiales_depend_municipal
                 expedientes
                 expedientes_acumulados
                 expedientes_adjuntados_fisicamente
+                expedientes_administrativos
               ]
 
   desc "Migracion de particulares"
@@ -168,7 +169,7 @@ namespace :legacy_migrate do
       find = LegacyTramite.find_by_ind(e.IND_EXP)
       if find.nil?
         exp.anio = Date.new.change year: e.ANO_EXPED
-      else  
+      else
         exp.anio = find.FECHA
       end
       exp.save
@@ -176,13 +177,13 @@ namespace :legacy_migrate do
       c.save
       puts "creo expediente #{exp.inspect}"
     end
-  end  
+  end
 
   desc "Migracion de expedientes_acumulados"
   task expedientes_acumulados: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
-  
+
     LegacyExpediente.where("ACUM != 0").each do |e|
       fe = LegacyExpediente.find_by_ind(e.ACUM)
       fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
@@ -196,13 +197,31 @@ namespace :legacy_migrate do
   task expedientes_adjuntados_fisicamente: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
-  
+
     LegacyExpediente.where("ADJFIS != 0").each do |e|
       fe = LegacyExpediente.find_by_ind(e.ADJFIS)
       fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
       exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
       fe2.acumulados << exp
       puts "adjunte #{fe2.id}"
+    end
+  end
+
+  desc "Migracion de expedientes administrativos"
+  task expedientes_administrativos: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyExpedienteAdministrativo.each do |e|
+      ea = ExpedienteAdminitrativo.create do |ea|
+        ea.nro_exp = e.NUMEROEA
+        ea.letra = e.LETRAEA
+        ea.sub_indice = e.SUBEA
+        ea.anio = Date.new.change year: e.NUMEROEA
+      end
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+      exp.expediente_administrativo << ea
+      puts "Expediente administrativo  #{ea.id}"
     end
   end
 
