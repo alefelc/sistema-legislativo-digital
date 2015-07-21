@@ -1,5 +1,17 @@
 namespace :legacy_migrate do
 
+  TAREAS = %w[  particulares 
+                juridicas 
+                periodos 
+                concejales 
+                comisiones 
+                bloques 
+                repart_oficiales_depend_municipal 
+                expedientes
+                expedientes_acumulados
+                expedientes_adjuntados_fisicamente
+              ]
+
   desc "Migracion de particulares"
   task particulares: :environment do
   	# requerimos los modelos legacy
@@ -138,8 +150,64 @@ namespace :legacy_migrate do
     end
   end
 
+  desc "Migracion de expedientes"
+  task expedientes: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyExpediente.all.each do |e|
+      c = Circuito.new
+      c.nro = 0
+
+      exp = Expediente.new
+      exp.nro_exp = e.NUM_EXPED
+      exp.bis = e.BIS_EXPED
+      exp.tema = e.TEMA
+      exp.observacion = e.OBSERV
+
+      find = LegacyTramite.find_by_ind(e.IND_EXP)
+      if find.nil?
+        exp.anio = Date.new.change year: e.ANO_EXPED
+      else  
+        exp.anio = find.FECHA
+      end
+      exp.save
+      c.expediente = exp
+      c.save
+      puts "creo expediente #{exp.inspect}"
+    end
+  end  
+
+  desc "Migracion de expedientes_acumulados"
+  task expedientes_acumulados: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+  
+    LegacyExpediente.where("ACUM != 0").each do |e|
+      fe = LegacyExpediente.find_by_ind(e.ACUM)
+      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+      fe2.acumulados << exp
+      puts "acumule #{fe2.id}"
+    end
+  end
+
+  desc "Migracion de expedientes_adjuntados_fisicamente"
+  task expedientes_adjuntados_fisicamente: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+  
+    LegacyExpediente.where("ADJFIS != 0").each do |e|
+      fe = LegacyExpediente.find_by_ind(e.ADJFIS)
+      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+      fe2.acumulados << exp
+      puts "adjunte #{fe2.id}"
+    end
+  end
+
   desc "ejecutar todas las tareas"
-  task :tareas => [:particulares, :juridicas, :periodos, :concejales, :comisiones, :bloques, :repart_oficiales_depend_municipal]
+  task :tareas => TAREAS
 
   def concejal_exists? concej
     Concejal.where(nombre: concej.NOMBRE, apellido: concej.APELLIDO).present?

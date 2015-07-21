@@ -46,3 +46,24 @@ class LegacyDependenciaMunicipal < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'DEPEND'
 end
+
+# Model expediente
+class LegacyExpediente < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'EXPED'
+
+  def self.find_by_ind(ind_exp)
+    LegacyExpediente.find_by("IND_EXP = ?", ind_exp)
+  end
+end
+
+# Model tramites
+class LegacyTramite < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'TRAMITE'
+
+  def self.find_by_ind(ind_exp)
+    LegacyTramite.find_by("IND_EXP = ? AND B_EST = ?", ind_exp, 1)
+  end
+
+end
