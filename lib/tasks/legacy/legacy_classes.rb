@@ -57,6 +57,12 @@ class LegacyExpediente < ActiveRecord::Base
   end
 end
 
+# Model expediente administrativo
+class LegacyExpedienteAdministrativo < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'EXPADJ'
+end
+
 # Model tramites
 class LegacyTramite < ActiveRecord::Base
   establish_connection :legacy
