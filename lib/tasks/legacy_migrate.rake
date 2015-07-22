@@ -1,24 +1,27 @@
 namespace :legacy_migrate do
 
-  TAREAS = %w[  particulares
-                juridicas
-                periodos
-                concejales
-                comisiones
-                bloques
-                repart_oficiales_depend_municipal
-                expedientes
-                expedientes_acumulados
-                expedientes_adjuntados_fisicamente
-                expedientes_administrativos
-              ]
+  TAREAS = %w[
+               particulares
+               juridicas
+               periodos
+               concejales
+               comisiones
+               bloques
+               repart_oficiales_depend_municipal
+               expedientes
+               expedientes_acumulados
+               expedientes_adjuntados_fisicamente
+               expedientes_administrativos
+               data_refactoring
+             ]
 
   desc "Migracion de particulares"
   task particulares: :environment do
   	# requerimos los modelos legacy
   	require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
-  	# Iteramos por todos los particulares legacy
-		LegacyPart.all.each do |part|
+
+    # Iteramos por todos los particulares legacy
+		LegacyPart.select(:NOMBRE, :APELLIDO, :TIPO_DOC, :NUM_DOC, :DOMICILIO).each do |part|
   		p = Fisica.new
   		p.nombre = part.NOMBRE
   		p.apellido = part.APELLIDO
@@ -26,26 +29,20 @@ namespace :legacy_migrate do
   		p.nro_doc	 = part.NUM_DOC
   		p.domicilio = part.DOMICILIO
   		p.save
-  		puts "creo particular #{p.nombre}"
   	end
+
+    puts "Finalizada migración de particulares"
+    puts "...\n"
   end
 
   desc "Migracion de concejales"
   task concejales: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
     # Iteramos por todos los concejales legacy
     LegacyConcejal.all.each do |c|
-
-      if concejal_exists? c
-        p = Concejal.find_by nombre: c.NOMBRE, apellido: c.APELLIDO
-      else
-        p = Concejal.create do |x|
-          x.nombre = c.NOMBRE
-          x.apellido = c.APELLIDO
-        end
-      end
-
+      p = create_concejal c
       find = Periodo.find_by_year(c.PERIODOD, c.PERIODOH)
       if find.empty?
         p.periodos.create do |per|
@@ -55,29 +52,28 @@ namespace :legacy_migrate do
       else
         p.periodos << find
       end
-      p.save
-      puts "creo concejal #{p.nombre}"
     end
+
+    puts "Finalizada migración de concejales"
+    puts "...\n"
   end
 
   desc "Migracion de comisiones"
   task comisiones: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
     # Iteramos por todos las comisiones legacy
     LegacyComision.all.each do |com|
       c_legadas = LegacyComision.where(CODIGO: com.CODIGO)
       c_actuales = Comision.where(codigo: com.CODIGO)
       if !c_legadas.empty? and c_actuales.count == 0
-        c = Comision.create
-        c.denominacion = com.DENOMINAC
-        c.codigo = com.CODIGO
-        c_legadas.each do |cm|
-          c.periodos << Periodo.find_by_year(cm.PERIODOD, cm.PERIODOH)
-        end
-        c.save
-        puts "creo comision #{c.denominacion}"
+        c = Comision.create denominacion: com.DENOMINAC, codigo: com.CODIGO
+        c_legadas.each { |cm| c.periodos << Periodo.find_by_year(cm.PERIODOD, cm.PERIODOH) }
       end
+
+      puts "Finalizada migración de comisiones"
+      puts "...\n"
     end
   end
 
@@ -85,56 +81,47 @@ namespace :legacy_migrate do
   task juridicas: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
     # Iteramos por todos los particulares legacy
-    LegacyJuridica.all.each do |j|
-      p = Juridica.new
-      p.nombre = j.DENOMINAC
-      p.save
-      puts "creo persona juridica #{p.nombre}"
-    end
+    LegacyJuridica.select(:DENOMINAC).each { |j| Juridica.create nombre: j.DENOMINAC }
+
+    puts "Finalizada migración de personas jurídicas"
+    puts "...\n"
   end
 
   desc "Migracion de periodos"
   task periodos: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
     # Iteramos por todos los periodos legacy
-    LegacyPeriodo.all.each do |periodo|
-      p = Periodo.new
-      p.desde = Date.new.change year: periodo.PERIODOD
-      p.hasta = Date.new.change day: 31, month: 12, year: periodo.PERIODOH
-      p.save
-      puts "creo periodo #{p.inspect}"
+    LegacyPeriodo.select(:PERIODOD, :PERIODOH).each do |periodo|
+      Periodo.create do |p|
+        p.desde = Date.new.change year: periodo.PERIODOD
+        p.hasta = Date.new.change day: 31, month: 12, year: periodo.PERIODOH
+      end
     end
+
+    puts "Finalizada migración de períodos"
+    puts "...\n"
   end
 
   desc "Migracion de bloques"
   task bloques: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
-    # Iteramos por todos los periodos legacy
+
+    # Iteramos por todos los bloques legacy
     LegacyBloque.all.each do |bloque|
-
-      if bloque_exists? bloque
-        b = Bloque.find_by codigo: bloque.CODIGO
-      else
-        b = Bloque.create do |x|
-          x.denominacion = bloque.DENOMINAC
-          x.codigo = bloque.CODIGO
-        end
-      end
-
+      b = create_bloque bloque
       b.periodos << Periodo.find_by_year(bloque.PERIODOD, bloque.PERIODOH)
-
       LegacyConcejal.where(PARTIDO: bloque.CODIGO).each do |c|
-        concejal = Concejal.find_by(nombre: c.NOMBRE, apellido: c.APELLIDO)
-        concejal.bloque = b
-        concejal.save
+        Concejal.find_by(nombre: c.NOMBRE, apellido: c.APELLIDO).update_attribute :bloque, b
       end
-
-      b.save
-      puts "creo bloque #{b.inspect}"
     end
+
+    puts "Finalizada migración de períodos"
+    puts "...\n"
   end
 
   desc "Migracion de reparticiones oficiales y dependencias municipales"
@@ -143,12 +130,18 @@ namespace :legacy_migrate do
   	require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyReparticionOficial.select(:DENOMINAC).distinct.each do |x|
-      puts ReparticionOficial.create denominacion: x.DENOMINAC
+      ReparticionOficial.create denominacion: x.DENOMINAC
     end
 
+    puts "Finalizada migración de reparticiones oficiales"
+    puts "...\n"
+
     LegacyDependenciaMunicipal.select(:DENOMINAC).distinct.each do |x|
-      puts DependenciaMunicipal.create denominacion: x.DENOMINAC
+      DependenciaMunicipal.create denominacion: x.DENOMINAC
     end
+
+    puts "Finalizada migración de dependencias municipales"
+    puts "...\n"
   end
 
   desc "Migracion de expedientes"
@@ -157,26 +150,19 @@ namespace :legacy_migrate do
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpediente.all.each do |e|
-      c = Circuito.new
-      c.nro = 0
-
-      exp = Expediente.new
-      exp.nro_exp = e.NUM_EXPED
-      exp.bis = e.BIS_EXPED
-      exp.tema = e.TEMA
-      exp.observacion = e.OBSERV
-
+      exp = Expediente.create nro_exp: e.NUM_EXPED, bis: e.BIS_EXPED, tema: e.TEMA, observacion: e.OBSERV
       find = LegacyTramite.find_by_ind(e.IND_EXP)
       if find.nil?
-        exp.anio = Date.new.change year: e.ANO_EXPED
+        date = Date.new.change year: e.ANO_EXPED
       else
-        exp.anio = find.FECHA
+        date = find.FECHA
       end
-      exp.save
-      c.expediente = exp
-      c.save
-      puts "creo expediente #{exp.inspect}"
+      exp.update_attribute :anio, date
+      Circuito.create nro: 0, expediente: exp
     end
+
+    puts "Finalizada migración de dependencias municipales"
+    puts "...\n"
   end
 
   desc "Migracion de expedientes_acumulados"
@@ -184,27 +170,35 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
-    LegacyExpediente.where("ACUM != 0").each do |e|
+    LegacyExpediente.select(:ACUM, :ANO_EXPED, :BIS_EXPED, :NUM_EXPED).where("ACUM != 0").each do |e|
       fe = LegacyExpediente.find_by_ind(e.ACUM)
-      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
-      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
       fe2.acumulados << exp
-      puts "acumule #{fe2.id}"
     end
+
+    puts "Finalizada migración de expedientes acumulados"
+    puts "...\n"
   end
 
-  desc "Migracion de expedientes_adjuntados_fisicamente"
+  desc "Migracion de expedientes adjuntados fisicamente"
   task expedientes_adjuntados_fisicamente: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
-    LegacyExpediente.where("ADJFIS != 0").each do |e|
+    LegacyExpediente.select(:ADJFIS, :ANO_EXPED, :BIS_EXPED, :NUM_EXPED).where("ADJFIS != 0").each do |e|
       fe = LegacyExpediente.find_by_ind(e.ADJFIS)
-      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
-      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+      fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
       fe2.acumulados << exp
-      puts "adjunte #{fe2.id}"
     end
+
+    puts "Finalizada migración de expedientes acumulados"
+    puts "...\n"
   end
 
   desc "Migracion de expedientes administrativos"
@@ -212,32 +206,68 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
-    LegacyExpedienteAdministrativo.all.each do |e|
-      ea = ExpedienteAdministrativo.create do |ea|
-        ea.nro_exp = e.NUMEROEA
-        ea.letra = e.LETRAEA
-        ea.sub_indice = e.SUBEA
-        ea.anio = Date.new.change year: e.NUMEROEA
-      end
-      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?", e.ANO_EXPED, e.BIS_EXPED, e.NUM_EXPED.to_s)
+    LegacyExpedienteAdministrativo.select(:IND_EXP, :NUMEROEA, :LETRAEA, :SUBEA, :ANOEA).each do |e|
+      date = Date.new.change year: e.ANOEA unless e.ANOEA.zero?
+      ea = ExpedienteAdministrativo.create nro_exp: e.NUMEROEA, letra: e.LETRAEA, sub_indice: e.SUBEA, anio: date
+      ind = parse_ind_exp e.IND_EXP.to_s
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               ind[:anio], ind[:bis], ind[:exp].to_s)
       if exp.nil?
         puts "soy nil #{e.IND_EXP}"
-      else  
+      else
         exp.expediente_administrativos << ea
-        puts "Expediente administrativo  #{ea.id}"
       end
     end
+
+    puts "Finalizada migración de expedientes administrativos"
+    puts "...\n"
+  end
+
+  desc "Refactorizacion de datos"
+  task data_refactoring: :environment do
+    puts "Migracion de datos finalizada\n"
   end
 
   desc "ejecutar todas las tareas"
-  task :tareas => TAREAS
+  task :tareas => TAREAS do
+    puts "Iniciando migraciones de datos..."
+    puts "...\n"
+  end
 
+  private
   def concejal_exists? concej
     Concejal.where(nombre: concej.NOMBRE, apellido: concej.APELLIDO).present?
   end
 
   def bloque_exists? bloque
     Bloque.where(codigo: bloque.CODIGO).present?
+  end
+
+  def create_concejal concej
+    if concejal_exists? concej
+      Concejal.find_by nombre: concej.NOMBRE, apellido: concej.APELLIDO
+    else
+      Concejal.create do |x|
+        x.nombre = concej.NOMBRE
+        x.apellido = concej.APELLIDO
+      end
+    end
+  end
+
+  def create_bloque bloque
+    if bloque_exists? bloque
+      Bloque.find_by codigo: bloque.CODIGO
+    else
+      Bloque.create denominacion: bloque.DENOMINAC, codigo: bloque.CODIGO
+    end
+  end
+
+  def parse_ind_exp ind_exp
+    {
+      anio: ind_exp[0..3],
+      exp: ind_exp[4..-2].to_i,
+      bis: ind_exp.last.to_i
+    }
   end
 
 end
