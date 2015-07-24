@@ -71,10 +71,9 @@ namespace :legacy_migrate do
         c = Comision.create denominacion: com.DENOMINAC, codigo: com.CODIGO
         c_legadas.each { |cm| c.periodos << Periodo.find_by_year(cm.PERIODOD, cm.PERIODOH) }
       end
-
-      puts "Finalizada migración de comisiones"
-      puts "...\n"
     end
+    puts "Finalizada migración de comisiones"
+    puts "...\n"
   end
 
   desc "Migracion de personas juridicas"
@@ -159,9 +158,21 @@ namespace :legacy_migrate do
       end
       exp.update_attribute :anio, date
       Circuito.create nro: 0, expediente: exp
+
+      # creo circuitos correspondientes al expediente exp
+      lt = LegacyTramite.where(B_EST: 1, IND_EXP: e.IND_EXP).order(:FECHA)
+      i = 1
+
+      while (i < lt.length) do
+        if (lt[i-1].FECHA != lt[i].FECHA)
+          Circuito.create nro: i, expediente: exp
+        end
+        i = i + 1  
+      end
+      puts "Creo expediente #{exp.inspect}"
     end
 
-    puts "Finalizada migración de dependencias municipales"
+    puts "Finalizada migración de expediente"
     puts "...\n"
   end
 
@@ -218,9 +229,6 @@ namespace :legacy_migrate do
         exp.expediente_administrativos << ea
       end
     end
-
-    puts "Finalizada migración de expedientes administrativos"
-    puts "...\n"
   end
 
   desc "Refactorizacion de datos"
@@ -230,7 +238,7 @@ namespace :legacy_migrate do
 
   desc "ejecutar todas las tareas"
   task :tareas => TAREAS do
-    puts "Iniciando migraciones de datos..."
+    puts "Finalizada migración de expedientes administrativos"
     puts "...\n"
   end
 
@@ -269,5 +277,9 @@ namespace :legacy_migrate do
       bis: ind_exp.last.to_i
     }
   end
+
+  def build_index(nro_exp, bis, anio)
+    anio.year.to_s + nro_exp.to_s.rjust(5,"0") + bis.to_s
+  end  
 
 end
