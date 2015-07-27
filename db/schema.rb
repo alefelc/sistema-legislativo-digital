@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721140053) do
+ActiveRecord::Schema.define(version: 20150727135058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 20150721140053) do
     t.integer  "circuito_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.date     "fecha"
   end
 
   add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree

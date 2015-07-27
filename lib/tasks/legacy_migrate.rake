@@ -167,7 +167,7 @@ namespace :legacy_migrate do
         if (lt[i-1].FECHA != lt[i].FECHA)
           Circuito.create nro: i, expediente: exp
         end
-        i = i + 1  
+        i = i + 1
       end
       puts "Creo expediente #{exp.inspect}"
     end
@@ -231,6 +231,27 @@ namespace :legacy_migrate do
     end
   end
 
+  desc "Migracion de estados expedientes (TRAMITE)"
+  task estado_expediente: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyTramite.all.each do |t|
+      ind = parse_ind_exp t.IND_EXP.to_s
+      exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               ind[:anio], ind[:bis], ind[:exp].to_s)
+      if exp.present?
+        ee = EstadoExpediente.create nombre: t.ESTADO,
+          especificacion1: t.ESPECIF1, especificacion2: t.ESPECIF2,
+          tipo: t.B_EST, fecha: t.FECHA
+        exp.circuitos[0].estado_expedientes << ee
+      else
+        puts "Soy niiiiiiiiiiiiiiiiiiiiiiiil! #{t.IND_EXP}"
+      end
+    end
+    puts "Migracion de estados expedientes finalizada\n"
+  end
+
   desc "Refactorizacion de datos"
   task data_refactoring: :environment do
     puts "Migracion de datos finalizada\n"
@@ -280,6 +301,6 @@ namespace :legacy_migrate do
 
   def build_index(nro_exp, bis, anio)
     anio.year.to_s + nro_exp.to_s.rjust(5,"0") + bis.to_s
-  end  
+  end
 
 end
