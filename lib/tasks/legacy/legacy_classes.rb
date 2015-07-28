@@ -73,3 +73,9 @@ class LegacyTramite < ActiveRecord::Base
   end
 
 end
+
+# Model digesto
+class LegacyDigesto < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'ESTRUCT'
+end
