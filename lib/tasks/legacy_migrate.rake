@@ -12,16 +12,23 @@ namespace :legacy_migrate do
                expedientes_acumulados
                expedientes_adjuntados_fisicamente
                expedientes_administrativos
+               estado_expediente
+               digesto
                data_refactoring
              ]
 
-  desc "Migracion de particulares"
+  desc "Migración de particulares"
   task particulares: :environment do
+    $estimated_time = Time.now
+    puts "| - - - - - - - - - - - - - - - - - |"
+    puts "| - Inicio de migración de datos- - |"
+    puts "| - - - - - - - - - - - - - - - - - |\n"
   	# requerimos los modelos legacy
   	require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     # Iteramos por todos los particulares legacy
 		LegacyPart.select(:NOMBRE, :APELLIDO, :TIPO_DOC, :NUM_DOC, :DOMICILIO).each do |part|
+      print "."
   		p = Fisica.new
   		p.nombre = part.NOMBRE
   		p.apellido = part.APELLIDO
@@ -31,17 +38,18 @@ namespace :legacy_migrate do
   		p.save
   	end
 
-    puts "Finalizada migración de particulares"
-    puts "...\n"
+    puts "\nFinalizada migración de particulares\n"
   end
 
-  desc "Migracion de concejales"
+  desc "Migración de concejales"
   task concejales: :environment do
+  	# requerimos los modelos legacy
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     # Iteramos por todos los concejales legacy
     LegacyConcejal.all.each do |c|
+      print "."
       p = create_concejal c
       find = Periodo.find_by_year(c.PERIODOD, c.PERIODOH)
       if find.empty?
@@ -54,17 +62,17 @@ namespace :legacy_migrate do
       end
     end
 
-    puts "Finalizada migración de concejales"
-    puts "...\n"
+    puts "\nFinalizada migración de concejales\n"
   end
 
-  desc "Migracion de comisiones"
+  desc "Migración de comisiones"
   task comisiones: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     # Iteramos por todos las comisiones legacy
     LegacyComision.all.each do |com|
+      print "."
       c_legadas = LegacyComision.where(CODIGO: com.CODIGO)
       c_actuales = Comision.where(codigo: com.CODIGO)
       if !c_legadas.empty? and c_actuales.count == 0
@@ -72,23 +80,24 @@ namespace :legacy_migrate do
         c_legadas.each { |cm| c.periodos << Periodo.find_by_year(cm.PERIODOD, cm.PERIODOH) }
       end
     end
-    puts "Finalizada migración de comisiones"
-    puts "...\n"
+    puts "\nFinalizada migración de comisiones\n"
   end
 
-  desc "Migracion de personas juridicas"
+  desc "Migración de personas juridicas"
   task juridicas: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     # Iteramos por todos los particulares legacy
-    LegacyJuridica.select(:DENOMINAC).each { |j| Juridica.create nombre: j.DENOMINAC }
+    LegacyJuridica.select(:DENOMINAC).each do |j|
+      print "."
+      Juridica.create nombre: j.DENOMINAC
+    end
 
-    puts "Finalizada migración de personas jurídicas"
-    puts "...\n"
+    puts "\nFinalizada migración de personas jurídicas\n"
   end
 
-  desc "Migracion de periodos"
+  desc "Migración de periodos"
   task periodos: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
@@ -96,16 +105,16 @@ namespace :legacy_migrate do
     # Iteramos por todos los periodos legacy
     LegacyPeriodo.select(:PERIODOD, :PERIODOH).each do |periodo|
       Periodo.create do |p|
+        print "."
         p.desde = Date.new.change year: periodo.PERIODOD
         p.hasta = Date.new.change day: 31, month: 12, year: periodo.PERIODOH
       end
     end
 
-    puts "Finalizada migración de períodos"
-    puts "...\n"
+    puts "\nFinalizada migración de períodos\n"
   end
 
-  desc "Migracion de bloques"
+  desc "Migración de bloques"
   task bloques: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
@@ -115,40 +124,41 @@ namespace :legacy_migrate do
       b = create_bloque bloque
       b.periodos << Periodo.find_by_year(bloque.PERIODOD, bloque.PERIODOH)
       LegacyConcejal.where(PARTIDO: bloque.CODIGO).each do |c|
+        print "."
         Concejal.find_by(nombre: c.NOMBRE, apellido: c.APELLIDO).update_attribute :bloque, b
       end
     end
 
-    puts "Finalizada migración de períodos"
-    puts "...\n"
+    puts "\nFinalizada migración de períodos\n"
   end
 
-  desc "Migracion de reparticiones oficiales y dependencias municipales"
+  desc "Migración de reparticiones oficiales y dependencias municipales"
   task repart_oficiales_depend_municipal: :environment do
   	# requerimos los modelos legacy
   	require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyReparticionOficial.select(:DENOMINAC).distinct.each do |x|
+      print "."
       ReparticionOficial.create denominacion: x.DENOMINAC
     end
 
-    puts "Finalizada migración de reparticiones oficiales"
-    puts "...\n"
+    puts "\nFinalizada migración de reparticiones oficiales\n"
 
     LegacyDependenciaMunicipal.select(:DENOMINAC).distinct.each do |x|
+      print "."
       DependenciaMunicipal.create denominacion: x.DENOMINAC
     end
 
-    puts "Finalizada migración de dependencias municipales"
-    puts "...\n"
+    puts "\nFinalizada migración de dependencias municipales\n"
   end
 
-  desc "Migracion de expedientes"
+  desc "Migración de expedientes"
   task expedientes: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpediente.all.each do |e|
+      print "."
       exp = Expediente.create nro_exp: e.NUM_EXPED, bis: e.BIS_EXPED, tema: e.TEMA, observacion: e.OBSERV
       find = LegacyTramite.find_by_ind(e.IND_EXP)
       if find.nil?
@@ -169,19 +179,18 @@ namespace :legacy_migrate do
         end
         i = i + 1
       end
-      puts "Creo expediente #{exp.inspect}"
     end
 
-    puts "Finalizada migración de expediente"
-    puts "...\n"
+    puts "\nFinalizada migración de expediente\n"
   end
 
-  desc "Migracion de expedientes_acumulados"
+  desc "Migración de expedientes_acumulados"
   task expedientes_acumulados: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpediente.select(:ACUM, :ANO_EXPED, :BIS_EXPED, :NUM_EXPED).where("ACUM != 0").each do |e|
+      print "."
       fe = LegacyExpediente.find_by_ind(e.ACUM)
       fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
                                fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
@@ -190,16 +199,16 @@ namespace :legacy_migrate do
       fe2.acumulados << exp
     end
 
-    puts "Finalizada migración de expedientes acumulados"
-    puts "...\n"
+    puts "\nFinalizada migración de expedientes acumulados\n"
   end
 
-  desc "Migracion de expedientes adjuntados fisicamente"
+  desc "Migración de expedientes adjuntados fisicamente"
   task expedientes_adjuntados_fisicamente: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpediente.select(:ADJFIS, :ANO_EXPED, :BIS_EXPED, :NUM_EXPED).where("ADJFIS != 0").each do |e|
+      print "."
       fe = LegacyExpediente.find_by_ind(e.ADJFIS)
       fe2 = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
                                fe.ANO_EXPED, fe.BIS_EXPED, fe.NUM_EXPED.to_s)
@@ -208,16 +217,16 @@ namespace :legacy_migrate do
       fe2.acumulados << exp
     end
 
-    puts "Finalizada migración de expedientes acumulados"
-    puts "...\n"
+    puts "\nFinalizada migración de expedientes acumulados\n"
   end
 
-  desc "Migracion de expedientes administrativos"
+  desc "Migración de expedientes administrativos"
   task expedientes_administrativos: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpedienteAdministrativo.select(:IND_EXP, :NUMEROEA, :LETRAEA, :SUBEA, :ANOEA).each do |e|
+      print "."
       date = Date.new.change year: e.ANOEA unless e.ANOEA.zero?
       ea = ExpedienteAdministrativo.create nro_exp: e.NUMEROEA, letra: e.LETRAEA, sub_indice: e.SUBEA, anio: date
       ind = parse_ind_exp e.IND_EXP.to_s
@@ -229,14 +238,17 @@ namespace :legacy_migrate do
         exp.expediente_administrativos << ea
       end
     end
+
+    puts "\nFinalizada migración de expediente administrativos\n"
   end
 
-  desc "Migracion de estados expedientes (TRAMITE)"
+  desc "Migración de estados expedientes (TRAMITE)"
   task estado_expediente: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyTramite.all.each do |t|
+      print "."
       ind = parse_ind_exp t.IND_EXP.to_s
       exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
                                ind[:anio], ind[:bis], ind[:exp].to_s)
@@ -246,22 +258,53 @@ namespace :legacy_migrate do
           tipo: t.B_EST, fecha: t.FECHA
         exp.circuitos[0].estado_expedientes << ee
       else
-        puts "Soy niiiiiiiiiiiiiiiiiiiiiiiil! #{t.IND_EXP}"
+        puts "Soy nil! #{t.IND_EXP}"
       end
     end
-    puts "Migracion de estados expedientes finalizada\n"
+    puts "\nMigración de estados de expedientes finalizada\n"
+  end
+
+  desc "Carga de la estructura del digesto"
+  task digesto: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    d = Digesto.create nombre: "Digesto Version 1"
+
+    LegacyDigesto.select(:TEXLIBRO).distinct.each do |l|
+      unless l.TEXLIBRO.blank?
+        print "."
+        lib = Libro.create nombre: l.TEXLIBRO
+        d.libros << lib
+        LegacyDigesto.select(:TEXTIT).where(TEXLIBRO: l.TEXLIBRO).distinct.each do |t|
+          unless t.TEXTIT.blank?
+            print "."
+            tit = Titulo.create nombre: t.TEXTIT
+            lib.titulos << tit
+            LegacyDigesto.select(:TEXCAP).where(TEXTIT: t.TEXTIT).distinct.each do |c|
+              unless c.TEXCAP.blank?
+                print "."
+                cap = Capitulo.create nombre: c.TEXCAP
+                tit.capitulos << cap
+              end
+            end
+          end
+        end
+      end
+    end
+    puts "\nFinalizada carga de estructura del digesto\n"
   end
 
   desc "Refactorizacion de datos"
   task data_refactoring: :environment do
-    puts "Migracion de datos finalizada\n"
+    puts "| - - - - - - - - - - - - - - - - - - |"
+    puts "| - Migración de datos FINALIZADA - - |"
+    puts "| - - - - - - - - - - - - - - - - - - |\n"
+    puts "Tiempo estimado #{$estimated_time - Time.now}s"
   end
 
   desc "ejecutar todas las tareas"
-  task :tareas => TAREAS do
-    puts "Finalizada migración de expedientes administrativos"
-    puts "...\n"
-  end
+  task :tareas => TAREAS
 
   private
   def concejal_exists? concej
