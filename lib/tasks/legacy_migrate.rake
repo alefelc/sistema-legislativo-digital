@@ -14,6 +14,7 @@ namespace :legacy_migrate do
                expedientes_administrativos
                estado_expediente
                digesto
+               clasificacion
                data_refactoring
              ]
 
@@ -295,12 +296,71 @@ namespace :legacy_migrate do
     puts "\nFinalizada carga de estructura del digesto\n"
   end
 
+  desc "Carga de las clasificaciones"
+  task clasificacion: :environment do
+    ## Ordenanza - Contenido
+    Clasificacion.create nombre: "General"
+    Clasificacion.create nombre: "Individual y meros actos administrativos"
+    Clasificacion.create nombre: "De Servicios Públicos"
+    Clasificacion.create nombre: "Otras"
+    Clasificacion.create nombre: "Alcance general"
+    Clasificacion.create nombre: "Alcance especial"
+    ## Ordenanza - Vigencia
+    Clasificacion.create nombre: "Dictada por razones de emergencia"
+    Clasificacion.create nombre: "Que contienen normas generales y permanentes"
+    Clasificacion.create nombre: "Que NO contienen normas generales y permanentes"
+    Clasificacion.create nombre: "Motivos subsisten"
+    Clasificacion.create nombre: "Normas generales"
+    Clasificacion.create nombre: "Normas no generales"
+    Clasificacion.create nombre: "Plazo determinado y cumplido"
+    Clasificacion.create nombre: "Plazo determinado y NO cumplido"
+    Clasificacion.create nombre: "Vigencia sujeta a condición resolutoria"
+    Clasificacion.create nombre: "Objeto agotado"
+    Clasificacion.create nombre: "Cumplida"
+    Clasificacion.create nombre: "NO cumplida"
+    # Ordenanza - Derog.
+    Clasificacion.create nombre: "Derogación sujeta a condición suspensiva"
+    Clasificacion.create nombre: "Derog. tácita"
+    Clasificacion.create nombre: "Derog. cumplida"
+    Clasificacion.create nombre: "Derog. NO cumplida"
+    # Ordenanza - Modif.
+    Clasificacion.create nombre: "Dispone texto ordenado"
+    ## Decreto - Contenido
+    Clasificacion.create nombre: "Autónomo"
+    # Clasificacion.create nombre: "Individual y meros actos administrativos"
+    # Clasificacion.create nombre: "De servicios públicos"
+    # Clasificacion.create nombre: "Otras"
+    # Clasificacion.create nombre: "Alcance general"
+    # Clasificacion.create nombre: "Alcance especial"
+    # Decreto - vigencia
+    Clasificacion.create nombre: "De necesidad o urgencia"
+    Clasificacion.create nombre: "Dictado ad referendum"
+    # Clasificacion.create nombre: "Que contienen normas generales y permanentes"
+    # Clasificacion.create nombre: "Que NO contienen normas generales y permanentes"
+    # Clasificacion.create nombre: "Motivos subsisten"
+    # Clasificacion.create nombre: "Normas generales"
+    # Clasificacion.create nombre: "Normas no generales"
+    # Clasificacion.create nombre: "Plazo determinado y cumplido"
+    # Clasificacion.create nombre: "Plazo determinado y NO cumplido"
+    # Clasificacion.create nombre: "Vigencia sujeta a condición resolutoria"
+    # Clasificacion.create nombre: "Objeto agotado"
+    # Clasificacion.create nombre: "Cumplida"
+    # Clasificacion.create nombre: "NO cumplida"
+    # Decreto - derog.
+    # Clasificacion.create nombre: "Derogación sujeta a condición suspensiva"
+    # Clasificacion.create nombre: "Derog. tácita"
+    # Clasificacion.create nombre: "Derog. cumplida"
+    # Clasificacion.create nombre: "Derog. NO cumplida"
+    # Decreto - modif.
+    # Clasificacion.create nombre: "Dispone texto ordenado"
+  end
+
   desc "Refactorizacion de datos"
   task data_refactoring: :environment do
     puts "| - - - - - - - - - - - - - - - - - - |"
     puts "| - Migración de datos FINALIZADA - - |"
     puts "| - - - - - - - - - - - - - - - - - - |\n"
-    puts "Tiempo estimado #{$estimated_time - Time.now}s"
+    puts "Tiempo estimado #{ Time.now - $estimated_time }s"
   end
 
   desc "ejecutar todas las tareas"

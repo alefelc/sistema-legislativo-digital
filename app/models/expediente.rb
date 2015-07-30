@@ -4,7 +4,7 @@ class Expediente < ActiveRecord::Base
 	has_many :despachos
 	has_many :expediente_administrativos
 	has_many :circuitos
-	has_many :tags
+	has_and_belongs_to_many :tags
 	has_many :normas
 
   #== Shortcut association
