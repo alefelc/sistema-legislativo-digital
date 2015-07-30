@@ -7,6 +7,9 @@ class Expediente < ActiveRecord::Base
 	has_many :tags
 	has_many :normas
 
+  #== Shortcut association
+  has_many :estado_expedientes, through: :circuitos
+
 	#== Association recursive expediente acumula
   has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumula_id"
   has_many :acumulados, through: :acumulados_relationship
