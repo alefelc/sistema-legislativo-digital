@@ -6,6 +6,7 @@ class Norma < ActiveRecord::Base
   has_and_belongs_to_many :capitulos
   has_and_belongs_to_many :boletin_oficials
   has_and_belongs_to_many :otra_publicacions
+  has_and_belongs_to_many :tags
   has_many :destinos
 
   belongs_to :expediente

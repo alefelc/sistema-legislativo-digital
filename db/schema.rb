@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727135058) do
+ActiveRecord::Schema.define(version: 20150730131643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,10 +303,13 @@ ActiveRecord::Schema.define(version: 20150727135058) do
     t.integer  "circuito_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "id_ref_id"
+    t.string   "id_ref_type"
     t.date     "fecha"
   end
 
   add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
+  add_index "estado_expedientes", ["id_ref_type", "id_ref_id"], name: "index_estado_expedientes_on_id_ref_type_and_id_ref_id", using: :btree
 
   create_table "estado_tramites", force: :cascade do |t|
     t.string   "nombre"
@@ -346,6 +349,14 @@ ActiveRecord::Schema.define(version: 20150727135058) do
     t.datetime "updated_at",  null: false
     t.date     "anio"
   end
+
+  create_table "expedientes_tags", id: false, force: :cascade do |t|
+    t.integer "expediente_id"
+    t.integer "tag_id"
+  end
+
+  add_index "expedientes_tags", ["expediente_id"], name: "index_expedientes_tags_on_expediente_id", using: :btree
+  add_index "expedientes_tags", ["tag_id"], name: "index_expedientes_tags_on_tag_id", using: :btree
 
   create_table "libros", force: :cascade do |t|
     t.string   "nombre"
@@ -399,6 +410,14 @@ ActiveRecord::Schema.define(version: 20150727135058) do
 
   add_index "normas_otra_publicacions", ["norma_id"], name: "index_normas_otra_publicacions_on_norma_id", using: :btree
   add_index "normas_otra_publicacions", ["otra_publicacion_id"], name: "index_normas_otra_publicacions_on_otra_publicacion_id", using: :btree
+
+  create_table "normas_tags", id: false, force: :cascade do |t|
+    t.integer "norma_id"
+    t.integer "tag_id"
+  end
+
+  add_index "normas_tags", ["norma_id"], name: "index_normas_tags_on_norma_id", using: :btree
+  add_index "normas_tags", ["tag_id"], name: "index_normas_tags_on_tag_id", using: :btree
 
   create_table "orden_del_dia", force: :cascade do |t|
     t.integer  "nro"
@@ -629,12 +648,9 @@ ActiveRecord::Schema.define(version: 20150727135058) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "nombre"
-    t.integer  "expediente_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
-
-  add_index "tags", ["expediente_id"], name: "index_tags_on_expediente_id", using: :btree
 
   create_table "titulos", force: :cascade do |t|
     t.string   "nombre"
