@@ -69,6 +69,12 @@ class LegacyOrdenanza < ActiveRecord::Base
   self.table_name = 'ORDDIG'
 end
 
+# Model resolucion
+class LegacyResolucion < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'RESOL'
+end
+
 # Model tramites
 class LegacyTramite < ActiveRecord::Base
   establish_connection :legacy
