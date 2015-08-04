@@ -17,6 +17,7 @@ namespace :legacy_migrate do
                clasificacion
                ordenanza
                decretos
+               resolucion
                data_refactoring
              ]
 
@@ -422,8 +423,8 @@ namespace :legacy_migrate do
       elsif (p = !o.NUM_DEC.zero?) || (q = !o.IND_DAUX.zero?)
         #creo decrto y relacion de promulgacion
         if q
-          ind = parse_ind_dec o.IND_DAUX.to_s
-          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:dec], bis: ind[:bis]
+          ind = parse_ind_norma o.IND_DAUX.to_s
+          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:norma], bis: ind[:bis]
           ord.relationship_me_promulgan.create do |r|
             r.me_promulga = dec
             r.desde = o.FECSDEC
@@ -488,6 +489,40 @@ namespace :legacy_migrate do
 
       dec.save
     end
+    puts "\nFinalizada carga de Decretos\n"
+  end
+
+  desc "Carga de resoluciones"
+  task resolucion: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyResolucion.all.each do |r|
+      res = Resolucion.create(nro: r.NUM_RES, bis: r.BIS_RES, sumario: r.SUMARIO, observaciones: r.OBSERV,
+            sancion: r.FEC_SANC)
+      # carga de comunicacion
+      unless r.DEST_COM.blank?
+        dest = Destino.create tipo: 0, fecha: r.COMUNIC, destino: r.DEST_COM 
+        res.destinos << dest
+      end
+      # carga de notificacion
+      unless r.DEST_NOT.blank?
+        dest = Destino.create tipo: 1, fecha: r.NOTIFIC, destino: r.DEST_NOT 
+        res.destinos << dest
+      end
+      # cargo relacion resolucion con su expediente
+      unless r.IND_EXP.zero?
+        ind = parse_ind_exp r.IND_EXP.to_s
+        exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               ind[:anio], ind[:bis], ind[:exp].to_s)
+        if exp.present?
+          res.circuitos << exp.circuitos.find_by(nro: 0)
+        else
+          puts "Soy ecxpediente nil! #{r.IND_EXP}"
+        end
+      end
+    end
+    puts "\nFinalizada carga de Resolucion\n"
   end
 
   desc "Refactorizacion de datos"
@@ -541,11 +576,11 @@ namespace :legacy_migrate do
     anio.year.to_s + nro_exp.to_s.rjust(5,"0") + bis.to_s
   end
 
-  def parse_ind_dec ind_dec
+  def parse_ind_norma ind_norma
     {
-      anio: ind_dec[1..4],
-      dec: ind_dec[5..-2].to_i,
-      bis: ind_dec.last.to_i
+      anio: ind_norma[1..4],
+      norma: ind_norma[5..-2].to_i,
+      bis: ind_norma.last.to_i
     }
   end
 end
