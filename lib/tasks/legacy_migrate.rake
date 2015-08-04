@@ -15,6 +15,7 @@ namespace :legacy_migrate do
                estado_expediente
                digesto
                clasificacion
+               ordenanza
                data_refactoring
              ]
 
@@ -353,6 +354,90 @@ namespace :legacy_migrate do
     # Clasificacion.create nombre: "Derog. NO cumplida"
     # Decreto - modif.
     # Clasificacion.create nombre: "Dispone texto ordenado"
+    puts "\nFinalizada carga de clasificaciones de las normas\n"
+  end
+
+  desc "Carga de las ordenanzas"
+  task ordenanza: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+    LegacyOrdenanza.all.each do |o|
+      ord = Ordenanza.create letra: o.LETRA_ORD, nro: o.NUM_ORD, bis: o.BIS_ORD,
+          sumario: o.SUMARIO, observaciones: o.OBSERV, sancion: o.FECSORD, entrada_vigencia: o.FEC_VIGE, 
+          finaliza_vigencia: o.FEC_VIGF
+      #cargo plazo vigencia
+      if o.PLZVD == 1
+        ord.plazo_dia = o.PLNUM
+      elsif o.PLZVM == 1
+        ord.plazo_mes = o.PLNUM
+      elsif o.PLZVA == 1
+        ord.plazo_anio = o.PLNUM
+      end
+      
+      # cargo clasificaciones a las ordenanzas
+        ord.clasificacions << Clasificacion.find_by(nombre: "General") if o.CGEN == 1    
+        ord.clasificacions << Clasificacion.find_by(nombre: "Individual y meros actos administrativos") if o.CPIND == 1      
+        ord.clasificacions << Clasificacion.find_by(nombre: "De Servicios Públicos") if o.CPCCSP == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Otras") if o.CPCCOT == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Alcance general") if o.CALCGEN == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Alcance especial") if o.CALCESP == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Dictada por razones de emergencia") if o.VDREMERG == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Motivos subsisten") if o.VDREMOTS == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Normas generales") if o.VDREMNG == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Normas no generales") if o.VDREMNNG == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Que contienen normas generales y permanentes") if o.VDRPQC == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Que NO contienen normas generales y permanentes")  if o.VDRPQNC == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Plazo determinado y cumplido") if o.VPLZDYC == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Plazo determinado y NO cumplido") if o.VPLZDYNC  == 1     
+        ord.clasificacions << Clasificacion.find_by(nombre: "Vigencia sujeta a condición resolutoria") if o.VSUJCR == 1     
+        ord.clasificacions << Clasificacion.find_by(nombre: "Cumplida") if o.VSUJCRC == 1     
+        ord.clasificacions << Clasificacion.find_by(nombre: "NO cumplida") if o.VSUJCRNC == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Objeto agotado") if o.OBJ_AGOT == 1 
+        ord.clasificacions << Clasificacion.find_by(nombre: "Derog. tácita") if o.DEROGTAC == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Derogación sujeta a condición suspensiva") if o.DSUJACS == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Derog. cumplida") if o.DSJCUMP == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Derog. NO cumplida") if o.DSJNCUMP == 1
+        ord.clasificacions << Clasificacion.find_by(nombre: "Dispone texto ordenado") if o.MDISTXTO == 1             
+
+      # cargo relacion ordenanza con su expediente
+      unless o.IND_EXP.zero?
+        ind = parse_ind_exp o.IND_EXP.to_s
+        exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               ind[:anio], ind[:bis], ind[:exp].to_s)
+        if exp.present?
+          ord.circuitos << exp.circuitos.find_by(nro: 0)
+        else
+          puts "Soy ecxpediente nil! #{o.IND_EXP}"
+        end
+      end
+        
+      # creo y cargo decreto de promulgacion de las ordenanzas
+      if !o.OBSERV.scan(/.*PROMUL.*CITA.*/).empty?
+        #creo relacion promul tacita pero sin decreto
+        ord.relationship_me_promulgan.create do |r|
+          r.tipo = 1
+          r.observacion = o.OBSERV
+        end  
+      elsif (p = !o.NUM_DEC.zero?) || (q = !o.IND_DAUX.zero?) 
+        #creo decrto y relacion de promulgacion
+        if q
+          ind = parse_ind_dec o.IND_DAUX.to_s
+          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:dec], bis: ind[:bis]
+          ord.relationship_me_promulgan.create do |r|
+            r.me_promulga = dec
+            r.desde = o.FECSDEC
+          end   
+        elsif p
+          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: o.NUM_DEC, bis: o.BIS_DEC           
+          ord.relationship_me_promulgan.create do |r|
+            r.me_promulga = dec
+            r.desde = o.FECSDEC
+          end
+        end  
+      end  
+      ord.save    
+    end
+    puts "\nFinalizada carga de Ordenanzas\n"
   end
 
   desc "Refactorizacion de datos"
@@ -406,4 +491,11 @@ namespace :legacy_migrate do
     anio.year.to_s + nro_exp.to_s.rjust(5,"0") + bis.to_s
   end
 
+  def parse_ind_dec ind_dec
+    {
+      anio: ind_dec[1..4],
+      dec: ind_dec[5..-2].to_i,
+      bis: ind_dec.last.to_i
+    }
+  end  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730131643) do
+ActiveRecord::Schema.define(version: 20150803133924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -499,6 +499,7 @@ ActiveRecord::Schema.define(version: 20150730131643) do
     t.text     "observacion"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "tipo"
   end
 
   add_index "promulga_relationships", ["me_promulga_id"], name: "index_promulga_relationships_on_me_promulga_id", using: :btree
