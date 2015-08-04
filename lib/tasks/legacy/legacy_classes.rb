@@ -1,4 +1,3 @@
-
 # Model particulares
 class LegacyPart < ActiveRecord::Base
 	establish_connection :legacy
@@ -96,4 +95,10 @@ end
 class LegacyDecreto < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'DECDIG'
+end
+
+# Model declaracion
+class LegacyDeclaracion < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'CLA'
 end
