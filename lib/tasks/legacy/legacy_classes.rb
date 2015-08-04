@@ -85,3 +85,9 @@ class LegacyDigesto < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'ESTRUCT'
 end
+
+# Model decreto
+class LegacyDecreto < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'DECDIG'
+end
