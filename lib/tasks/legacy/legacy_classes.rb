@@ -63,6 +63,12 @@ class LegacyExpedienteAdministrativo < ActiveRecord::Base
   self.table_name = 'EXPADJ'
 end
 
+# Model ordenanza
+class LegacyOrdenanza < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'ORDDIG'
+end
+
 # Model tramites
 class LegacyTramite < ActiveRecord::Base
   establish_connection :legacy
