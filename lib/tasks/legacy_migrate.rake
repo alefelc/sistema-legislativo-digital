@@ -18,6 +18,7 @@ namespace :legacy_migrate do
                ordenanza
                decretos
                resolucion
+               declaraciones
                data_refactoring
              ]
 
@@ -498,16 +499,17 @@ namespace :legacy_migrate do
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyResolucion.all.each do |r|
+      print '.'
       res = Resolucion.create(nro: r.NUM_RES, bis: r.BIS_RES, sumario: r.SUMARIO, observaciones: r.OBSERV,
             sancion: r.FEC_SANC)
       # carga de comunicacion
       unless r.DEST_COM.blank?
-        dest = Destino.create tipo: 0, fecha: r.COMUNIC, destino: r.DEST_COM 
+        dest = Destino.create tipo: 0, fecha: r.COMUNIC, destino: r.DEST_COM
         res.destinos << dest
       end
       # carga de notificacion
       unless r.DEST_NOT.blank?
-        dest = Destino.create tipo: 1, fecha: r.NOTIFIC, destino: r.DEST_NOT 
+        dest = Destino.create tipo: 1, fecha: r.NOTIFIC, destino: r.DEST_NOT
         res.destinos << dest
       end
       # cargo relacion resolucion con su expediente
@@ -523,6 +525,40 @@ namespace :legacy_migrate do
       end
     end
     puts "\nFinalizada carga de Resolucion\n"
+  end
+
+  desc "Carga de declaraciones"
+  task declaraciones: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyDeclaracion.all.each do |d|
+      print '.'
+      decl = Declaracion.create(nro: d.NUM_CLA, bis: d.BIS_CLA, sumario: d.SUMARIO, observaciones: d.OBSERV,
+                              sancion: d.FECSCLA)
+      # carga de comunicacion
+      unless d.DEST_COM.blank?
+        dest = Destino.create tipo: 0, fecha: d.COMUNIC, destino: d.DEST_COM
+        decl.destinos << dest
+      end
+      # carga de notificacion
+      unless d.DEST_NOT.blank?
+        dest = Destino.create tipo: 1, fecha: d.NOTIFIC, destino: d.DEST_NOT
+        decl.destinos << dest
+      end
+      # cargo relacion declaracion con su expediente
+      unless d.IND_EXP.zero?
+        ind = parse_ind_exp d.IND_EXP.to_s
+        exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                                 ind[:anio], ind[:bis], ind[:exp].to_s)
+        if exp.present?
+          decl.circuitos << exp.circuitos.find_by(nro: 0)
+        else
+          puts "Soy expediente nil! #{d.IND_EXP}"
+        end
+      end
+    end
+    puts "\nFinalizada carga de declaraciones\n"
   end
 
   desc "Refactorizacion de datos"
