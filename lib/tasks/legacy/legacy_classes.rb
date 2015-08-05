@@ -102,3 +102,15 @@ class LegacyDeclaracion < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'CLA'
 end
+
+# Model norma especial
+class LegacyNormaEspecial < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'NORMESP'
+end
+
+# Model especial a dispositivo
+class LegacyEspecialADispositivo < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'ESPAD'
+end

@@ -19,6 +19,8 @@ namespace :legacy_migrate do
                decretos
                resolucion
                declaraciones
+               normas_especiales
+               especiales_a_dispositivos
                data_refactoring
              ]
 
@@ -559,6 +561,45 @@ namespace :legacy_migrate do
       end
     end
     puts "\nFinalizada carga de declaraciones\n"
+  end
+
+  desc "Carga de normas especiales"
+  task normas_especiales: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyNormaEspecial.all.each do |e|
+      print '.'
+      esp = Especial.create(nro: e.NUM_E, descripcion: e.DESCRIP, sumario: e.SUMARIO, observaciones: e.OBSERV,
+                              sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0)
+      if !e.FEC_PROM.nil?
+        esp.relationship_me_promulgan.create do |r|
+          r.desde = e.FEC_PROM
+        end
+      end  
+      esp.clasificacions << Clasificacion.find_by(nombre: "Dispone texto ordenado") if e.MDISTXTO == 1
+    end
+    puts "\nFinalizada carga de normas especiales\n"
+  end
+
+  desc "Carga de normas especiales a dispositivos"
+  task especiales_a_dispositivos: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyEspecialADispositivo.all.each do |e|
+      print '.'
+      ind_base = parse_ind_norma e.IND_B.to_s 
+      ind_ref = parse_ind_norma e.IND_R.to_s
+      esp_base = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_base[:anio], ind_base[:bis],ind_base[:norma])
+      esp_ref = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_ref[:anio], ind_ref[:bis],ind_ref[:norma])
+      if esp_base.present? && esp_ref.present?
+        esp_ref.me_modifican << esp_base
+      else
+        puts "base o referencia es nil: #{e.IND_B} modifica #{e.IND_R}"
+      end  
+    end  
+    puts "\nFinalizada carga de normas especiales a dispositivos\n"
   end
 
   desc "Refactorizacion de datos"
