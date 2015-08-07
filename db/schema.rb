@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804145657) do
+ActiveRecord::Schema.define(version: 20150807121245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(version: 20150804145657) do
     t.integer  "expediente_id"
     t.integer  "tipo"
     t.text     "descripcion"
+    t.integer  "anio"
   end
 
   add_index "normas", ["expediente_id"], name: "index_normas_on_expediente_id", using: :btree

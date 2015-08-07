@@ -367,7 +367,7 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
     LegacyOrdenanza.all.each do |o|
-      ord = Ordenanza.create letra: o.LETRA_ORD, nro: o.NUM_ORD, bis: o.BIS_ORD,
+      ord = Ordenanza.create letra: o.LETRA_ORD, nro: o.NUM_ORD, bis: o.BIS_ORD, anio: o.ANO_ORD,
           sumario: o.SUMARIO, observaciones: o.OBSERV, sancion: o.FECSORD, entrada_vigencia: o.FEC_VIGE,
           finaliza_vigencia: o.FEC_VIGF
       #cargo plazo vigencia
@@ -503,7 +503,7 @@ namespace :legacy_migrate do
     LegacyResolucion.all.each do |r|
       print '.'
       res = Resolucion.create(nro: r.NUM_RES, bis: r.BIS_RES, sumario: r.SUMARIO, observaciones: r.OBSERV,
-            sancion: r.FEC_SANC)
+            sancion: r.FEC_SANC, anio: r.ANO_RES)
       # carga de comunicacion
       unless r.DEST_COM.blank?
         dest = Destino.create tipo: 0, fecha: r.COMUNIC, destino: r.DEST_COM
@@ -537,7 +537,7 @@ namespace :legacy_migrate do
     LegacyDeclaracion.all.each do |d|
       print '.'
       decl = Declaracion.create(nro: d.NUM_CLA, bis: d.BIS_CLA, sumario: d.SUMARIO, observaciones: d.OBSERV,
-                              sancion: d.FECSCLA)
+                              sancion: d.FECSCLA, anio: d.ANO_CLA)
       # carga de comunicacion
       unless d.DEST_COM.blank?
         dest = Destino.create tipo: 0, fecha: d.COMUNIC, destino: d.DEST_COM
@@ -571,12 +571,12 @@ namespace :legacy_migrate do
     LegacyNormaEspecial.all.each do |e|
       print '.'
       esp = Especial.create(nro: e.NUM_E, descripcion: e.DESCRIP, sumario: e.SUMARIO, observaciones: e.OBSERV,
-                              sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0)
+                              sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0, anio: e.ANO_E)
       if !e.FEC_PROM.nil?
         esp.relationship_me_promulgan.create do |r|
           r.desde = e.FEC_PROM
         end
-      end  
+      end
       esp.clasificacions << Clasificacion.find_by(nombre: "Dispone texto ordenado") if e.MDISTXTO == 1
     end
     puts "\nFinalizada carga de normas especiales\n"
@@ -589,7 +589,7 @@ namespace :legacy_migrate do
 
     LegacyEspecialADispositivo.all.each do |e|
       print '.'
-      ind_base = parse_ind_norma e.IND_B.to_s 
+      ind_base = parse_ind_norma e.IND_B.to_s
       ind_ref = parse_ind_norma e.IND_R.to_s
       esp_base = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_base[:anio], ind_base[:bis],ind_base[:norma])
       esp_ref = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_ref[:anio], ind_ref[:bis],ind_ref[:norma])
@@ -597,8 +597,8 @@ namespace :legacy_migrate do
         esp_ref.me_modifican << esp_base
       else
         puts "base o referencia es nil: #{e.IND_B} modifica #{e.IND_R}"
-      end  
-    end  
+      end
+    end
     puts "\nFinalizada carga de normas especiales a dispositivos\n"
   end
 
