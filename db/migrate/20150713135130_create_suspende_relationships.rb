@@ -1,6 +1,6 @@
 class CreateSuspendeRelationships < ActiveRecord::Migration
   def change
-    create_table :prorroga_suspencion_relationships do |t|
+    create_table :prorroga_suspension_relationships do |t|
       t.belongs_to :suspendida, index: true
       t.belongs_to :me_suspende, index: true
 
