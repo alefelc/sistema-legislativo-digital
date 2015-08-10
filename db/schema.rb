@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807121245) do
+ActiveRecord::Schema.define(version: 20150810124203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -402,6 +402,7 @@ ActiveRecord::Schema.define(version: 20150807121245) do
     t.integer  "tipo"
     t.text     "descripcion"
     t.integer  "anio"
+    t.integer  "indice"
   end
 
   add_index "normas", ["expediente_id"], name: "index_normas_on_expediente_id", using: :btree
@@ -508,7 +509,7 @@ ActiveRecord::Schema.define(version: 20150807121245) do
   add_index "promulga_relationships", ["me_promulga_id"], name: "index_promulga_relationships_on_me_promulga_id", using: :btree
   add_index "promulga_relationships", ["promulga_id"], name: "index_promulga_relationships_on_promulga_id", using: :btree
 
-  create_table "prorroga_suspencion_relationships", force: :cascade do |t|
+  create_table "prorroga_suspension_relationships", force: :cascade do |t|
     t.integer  "suspendida_id"
     t.integer  "me_suspende_id"
     t.date     "desde"
@@ -522,8 +523,8 @@ ActiveRecord::Schema.define(version: 20150807121245) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "prorroga_suspencion_relationships", ["me_suspende_id"], name: "index_prorroga_suspencion_relationships_on_me_suspende_id", using: :btree
-  add_index "prorroga_suspencion_relationships", ["suspendida_id"], name: "index_prorroga_suspencion_relationships_on_suspendida_id", using: :btree
+  add_index "prorroga_suspension_relationships", ["me_suspende_id"], name: "index_prorroga_suspencion_relationships_on_me_suspende_id", using: :btree
+  add_index "prorroga_suspension_relationships", ["suspendida_id"], name: "index_prorroga_suspencion_relationships_on_suspendida_id", using: :btree
 
   create_table "prorroga_vigencia_relationships", force: :cascade do |t|
     t.integer  "prorroga_id"
