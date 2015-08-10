@@ -367,9 +367,10 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
     LegacyOrdenanza.all.each do |o|
+      print ";"
       ord = Ordenanza.create letra: o.LETRA_ORD, nro: o.NUM_ORD, bis: o.BIS_ORD, anio: o.ANO_ORD,
           sumario: o.SUMARIO, observaciones: o.OBSERV, sancion: o.FECSORD, entrada_vigencia: o.FEC_VIGE,
-          finaliza_vigencia: o.FEC_VIGF
+          finaliza_vigencia: o.FEC_VIGF, indice: o.IND_ORD
       #cargo plazo vigencia
       if o.PLZVD == 1
         ord.plazo_dia = o.PLNUM
@@ -427,13 +428,13 @@ namespace :legacy_migrate do
         #creo decrto y relacion de promulgacion
         if q
           ind = parse_ind_norma o.IND_DAUX.to_s
-          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:norma], bis: ind[:bis]
+          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:norma], bis: ind[:bis], indice: o.IND_DAUX
           ord.relationship_me_promulgan.create do |r|
             r.me_promulga = dec
             r.desde = o.FECSDEC
           end
         elsif p
-          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: o.NUM_DEC, bis: o.BIS_DEC
+          dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: o.NUM_DEC, bis: o.BIS_DEC, indice: o.IND_DAUX
           ord.relationship_me_promulgan.create do |r|
             r.me_promulga = dec
             r.desde = o.FECSDEC
@@ -453,7 +454,7 @@ namespace :legacy_migrate do
     LegacyDecreto.all.each do |d|
       dec = Decreto.create(letra: d.LETRA_DEC, nro: d.NUM_DEC, bis: d.BIS_DEC, sumario: d.SUMARIO,
             observaciones: d.OBSERV, entrada_vigencia: d.FEC_VIGE, finaliza_vigencia: d.FEC_VIGF,
-            sancion: d.FECSDEC)
+            sancion: d.FECSDEC, indice: d.IND_D)
 
       if !d.PLZVD.zero?
         dec.plazo_dia = d.PLNUM

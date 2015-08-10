@@ -523,8 +523,8 @@ ActiveRecord::Schema.define(version: 20150810124203) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "prorroga_suspension_relationships", ["me_suspende_id"], name: "index_prorroga_suspencion_relationships_on_me_suspende_id", using: :btree
-  add_index "prorroga_suspension_relationships", ["suspendida_id"], name: "index_prorroga_suspencion_relationships_on_suspendida_id", using: :btree
+  add_index "prorroga_suspension_relationships", ["me_suspende_id"], name: "index_prorroga_suspension_relationships_on_me_suspende_id", using: :btree
+  add_index "prorroga_suspension_relationships", ["suspendida_id"], name: "index_prorroga_suspension_relationships_on_suspendida_id", using: :btree
 
   create_table "prorroga_vigencia_relationships", force: :cascade do |t|
     t.integer  "prorroga_id"
