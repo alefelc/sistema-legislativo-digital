@@ -19,7 +19,7 @@ class Norma < ActiveRecord::Base
 
   has_many :relationship_delegadas, class_name: 'DelegaRelationship', foreign_key: 'me_delega_id'
   has_many :delegadas, through: :relationship_delegadas, source: :delega
-  has_many :relationship_me_delegan, class_name: 'DelegaRelationship', foreign_key: 'delegada_id'
+  has_many :relationship_me_delegan, class_name: 'DelegaRelationship', foreign_key: 'delega_id'
   has_many :me_delegan, through: :relationship_me_delegan, source: :me_delega
 
   has_many :relationship_derogadas, class_name: 'DerogaRelationship', foreign_key: 'me_deroga_id'
@@ -42,9 +42,9 @@ class Norma < ActiveRecord::Base
   has_many :relationship_me_prorrogan_vigencia, class_name: 'ProrrogaVigenciaRelationship', foreign_key: 'prorroga_id'
   has_many :me_prorrogan_vigencia, through: :relationship_me_prorrogan_vigencia, source: :me_prorroga
 
-  has_many :relationship_prorroga_suspension, class_name: 'ProrrogasuspensionRelationship', foreign_key: 'me_suspende_id'
+  has_many :relationship_prorroga_suspension, class_name: 'ProrrogaSuspensionRelationship', foreign_key: 'me_suspende_id'
   has_many :prorroga_suspension, through: :relationship_prorroga_suspension, source: :suspendida
-  has_many :relationship_me_prorrogan_suspension, class_name: 'ProrrogasuspensionRelationship', foreign_key: 'suspendida_id'
+  has_many :relationship_me_prorrogan_suspension, class_name: 'ProrrogaSuspensionRelationship', foreign_key: 'suspendida_id'
   has_many :me_prorrogan_suspension, through: :relationship_me_prorrogan_suspension, source: :me_suspende
 
   has_many :relationship_restituye_vigencia, class_name: 'RestituyeVigenciaRelationship', foreign_key: 'me_restituye_id'
