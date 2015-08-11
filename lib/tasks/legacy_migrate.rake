@@ -504,7 +504,7 @@ namespace :legacy_migrate do
     LegacyResolucion.all.each do |r|
       print '.'
       res = Resolucion.create(nro: r.NUM_RES, bis: r.BIS_RES, sumario: r.SUMARIO, observaciones: r.OBSERV,
-            sancion: r.FEC_SANC, anio: r.ANO_RES)
+            sancion: r.FEC_SANC, anio: r.ANO_RES, indice: r.IND_RES)
       # carga de comunicacion
       unless r.DEST_COM.blank?
         dest = Destino.create tipo: 0, fecha: r.COMUNIC, destino: r.DEST_COM
@@ -572,7 +572,7 @@ namespace :legacy_migrate do
     LegacyNormaEspecial.all.each do |e|
       print '.'
       esp = Especial.create(nro: e.NUM_E, descripcion: e.DESCRIP, sumario: e.SUMARIO, observaciones: e.OBSERV,
-                              sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0, anio: e.ANO_E)
+                              sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0, anio: e.ANO_E, indice: e.IND_E)
       if !e.FEC_PROM.nil?
         esp.relationship_me_promulgan.create do |r|
           r.desde = e.FEC_PROM

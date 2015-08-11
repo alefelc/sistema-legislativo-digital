@@ -396,13 +396,13 @@ ActiveRecord::Schema.define(version: 20150810124203) do
     t.integer  "plazo_anio"
     t.string   "organismo_origen"
     t.string   "type"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "expediente_id"
     t.integer  "tipo"
     t.text     "descripcion"
     t.integer  "anio"
-    t.integer  "indice"
+    t.integer  "indice",            limit: 8
   end
 
   add_index "normas", ["expediente_id"], name: "index_normas_on_expediente_id", using: :btree
