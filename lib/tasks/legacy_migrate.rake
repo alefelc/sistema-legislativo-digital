@@ -280,20 +280,20 @@ namespace :legacy_migrate do
 
     d = Digesto.create nombre: "Digesto Version 1"
 
-    LegacyDigesto.select(:TEXLIBRO).distinct.each do |l|
+    LegacyDigesto.select(:TEXLIBRO,:LIBRO).distinct.each do |l|
       unless l.TEXLIBRO.blank?
         print "."
-        lib = Libro.create nombre: l.TEXLIBRO
+        lib = Libro.create nombre: l.TEXLIBRO, orden: l.LIBRO
         d.libros << lib
-        LegacyDigesto.select(:TEXTIT).where(TEXLIBRO: l.TEXLIBRO).distinct.each do |t|
+        LegacyDigesto.select(:TEXTIT,:TITULO).where(TEXLIBRO: l.TEXLIBRO).distinct.each do |t|
           unless t.TEXTIT.blank?
             print "."
-            tit = Titulo.create nombre: t.TEXTIT
+            tit = Titulo.create nombre: t.TEXTIT, orden: t.TITULO
             lib.titulos << tit
-            LegacyDigesto.select(:TEXCAP).where(TEXTIT: t.TEXTIT).distinct.each do |c|
+            LegacyDigesto.select(:TEXCAP,:CAPITULO).where(TEXTIT: t.TEXTIT).distinct.each do |c|
               unless c.TEXCAP.blank?
                 print "."
-                cap = Capitulo.create nombre: c.TEXCAP
+                cap = Capitulo.create nombre: c.TEXCAP, orden: c.CAPITULO
                 tit.capitulos << cap
               end
             end
