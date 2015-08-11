@@ -114,3 +114,15 @@ class LegacyEspecialADispositivo < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'ESPAD'
 end
+
+# Model ordenanza a dispositivo
+class LegacyOrdenanzaADispositivo < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'ORDAD'
+end
+
+# Model decreto a dispositivo
+class LegacyDecretoADispositivo < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'DECAD'
+end

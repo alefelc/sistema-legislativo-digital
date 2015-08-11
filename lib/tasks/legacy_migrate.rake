@@ -21,6 +21,8 @@ namespace :legacy_migrate do
                declaraciones
                normas_especiales
                especiales_a_dispositivos
+               ordenanzas_a_dispositivos
+               decretos_a_dispositivos
                data_refactoring
              ]
 
@@ -441,6 +443,17 @@ namespace :legacy_migrate do
           end
         end
       end
+
+      # carga de comunicacion
+      unless o.ACOM_DEM.nil?
+        dest = Destino.create tipo: 0, fecha: o.ACOM_DEM
+        ord.destinos << dest
+      end
+      # carga de notificacion
+      unless o.ADEST_NOT.blank?
+        dest = Destino.create tipo: 1, fecha: o.AFEC_NOT, destino: o.ADEST_NOT
+        ord.destinos << dest
+      end
       ord.save
     end
     puts "\nFinalizada carga de Ordenanzas\n"
@@ -603,6 +616,76 @@ namespace :legacy_migrate do
     puts "\nFinalizada carga de normas especiales a dispositivos\n"
   end
 
+  # Cuando se cree la tarea de eliminar ordenanzas duplicadas, realizarla antes de la tarea de carga de ordenanzas
+  desc "Carga de ordenanzas a dispositivos"
+  task ordenanzas_a_dispositivos: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyOrdenanzaADispositivo.all.each do |o|
+      print '.'
+      #ind_base = parse_ind_ord o.IND_B.to_s
+      ord_base = Ordenanza.find_by(indice: o.IND_B)
+      if o.IND_R.to_s.length == 10
+        #ind_ref = parse_ind_ord o.IND_R.to_s
+        norm_ref = Ordenanza.find_by(indice: o.IND_R)  
+      else
+        #ind_ref = parse_ind_norma o.IND_R.to_s
+        norm_ref = Decreto.find_by(indice: o.IND_R)  
+      end
+      # cargo relaciones
+      if ord_base.present? && norm_ref.present?
+          norm_ref.me_modifican << ord_base if o.CODREFER == "modif"
+          norm_ref.me_prorrogan_suspension << ord_base if o.CODREFER == "prorrog"
+          norm_ref.me_prorrogan_vigencia << ord_base if o.CODREFER == "provig"
+          norm_ref.me_restituyen_vigencia << ord_base if o.CODREFER == "restiv"
+          norm_ref.me_suspenden_vigencia << ord_base if o.CODREFER == "suspvig"
+          norm_ref.me_derogan << ord_base if o.CODREFER == "derog"
+          norm_ref.me_aclaran << ord_base if o.CODREFER == "aclarac"
+          norm_ref.tiene_ad_referendum << ord_base if o.CODREFER == "adrefe"
+      else
+        puts "base o referencia es nil: #{o.IND_B} modifica #{o.IND_R}\n"
+      end
+    end
+    puts "\nFinalizada carga de ordenanzas a dispositivos\n"
+  end
+
+  desc "Carga de decretos a dispositivos"
+  task decretos_a_dispositivos: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyDecretoADispositivo.all.each do |d|
+      print '.'
+      #ind_base = parse_ind_ord o.IND_B.to_s
+      dec_base = Decreto.find_by(indice: d.IND_B)
+      if d.IND_R.to_s.length == 10
+        #ind_ref = parse_ind_ord o.IND_R.to_s
+        norm_ref = Ordenanza.find_by(indice: d.IND_R)  
+      else
+        #ind_ref = parse_ind_norma o.IND_R.to_s
+        norm_ref = Decreto.find_by(indice: d.IND_R)  
+      end
+      # cargo relaciones
+      if dec_base.present? && norm_ref.present?
+          norm_ref.me_modifican << dec_base if d.CODREFER == "modif"
+          norm_ref.me_prorrogan_suspension << dec_base if d.CODREFER == "prorrog"
+          norm_ref.me_prorrogan_vigencia << dec_base if d.CODREFER == "provig"
+          norm_ref.me_restituyen_vigencia << dec_base if d.CODREFER == "restiv"
+          norm_ref.me_suspenden_vigencia << dec_base if d.CODREFER == "suspvig"
+          norm_ref.me_derogan << dec_base if d.CODREFER == "derog"
+          norm_ref.me_aclaran << dec_base if d.CODREFER == "aclarac"
+          norm_ref.me_delegan << dec_base if d.CODREFER == "delegado"
+          norm_ref.me_reglamentan << dec_base if d.CODREFER == "reglamen"
+          norm_ref.me_vetan_parcialmente << dec_base if d.CODREFER == "vetop"
+          norm_ref.me_vetan_totalmente << dec_base if d.CODREFER == "vetot"
+      else
+        puts "base o referencia es nil: #{d.IND_B} modifica #{d.IND_R}\n"
+      end
+    end
+    puts "\nFinalizada carga de decretos a dispositivos\n"
+  end
+
   desc "Refactorizacion de datos"
   task data_refactoring: :environment do
     puts "| - - - - - - - - - - - - - - - - - - |"
@@ -659,6 +742,14 @@ namespace :legacy_migrate do
       anio: ind_norma[1..4],
       norma: ind_norma[5..-2].to_i,
       bis: ind_norma.last.to_i
+    }
+  end
+
+  def parse_ind_ord ind_ord
+    {
+      anio: ind_ord[0..3],
+      ord: ind_ord[4..-2].to_i,
+      bis: ind_ord.last.to_i
     }
   end
 end
