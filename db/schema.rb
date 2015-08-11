@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810124203) do
+ActiveRecord::Schema.define(version: 20150811134127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20150810124203) do
     t.integer  "titulo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "orden"
   end
 
   create_table "capitulos_normas", id: false, force: :cascade do |t|
@@ -363,6 +364,7 @@ ActiveRecord::Schema.define(version: 20150810124203) do
     t.integer  "digesto_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "orden"
   end
 
   create_table "modifica_relationships", force: :cascade do |t|
@@ -662,6 +664,7 @@ ActiveRecord::Schema.define(version: 20150810124203) do
     t.integer  "libro_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "orden"
   end
 
   create_table "tramites", force: :cascade do |t|
