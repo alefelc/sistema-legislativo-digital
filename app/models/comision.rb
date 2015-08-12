@@ -6,4 +6,6 @@ class Comision < ActiveRecord::Base
 	has_and_belongs_to_many :tramites
 	has_and_belongs_to_many :despachos, join_table: 'comisions_despachos'
 
+  has_many :estado_tramites, as: :ref
+
 end
