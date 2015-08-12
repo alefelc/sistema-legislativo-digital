@@ -5,4 +5,6 @@ class OrdenDelDia < ActiveRecord::Base
 	#== asociacion con circuito
 	has_many :circuito_ordens
 	has_many :circuitos, :through => :circuito_ordens
+
+  has_many :estado_expedientes, as: :ref
 end

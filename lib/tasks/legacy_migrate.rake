@@ -709,6 +709,10 @@ namespace :legacy_migrate do
     end
   end
 
+  ### QUEDAN PENDIENTES!!!
+  # SANCIONE.sql = Estos estados no seran manejados desde la DB.
+  # DIA.sql - ASE.sql (Son iguales) + los datos del lalo.
+
   desc "Refactorizacion de datos"
   task data_refactoring: :environment do
     puts "| - - - - - - - - - - - - - - - - - - |"
