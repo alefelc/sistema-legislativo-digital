@@ -3,10 +3,11 @@ class Norma < ActiveRecord::Base
   # == Associations
   has_and_belongs_to_many :clasificacions
   has_and_belongs_to_many :circuitos
-  has_and_belongs_to_many :capitulos
   has_and_belongs_to_many :boletin_oficials
   has_and_belongs_to_many :otra_publicacions
   has_and_belongs_to_many :tags
+  has_many :capitulos_normas
+  has_many :capitulos, through: :capitulos_normas
   has_many :destinos
 
   belongs_to :expediente

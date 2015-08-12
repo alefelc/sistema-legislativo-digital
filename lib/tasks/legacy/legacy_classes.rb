@@ -126,3 +126,9 @@ class LegacyDecretoADispositivo < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'DECAD'
 end
+
+# Model normas a digesto
+class LegacyNormaDigesto < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'NORM_EST'
+end

@@ -23,6 +23,7 @@ namespace :legacy_migrate do
                especiales_a_dispositivos
                ordenanzas_a_dispositivos
                decretos_a_dispositivos
+               digesto_normas
                data_refactoring
              ]
 
@@ -616,7 +617,9 @@ namespace :legacy_migrate do
     puts "\nFinalizada carga de normas especiales a dispositivos\n"
   end
 
+  # ATENTION!!!!!!!!
   # Cuando se cree la tarea de eliminar ordenanzas duplicadas, realizarla antes de la tarea de carga de ordenanzas
+  # ATENTION!!!!!!!!
   desc "Carga de ordenanzas a dispositivos"
   task ordenanzas_a_dispositivos: :environment do
     # requerimos los modelos legacy
@@ -628,10 +631,10 @@ namespace :legacy_migrate do
       ord_base = Ordenanza.find_by(indice: o.IND_B)
       if o.IND_R.to_s.length == 10
         #ind_ref = parse_ind_ord o.IND_R.to_s
-        norm_ref = Ordenanza.find_by(indice: o.IND_R)  
+        norm_ref = Ordenanza.find_by(indice: o.IND_R)
       else
         #ind_ref = parse_ind_norma o.IND_R.to_s
-        norm_ref = Decreto.find_by(indice: o.IND_R)  
+        norm_ref = Decreto.find_by(indice: o.IND_R)
       end
       # cargo relaciones
       if ord_base.present? && norm_ref.present?
@@ -661,10 +664,10 @@ namespace :legacy_migrate do
       dec_base = Decreto.find_by(indice: d.IND_B)
       if d.IND_R.to_s.length == 10
         #ind_ref = parse_ind_ord o.IND_R.to_s
-        norm_ref = Ordenanza.find_by(indice: d.IND_R)  
+        norm_ref = Ordenanza.find_by(indice: d.IND_R)
       else
         #ind_ref = parse_ind_norma o.IND_R.to_s
-        norm_ref = Decreto.find_by(indice: d.IND_R)  
+        norm_ref = Decreto.find_by(indice: d.IND_R)
       end
       # cargo relaciones
       if dec_base.present? && norm_ref.present?
@@ -684,6 +687,26 @@ namespace :legacy_migrate do
       end
     end
     puts "\nFinalizada carga de decretos a dispositivos\n"
+  end
+
+  ## ELIMINAR RESOLUCIONES REPETIDAS!! VERIFICAR RESOL Y NORMESP
+  desc "Carga de normas a digesto"
+  task digesto_normas: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyNormaDigesto.all.each do |n|
+      print '.'
+      norma = Norma.find_by indice: n.CODIGO_N
+      lib = Libro.find_by orden: n.LIBRO
+      tit = lib.titulos.find_by orden: n.TITULO
+      cap = tit.capitulos.find_by orden: n.CAPITULO
+      if cap.nil?
+        puts "NO SE PUDO ENCONTRAR CAPITULO #{n.UBIC}"
+      else
+        norma.capitulos_normas.create capitulo_id: cap.id, orden: n.ORDEN
+      end
+    end
   end
 
   desc "Refactorizacion de datos"

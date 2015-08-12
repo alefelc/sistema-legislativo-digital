@@ -121,9 +121,12 @@ ActiveRecord::Schema.define(version: 20150811134127) do
     t.integer  "orden"
   end
 
-  create_table "capitulos_normas", id: false, force: :cascade do |t|
-    t.integer "capitulo_id"
-    t.integer "norma_id"
+  create_table "capitulos_normas", force: :cascade do |t|
+    t.integer  "orden"
+    t.integer  "capitulo_id"
+    t.integer  "norma_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "capitulos_normas", ["capitulo_id"], name: "index_capitulos_normas_on_capitulo_id", using: :btree
