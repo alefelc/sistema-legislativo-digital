@@ -1,7 +1,9 @@
 class Capitulo < ActiveRecord::Base
 
   # == Associations
-  has_and_belongs_to_many :normas
+  has_many :capitulos_normas
+  has_many :normas, through: :capitulos_normas
+
   belongs_to :titulo
 
 end
