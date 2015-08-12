@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811134127) do
+ActiveRecord::Schema.define(version: 20150812134043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,29 +302,30 @@ ActiveRecord::Schema.define(version: 20150811134127) do
     t.string   "nombre"
     t.text     "especificacion1"
     t.text     "especificacion2"
-    t.integer  "id_ref"
     t.string   "tipo"
     t.integer  "circuito_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "id_ref_id"
-    t.string   "id_ref_type"
     t.date     "fecha"
+    t.integer  "ref_id"
+    t.string   "ref_type"
   end
 
   add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
-  add_index "estado_expedientes", ["id_ref_type", "id_ref_id"], name: "index_estado_expedientes_on_id_ref_type_and_id_ref_id", using: :btree
+  add_index "estado_expedientes", ["ref_id"], name: "index_estado_expedientes_on_ref_id", using: :btree
 
   create_table "estado_tramites", force: :cascade do |t|
     t.string   "nombre"
     t.text     "especificacion"
-    t.integer  "id_ref"
     t.string   "tipo"
     t.integer  "tramite_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "ref_id"
+    t.string   "ref_type"
   end
 
+  add_index "estado_tramites", ["ref_id"], name: "index_estado_tramites_on_ref_id", using: :btree
   add_index "estado_tramites", ["tramite_id"], name: "index_estado_tramites_on_tramite_id", using: :btree
 
   create_table "expediente_administrativos", force: :cascade do |t|

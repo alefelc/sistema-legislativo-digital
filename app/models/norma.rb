@@ -12,6 +12,8 @@ class Norma < ActiveRecord::Base
 
   belongs_to :expediente
 
+  has_many :estado_expedientes, as: :ref
+
   # == Recursive associations
   has_many :relationship_aclaradas, class_name: 'AclaraRelationship', foreign_key: 'me_aclara_id'
   has_many :aclaradas, through: :relationship_aclaradas
