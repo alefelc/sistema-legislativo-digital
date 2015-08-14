@@ -39,6 +39,18 @@ gem 'devise'
 # Activeadmin
 gem 'activeadmin', github: 'activeadmin'
 
+# HTML Abstraction Markup Language
+gem 'haml'
+
+# Bootstrap for Sass
+gem 'bootstrap-sass', '~> 3.3.5'
+
+# Sprockets Rails integration
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+
+# Icons
+gem 'font-awesome-sass'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -57,5 +69,8 @@ group :development do
 
   # Take off assets in rails console
   gem 'quiet_assets'
+
+  # Haml generators for Rails 4
+  gem "haml-rails", "~> 0.9"
 end
 
