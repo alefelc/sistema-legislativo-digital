@@ -1,0 +1,117 @@
+%body.skin-green.fixed.sidebar-mini
+  / Site wrapper
+  .wrapper
+    %header.main-header
+      / Logo
+      %a.logo{:href => "#"}
+        / mini logo for sidebar mini 50x50 pixels
+        %span.logo-mini
+          %b> S
+          L
+        / logo for regular state and mobile devices
+        %span.logo-lg
+          %b Sistema Legislativo Digital
+      / Header Navbar: style can be found in header.less
+      %nav.navbar.navbar-static-top{:role => "navigation"}
+        / Sidebar toggle button
+        %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        .navbar-custom-menu
+          %ul.nav.navbar-nav
+            / User Account: style can be found in dropdown.less
+            %li.dropdown.user.user-menu
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                %span.hidden-xs Alexander Pierce
+            / Control Sidebar Toggle Button
+            %li
+              %a{"data-toggle" => "control-sidebar", :href => "#"}
+                %i.fa.fa-gears
+    / ===============================================
+    / Left side column. contains the sidebar
+    %aside.main-sidebar
+      / sidebar: style can be found in sidebar.less
+      %section.sidebar
+        / search form
+        %form.sidebar-form{:action => "#", :method => "get"}
+          .input-group
+            %input.form-control{:name => "q", :placeholder => "Search...", :type => "text"}
+              %span.input-group-btn
+                %button#search-btn.btn.btn-flat{:name => "search", :type => "submit"}
+                  %i.fa.fa-search
+        / /.search form
+        / sidebar menu: : style can be found in sidebar.less
+        %ul.sidebar-menu
+          %li.header MAIN NAVIGATION
+          %li.treeview
+            %a{:href => "#"}
+              %i.fa.fa-share
+              %span Multilevel
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  Level One
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  Level One
+                  %i.fa.fa-angle-left.pull-right
+                %ul.treeview-menu
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-circle-o
+                      Level Two
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-circle-o
+                      Level Two
+                      %i.fa.fa-angle-left.pull-right
+                    %ul.treeview-menu
+                      %li
+                        %a{:href => "#"}
+                          %i.fa.fa-circle-o
+                          Level Three
+                      %li
+                        %a{:href => "#"}
+                          %i.fa.fa-circle-o
+                          Level Three
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  Level One
+      / /.sidebar
+    / ===============================================
+    / Contains page content
+    .content-wrapper
+      / Content Header (Page header)
+      %section.content-header
+      / Main content
+      %section.content
+        = yield
+    / /.content-wrapper
+    %footer.main-footer
+      .pull-right.hidden-xs
+        %b Version
+        0.0.1
+      %strong
+        Copyright &copy; 2015
+        = succeed "." do
+          %a{:href => "#"} Abella - Gasparrini
+      All rights reserved.
+  / ./wrapper
+  / jQuery 2.1.4
+  -# %script{:src => "../../plugins/jQuery/jQuery-2.1.4.min.js"}
+  -# / Bootstrap 3.3.4
+  -# %script{:src => "../../bootstrap/js/bootstrap.min.js"}
+  -# / SlimScroll
+  -# %script{:src => "../../plugins/slimScroll/jquery.slimscroll.min.js"}
+  -# / FastClick
+  -# %script{:src => "../../plugins/fastclick/fastclick.min.js"}
+  -# / AdminLTE App
+  -# %script{:src => "../../dist/js/app.min.js"}
+  -# / AdminLTE for demo purposes
+  -# %script{:src => "../../dist/js/demo.js"}
