@@ -1,0 +1,10 @@
+es:
+  layouts:
+    layout:
+      normas: Normas
+      norma:
+        decreto: Decreto
+        resolucion: Resolución
+        declaracion: Declaración
+        especiales: Normas Especiales
+        otras: Otras Normas

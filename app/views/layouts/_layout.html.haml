@@ -83,6 +83,36 @@
                 %a{:href => "#"}
                   %i.fa.fa-circle-o
                   Level One
+          %li.treeview
+            %a{:href => "#"}
+              %i.fa.fa-share
+              %span=t('.normas')
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.declaracion')
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.decreto')
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.especiales')
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.ordenanzas')
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.otras')
+              %li
+                %a{:href => "#"}
+                  %i.fa.fa-circle-o
+                  =t('.norma.resolucion')
       / /.sidebar
     / ===============================================
     / Contains page content
@@ -103,15 +133,3 @@
           %a{:href => "#"} Abella - Gasparrini
       All rights reserved.
   / ./wrapper
-  / jQuery 2.1.4
-  -# %script{:src => "../../plugins/jQuery/jQuery-2.1.4.min.js"}
-  -# / Bootstrap 3.3.4
-  -# %script{:src => "../../bootstrap/js/bootstrap.min.js"}
-  -# / SlimScroll
-  -# %script{:src => "../../plugins/slimScroll/jquery.slimscroll.min.js"}
-  -# / FastClick
-  -# %script{:src => "../../plugins/fastclick/fastclick.min.js"}
-  -# / AdminLTE App
-  -# %script{:src => "../../dist/js/app.min.js"}
-  -# / AdminLTE for demo purposes
-  -# %script{:src => "../../dist/js/demo.js"}
