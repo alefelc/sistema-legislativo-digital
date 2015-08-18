@@ -27,6 +27,8 @@ module Sld
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
     # Load subfolder legacy models
     config.autoload_paths += Dir[Rails.root.join('lib', 'tasks', '{**}')]
+    # Load subfolder controllers
+    config.autoload_paths += Dir[Rails.root.join('app', 'controller', '{**}')]
 
     # Default I18n internalization
     config.i18n.default_locale = :es

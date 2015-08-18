@@ -1,6 +1,7 @@
 es:
   layouts:
     layout:
+      sld: Sistema Legislativo
       normas: Normas
       norma:
         decreto: Decreto
