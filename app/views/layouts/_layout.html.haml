@@ -3,14 +3,14 @@
   .wrapper
     %header.main-header
       / Logo
-      %a.logo{:href => "#"}
+      %a.logo{:href => root_path}
         / mini logo for sidebar mini 50x50 pixels
         %span.logo-mini
           %b> S
           L
         / logo for regular state and mobile devices
         %span.logo-lg
-          %b Sistema Legislativo Digital
+          %b=t('.sld')
       / Header Navbar: style can be found in header.less
       %nav.navbar.navbar-static-top{:role => "navigation"}
         / Sidebar toggle button
@@ -90,7 +90,7 @@
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{:href => "#"}
+                %a{:href => declaracions_path}
                   %i.fa.fa-circle-o
                   =t('.norma.declaracion')
               %li

@@ -1,0 +1,2 @@
+module DeclaracionsHelper
+end
