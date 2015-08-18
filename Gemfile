@@ -51,6 +51,11 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 # Icons
 gem 'font-awesome-sass'
 
+# Ajax synchronizate datatables
+gem 'jquery-datatables-rails'
+gem 'ajax-datatables-rails'
+gem 'kaminari'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

@@ -54,6 +54,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    ajax-datatables-rails (0.3.1)
+      railties (>= 3.1)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.3)
@@ -127,6 +129,11 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-datatables-rails (3.3.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -241,6 +248,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  ajax-datatables-rails
   awesome_print
   better_errors
   bootstrap-sass (~> 3.3.5)
@@ -250,7 +258,9 @@ DEPENDENCIES
   haml
   haml-rails (~> 0.9)
   jbuilder (~> 2.0)
+  jquery-datatables-rails
   jquery-rails
+  kaminari
   meta_request
   mysql2
   pg
