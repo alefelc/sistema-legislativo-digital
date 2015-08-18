@@ -13,5 +13,6 @@ ActiveAdmin.register Concejal do
 #   permitted
 # end
 
+menu parent: "Personas"
 
 end
