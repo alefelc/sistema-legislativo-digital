@@ -4,3 +4,5 @@ $ ->
     serverSide: true
     ajaxSource: $('#declaracion-table').data('source')
     pagingType: 'full_numbers'
+    JQueryUI: true
+    displayLength: 10

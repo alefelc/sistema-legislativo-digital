@@ -2,6 +2,9 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
 
   def as_json(options = {})
     {
+      :draw => params[:draw].to_i,
+      :recordsTotal =>  get_raw_records.count(:all),
+      :recordsFiltered => filter_records(get_raw_records).count(:all),
       :data => data
     }
   end
@@ -19,11 +22,11 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   private
 
   def data
-    declaraciones.map do |declaracion|
+    records.map do |record|
       [
-        declaracion.letra,
-        declaracion.nro,
-        declaracion.bis,
+        record.letra,
+        record.nro,
+        record.bis
       ]
     end
   end
@@ -44,7 +47,7 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
     params[:iDisplayStart].to_i/per_page + 1
   end
 
-  def get_raw_declaracions
+  def get_raw_records
     Declaracion.all
   end
 
