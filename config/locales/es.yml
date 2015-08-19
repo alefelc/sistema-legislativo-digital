@@ -9,3 +9,13 @@ es:
         declaracion: Declaración
         especiales: Normas Especiales
         otras: Otras Normas
+  declaracions:
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        declaracion: Letra Nro Bis / Año
+        sancion: Sanción
+        description: Descripción
+        relationships: Relación a otras normas
+
