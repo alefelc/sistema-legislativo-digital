@@ -1,5 +1,4 @@
 $ ->
-  $('.datatable').DataTable();
   $('#declaracion-table').dataTable
     processing: true
     serverSide: true
