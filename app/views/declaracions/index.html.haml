@@ -1,8 +1,14 @@
 #declaracion
+  %button.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true}
+    = t('.btnheader.new')
+
   %table.table.table-striped.table-bordered#declaracion-table{"data-source" => declaracions_path(format: :json)}
     %thead
       %tr
-        %th First Name
-        %th Last Name
-        %th Brief Bio
+        %th= t('.table.declaracion')
+        %th= t('.table.sancion')
+        %th= t('.table.description')
+        %th= t('.table.relationships')
+        %th
     %tbody

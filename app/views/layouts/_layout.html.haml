@@ -24,6 +24,7 @@
             / User Account: style can be found in dropdown.less
             %li.dropdown.user.user-menu
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                %img.user-image{ src: image_url("logo.jpg") }
                 %span.hidden-xs Nombre de Usuario
             / Control Sidebar Toggle Button
             %li
@@ -117,8 +118,6 @@
     / ===============================================
     / Contains page content
     .content-wrapper
-      / Content Header (Page header)
-      %section.content-header
       / Main content
       %section.content
         = yield

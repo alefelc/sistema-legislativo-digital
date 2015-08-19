@@ -22,13 +22,23 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   private
 
   def data
-    records.map do |record|
+    records.map do |decl|
       [
-        record.letra,
-        record.nro,
-        record.bis
+        decl.letra.to_s + " " +
+        decl.nro.to_s + " " +
+        decl.bis.to_s + " / " +
+        decl.anio.to_s,
+        decl.sancion,
+        decl.descripcion,
+        "Otras normas",
+        associated_file(decl)
       ]
     end
+  end
+
+  def associated_file decl
+    # link_to nil, "#", class: "btn btn-xs btn-default"
+    "file"
   end
 
   def declaraciones
