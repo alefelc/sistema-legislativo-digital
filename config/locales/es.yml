@@ -17,5 +17,6 @@ es:
         declaracion: Letra Nro Bis / Año
         sancion: Sanción
         description: Descripción
-        relationships: Relación a otras normas
-
+        relationships: Norma a Dispositivos
+        relationships2: Dispositivos a Norma
+        expedientes: Expedientes

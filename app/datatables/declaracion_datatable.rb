@@ -1,5 +1,6 @@
 class DeclaracionDatatable < AjaxDatatablesRails::Base
-
+  def_delegator :@view, :norma_a_dispositivos
+  def_delegator :@view, :dispositivos_a_norma
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -30,12 +31,14 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
         decl.anio.to_s,
         decl.sancion,
         decl.descripcion,
-        "Otras normas",
+        norma_a_dispositivos(decl),
+        dispositivos_a_norma(decl),
+        "Expedientes",
         associated_file(decl)
       ]
     end
-  end
-
+  end 
+ 
   def associated_file decl
     # link_to nil, "#", class: "btn btn-xs btn-default"
     "file"
