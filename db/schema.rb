@@ -11,27 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813123639) do
+ActiveRecord::Schema.define(version: 20150820130728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "aclara_relationships", force: :cascade do |t|
-    t.integer  "aclarada_id"
-    t.integer  "me_aclara_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "aclara_relationships", ["aclarada_id"], name: "index_aclara_relationships_on_aclarada_id", using: :btree
-  add_index "aclara_relationships", ["me_aclara_id"], name: "index_aclara_relationships_on_me_aclara_id", using: :btree
 
   create_table "acumulas", force: :cascade do |t|
     t.integer  "acumulado_id"
@@ -42,23 +25,6 @@ ActiveRecord::Schema.define(version: 20150813123639) do
 
   add_index "acumulas", ["acumula_id"], name: "index_acumulas_on_acumula_id", using: :btree
   add_index "acumulas", ["acumulado_id"], name: "index_acumulas_on_acumulado_id", using: :btree
-
-  create_table "ad_referendum_relationships", force: :cascade do |t|
-    t.integer  "ad_referendum_id"
-    t.integer  "tiene_ad_referendum_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "ad_referendum_relationships", ["ad_referendum_id"], name: "index_ad_referendum_relationships_on_ad_referendum_id", using: :btree
-  add_index "ad_referendum_relationships", ["tiene_ad_referendum_id"], name: "index_ad_referendum_relationships_on_tiene_ad_referendum_id", using: :btree
 
   create_table "adjunta_fisicamentes", force: :cascade do |t|
     t.integer  "adjuntado_id"
@@ -238,45 +204,11 @@ ActiveRecord::Schema.define(version: 20150813123639) do
   add_index "comisions_tramites", ["comision_id"], name: "index_comisions_tramites_on_comision_id", using: :btree
   add_index "comisions_tramites", ["tramite_id"], name: "index_comisions_tramites_on_tramite_id", using: :btree
 
-  create_table "delega_relationships", force: :cascade do |t|
-    t.integer  "delega_id"
-    t.integer  "me_delega_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "delega_relationships", ["delega_id"], name: "index_delega_relationships_on_delega_id", using: :btree
-  add_index "delega_relationships", ["me_delega_id"], name: "index_delega_relationships_on_me_delega_id", using: :btree
-
   create_table "dependencia_municipals", force: :cascade do |t|
     t.string   "denominacion"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
-
-  create_table "deroga_relationships", force: :cascade do |t|
-    t.integer  "derogada_id"
-    t.integer  "me_deroga_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "deroga_relationships", ["derogada_id"], name: "index_deroga_relationships_on_derogada_id", using: :btree
-  add_index "deroga_relationships", ["me_deroga_id"], name: "index_deroga_relationships_on_me_deroga_id", using: :btree
 
   create_table "despachos_concejals", id: false, force: :cascade do |t|
     t.integer "despacho_id"
@@ -324,13 +256,13 @@ ActiveRecord::Schema.define(version: 20150813123639) do
     t.integer  "circuito_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.date     "fecha"
     t.integer  "ref_id"
     t.string   "ref_type"
+    t.date     "fecha"
   end
 
   add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
-  add_index "estado_expedientes", ["ref_id"], name: "index_estado_expedientes_on_ref_id", using: :btree
+  add_index "estado_expedientes", ["ref_type", "ref_id"], name: "index_estado_expedientes_on_ref_type_and_ref_id", using: :btree
 
   create_table "estado_tramites", force: :cascade do |t|
     t.string   "nombre"
@@ -401,6 +333,8 @@ ActiveRecord::Schema.define(version: 20150813123639) do
     t.text     "observacion"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "type"
+    t.string   "tipo"
   end
 
   add_index "modifica_relationships", ["me_modifica_id"], name: "index_modifica_relationships_on_me_modifica_id", using: :btree
@@ -515,75 +449,6 @@ ActiveRecord::Schema.define(version: 20150813123639) do
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
 
-  create_table "promulga_relationships", force: :cascade do |t|
-    t.integer  "promulga_id"
-    t.integer  "me_promulga_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "tipo"
-  end
-
-  add_index "promulga_relationships", ["me_promulga_id"], name: "index_promulga_relationships_on_me_promulga_id", using: :btree
-  add_index "promulga_relationships", ["promulga_id"], name: "index_promulga_relationships_on_promulga_id", using: :btree
-
-  create_table "prorroga_suspension_relationships", force: :cascade do |t|
-    t.integer  "suspendida_id"
-    t.integer  "me_suspende_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "prorroga_suspension_relationships", ["me_suspende_id"], name: "index_prorroga_suspension_relationships_on_me_suspende_id", using: :btree
-  add_index "prorroga_suspension_relationships", ["suspendida_id"], name: "index_prorroga_suspension_relationships_on_suspendida_id", using: :btree
-
-  create_table "prorroga_vigencia_relationships", force: :cascade do |t|
-    t.integer  "prorroga_id"
-    t.integer  "me_prorroga_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "prorroga_vigencia_relationships", ["me_prorroga_id"], name: "index_prorroga_vigencia_relationships_on_me_prorroga_id", using: :btree
-  add_index "prorroga_vigencia_relationships", ["prorroga_id"], name: "index_prorroga_vigencia_relationships_on_prorroga_id", using: :btree
-
-  create_table "reglamenta_relationships", force: :cascade do |t|
-    t.integer  "reglamenta_id"
-    t.integer  "me_reglamenta_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "reglamenta_relationships", ["me_reglamenta_id"], name: "index_reglamenta_relationships_on_me_reglamenta_id", using: :btree
-  add_index "reglamenta_relationships", ["reglamenta_id"], name: "index_reglamenta_relationships_on_reglamenta_id", using: :btree
-
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"
     t.integer  "titular_id"
@@ -599,23 +464,6 @@ ActiveRecord::Schema.define(version: 20150813123639) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
-
-  create_table "restituye_vigencia_relationships", force: :cascade do |t|
-    t.integer  "restituye_id"
-    t.integer  "me_restituye_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "restituye_vigencia_relationships", ["me_restituye_id"], name: "index_restituye_vigencia_relationships_on_me_restituye_id", using: :btree
-  add_index "restituye_vigencia_relationships", ["restituye_id"], name: "index_restituye_vigencia_relationships_on_restituye_id", using: :btree
 
   create_table "rols", force: :cascade do |t|
     t.string   "tipo"
@@ -657,23 +505,6 @@ ActiveRecord::Schema.define(version: 20150813123639) do
   end
 
   add_index "sub_seccions", ["seccion_id"], name: "index_sub_seccions_on_seccion_id", using: :btree
-
-  create_table "suspende_vigencia_relationships", force: :cascade do |t|
-    t.integer  "suspende_id"
-    t.integer  "me_suspende_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "suspende_vigencia_relationships", ["me_suspende_id"], name: "index_suspende_vigencia_relationships_on_me_suspende_id", using: :btree
-  add_index "suspende_vigencia_relationships", ["suspende_id"], name: "index_suspende_vigencia_relationships_on_suspende_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "nombre"
@@ -723,39 +554,5 @@ ActiveRecord::Schema.define(version: 20150813123639) do
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
-
-  create_table "veto_parcial_relationships", force: :cascade do |t|
-    t.integer  "veta_parcial_id"
-    t.integer  "me_veta_parcial_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "veto_parcial_relationships", ["me_veta_parcial_id"], name: "index_veto_parcial_relationships_on_me_veta_parcial_id", using: :btree
-  add_index "veto_parcial_relationships", ["veta_parcial_id"], name: "index_veto_parcial_relationships_on_veta_parcial_id", using: :btree
-
-  create_table "veto_total_relationships", force: :cascade do |t|
-    t.integer  "veta_total_id"
-    t.integer  "me_veta_total_id"
-    t.date     "desde"
-    t.date     "hasta"
-    t.integer  "dia"
-    t.integer  "mes"
-    t.integer  "anio"
-    t.integer  "dia_habil"
-    t.text     "observacion"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "veto_total_relationships", ["me_veta_total_id"], name: "index_veto_total_relationships_on_me_veta_total_id", using: :btree
-  add_index "veto_total_relationships", ["veta_total_id"], name: "index_veto_total_relationships_on_veta_total_id", using: :btree
 
 end

@@ -5,7 +5,6 @@ class CreateEstadoTramites < ActiveRecord::Migration
       t.text :especificacion
 
       ## Relación del estado actual
-      t.integer :id_ref
       t.string :tipo
 
       ## Tramite tiene muchos estados

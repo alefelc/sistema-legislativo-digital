@@ -24,6 +24,9 @@ namespace :legacy_migrate do
                ordenanzas_a_dispositivos
                decretos_a_dispositivos
                digesto_normas
+               tags
+               expedientes_tags
+               normas_tags
                data_refactoring
              ]
 
@@ -370,7 +373,7 @@ namespace :legacy_migrate do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
     LegacyOrdenanza.all.each do |o|
-      print ";"
+      print "."
       ord = Ordenanza.create letra: o.LETRA_ORD, nro: o.NUM_ORD, bis: o.BIS_ORD, anio: o.ANO_ORD,
           sumario: o.SUMARIO, observaciones: o.OBSERV, sancion: o.FECSORD, entrada_vigencia: o.FEC_VIGE,
           finaliza_vigencia: o.FEC_VIGF, indice: o.IND_ORD
@@ -423,24 +426,27 @@ namespace :legacy_migrate do
       # creo y cargo decreto de promulgacion de las ordenanzas
       if !o.OBSERV.scan(/.*PROMUL.*CITA.*/).empty?
         #creo relacion promul tacita pero sin decreto
-        ord.relationship_me_promulgan.create do |r|
+        ord.relationship_me_modifican.create do |r|
           r.tipo = 1
           r.observacion = o.OBSERV
+          r.type = "promul"
         end
       elsif (p = !o.NUM_DEC.zero?) || (q = !o.IND_DAUX.zero?)
         #creo decrto y relacion de promulgacion
         if q
           ind = parse_ind_norma o.IND_DAUX.to_s
           dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: ind[:norma], bis: ind[:bis], indice: o.IND_DAUX
-          ord.relationship_me_promulgan.create do |r|
-            r.me_promulga = dec
+          ord.relationship_me_modifican.create do |r|
+            r.me_modifica = dec
             r.desde = o.FECSDEC
+            r.type = "promul"
           end
         elsif p
           dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: o.NUM_DEC, bis: o.BIS_DEC, indice: o.IND_DAUX
-          ord.relationship_me_promulgan.create do |r|
-            r.me_promulga = dec
+          ord.relationship_me_modifican.create do |r|
+            r.me_modifica = dec
             r.desde = o.FECSDEC
+            r.type = "promul"
           end
         end
       end
@@ -588,8 +594,9 @@ namespace :legacy_migrate do
       esp = Especial.create(nro: e.NUM_E, descripcion: e.DESCRIP, sumario: e.SUMARIO, observaciones: e.OBSERV,
                               sancion: e.FEC_SANC, tipo: e.TIPO_E, bis: 0, anio: e.ANO_E, indice: e.IND_E)
       if !e.FEC_PROM.nil?
-        esp.relationship_me_promulgan.create do |r|
+        esp.relationship_me_modifican.create do |r|
           r.desde = e.FEC_PROM
+          r.type = "promul"
         end
       end
       esp.clasificacions << Clasificacion.find_by(nombre: "Dispone texto ordenado") if e.MDISTXTO == 1
@@ -609,7 +616,10 @@ namespace :legacy_migrate do
       esp_base = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_base[:anio], ind_base[:bis],ind_base[:norma])
       esp_ref = Especial.find_by("EXTRACT(year FROM sancion) = ? AND bis = ? AND nro = ?",ind_ref[:anio], ind_ref[:bis],ind_ref[:norma])
       if esp_base.present? && esp_ref.present?
-        esp_ref.me_modifican << esp_base
+        esp_ref.relationship_me_modifican.create do |r|
+         r.me_modifica = esp_base
+         r.type = "modif"
+        end 
       else
         puts "base o referencia es nil: #{e.IND_B} modifica #{e.IND_R}"
       end
@@ -638,14 +648,10 @@ namespace :legacy_migrate do
       end
       # cargo relaciones
       if ord_base.present? && norm_ref.present?
-          norm_ref.me_modifican << ord_base if o.CODREFER == "modif"
-          norm_ref.me_prorrogan_suspension << ord_base if o.CODREFER == "prorrog"
-          norm_ref.me_prorrogan_vigencia << ord_base if o.CODREFER == "provig"
-          norm_ref.me_restituyen_vigencia << ord_base if o.CODREFER == "restiv"
-          norm_ref.me_suspenden_vigencia << ord_base if o.CODREFER == "suspvig"
-          norm_ref.me_derogan << ord_base if o.CODREFER == "derog"
-          norm_ref.me_aclaran << ord_base if o.CODREFER == "aclarac"
-          norm_ref.tiene_ad_referendum << ord_base if o.CODREFER == "adrefe"
+        norm_ref.relationship_me_modifican.create do |n|
+          n.me_modifica = ord_base
+          n.type = o.CODREFER
+        end          
       else
         puts "base o referencia es nil: #{o.IND_B} modifica #{o.IND_R}\n"
       end
@@ -671,17 +677,10 @@ namespace :legacy_migrate do
       end
       # cargo relaciones
       if dec_base.present? && norm_ref.present?
-          norm_ref.me_modifican << dec_base if d.CODREFER == "modif"
-          norm_ref.me_prorrogan_suspension << dec_base if d.CODREFER == "prorrog"
-          norm_ref.me_prorrogan_vigencia << dec_base if d.CODREFER == "provig"
-          norm_ref.me_restituyen_vigencia << dec_base if d.CODREFER == "restiv"
-          norm_ref.me_suspenden_vigencia << dec_base if d.CODREFER == "suspvig"
-          norm_ref.me_derogan << dec_base if d.CODREFER == "derog"
-          norm_ref.me_aclaran << dec_base if d.CODREFER == "aclarac"
-          norm_ref.me_delegan << dec_base if d.CODREFER == "delegado"
-          norm_ref.me_reglamentan << dec_base if d.CODREFER == "reglamen"
-          norm_ref.me_vetan_parcialmente << dec_base if d.CODREFER == "vetop"
-          norm_ref.me_vetan_totalmente << dec_base if d.CODREFER == "vetot"
+        norm_ref.relationship_me_modifican.create do |n|
+          n.me_modifica = dec_base
+          n.type = d.CODREFER
+        end 
       else
         puts "base o referencia es nil: #{d.IND_B} modifica #{d.IND_R}\n"
       end
@@ -707,6 +706,71 @@ namespace :legacy_migrate do
         norma.capitulos_normas.create capitulo_id: cap.id, orden: n.ORDEN
       end
     end
+    puts "\nFinalizada carga de normas a digesto\n"
+  end
+
+  desc "Carga de tags"
+  task tags: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyClaves.all.each do |c|
+      print '.'  
+      Tag.create nombre: c.VOZ_CLAVE  
+    end
+    puts "\nFinalizada carga tags\n"
+  end
+
+  desc "Carga de tags a expedientes"
+  task expedientes_tags: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyExpedientesClaves.all.each do |c|
+      print '.'  
+      t = Tag.find_by(nombre: c.CLAVE)
+      if t.nil?
+        puts "tag nil"
+      else
+        ind = c.IND_EXP.to_s
+        if ind.length == 8
+          ind = "19" + ind
+          ind = parse_ind_exp ind
+        else 
+          ind = parse_ind_exp ind
+        end
+        exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
+                               ind[:anio], ind[:bis], ind[:exp].to_s)       
+        if exp.nil?
+          puts "expediente nil #{ind}"
+        else  
+          exp.tags << t
+        end  
+      end  
+    end
+    puts "\nFinalizada carga tags a expedientes\n"
+  end 
+   
+  desc "Carga de tags a normas"
+  task normas_tags: :environment do
+    # requerimos los modelos legacy
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    LegacyNormasClaves.all.each do |c|
+      print '.'  
+      t = Tag.find_by(nombre: c.VOZ_CLAVE)
+      if t.nil?
+        puts "tag nil"
+      else
+        norma = Norma.find_by(indice: c.INDICE)       
+        if norma.nil?
+          puts "norma nil #{c.INDICE}"
+        else
+          norma.tags << t
+        end
+      end  
+    end
+    puts "\nFinalizada carga tags a normas\n"
   end
 
   ### QUEDAN PENDIENTES!!!
