@@ -4,7 +4,6 @@ class CreateEstadoExpedientes < ActiveRecord::Migration
       t.string :nombre
       t.text :especificacion1
       t.text :especificacion2
-      t.integer :id_ref
       t.string :tipo
 
       ## EstadoExp tiene un circuito

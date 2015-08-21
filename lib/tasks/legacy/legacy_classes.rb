@@ -132,3 +132,21 @@ class LegacyNormaDigesto < ActiveRecord::Base
   establish_connection :legacy
   self.table_name = 'NORM_EST'
 end
+
+# Model claves
+class LegacyClaves < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'P_CLAVE'
+end
+
+# Model expedientes_claves
+class LegacyExpedientesClaves < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'EXPCLA'
+end
+
+# Model normas_claves
+class LegacyNormasClaves < ActiveRecord::Base
+  establish_connection :legacy
+  self.table_name = 'VOCLAVE'
+end
