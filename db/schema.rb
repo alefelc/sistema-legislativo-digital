@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820130728) do
+ActiveRecord::Schema.define(version: 20150824133559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,6 +335,7 @@ ActiveRecord::Schema.define(version: 20150820130728) do
     t.datetime "updated_at",     null: false
     t.string   "type"
     t.string   "tipo"
+    t.string   "tipo_relacion"
   end
 
   add_index "modifica_relationships", ["me_modifica_id"], name: "index_modifica_relationships_on_me_modifica_id", using: :btree
