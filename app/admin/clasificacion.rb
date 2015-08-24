@@ -13,5 +13,7 @@ ActiveAdmin.register Clasificacion do
 #   permitted
 # end
 
+# parent
+menu parent: "Normas", label: "Clasificaciones"
 
 end

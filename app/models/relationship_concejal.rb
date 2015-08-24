@@ -1,4 +1,4 @@
 class RelationshipConcejal < ActiveRecord::Base
-	belongs_to :suplente
-	belongs_to :titular
+	belongs_to :concejal
+	belongs_to :concejal
 end

@@ -27,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #Flexible authentication solution for Rails with Warden
 gem 'devise'
 
+gem 'rails-i18n'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -50,6 +52,11 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # Icons
 gem 'font-awesome-sass'
+
+# Ajax synchronizate datatables
+gem 'jquery-datatables-rails'
+gem 'ajax-datatables-rails'
+gem 'kaminari'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

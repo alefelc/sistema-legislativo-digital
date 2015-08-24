@@ -13,5 +13,7 @@ ActiveAdmin.register Especial do
 #   permitted
 # end
 
+# parent
+menu parent: "Normas", label: "Especiales"
 
 end

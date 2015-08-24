@@ -1,10 +1,13 @@
 /* Libraries */
 @import "bootstrap-sprockets";
-@import "bootstrap";
 @import "font-awesome-sprockets";
-@import "font-awesome";
-@import "ionicons.min";
-
-/* Stylesheets */
 @import "layout";
 @import "skin";
+@import "bootstrap";
+@import "font-awesome";
+@import "ionicons.min";
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+
+/* Stylesheets */
+@import "dashboard";
+@import "declaracions";

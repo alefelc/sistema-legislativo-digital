@@ -13,5 +13,7 @@ ActiveAdmin.register BloquePeriodo do
 #   permitted
 # end
 
+# parent
+menu parent: "Bloques", label: "Bloques Periodos"
 
 end

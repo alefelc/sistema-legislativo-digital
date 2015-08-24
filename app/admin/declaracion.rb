@@ -13,5 +13,7 @@ ActiveAdmin.register Declaracion do
 #   permitted
 # end
 
+# parent
+menu parent: "Normas", label: "Declaraciones"
 
 end

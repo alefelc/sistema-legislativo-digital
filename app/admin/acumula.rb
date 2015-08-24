@@ -13,5 +13,7 @@ ActiveAdmin.register Acumula do
 #   permitted
 # end
 
+# parent
+menu parent: "Expedientes", label: "Acumula"
 
 end

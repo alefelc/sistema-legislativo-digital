@@ -13,5 +13,7 @@ ActiveAdmin.register Resolucion do
 #   permitted
 # end
 
+# parent
+menu parent: "Normas", label: "Resoluciones"
 
 end

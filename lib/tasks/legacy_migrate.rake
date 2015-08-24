@@ -429,7 +429,7 @@ namespace :legacy_migrate do
         ord.relationship_me_modifican.create do |r|
           r.tipo = 1
           r.observacion = o.OBSERV
-          r.type = "promul"
+          r.tipo_relacion = "promul"
         end
       elsif (p = !o.NUM_DEC.zero?) || (q = !o.IND_DAUX.zero?)
         #creo decrto y relacion de promulgacion
@@ -439,14 +439,14 @@ namespace :legacy_migrate do
           ord.relationship_me_modifican.create do |r|
             r.me_modifica = dec
             r.desde = o.FECSDEC
-            r.type = "promul"
+            r.tipo_relacion = "promul"
           end
         elsif p
           dec = Decreto.create sancion: o.FECSDEC, letra: o.LETRA_DEC, nro: o.NUM_DEC, bis: o.BIS_DEC, indice: o.IND_DAUX
           ord.relationship_me_modifican.create do |r|
             r.me_modifica = dec
             r.desde = o.FECSDEC
-            r.type = "promul"
+            r.tipo_relacion = "promul"
           end
         end
       end
@@ -596,7 +596,7 @@ namespace :legacy_migrate do
       if !e.FEC_PROM.nil?
         esp.relationship_me_modifican.create do |r|
           r.desde = e.FEC_PROM
-          r.type = "promul"
+          r.tipo_relacion = "promul"
         end
       end
       esp.clasificacions << Clasificacion.find_by(nombre: "Dispone texto ordenado") if e.MDISTXTO == 1
@@ -618,8 +618,8 @@ namespace :legacy_migrate do
       if esp_base.present? && esp_ref.present?
         esp_ref.relationship_me_modifican.create do |r|
          r.me_modifica = esp_base
-         r.type = "modif"
-        end 
+         r.tipo_relacion = "modif"
+        end
       else
         puts "base o referencia es nil: #{e.IND_B} modifica #{e.IND_R}"
       end
@@ -650,8 +650,8 @@ namespace :legacy_migrate do
       if ord_base.present? && norm_ref.present?
         norm_ref.relationship_me_modifican.create do |n|
           n.me_modifica = ord_base
-          n.type = o.CODREFER
-        end          
+          n.tipo_relacion = o.CODREFER
+        end
       else
         puts "base o referencia es nil: #{o.IND_B} modifica #{o.IND_R}\n"
       end
@@ -679,8 +679,8 @@ namespace :legacy_migrate do
       if dec_base.present? && norm_ref.present?
         norm_ref.relationship_me_modifican.create do |n|
           n.me_modifica = dec_base
-          n.type = d.CODREFER
-        end 
+          n.tipo_relacion = d.CODREFER
+        end
       else
         puts "base o referencia es nil: #{d.IND_B} modifica #{d.IND_R}\n"
       end
@@ -715,8 +715,8 @@ namespace :legacy_migrate do
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyClaves.all.each do |c|
-      print '.'  
-      Tag.create nombre: c.VOZ_CLAVE  
+      print '.'
+      Tag.create nombre: c.VOZ_CLAVE
     end
     puts "\nFinalizada carga tags\n"
   end
@@ -727,7 +727,7 @@ namespace :legacy_migrate do
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyExpedientesClaves.all.each do |c|
-      print '.'  
+      print '.'
       t = Tag.find_by(nombre: c.CLAVE)
       if t.nil?
         puts "tag nil"
@@ -736,39 +736,39 @@ namespace :legacy_migrate do
         if ind.length == 8
           ind = "19" + ind
           ind = parse_ind_exp ind
-        else 
+        else
           ind = parse_ind_exp ind
         end
         exp = Expediente.find_by("EXTRACT(year FROM anio) = ? AND bis = ? AND nro_exp = ?",
-                               ind[:anio], ind[:bis], ind[:exp].to_s)       
+                               ind[:anio], ind[:bis], ind[:exp].to_s)
         if exp.nil?
           puts "expediente nil #{ind}"
-        else  
+        else
           exp.tags << t
-        end  
-      end  
+        end
+      end
     end
     puts "\nFinalizada carga tags a expedientes\n"
-  end 
-   
+  end
+
   desc "Carga de tags a normas"
   task normas_tags: :environment do
     # requerimos los modelos legacy
     require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
 
     LegacyNormasClaves.all.each do |c|
-      print '.'  
+      print '.'
       t = Tag.find_by(nombre: c.VOZ_CLAVE)
       if t.nil?
         puts "tag nil"
       else
-        norma = Norma.find_by(indice: c.INDICE)       
+        norma = Norma.find_by(indice: c.INDICE)
         if norma.nil?
           puts "norma nil #{c.INDICE}"
         else
           norma.tags << t
         end
-      end  
+      end
     end
     puts "\nFinalizada carga tags a normas\n"
   end

@@ -13,5 +13,7 @@ ActiveAdmin.register Circuito do
 #   permitted
 # end
 
+# parent
+menu parent: "Expedientes"
 
 end

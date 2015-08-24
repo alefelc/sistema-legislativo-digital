@@ -13,5 +13,7 @@ ActiveAdmin.register DependenciaMunicipal do
 #   permitted
 # end
 
+# menu label name
+menu label: "Dependencias Municipales"
 
 end

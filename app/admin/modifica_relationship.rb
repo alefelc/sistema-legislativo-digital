@@ -13,5 +13,6 @@ ActiveAdmin.register ModificaRelationship do
 #   permitted
 # end
 
+menu parent: "Normas", label: "Vinculos entre Normas"
 
 end

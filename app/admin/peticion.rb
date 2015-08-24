@@ -13,5 +13,7 @@ ActiveAdmin.register Peticion do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites", label: "Peticiones"
 
 end

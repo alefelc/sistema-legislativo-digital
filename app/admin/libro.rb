@@ -13,5 +13,7 @@ ActiveAdmin.register Libro do
 #   permitted
 # end
 
+# parent
+menu parent: "Digestos"
 
 end
