@@ -13,5 +13,6 @@ ActiveAdmin.register DocumentacionPresentada do
 #   permitted
 # end
 
+menu parent: "Tramites", label: "Documentacion Presentada(Condonacion)"
 
 end

@@ -13,5 +13,7 @@ ActiveAdmin.register Administrativo do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites", label: "Administrativos"
 
 end

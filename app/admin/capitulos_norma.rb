@@ -13,5 +13,7 @@ ActiveAdmin.register CapitulosNorma do
 #   permitted
 # end
 
+# parent
+menu parent: "Digestos"
 
 end

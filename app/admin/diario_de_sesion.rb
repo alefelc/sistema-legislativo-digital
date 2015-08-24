@@ -13,5 +13,7 @@ ActiveAdmin.register DiarioDeSesion do
 #   permitted
 # end
 
+# parent
+menu parent: "Orden Del Dia", label: "Diario De Sesion"
 
 end

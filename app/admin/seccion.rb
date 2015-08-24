@@ -13,5 +13,7 @@ ActiveAdmin.register Seccion do
 #   permitted
 # end
 
+# parent
+menu parent: "Orden Del Dia", label: "Secciones"
 
 end

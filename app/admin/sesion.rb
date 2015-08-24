@@ -13,5 +13,7 @@ ActiveAdmin.register Sesion do
 #   permitted
 # end
 
+# parent
+menu parent: "Orden Del Dia", label: "Sesiones"
 
 end

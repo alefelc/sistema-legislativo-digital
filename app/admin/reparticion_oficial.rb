@@ -13,5 +13,7 @@ ActiveAdmin.register ReparticionOficial do
 #   permitted
 # end
 
+# menu label name
+menu label: "Reparticiones Oficiales"
 
 end

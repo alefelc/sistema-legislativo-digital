@@ -13,5 +13,7 @@ ActiveAdmin.register Rol do
 #   permitted
 # end
 
+# parent
+menu parent: "Usuarios", label: "Roles"
 
 end

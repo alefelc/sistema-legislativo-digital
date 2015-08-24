@@ -13,5 +13,7 @@ ActiveAdmin.register Proyecto do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites"
 
 end

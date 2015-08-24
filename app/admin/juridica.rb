@@ -13,5 +13,7 @@ ActiveAdmin.register Juridica do
 #   permitted
 # end
 
-
+# parent
+menu parent: "Personas"  
+  
 end

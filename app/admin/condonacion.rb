@@ -13,5 +13,7 @@ ActiveAdmin.register Condonacion do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites", label: "Condonaciones"
 
 end

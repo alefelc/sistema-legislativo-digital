@@ -13,5 +13,7 @@ ActiveAdmin.register Fisica do
 #   permitted
 # end
 
+# parent
+menu parent: "Personas"
 
 end

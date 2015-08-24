@@ -13,5 +13,7 @@ ActiveAdmin.register Eximicion do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites", label: "Eximiciones"
 
 end

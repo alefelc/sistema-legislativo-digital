@@ -13,5 +13,7 @@ ActiveAdmin.register Despacho do
 #   permitted
 # end
 
+# parent
+menu parent: "Tramites"
 
 end

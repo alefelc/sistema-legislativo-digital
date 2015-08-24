@@ -13,5 +13,7 @@ ActiveAdmin.register Decreto do
 #   permitted
 # end
 
+# parent
+menu parent: "Normas"
 
 end
