@@ -5,7 +5,7 @@ module ApplicationHelper
     norma.modificadas.each do |n|
       resp
     end
-    resp  
+    resp
   end
 
   def dispositivos_a_norma norma
@@ -16,14 +16,14 @@ module ApplicationHelper
     resp = ""
     resp = resp + "Sanción: #{norma.sancion}\n"
     norma.destinos.each do |d|
-      case d.tipo 
+      case d.tipo
       when 0
-        resp = resp + "Comunicación: #{d.fecha}\n" 
+        resp = resp + "Comunicación: #{d.fecha}\n"
       when 1
         resp = resp + "Notificación: #{d.fecha}\n"
-      end      
+      end
     end
-    resp  
+    resp
   end
 
   def norma_expediente norma
@@ -33,8 +33,17 @@ module ApplicationHelper
         resp = resp + "Expediente: " + link_to(c.expediente.nro_exp, "expedientes/#{c.expediente.id}")
       else
         resp= resp + "Circuito nro: #{c.nro}--> Expediente: #{c.expediente.nro_exp} \n"
-      end    
+      end
     end
-    resp  
+    resp
   end
+
+  def resolve_path_name
+    if current_page?(:declaracions)
+      "Declaraciones"
+    else
+      "Normas"
+    end
+  end
+
 end
