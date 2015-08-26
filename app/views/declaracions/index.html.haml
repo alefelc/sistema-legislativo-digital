@@ -1,16 +1,63 @@
 #declaracion
-  %button.btn.btn-primary
+  %button.btn.btn-primary{"data-toggle"=>"modal","data-target" => "#nuevo"}
     %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true}
     = t('.btnheader.new')
 
   %table.table.table-striped.table-bordered#declaracion-table{"data-source" => declaracions_path(format: :json)}
     %thead
       %tr
-        %th= t('.table.declaracion')
-        %th= t('.table.sancion')
-        %th= t('.table.description')
-        %th= t('.table.relationships')
-        %th= t('.table.relationships2')
+        %th{ width: "15%"}= t('.table.declaracion')
+        %th= t('.table.sumario')
+        %th{ width: "18%"}= t('.table.fechas')
         %th= t('.table.expedientes')
-        %th
+        %th{ width: "1%" }
     %tbody
+
+  / Modal Nueva Declaración
+  #nuevo.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-xs{:role => "document"}
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#nuevoLabel.modal-title Creando Declaración
+        = form_for @declaracion, url: { action: "create" } do |f|
+          .modal-body
+            .row
+              .col-md-4
+                .input-group
+                  = f.label "LETRA/NUMERO/BIS", { class: "input-group-addon", id: "basic-addon1"}
+                  = f.text_field :letra, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Letra", type: :text }
+                  = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Número", type: :number }
+                  = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Bis", type: :number }
+                %br
+                .input-group
+                  = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
+                  = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => "Sumario", type: :text }   
+                %br
+                .input-group
+                  = f.label :observaciones, { class: "input-group-addon", id: "basic-addon3"}
+                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Observaciones", type: :text }   
+                %br
+                .input-group
+                  = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
+                  = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date }     
+                %br
+                .input-group
+                  = f.label "Entrada Vigencia", { class: "input-group-addon", id: "basic-addon5"}
+                  = f.text_field :entrada_vigencia, {class: "form-control", "aria-describedby" => "basic-addon5", type: :date }
+                %br
+                .input-group
+                  = f.label "Finaliza Vigencia", { class: "input-group-addon",id: "basic-addon6"}
+                  = f.text_field :finaliza_vigencia, {class: "form-control", "aria-describedby" => "basic-addon6", type: :date }
+                  = f.text_field :plazo_dia, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo dia", type: :number }
+                  = f.text_field :plazo_mes, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo mes", type: :number }
+                  = f.text_field :plazo_anio, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo año", type: :number }
+              .col-md-8 dsads
+          .modal-footer
+            = f.submit "Guardar", {class: "btn btn-primary"}
+:javascript
+  wi = $(window).width()-20;
+  margin = 10; 
+  $(".modal-xs").css('width', wi);
+  $(".modal-xs").css('margin-left', margin);

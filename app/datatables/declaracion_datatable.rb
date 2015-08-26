@@ -1,6 +1,8 @@
 class DeclaracionDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :norma_a_dispositivos
   def_delegator :@view, :dispositivos_a_norma
+  def_delegator :@view, :norma_expediente
+  def_delegator :@view, :fechas
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -25,15 +27,13 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |decl|
       [
-        decl.letra.to_s + " " +
-        decl.nro.to_s + " " +
-        decl.bis.to_s + " / " +
+        decl.letra.to_s + "-" +
+        decl.nro.to_s + "-" +
+        decl.bis.to_s + "/" +
         decl.anio.to_s,
-        decl.sancion,
-        decl.descripcion,
-        norma_a_dispositivos(decl),
-        dispositivos_a_norma(decl),
-        "Expedientes",
+        decl.sumario,
+        fechas(decl),
+        norma_expediente(decl),
         associated_file(decl)
       ]
     end

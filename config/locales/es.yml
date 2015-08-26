@@ -14,8 +14,10 @@ es:
       btnheader:
         new: Nuevo
       table:
-        declaracion: Letra Nro Bis / Año
+        declaracion: Letra-Nro-Bis/Año
+        sumario: Sumario
         sancion: Sanción
+        fechas: Fechas
         description: Descripción
         relationships: Norma a Dispositivos
         relationships2: Dispositivos a Norma
