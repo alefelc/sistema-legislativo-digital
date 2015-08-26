@@ -20,4 +20,8 @@ class Norma < ActiveRecord::Base
   has_many :relationship_me_modifican, class_name: 'ModificaRelationship', foreign_key: 'modifica_id'
   has_many :me_modifican, through: :relationship_me_modifican, source: :me_modifica
 
+  def expedientes
+    self.circuitos.map { |x| x.expediente }
+  end
+  
 end
