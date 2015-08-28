@@ -6,13 +6,12 @@
   %table.table.table-striped.table-bordered#declaracion-table{"data-source" => declaracions_path(format: :json)}
     %thead
       %tr
-        %th{ width: "15%"}= t('.table.declaracion')
+        %th{ width: "16%"}= t('.table.declaracion')
         %th= t('.table.sumario')
         %th{ width: "18%"}= t('.table.fechas')
         %th= t('.table.expedientes')
         %th{ width: "1%" }
     %tbody
-
   / Modal Nueva Declaración
   #nuevo.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
     .modal-dialog.modal-xs{:role => "document"}
