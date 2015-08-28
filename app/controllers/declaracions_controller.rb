@@ -8,4 +8,14 @@ class DeclaracionsController < ApplicationController
     end
   end
 
+  def search_exp
+      expedientes = Expediente.where(nro_exp: params[:q])
+      
+      render json: expedientes
+  end
+
+  def search_norma
+      render json: [{name: "roli"}]
+  end  
+
 end

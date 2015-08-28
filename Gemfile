@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #Flexible authentication solution for Rails with Warden
 gem 'devise'
 
+# I18n
 gem 'rails-i18n'
 
 # Use ActiveModel has_secure_password

@@ -30,14 +30,13 @@
                   = f.text_field :letra, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Letra", type: :text }
                   = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Número", type: :number }
                   = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Bis", type: :number }
+                .input-group
+                  = f.label "Descripción", { class: "input-group-addon", id: "basic-addon3"}
+                  = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Descripción", type: :text }   
                 %br
                 .input-group
                   = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
                   = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => "Sumario", type: :text }   
-                %br
-                .input-group
-                  = f.label :observaciones, { class: "input-group-addon", id: "basic-addon3"}
-                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Observaciones", type: :text }   
                 %br
                 .input-group
                   = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
@@ -53,7 +52,29 @@
                   = f.text_field :plazo_dia, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo dia", type: :number }
                   = f.text_field :plazo_mes, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo mes", type: :number }
                   = f.text_field :plazo_anio, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo año", type: :number }
-              .col-md-8 dsads
+                %br
+                .input-group
+                  = f.label "Organismo Origen", { class: "input-group-addon", id: "basic-addon10"}
+                  = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => "Organismo origen", type: :text }
+              .col-md-8
+                .input-group
+                  = f.label "Observaciones", { class: "input-group-addon", id: "basic-addon7"}
+                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => "Observaciones", type: :text }   
+                %br
+                .input-group
+                  = f.label "Sanciona Exp/s N°", { class: "input-group-addon", id: "basic-addon8"}
+                  %input#exp.form-control{"aria-describedby" => "basic-addon8", :placeholder => "Expedientes sancionados", type: :text }   
+                %br
+                .input-group
+                  = f.label "Norma a Dsipositivos", { class: "input-group-addon", id: "basic-addon9"}
+                  %select.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Seleccione tipo de vinculo", type: :text}
+                    %option modifica
+                    %option deroga
+                    %option etc
+                    %option 4
+                    %option 5
+                  %input#norma.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Norma a Dispositivos", type: :text }   
+                %br  
           .modal-footer
             = f.submit "Guardar", {class: "btn btn-primary"}
 :javascript
@@ -61,3 +82,5 @@
   margin = 10; 
   $(".modal-xs").css('width', wi);
   $(".modal-xs").css('margin-left', margin);
+  $('#exp').tokenInput('/declaracions/search_exp',{theme: "bootstrap",zindex: 1050});
+  $('#norma').tokenInput('/declaracions/search_norma',{theme: "bootstrap",zindex: 1050});

@@ -5,6 +5,12 @@ Rails.application.routes.draw do
 
   root to: "dashboard#index"
 
-    resources :declaracions
+    resources :declaracions do
+      get 'search_exp', on: :collection
+      get 'search_norma', on: :collection
+    end  
 
+  resources :dashboard do
+    get 'search', on: :collection
+  end
 end
