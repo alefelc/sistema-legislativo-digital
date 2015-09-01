@@ -9,13 +9,25 @@ class DeclaracionsController < ApplicationController
   end
 
   def search_exp
-      expedientes = Expediente.where(nro_exp: params[:q])
-      
-      render json: expedientes
+      expedientes = Expediente.where("CONCAT(EXTRACT(year from anio), nro_exp, bis) ilike ?",
+                                     "%#{params[:q]}%").first(10)
+      render json: build_json(expedientes)
   end
 
   def search_norma
       render json: [{name: "roli"}]
-  end  
+  end
+
+  private
+  def build_json exps
+    json_array = []
+    exps.each do |x|
+      json_array << {
+        id: x.id,
+        indice: x.anio.year.to_s + "/" + x.nro_exp + "/" + x.bis.to_s
+      }
+    end
+    json_array
+  end
 
 end
