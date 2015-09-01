@@ -76,6 +76,16 @@
                     %option 5
                   %input#norma.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Norma a Dispositivos", type: :text }
                 %br
+                  #disp_norma_table
+                    .row
+                      .col-xs-12
+                        %table.table.table-striped.table-bordered
+                          %thead
+                            %tr
+                              %th= t('.table.ref_type')
+                              %th= t('.table.date')
+                              %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                          %tbody
           .modal-footer
             = f.submit "Guardar", {class: "btn btn-primary"}
 :javascript
