@@ -31,15 +31,15 @@
                   = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Bis", type: :number }
                 .input-group
                   = f.label "Descripción", { class: "input-group-addon", id: "basic-addon3"}
-                  = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Descripción", type: :text }   
+                  = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Descripción", type: :text }
                 %br
                 .input-group
                   = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
-                  = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => "Sumario", type: :text }   
+                  = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => "Sumario", type: :text }
                 %br
                 .input-group
                   = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
-                  = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date }     
+                  = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date }
                 %br
                 .input-group
                   = f.label "Entrada Vigencia", { class: "input-group-addon", id: "basic-addon5"}
@@ -58,28 +58,49 @@
               .col-md-8
                 .input-group
                   = f.label "Observaciones", { class: "input-group-addon", id: "basic-addon7"}
-                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => "Observaciones", type: :text }   
+                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => "Observaciones", type: :text }
                 %br
                 .input-group
-                  = f.label "Sanciona Exp/s N°", { class: "input-group-addon", id: "basic-addon8"}
-                  %input#exp.form-control{"aria-describedby" => "basic-addon8", :placeholder => "Expedientes sancionados", type: :text }   
+                  -# = f.label "Sanciona Exp/s N°", { class: "input-group-addon", id: "basic-addon8"}
+                  -# %input#exp.form-control{"aria-describedby" => "basic-addon8", :placeholder => "Expedientes sancionados", type: :text }
+                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
+                  = f.text_field :expedientes, { class: "form-control", "aria-describedby" => "basic-addon8", type: "text", data: { load: "" }}
                 %br
                 .input-group
-                  = f.label "Norma a Dsipositivos", { class: "input-group-addon", id: "basic-addon9"}
+                  = f.label "Norma a Dispositivos", { class: "input-group-addon", id: "basic-addon9"}
                   %select.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Seleccione tipo de vinculo", type: :text}
                     %option modifica
                     %option deroga
                     %option etc
                     %option 4
                     %option 5
-                  %input#norma.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Norma a Dispositivos", type: :text }   
-                %br  
+                  %input#norma.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Norma a Dispositivos", type: :text }
+                %br
           .modal-footer
             = f.submit "Guardar", {class: "btn btn-primary"}
 :javascript
   wi = $(window).width()-20;
-  margin = 10; 
+  margin = 10;
   $(".modal-xs").css('width', wi);
   $(".modal-xs").css('margin-left', margin);
-  $('#exp').tokenInput('/declaracions/search_exp',{theme: "bootstrap",zindex: 1050});
-  $('#norma').tokenInput('/declaracions/search_norma',{theme: "bootstrap",zindex: 1050});
+  $('#declaracion_expedientes').tokenInput('/declaracions/search_exp',{
+    preventDuplicates: true,
+    propertyToSearch: "indice",
+    theme: "bootstrap",
+    zindex: 1050,
+    resultsFormatter: function(exp) {
+      console.log(exp);
+      return "<li><p style= 'color: black'>" + exp.indice + "</p></li>"
+    },
+    tokenFormatter: function(exp) {
+      console.log(exp);
+      return "<li><p> Exp: " + exp.indice + "</p></li>"
+    },
+    allowTabOut: true,
+    placeholder: "Año + Nro + Bis  -  Ej: 20151090"
+  });
+  $('#norma').tokenInput('/declaracions/search_norma',{
+    theme: "bootstrap",
+    zindex: 1050,
+    allowTabOut: true
+  });
