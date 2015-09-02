@@ -26,6 +26,30 @@ es:
         date: Fechas
       modal:
         enter_exp: Ingrese Expediente
-        enter_norma: Ingrese Norma  
+        enter_norma: Ingrese Norma
+        destiny: Destino
+      letter: Letra
+      number: Número
+      bis: Bis
+      description: Descripción
+      summary: Sumario
+      validate_entry: Entrada Vigencia
+      validate_output: Finaliza Vigencia
+      deadline_day: Plazo Dia
+      deadline_month: Plazo Mes
+      deadline_year: Plazo Año
+      organism: Organismo Origen
+      observations: Observaciones
+      norma_disp: Norma a Dispositivos
+      select_ref_type: Selecciones tipo de vínculo
+      from: Desde
+      to: Hasta
+      index: LETRA/NUMERO/BIS
+      new_declaracion: Creando Declaración
+      destiny: Destino
+      not_clear: No aclara
+      working_day: Dia hábil
+      calendar_day: Dia corrido
+
   datatable:
     search: Ingrese búsqueda ...

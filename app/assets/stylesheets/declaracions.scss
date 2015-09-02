@@ -19,7 +19,7 @@
     }
 
   }
-  
+
   .input-group {
     width: 100%;
   }
@@ -32,4 +32,10 @@
     color: #00A65A;
   }
 
+
+  #disp_norma_table {
+    height: 114px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

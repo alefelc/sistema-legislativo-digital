@@ -19,78 +19,78 @@
         .modal-header
           %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
             %span{"aria-hidden" => "true"} &times;
-          %h4#nuevoLabel.modal-title Creando Declaración
+          %h4#nuevoLabel.modal-title= t('.new_declaracion')
         = form_for @declaracion, url: { action: "create" } do |f|
           .modal-body
             .row
               .col-md-4
                 .input-group
-                  = f.label "LETRA/NUMERO/BIS", { class: "input-group-addon", id: "basic-addon1"}
-                  = f.text_field :letra, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Letra", type: :text }
-                  = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Número", type: :number }
-                  = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => "Bis", type: :number }
+                  = f.label t('.index'), { class: "input-group-addon", id: "basic-addon1"}
+                  = f.text_field :letra, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.letter'), type: :text }
+                  = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.number'), type: :number }
+                  = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.bis'), type: :number }
                 .input-group
-                  = f.label "Descripción", { class: "input-group-addon", id: "basic-addon3"}
-                  = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => "Descripción", type: :text }
+                  = f.label t('.description'), { class: "input-group-addon", id: "basic-addon3"}
+                  = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => t('.description'), type: :text }
                 %br
                 .input-group
                   = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
-                  = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => "Sumario", type: :text }
+                  = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => t('.summary'), type: :text }
                 %br
                 .input-group
                   = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
                   = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date }
                 %br
                 .input-group
-                  = f.label "Entrada Vigencia", { class: "input-group-addon", id: "basic-addon5"}
+                  = f.label t('.validate_entry'), { class: "input-group-addon", id: "basic-addon5"}
                   = f.text_field :entrada_vigencia, {class: "form-control", "aria-describedby" => "basic-addon5", type: :date }
                 .input-group
-                  = f.label "Finaliza Vigencia", { class: "input-group-addon",id: "basic-addon6"}
+                  = f.label t('.validate_output'), { class: "input-group-addon",id: "basic-addon6"}
                   = f.text_field :finaliza_vigencia, {class: "form-control", "aria-describedby" => "basic-addon6", type: :date }
-                  = f.text_field :plazo_dia, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo dia", type: :number }
-                  = f.text_field :plazo_mes, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo mes", type: :number }
-                  = f.text_field :plazo_anio, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => "Plazo año", type: :number }
+                  = f.text_field :plazo_dia, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_day'), type: :number }
+                  = f.text_field :plazo_mes, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_month'), type: :number }
+                  = f.text_field :plazo_anio, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_year'), type: :number }
                 %br
                 .input-group
-                  = f.label "Organismo Origen", { class: "input-group-addon", id: "basic-addon10"}
-                  = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => "Organismo origen", type: :text }
+                  = f.label t('.organism'), { class: "input-group-addon", id: "basic-addon10"}
+                  = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.organism'), type: :text }
               .col-md-8
                 .input-group
-                  = f.label "Observaciones", { class: "input-group-addon", id: "basic-addon7"}
-                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => "Observaciones", type: :text }
+                  = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
+                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
                 %br
                 .input-group
                   = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
                   = f.text_field :expedientes, { class: "form-control", "aria-describedby" => "basic-addon8", type: "text", data: { load: "" }}
                 %br
                 .input-group
-                  = f.label "Norma a Dispositivos", { class: "input-group-addon", id: "basic-addon9"}
-                  %select.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Seleccione tipo de vinculo", type: :text}
-                    %option modifica
-                    %option deroga
-                    %option etc        
+                  = f.label t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
+                  = select_tag :refer_type, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
                   .input-group
-                    = f.label "Destino", { class: "input-group-addon", id: "basic-addon13"}
-                    %input#norma.form-control{"aria-describedby" => "basic-addon13", :placeholder => "Norma a Dispositivos", type: :text }
+                    = f.label t('.destiny'), { class: "input-group-addon", id: "basic-addon13"}
+                    %input#norma.form-control{"aria-describedby" => "basic-addon13", :placeholder => t('.norma_disp'), type: :text }
                   .input-group
-                    = f.label "Desde", { class: "input-group-addon", id: "basic-addon12"}
-                    %input.form-control{"aria-describedby" => "basic-addon12", type: :date }
+                    = f.label t('.from'), { class: "input-group-addon", id: "basic-addon12"}
+                    %input#from_refer.form-control{"aria-describedby" => "basic-addon12", type: :date }
                     .input-group-addon
                       %label
                         %input{:checked => "checked",:name => "tipo_dia", :type => "radio", :value => "0"}
-                        No aclara&nbsp
+                        = t('.not_clear')
+                        &nbsp
                       %label
                         %input{:name => "tipo_dia", :type => "radio", :value => "1"}
-                        Habil&nbsp
+                        = t('.working_day')
+                        &nbsp
                       %label
                         %input{:name => "tipo_dia", :type => "radio", :value => "2"}
-                        Corrido&nbsp
+                        = t('.calendar_day')
+                        &nbsp
                   .input-group
-                    = f.label "Hasta", { class: "input-group-addon",id: "basic-addon11"}
-                    %input.form-control{"aria-describedby" => "basic-addon11", type: :date }
-                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo dia", type: :number }
-                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo mes", type: :number }
-                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo año", type: :number }
+                    = f.label t('.to'), { class: "input-group-addon",id: "basic-addon11"}
+                    %input#to_refer.form-control{"aria-describedby" => "basic-addon11", type: :date }
+                    %input#day_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_day'), type: :number }
+                    %input#month_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_month'), type: :number }
+                    %input#year_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_year'), type: :number }
                   .input-group-addon
                     %i.fa.fa-plus-circle.fa-2x#add_disp
                 %br
@@ -101,6 +101,7 @@
                           %thead
                             %tr
                               %th= t('.table.ref_type')
+                              %th= t('.table.destiny')
                               %th= t('.table.date')
                               %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
                           %tbody

@@ -21,13 +21,14 @@ class DeclaracionsController < ApplicationController
   end
 
   private
-  
+
   def build_json_exp exps
     json_array = []
     exps.each do |x|
+      year = x.anio.present? ? x.anio.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: x.anio.year.to_s + "/" + x.nro_exp + "/" + x.bis.to_s
+        indice: year + "/" + x.nro_exp + "/" + x.bis.to_s
       }
     end
     json_array
@@ -36,9 +37,10 @@ class DeclaracionsController < ApplicationController
   def build_json_norma norma
     json_array = []
     norma.each do |x|
+      year = x.sancion.present? ? x.sancion.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: x.type + ": " + x.sancion.year.to_s + "/" + x.nro.to_s + "/" + x.bis.to_s
+        indice: x.type + ": " + year + "/" + x.nro.to_s + "/" + x.bis.to_s
       }
     end
     json_array

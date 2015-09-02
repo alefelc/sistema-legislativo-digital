@@ -7,4 +7,27 @@ $(document).on 'ready page:load', ->
     fnInfoCallback: (oSettings, iStart, iEnd, iMax, iTotal, sPre ) ->
       $('tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
-      return    
+      return
+  $('#add_disp').on 'click', ->
+    flagTokenInput = false
+    $.each $('#norma').tokenInput('get'), (index, element) ->
+      flagTokenInput = true
+      ref_type = $('#refer_type  option:selected').text()
+      dates = ""
+      row = "<tr> <td> #{ref_type} </td> " +
+      "<td> #{this.indice} </td>" +
+      "<td> #{dates} </td>" +
+      "<td> <i class='fa fa-times remove-tr'></i> </td> </tr>"
+      $('#disp_norma_table tbody').append(row)
+    if flagTokenInput
+      $('#norma').tokenInput 'clear'
+      $('#from_refer').val ''
+      $('#to_refer').val ''
+      $('#day_refer').val ''
+      $('#month_refer').val ''
+      $('#year_refer').val ''
+    else
+      alert 'Debe vincular alguna norma.'
+
+  $(document).on 'click', '.remove-tr', ->
+    $(this).parents().eq(1).remove()
