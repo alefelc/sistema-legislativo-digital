@@ -116,6 +116,7 @@
     propertyToSearch: "indice",
     theme: "bootstrap",
     zindex: 1050,
+    hintText: "#{t('declaracions.index.modal.enter_exp')}",
     resultsFormatter: function(exp) {
       return "<li><p style= 'color: black'>" + exp.indice + "</p></li>"
     },
@@ -126,7 +127,17 @@
     placeholder: "Año + Nro + Bis  -  Ej: 20151090"
   });
   $('#norma').tokenInput('/declaracions/search_norma',{
+    preventDuplicates: true,
+    propertyToSearch: "indice",
     theme: "bootstrap",
     zindex: 1050,
-    allowTabOut: true
+    hintText: "#{t('declaracions.index.modal.enter_norma')}",
+    resultsFormatter: function(norma) {
+      return "<li><p style= 'color: black'> " + norma.indice + "</p></li>"
+    },
+    tokenFormatter: function(norma) {
+      return "<li><p> " + norma.indice + "</p></li>"
+    },
+    allowTabOut: true,
+    placeholder: "Año + Nro + Bis  -  Ej: 20151090"
   });
