@@ -24,6 +24,8 @@ es:
         expedientes: Expedientes
         ref_type: Tipo de vínculo
         date: Fechas
-
+      modal:
+        enter_exp: Ingrese Expediente
+        enter_norma: Ingrese Norma  
   datatable:
     search: Ingrese búsqueda ...
