@@ -19,9 +19,17 @@
     }
 
   }
+  
+  .input-group {
+    width: 100%;
+  }
 
   #disp_norma_table th {
     text-align: center;
+  }
+
+  #add_disp:hover {
+    color: #00A65A;
   }
 
 }
