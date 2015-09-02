@@ -44,7 +44,6 @@
                 .input-group
                   = f.label "Entrada Vigencia", { class: "input-group-addon", id: "basic-addon5"}
                   = f.text_field :entrada_vigencia, {class: "form-control", "aria-describedby" => "basic-addon5", type: :date }
-                %br
                 .input-group
                   = f.label "Finaliza Vigencia", { class: "input-group-addon",id: "basic-addon6"}
                   = f.text_field :finaliza_vigencia, {class: "form-control", "aria-describedby" => "basic-addon6", type: :date }
@@ -61,8 +60,6 @@
                   = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => "Observaciones", type: :text }
                 %br
                 .input-group
-                  -# = f.label "Sanciona Exp/s N°", { class: "input-group-addon", id: "basic-addon8"}
-                  -# %input#exp.form-control{"aria-describedby" => "basic-addon8", :placeholder => "Expedientes sancionados", type: :text }
                   = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
                   = f.text_field :expedientes, { class: "form-control", "aria-describedby" => "basic-addon8", type: "text", data: { load: "" }}
                 %br
@@ -71,10 +68,31 @@
                   %select.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Seleccione tipo de vinculo", type: :text}
                     %option modifica
                     %option deroga
-                    %option etc
-                    %option 4
-                    %option 5
-                  %input#norma.form-control{"aria-describedby" => "basic-addon9", :placeholder => "Norma a Dispositivos", type: :text }
+                    %option etc        
+                  .input-group
+                    = f.label "Destino", { class: "input-group-addon", id: "basic-addon13"}
+                    %input#norma.form-control{"aria-describedby" => "basic-addon13", :placeholder => "Norma a Dispositivos", type: :text }
+                  .input-group
+                    = f.label "Desde", { class: "input-group-addon", id: "basic-addon12"}
+                    %input.form-control{"aria-describedby" => "basic-addon12", type: :date }
+                    .input-group-addon
+                      %label
+                        %input{:checked => "checked",:name => "tipo_dia", :type => "radio", :value => "0"}
+                        No aclara&nbsp
+                      %label
+                        %input{:name => "tipo_dia", :type => "radio", :value => "1"}
+                        Habil&nbsp
+                      %label
+                        %input{:name => "tipo_dia", :type => "radio", :value => "2"}
+                        Corrido&nbsp
+                  .input-group
+                    = f.label "Hasta", { class: "input-group-addon",id: "basic-addon11"}
+                    %input.form-control{"aria-describedby" => "basic-addon11", type: :date }
+                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo dia", type: :number }
+                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo mes", type: :number }
+                    %input.form-control{"aria-describedby" => "basic-addon11",:placeholder => "Plazo año", type: :number }
+                  .input-group-addon
+                    %i.fa.fa-plus-circle.fa-2x#add_disp
                 %br
                   #disp_norma_table
                     .row
@@ -99,11 +117,9 @@
     theme: "bootstrap",
     zindex: 1050,
     resultsFormatter: function(exp) {
-      console.log(exp);
       return "<li><p style= 'color: black'>" + exp.indice + "</p></li>"
     },
     tokenFormatter: function(exp) {
-      console.log(exp);
       return "<li><p> Exp: " + exp.indice + "</p></li>"
     },
     allowTabOut: true,
