@@ -8,6 +8,46 @@ $(document).on 'ready page:load', ->
       $('tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
       return
+
+  $('#declaracion_expedientes').tokenInput '/declaracions/search_exp',
+    preventDuplicates: true
+    propertyToSearch: 'indice'
+    theme: 'bootstrap'
+    zindex: 1050
+    hintText: "<%= I18n.t('declaracions.index.modal.enter_exp') %>"
+    resultsFormatter: (exp) ->
+      '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>'
+    tokenFormatter: (exp) ->
+      '<li><p> Exp: ' + exp.indice + '</p></li>'
+    allowTabOut: true
+    placeholder: 'Año + Nro + Bis  -  Ej: 20151090'
+
+  $('#norma').tokenInput '/declaracions/search_norma',
+    preventDuplicates: true
+    propertyToSearch: 'indice'
+    theme: 'bootstrap'
+    zindex: 1050
+    hintText: "<%= I18n.t('declaracions.index.modal.enter_norma') %>"
+    resultsFormatter: (norma) ->
+      '<li><p style= \'color: black\'> ' + norma.indice + '</p></li>'
+    tokenFormatter: (norma) ->
+      '<li><p> ' + norma.indice + '</p></li>'
+    allowTabOut: true
+    placeholder: 'Año + Nro + Bis  -  Ej: 20151090'
+
+  $('#tags').tokenInput '/declaracions/search_norma',
+    preventDuplicates: true
+    propertyToSearch: 'nombre'
+    theme: 'bootstrap'
+    zindex: 1050
+    hintText: '#{t(\'declaracions.index.modal.enter_norma\')}'
+    resultsFormatter: (tag) ->
+      '<li><p style= \'color: black\'> ' + tag.nombre + '</p></li>'
+    tokenFormatter: (tag) ->
+      '<li><p> ' + tag.nombre + '</p></li>'
+    allowTabOut: true
+    placeholder: 'Buscar voces claves...'
+
   $('#add_disp').on 'click', ->
     flagTokenInput = false
     $.each $('#norma').tokenInput('get'), (index, element) ->
@@ -34,14 +74,14 @@ $(document).on 'ready page:load', ->
     setTimeout (->
       $('.clasification').fadeIn(100)
       return
-    ), 250  
-  
+    ), 250
+
   $('#ready').on 'click', ->
     $('.clasification').fadeOut(100)
     setTimeout (->
       $('#second-column').fadeIn(100)
       return
     ), 250
-  
+
   $(document).on 'click', '.remove-tr', ->
     $(this).parents().eq(1).remove()
