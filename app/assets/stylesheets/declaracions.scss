@@ -45,4 +45,14 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  #nuevo .col-md-4, #nuevo .col-md-8 #second-column {
+    & > .input-group{
+      padding-bottom: 5px;
+    }
+  }
+
+  #nuevo .input-group {
+    width: 100%;
+  }
 }
