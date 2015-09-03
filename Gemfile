@@ -80,5 +80,9 @@ group :development do
 
   # Haml generators for Rails 4
   gem "haml-rails", "~> 0.9"
+
+  # For live reload chrome extension
+  gem 'rb-fsevent'
+  gem 'guard-livereload'
 end
 
