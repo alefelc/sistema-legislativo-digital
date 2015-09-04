@@ -15,7 +15,7 @@ es:
         new: Nuevo
       btn_clasification:
         ready: Listo
-        classify: Clasificar Norma  
+        classify: Clasificar Norma
       table:
         declaracion: Letra-Nro-Bis/Año
         sumario: Sumario
@@ -32,6 +32,7 @@ es:
         enter_exp: Ingrese Expediente
         enter_norma: Ingrese Norma
         destiny: Destino
+        tags: Voces claves
       letter: Letra
       number: Número
       bis: Bis
@@ -54,6 +55,14 @@ es:
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
+      clasifications: Estructura de clasificaciones
 
   datatable:
     search: Ingrese búsqueda ...
+
+  tokeninput:
+    placeholder:
+      exp_example: 'Año + Nro + Bis  -  Ej: 20151090'
+      tag: 'Voz clave'
+      tag_example: 'Ingrese voz clave'
+      norma_example: 'Año + Nro + Bis  -  Ej: 20151090'

@@ -50,9 +50,12 @@
                 .input-group
                   = f.label t('.organism'), { class: "input-group-addon", id: "basic-addon10"}
                   = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.organism'), type: :text }
+                .input-group
+                  = f.label t('.modal.tags'), { class: "input-group-addon", id: "basic-addon13" }
+                  %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text }
               .col-md-8
                 .clasification
-                  Estructura de clasificaciones
+                  = t('.clasifications')
                   %hr
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
                 #second-column
@@ -68,7 +71,7 @@
                     = select_tag :refer_type, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
                     .input-group
                       = f.label t('.destiny'), { class: "input-group-addon", id: "basic-addon13"}
-                      %input#norma.form-control{"aria-describedby" => "basic-addon13", :placeholder => t('.norma_disp'), type: :text }
+                      %input#norma.form-control{"aria-describedby" => "basic-addon13", type: :text }
                     .input-group
                       = f.label t('.from'), { class: "input-group-addon", id: "basic-addon12"}
                       %input#from_refer.form-control{"aria-describedby" => "basic-addon12", type: :date }

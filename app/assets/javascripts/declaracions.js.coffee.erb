@@ -20,7 +20,20 @@ $(document).on 'ready page:load', ->
     tokenFormatter: (exp) ->
       '<li><p> Exp: ' + exp.indice + '</p></li>'
     allowTabOut: true
-    placeholder: 'Año + Nro + Bis  -  Ej: 20151090'
+    placeholder: "<%= I18n.t('tokeninput.placeholder.exp_example') %>"
+
+  $('#tags-tokeninput').tokenInput '/declaracions/search_tag',
+    preventDuplicates: true
+    propertyToSearch: 'nombre'
+    theme: 'bootstrap'
+    zindex: 1050
+    hintText: "<%= I18n.t('tokeninput.placeholder.tag_example') %>"
+    resultsFormatter: (tag) ->
+      '<li><p style= \'color: black\'>' + tag.nombre + '</p></li>'
+    tokenFormatter: (tag) ->
+      '<li><p>' + tag.nombre + '</p></li>'
+    allowTabOut: true
+    placeholder: "<%= I18n.t('tokeninput.placeholder.tag') %>"
 
   $('#norma').tokenInput '/declaracions/search_norma',
     preventDuplicates: true
@@ -33,20 +46,7 @@ $(document).on 'ready page:load', ->
     tokenFormatter: (norma) ->
       '<li><p> ' + norma.indice + '</p></li>'
     allowTabOut: true
-    placeholder: 'Año + Nro + Bis  -  Ej: 20151090'
-
-  $('#tags').tokenInput '/declaracions/search_norma',
-    preventDuplicates: true
-    propertyToSearch: 'nombre'
-    theme: 'bootstrap'
-    zindex: 1050
-    hintText: '#{t(\'declaracions.index.modal.enter_norma\')}'
-    resultsFormatter: (tag) ->
-      '<li><p style= \'color: black\'> ' + tag.nombre + '</p></li>'
-    tokenFormatter: (tag) ->
-      '<li><p> ' + tag.nombre + '</p></li>'
-    allowTabOut: true
-    placeholder: 'Buscar voces claves...'
+    placeholder: "<%= I18n.t('tokeninput.placeholder.norma_example') %>"
 
   $('#add_disp').on 'click', ->
     flagTokenInput = false
