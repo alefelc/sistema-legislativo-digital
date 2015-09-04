@@ -17,7 +17,7 @@ es:
         ready: Listo
         classify: Clasificar Norma
       table:
-        declaracion: Letra-Nro-Bis/Año
+        declaracion: Nro-Bis/Año
         sumario: Sumario
         sancion: Sanción
         fechas: Fechas
@@ -55,7 +55,6 @@ es:
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
-      clasifications: Estructura de clasificaciones
 
   datatable:
     search: Ingrese búsqueda ...

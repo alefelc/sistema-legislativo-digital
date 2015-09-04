@@ -2,10 +2,17 @@
   background-color: white;
 }
 
+.center {
+  text-align: center;
+}
+
 #declaracion {
 
   #declaracion-table_wrapper {
     margin-top: -30px;
+    th {
+      @extend .center;
+    }
   }
 
   .modal-header {

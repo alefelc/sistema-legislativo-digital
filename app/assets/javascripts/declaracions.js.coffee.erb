@@ -8,6 +8,13 @@ $(document).on 'ready page:load', ->
       $('tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
       return
+    aoColumns: [
+      { sortable: false, "width": "12%" , sClass: "center"}
+      { sortable: false }
+      { sortable: false }
+      { sortable: false, "width": "14%" }
+      { sortable: false, "width": "1%" }
+    ]
 
   $('#declaracion_expedientes').tokenInput '/declaracions/search_exp',
     preventDuplicates: true

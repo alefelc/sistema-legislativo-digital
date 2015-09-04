@@ -27,7 +27,6 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |decl|
       [
-        decl.letra.to_s + "-" +
         decl.nro.to_s + "-" +
         decl.bis.to_s + "/" +
         decl.anio.to_s,
@@ -37,11 +36,10 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
         associated_file(decl)
       ]
     end
-  end 
- 
+  end
+
   def associated_file decl
-    # link_to nil, "#", class: "btn btn-xs btn-default"
-    "file"
+    "<i class=\"btn btn-xs fa fa-download\"></i>"
   end
 
   def declaraciones
@@ -49,7 +47,11 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   end
 
   def fetch_records
-    Declaracion.page(page).per(per_page)
+    declaracion = Declaracion.page(page).per(per_page)
+    if params[:sSearch].present?
+      declaracion = declaracion.where("sumario ilike '%#{params[:sSearch]}%'")
+    end
+    declaracion
   end
 
   def per_page
