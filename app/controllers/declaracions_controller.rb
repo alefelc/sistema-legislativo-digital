@@ -20,6 +20,11 @@ class DeclaracionsController < ApplicationController
     render json: build_json_norma(normas)
   end
 
+  def search_tag
+    tags = Tag.where("nombre ilike '%#{params[:q]}%'").first(5)
+    render json: tags
+  end
+
   private
 
   def build_json_exp exps
