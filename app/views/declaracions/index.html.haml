@@ -56,6 +56,137 @@
               .col-md-8
                 .clasification
                   = t('.clasifications')
+                  .input-group
+                    = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          General
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          Autonoma
+                          &nbsp
+                    .input-group    
+                      = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            Individual y meros actos Administrativos
+                            &nbsp 
+                      .input-group    
+                        = f.label "Contrataciones y conveños", {class: "input-group-addon", id: "basic-addon16"}
+                        .input-group.form-control
+                          %label
+                            %input{:type => "checkbox"}
+                              De servicios públicos
+                              &nbsp
+                          %label
+                            %input{:type => "checkbox"}
+                              Otros
+                              &nbsp
+                    .input-group    
+                      = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            General
+                            &nbsp
+                        %label
+                          %input{:type => "checkbox"}
+                            General
+                            &nbsp
+                  .input-group
+                    = f.label "Vigencia", { class: "input-group-addon", id: "basic-addon14"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Dictado por razones de Emergencias
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          De necesidad o urgencia
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          Dictado ad referendum
+                          &nbsp    
+                    .input-group    
+                      = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            Contiene normas grales y permanentes
+                            &nbsp
+                        %label
+                          %input{:type => "checkbox"}
+                            No contiene
+                            &nbsp
+                    .input-group    
+                      = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            Subsisten
+                            &nbsp
+                      .input-group    
+                        = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
+                        .input-group.form-control
+                          %label
+                            %input{:type => "checkbox"}
+                              Normas Grales
+                              &nbsp
+                          %label
+                            %input{:type => "checkbox"}
+                              Normas No Grales
+                              &nbsp
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Plazo determinado y Cumplido
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          Plazo determinado y No cumplido
+                          &nbsp
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Vigencia sujeta a condicion resolutoria
+                          &nbsp
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Cumplida
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          No Cumplida
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          Objeto agotado
+                          &nbsp
+                  .input-group
+                    = f.label "Derogación", { class: "input-group-addon", id: "basic-addon16"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Derogación sujeta a condición suspensiva
+                          &nbsp
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Derog Tácita
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          Cumplida
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          No Cumplida
+                          &nbsp
                   %hr
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
                 #second-column
