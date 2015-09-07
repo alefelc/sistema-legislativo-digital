@@ -6,11 +6,11 @@
   %table.table.table-striped.table-bordered#declaracion-table{"data-source" => declaracions_path(format: :json)}
     %thead
       %tr
-        %th{ width: "16%"}= t('.table.declaracion')
+        %th= t('.table.declaracion')
         %th= t('.table.sumario')
-        %th{ width: "18%"}= t('.table.fechas')
+        %th= t('.table.fechas')
         %th= t('.table.expedientes')
-        %th{ width: "1%" }
+        %th
     %tbody
   / Modal Nueva Declaración
   #nuevo.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
@@ -55,7 +55,6 @@
                   %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text }
               .col-md-8
                 .clasification
-                  = t('.clasifications')
                   .input-group
                     = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
                     .input-group.form-control
@@ -67,14 +66,14 @@
                         %input{:type => "checkbox"}
                           Autonoma
                           &nbsp
-                    .input-group    
+                    .input-group
                       = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
                       .input-group.form-control
                         %label
                           %input{:type => "checkbox"}
                             Individual y meros actos Administrativos
-                            &nbsp 
-                      .input-group    
+                            &nbsp
+                      .input-group
                         = f.label "Contrataciones y conveños", {class: "input-group-addon", id: "basic-addon16"}
                         .input-group.form-control
                           %label
@@ -85,7 +84,7 @@
                             %input{:type => "checkbox"}
                               Otros
                               &nbsp
-                    .input-group    
+                    .input-group
                       = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
                       .input-group.form-control
                         %label
@@ -110,8 +109,8 @@
                       %label
                         %input{:type => "checkbox"}
                           Dictado ad referendum
-                          &nbsp    
-                    .input-group    
+                          &nbsp
+                    .input-group
                       = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
                       .input-group.form-control
                         %label
@@ -122,14 +121,14 @@
                           %input{:type => "checkbox"}
                             No contiene
                             &nbsp
-                    .input-group    
+                    .input-group
                       = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
                       .input-group.form-control
                         %label
                           %input{:type => "checkbox"}
                             Subsisten
                             &nbsp
-                      .input-group    
+                      .input-group
                         = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
                         .input-group.form-control
                           %label
