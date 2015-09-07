@@ -39,11 +39,11 @@
     color: #00A65A;
   }
 
-  #nuevo .clasification {
+  #modaldecl .clasification {
     display: none;
   }
 
-  #nuevo #classify {
+  #modaldecl #classify {
     margin-bottom: 5px;
   }
 
@@ -53,13 +53,13 @@
     overflow-x: hidden;
   }
 
-  #nuevo .col-md-4, #nuevo .col-md-8 #second-column, #nuevo .col-md-8 .clasification {
+  #modaldecl .col-md-4, #modaldecl .col-md-8 #second-column, #modaldecl .col-md-8 .clasification {
     & > .input-group{
       padding-bottom: 5px;
     }
   }
 
-  #nuevo .input-group {
+  #modaldecl .input-group {
     width: 100%;
   }
 }

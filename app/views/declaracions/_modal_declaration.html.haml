@@ -1,0 +1,231 @@
+#modaldecl.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xs{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#nuevoLabel.modal-title= t('.new_declaracion')
+      = form_for @declaracion, url: { action: actionvar } do |f|
+        .modal-body
+          .row
+            .col-md-4#first-column
+              .input-group
+                = f.label t('.index'), { class: "input-group-addon", id: "basic-addon1"}
+                = f.text_field :letra, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.letter'), type: :text }
+                = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.number'), type: :number }
+                = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.bis'), type: :number }
+              .input-group
+                = f.label t('.description'), { class: "input-group-addon", id: "basic-addon3"}
+                = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => t('.description'), type: :text}
+              .input-group
+                = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
+                = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => t('.summary'), type: :text}
+              .input-group
+                = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
+                = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date}
+              .input-group
+                = f.label t('.validate_entry'), { class: "input-group-addon", id: "basic-addon5"}
+                = f.text_field :entrada_vigencia, {class: "form-control", "aria-describedby" => "basic-addon5", type: :date }
+              .input-group
+                = f.label t('.validate_output'), { class: "input-group-addon",id: "basic-addon6"}
+                = f.text_field :finaliza_vigencia, {class: "form-control", "aria-describedby" => "basic-addon6", type: :date }
+                = f.text_field :plazo_dia, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_day'), type: :number }
+                = f.text_field :plazo_mes, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_month'), type: :number }
+                = f.text_field :plazo_anio, {class: "form-control", "aria-describedby" => "basic-addon6",:placeholder => t('.deadline_year'), type: :number }
+              .input-group
+                = f.label t('.organism'), { class: "input-group-addon", id: "basic-addon10"}
+                = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.organism'), type: :text }
+              .input-group
+                = f.label t('.modal.tags'), { class: "input-group-addon", id: "basic-addon13" }
+                %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text }
+            .col-md-8
+              .clasification
+                .input-group
+                  = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        General
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        Autonoma
+                        &nbsp
+                  .input-group
+                    = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Individual y meros actos Administrativos
+                          &nbsp
+                    .input-group
+                      = f.label "Contrataciones y conveños", {class: "input-group-addon", id: "basic-addon16"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            De servicios públicos
+                            &nbsp
+                        %label
+                          %input{:type => "checkbox"}
+                            Otros
+                            &nbsp
+                  .input-group
+                    = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          General
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          General
+                          &nbsp
+                .input-group
+                  = f.label "Vigencia", { class: "input-group-addon", id: "basic-addon14"}
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Dictado por razones de Emergencias
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        De necesidad o urgencia
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        Dictado ad referendum
+                        &nbsp
+                  .input-group
+                    = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Contiene normas grales y permanentes
+                          &nbsp
+                      %label
+                        %input{:type => "checkbox"}
+                          No contiene
+                          &nbsp
+                  .input-group
+                    = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
+                    .input-group.form-control
+                      %label
+                        %input{:type => "checkbox"}
+                          Subsisten
+                          &nbsp
+                    .input-group
+                      = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
+                      .input-group.form-control
+                        %label
+                          %input{:type => "checkbox"}
+                            Normas Grales
+                            &nbsp
+                        %label
+                          %input{:type => "checkbox"}
+                            Normas No Grales
+                            &nbsp
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Plazo determinado y Cumplido
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        Plazo determinado y No cumplido
+                        &nbsp
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Vigencia sujeta a condicion resolutoria
+                        &nbsp
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Cumplida
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        No Cumplida
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        Objeto agotado
+                        &nbsp
+                .input-group
+                  = f.label "Derogación", { class: "input-group-addon", id: "basic-addon16"}
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Derogación sujeta a condición suspensiva
+                        &nbsp
+                  .input-group.form-control
+                    %label
+                      %input{:type => "checkbox"}
+                        Derog Tácita
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        Cumplida
+                        &nbsp
+                    %label
+                      %input{:type => "checkbox"}
+                        No Cumplida
+                        &nbsp
+                %hr
+                %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
+              #second-column
+                %button#classify.btn.btn-default{:type => "button"}= t('.btn_clasification.classify')
+                .input-group
+                  = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
+                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
+                .input-group
+                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
+                  = f.text_field :expedientes, { class: "form-control", "aria-describedby" => "basic-addon8", type: "text", data: { load: "" }}
+                .input-group
+                  = f.label t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
+                  = select_tag :refer_type, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
+                  .input-group
+                    = f.label t('.destiny'), { class: "input-group-addon", id: "basic-addon13"}
+                    %input#norma.form-control{"aria-describedby" => "basic-addon13", type: :text }
+                  .input-group
+                    = f.label t('.from'), { class: "input-group-addon", id: "basic-addon12"}
+                    %input#from_refer.form-control{"aria-describedby" => "basic-addon12", type: :date }
+                    .input-group-addon
+                      %label
+                        %input{:checked => "checked",:name => "tipo_dia", :type => "radio", :value => "0"}
+                        = t('.not_clear')
+                        &nbsp
+                      %label
+                        %input{:name => "tipo_dia", :type => "radio", :value => "1"}
+                        = t('.working_day')
+                        &nbsp
+                      %label
+                        %input{:name => "tipo_dia", :type => "radio", :value => "2"}
+                        = t('.calendar_day')
+                        &nbsp
+                  .input-group
+                    = f.label t('.to'), { class: "input-group-addon",id: "basic-addon11"}
+                    %input#to_refer.form-control{"aria-describedby" => "basic-addon11", type: :date }
+                    %input#day_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_day'), type: :number }
+                    %input#month_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_month'), type: :number }
+                    %input#year_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_year'), type: :number }
+                  .input-group-addon
+                    %i.fa.fa-plus-circle.fa-2x#add_disp
+                #disp_norma_table
+                  .row
+                    .col-xs-12
+                      %table.table.table-striped.table-bordered
+                        %thead
+                          %tr
+                            %th= t('.table.ref_type')
+                            %th= t('.table.destiny')
+                            %th= t('.table.date')
+                            %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                        %tbody
+        .modal-footer
+          = f.submit "Guardar", {class: "btn btn-primary"}
+:javascript
+  wi = $(window).width()-20;
+  margin = 10;
+  $(".modal-xs").css('width', wi);
+  $(".modal-xs").css('margin-left', margin);

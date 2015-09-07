@@ -13,9 +13,6 @@ es:
     index:
       btnheader:
         new: Nuevo
-      btn_clasification:
-        ready: Listo
-        classify: Clasificar Norma
       table:
         declaracion: Nro-Bis/Año
         sumario: Sumario
@@ -25,9 +22,14 @@ es:
         relationships: Norma a Dispositivos
         relationships2: Dispositivos a Norma
         expedientes: Sanciona Exp N°
+    modal_declaration:
+      table:
         ref_type: Tipo de vínculo
         date: Fechas
         destiny: Destino
+      btn_clasification:
+        ready: Listo
+        classify: Clasificar Norma
       modal:
         enter_exp: Ingrese Expediente
         enter_norma: Ingrese Norma

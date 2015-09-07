@@ -92,3 +92,12 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'click', '.remove-tr', ->
     $(this).parents().eq(1).remove()
+
+  $(document).on 'ajax:success', '.linktoedit', (e,data, status, xhr) ->
+    $('#declaracion-edit').empty()
+    $('#declaracion-edit').append(data)
+    $('#declaracion-edit .modal').modal('show')
+    return
+
+  $('#btn-new').on 'click', ->
+    $('#declaracion-edit').empty()    

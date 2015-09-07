@@ -26,13 +26,17 @@ module ApplicationHelper
     resp
   end
 
+  def index_norma norma
+    link_to(norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.anio.to_s, edit_declaracion_path(norma), {remote: true, class: "linktoedit"})
+  end  
+
   def norma_expediente norma
     resp = ""
     norma.circuitos.each do |c|
       if (c.nro == 0)
-        resp = resp + "Expediente: " + link_to(c.expediente.nro_exp, "expedientes/#{c.expediente.id}")
+        resp = resp + "Expediente: " + link_to(c.expediente.nro_exp, "expedientes/#{c.expediente.id}") + "\n"
       else
-        resp= resp + "Circuito nro: #{c.nro}--> Expediente: #{c.expediente.nro_exp} \n"
+        resp= resp + "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp, "expediente/#{c.expediente.id}") + "\n"
       end
     end
     resp
