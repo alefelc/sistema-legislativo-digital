@@ -215,7 +215,7 @@
                 #disp_norma_table
                   .row
                     .col-xs-12
-                      %table.table.table-striped.table-bordered
+                      %table.table.table-striped.table-bordered#table-link
                         %thead
                           %tr
                             %th= t('.table.ref_type')
@@ -276,5 +276,17 @@
       return '<li><p> ' + norma.indice + '</p></li>';
     },
     allowTabOut: true,
-    placeholder: "#{ I18n.t('tokeninput.placeholder.norma_example') }"
+    placeholder: "#{ I18n.t('tokeninput.placeholder.norma_example') }",
+    onAdd: function(norma){
+      vinculada = false
+      $('#table-link > tbody  > tr').each(function() {
+        n = norma.indice.trim();
+        td = $(this).children(':nth-child(2)').text().trim();
+        vinculada = (td == n);
+        if (vinculada){
+          $('#norma').tokenInput('remove', norma);
+          alert(n + " ya esta vinculada/o");
+        }
+      });
+    }
   });
