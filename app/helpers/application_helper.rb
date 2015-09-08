@@ -28,7 +28,7 @@ module ApplicationHelper
 
   def index_norma norma
     link_to(norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.anio.to_s, edit_declaracion_path(norma), {remote: true, class: "linktoedit"})
-  end  
+  end
 
   def norma_expediente norma
     resp = ""
@@ -49,5 +49,22 @@ module ApplicationHelper
       "Normas"
     end
   end
+
+  def prepopulate_exps norma
+    norma.expedientes.present? ? build_json_exp(norma.expedientes) : []
+  end
+
+  def build_json_exp exps
+    json_array = []
+    exps.each do |x|
+      year = x.anio.present? ? x.anio.year.to_s : ""
+      json_array << {
+        id: x.id,
+        indice: year + "/" + x.nro_exp + "/" + x.bis.to_s
+      }
+    end
+    json_array
+  end
+
 
 end

@@ -16,46 +16,7 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "1%" }
     ]
 
-  $('#declaracion_expedientes').tokenInput '/declaracions/search_exp',
-    preventDuplicates: true
-    propertyToSearch: 'indice'
-    theme: 'bootstrap'
-    zindex: 1050
-    hintText: "<%= I18n.t('declaracions.index.modal.enter_exp') %>"
-    resultsFormatter: (exp) ->
-      '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>'
-    tokenFormatter: (exp) ->
-      '<li><p> Exp: ' + exp.indice + '</p></li>'
-    allowTabOut: true
-    placeholder: "<%= I18n.t('tokeninput.placeholder.exp_example') %>"
-
-  $('#tags-tokeninput').tokenInput '/declaracions/search_tag',
-    preventDuplicates: true
-    propertyToSearch: 'nombre'
-    theme: 'bootstrap'
-    zindex: 1050
-    hintText: "<%= I18n.t('tokeninput.placeholder.tag_example') %>"
-    resultsFormatter: (tag) ->
-      '<li><p style= \'color: black\'>' + tag.nombre + '</p></li>'
-    tokenFormatter: (tag) ->
-      '<li><p>' + tag.nombre + '</p></li>'
-    allowTabOut: true
-    placeholder: "<%= I18n.t('tokeninput.placeholder.tag') %>"
-
-  $('#norma').tokenInput '/declaracions/search_norma',
-    preventDuplicates: true
-    propertyToSearch: 'indice'
-    theme: 'bootstrap'
-    zindex: 1050
-    hintText: "<%= I18n.t('declaracions.index.modal.enter_norma') %>"
-    resultsFormatter: (norma) ->
-      '<li><p style= \'color: black\'> ' + norma.indice + '</p></li>'
-    tokenFormatter: (norma) ->
-      '<li><p> ' + norma.indice + '</p></li>'
-    allowTabOut: true
-    placeholder: "<%= I18n.t('tokeninput.placeholder.norma_example') %>"
-
-  $('#add_disp').on 'click', ->
+  $(document).on 'click', '#add_disp', ->
     flagTokenInput = false
     $.each $('#norma').tokenInput('get'), (index, element) ->
       flagTokenInput = true
@@ -76,14 +37,14 @@ $(document).on 'ready page:load', ->
     else
       alert 'Debe vincular alguna norma.'
 
-  $('#classify').on 'click', ->
+  $(document).on 'click', '#classify', ->
     $('#second-column').fadeOut(100)
     setTimeout (->
       $('.clasification').fadeIn(100)
       return
     ), 250
 
-  $('#ready').on 'click', ->
+  $(document).on 'click', '#ready', ->
     $('.clasification').fadeOut(100)
     setTimeout (->
       $('#second-column').fadeIn(100)
@@ -96,8 +57,12 @@ $(document).on 'ready page:load', ->
   $(document).on 'ajax:success', '.linktoedit', (e,data, status, xhr) ->
     $('#declaracion-edit').empty()
     $('#declaracion-edit').append(data)
-    $('#declaracion-edit .modal').modal('show')
+    $('#declaracion-edit .modal').modal 'show'
+    ## Preload token input
+    tokenData = $('#exped_token').data 'load'
+    $.each tokenData, (index, exp) ->
+      $('#exped_token').tokenInput 'add', exp
     return
 
   $('#btn-new').on 'click', ->
-    $('#declaracion-edit').empty()    
+    $('#declaracion-edit').empty()

@@ -30,11 +30,8 @@ es:
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-      modal:
-        enter_exp: Ingrese Expediente
-        enter_norma: Ingrese Norma
         destiny: Destino
-        tags: Voces claves
+      tags: Voces claves
       letter: Letra
       number: Número
       bis: Bis
@@ -67,3 +64,6 @@ es:
       tag: 'Voz clave'
       tag_example: 'Ingrese voz clave'
       norma_example: 'Año + Nro + Bis  -  Ej: 20151090'
+    hint:
+      enter_exp: Ingrese Expediente
+      enter_norma: Ingrese Norma
