@@ -36,7 +36,7 @@
                 = f.label t('.organism'), { class: "input-group-addon", id: "basic-addon10"}
                 = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.organism'), type: :text }
               .input-group
-                = f.label t('.modal.tags'), { class: "input-group-addon", id: "basic-addon13" }
+                = f.label t('.tags'), { class: "input-group-addon", id: "basic-addon13" }
                 %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text }
             .col-md-8
               .clasification
@@ -180,7 +180,8 @@
                   = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
                 .input-group
                   = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
-                  = f.text_field :expedientes, { class: "form-control", "aria-describedby" => "basic-addon8", type: "text", data: { load: "" }}
+                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon8", id: "exped_token",
+                                                 type: "text", data: { load: prepopulate_exps(@declaracion) }}
                 .input-group
                   = f.label t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
                   = select_tag :refer_type, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
@@ -229,3 +230,51 @@
   margin = 10;
   $(".modal-xs").css('width', wi);
   $(".modal-xs").css('margin-left', margin);
+
+  $('#exped_token').tokenInput('/declaracions/search_exp', {
+    preventDuplicates: true,
+    propertyToSearch: 'indice',
+    theme: 'bootstrap',
+    zindex: 1050,
+    hintText: "#{t 'tokeninput.hint.enter_exp'}",
+    resultsFormatter: function(exp) {
+      return '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>';
+    },
+    tokenFormatter: function(exp) {
+      return '<li><p> Exp: ' + exp.indice + '</p></li>';
+    },
+    allowTabOut: true,
+    placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
+  });
+
+  $('#tags-tokeninput').tokenInput('/declaracions/search_tag', {
+    preventDuplicates: true,
+    propertyToSearch: 'nombre',
+    theme: 'bootstrap',
+    zindex: 1050,
+    hintText: "#{ I18n.t('tokeninput.placeholder.tag_example') }",
+    resultsFormatter: function(tag) {
+      return '<li><p style= \'color: black\'>' + tag.nombre + '</p></li>';
+    },
+    tokenFormatter: function(tag) {
+      return '<li><p>' + tag.nombre + '</p></li>';
+    },
+    allowTabOut: true,
+    placeholder: "#{ I18n.t('tokeninput.placeholder.tag') }"
+  });
+
+  $('#norma').tokenInput('/declaracions/search_norma', {
+    preventDuplicates: true,
+    propertyToSearch: 'indice',
+    theme: 'bootstrap',
+    zindex: 1050,
+    hintText: "#{ I18n.t('tokeninput.hint.enter_norma') }",
+    resultsFormatter: function(norma) {
+      return '<li><p style= \'color: black\'> ' + norma.indice + '</p></li>';
+    },
+    tokenFormatter: function(norma) {
+      return '<li><p> ' + norma.indice + '</p></li>';
+    },
+    allowTabOut: true,
+    placeholder: "#{ I18n.t('tokeninput.placeholder.norma_example') }"
+  });
