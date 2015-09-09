@@ -54,16 +54,6 @@ $(document).on 'ready page:load', ->
   $(document).on 'click', '.remove-tr', ->
     $(this).parents().eq(1).remove()
 
-  $(document).on 'ajax:success', '.linktoedit', (e,data, status, xhr) ->
-    $('#declaracion-edit').empty()
-    $('#declaracion-edit').append(data)
-    $('#declaracion-edit .modal').modal 'show'
-    ## Preload token input
-    tokenData = $('#exped_token').data 'load'
-    $.each tokenData, (index, exp) ->
-      $('#exped_token').tokenInput 'add', exp
-    return
-
   $('#btn-new').on 'click', ->
     $.get '/declaracions/new', (data) ->
       $('#declaracion-edit').empty()
@@ -77,4 +67,15 @@ $(document).on 'ready page:load', ->
       $('#declaracion-edit').empty()
       $('#declaracion-edit').append data
       $('#declaracion-edit .modal').modal 'show'
-      return
+
+      ## Preload token inputs
+      tokenData = $('#exped_token').data 'load'
+      $.each tokenData, (index, exp) ->
+        $('#exped_token').tokenInput 'add', exp
+        return
+
+      tokenTag = $('#tags-tokeninput').data 'load'
+      $.each tokenTag, (index, tag) ->
+        console.log tag
+        $('#tags-tokeninput').tokenInput 'add', tag
+        return

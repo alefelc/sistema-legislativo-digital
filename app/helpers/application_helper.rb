@@ -54,6 +54,10 @@ module ApplicationHelper
     norma.expedientes.present? ? build_json_exp(norma.expedientes) : []
   end
 
+  def prepopulate_tags norma
+    norma.tags.present? ? build_json_tags(norma.tags) : []
+  end
+
   def build_json_exp exps
     json_array = []
     exps.each do |x|
@@ -64,6 +68,12 @@ module ApplicationHelper
       }
     end
     json_array
+  end
+
+  def build_json_tags tags
+    json_array = []
+    tags.each { |x| json_array << { id: x.id, nombre: x.nombre } }
+    json_array.to_json
   end
 
 
