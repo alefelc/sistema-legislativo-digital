@@ -1,7 +1,7 @@
 #declaracion
   #declaracion-edit
-  %button#btn-new.btn.btn-primary{"data-toggle"=>"modal","data-target" => "#modaldecl"}
-    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true}
+  %button#btn-new.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
     = t('.btnheader.new')
 
   %table.table.table-striped.table-bordered#declaracion-table{"data-source" => declaracions_path(format: :json)}
@@ -13,4 +13,3 @@
         %th= t('.table.expedientes')
         %th
     %tbody
-  = render partial: "modal_declaration", locals: {actionvar: "create"}

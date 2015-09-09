@@ -38,7 +38,8 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   end
 
   def associated_file decl
-    "<i class=\"btn btn-xs fa fa-download\"></i>"
+    "<i class='linktoedit btn btn-xs btn-danger fa fa-pencil-square-o u' data-id='#{decl.id}'></i>" +
+    "<i class='btn btn-xs btn-info fa fa-download'></i>"
   end
 
   def declaraciones
