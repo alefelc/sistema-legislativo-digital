@@ -223,8 +223,15 @@
                             %th= t('.table.date')
                             %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
                         %tbody
+                          - @declaracion.relationship_modificadas.each do |x|
+                            %tr
+                              %td= x.tipo_relacion
+                              %td= indice x
+                              %td= "Dates"
+                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
         .modal-footer
           = f.submit "Guardar", {class: "btn btn-primary"}
+
 :javascript
   wi = $(window).width()-20;
   margin = 10;
