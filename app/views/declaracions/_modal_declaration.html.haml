@@ -37,7 +37,7 @@
                 = f.text_field :organismo_origen, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.organism'), type: :text }
               .input-group
                 = f.label t('.tags'), { class: "input-group-addon", id: "basic-addon13" }
-                %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text }
+                %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text, data: { load: prepopulate_tags(@declaracion) } }
             .col-md-8
               .clasification
                 .input-group
