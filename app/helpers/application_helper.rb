@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def index_norma norma
-    link_to(norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.anio.to_s, edit_declaracion_path(norma), {remote: true, class: "linktoedit"})
+    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.anio.to_s, declaracion_path(norma)
   end
 
   def norma_expediente norma

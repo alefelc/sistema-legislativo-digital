@@ -1,10 +1,25 @@
 class DeclaracionsController < ApplicationController
   respond_to :json, :html
+
   def index
     @declaracion = Declaracion.new
     respond_to do |format|
       format.html
       format.json { render json: DeclaracionDatatable.new(view_context) }
+    end
+  end
+
+  def new
+    @declaracion = Declaracion.new
+    respond_to do |format|
+      format.html {render partial: "modal_declaration", locals: { actionvar: "create"}}
+    end
+  end
+
+  def edit
+    @declaracion = Declaracion.find(params[:id])
+    respond_to do |format|
+      format.html {render partial: "modal_declaration", locals: { actionvar: "update"}}
     end
   end
 
@@ -24,13 +39,6 @@ class DeclaracionsController < ApplicationController
     tags = Tag.where("nombre ilike '%#{params[:q]}%'").first(5)
     render json: tags
   end
-
-  def edit
-    @declaracion = Declaracion.find(params[:id])
-    respond_to do |format|
-      format.html {render partial: "modal_declaration", locals: { actionvar: "update"}}
-    end  
-  end  
 
   private
 
