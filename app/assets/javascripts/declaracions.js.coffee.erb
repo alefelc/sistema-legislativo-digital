@@ -25,7 +25,7 @@ $(document).on 'ready page:load', ->
       row = "<tr> <td> #{ref_type} </td> " +
       "<td> #{this.indice} </td>" +
       "<td> #{dates} </td>" +
-      "<td> <i class='fa fa-times remove-tr'></i> </td> </tr>"      
+      "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"
       $('#disp_norma_table tbody').append(row)
     if flagTokenInput
       $('#norma').tokenInput 'clear'

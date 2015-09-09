@@ -76,5 +76,9 @@ module ApplicationHelper
     json_array.to_json
   end
 
-
+  def indice norma
+    x = norma.modifica
+    year = x.sancion.present? ? x.sancion.year.to_s : ""
+    "#{x.type}: #{year}/#{x.nro}/#{x.bis}"
+  end
 end
