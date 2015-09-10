@@ -39,6 +39,17 @@
                 = f.label t('.tags'), { class: "input-group-addon", id: "basic-addon13" }
                 %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text, data: { load: prepopulate_tags(@declaracion) } }
             .col-md-8
+              .group-buttons
+                %button#classify.btn.btn-default{:type => "button"}
+                  %i.fa.fa-check-square-o
+                  = t('.btn_clasification.classify')
+                %button#dates.btn.btn-default{:type => "button"}
+                  %i.fa.fa-calendar-plus-o
+                  = t('.btn_clasification.dates')
+              .dates
+                Aca van los campos para cargar comunic,notific,public,etc
+                %hr
+                %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               .clasification
                 .input-group
                   = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
@@ -174,7 +185,6 @@
                 %hr
                 %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               #second-column
-                %button#classify.btn.btn-default{:type => "button"}= t('.btn_clasification.classify')
                 .input-group
                   = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
                   = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }

@@ -27,10 +27,13 @@ es:
         ref_type: Tipo de vínculo
         date: Fechas
         destiny: Destino
+      title:
+        clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
         destiny: Destino
+        dates: Fechas
       tags: Voces claves
       letter: Letra
       number: Número
