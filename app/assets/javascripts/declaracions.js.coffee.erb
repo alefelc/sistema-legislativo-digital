@@ -38,6 +38,7 @@ $(document).on 'ready page:load', ->
       alert 'Debe vincular alguna norma.'
 
   $(document).on 'click', '#classify', ->
+    $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")
     $('#classify').css('display','none')
     $('#dates').css('display','inline-block')
     $('#second-column').fadeOut(100)
@@ -51,6 +52,7 @@ $(document).on 'ready page:load', ->
     ), 250
 
   $(document).on 'click', '#ready', ->
+    $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.create_declaration')%>")
     $('#classify').css('display','inline-block')
     $('#dates').css('display','inline-block')
     $('.clasification').fadeOut(100)
@@ -65,6 +67,7 @@ $(document).on 'ready page:load', ->
     ), 250
 
   $(document).on 'click', '#dates', ->
+    $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.btn_clasification.dates')%>")
     $('#dates').css('display','none')
     $('#classify').css('display','inline-block')
     $('#second-column').fadeOut(100)

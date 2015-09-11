@@ -52,7 +52,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # Icons
-gem 'font-awesome-sass'
+gem 'font-awesome-sass', '~> 4.4.0'
 
 # Ajax synchronizate datatables
 gem 'jquery-datatables-rails'
