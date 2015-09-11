@@ -28,6 +28,7 @@ es:
         date: Fechas
         destiny: Destino
       title:
+        create_declaration: Creando Declaración
         clasification: Clasificación
       btn_clasification:
         ready: Listo
