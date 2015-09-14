@@ -1,8 +1,9 @@
-val = $(window).height()-280
+##val = $(window).height()-280
+
 $.extend $.fn.dataTable.defaults,
   pagingType: 'full_numbers'
-  'scrollCollapse': true
-  'scrollY': val
+  ##'scrollCollapse': true
+  ##'scrollY': val
   lengthChange: false
   pageLength: 10
   bServerSide: true

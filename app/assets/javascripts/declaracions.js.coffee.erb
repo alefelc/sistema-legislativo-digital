@@ -4,9 +4,12 @@ $(document).on 'ready page:load', ->
     fnInitComplete: ->
       $('div.dataTables_filter input').focus()
       $('div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
-    fnInfoCallback: (oSettings, iStart, iEnd, iMax, iTotal, sPre ) ->
       $('tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
+        return
+      return
+    fnDrawCallback: ->
+      $('tr:eq(1)').addClass 'info'
       return
     aoColumns: [
       { sortable: false, "width": "12%" , sClass: "center"}
@@ -78,7 +81,7 @@ $(document).on 'ready page:load', ->
     $('.clasification').fadeOut(100)
     setTimeout (->
       return
-    ), 250  
+    ), 250
 
   $(document).on 'click', '.remove-tr', ->
     $(this).parents().eq(1).remove()
@@ -105,14 +108,40 @@ $(document).on 'ready page:load', ->
 
       tokenTag = $('#tags-tokeninput').data 'load'
       $.each tokenTag, (index, tag) ->
-        console.log tag
         $('#tags-tokeninput').tokenInput 'add', tag
         return
 
   $(document).on 'focus', 'textarea', ->
     $(this).elastic();
     return
-  
+
   $(document).on 'focusout', 'textarea', ->
     $(this).animate({ height: "#{40}" }, 200);
+    return
+
+  $(document).keydown (event) ->
+    table = $('#declaracion-table').dataTable()
+    currentRow = $('tr.info').get(0)
+    switch event.keyCode
+      ## arrow down
+      when 40
+        if $(currentRow).next().length != 0
+          $(currentRow).next().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow up
+      when 38
+        if $(currentRow).prev().length != 0
+          $(currentRow).prev().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow left
+      when 37
+        table.fnPageChange('previous')
+      ## arrow right
+      when 39
+        table.fnPageChange('next')
+      when 13
+        $('tr.info').find('td:eq(0) a').get(0).click()
+    ## Update scrollbar
+    rowpos = $('tr.info').position()
+    $(document).scrollTop(rowpos.top-45)
     return
