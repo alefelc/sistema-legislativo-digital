@@ -4,11 +4,11 @@ $(document).on 'ready page:load', ->
     fnInitComplete: ->
       $('div.dataTables_filter input').focus()
       $('div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      return
+    fnDrawCallback: ->
       $('tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
         return
-      return
-    fnDrawCallback: ->
       $('tr:eq(1)').addClass 'info'
       return
     aoColumns: [
