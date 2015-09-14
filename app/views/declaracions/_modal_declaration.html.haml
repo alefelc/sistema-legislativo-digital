@@ -47,9 +47,32 @@
                   %i.fa.fa-calendar-plus-o
                   = t('.btn_clasification.dates')
               .dates
-                Aca van los campos para cargar comunic,notific,public,etc
-                %hr
-                %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
+                .input-group
+                  = f.label "Comunicación", { class: "input-group-addon", id: "basic-addon18"}
+                  .input-group
+                    = f.label "Fecha", {class: "input-group-addon", id: "basic-addon19"}
+                    .input-group
+                      = f.text_field :com_date, {class: "form-control", "aria-describedby" => "basic-addon19", type: :date }
+                  .input-group
+                    = f.label "Destino", {class: "input-group-addon", id: "basic-addon20"}
+                    .input-group
+                      = f.text_field :com_dest, {class: "form-control", "aria-describedby" => "basic-addon20", type: :text }
+                .input-group
+                  = f.label "Notificación", { class: "input-group-addon", id: "basic-addon21"}
+                  .input-group
+                    = f.label "Fecha", {class: "input-group-addon", id: "basic-addon22"}
+                    .input-group
+                      = f.text_field :not_date, {class: "form-control", "aria-describedby" => "basic-addon22", type: :date }
+                  .input-group
+                    = f.label "Destino", {class: "input-group-addon", id: "basic-addon23"}
+                    .input-group
+                      = f.text_field :not_dest, {class: "form-control", "aria-describedby" => "basic-addon23", type: :text }      
+                .input-group
+                  = f.label "Publicacion", { class: "input-group-addon", id: "basic-addon24"}
+                  .input-group.form-control
+                    Completar publicación
+                .group-buttons2
+                  %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               .clasification
                 .input-group
                   = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
@@ -182,8 +205,8 @@
                       %input{:type => "checkbox"}
                         No Cumplida
                         &nbsp
-                %hr
-                %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
+                .group-buttons2
+                  %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               #second-column
                 .input-group
                   = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}

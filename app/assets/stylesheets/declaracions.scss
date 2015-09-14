@@ -47,13 +47,23 @@
     margin-bottom: 5px;
   }
 
+  .group-buttons {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 5px;
+  }
+
+  .group-buttons2 {
+    border-top: 1px solid #EEEEEE;
+    padding-top: 5px;
+  }
+
   #disp_norma_table {
     height: 114px;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
-  #modaldecl .col-md-4, #modaldecl .col-md-8 #second-column, #modaldecl .col-md-8 .clasification {
+  #modaldecl .col-md-4, #modaldecl .col-md-8 #second-column, #modaldecl .col-md-8 .clasification, #modaldecl .col-md-8 .dates {
     & > .input-group{
       padding-bottom: 5px;
     }
