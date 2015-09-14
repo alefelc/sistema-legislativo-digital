@@ -23,5 +23,24 @@ class Norma < ActiveRecord::Base
   def expedientes
     self.circuitos.map { |x| x.expediente }
   end
-  
+
+  def com_date
+    date = self.destinos.where(tipo: 0).first()
+    date.nil? ? nil : date.fecha
+  end
+
+  def com_dest
+    dest = self.destinos.where(tipo: 0).first()
+    dest.nil? ? "" : dest.destino
+  end
+
+  def not_date
+    date = self.destinos.where(tipo: 1).first()
+    date.nil? ? nil : date.fecha
+  end
+
+  def not_dest
+    dest = self.destinos.where(tipo: 1).first()
+    dest.nil? ? "" : dest.destino
+  end  
 end
