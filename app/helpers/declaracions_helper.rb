@@ -6,4 +6,8 @@ module DeclaracionsHelper
       ["deroga", 2]
     ]
   end
+
+  def search_value_classify(id_clasif, id_norm)
+    Declaracion.find(id_norm).clasificacions.where(nombre: id_clasif).present?
+  end  
 end

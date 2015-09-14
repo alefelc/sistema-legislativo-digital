@@ -77,134 +77,98 @@
                 .input-group
                   = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        General
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        Autonoma
-                        &nbsp
+                    = check_box_tag 'general', nil ,search_value_classify('General',@declaracion.id)
+                    = label_tag 'general', 'General'
+                    &nbsp
+                    = check_box_tag 'autonomo', nil ,search_value_classify('Autónomo',@declaracion.id)
+                    = label_tag 'autonomo', 'Autónomo'
                   .input-group
                     = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      %label
-                        %input{:type => "checkbox"}
-                          Individual y meros actos Administrativos
-                          &nbsp
+                      = check_box_tag 'individual', nil ,search_value_classify('Individual y meros actos administrativos',@declaracion.id)
+                      = label_tag 'individual', 'Individual y meros actos administrativos'
                     .input-group
-                      = f.label "Contrataciones y conveños", {class: "input-group-addon", id: "basic-addon16"}
+                      = f.label "Contrataciones y convenios", {class: "input-group-addon", id: "basic-addon16"}
                       .input-group.form-control
-                        %label
-                          %input{:type => "checkbox"}
-                            De servicios públicos
-                            &nbsp
-                        %label
-                          %input{:type => "checkbox"}
-                            Otros
-                            &nbsp
+                        = check_box_tag 'servicios_public', nil ,search_value_classify('De Servicios Públicos',@declaracion.id)
+                        = label_tag 'servicios_public', 'De Servicios Públicos'
+                        &nbsp
+                        = check_box_tag 'Otras', nil ,search_value_classify('Otras',@declaracion.id)
+                        = label_tag 'Otras', 'Otras'
                   .input-group
                     = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      %label
-                        %input{:type => "checkbox"}
-                          General
-                          &nbsp
-                      %label
-                        %input{:type => "checkbox"}
-                          General
-                          &nbsp
+                      = check_box_tag 'general', nil ,search_value_classify('Alcance general',@declaracion.id)
+                      = label_tag 'general', 'Alcance general'
+                      &nbsp
+                      = check_box_tag 'especial', nil ,search_value_classify('Alcance especial',@declaracion.id)
+                      = label_tag 'especial', 'Alcance especial'
                 .input-group
                   = f.label "Vigencia", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Dictado por razones de Emergencias
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        De necesidad o urgencia
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        Dictado ad referendum
-                        &nbsp
+                    = check_box_tag 'dictada', nil ,search_value_classify('Dictada por razones de emergencia',@declaracion.id)
+                    = label_tag 'dictada', 'Dictada por razones de emergencia'
+                    &nbsp
+                    = check_box_tag 'dictada', nil ,search_value_classify('De necesidad o urgencia',@declaracion.id)
+                    = label_tag 'dictada', 'De necesidad o urgencia'
+                    &nbsp
+                    = check_box_tag 'referendum', nil ,search_value_classify('Dictado ad referendum',@declaracion.id)
+                    = label_tag 'referendum', 'Dictado ad referendum'
                   .input-group
                     = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      %label
-                        %input{:type => "checkbox"}
-                          Contiene normas grales y permanentes
-                          &nbsp
-                      %label
-                        %input{:type => "checkbox"}
-                          No contiene
-                          &nbsp
+                      = check_box_tag 'contiene', nil ,search_value_classify('Que contienen normas generales y permanentes',@declaracion.id)
+                      = label_tag 'contiene', 'Que contienen normas generales y permanentes'
+                      &nbsp
+                      = check_box_tag 'contiene', nil ,search_value_classify('Que NO contienen normas generales y permanentes',@declaracion.id)
+                      = label_tag 'contiene', 'Que NO contienen normas generales y permanentes'
                   .input-group
                     = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      %label
-                        %input{:type => "checkbox"}
-                          Subsisten
-                          &nbsp
+                      = check_box_tag 'subsisten', nil ,search_value_classify('Motivos subsisten',@declaracion.id)
+                      = label_tag 'subsisten', 'Motivos subsisten'
                     .input-group
                       = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
                       .input-group.form-control
-                        %label
-                          %input{:type => "checkbox"}
-                            Normas Grales
-                            &nbsp
-                        %label
-                          %input{:type => "checkbox"}
-                            Normas No Grales
-                            &nbsp
+                        = check_box_tag 'generales', nil ,search_value_classify('Normas generales',@declaracion.id)
+                        = label_tag 'generales', 'Normas generales'
+                        &nbsp
+                        = check_box_tag 'no-generales', nil ,search_value_classify('Normas no generales',@declaracion.id)
+                        = label_tag 'no-generales', 'Normas no generales'
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Plazo determinado y Cumplido
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        Plazo determinado y No cumplido
-                        &nbsp
+                    = check_box_tag 'plazo-cumplido', nil ,search_value_classify('Plazo determinado y cumplido',@declaracion.id)
+                    = label_tag 'plazo-cumplido', 'Plazo determinado y cumplido'
+                    &nbsp
+                    = check_box_tag 'no-cumplido', nil ,search_value_classify('Plazo determinado y NO cumplido',@declaracion.id)
+                    = label_tag 'no-cumplido', 'Plazo determinado y NO cumplido'
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Vigencia sujeta a condicion resolutoria
-                        &nbsp
+                    = check_box_tag 'vigencia-sujeta', nil ,search_value_classify('Vigencia sujeta a condición resolutoria',@declaracion.id)
+                    = label_tag 'vigencia', 'Vigencia sujeta a condición resolutoria'
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Cumplida
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        No Cumplida
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        Objeto agotado
-                        &nbsp
+                    = check_box_tag 'cumplida', nil ,search_value_classify('Cumplida',@declaracion.id)
+                    = label_tag 'cumplida', 'Cumplida'
+                    &nbsp
+                    = check_box_tag 'no-cumplida', nil ,search_value_classify('NO cumplida',@declaracion.id)
+                    = label_tag 'no-cumplida', 'NO cumplida'
+                    &nbsp
+                    = check_box_tag 'agotado', nil ,search_value_classify('Objeto agotado',@declaracion.id)
+                    = label_tag 'agotado', 'Objeto agotado'
                 .input-group
                   = f.label "Derogación", { class: "input-group-addon", id: "basic-addon16"}
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Derogación sujeta a condición suspensiva
-                        &nbsp
+                    = check_box_tag 'derog-susp', nil ,search_value_classify('Derogación sujeta a condición suspensiva',@declaracion.id)
+                    = label_tag 'derog-susp', 'Derogación sujeta a condición suspensiva'
+                    &nbsp
                   .input-group.form-control
-                    %label
-                      %input{:type => "checkbox"}
-                        Derog Tácita
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        Cumplida
-                        &nbsp
-                    %label
-                      %input{:type => "checkbox"}
-                        No Cumplida
-                        &nbsp
+                    = check_box_tag 'derog-tacita', nil ,search_value_classify('Derog. tácita',@declaracion.id)
+                    = label_tag 'derog-tacita', 'Derog. tácita'
+                    &nbsp
+                    = check_box_tag 'derog-cumplida', nil ,search_value_classify('Derog. cumplida',@declaracion.id)
+                    = label_tag 'derog-cumplida', 'Derog. cumplida'
+                    &nbsp
+                    = check_box_tag 'derog-no-cumplida', nil ,search_value_classify('Derog. NO cumplida',@declaracion.id)
+                    = label_tag 'derog-no-cumplida', 'Derog. NO cumplida'
+                    &nbsp
                 .group-buttons2
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               #second-column
