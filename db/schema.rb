@@ -532,7 +532,7 @@ ActiveRecord::Schema.define(version: 20150914150542) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "expediente_id"
-    t.text     "destino"
+    t.string   "destino"
     t.string   "iniciador"
     t.string   "domicilio"
     t.string   "telefono"

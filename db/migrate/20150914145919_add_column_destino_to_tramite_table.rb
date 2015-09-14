@@ -1,5 +1,5 @@
 class AddColumnDestinoToTramiteTable < ActiveRecord::Migration
   def change
-    add_column :tramites, :destino, :text
+    add_column :tramites, :destino, :string
   end
 end
