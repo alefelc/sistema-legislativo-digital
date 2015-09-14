@@ -13,7 +13,8 @@ ActiveAdmin.register SubSeccion do
 #   permitted
 # end
 
-# parent
-menu parent: "Orden Del Dia", label: "Sub Secciones"
+  # parent
+  menu parent: "Orden Del Dia", label: "Sub Secciones"
+  menu false
 
 end

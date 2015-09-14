@@ -3,15 +3,6 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :usuarios
 
-  root to: "dashboard#index"
+  root to: "admin/peticions#index"
 
-  resources :declaracions do
-    get 'search_exp', on: :collection
-    get 'search_norma', on: :collection
-    get 'search_tag', on: :collection
-  end
-
-  resources :dashboard do
-    get 'search', on: :collection
-  end
 end

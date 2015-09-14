@@ -13,5 +13,6 @@ ActiveAdmin.register Usuario do
 #   permitted
 # end
 
+  config.filters = false
 
 end

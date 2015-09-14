@@ -13,7 +13,8 @@ ActiveAdmin.register AdjuntaFisicamente do
 #   permitted
 # end
 
-# parent
-menu parent: "Expedientes", label: "Adjunta Fisicamente"
+  # parent
+  menu parent: "Expedientes", label: "Adjunta Fisicamente"
+  menu false
 
 end

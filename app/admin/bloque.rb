@@ -13,5 +13,6 @@ ActiveAdmin.register Bloque do
 #   permitted
 # end
 
+  menu false
 
 end

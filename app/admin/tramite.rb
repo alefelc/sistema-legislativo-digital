@@ -13,5 +13,6 @@ ActiveAdmin.register Tramite do
 #   permitted
 # end
 
+  menu false
 
 end

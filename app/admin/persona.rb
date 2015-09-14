@@ -13,5 +13,6 @@ ActiveAdmin.register Persona do
 #   permitted
 # end
 
+  menu false
 
 end

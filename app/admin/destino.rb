@@ -13,7 +13,8 @@ ActiveAdmin.register Destino do
 #   permitted
 # end
 
-# parent
-menu parent: "Normas", label: "Destinos"
+  # parent
+  menu parent: "Normas", label: "Destinos"
+  menu false
 
 end

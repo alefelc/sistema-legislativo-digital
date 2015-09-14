@@ -13,5 +13,6 @@ ActiveAdmin.register Digesto do
 #   permitted
 # end
 
+  menu false
 
 end

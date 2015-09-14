@@ -13,7 +13,8 @@ ActiveAdmin.register RelationshipConcejal do
 #   permitted
 # end
 
-# parent
-menu parent: "Personas", label: "Suplente y Titular de Concejal"
+  # parent
+  menu parent: "Personas", label: "Suplente y Titular de Concejal"
+  menu false
 
 end

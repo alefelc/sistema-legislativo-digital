@@ -13,7 +13,8 @@ ActiveAdmin.register EstadoTramite do
 #   permitted
 # end
 
-# parent
-menu parent: "Tramites", label: "Estados Tramites"
+  # parent
+  menu parent: "Tramites", label: "Estados Tramites"
+  menu false
 
 end

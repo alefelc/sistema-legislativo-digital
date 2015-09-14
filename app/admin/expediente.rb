@@ -13,5 +13,6 @@ ActiveAdmin.register Expediente do
 #   permitted
 # end
 
+  menu false
 
 end

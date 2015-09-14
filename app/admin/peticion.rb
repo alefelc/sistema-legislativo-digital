@@ -13,7 +13,9 @@ ActiveAdmin.register Peticion do
 #   permitted
 # end
 
-# parent
-menu parent: "Tramites", label: "Peticiones"
+  # parent
+  menu label: "Peticiones generales"
+
+  config.filters = false
 
 end

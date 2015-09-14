@@ -13,7 +13,8 @@ ActiveAdmin.register Titulo do
 #   permitted
 # end
 
-# parent
-menu parent: "Digestos"
+  # parent
+  menu parent: "Digestos"
+  menu false
 
 end

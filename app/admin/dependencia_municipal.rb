@@ -14,6 +14,7 @@ ActiveAdmin.register DependenciaMunicipal do
 # end
 
 # menu label name
-menu label: "Dependencias Municipales"
+  menu label: "Dependencias Municipales"
+  menu false
 
 end

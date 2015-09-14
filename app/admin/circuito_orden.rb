@@ -13,6 +13,7 @@ ActiveAdmin.register CircuitoOrden do
 #   permitted
 # end
 
-menu parent: "Orden Del Dia", label: "Circuito Orden del Dia"
+  menu parent: "Orden Del Dia", label: "Circuito Orden del Dia"
+  menu false
 
 end

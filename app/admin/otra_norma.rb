@@ -13,7 +13,8 @@ ActiveAdmin.register OtraNorma do
 #   permitted
 # end
 
-# parent
-menu parent: "Normas", label: "Otras"
+  # parent
+  menu parent: "Normas", label: "Otras"
+  menu false
 
 end

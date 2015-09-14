@@ -13,5 +13,6 @@ ActiveAdmin.register Tag do
 #   permitted
 # end
 
+  menu false
 
 end

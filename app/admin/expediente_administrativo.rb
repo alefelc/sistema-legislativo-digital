@@ -13,7 +13,8 @@ ActiveAdmin.register ExpedienteAdministrativo do
 #   permitted
 # end
 
-# parent
-menu parent: "Expedientes", label: "Expedientes Administrativos"
+  # parent
+  menu parent: "Expedientes", label: "Expedientes Administrativos"
+  menu false
 
 end

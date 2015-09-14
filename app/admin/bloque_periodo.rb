@@ -14,6 +14,7 @@ ActiveAdmin.register BloquePeriodo do
 # end
 
 # parent
-menu parent: "Bloques", label: "Bloques Periodos"
+  menu parent: "Bloques", label: "Bloques Periodos"
+  menu false
 
 end

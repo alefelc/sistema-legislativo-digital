@@ -13,7 +13,8 @@ ActiveAdmin.register Comision do
 #   permitted
 # end
 
-# menu label name
-menu label: "Comisiones"
+  # menu label name
+  menu label: "Comisiones"
+  menu false
 
 end

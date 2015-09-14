@@ -13,7 +13,8 @@ ActiveAdmin.register Clasificacion do
 #   permitted
 # end
 
-# parent
-menu parent: "Normas", label: "Clasificaciones"
+  # parent
+  menu parent: "Normas", label: "Clasificaciones"
+  menu false
 
 end

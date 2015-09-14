@@ -13,6 +13,7 @@ ActiveAdmin.register OtraPublicacion do
 #   permitted
 # end
 
-menu parent: "Publicaciones", label: "Otras Publicaciones"
+  menu parent: "Publicaciones", label: "Otras Publicaciones"
+  menu false
 
 end

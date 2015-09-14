@@ -13,5 +13,6 @@ ActiveAdmin.register OrdenDelDia do
 #   permitted
 # end
 
+  menu false
 
 end

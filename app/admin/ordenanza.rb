@@ -13,7 +13,8 @@ ActiveAdmin.register Ordenanza do
 #   permitted
 # end
 
-# parent
-menu parent: "Normas"
+  # parent
+  menu parent: "Normas"
+  menu false
 
 end

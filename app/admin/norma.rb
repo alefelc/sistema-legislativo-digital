@@ -13,5 +13,6 @@ ActiveAdmin.register Norma do
 #   permitted
 # end
 
+  menu false
 
 end

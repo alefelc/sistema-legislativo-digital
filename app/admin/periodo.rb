@@ -13,5 +13,6 @@ ActiveAdmin.register Periodo do
 #   permitted
 # end
 
+  menu false
 
 end

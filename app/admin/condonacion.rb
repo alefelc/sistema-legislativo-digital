@@ -13,7 +13,9 @@ ActiveAdmin.register Condonacion do
 #   permitted
 # end
 
-# parent
-menu parent: "Tramites", label: "Condonaciones"
+  # parent
+  menu label: "Condonaciones"
+
+  config.filters = false
 
 end

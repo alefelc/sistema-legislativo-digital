@@ -13,7 +13,8 @@ ActiveAdmin.register Concejal do
 #   permitted
 # end
 
-# parent
-menu parent: "Personas", label: "Concejal"
+  # parent
+  menu parent: "Personas", label: "Concejal"
+  menu false
 
 end

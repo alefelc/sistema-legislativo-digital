@@ -13,7 +13,8 @@ ActiveAdmin.register ActuacionAdministrativa do
 #   permitted
 # end
 
-# parent
-menu parent: "Tramites", label: "Actuaciones Administrativas"
+  # parent
+  menu parent: "Tramites", label: "Actuaciones Administrativas"
+  menu false
 
 end

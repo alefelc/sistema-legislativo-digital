@@ -13,7 +13,8 @@ ActiveAdmin.register BoletinOficial do
 #   permitted
 # end
 
-# parent
-menu parent: "Publicaciones", label: "Boletin Oficial"
+  # parent
+  menu parent: "Publicaciones", label: "Boletin Oficial"
+  menu false
 
 end
