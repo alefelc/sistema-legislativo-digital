@@ -2,6 +2,7 @@ ActiveAdmin.register AdminUser do
   menu label: "Administrador"
   permit_params :email, :password, :password_confirmation
 
+  index :title => 'Administradores'
   index do
     selectable_column
     id_column
@@ -15,7 +16,7 @@ ActiveAdmin.register AdminUser do
   config.filters = false
 
   form do |f|
-    f.inputs "Admin Details" do
+    f.inputs "Detalles" do
       f.input :email
       f.input :password
       f.input :password_confirmation
