@@ -94,6 +94,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-i18n (0.12.1)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -295,6 +296,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   coffee-rails (~> 4.1.0)
   devise
+  devise-i18n
   font-awesome-sass (~> 4.4.0)
   guard-livereload
   haml
