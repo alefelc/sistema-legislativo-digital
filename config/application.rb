@@ -33,6 +33,6 @@ module Sld
     # Default I18n internalization
     config.i18n.default_locale = :es
 
-    config.time_zone = 'Buenos Aires'
+    config.time_zone = 'Buenos Aires' 
   end
 end

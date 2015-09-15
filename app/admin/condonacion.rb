@@ -29,8 +29,8 @@ permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :o
       row :email
       row "Solicitud" do condonacion.asunto end
       row :observaciones
-      row "Creado el" do condonacion.created_at.to_s format: :default end
-      row "Actualizado el" do condonacion.updated_at.to_s format: :default end
+      row "Creado el" do condonacion.created_at end
+      row "Actualizado el" do condonacion.updated_at end
     end
   end
 

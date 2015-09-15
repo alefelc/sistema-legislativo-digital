@@ -77,7 +77,4 @@ es:
       default: "%d/%m/%Y"
   time:
     formats:
-      default: "H:%M"
-  datetime:
-    formats:
-      default: "%d/%m/%Y - %H:%M"
+      default: "%d/%m/%Y - %H:%M" 
