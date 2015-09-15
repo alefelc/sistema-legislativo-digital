@@ -71,3 +71,13 @@ es:
     hint:
       enter_exp: Ingrese Expediente
       enter_norma: Ingrese Norma
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+  time:
+    formats:
+      default: "H:%M"
+  datetime:
+    formats:
+      default: "%d/%m/%Y - %H:%M"
