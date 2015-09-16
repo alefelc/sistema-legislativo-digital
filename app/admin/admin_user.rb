@@ -1,6 +1,20 @@
 ActiveAdmin.register AdminUser do
-  menu label: "Administrador"
+  menu label: "Usuarios"
   permit_params :email, :password, :password_confirmation
+
+  actions :all
+
+  controller do
+    def action_methods
+      if current_admin_user.email.split('@')[1] == 'example.com'
+        super
+      elsif current_admin_user.email.split('@')[1] != 'guest.com'
+        super - %w[ show destroy new create edit ]
+      else
+        super - %w[ show destroy new create edit ]
+      end
+    end
+  end
 
   index :title => 'Administradores'
   index do

@@ -14,5 +14,6 @@ ActiveAdmin.register Usuario do
 # end
 
   config.filters = false
+  menu false
 
 end
