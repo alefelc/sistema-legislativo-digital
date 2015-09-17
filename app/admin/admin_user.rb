@@ -1,18 +1,30 @@
 ActiveAdmin.register AdminUser do
-  menu label: "Usuarios"
   permit_params :email, :password, :password_confirmation
 
+  menu if: proc{ 
+    if current_admin_user.present?
+      current_admin_user.email.split('@')[1] == 'admin.com'
+    end
+    }, label: "Usuarios"
+
+  
   actions :all
 
   controller do
     def action_methods
-      if current_admin_user.email.split('@')[1] == 'example.com'
-        super
-      elsif current_admin_user.email.split('@')[1] != 'guest.com'
-        super - %w[ show destroy new create edit ]
+      if current_admin_user.present?
+        if current_admin_user.email.split('@')[1] == 'admin.com'
+          super
+        elsif current_admin_user.email.split('@')[1] == 'invitado.com'
+          super - %w[ destroy new create edit ] 
+        elsif current_admin_user.email.split('@')[1] == 'entrada.com'
+          super
+        else
+          super - %w[ show destroy new create edit ]    
+        end
       else
         super - %w[ show destroy new create edit ]
-      end
+      end    
     end
   end
 

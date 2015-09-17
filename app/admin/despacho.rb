@@ -1,9 +1,29 @@
 ActiveAdmin.register Despacho do
 
-permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones
+  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones
 
   # parent
   menu label: "Despachos"
+
+  actions :all
+
+  controller do
+    def action_methods
+      if current_admin_user.present? 
+        if current_admin_user.email.split('@')[1] == 'admin.com'
+          super
+        elsif current_admin_user.email.split('@')[1] == 'invitado.com'
+          super - %w[ destroy new create edit ] 
+        elsif current_admin_user.email.split('@')[1] == 'entrada.com'
+          super
+        else
+          super - %w[ show destroy new create edit ]  
+        end
+      else
+        super - %w[ show destroy new create edit ]
+      end    
+    end
+  end
 
   config.filters = false
 

@@ -1,6 +1,26 @@
 ActiveAdmin.register Peticion do
 
-permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones, :destino
+  permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones, :destino
+
+  actions :all
+
+  controller do
+    def action_methods
+      if current_admin_user.present?  
+        if current_admin_user.email.split('@')[1] == 'admin.com'
+          super
+        elsif current_admin_user.email.split('@')[1] == 'invitado.com'
+          super - %w[ destroy new create edit ] 
+        elsif current_admin_user.email.split('@')[1] == 'entrada.com'
+          super
+        else
+          super - %w[ show destroy new create edit ]  
+        end
+      else
+        super - %w[ show destroy new create edit ]
+      end    
+    end
+  end
 
   # parent
   menu label: "Peticiones generales"
