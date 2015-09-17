@@ -96,6 +96,8 @@ group :development do
 
   # Capistrano for deployment
   gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano3-unicorn'
 end
 
 group :production do
