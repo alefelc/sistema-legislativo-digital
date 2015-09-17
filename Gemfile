@@ -6,9 +6,6 @@ gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
-# Use MySql legacy database
-gem 'mysql2'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
@@ -74,6 +71,9 @@ group :development do
 
   # Print rails objects in the cool way
   gem "awesome_print", require:"ap"
+
+  # Use MySql legacy database
+  gem 'mysql2'
 
   # This is very usefull for rails panel extension of google chrome
   gem 'meta_request'
