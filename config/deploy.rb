@@ -16,12 +16,27 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 after 'deploy:publishing', 'deploy:restart'
 
+set(:config_files, %w(
+   unicorn.rb
+   unicorn_init.sh
+))
+
+set(:executable_config_files, %w(
+  unicorn_init.sh
+))
+
+set(:symlinks, [
+  {
+  source: "unicorn_init.sh",
+  link: "/etc/init.d/unicorn_sld"
+  }
+])
+
 namespace :deploy do
   task :restart do
-    invoke 'unicorn:reload'
+    invoke 'unicorn:restart'
   end
 end
-
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/var/www/my_app_name'
 
