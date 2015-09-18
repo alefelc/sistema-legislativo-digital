@@ -13,15 +13,15 @@ ActiveAdmin.register Condonacion do
         if current_admin_user.email.split('@')[1] == 'admin.com'
           super
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
-          super - %w[ destroy new create edit ] 
+          super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
           super
         else
-          super - %w[ show destroy new create edit ]  
+          super - %w[ show destroy new create edit ]
         end
       else
         super - %w[ show destroy new create edit ]
-      end    
+      end
     end
   end
 
@@ -51,6 +51,7 @@ ActiveAdmin.register Condonacion do
       row :observaciones
       row "Creado el" do condonacion.created_at end
       row "Actualizado el" do condonacion.updated_at end
+      row "Actualizado por" do condonacion.responsable end
     end
   end
 

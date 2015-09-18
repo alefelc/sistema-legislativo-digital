@@ -9,19 +9,19 @@ ActiveAdmin.register Despacho do
 
   controller do
     def action_methods
-      if current_admin_user.present? 
+      if current_admin_user.present?
         if current_admin_user.email.split('@')[1] == 'admin.com'
           super
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
-          super - %w[ destroy new create edit ] 
+          super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
           super
         else
-          super - %w[ show destroy new create edit ]  
+          super - %w[ show destroy new create edit ]
         end
       else
         super - %w[ show destroy new create edit ]
-      end    
+      end
     end
   end
 
@@ -31,7 +31,6 @@ ActiveAdmin.register Despacho do
     column "Nro. Trámite", :id
     column "Nro. fojas", :nro_fojas
     column "Nro. Expediente", :nro_exp
-    column "Año Expediente", :anio_exp
     column "Bis Expediente", :bis_exp
     column "Comisión", :comision
     column :concejales_firmantes
@@ -44,11 +43,13 @@ ActiveAdmin.register Despacho do
       row "Nro. Trámite" do despacho.id end
       row "Nro. Fojas" do despacho.nro_fojas end
       row "Nro. Expediente" do despacho.nro_exp end
-      row "Año Expediente" do despacho.anio_exp end
       row "Bis Expediente" do despacho.bis_exp end
       row "Comisión" do despacho.comision end
       row :concejales_firmantes
       row :observaciones
+      row "Creado el" do despacho.created_at end
+      row "Actualizado el" do despacho.updated_at end
+      row "Actualizado por" do despacho.responsable end
     end
   end
 
@@ -58,7 +59,6 @@ ActiveAdmin.register Despacho do
       inputs do end
       inputs "Datos del Expediente" do
         f.input :nro_exp, label: "Nro. Expediente"
-        f.input :anio_exp, label: "Año Expediente"
         f.input :bis_exp, label: "Bis Expediente"
       end
       inputs do end

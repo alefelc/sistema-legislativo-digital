@@ -6,19 +6,19 @@ ActiveAdmin.register Peticion do
 
   controller do
     def action_methods
-      if current_admin_user.present?  
+      if current_admin_user.present?
         if current_admin_user.email.split('@')[1] == 'admin.com'
           super
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
-          super - %w[ destroy new create edit ] 
+          super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
           super
         else
-          super - %w[ show destroy new create edit ]  
+          super - %w[ show destroy new create edit ]
         end
       else
         super - %w[ show destroy new create edit ]
-      end    
+      end
     end
   end
 
@@ -51,6 +51,9 @@ ActiveAdmin.register Peticion do
       row :asunto
       row :observaciones
       row :destino
+      row "Creado el" do peticion.created_at end
+      row "Actualizado el" do peticion.updated_at end
+      row "Actualizado por" do peticion.responsable end
     end
   end
 
