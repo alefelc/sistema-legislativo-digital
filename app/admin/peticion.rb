@@ -1,8 +1,16 @@
 ActiveAdmin.register Peticion do
 
-  permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones, :destino
+  permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones, :destino, :usuario
 
   actions :all
+
+  filter :id, label: "Nro. Trámite"
+  filter :asunto
+  filter :iniciador
+  filter :observaciones
+  filter :destino
+  filter :created_at, label: "Creado el"
+  filter :updated_at, label: "Actualizado el"
 
   controller do
     def action_methods
@@ -25,8 +33,6 @@ ActiveAdmin.register Peticion do
   # parent
   menu label: "Peticiones generales"
 
-  config.filters = false
-
   index title: "Peticiones Generales" do
     column "Nro. Trámite", :id
     column :nro_fojas
@@ -37,6 +43,7 @@ ActiveAdmin.register Peticion do
     column :asunto
     column :observaciones
     column :destino
+    column "Usuario Resp.", :usuario
     actions
   end
 
@@ -53,7 +60,7 @@ ActiveAdmin.register Peticion do
       row :destino
       row "Creado el" do peticion.created_at end
       row "Actualizado el" do peticion.updated_at end
-      row "Actualizado por" do peticion.responsable end
+      row "Actualizado por" do peticion.usuario end
     end
   end
 
@@ -67,6 +74,7 @@ ActiveAdmin.register Peticion do
       f.input :asunto, :input_html => { :rows => 5 }
       f.input :observaciones, :input_html => { :rows => 5 }
       f.input :destino
+      f.input :usuario, label: "Usuario", :input_html => { readonly: true, class: "usuario-resp" }
     end
     f.actions
   end

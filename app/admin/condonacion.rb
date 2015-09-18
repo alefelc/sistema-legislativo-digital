@@ -1,11 +1,18 @@
 ActiveAdmin.register Condonacion do
 
-  permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones
+  permit_params :nro_fojas, :iniciador, :domicilio, :telefono, :email, :asunto, :observaciones, :usuario
 
   # parent
   menu label: "Condonaciones"
 
   actions :all
+
+  filter :id, label: "Nro. Trámite"
+  filter :asunto
+  filter :iniciador
+  filter :observaciones
+  filter :created_at, label: "Creado el"
+  filter :updated_at, label: "Actualizado el"
 
   controller do
     def action_methods
@@ -25,8 +32,6 @@ ActiveAdmin.register Condonacion do
     end
   end
 
-  config.filters = false
-
   index title: "Condonaciones" do
     column "Nro. Trámite", :id
     column :nro_fojas
@@ -36,6 +41,7 @@ ActiveAdmin.register Condonacion do
     column :email
     column "Solicitud", :asunto
     column :observaciones
+    column "Usuario Resp.", :usuario
     actions
   end
 
@@ -51,7 +57,7 @@ ActiveAdmin.register Condonacion do
       row :observaciones
       row "Creado el" do condonacion.created_at end
       row "Actualizado el" do condonacion.updated_at end
-      row "Actualizado por" do condonacion.responsable end
+      row "Actualizado por" do condonacion.usuario end
     end
   end
 
@@ -64,6 +70,7 @@ ActiveAdmin.register Condonacion do
       f.input :email
       f.input :asunto, label: "Solicitud", :input_html => { :rows => 5 }
       f.input :observaciones, :input_html => { :rows => 5 }
+      f.input :usuario, label: "Usuario", :input_html => { readonly: true, class: "usuario-resp" }
     end
     f.actions
   end

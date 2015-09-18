@@ -1,9 +1,17 @@
 ActiveAdmin.register Despacho do
 
-  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones
+  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones, :usuario
 
   # parent
   menu label: "Despachos"
+
+  filter :id, label: "Nro. Trámite"
+  filter :nro_exp, label: "Nro. Expediente"
+  filter :comision, label: "Comision"
+  filter :concejales_firmantes, label: "Concejales"
+  filter :observaciones
+  filter :created_at, label: "Creado el"
+  filter :updated_at, label: "Actualizado el"
 
   actions :all
 
@@ -25,8 +33,6 @@ ActiveAdmin.register Despacho do
     end
   end
 
-  config.filters = false
-
   index title: "Despachos" do
     column "Nro. Trámite", :id
     column "Nro. fojas", :nro_fojas
@@ -35,6 +41,7 @@ ActiveAdmin.register Despacho do
     column "Comisión", :comision
     column :concejales_firmantes
     column :observaciones
+    column "Usuario Resp.", :usuario
     actions
   end
 
@@ -49,7 +56,7 @@ ActiveAdmin.register Despacho do
       row :observaciones
       row "Creado el" do despacho.created_at end
       row "Actualizado el" do despacho.updated_at end
-      row "Actualizado por" do despacho.responsable end
+      row "Actualizado por" do despacho.usuario end
     end
   end
 
@@ -65,6 +72,7 @@ ActiveAdmin.register Despacho do
       f.input :comision, label: "Comisión"
       f.input :concejales_firmantes, label: "Concejales Firmantes"
       f.input :observaciones, :input_html => { :rows => 5 }
+      f.input :usuario, label: "Usuario", :input_html => { readonly: true, class: "usuario-resp" }
     end
     f.actions
   end

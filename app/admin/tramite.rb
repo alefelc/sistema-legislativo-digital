@@ -6,8 +6,10 @@ ActiveAdmin.register Tramite do
 
   actions :all
 
+  filter :id, label: "Nro. Trámite"
   filter :asunto
   filter :iniciador
+  filter :type, label: "Trámite"
   filter :observaciones
   filter :created_at, label: "Creado el"
   filter :updated_at, label: "Actualizado el"
@@ -38,5 +40,6 @@ ActiveAdmin.register Tramite do
     column "Iniciador/Particular", :iniciador
     column :observaciones
     column "Firma"
+    column "Usuario Resp.", :usuario
   end
 end
