@@ -22,4 +22,11 @@ class Expediente < ActiveRecord::Base
   has_many :adjuntados, through: :adjuntados_relationship
   has_one :adjunta_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
   has_one :adjunta, through: :adjunta_relationship
+
+  before_create :update_bis
+
+  def update_bis
+    self.bis = 0 if self.bis.nil?
+  end
+
 end
