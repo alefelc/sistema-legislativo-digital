@@ -43,7 +43,7 @@ ActiveAdmin.register Peticion do
     column :asunto
     column :observaciones
     column :destino
-    column "Usuario Resp.", :usuario
+    column "Actualizado", :updated_at
     actions
   end
 

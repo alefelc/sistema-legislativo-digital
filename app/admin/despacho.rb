@@ -66,7 +66,7 @@ ActiveAdmin.register Despacho do
     #column "Comisión", :comision
     column :concejales_firmantes
     column :observaciones
-    column "Usuario Resp.", :usuario
+    column "Actualizado", :updated_at
     actions
   end
 

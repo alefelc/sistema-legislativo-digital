@@ -16,19 +16,7 @@ ActiveAdmin.register Tramite do
 
   controller do
     def action_methods
-      if current_admin_user.present?
-        if current_admin_user.email.split('@')[1] == 'admin.com'
-          super
-        elsif current_admin_user.email.split('@')[1] == 'invitado.com'
-          super - %w[ destroy new create edit ]
-        elsif current_admin_user.email.split('@')[1] == 'entrada.com'
-          super
-        else
-          super - %w[ show destroy new create edit ]
-        end
-      else
-        super - %w[ show destroy new create edit ]
-      end
+        super - %w[ destroy new create edit ]
     end
   end
 
@@ -39,7 +27,9 @@ ActiveAdmin.register Tramite do
     column "Asunto/Solicitud", :asunto
     column "Iniciador/Particular", :iniciador
     column :observaciones
-    column "Firma"
     column "Usuario Resp.", :usuario
+    column "Actualizado", :updated_at
+    column "Firma"
+    actions
   end
 end

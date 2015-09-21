@@ -41,7 +41,7 @@ ActiveAdmin.register Condonacion do
     column :email
     column "Solicitud", :asunto
     column :observaciones
-    column "Usuario Resp.", :usuario
+    column "Actualizado", :updated_at
     actions
   end
 

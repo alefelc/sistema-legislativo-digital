@@ -1,13 +1,13 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation
 
-  menu if: proc{ 
+  menu if: proc{
     if current_admin_user.present?
       current_admin_user.email.split('@')[1] == 'admin.com'
     end
     }, label: "Usuarios"
 
-  
+
   actions :all
 
   controller do
@@ -16,21 +16,19 @@ ActiveAdmin.register AdminUser do
         if current_admin_user.email.split('@')[1] == 'admin.com'
           super
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
-          super - %w[ destroy new create edit ] 
+          super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
           super
         else
-          super - %w[ show destroy new create edit ]    
+          super - %w[ show destroy new create edit ]
         end
       else
         super - %w[ show destroy new create edit ]
-      end    
+      end
     end
   end
 
-  index :title => 'Administradores'
-  index do
-    selectable_column
+  index :title => 'Administradores' do
     id_column
     column :email
     column :current_sign_in_at
