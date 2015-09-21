@@ -27,7 +27,6 @@ ActiveAdmin.register Tramite do
     column "Asunto/Solicitud", :asunto
     column "Iniciador/Particular", :iniciador
     column :observaciones
-    column "Usuario Resp.", :usuario
     column "Actualizado", :updated_at
     column "Firma"
     actions
