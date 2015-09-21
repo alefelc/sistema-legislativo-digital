@@ -1,11 +1,12 @@
 class Expediente < ActiveRecord::Base
 
 	#= Associations
-	has_many :despachos
+	#has_many :despachos
 	has_many :expediente_administrativos
 	has_many :circuitos
 	has_and_belongs_to_many :tags
 	has_many :normas
+  has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
 
   #== Shortcut association
   has_many :estado_expedientes, through: :circuitos
