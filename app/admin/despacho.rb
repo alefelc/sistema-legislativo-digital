@@ -1,6 +1,6 @@
 ActiveAdmin.register Despacho do
 
-  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones, :usuario, comisions_attributes: [:id, :denominacion, :_destroy], expedientes_attributes: [:id, :nro_exp, :bis_exp, :_destroy]
+  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones, :usuario, comisions_attributes: [:id, :denominacion, :_destroy], expedientes_attributes: [:id, :nro_exp, :bis, :_destroy]
 
   # parent
   menu label: "Despachos"
@@ -94,10 +94,7 @@ ActiveAdmin.register Despacho do
                     despacho.expedientes.each do |comment|
                       tr do
                         td do
-                          comment.nro_exp
-                        end
-                        td do
-                          comment.bis
+                          comment.nro_exp + " / " + comment.bis.to_s
                         end
                       end
                     end
