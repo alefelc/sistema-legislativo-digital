@@ -37,9 +37,6 @@ ActiveAdmin.register Peticion do
     column "Nro. Trámite", :id
     column :nro_fojas
     column :iniciador
-    column :domicilio
-    column :telefono
-    column :email
     column :asunto
     column :observaciones
     column :destino

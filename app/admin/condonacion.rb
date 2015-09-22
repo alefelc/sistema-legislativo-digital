@@ -33,12 +33,9 @@ ActiveAdmin.register Condonacion do
   end
 
   index title: "Condonaciones" do
-    column "Nro. Trámite", :id
+    column "Nro.", :id
     column :nro_fojas
     column "Particular", :iniciador
-    column :domicilio
-    column :telefono
-    column :email
     column "Solicitud", :asunto
     column :observaciones
     column "Actualizado", :updated_at

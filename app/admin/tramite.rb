@@ -6,10 +6,10 @@ ActiveAdmin.register Tramite do
 
   actions :all
 
-  filter :id, label: "Nro. Trámite"
+  filter :id, label: "Nro."
   filter :asunto
   filter :iniciador
-  filter :type, label: "Trámite"
+  filter :type, as: :select, :collection => proc{ %w( Condonacion Despacho Peticion ) }, :include_blank => true, label: "Tipo de tramite"
   filter :observaciones
   filter :created_at, label: "Creado el"
   filter :updated_at, label: "Actualizado el"
@@ -21,7 +21,7 @@ ActiveAdmin.register Tramite do
   end
 
   index title: 'Trámites' do
-    column "Nro. Trámite", :id
+    column "Nro.", :id
     column "Trámite", :type
     column "Nro. de Fojas", :nro_fojas
     column "Asunto/Solicitud", :asunto

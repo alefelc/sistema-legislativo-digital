@@ -1,16 +1,14 @@
 ActiveAdmin.register Despacho do
 
-  permit_params :id, :nro_fojas, :nro_exp, :anio_exp, :bis_exp, :comision, :concejales_firmantes, :observaciones, :usuario, comisions_attributes: [:id, :denominacion, :_destroy], expedientes_attributes: [:id, :nro_exp, :bis, :_destroy], concejals_attributes: [:id, :nombre, :_destroy]
+  permit_params :id, :nro_fojas, :fecha, :observaciones, :usuario, comisions_attributes: [:id, :denominacion, :_destroy], expedientes_attributes: [:id, :nro_exp, :bis, :_destroy], concejals_attributes: [:id, :nombre, :_destroy]
 
 
   # parent
   menu label: "Despachos"
 
-  filter :id, label: "Nro. Trámite"
-  filter :nro_exp, label: "Nro. Expediente"
-  filter :comision, label: "Comision"
-  filter :concejales_firmantes, label: "Concejales"
+  filter :id, label: "Nro. Tramite"
   filter :observaciones
+  filter :fecha, label: "Fecha despacho"
   filter :created_at, label: "Creado el"
   filter :updated_at, label: "Actualizado el"
 
@@ -71,28 +69,31 @@ ActiveAdmin.register Despacho do
   end
 
   index title: "Despachos" do
-    column "Nro. Trámite", :id
+    column "Nro.", :id
     column "Nro. fojas", :nro_fojas
-    #column "Nro. Expediente", :nro_exp
-    #column "Bis Expediente", :bis_exp
-    #column "Comisión", :comision
-    # column :concejales_firmantes
     column "Expedientes" do |despacho|
       string = ""
       despacho.expedientes.each do |x|
-        string << x.nro_exp + "/" + x.bis.to_s + ", "
+        string << x.nro_exp + "/" + x.bis.to_s + "; "
       end
       string[0..-3]
     end
+    column "Fecha despacho", :fecha
     column "Comisiones" do |despacho|
       string = ""
       despacho.comisions.each do |x|
-        string << x.denominacion + ", "
+        string << x.denominacion + "; "
+      end
+      string[0..-3]
+    end
+    column "Concejales" do |despacho|
+      string = ""
+      despacho.concejals.each do |x|
+        string << x.nombre + "; "
       end
       string[0..-3]
     end
     column :observaciones
-    column "Actualizado", :updated_at
     actions
   end
 
@@ -100,10 +101,7 @@ ActiveAdmin.register Despacho do
     attributes_table do
       row "Nro. Trámite" do despacho.id end
       row "Nro. Fojas" do despacho.nro_fojas end
-      #row "Nro. Expediente" do despacho.nro_exp end
-      #row "Bis Expediente" do despacho.bis_exp end
-      #row "Comisión" do despacho.comision end
-      # row :concejales_firmantes
+      row :fecha
       row :observaciones
       row "Creado el" do despacho.created_at end
       row "Actualizado el" do despacho.updated_at end
@@ -187,6 +185,8 @@ ActiveAdmin.register Despacho do
       end
 
       inputs do end
+
+      f.input :fecha, as: :datepicker
 
       f.inputs "Comisiones" do
         f.has_many :comisions do |ff|
