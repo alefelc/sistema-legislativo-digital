@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921123909) do
+ActiveRecord::Schema.define(version: 20150922142608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -551,6 +551,7 @@ ActiveRecord::Schema.define(version: 20150921123909) do
     t.string   "comision"
     t.string   "concejales_firmantes"
     t.string   "usuario"
+    t.date     "fecha"
   end
 
   add_index "tramites", ["expediente_id"], name: "index_tramites_on_expediente_id", using: :btree
