@@ -22,7 +22,7 @@ ActiveAdmin.register Condonacion do
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
           super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
-          super - %w[ show new create edit ]
+          super - %w[ destroy ]
         else
           super - %w[ show destroy new create edit ]
         end

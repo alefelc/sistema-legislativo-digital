@@ -21,7 +21,7 @@ ActiveAdmin.register Tramite do
   end
 
   index title: 'Trámites' do
-    id_column
+    column "Nro. Trámite", :id
     column "Trámite", :type
     column "Nro. de Fojas", :nro_fojas
     column "Asunto/Solicitud", :asunto
