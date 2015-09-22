@@ -190,7 +190,7 @@ ActiveAdmin.register Despacho do
 
       f.inputs "Comisiones" do
         f.has_many :comisions do |ff|
-          ff.input :denominacion, as: :select, collection: Comision.select(:denominacion).distinct.map{|c| c.denominacion}
+          ff.input :denominacion, as: :select, collection: Comision.select(:denominacion).order(:denominacion).distinct.map{|c| c.denominacion}
           ff.input :_destroy, :as=>:boolean, :required => false, :label=>'Quitar comisión'
         end
       end
@@ -199,7 +199,7 @@ ActiveAdmin.register Despacho do
 
       f.inputs "Concejales firmantes" do
         f.has_many :concejals do |ff|
-          ff.input :nombre, as: :select, collection: Concejal.all.distinct.map{ |c| c.nombre }
+          ff.input :nombre, as: :select, collection: Concejal.select(:nombre).order(:nombre).distinct.map{ |c| c.nombre }
           ff.input :_destroy, :as=>:boolean, :required => false, :label=>'Quitar concejal'
         end
       end
