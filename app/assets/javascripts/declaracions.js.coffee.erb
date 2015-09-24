@@ -38,7 +38,7 @@ $(document).on 'ready page:load', ->
       $('#month_refer').val ''
       $('#year_refer').val ''
     else
-      alert 'Debe vincular alguna norma.'
+    alert "<%= I18n.t('declaracion.modal_declaration.alert.norma_has_linked') %>"
 
   $(document).on 'click', '#classify', ->
     $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")

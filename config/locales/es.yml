@@ -23,6 +23,8 @@ es:
         relationships2: Dispositivos a Norma
         expedientes: Sanciona Exp N°
     modal_declaration:
+      alert:
+        norma_has_linked: Debe vincular alguna norma.
       table:
         ref_type: Tipo de vínculo
         date: Fechas

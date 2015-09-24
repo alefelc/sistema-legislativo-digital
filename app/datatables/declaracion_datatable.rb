@@ -47,9 +47,13 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   end
 
   def fetch_records
-    declaracion = Declaracion.page(page).per(per_page)
+    declaracion = Declaracion.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
-      declaracion = declaracion.where("sumario ilike '%#{params[:sSearch]}%'")
+      query = "(sumario ilike '%#{params[:sSearch]}%')"
+      unless params[:sSearch].to_i.zero?
+        query = "(CONCAT(nro, bis, EXTRACT(year from sancion)) ilike '%#{params[:sSearch].to_i}%')"
+      end
+      declaracion = declaracion.where(query)
     end
     declaracion
   end
