@@ -23,6 +23,19 @@ class DeclaracionsController < ApplicationController
     end
   end
 
+  def create
+    decl = params[:declaracion].select { |key, value| ["letra", "nro", "bis", "descripcion",
+          "sumario", "sancion", "observaciones", "entrada_vigencia", "finaliza_vigencia",
+          "plazo_dia", "plazo_mes", "plazo_anio", "organismo_origen"].include?(key) }
+    @declaracion = Declaracion.create decl.to_hash
+    unless params[:tags_ids].blank?
+      params[:tags_ids].split(',').each do |id|
+        @declaracion.tags << Tag.find(id)
+      end
+    end
+    redirect_to action: :index
+  end
+
   def search_exp
     expedientes = Expediente.where("CONCAT(EXTRACT(year from anio), nro_exp, bis) ilike ?",
                                    "%#{params[:q]}%").first(10)
@@ -41,6 +54,12 @@ class DeclaracionsController < ApplicationController
   end
 
   private
+
+  def declaracion_params
+    params.require(:declaracion).permit("letra", "nro", "bis", "descripcion",
+          "sumario", "sancion", "observaciones", "entrada_vigencia", "finaliza_vigencia",
+          "plazo_dia", "plazo_mes", "plazo_anio", "organismo_origen")
+  end
 
   def build_json_exp exps
     json_array = []

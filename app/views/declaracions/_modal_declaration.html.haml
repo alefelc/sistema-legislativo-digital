@@ -6,6 +6,7 @@
           %span{"aria-hidden" => "true"} &times;
         %h4#nuevoLabel.modal-title= t('.new_declaracion')
       = form_for @declaracion, url: { action: actionvar } do |f|
+        = hidden_field_tag :tags_ids
         .modal-body
           .row
             .col-md-4#first-column
@@ -66,7 +67,7 @@
                   .input-group
                     = f.label "Destino", {class: "input-group-addon", id: "basic-addon23"}
                     .input-group
-                      = f.text_field :not_dest, {class: "form-control", "aria-describedby" => "basic-addon23", type: :text }      
+                      = f.text_field :not_dest, {class: "form-control", "aria-describedby" => "basic-addon23", type: :text }
                 .input-group
                   = f.label "Publicacion", { class: "input-group-addon", id: "basic-addon24"}
                   .input-group.form-control
@@ -227,7 +228,7 @@
                               %td= "Dates"
                               %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
         .modal-footer
-          = f.submit "Guardar", {class: "btn btn-primary"}
+          = f.submit "Guardar", {class: "btn btn-primary modal-submit"}
 
 :javascript
   wi = $(window).width()-20;
@@ -257,10 +258,10 @@
     theme: 'bootstrap',
     zindex: 1050,
     hintText: "#{ I18n.t('tokeninput.placeholder.tag_example') }",
-    resultsFormatter: function(tag) {
-      return '<li><p style= \'color: black\'>' + tag.nombre + '</p></li>';
-    },
     tokenFormatter: function(tag) {
+      return "<li><p class='tags-token' data-id='" + tag.id + "' style='color: black'> " + tag.nombre + "</p></li>";
+    },
+    resultsFormatter: function(tag) {
       return '<li><p>' + tag.nombre + '</p></li>';
     },
     allowTabOut: true,
@@ -293,4 +294,14 @@
         }
       });
     }
+  });
+
+  $(document).on('click', '.modal-submit', function(event) {
+    event.preventDefault();
+    var tagsIds = []
+    $(".tags-token").each(function(key, value) {
+      tagsIds.push($(value).data("id"))
+    })
+    $("#tags_ids").val(tagsIds);
+    $("#new_declaracion").submit();
   });
