@@ -28,11 +28,39 @@ class DeclaracionsController < ApplicationController
           "sumario", "sancion", "observaciones", "entrada_vigencia", "finaliza_vigencia",
           "plazo_dia", "plazo_mes", "plazo_anio", "organismo_origen"].include?(key) }
     @declaracion = Declaracion.create decl.to_hash
+    ## get params tags_ids the POST
     unless params[:tags_ids].blank?
       params[:tags_ids].split(',').each do |id|
         @declaracion.tags << Tag.find(id)
       end
     end
+    ## get params exps_ids the POST
+    unless params[:exps_ids].blank?
+      params[:exps_ids].split(',').each do |id|
+        exp = Expediente.find(id)
+        @declaracion.circuitos << exp.circuitos.find_by(nro: 0)
+      end
+    end
+    ## get params clasifications_ids the POST and save
+    unless params[:clasificaciones].blank?  
+      params[:clasificaciones].each do |key,value|
+        @declaracion.clasificacions <<  Clasificacion.where(nombre: key).first()
+      end
+    end  
+    ## get params notif and comunic the POST and save
+    if params[:declaracion]['com_date'].present?
+      com_date = params[:declaracion]['com_date']
+      com_dest = params[:declaracion]['com_dest']
+      dest = Destino.create tipo: 0, fecha: com_date, destino: com_dest
+      @declaracion.destinos << dest
+    end
+    if params[:declaracion]['not_date'].present?
+      not_date = params[:declaracion]['not_date']
+      not_dest = params[:declaracion]['not_dest']
+      dest = Destino.create tipo: 1, fecha: not_date, destino: not_dest
+      @declaracion.destinos << dest
+    end  
+
     redirect_to action: :index
   end
 
