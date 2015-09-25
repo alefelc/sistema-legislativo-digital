@@ -7,6 +7,7 @@
         %h4#nuevoLabel.modal-title= t('.new_declaracion')
       = form_for @declaracion, url: { action: actionvar } do |f|
         = hidden_field_tag :tags_ids
+        = hidden_field_tag :exps_ids
         .modal-body
           .row
             .col-md-4#first-column
@@ -78,97 +79,97 @@
                 .input-group
                   = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    = check_box_tag 'general', nil ,search_value_classify('General',@declaracion.id)
-                    = label_tag 'general', 'General'
+                    = check_box_tag 'clasificaciones[General]', nil ,search_value_classify('General',@declaracion.id)
+                    = label_tag 'General', 'General'
                     &nbsp
-                    = check_box_tag 'autonomo', nil ,search_value_classify('Autónomo',@declaracion.id)
-                    = label_tag 'autonomo', 'Autónomo'
+                    = check_box_tag 'clasificaciones[Autónomo]', nil ,search_value_classify('Autónomo',@declaracion.id)
+                    = label_tag 'Autónomo', 'Autónomo'
                   .input-group
                     = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      = check_box_tag 'individual', nil ,search_value_classify('Individual y meros actos administrativos',@declaracion.id)
-                      = label_tag 'individual', 'Individual y meros actos administrativos'
+                      = check_box_tag 'clasificaciones[Individual y meros actos administrativos]', nil ,search_value_classify('Individual y meros actos administrativos',@declaracion.id)
+                      = label_tag 'Individual y meros actos administrativos', 'Individual y meros actos administrativos'
                     .input-group
                       = f.label "Contrataciones y convenios", {class: "input-group-addon", id: "basic-addon16"}
                       .input-group.form-control
-                        = check_box_tag 'servicios_public', nil ,search_value_classify('De Servicios Públicos',@declaracion.id)
-                        = label_tag 'servicios_public', 'De Servicios Públicos'
+                        = check_box_tag 'clasificaciones[De Servicios Públicos]', nil ,search_value_classify('De Servicios Públicos',@declaracion.id)
+                        = label_tag 'De Servicios Públicos', 'De Servicios Públicos'
                         &nbsp
-                        = check_box_tag 'Otras', nil ,search_value_classify('Otras',@declaracion.id)
+                        = check_box_tag 'clasificaciones[Otras]', nil ,search_value_classify('Otras',@declaracion.id)
                         = label_tag 'Otras', 'Otras'
                   .input-group
                     = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      = check_box_tag 'general', nil ,search_value_classify('Alcance general',@declaracion.id)
-                      = label_tag 'general', 'Alcance general'
+                      = check_box_tag 'clasificaciones[Alcance general]', nil ,search_value_classify('Alcance general',@declaracion.id)
+                      = label_tag 'Alcance general', 'Alcance general'
                       &nbsp
-                      = check_box_tag 'especial', nil ,search_value_classify('Alcance especial',@declaracion.id)
-                      = label_tag 'especial', 'Alcance especial'
+                      = check_box_tag 'clasificaciones[Alcance especial]', nil ,search_value_classify('Alcance especial',@declaracion.id)
+                      = label_tag 'Alcance especial', 'Alcance especial'
                 .input-group
                   = f.label "Vigencia", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    = check_box_tag 'dictada', nil ,search_value_classify('Dictada por razones de emergencia',@declaracion.id)
-                    = label_tag 'dictada', 'Dictada por razones de emergencia'
+                    = check_box_tag 'clasificaciones[Dictada por razones de emergencia]', nil ,search_value_classify('Dictada por razones de emergencia',@declaracion.id)
+                    = label_tag 'Dictada por razones de emergencia', 'Dictada por razones de emergencia'
                     &nbsp
-                    = check_box_tag 'dictada', nil ,search_value_classify('De necesidad o urgencia',@declaracion.id)
-                    = label_tag 'dictada', 'De necesidad o urgencia'
+                    = check_box_tag 'clasificaciones[De necesidad o urgencia]', nil ,search_value_classify('De necesidad o urgencia',@declaracion.id)
+                    = label_tag 'De necesidad o urgencia', 'De necesidad o urgencia'
                     &nbsp
-                    = check_box_tag 'referendum', nil ,search_value_classify('Dictado ad referendum',@declaracion.id)
-                    = label_tag 'referendum', 'Dictado ad referendum'
+                    = check_box_tag 'clasificaciones[Dictado ad referendum]', nil ,search_value_classify('Dictado ad referendum',@declaracion.id)
+                    = label_tag 'Dictado ad referendum', 'Dictado ad referendum'
                   .input-group
                     = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      = check_box_tag 'contiene', nil ,search_value_classify('Que contienen normas generales y permanentes',@declaracion.id)
-                      = label_tag 'contiene', 'Que contienen normas generales y permanentes'
+                      = check_box_tag 'clasificaciones[Que contienen normas generales y permanentes]', nil ,search_value_classify('Que contienen normas generales y permanentes',@declaracion.id)
+                      = label_tag 'Que contienen normas generales y permanentes', 'Que contienen normas generales y permanentes'
                       &nbsp
-                      = check_box_tag 'contiene', nil ,search_value_classify('Que NO contienen normas generales y permanentes',@declaracion.id)
-                      = label_tag 'contiene', 'Que NO contienen normas generales y permanentes'
+                      = check_box_tag 'clasificaciones[Que NO contienen normas generales y permanentes]', nil ,search_value_classify('Que NO contienen normas generales y permanentes',@declaracion.id)
+                      = label_tag 'Que NO contienen normas generales y permanentes', 'Que NO contienen normas generales y permanentes'
                   .input-group
                     = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      = check_box_tag 'subsisten', nil ,search_value_classify('Motivos subsisten',@declaracion.id)
-                      = label_tag 'subsisten', 'Motivos subsisten'
+                      = check_box_tag 'clasificaciones[Motivos subsisten]', nil ,search_value_classify('Motivos subsisten',@declaracion.id)
+                      = label_tag 'Motivos subsisten', 'Motivos subsisten'
                     .input-group
                       = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
                       .input-group.form-control
-                        = check_box_tag 'generales', nil ,search_value_classify('Normas generales',@declaracion.id)
-                        = label_tag 'generales', 'Normas generales'
+                        = check_box_tag 'clasificaciones[Normas generales]', nil ,search_value_classify('Normas generales',@declaracion.id)
+                        = label_tag 'Normas generales', 'Normas generales'
                         &nbsp
-                        = check_box_tag 'no-generales', nil ,search_value_classify('Normas no generales',@declaracion.id)
-                        = label_tag 'no-generales', 'Normas no generales'
+                        = check_box_tag 'clasificaciones[Normas no generales]', nil ,search_value_classify('Normas no generales',@declaracion.id)
+                        = label_tag 'Normas no generales', 'Normas no generales'
                   .input-group.form-control
-                    = check_box_tag 'plazo-cumplido', nil ,search_value_classify('Plazo determinado y cumplido',@declaracion.id)
-                    = label_tag 'plazo-cumplido', 'Plazo determinado y cumplido'
+                    = check_box_tag 'clasificaciones[Plazo determinado y cumplido]', nil ,search_value_classify('Plazo determinado y cumplido',@declaracion.id)
+                    = label_tag 'Plazo determinado y cumplido', 'Plazo determinado y cumplido'
                     &nbsp
-                    = check_box_tag 'no-cumplido', nil ,search_value_classify('Plazo determinado y NO cumplido',@declaracion.id)
-                    = label_tag 'no-cumplido', 'Plazo determinado y NO cumplido'
+                    = check_box_tag 'clasificaciones[Plazo determinado y NO cumplido]', nil ,search_value_classify('Plazo determinado y NO cumplido',@declaracion.id)
+                    = label_tag 'Plazo determinado y NO cumplido', 'Plazo determinado y NO cumplido'
                   .input-group.form-control
-                    = check_box_tag 'vigencia-sujeta', nil ,search_value_classify('Vigencia sujeta a condición resolutoria',@declaracion.id)
-                    = label_tag 'vigencia', 'Vigencia sujeta a condición resolutoria'
+                    = check_box_tag 'clasificaciones[Vigencia sujeta a condición resolutoria]', nil ,search_value_classify('Vigencia sujeta a condición resolutoria',@declaracion.id)
+                    = label_tag 'Vigencia sujeta a condición resolutoria', 'Vigencia sujeta a condición resolutoria'
                   .input-group.form-control
-                    = check_box_tag 'cumplida', nil ,search_value_classify('Cumplida',@declaracion.id)
-                    = label_tag 'cumplida', 'Cumplida'
+                    = check_box_tag 'clasificaciones[Cumplida]', nil ,search_value_classify('Cumplida',@declaracion.id)
+                    = label_tag 'Cumplida', 'Cumplida'
                     &nbsp
-                    = check_box_tag 'no-cumplida', nil ,search_value_classify('NO cumplida',@declaracion.id)
-                    = label_tag 'no-cumplida', 'NO cumplida'
+                    = check_box_tag 'clasificaciones[NO cumplida]', nil ,search_value_classify('NO cumplida',@declaracion.id)
+                    = label_tag 'NO cumplida', 'NO cumplida'
                     &nbsp
-                    = check_box_tag 'agotado', nil ,search_value_classify('Objeto agotado',@declaracion.id)
-                    = label_tag 'agotado', 'Objeto agotado'
+                    = check_box_tag 'clasificaciones[Objeto agotado]', nil ,search_value_classify('Objeto agotado',@declaracion.id)
+                    = label_tag 'Objeto agotado', 'Objeto agotado'
                 .input-group
                   = f.label "Derogación", { class: "input-group-addon", id: "basic-addon16"}
                   .input-group.form-control
-                    = check_box_tag 'derog-susp', nil ,search_value_classify('Derogación sujeta a condición suspensiva',@declaracion.id)
-                    = label_tag 'derog-susp', 'Derogación sujeta a condición suspensiva'
+                    = check_box_tag 'clasificaciones[Derogación sujeta a condición suspensiva]', nil ,search_value_classify('Derogación sujeta a condición suspensiva',@declaracion.id)
+                    = label_tag 'Derogación sujeta a condición suspensiva', 'Derogación sujeta a condición suspensiva'
                     &nbsp
                   .input-group.form-control
-                    = check_box_tag 'derog-tacita', nil ,search_value_classify('Derog. tácita',@declaracion.id)
-                    = label_tag 'derog-tacita', 'Derog. tácita'
+                    = check_box_tag 'clasificaciones[Derog. tácita]', nil ,search_value_classify('Derog. tácita',@declaracion.id)
+                    = label_tag 'Derog. tácita', 'Derog. tácita'
                     &nbsp
-                    = check_box_tag 'derog-cumplida', nil ,search_value_classify('Derog. cumplida',@declaracion.id)
-                    = label_tag 'derog-cumplida', 'Derog. cumplida'
+                    = check_box_tag 'clasificaciones[Derog. cumplida]', nil ,search_value_classify('Derog. cumplida',@declaracion.id)
+                    = label_tag 'Derog. cumplida', 'Derog. cumplida'
                     &nbsp
-                    = check_box_tag 'derog-no-cumplida', nil ,search_value_classify('Derog. NO cumplida',@declaracion.id)
-                    = label_tag 'derog-no-cumplida', 'Derog. NO cumplida'
+                    = check_box_tag 'clasificaciones[Derog. NO cumplida]', nil ,search_value_classify('Derog. NO cumplida',@declaracion.id)
+                    = label_tag 'Derog. NO cumplida', 'Derog. NO cumplida'
                     &nbsp
                 .group-buttons2
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
@@ -246,7 +247,7 @@
       return '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>';
     },
     tokenFormatter: function(exp) {
-      return '<li><p> Exp: ' + exp.indice + '</p></li>';
+      return "<li><p class='exps-token' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p></li>";
     },
     allowTabOut: true,
     placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
@@ -298,10 +299,17 @@
 
   $(document).on('click', '.modal-submit', function(event) {
     event.preventDefault();
+    //add tags ids to form
     var tagsIds = []
     $(".tags-token").each(function(key, value) {
       tagsIds.push($(value).data("id"))
     })
     $("#tags_ids").val(tagsIds);
+    //add exp ids to form
+    var expsIds = []
+    $(".exps-token").each(function(key, value) {
+      expsIds.push($(value).data("id"))
+    })
+    $("#exps_ids").val(expsIds);
     $("#new_declaracion").submit();
   });

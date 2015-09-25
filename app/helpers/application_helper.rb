@@ -14,13 +14,15 @@ module ApplicationHelper
 
   def fechas norma
     resp = ""
-    resp = resp + "Sanción: #{norma.sancion}\n"
+    if norma.sancion.present?
+      resp = resp + "Sanción: #{norma.sancion}\n"
+    end
     norma.destinos.each do |d|
       case d.tipo
       when 0
-        resp = resp + "Comunicación: #{d.fecha}\n"
+        resp = resp + "Comunic: #{d.fecha}\n"
       when 1
-        resp = resp + "Notificación: #{d.fecha}\n"
+        resp = resp + "Notific: #{d.fecha}\n"
       end
     end
     resp
