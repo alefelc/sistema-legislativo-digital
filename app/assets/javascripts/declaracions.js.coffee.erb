@@ -25,7 +25,7 @@ $(document).on 'ready page:load', ->
       flagTokenInput = true
       ref_type = $('#refer_type  option:selected').text()
       dates = ""
-      row = "<tr> <td> #{ref_type} </td> " +
+      row = "<tr class='linked-normas-table' data-id='#{this.id}'> <td> #{ref_type} </td> " +
       "<td> #{this.indice} </td>" +
       "<td> #{dates} </td>" +
       "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"
@@ -38,7 +38,7 @@ $(document).on 'ready page:load', ->
       $('#month_refer').val ''
       $('#year_refer').val ''
     else
-    alert "<%= I18n.t('declaracion.modal_declaration.alert.norma_has_linked') %>"
+      alert "<%= I18n.t('declaracions.modal_declaration.alert.norma_has_linked') %>"
 
   $(document).on 'click', '#classify', ->
     $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")
