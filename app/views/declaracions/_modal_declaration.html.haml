@@ -8,6 +8,7 @@
       = form_for @declaracion, url: { action: actionvar } do |f|
         = hidden_field_tag :tags_ids
         = hidden_field_tag :exps_ids
+        = hidden_field_tag :linked_normas_ids
         .modal-body
           .row
             .col-md-4#first-column
@@ -304,12 +305,17 @@
     $(".tags-token").each(function(key, value) {
       tagsIds.push($(value).data("id"))
     })
-    $("#tags_ids").val(tagsIds);
-    //add exp ids to form
+    var linkedNormasIds = []
+    $(".linked-normas-table").each(function(key, value) {
+      linkedNormasIds.push($(value).data("id"))
+    })
     var expsIds = []
     $(".exps-token").each(function(key, value) {
       expsIds.push($(value).data("id"))
     })
+    //add exp ids to form
+    $("#tags_ids").val(tagsIds);
     $("#exps_ids").val(expsIds);
+    $("#linked_normas_ids").val(linkedNormasIds);
     $("#new_declaracion").submit();
   });
