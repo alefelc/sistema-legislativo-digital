@@ -25,7 +25,19 @@ $(document).on 'ready page:load', ->
       flagTokenInput = true
       ref_type = $('#refer_type  option:selected').text()
       dates = ""
-      row = "<tr class='linked-normas-table' data-id='#{this.id}'> <td> #{ref_type} </td> " +
+      tipo_rel = $('#refer_type  option:selected').val()
+      date_desde = $("#from_refer").val()
+      date_hasta = $("#to_refer").val()
+      date_hasta_dia = $("#day_refer").val()
+      date_hasta_mes = $("#month_refer").val()
+      date_hasta_anio = $("#year_refer").val()
+      date_tipo_dia = $("[name=tipo_dia]:checked").val()
+      row = "<tr class='linked-normas-table' data-id='#{this.id}'" +
+      " data-desde='#{date_desde}' data-hasta='#{date_hasta}' data-hasta-dia='#{date_hasta_dia}'" +
+      " data-hasta-mes='#{date_hasta_mes}' data-hasta-anio='#{date_hasta_anio}' " +
+      "data-tipo-relacion='#{tipo_rel}'> " +
+      "data-dia-tipo='#{date_tipo_dia}'> " +
+      "<td> #{ref_type} </td> " +
       "<td> #{this.indice} </td>" +
       "<td> #{dates} </td>" +
       "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"

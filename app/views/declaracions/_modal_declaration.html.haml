@@ -8,7 +8,7 @@
       = form_for @declaracion, url: { action: actionvar } do |f|
         = hidden_field_tag :tags_ids
         = hidden_field_tag :exps_ids
-        = hidden_field_tag :linked_normas_ids
+        = hidden_field_tag :linked_normas
         .modal-body
           .row
             .col-md-4#first-column
@@ -183,13 +183,13 @@
                   = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon8", id: "exped_token",
                                                  type: "text", data: { load: prepopulate_exps(@declaracion) }}
                 .input-group
-                  = f.label t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
-                  = select_tag :refer_type, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
+                  = label_tag nil, t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
+                  #refer_type= select_tag nil, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
                   .input-group
                     = f.label t('.destiny'), { class: "input-group-addon", id: "basic-addon13"}
                     %input#norma.form-control{"aria-describedby" => "basic-addon13", type: :text }
                   .input-group
-                    = f.label t('.from'), { class: "input-group-addon", id: "basic-addon12"}
+                    = label_tag nil, t('.from'), { class: "input-group-addon", id: "basic-addon12"}
                     %input#from_refer.form-control{"aria-describedby" => "basic-addon12", type: :date }
                     .input-group-addon
                       %label
@@ -205,7 +205,7 @@
                         = t('.calendar_day')
                         &nbsp
                   .input-group
-                    = f.label t('.to'), { class: "input-group-addon",id: "basic-addon11"}
+                    = label_tag nil, t('.to'), { class: "input-group-addon",id: "basic-addon11"}
                     %input#to_refer.form-control{"aria-describedby" => "basic-addon11", type: :date }
                     %input#day_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_day'), type: :number }
                     %input#month_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_month'), type: :number }
@@ -225,9 +225,9 @@
                         %tbody
                           - @declaracion.relationship_modificadas.each do |x|
                             %tr
-                              %td= x.tipo_relacion
+                              %td= refers_by_type x
                               %td= indice x
-                              %td= "Dates"
+                              %td= show_dates x
                               %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
         .modal-footer
           = f.submit "Guardar", {class: "btn btn-primary modal-submit"}
@@ -301,13 +301,25 @@
   $(document).on('click', '.modal-submit', function(event) {
     event.preventDefault();
     //add tags ids to form
-    var tagsIds = []
+    var tagsIds = [];
     $(".tags-token").each(function(key, value) {
       tagsIds.push($(value).data("id"))
     })
-    var linkedNormasIds = []
+    var linkedNormasIds = {};
+    var index = 0;
     $(".linked-normas-table").each(function(key, value) {
-      linkedNormasIds.push($(value).data("id"))
+      linkedNormasIds[index] = {
+        id: $(value).data("id"),
+        //relation: $(value).data("id"),
+        from: $(value).data("desde"),
+        to: $(value).data("hasta"),
+        to_day: $(value).data("hasta-dia"),
+        to_month: $(value).data("hasta-mes"),
+        to_year: $(value).data("hasta-anio"),
+        type_day: $(value).data("dia-tipo"),
+        relation_type: $(value).data("tipo-relacion")
+      };
+      index++;
     })
     var expsIds = []
     $(".exps-token").each(function(key, value) {
@@ -316,6 +328,7 @@
     //add exp ids to form
     $("#tags_ids").val(tagsIds);
     $("#exps_ids").val(expsIds);
-    $("#linked_normas_ids").val(linkedNormasIds);
-    $("#new_declaracion").submit();
+    $("#linked_normas").val(JSON.stringify(linkedNormasIds));
+    $("#new_declaracion, [id^='edit_declaracion']").submit();
+    $("[id^='edit_declaracion']")
   });
