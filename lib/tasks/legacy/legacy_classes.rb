@@ -54,6 +54,10 @@ class LegacyExpediente < ActiveRecord::Base
   def self.find_by_ind(ind_exp)
     LegacyExpediente.find_by("IND_EXP = ?", ind_exp)
   end
+
+  def self.find_by_ind_iniciado(ind_exp)
+    LegacyExpediente.find_by("IND_EXP = ? AND ESTADO = ?", ind_exp, "Iniciado")
+  end
 end
 
 # Model expediente administrativo

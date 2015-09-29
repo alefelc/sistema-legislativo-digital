@@ -173,11 +173,13 @@ namespace :legacy_migrate do
     LegacyExpediente.all.each do |e|
       print "."
       exp = Expediente.create nro_exp: e.NUM_EXPED, bis: e.BIS_EXPED, tema: e.TEMA, observacion: e.OBSERV
-      find = LegacyTramite.find_by_ind(e.IND_EXP)
+      ind = parse_ind_exp e.IND_EXP.to_s
+      find = LegacyTramite.find_by_ind_iniciado(e.IND_EXP)
       if find.nil?
-        date = Date.new.change year: e.ANO_EXPED
+        date = Date.new.change year: ind[:anio]
       else
         date = find.FECHA
+        date.change year: ind[:anio]
       end
       exp.update_attribute :anio, date
       Circuito.create nro: 0, expediente: exp
