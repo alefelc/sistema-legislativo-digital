@@ -224,7 +224,7 @@
                             %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
                         %tbody
                           - @declaracion.relationship_modificadas.each do |x|
-                            %tr
+                            %tr.linked-normas-table{"data-id" => x.modifica_id, "data-desde" => x.desde, "data-hasta" => x.hasta, "data-hasta-dia" => x.dia, "data-hasta-mes" => x.mes, "data-hasta-anio" => x.anio, "data-tipo-relacion" => x.tipo_relacion, "data-dia-tipo" => x.dia_habil}
                               %td= refers_by_type x
                               %td= indice x
                               %td= show_dates x

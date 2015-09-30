@@ -60,7 +60,7 @@ class DeclaracionsController < ApplicationController
       dest = Destino.create tipo: 1, fecha: not_date, destino: not_dest
       @declaracion.destinos << dest
     end
-
+    ## get params linked_normas the POST and save
     if params['linked_normas'].present?
       JSON.parse(params['linked_normas']).each do |key, value|
         @declaracion.relationship_modificadas.create do |rm|
@@ -88,31 +88,70 @@ class DeclaracionsController < ApplicationController
     @declaracion.update decl.to_hash
 
     ## update params tags_ids the PATCH
-    unless params[:tags_ids].blank?
-      current_tags = params[:tags_ids].split(',')
-      old_tag = @declaracion.tags.map{ |x| x.id.to_s }
-      puts "current #{current_tags}"
-      puts "old #{old_tag}"
-      (current_tags - old_tag).each do |id|
-        @declaracion.tags << Tag.find(id)
-      end
-      (old_tag - current_tags).each do |id|
-        @declaracion.tags.delete(id)
+    current_tags = params[:tags_ids].split(',')
+    old_tag = @declaracion.tags.map{ |x| x.id.to_s }
+    (current_tags - old_tag).each do |id|
+      @declaracion.tags << Tag.find(id)
+    end
+    (old_tag - current_tags).each do |id|
+      @declaracion.tags.delete(id)
+    end
+
+    ## update params exps_ids the PATCH
+    current_exps = params[:exps_ids].split(',')
+    old_exps = @declaracion.expedientes.map{ |x| x.id.to_s}
+    (current_exps - old_exps).each do |id|
+      exp = Expediente.find(id)
+      @declaracion.circuitos << exp.circuitos.find_by(nro: 0)
+    end
+    (old_exps - current_exps).each do |id|
+      id_circuito = Expediente.find(id).circuitos.find_by(nro: 0).id
+      @declaracion.circuitos.delete(id_circuito)
+    end
+
+    ## update params clasifications_ids the PATCH    
+    current_clasific = []
+    old_clasific = @declaracion.clasificacions.map{ |x| x.id}
+    
+    unless params[:clasificaciones].blank?
+      params[:clasificaciones].each do |key,value|
+        current_clasific << Clasificacion.where(nombre: key).first().id
       end
     end
-    ## get params exps_ids the POST
-    # unless params[:exps_ids].blank?
-    #   params[:exps_ids].split(',').each do |id|
-    #     exp = Expediente.find(id)
-    #     @declaracion.circuitos << exp.circuitos.find_by(nro: 0)
-    #   end
-    # end
-    # ## get params clasifications_ids the POST and save
-    # unless params[:clasificaciones].blank?
-    #   params[:clasificaciones].each do |key,value|
-    #     @declaracion.clasificacions <<  Clasificacion.where(nombre: key).first()
-    #   end
-    # end
+    (current_clasific - old_clasific).each do |id|
+      @declaracion.clasificacions <<  Clasificacion.find(id)
+    end
+    (old_clasific - current_clasific).each do |id|
+      @declaracion.clasificacions.delete(id)
+    end
+
+    ## update params linked_normas the PATCH
+    current_normas = []
+    old_normas = @declaracion.modificadas.map{ |x| x.id}
+    if params['linked_normas'].present?
+      JSON.parse(params['linked_normas']).each do |key, value|
+        unless old_normas.include?(value["id"])
+          @declaracion.relationship_modificadas.create do |rm|
+              rm.tipo_relacion = value["relation_type"]
+              rm.modifica_id = value["id"]
+              rm.desde = value["from"]
+              rm.hasta = value["to"]
+              rm.dia = value["to_day"]
+              rm.mes = value["to_month"]
+              rm.anio = value["to_year"]
+              rm.dia_habil = value["type_day"]
+          end
+        end    
+        current_normas << value["id"]
+      end
+    end
+    puts "current_normas #{current_normas}"
+    puts "old_normas #{old_normas}"
+    # delete norms
+    (old_normas - current_normas).each do |id|
+      @declaracion.modificadas.delete(id)
+    end
+
     redirect_to action: :index
   end
 
