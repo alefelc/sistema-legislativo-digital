@@ -73,3 +73,21 @@
     width: 100%;
   }
 }
+
+#declaracion-show {
+  color: gray;
+
+  .titles {
+    color: #676773;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .single-tab {
+    padding-left: 15px;
+  }
+
+  .double-tab {
+    padding-left: 30px;
+  }
+}

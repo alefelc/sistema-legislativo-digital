@@ -42,5 +42,62 @@ class Norma < ActiveRecord::Base
   def not_dest
     dest = self.destinos.where(tipo: 1).first()
     dest.nil? ? "" : dest.destino
+  end
+
+  def get_nro
+    if self.nro.present?
+      self.nro.to_s
+    else
+      " Numero no asignado"
+    end    
+  end
+
+  def get_anio_sancion
+    if self.sancion.present?
+      " Año " + self.sancion.year.to_s
+    else
+      " - Año no asignado"
+    end    
+  end
+
+  def get_sancion
+    if self.sancion.present?
+      " Sancionada el " + to_date(self.sancion).to_s
+    else
+      " Sancion no cargada"
+    end    
+  end
+
+  def to_date date
+    date.strftime("%d/%m/%Y")
+  end
+
+  def get_circuitos
+    self.circuitos
   end  
+
+  def get_relacion_me_modifican type
+    self.relationship_me_modifican.where(tipo_relacion: type)    
+  end
+
+  def get_relacion_modifica type
+    self.relationship_modificadas.where(tipo_relacion: type)    
+  end
+
+  def get_destinos type
+    self.destinos.where(tipo: type)
+  end
+
+  def get_clasificaciones
+    self.clasificacions
+  end  
+
+  def get_sumario
+    if self.sumario.present?
+      self.sumario
+    else
+      " No tiene sumario"
+    end    
+  end  
+
 end

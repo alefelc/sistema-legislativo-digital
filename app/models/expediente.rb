@@ -21,4 +21,13 @@ class Expediente < ActiveRecord::Base
   has_many :adjuntados, through: :adjuntados_relationship
   has_one :adjunta_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
   has_one :adjunta, through: :adjunta_relationship
+
+  def get_anio_expediente
+    if self.anio.present?
+      " Año " + self.anio.year.to_s + " - "
+    else
+      " - Año no asignado"
+    end    
+  end
+
 end
