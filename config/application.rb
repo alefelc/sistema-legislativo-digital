@@ -32,5 +32,13 @@ module Sld
 
     # Default I18n internalization
     config.i18n.default_locale = :es
+
+    # Date
+    # ----------------------------
+    #Date::DATE_FORMATS[:default] = "%d/%m/%Y" 
+
+    # DateTime / Time
+    # ----------------------------
+    #Time::DATE_FORMATS[:default] = "%d/%m/%Y - %H:%M" 
   end
 end

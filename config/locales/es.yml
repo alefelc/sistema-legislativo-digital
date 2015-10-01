@@ -10,6 +10,8 @@ es:
         especiales: Normas Especiales
         otras: Otras Normas
   declaracions:
+    show:
+      info: Información de la Declaración
     index:
       btnheader:
         new: Nuevo
@@ -72,4 +74,4 @@ es:
       norma_example: 'Año + Nro + Bis  -  Ej: 20151090'
     hint:
       enter_exp: Ingrese Expediente
-      enter_norma: Ingrese Norma
+      enter_norma: Ingrese Norma    
