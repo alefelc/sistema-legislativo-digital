@@ -16,6 +16,10 @@ class DeclaracionsController < ApplicationController
     end
   end
 
+  def show
+    @declaracion = Declaracion.find(params[:id])
+  end  
+  
   def edit
     @declaracion = Declaracion.find(params[:id])
     respond_to do |format|

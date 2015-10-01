@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def index_norma norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.anio.to_s, declaracion_path(norma)
+    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, declaracion_path(norma)
   end
 
   def norma_expediente norma
@@ -45,11 +45,9 @@ module ApplicationHelper
   end
 
   def resolve_path_name
-    if current_page?(:declaracions)
-      "Declaraciones"
-    else
-      "Normas"
-    end
+    return "Declaraciones" if current_page?(controller: :declaracions, action: :index)
+    return "Declaración #{params[:id]}" if current_page?(controller: :declaracions, action: :show, id: params[:id].to_i)
+    return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
   def prepopulate_exps norma
@@ -83,4 +81,8 @@ module ApplicationHelper
     year = x.sancion.present? ? x.sancion.year.to_s : ""
     "#{x.type}: #{year}/#{x.nro}/#{x.bis}"
   end
+
+  def to_date date
+    date.strftime("%d/%m/%Y")
+  end  
 end
