@@ -57,7 +57,16 @@ $(document).on 'ready page:load', ->
       alert "<%= I18n.t('declaracions.modal_declaration.alert.norma_has_linked') %>"
 
   $(document).on 'click', '#add_destiny', ->
-    flagTokenInput = false
+    destiny = $("#select_destiny option:selected")
+    row = "<tr data-value=#{destiny.val()} data-destiny=#{$('#destiny').val()}" +
+          " data-date=#{$('#destiny_date').val()}>" +
+          "<td> #{destiny.text()} </td>" +
+          "<td> #{$('#destiny').val()} </td>" +
+          "<td> #{$('#destiny_date').val()} " +
+          "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"
+    $('#destinies_table tbody').append(row)
+    $("#destiny").val('')
+    $("#destiny_date").val('')
 
   $(document).on 'click', '#classify', ->
     $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")
