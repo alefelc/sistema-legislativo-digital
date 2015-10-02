@@ -56,6 +56,9 @@ $(document).on 'ready page:load', ->
     else
       alert "<%= I18n.t('declaracions.modal_declaration.alert.norma_has_linked') %>"
 
+  $(document).on 'click', '#add_destiny', ->
+    flagTokenInput = false
+
   $(document).on 'click', '#classify', ->
     $('#nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")
     $('#classify').css('display','none')

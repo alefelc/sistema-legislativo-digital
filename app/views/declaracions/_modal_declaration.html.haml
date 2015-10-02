@@ -51,29 +51,27 @@
                   = t('.btn_clasification.dates')
               .dates
                 .input-group
-                  = f.label "Comunicación", { class: "input-group-addon", id: "basic-addon18"}
+                  = label_tag nil, "Carga de fechas", { class: "input-group-addon", id: "basic-addon18"}
+                  #refer_type= select_tag nil, options_for_select(select_destiny), { class: "form-control", "aria-describedby": "basic-addon18"}
                   .input-group
-                    = f.label "Fecha", {class: "input-group-addon", id: "basic-addon19"}
-                    .input-group
-                      = f.text_field :com_date, {class: "form-control", "aria-describedby" => "basic-addon19", type: :date }
+                    = f.label t('.destiny'), { class: "input-group-addon", id: "basic-addon19"}
+                    %input#destiny.form-control{"aria-describedby" => "basic-addon19", type: :text }
                   .input-group
-                    = f.label "Destino", {class: "input-group-addon", id: "basic-addon20"}
-                    .input-group
-                      = f.text_field :com_dest, {class: "form-control", "aria-describedby" => "basic-addon20", type: :text }
-                .input-group
-                  = f.label "Notificación", { class: "input-group-addon", id: "basic-addon21"}
-                  .input-group
-                    = f.label "Fecha", {class: "input-group-addon", id: "basic-addon22"}
-                    .input-group
-                      = f.text_field :not_date, {class: "form-control", "aria-describedby" => "basic-addon22", type: :date }
-                  .input-group
-                    = f.label "Destino", {class: "input-group-addon", id: "basic-addon23"}
-                    .input-group
-                      = f.text_field :not_dest, {class: "form-control", "aria-describedby" => "basic-addon23", type: :text }
-                .input-group
-                  = f.label "Publicacion", { class: "input-group-addon", id: "basic-addon24"}
-                  .input-group.form-control
-                    Completar publicación
+                    = label_tag nil, "Fecha", { class: "input-group-addon", id: "basic-addon20"}
+                    %input#destiny_date.form-control{"aria-describedby" => "basic-addon20", type: :date }
+                  .input-group-addon.parent-group-btn.btn
+                    %i.fa.fa-plus-circle.fa-2x#add_destiny
+                #destinies_table
+                  .row
+                    .col-xs-12
+                      %table.table.table-striped.table-bordered#table-link
+                        %thead
+                          %tr
+                            %th= "Tipo"
+                            %th= "Destino"
+                            %th= "Fecha"
+                            %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                        %tbody
                 .group-buttons2
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               .clasification
@@ -210,7 +208,7 @@
                     %input#day_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_day'), type: :number }
                     %input#month_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_month'), type: :number }
                     %input#year_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_year'), type: :number }
-                  .input-group-addon
+                  .input-group-addon.parent-group-btn.btn
                     %i.fa.fa-plus-circle.fa-2x#add_disp
                 #disp_norma_table
                   .row

@@ -60,4 +60,11 @@ module DeclaracionsHelper
     Declaracion.find(id_norm).clasificacions.where(nombre: id_clasif).present? unless id_norm.nil?
   end
 
+  def select_destiny
+    [
+      ["Comunicación", "comunication"],
+      ["Notificación", "notify"],
+      ["Publicación", "publication"]
+    ]
+  end
 end
