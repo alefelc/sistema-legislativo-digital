@@ -54,7 +54,7 @@
         %span= link_to(" Decreto " + r.me_modifica.nro.to_s, r.me_modifica)
     %p.single-tab
       - decl.get_destinos(0).each do |d| 
-        %span= "Cominicada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s
+        %span= "Comunicada al " + d.destino.to_s + " el " + to_date(d.fecha).to_s
     %p.single-tab
       - decl.get_destinos(1).each do |d| 
         %span= "Notificada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s    
