@@ -90,6 +90,26 @@ class Norma < ActiveRecord::Base
 
   def get_clasificaciones
     self.clasificacions
+  end
+
+  def get_descripcion
+    self.descripcion
+  end
+
+  def get_observaciones
+    self.observaciones
+  end
+
+  def get_organismo_origen
+    self.organismo_origen
+  end
+
+  def get_tags
+    self.tags
+  end  
+
+  def get_capitulos
+    self.capitulos
   end  
 
   def get_sumario
