@@ -35,7 +35,7 @@
     text-align: center;
   }
 
-  #add_disp:hover {
+  .parent-group-btn:hover {
     color: #00A65A;
   }
 
@@ -59,6 +59,12 @@
 
   #disp_norma_table {
     height: 114px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #destinies_table {
+    height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
   }

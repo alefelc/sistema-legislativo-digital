@@ -1,13 +1,5 @@
 module ApplicationHelper
 
-  def norma_a_dispositivos norma
-    resp = "dsa"
-    norma.modificadas.each do |n|
-      resp
-    end
-    resp
-  end
-
   def dispositivos_a_norma norma
     "dispositivos a norma"
   end
@@ -23,6 +15,8 @@ module ApplicationHelper
         resp = resp + "Comunic: #{d.fecha}\n"
       when 1
         resp = resp + "Notific: #{d.fecha}\n"
+      when 2
+        resp = resp + "Public: #{d.fecha}\n"
       end
     end
     resp
@@ -84,10 +78,21 @@ module ApplicationHelper
 
   def to_date date
     date.strftime("%d/%m/%Y")
-  end 
+  end
 
   def get_digesto_actual
     ## por ahora lo dejo con el last para obtener el ultimo osea el actual. Hay que agregarle el campo año al digesto
     Digesto.last
-  end 
+  end
+
+  def tipo_destinos tipo
+    case tipo
+    when 0
+      "Comunicación"
+    when 1
+      "Notificación"
+    when 2
+      "Publicación"
+    end
+  end
 end

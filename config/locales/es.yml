@@ -4,9 +4,9 @@ es:
       sld: Sistema Legislativo
       normas: Normas
       norma:
-        decreto: Decreto
-        resolucion: Resolución
-        declaracion: Declaración
+        decreto: Decretos
+        resolucion: Resoluciones
+        declaracion: Declaraciones
         especiales: Normas Especiales
         otras: Otras Normas
   declaracions:
