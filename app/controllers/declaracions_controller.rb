@@ -161,7 +161,7 @@ class DeclaracionsController < ApplicationController
 
   def search_exp
     expedientes = Expediente.where("CONCAT(nro_exp, bis, EXTRACT(year from anio)) ilike ?",
-                                   "%#{params[:q]}%").order(nro_exp: :asc).first(15)
+                                   "%#{params[:q]}%").order("nro_exp::int asc").first(15)
     render json: build_json_exp(expedientes)
   end
 
