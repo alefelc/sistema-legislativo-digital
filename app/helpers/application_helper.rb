@@ -64,7 +64,7 @@ module ApplicationHelper
       year = x.anio.present? ? x.anio.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: year + "/" + x.nro_exp + "/" + x.bis.to_s
+        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year
       }
     end
     json_array
@@ -79,7 +79,7 @@ module ApplicationHelper
   def indice norma
     x = norma.modifica
     year = x.sancion.present? ? x.sancion.year.to_s : ""
-    "#{x.type}: #{year}/#{x.nro}/#{x.bis}"
+    "#{x.type}: #{x.nro}/#{x.bis}/#{year}"
   end
 
   def to_date date
