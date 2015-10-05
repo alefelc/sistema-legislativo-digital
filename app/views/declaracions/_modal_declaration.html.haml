@@ -9,6 +9,7 @@
         = hidden_field_tag :tags_ids
         = hidden_field_tag :exps_ids
         = hidden_field_tag :linked_normas
+        = hidden_field_tag :destinies
         .modal-body
           .row
             .col-md-4#first-column
@@ -59,8 +60,8 @@
                   .input-group
                     = label_tag nil, "Fecha", { class: "input-group-addon", id: "basic-addon20"}
                     %input#destiny_date.form-control{"aria-describedby" => "basic-addon20", type: :date }
-                  .input-group-addon.parent-group-btn.btn
-                    %i.fa.fa-plus-circle.fa-2x#add_destiny
+                  .input-group-addon.parent-group-btn.btn#add_destiny
+                    %i.fa.fa-plus-circle.fa-2x
                 #destinies_table
                   .row
                     .col-xs-12
@@ -208,8 +209,8 @@
                     %input#day_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_day'), type: :number }
                     %input#month_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_month'), type: :number }
                     %input#year_refer.form-control{"aria-describedby" => "basic-addon11",:placeholder => t('.deadline_year'), type: :number }
-                  .input-group-addon.parent-group-btn.btn
-                    %i.fa.fa-plus-circle.fa-2x#add_disp
+                  .input-group-addon.parent-group-btn.btn#add_disp
+                    %i.fa.fa-plus-circle.fa-2x
                 #disp_norma_table
                   .row
                     .col-xs-12
@@ -324,8 +325,19 @@
       expsIds.push($(value).data("id"))
     })
     //add exp ids to form
+    var destinies = {}
+    var index = 0
+    $(".destiny-row").each(function(key, value) {
+      destinies[index] = {
+        tipo: $(value).data("value"),
+        destino: $(value).data("destiny"),
+        fecha: $(value).data("date"),
+      }
+      index++;
+    });
     $("#tags_ids").val(tagsIds);
     $("#exps_ids").val(expsIds);
+    $("#destinies").val(JSON.stringify(destinies));
     $("#linked_normas").val(JSON.stringify(linkedNormasIds));
     $("#new_declaracion, [id^='edit_declaracion']").submit();
     $("[id^='edit_declaracion']")

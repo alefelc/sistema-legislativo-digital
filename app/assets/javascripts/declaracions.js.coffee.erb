@@ -57,9 +57,12 @@ $(document).on 'ready page:load', ->
       alert "<%= I18n.t('declaracions.modal_declaration.alert.norma_has_linked') %>"
 
   $(document).on 'click', '#add_destiny', ->
+    if $("#destiny").val() == "" || $("#destiny_date").val() == ""
+      alert("Destino o Fecha no pueden estar vacios")
+      return
     destiny = $("#select_destiny option:selected")
-    row = "<tr data-value=#{destiny.val()} data-destiny=#{$('#destiny').val()}" +
-          " data-date=#{$('#destiny_date').val()}>" +
+    row = "<tr data-value='#{destiny.val()}' data-destiny='#{$('#destiny').val()}'" +
+          " data-date='#{$('#destiny_date').val()}' class='destiny-row'>" +
           "<td> #{destiny.text()} </td>" +
           "<td> #{$('#destiny').val()} </td>" +
           "<td> #{$('#destiny_date').val()} " +
@@ -139,7 +142,7 @@ $(document).on 'ready page:load', ->
         $('#tags-tokeninput').tokenInput 'add', tag
         return
 
-      return  
+      return
 
   $(document).on 'focus', 'textarea', ->
     $(this).elastic();
