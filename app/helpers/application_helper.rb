@@ -84,5 +84,10 @@ module ApplicationHelper
 
   def to_date date
     date.strftime("%d/%m/%Y")
-  end  
+  end 
+
+  def get_digesto_actual
+    ## por ahora lo dejo con el last para obtener el ultimo osea el actual. Hay que agregarle el campo año al digesto
+    Digesto.last
+  end 
 end

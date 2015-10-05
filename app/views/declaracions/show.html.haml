@@ -11,7 +11,23 @@
       %span= decl.get_nro + decl.get_anio_sancion
       %span
         &nbsp 
-        %i.btn.btn-xs.btn-default.fa.fa-download
+        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Texto Original"}    
+    - cap = decl.get_capitulos
+      - unless cap.empty?  
+      %p
+        // aca chequear si pertenece al digesto para mostrar esto
+        %span.titles= "Ubicación #{get_digesto_actual.nombre}: "
+        - cap.each  do |c|
+          %p.single-tab
+            %span= "Libro #{c.titulo.libro.orden}-#{c.titulo.libro.nombre}"  
+            %span= "/ Titulo #{c.titulo.orden}-#{c.titulo.nombre}"
+            %span= "/ Capitulo #{c.orden}-#{c.nombre}"
+            - decl.capitulos_normas.each do |n|  
+              - if c.id == n.capitulo_id
+                %span= "/ Nro Orden: #{n.orden}"
+            %span
+              &nbsp 
+              %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Texto del digesto"}    
     %p
       %span.titles= "Tema: "
       %span= decl.get_sumario
@@ -22,25 +38,47 @@
         - unless cla.empty?
         .single-tab.titles= "Clasificaciones: "
         - cla.each do |r|
-          .single-tab= r.nombre
+          .double-tab= r.nombre
     %p.single-tab
       - circuitos = decl.get_circuitos
         - unless circuitos.empty?
         %span= "Expedientes Legislativos: "
         - circuitos.each do |c|
           - if (c.nro == 0)
-            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "expedientes/#{c.expediente.id}") 
+            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}") 
           - else
             %span= "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp, "expediente/#{c.expediente.id}") + c.expediente.get_anio_expediente
     %p.single-tab
       - decl.get_relacion_me_modifican("promul").each do |r| 
-        %span= "Promulgado el " + r.desde.to_s + " Decreto " + r.me_modifica.nro.to_s
+        %span= "Promulgado el " + to_date(r.desde).to_s
+        %span= link_to(" Decreto " + r.me_modifica.nro.to_s, r.me_modifica)
     %p.single-tab
       - decl.get_destinos(0).each do |d| 
-        %span= "Cominicada a " + d.destino.to_s + " el " + d.fecha.to_s
+        %span= "Cominicada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s
     %p.single-tab
       - decl.get_destinos(1).each do |d| 
-        %span= "Notificada a " + d.destino.to_s + " el " + d.fecha.to_s    
+        %span= "Notificada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s    
+    - desc = decl.get_descripcion
+      - if desc.present?
+      %p
+        %span.titles= "Descripción: "
+        %span= desc
+    - obs = decl.get_observaciones
+      - if obs.present?
+      %p
+        %span.titles= "Observaciónes: "
+        %span= obs 
+    - org = decl.get_organismo_origen
+      - if org.present?
+      %p
+        %span.titles= "Organismo origen: "
+        %span= org
+    %p
+      - tags = decl.get_tags
+        - unless tags.empty?
+        %span.titles= "Voces Claves: "
+        - tags.each do |t|
+          %span= t.nombre + " - "
     %hr
     %p.single-tab
       - rel = decl.get_relacion_me_modifican("reglamen")
@@ -210,4 +248,11 @@
         .single-tab= "Prorroga vigencia a: "
         - rel.each do |r| 
           - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + norm_dest.get_anio_sancion, norm_dest)            
+          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + norm_dest.get_anio_sancion, norm_dest)
+    %p.single-tab
+      - rel = decl.get_relacion_modifica("promul")
+        - unless rel.empty?
+        .single-tab= "Promulga a: "
+        - rel.each do |r| 
+          - norm_dest = r.modifica
+          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + norm_dest.get_anio_sancion, norm_dest)                  
