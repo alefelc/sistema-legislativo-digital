@@ -68,10 +68,10 @@ es:
 
   tokeninput:
     placeholder:
-      exp_example: 'Año + Nro + Bis  -  Ej: 20151090'
+      exp_example: 'Nro + Bis + Año  -  Ej: 10902015'
       tag: 'Voz clave'
       tag_example: 'Ingrese voz clave'
-      norma_example: 'Año + Nro + Bis  -  Ej: 20151090'
+      norma_example: 'Nro + Bis + Año  -  Ej: 10902015'
     hint:
       enter_exp: Ingrese Expediente
       enter_norma: Ingrese Norma    

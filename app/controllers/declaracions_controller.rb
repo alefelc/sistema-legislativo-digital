@@ -160,14 +160,14 @@ class DeclaracionsController < ApplicationController
   end
 
   def search_exp
-    expedientes = Expediente.where("CONCAT(EXTRACT(year from anio), nro_exp, bis) ilike ?",
-                                   "%#{params[:q]}%").first(10)
+    expedientes = Expediente.where("CONCAT(nro_exp, bis, EXTRACT(year from anio)) ilike ?",
+                                   "%#{params[:q]}%").order(nro_exp: :asc).first(15)
     render json: build_json_exp(expedientes)
   end
 
   def search_norma
-    normas = Norma.where("CONCAT(EXTRACT(year from sancion), nro, bis) ilike ?",
-                                   "%#{params[:q]}%").first(10)
+    normas = Norma.where("CONCAT(nro, bis, EXTRACT(year from sancion)) ilike ?",
+                                   "%#{params[:q]}%").order(nro: :asc).first(15)
     render json: build_json_norma(normas)
   end
 
@@ -190,7 +190,7 @@ class DeclaracionsController < ApplicationController
       year = x.anio.present? ? x.anio.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: year + "/" + x.nro_exp + "/" + x.bis.to_s
+        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year
       }
     end
     json_array
@@ -202,7 +202,7 @@ class DeclaracionsController < ApplicationController
       year = x.sancion.present? ? x.sancion.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: x.type + ": " + year + "/" + x.nro.to_s + "/" + x.bis.to_s
+        indice: x.type + ": " + x.nro.to_s + "/" + x.bis.to_s  + "/" + year
       }
     end
     json_array
