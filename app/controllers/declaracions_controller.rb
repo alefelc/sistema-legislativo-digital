@@ -18,8 +18,8 @@ class DeclaracionsController < ApplicationController
 
   def show
     @declaracion = Declaracion.find(params[:id])
-  end  
-  
+  end
+
   def edit
     @declaracion = Declaracion.find(params[:id])
     respond_to do |format|
@@ -80,6 +80,22 @@ class DeclaracionsController < ApplicationController
       end
     end
 
+    unless params[:destinies].blank?
+      JSON.parse(params[:destinies]).each do |key, value|
+        @declaracion.destinos.create do |d|
+          if value['tipo'] == 'comunication'
+            d.tipo = 0
+          elsif value['tipo'] == 'notification'
+            d.tipo = 1
+          else
+            d.tipo = 2
+          end
+          d.fecha = value['fecha']
+          d.destino = value['destino']
+        end
+      end
+    end
+
     redirect_to action: :index
   end
 
@@ -113,10 +129,10 @@ class DeclaracionsController < ApplicationController
       @declaracion.circuitos.delete(id_circuito)
     end
 
-    ## update params clasifications_ids the PATCH    
+    ## update params clasifications_ids the PATCH
     current_clasific = []
     old_clasific = @declaracion.clasificacions.map{ |x| x.id}
-    
+
     unless params[:clasificaciones].blank?
       params[:clasificaciones].each do |key,value|
         current_clasific << Clasificacion.where(nombre: key).first().id
@@ -145,15 +161,31 @@ class DeclaracionsController < ApplicationController
               rm.anio = value["to_year"]
               rm.dia_habil = value["type_day"]
           end
-        end    
+        end
         current_normas << value["id"]
       end
     end
-    puts "current_normas #{current_normas}"
-    puts "old_normas #{old_normas}"
     # delete norms
     (old_normas - current_normas).each do |id|
       @declaracion.modificadas.delete(id)
+    end
+
+    unless params[:destinies].blank?
+      JSON.parse(params[:destinies]).each do |key, value|
+        @declaracion.destinos.create do |d|
+          if value['tipo'] == 'comunication'
+            d.tipo = 0
+          elsif value['tipo'] == 'notification'
+            d.tipo = 1
+          elsif value['tipo'] == 'publication'
+            d.tipo = 2
+          else
+            d.tipo = -1
+          end
+          d.fecha = value['fecha']
+          d.destino = value['destino']
+        end
+      end
     end
 
     redirect_to action: :index

@@ -73,6 +73,13 @@
                             %th= "Fecha"
                             %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
                         %tbody
+                          - @declaracion.destinos.each do |x|
+                            %tr
+                              %th= tipo_destinos x.tipo
+                              %th= x.destino
+                              %th= x.fecha
+                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
+
                 .group-buttons2
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               .clasification

@@ -63,7 +63,7 @@ module DeclaracionsHelper
   def select_destiny
     [
       ["Comunicación", "comunication"],
-      ["Notificación", "notify"],
+      ["Notificación", "notification"],
       ["Publicación", "publication"]
     ]
   end

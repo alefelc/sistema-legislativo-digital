@@ -1,5 +1,4 @@
 class DeclaracionDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :norma_a_dispositivos
   def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
