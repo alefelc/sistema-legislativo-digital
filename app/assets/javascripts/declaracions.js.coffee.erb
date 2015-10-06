@@ -126,8 +126,8 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'click', '.linktoedit', ->
     id = $(this).data 'id'
+    $('#declaracion-edit').empty()
     $.get "/declaracions/#{id}/edit", (data) ->
-      $('#declaracion-edit').empty()
       $('#declaracion-edit').append data
       $('#declaracion-edit .modal').modal 'show'
 
