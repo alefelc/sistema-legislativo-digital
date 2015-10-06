@@ -6,4 +6,3 @@
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require jquery.tokeninput.min
 //= require_tree .
-//= require turbolinks
