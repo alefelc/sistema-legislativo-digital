@@ -68,6 +68,22 @@ class Norma < ActiveRecord::Base
     end    
   end
 
+  def get_entrada_vigencia
+    self.entrada_vigencia
+  end
+
+  def get_finaliza_vigencia
+    self.finaliza_vigencia
+  end  
+
+  def get_plazo_vigencia
+    ret = ""
+    plazo_anio = self.plazo_anio.to_i.to_s + " años, " 
+    plazo_mes = self.plazo_mes.to_i.to_s + " meses y "
+    plazo_dia = self.plazo_dia.to_i.to_s + " dias "
+    ret = plazo_anio + plazo_mes + plazo_dia
+  end  
+
   def to_date date
     date.strftime("%d/%m/%Y")
   end

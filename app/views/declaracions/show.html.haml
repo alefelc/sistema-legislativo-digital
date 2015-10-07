@@ -33,6 +33,18 @@
       %span= decl.get_sumario
     %p.single-tab
       %span= decl.get_sancion
+    %p.single-tab
+      - entrada_vigencia = decl.get_entrada_vigencia
+      - finaliza_vigencia = decl.get_finaliza_vigencia
+      - plazo_vigencia = decl.get_plazo_vigencia
+        - if entrada_vigencia.present?
+        .single-tab.titles= "Vigencia: "
+        - if entrada_vigencia.present?
+          .double-tab= "Entra en vigencia el: " + to_date(entrada_vigencia).to_s
+        - if finaliza_vigencia.present?
+          .double-tab= "Finaliza vigencia el: " + to_date(finaliza_vigencia).to_s
+        - else
+          .double-tab= "Finaliza vigencia en: " + plazo_vigencia + " a partir de la entrada en vigencia"        
     =render partial: "clasification_declaration", locals: { decl: decl } 
     %p.single-tab
       - circuitos = decl.get_circuitos
