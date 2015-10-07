@@ -56,7 +56,7 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
       end
       declaracion = declaracion.where(query)
     end
-    declaracion
+    declaracion.includes(:circuitos).includes(:destinos).includes(circuitos: [:expediente])
   end
 
   def per_page
