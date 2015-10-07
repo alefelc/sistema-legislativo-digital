@@ -178,3 +178,18 @@ $(document).on 'ready page:load', ->
     rowpos = $('tr.info').position()
     $(document).scrollTop(rowpos.top-45)
     return
+
+  ## hotkey create declaration
+  $.ctrl 'C', ->
+    $('#btn-new').click()
+    return
+
+  ## hotkey edit declaration
+  $.ctrl 'E', ->
+    $('table tbody').find('.info').find('.linktoedit').click()
+    return
+
+  ## hotkey delete declaration
+  $.ctrl 'D', ->
+    alert 'agregar funcion eliminar'
+    return    

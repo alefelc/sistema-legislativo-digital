@@ -29,3 +29,21 @@ $.extend $.fn.dataTable.defaults,
     "oAria":
       "sSortAscending":  ": Activar para ordenar la columna de manera ascendente"
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+$.ctrl = (key, callback, args) ->
+  isCtrl = false
+  $(document).keydown((e) ->
+    if !args
+      args = []
+    # IE barks when args is null
+    if e.ctrlKey
+      isCtrl = true
+    if e.keyCode == key.charCodeAt(0) and isCtrl
+      callback.apply this, args
+      return false
+    return
+  ).keyup (e) ->
+    if e.ctrlKey
+      isCtrl = false
+    return
+  return
