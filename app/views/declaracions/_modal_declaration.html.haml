@@ -74,10 +74,10 @@
                             %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
                         %tbody
                           - @declaracion.destinos.each do |x|
-                            %tr
-                              %th= tipo_destinos x.tipo
-                              %th= x.destino
-                              %th= x.fecha
+                            %tr{ class: 'destiny-row', 'data-id': x.id, 'data-value': x.tipo, 'data-destiny': x.destino, 'data-date': x.fecha }
+                              %td= tipo_destinos x.tipo
+                              %td= x.destino
+                              %td= x.fecha
                               %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
 
                 .group-buttons2
@@ -336,6 +336,7 @@
     var index = 0
     $(".destiny-row").each(function(key, value) {
       destinies[index] = {
+        id: $(value).data("id"),
         tipo: $(value).data("value"),
         destino: $(value).data("destiny"),
         fecha: $(value).data("date"),

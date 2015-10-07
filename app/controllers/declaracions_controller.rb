@@ -32,40 +32,22 @@ class DeclaracionsController < ApplicationController
           "sumario", "sancion", "observaciones", "entrada_vigencia", "finaliza_vigencia",
           "plazo_dia", "plazo_mes", "plazo_anio", "organismo_origen"].include?(key) }
     @declaracion = Declaracion.create decl.to_hash
+
     ## get params tags_ids the POST
-    unless params[:tags_ids].blank?
-      params[:tags_ids].split(',').each do |id|
-        @declaracion.tags << Tag.find(id)
-      end
-    end
+    params[:tags_ids].split(',').each { |id| @declaracion.tags << Tag.find(id) } unless params[:tags_ids].blank?
+
     ## get params exps_ids the POST
     unless params[:exps_ids].blank?
-      params[:exps_ids].split(',').each do |id|
-        exp = Expediente.find(id)
-        @declaracion.circuitos << exp.circuitos.find_by(nro: 0)
-      end
+      params[:exps_ids].split(',').each { |id| @declaracion.circuitos << Expediente.find(id).circuitos.find_by(nro: 0) }
     end
+
     ## get params clasifications_ids the POST and save
     unless params[:clasificaciones].blank?
-      params[:clasificaciones].each do |key,value|
-        @declaracion.clasificacions <<  Clasificacion.where(nombre: key).first()
-      end
+      params[:clasificaciones].each { |key,value| @declaracion.clasificacions <<  Clasificacion.where(nombre: key).first() }
     end
-    ## get params notif and comunic the POST and save
-    if params[:declaracion]['com_date'].present?
-      com_date = params[:declaracion]['com_date']
-      com_dest = params[:declaracion]['com_dest']
-      dest = Destino.create tipo: 0, fecha: com_date, destino: com_dest
-      @declaracion.destinos << dest
-    end
-    if params[:declaracion]['not_date'].present?
-      not_date = params[:declaracion]['not_date']
-      not_dest = params[:declaracion]['not_dest']
-      dest = Destino.create tipo: 1, fecha: not_date, destino: not_dest
-      @declaracion.destinos << dest
-    end
+
     ## get params linked_normas the POST and save
-    if params['linked_normas'].present?
+    unless params[:linked_normas].blank?
       JSON.parse(params['linked_normas']).each do |key, value|
         @declaracion.relationship_modificadas.create do |rm|
           rm.tipo_relacion = value["relation_type"]
@@ -83,13 +65,7 @@ class DeclaracionsController < ApplicationController
     unless params[:destinies].blank?
       JSON.parse(params[:destinies]).each do |key, value|
         @declaracion.destinos.create do |d|
-          if value['tipo'] == 'comunication'
-            d.tipo = 0
-          elsif value['tipo'] == 'notification'
-            d.tipo = 1
-          else
-            d.tipo = 2
-          end
+          d.tipo = value['tipo']
           d.fecha = value['fecha']
           d.destino = value['destino']
         end
@@ -110,45 +86,28 @@ class DeclaracionsController < ApplicationController
     ## update params tags_ids the PATCH
     current_tags = params[:tags_ids].split(',')
     old_tag = @declaracion.tags.map{ |x| x.id.to_s }
-    (current_tags - old_tag).each do |id|
-      @declaracion.tags << Tag.find(id)
-    end
-    (old_tag - current_tags).each do |id|
-      @declaracion.tags.delete(id)
-    end
+    (current_tags - old_tag).each { |id| @declaracion.tags << Tag.find(id) }
+    (old_tag - current_tags).each { |id| @declaracion.tags.delete(id) }
 
     ## update params exps_ids the PATCH
     current_exps = params[:exps_ids].split(',')
     old_exps = @declaracion.expedientes.map{ |x| x.id.to_s}
-    (current_exps - old_exps).each do |id|
-      exp = Expediente.find(id)
-      @declaracion.circuitos << exp.circuitos.find_by(nro: 0)
-    end
-    (old_exps - current_exps).each do |id|
-      id_circuito = Expediente.find(id).circuitos.find_by(nro: 0).id
-      @declaracion.circuitos.delete(id_circuito)
-    end
-
-    ## update params clasifications_ids the PATCH
-    current_clasific = []
-    old_clasific = @declaracion.clasificacions.map{ |x| x.id}
+    (current_exps - old_exps).each { |id| @declaracion.circuitos << Expediente.find(id).circuitos.find_by(nro: 0) }
+    (old_exps - current_exps).each { |id| @declaracion.circuitos.delete(Expediente.find(id).circuitos.find_by(nro: 0).id) }
 
     unless params[:clasificaciones].blank?
-      params[:clasificaciones].each do |key,value|
-        current_clasific << Clasificacion.where(nombre: key).first().id
-      end
-    end
-    (current_clasific - old_clasific).each do |id|
-      @declaracion.clasificacions <<  Clasificacion.find(id)
-    end
-    (old_clasific - current_clasific).each do |id|
-      @declaracion.clasificacions.delete(id)
+      ## update params clasifications_ids the PATCH
+      current_clasific = []
+      old_clasific = @declaracion.clasificacions.map{ |x| x.id}
+      params[:clasificaciones].each { |key,value| current_clasific << Clasificacion.where(nombre: key).first().id }
+      (current_clasific - old_clasific).each { |id| @declaracion.clasificacions <<  Clasificacion.find(id) }
+      (old_clasific - current_clasific).each { |id| @declaracion.clasificacions.delete(id) }
     end
 
-    ## update params linked_normas the PATCH
-    current_normas = []
-    old_normas = @declaracion.modificadas.map{ |x| x.id}
     if params['linked_normas'].present?
+      ## update params linked_normas the PATCH
+      current_normas = []
+      old_normas = @declaracion.modificadas.map{ |x| x.id }
       JSON.parse(params['linked_normas']).each do |key, value|
         unless old_normas.include?(value["id"])
           @declaracion.relationship_modificadas.create do |rm|
@@ -164,29 +123,21 @@ class DeclaracionsController < ApplicationController
         end
         current_normas << value["id"]
       end
-    end
-    # delete norms
-    (old_normas - current_normas).each do |id|
-      @declaracion.modificadas.delete(id)
+      # delete norms
+      (old_normas - current_normas).each { |id| @declaracion.modificadas.delete(id) }
     end
 
-    unless params[:destinies].blank?
-      JSON.parse(params[:destinies]).each do |key, value|
-        @declaracion.destinos.create do |d|
-          if value['tipo'] == 'comunication'
-            d.tipo = 0
-          elsif value['tipo'] == 'notification'
-            d.tipo = 1
-          elsif value['tipo'] == 'publication'
-            d.tipo = 2
-          else
-            d.tipo = -1
-          end
-          d.fecha = value['fecha']
-          d.destino = value['destino']
-        end
+    current_destinies = JSON.parse(params[:destinies]).select{ |x, y| y.has_key?(:id) }.map{ |x, y| y[:id] }
+    new_destinies = JSON.parse(params[:destinies]).select{ |x, y| not y.has_key?(:id) }
+    old_destinies = @declaracion.destinos.map{ |x| x.id.to_s }
+    new_destinies.each do |key, value|
+      @declaracion.destinos.create do |nd|
+        nd.tipo = value['tipo']
+        nd.fecha = value['fecha']
+        nd.destino = value['destino']
       end
     end
+    (old_destinies - current_destinies).each { |id| @declaracion.destinos.delete(id) }
 
     redirect_to action: :index
   end
