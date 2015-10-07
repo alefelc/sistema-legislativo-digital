@@ -27,6 +27,11 @@ class DeclaracionsController < ApplicationController
     end
   end
 
+  def destroy
+    Declaracion.find(params[:id]).delete
+    render json: {url: "/declaracions"}
+  end  
+
   def create
     decl = params[:declaracion].select { |key, value| ["letra", "nro", "bis", "descripcion",
           "sumario", "sancion", "observaciones", "entrada_vigencia", "finaliza_vigencia",
