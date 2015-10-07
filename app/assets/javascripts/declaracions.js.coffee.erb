@@ -6,10 +6,10 @@ $(document).on 'ready page:load', ->
       $('div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
       return
     fnDrawCallback: ->
-      $('tr').find('td:eq(1)').each ->
+      $('#declaracion-table tbody tr').find('td:eq(1)').each ->
         $(this).text $(this).text().substring(0, 125) + '...'
         return
-      $('tr:eq(1)').addClass 'info'
+      $('#declaracion-table tbody tr:eq(0)').addClass 'info'
       return
     aoColumns: [
       { sortable: false, "width": "12%" , sClass: "center"}
@@ -154,7 +154,7 @@ $(document).on 'ready page:load', ->
 
   $(document).keydown (event) ->
     table = $('#declaracion-table').dataTable()
-    currentRow = $('tr.info').get(0)
+    currentRow = $('#declaracion-table tbody tr.info').get(0)
     switch event.keyCode
       ## arrow down
       when 40
