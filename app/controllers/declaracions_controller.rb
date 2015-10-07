@@ -95,15 +95,15 @@ class DeclaracionsController < ApplicationController
     (current_exps - old_exps).each { |id| @declaracion.circuitos << Expediente.find(id).circuitos.find_by(nro: 0) }
     (old_exps - current_exps).each { |id| @declaracion.circuitos.delete(Expediente.find(id).circuitos.find_by(nro: 0).id) }
 
-    unless params[:clasificaciones].blank?
-      ## update params clasifications_ids the PATCH
-      current_clasific = []
-      old_clasific = @declaracion.clasificacions.map{ |x| x.id}
+    ## update params clasifications_ids the PATCH
+    current_clasific = []
+    old_clasific = @declaracion.clasificacions.map{ |x| x.id}
+    if params[:clasificaciones].present?
       params[:clasificaciones].each { |key,value| current_clasific << Clasificacion.where(nombre: key).first().id }
-      (current_clasific - old_clasific).each { |id| @declaracion.clasificacions <<  Clasificacion.find(id) }
-      (old_clasific - current_clasific).each { |id| @declaracion.clasificacions.delete(id) }
     end
-
+    (current_clasific - old_clasific).each { |id| @declaracion.clasificacions <<  Clasificacion.find(id) }
+    (old_clasific - current_clasific).each { |id| @declaracion.clasificacions.delete(id) }
+    
     if params['linked_normas'].present?
       ## update params linked_normas the PATCH
       current_normas = []
