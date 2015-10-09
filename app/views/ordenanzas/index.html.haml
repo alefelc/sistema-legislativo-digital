@@ -1,0 +1,15 @@
+#ordenanza
+  #ordenanza-edit
+  %button#btn-new.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+    = t('.btnheader.new')
+
+  %table.table.table-striped.table-bordered#ordenanza-table{"data-source" => ordenanzas_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.ordenanza')
+        %th= t('.table.sumario')
+        %th{width: "15%"}= t('.table.fechas')
+        %th= t('.table.expedientes')
+        %th
+    %tbody
