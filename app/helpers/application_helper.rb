@@ -22,8 +22,12 @@ module ApplicationHelper
     resp
   end
 
-  def index_norma norma
+  def index_decl norma
     link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, declaracion_path(norma)
+  end
+
+  def index_ord norma
+    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, ordenanza_path(norma)
   end
 
   def norma_expediente norma
@@ -41,6 +45,8 @@ module ApplicationHelper
   def resolve_path_name
     return "Declaraciones" if current_page?(controller: :declaracions, action: :index)
     return "Declaración #{params[:id]}" if current_page?(controller: :declaracions, action: :show, id: params[:id].to_i)
+    return "Ordenanzas" if current_page?(controller: :ordenanzas, action: :index)
+    return "Ordenanza #{params[:id]}" if current_page?(controller: :ordenanzas, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 

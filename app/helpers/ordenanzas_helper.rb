@@ -1,4 +1,4 @@
-module DeclaracionsHelper
+module OrdenanzasHelper
 
   def refers_type
     [
@@ -56,8 +56,8 @@ module DeclaracionsHelper
     output
   end
 
-  def search_value_classify_decl(id_clasif, id_norm)
-    Declaracion.find(id_norm).clasificacions.where(nombre: id_clasif).present? unless id_norm.nil?
+  def search_value_classify_ord(id_clasif, id_norm)
+    Ordenanza.find(id_norm).clasificacions.where(nombre: id_clasif).present? unless id_norm.nil?
   end
 
   def select_destiny

@@ -1,8 +1,8 @@
-class DeclaracionDatatable < AjaxDatatablesRails::Base
+class OrdenanzaDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
-  def_delegator :@view, :index_decl
+  def_delegator :@view, :index_ord
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -25,38 +25,38 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   private
 
   def data
-    records.map do |decl|
+    records.map do |ord|
       [
-        index_decl(decl),
-        decl.sumario,
-        fechas(decl),
-        norma_expediente(decl),
-        associated_file(decl)
+        index_ord(ord),
+        ord.sumario,
+        fechas(ord),
+        norma_expediente(ord),
+        associated_file(ord)
       ]
     end
   end
 
-  def associated_file decl
+  def associated_file ord
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{decl.id}' title='Borrar norma'></i>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{decl.id}' title='Editar norma'></i>" +
+    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{ord.id}' title='Borrar norma'></i>" +
+    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{ord.id}' title='Editar norma'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar norma'></i></div>"
   end
 
-  def declaraciones
+  def ordenanzas
     fetch_records
   end
 
   def fetch_records
-    declaracion = Declaracion.page(page).per(per_page).order(id: :desc)
+    ordenanza = Ordenanza.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
       query = "(sumario ilike '%#{params[:sSearch]}%')"
       unless params[:sSearch].to_i.zero?
         query = "(CONCAT(nro, bis, EXTRACT(year from sancion)) ilike '%#{params[:sSearch].to_i}%')"
       end
-      declaracion = declaracion.where(query)
+      ordenanza = ordenanza.where(query)
     end
-    declaracion.includes(:circuitos).includes(:destinos).includes(circuitos: [:expediente])
+    ordenanza.includes(:circuitos).includes(:destinos).includes(circuitos: [:expediente])
   end
 
   def per_page
@@ -68,7 +68,7 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    Declaracion.all
+    Ordenanza.all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
