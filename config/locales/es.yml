@@ -116,7 +116,61 @@ es:
       destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
-      calendar_day: Dia corrido    
+      calendar_day: Dia corrido
+
+  decretos:
+    show:
+      info: Información de la Decreto
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        decreto: Nro-Bis/Año
+        sumario: Sumario
+        sancion: Sanción
+        fechas: Fechas
+        description: Descripción
+        relationships: Norma a Dispositivos
+        relationships2: Dispositivos a Norma
+        expedientes: Sanciona Exp N°
+    modal_decreto:
+      alert:
+        norma_has_linked: Debe vincular alguna norma.
+      table:
+        ref_type: Tipo de vínculo
+        date: Fechas
+        destiny: Destino
+      title:
+        create_decreto: Creando Decreto
+        clasification: Clasificación
+      btn_clasification:
+        ready: Listo
+        classify: Clasificar Norma
+        destiny: Destino
+        dates: Fechas
+      tags: Voces claves
+      letter: Letra
+      number: Número
+      bis: Bis
+      description: Descripción
+      summary: Sumario
+      validate_entry: Entrada Vigencia
+      validate_output: Finaliza Vigencia
+      deadline_day: Plazo Dia
+      deadline_month: Plazo Mes
+      deadline_year: Plazo Año
+      organism: Organismo Origen
+      observations: Observaciones
+      norma_disp: Norma a Dispositivos
+      select_ref_type: Selecciones tipo de vínculo
+      from: Desde
+      to: Hasta
+      index: LETRA/NUMERO/BIS
+      new_decreto: Creando Decreto
+      destiny: Destino
+      not_clear: No aclara
+      working_day: Dia hábil
+      calendar_day: Dia corrido        
 
   datatable:
     search: Ingrese búsqueda ...
