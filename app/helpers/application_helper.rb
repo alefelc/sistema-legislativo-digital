@@ -34,6 +34,10 @@ module ApplicationHelper
     link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, decreto_path(norma)
   end
 
+  def index_resol norma
+    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, resolucion_path(norma)
+  end
+
   def norma_expediente norma
     resp = ""
     norma.circuitos.each do |c|
@@ -53,6 +57,8 @@ module ApplicationHelper
     return "Ordenanza #{params[:id]}" if current_page?(controller: :ordenanzas, action: :show, id: params[:id].to_i)
     return "Decretos" if current_page?(controller: :decretos, action: :index)
     return "Decreto #{params[:id]}" if current_page?(controller: :decretos, action: :show, id: params[:id].to_i)
+    return "Resoluciones" if current_page?(controller: :resolucions, action: :index)
+    return "Resolución #{params[:id]}" if current_page?(controller: :resolucions, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
