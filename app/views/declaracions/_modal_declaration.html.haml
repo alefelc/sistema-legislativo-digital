@@ -86,96 +86,96 @@
                 .input-group
                   = f.label "Contenido", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[General]', nil ,search_value_classify('General',@declaracion.id)
+                    = check_box_tag 'clasificaciones[General]', nil ,search_value_classify_decl('General',@declaracion.id)
                     = label_tag 'General', 'General'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Autónomo]', nil ,search_value_classify('Autónomo',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Autónomo]', nil ,search_value_classify_decl('Autónomo',@declaracion.id)
                     = label_tag 'Autónomo', 'Autónomo'
                   .input-group
                     = f.label "Particular", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      = check_box_tag 'clasificaciones[Individual y meros actos administrativos]', nil ,search_value_classify('Individual y meros actos administrativos',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Individual y meros actos administrativos]', nil ,search_value_classify_decl('Individual y meros actos administrativos',@declaracion.id)
                       = label_tag 'Individual y meros actos administrativos', 'Individual y meros actos administrativos'
                     .input-group
                       = f.label "Contrataciones y convenios", {class: "input-group-addon", id: "basic-addon16"}
                       .input-group.form-control
-                        = check_box_tag 'clasificaciones[De Servicios Públicos]', nil ,search_value_classify('De Servicios Públicos',@declaracion.id)
+                        = check_box_tag 'clasificaciones[De Servicios Públicos]', nil ,search_value_classify_decl('De Servicios Públicos',@declaracion.id)
                         = label_tag 'De Servicios Públicos', 'De Servicios Públicos'
                         &nbsp
-                        = check_box_tag 'clasificaciones[Otras]', nil ,search_value_classify('Otras',@declaracion.id)
+                        = check_box_tag 'clasificaciones[Otras]', nil ,search_value_classify_decl('Otras',@declaracion.id)
                         = label_tag 'Otras', 'Otras'
                   .input-group
                     = f.label "Alcance", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      = check_box_tag 'clasificaciones[Alcance general]', nil ,search_value_classify('Alcance general',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Alcance general]', nil ,search_value_classify_decl('Alcance general',@declaracion.id)
                       = label_tag 'Alcance general', 'Alcance general'
                       &nbsp
-                      = check_box_tag 'clasificaciones[Alcance especial]', nil ,search_value_classify('Alcance especial',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Alcance especial]', nil ,search_value_classify_decl('Alcance especial',@declaracion.id)
                       = label_tag 'Alcance especial', 'Alcance especial'
                 .input-group
                   = f.label "Vigencia", { class: "input-group-addon", id: "basic-addon14"}
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Dictada por razones de emergencia]', nil ,search_value_classify('Dictada por razones de emergencia',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Dictada por razones de emergencia]', nil ,search_value_classify_decl('Dictada por razones de emergencia',@declaracion.id)
                     = label_tag 'Dictada por razones de emergencia', 'Dictada por razones de emergencia'
                     &nbsp
-                    = check_box_tag 'clasificaciones[De necesidad o urgencia]', nil ,search_value_classify('De necesidad o urgencia',@declaracion.id)
+                    = check_box_tag 'clasificaciones[De necesidad o urgencia]', nil ,search_value_classify_decl('De necesidad o urgencia',@declaracion.id)
                     = label_tag 'De necesidad o urgencia', 'De necesidad o urgencia'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Dictado ad referendum]', nil ,search_value_classify('Dictado ad referendum',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Dictado ad referendum]', nil ,search_value_classify_decl('Dictado ad referendum',@declaracion.id)
                     = label_tag 'Dictado ad referendum', 'Dictado ad referendum'
                   .input-group
                     = f.label "De renovación períodica", {class: "input-group-addon", id: "basic-addon15"}
                     .input-group.form-control
-                      = check_box_tag 'clasificaciones[Que contienen normas generales y permanentes]', nil ,search_value_classify('Que contienen normas generales y permanentes',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Que contienen normas generales y permanentes]', nil ,search_value_classify_decl('Que contienen normas generales y permanentes',@declaracion.id)
                       = label_tag 'Que contienen normas generales y permanentes', 'Que contienen normas generales y permanentes'
                       &nbsp
-                      = check_box_tag 'clasificaciones[Que NO contienen normas generales y permanentes]', nil ,search_value_classify('Que NO contienen normas generales y permanentes',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Que NO contienen normas generales y permanentes]', nil ,search_value_classify_decl('Que NO contienen normas generales y permanentes',@declaracion.id)
                       = label_tag 'Que NO contienen normas generales y permanentes', 'Que NO contienen normas generales y permanentes'
                   .input-group
                     = f.label "Motivos", {class: "input-group-addon", id: "basic-addon16"}
                     .input-group.form-control
-                      = check_box_tag 'clasificaciones[Motivos subsisten]', nil ,search_value_classify('Motivos subsisten',@declaracion.id)
+                      = check_box_tag 'clasificaciones[Motivos subsisten]', nil ,search_value_classify_decl('Motivos subsisten',@declaracion.id)
                       = label_tag 'Motivos subsisten', 'Motivos subsisten'
                     .input-group
                       = f.label "No subsisten", {class: "input-group-addon", id: "basic-addon17"}
                       .input-group.form-control
-                        = check_box_tag 'clasificaciones[Normas generales]', nil ,search_value_classify('Normas generales',@declaracion.id)
+                        = check_box_tag 'clasificaciones[Normas generales]', nil ,search_value_classify_decl('Normas generales',@declaracion.id)
                         = label_tag 'Normas generales', 'Normas generales'
                         &nbsp
-                        = check_box_tag 'clasificaciones[Normas no generales]', nil ,search_value_classify('Normas no generales',@declaracion.id)
+                        = check_box_tag 'clasificaciones[Normas no generales]', nil ,search_value_classify_decl('Normas no generales',@declaracion.id)
                         = label_tag 'Normas no generales', 'Normas no generales'
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Plazo determinado y cumplido]', nil ,search_value_classify('Plazo determinado y cumplido',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Plazo determinado y cumplido]', nil ,search_value_classify_decl('Plazo determinado y cumplido',@declaracion.id)
                     = label_tag 'Plazo determinado y cumplido', 'Plazo determinado y cumplido'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Plazo determinado y NO cumplido]', nil ,search_value_classify('Plazo determinado y NO cumplido',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Plazo determinado y NO cumplido]', nil ,search_value_classify_decl('Plazo determinado y NO cumplido',@declaracion.id)
                     = label_tag 'Plazo determinado y NO cumplido', 'Plazo determinado y NO cumplido'
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Vigencia sujeta a condición resolutoria]', nil ,search_value_classify('Vigencia sujeta a condición resolutoria',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Vigencia sujeta a condición resolutoria]', nil ,search_value_classify_decl('Vigencia sujeta a condición resolutoria',@declaracion.id)
                     = label_tag 'Vigencia sujeta a condición resolutoria', 'Vigencia sujeta a condición resolutoria'
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Cumplida]', nil ,search_value_classify('Cumplida',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Cumplida]', nil ,search_value_classify_decl('Cumplida',@declaracion.id)
                     = label_tag 'Cumplida', 'Cumplida'
                     &nbsp
-                    = check_box_tag 'clasificaciones[NO cumplida]', nil ,search_value_classify('NO cumplida',@declaracion.id)
+                    = check_box_tag 'clasificaciones[NO cumplida]', nil ,search_value_classify_decl('NO cumplida',@declaracion.id)
                     = label_tag 'NO cumplida', 'NO cumplida'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Objeto agotado]', nil ,search_value_classify('Objeto agotado',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Objeto agotado]', nil ,search_value_classify_decl('Objeto agotado',@declaracion.id)
                     = label_tag 'Objeto agotado', 'Objeto agotado'
                 .input-group
                   = f.label "Derogación", { class: "input-group-addon", id: "basic-addon16"}
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Derogación sujeta a condición suspensiva]', nil ,search_value_classify('Derogación sujeta a condición suspensiva',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Derogación sujeta a condición suspensiva]', nil ,search_value_classify_decl('Derogación sujeta a condición suspensiva',@declaracion.id)
                     = label_tag 'Derogación sujeta a condición suspensiva', 'Derogación sujeta a condición suspensiva'
                     &nbsp
                   .input-group.form-control
-                    = check_box_tag 'clasificaciones[Derog. tácita]', nil ,search_value_classify('Derog. tácita',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Derog. tácita]', nil ,search_value_classify_decl('Derog. tácita',@declaracion.id)
                     = label_tag 'Derog. tácita', 'Derog. tácita'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Derog. cumplida]', nil ,search_value_classify('Derog. cumplida',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Derog. cumplida]', nil ,search_value_classify_decl('Derog. cumplida',@declaracion.id)
                     = label_tag 'Derog. cumplida', 'Derog. cumplida'
                     &nbsp
-                    = check_box_tag 'clasificaciones[Derog. NO cumplida]', nil ,search_value_classify('Derog. NO cumplida',@declaracion.id)
+                    = check_box_tag 'clasificaciones[Derog. NO cumplida]', nil ,search_value_classify_decl('Derog. NO cumplida',@declaracion.id)
                     = label_tag 'Derog. NO cumplida', 'Derog. NO cumplida'
                     &nbsp
                 .group-buttons2
@@ -241,10 +241,10 @@
 :javascript
   wi = $(window).width()-20;
   margin = 10;
-  $(".modal-xs").css('width', wi);
-  $(".modal-xs").css('margin-left', margin);
+  $("#declaracion .modal-xs").css('width', wi);
+  $("#declaracion .modal-xs").css('margin-left', margin);
 
-  $('#exped_token').tokenInput('/declaracions/search_exp', {
+  $('#declaracion #exped_token').tokenInput('/declaracions/search_exp', {
     preventDuplicates: true,
     propertyToSearch: 'indice',
     theme: 'bootstrap',
@@ -260,7 +260,7 @@
     placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
   });
 
-  $('#tags-tokeninput').tokenInput('/declaracions/search_tag', {
+  $('#declaracion #tags-tokeninput').tokenInput('/declaracions/search_tag', {
     preventDuplicates: true,
     propertyToSearch: 'nombre',
     theme: 'bootstrap',
@@ -276,7 +276,7 @@
     placeholder: "#{ I18n.t('tokeninput.placeholder.tag') }"
   });
 
-  $('#norma').tokenInput('/declaracions/search_norma', {
+  $('#declaracion #norma').tokenInput('/declaracions/search_norma', {
     preventDuplicates: true,
     propertyToSearch: 'indice',
     theme: 'bootstrap',
@@ -292,28 +292,28 @@
     placeholder: "#{ I18n.t('tokeninput.placeholder.norma_example') }",
     onAdd: function(norma){
       vinculada = false
-      $('#table-link > tbody  > tr').each(function() {
+      $('#declaracion #table-link > tbody  > tr').each(function() {
         n = norma.indice.trim();
         td = $(this).children(':nth-child(2)').text().trim();
         vinculada = (td == n);
         if (vinculada){
-          $('#norma').tokenInput('remove', norma);
+          $('#declaracion #norma').tokenInput('remove', norma);
           alert(n + " ya esta vinculada/o");
         }
       });
     }
   });
 
-  $(document).on('click', '.modal-submit', function(event) {
+  $(document).on('click', '#declaracion .modal-submit', function(event) {
     event.preventDefault();
     //add tags ids to form
     var tagsIds = [];
-    $(".tags-token").each(function(key, value) {
+    $("#declaracion .tags-token").each(function(key, value) {
       tagsIds.push($(value).data("id"))
     })
     var linkedNormasIds = {};
     var index = 0;
-    $(".linked-normas-table").each(function(key, value) {
+    $("#declaracion .linked-normas-table").each(function(key, value) {
       linkedNormasIds[index] = {
         id: $(value).data("id"),
         //relation: $(value).data("id"),
@@ -328,7 +328,7 @@
       index++;
     })
     var expsIds = []
-    $(".exps-token").each(function(key, value) {
+    $("#declaracion .exps-token").each(function(key, value) {
       expsIds.push($(value).data("id"))
     })
     //add exp ids to form
@@ -343,11 +343,11 @@
       }
       index++;
     });
-    $("#tags_ids").val(tagsIds);
-    $("#exps_ids").val(expsIds);
-    $("#destinies").val(JSON.stringify(destinies));
-    $("#linked_normas").val(JSON.stringify(linkedNormasIds));
-    $("#new_declaracion, [id^='edit_declaracion']").submit();
+    $("#declaracion #tags_ids").val(tagsIds);
+    $("#declaracion #exps_ids").val(expsIds);
+    $("#declaracion #destinies").val(JSON.stringify(destinies));
+    $("#declaracion #linked_normas").val(JSON.stringify(linkedNormasIds));
+    $("#declaracion #new_declaracion, [id^='edit_declaracion']").submit();
     $("[id^='edit_declaracion']")
   });
   
@@ -376,24 +376,24 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('tr.info').find('td:eq(0) a').get(0).click();
+          $('#declaracion tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('tr.info').position();
+      rowpos = $('#declaracion tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
     $.ctrl('C', function() {
-      $('#btn-new').click();
+      $('#declaracion #btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('table tbody').find('.info').find('.linktoedit').click();
+      $('#declaracion table tbody').find('.info').find('.linktoedit').click();
     });
 
     $.ctrl('D', function() {
-      $('table tbody').find('.info').find('.remove-tr').click();
+      $('#declaracion table tbody').find('.info').find('.remove-tr').click();
     });
 
-    $('div.dataTables_filter input').focus();
+    $('#declaracion div.dataTables_filter input').focus();
   });
 
   

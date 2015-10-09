@@ -56,7 +56,7 @@ module DeclaracionsHelper
     output
   end
 
-  def search_value_classify(id_clasif, id_norm)
+  def search_value_classify_decl(id_clasif, id_norm)
     Declaracion.find(id_norm).clasificacions.where(nombre: id_clasif).present? unless id_norm.nil?
   end
 
