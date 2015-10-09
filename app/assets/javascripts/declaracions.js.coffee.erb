@@ -56,7 +56,7 @@ $(document).on 'ready page:load', ->
     else
       alert "<%= I18n.t('declaracions.modal_declaration.alert.norma_has_linked') %>"
 
-  $(document).on 'click', '#add_destiny', ->
+  $(document).on 'click', '#declaracion #add_destiny', ->
     if $("#declaracion #destiny").val() == "" || $("#declaracion #destiny_date").val() == ""
       alert("Destino o Fecha no pueden estar vacios")
       return
@@ -71,13 +71,13 @@ $(document).on 'ready page:load', ->
     $("#declaracion #destiny").val('')
     $("#declaracion #destiny_date").val('')
 
-  $(document).on 'click', '#classify', ->
+  $(document).on 'click', '#declaracion #classify', ->
     $('#declaracion #nuevoLabel').text("<%=I18n.t('declaracions.modal_declaration.title.clasification')%>")
     $('#declaracion #classify').css('display','none')
     $('#declaracion #dates').css('display','inline-block')
     $('#declaracion #second-column').fadeOut(100)
     setTimeout (->
-      $(' #declaracion.clasification').fadeIn(100)
+      $('#declaracion .clasification').fadeIn(100)
       return
     ), 250
     $('#declaracion .dates').fadeOut(100)
