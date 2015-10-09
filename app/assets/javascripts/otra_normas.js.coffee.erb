@@ -1,0 +1,204 @@
+$(document).on 'ready page:load', ->
+  $('#otra_norma-table').dataTable
+    ajaxSource: $('#otra_norma-table').data('source')
+    fnInitComplete: ->
+      $('#otra_norma div.dataTables_filter input').focus()
+      $('#otra_norma div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      return
+    fnDrawCallback: ->
+      $('#otra_norma-table tbody tr').find('td:eq(1)').each ->
+        $(this).text $(this).text().substring(0, 125) + '...'
+        return
+      $('#otra_norma-table tbody tr:eq(0)').addClass 'info'
+      return
+    aoColumns: [
+      { sortable: false, "width": "12%" , sClass: "center"}
+      { sortable: false }
+      { sortable: false }
+      { sortable: false, "width": "14%" }
+      { sortable: false, "width": "1%" }
+    ]
+
+  $(document).on 'click', '#otra_norma #add_disp', ->
+    flagTokenInput = false
+    $.each $('#otra_norma #norma').tokenInput('get'), (index, element) ->
+      flagTokenInput = true
+      ref_type = $('#otra_norma #refer_type  option:selected').text()
+      dates = ""
+      tipo_rel = $('#otra_norma #refer_type  option:selected').val()
+      date_desde = $("#otra_norma #from_refer").val()
+      date_hasta = $("#otra_norma #to_refer").val()
+      if date_desde != ""
+        dates = dates + "Desde " + date_desde + "\n"
+      if date_hasta != ""
+          dates = dates + "Hasta " + date_hasta + "\n"
+      date_hasta_dia = $("#otra_norma #day_refer").val()
+      date_hasta_mes = $("#otra_norma #month_refer").val()
+      date_hasta_anio = $("#otra_norma #year_refer").val()
+      date_tipo_dia = $("#otra_norma [name=tipo_dia]:checked").val()
+      row = "<tr class='linked-normas-table' data-id='#{this.id}'" +
+      " data-desde='#{date_desde}' data-hasta='#{date_hasta}' data-hasta-dia='#{date_hasta_dia}'" +
+      " data-hasta-mes='#{date_hasta_mes}' data-hasta-anio='#{date_hasta_anio}' " +
+      "data-tipo-relacion='#{tipo_rel}' " +
+      "data-dia-tipo='#{date_tipo_dia}'> " +
+      "<td> #{ref_type} </td> " +
+      "<td> #{this.indice} </td>" +
+      "<td> #{dates} </td>" +
+      "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"
+      $('#otra_norma #disp_norma_table tbody').append(row)
+    if flagTokenInput
+      $('#otra_norma #norma').tokenInput 'clear'
+      $('#otra_norma #from_refer').val ''
+      $('#otra_norma #to_refer').val ''
+      $('#otra_norma #day_refer').val ''
+      $('#otra_norma #month_refer').val ''
+      $('#otra_norma #year_refer').val ''
+    else
+      alert "<%= I18n.t('otra_normas.modal_otra_norma.alert.norma_has_linked') %>"
+
+  $(document).on 'click', '#otra_norma #add_destiny', ->
+    if $("#otra_norma #destiny").val() == "" || $("#otra_norma #destiny_date").val() == ""
+      alert("Destino o Fecha no pueden estar vacios")
+      return
+    destiny = $("#otra_norma #select_destiny option:selected")
+    row = "<tr data-value='#{destiny.val()}' data-destiny='#{$('#destiny').val()}'" +
+          " data-date='#{$('#destiny_date').val()}' class='destiny-row'>" +
+          "<td> #{destiny.text()} </td>" +
+          "<td> #{$('#destiny').val()} </td>" +
+          "<td> #{$('#destiny_date').val()} " +
+          "<td> <i class='fa fa-times remove-tr btn btn-xs'></i> </td> </tr>"
+    $('#otra_norma #destinies_table tbody').append(row)
+    $("#otra_norma #destiny").val('')
+    $("#otra_norma #destiny_date").val('')
+
+  $(document).on 'click', '#otra_norma #classify', ->
+    $('#otra_norma #nuevoLabel').text("<%=I18n.t('otra_normas.modal_otra_norma.title.clasification')%>")
+    $('#otra_norma #classify').css('display','none')
+    $('#otra_norma #dates').css('display','inline-block')
+    $('#otra_norma #second-column').fadeOut(100)
+    setTimeout (->
+      $('#otra_norma .clasification').fadeIn(100)
+      return
+    ), 250
+    $('#otra_norma .dates').fadeOut(100)
+    setTimeout (->
+      return
+    ), 250
+
+  $(document).on 'click', '#otra_norma #ready', ->
+    $('#otra_norma #nuevoLabel').text("<%=I18n.t('otra_normas.modal_otra_norma.title.create_otra_norma')%>")
+    $('#otra_norma #classify').css('display','inline-block')
+    $('#otra_norma #dates').css('display','inline-block')
+    $('#otra_norma .clasification').fadeOut(100)
+    setTimeout (->
+      $('#otra_norma #second-column').fadeIn(100)
+      return
+    ), 250
+    $('#otra_norma .dates').fadeOut(100)
+    setTimeout (->
+      $('#otra_norma #second-column').fadeIn(100)
+      return
+    ), 250
+
+  $(document).on 'click', '#otra_norma #dates', ->
+    $('#otra_norma #nuevoLabel').text("<%=I18n.t('otra_normas.modal_otra_norma.btn_clasification.dates')%>")
+    $('#otra_norma #dates').css('display','none')
+    $('#otra_norma #classify').css('display','inline-block')
+    $('#otra_norma #second-column').fadeOut(100)
+    setTimeout (->
+      $('#otra_norma .dates').fadeIn(100)
+      return
+    ), 250
+    $('#otra_norma .clasification').fadeOut(100)
+    setTimeout (->
+      return
+    ), 250
+
+  $(document).on 'click', '#otra_norma .remove-tr', ->
+    id = $(this).data 'remove'
+    if confirm('Desea eliminar la norma')
+      $.ajax
+        url: "/otra_normas/#{id}"
+        type: 'DELETE'
+        success: (result) ->
+          window.location.href = result.url
+          return
+
+  $('#otra_norma #btn-new').on 'click', ->
+    $(document).off 'keydown'
+    $.get '/otra_normas/new', (data) ->
+      $('#otra_norma-edit').empty()
+      $('#otra_norma-edit').append data
+      $('#otra_norma-edit .modal').modal 'show'
+      return    
+
+  $(document).on 'click', '#otra_norma .linktoedit', ->
+    $(document).off 'keydown'
+    id = $(this).data 'id'
+    $('#otra_norma-edit').empty()
+    $.get "/otra_normas/#{id}/edit", (data) ->
+      $('#otra_norma-edit').append data
+      $('#otra_norma-edit .modal').modal 'show'
+
+      ## Preload token inputs
+      tokenData = $('#otra_norma #exped_token').data 'load'
+      $.each tokenData, (index, exp) ->
+        $('#otra_norma #exped_token').tokenInput 'add', exp
+        return
+
+      tokenTag = $('#otra_norma #tags-tokeninput').data 'load'
+      $.each tokenTag, (index, tag) ->
+        $('#otra_norma #tags-tokeninput').tokenInput 'add', tag
+        return
+
+      return
+
+  $(document).on 'focus', 'textarea', ->
+    $(this).elastic();
+    return
+
+  $(document).on 'focusout', 'textarea', ->
+    $(this).animate({ height: "#{40}" }, 200);
+    return
+
+  $(document).keydown (event) ->
+    table = $('#otra_norma-table').dataTable()
+    currentRow = $('#otra_norma-table tbody tr.info').get(0)
+    switch event.keyCode
+      ## arrow down
+      when 40
+        if $(currentRow).next().length != 0
+          $(currentRow).next().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow up
+      when 38
+        if $(currentRow).prev().length != 0
+          $(currentRow).prev().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow left
+      when 37
+        table.fnPageChange('previous')
+      ## arrow right
+      when 39
+        table.fnPageChange('next')
+      when 13
+        $('tr.info').find('td:eq(0) a').get(0).click()
+    ## Update scrollbar
+    rowpos = $('tr.info').position()
+    $(document).scrollTop(rowpos.top-45)
+    return
+
+  ## hotkey create otra_norma
+  $.ctrl 'C', ->
+    $('#otra_norma #btn-new').click()
+    return
+
+  ## hotkey edit otra_norma
+  $.ctrl 'E', ->
+    $('#otra_norma table tbody').find('.info').find('.linktoedit').click()
+    return
+
+  ## hotkey delete otra_norma
+  $.ctrl 'D', ->
+    $('#otra_norma table tbody').find('.info').find('.remove-tr').click()
+    return    

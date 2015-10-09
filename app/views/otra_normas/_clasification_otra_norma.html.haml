@@ -1,0 +1,57 @@
+%p.single-tab
+  - cla = otra.get_clasificaciones
+    - unless cla.empty?
+    .single-tab.titles= "Clasificaciones: "
+    - cla.each do |r|
+      - if (r.nombre == "General")
+        .double-tab= "De contenido general"
+      - if (r.nombre == "Individual y meros actos administrativos")
+        .double-tab= "De contenido particular - Individual y meros actos administrativos"
+      - if (r.nombre == "De Servicios Públicos")
+        .double-tab= "De contenido particular - Contrataciones y servicios - De servicios públicos"
+      - if (r.nombre == "Otras")
+        .double-tab= "De contenido particular - Contrataciones y servicios - Otras"
+      - if (r.nombre == "Alcance general")
+        .double-tab= "Alcance general"
+      - if (r.nombre == "Alcance especial")
+        .double-tab= "Alcance especial"
+      - if (r.nombre == "Dictada por razones de emergencia")
+        .double-tab= "Vigencia - Dictada por razones de emergencia"
+      - if (r.nombre == "Que contienen normas generales y permanentes")
+        .double-tab= "Vigencia - De renovación períodica - Que contienen normas generales y permanentes"
+      - if (r.nombre == "Que NO contienen normas generales y permanentes")
+        .double-tab= "Vigencia - De renovación períodica - Que NO contienen normas generales y permanentes"
+      - if (r.nombre == "Motivos subsisten")
+        .double-tab= "Vigencia - Motivos subsisten"
+      - if (r.nombre == "Normas generales")
+        .double-tab= "Vigencia - Motivos no susisten - Normas generales"
+      - if (r.nombre == "Normas no generales")
+        .double-tab= "Vigencia - Motivos no subsisten - Normas no generales"
+      - if (r.nombre == "Plazo determinado y cumplido")
+        .double-tab= "Vigencia - Plazo determinado y cumplido"
+      - if (r.nombre == "Plazo determinado y NO cumplido")
+        .double-tab= "Vigencia - Plazo determinado y NO cumplido"
+      - if (r.nombre == "Vigencia sujeta a condición resolutoria")
+        .double-tab= "Vigencia sujeta a condición resolutoria"
+      - if (r.nombre == "Objeto agotado")
+        .double-tab= "Vigencia - Objeto agotado"
+      - if (r.nombre == "Cumplida")
+        .double-tab= "Vigencia - Cumplida"
+      - if (r.nombre == "NO cumplida")
+        .double-tab= "Vigencia - NO cumplida"
+      - if (r.nombre == "Derogación sujeta a condición suspensiva")
+        .double-tab= "Derogación sujeta a condición suspensiva"
+      - if (r.nombre == "Derog. tácita")
+        .double-tab= "Derogación tácita"
+      - if (r.nombre == "Derog. cumplida")
+        .double-tab= "Derogación cumplida"
+      - if (r.nombre == "Derog. NO cumplida")
+        .double-tab= "Derogación NO cumplida"
+      - if (r.nombre == "Dispone texto ordenado")
+        .double-tab= "Dispone texto ordenado"
+      - if (r.nombre == "Autónomo")
+        .double-tab= "De contenido - General - Autónomo"
+      - if (r.nombre == "De necesidad o urgencia")
+        .double-tab= "Vigencia - De necesidad o urgencia"
+      - if (r.nombre == "Dictado ad referendum")
+        .double-tab= "Vigencia - Dictado ad referendum"

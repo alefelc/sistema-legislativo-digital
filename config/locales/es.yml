@@ -64,9 +64,63 @@ es:
       working_day: Dia hábil
       calendar_day: Dia corrido
 
+  otra_normas:
+    show:
+      info: Información de la Otra Norma
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        otra_norma: Nro-Bis/Año
+        sumario: Sumario
+        sancion: Sanción
+        fechas: Fechas
+        description: Descripción
+        relationships: Norma a Dispositivos
+        relationships2: Dispositivos a Norma
+        expedientes: Sanciona Exp N°
+    modal_otra_norma:
+      alert:
+        norma_has_linked: Debe vincular alguna norma.
+      table:
+        ref_type: Tipo de vínculo
+        date: Fechas
+        destiny: Destino
+      title:
+        create_otra_norma: Creando Otra Norma
+        clasification: Clasificación
+      btn_clasification:
+        ready: Listo
+        classify: Clasificar Norma
+        destiny: Destino
+        dates: Fechas
+      tags: Voces claves
+      letter: Letra
+      number: Número
+      bis: Bis
+      description: Descripción
+      summary: Sumario
+      validate_entry: Entrada Vigencia
+      validate_output: Finaliza Vigencia
+      deadline_day: Plazo Dia
+      deadline_month: Plazo Mes
+      deadline_year: Plazo Año
+      organism: Organismo Origen
+      observations: Observaciones
+      norma_disp: Norma a Dispositivos
+      select_ref_type: Selecciones tipo de vínculo
+      from: Desde
+      to: Hasta
+      index: LETRA/NUMERO/BIS
+      new_otra_norma: Creando Otra Norma
+      destiny: Destino
+      not_clear: No aclara
+      working_day: Dia hábil
+      calendar_day: Dia corrido    
+
   especials:
     show:
-      info: Información de la Especial
+      info: Información de la Norma Especial
     index:
       btnheader:
         new: Nuevo
@@ -228,7 +282,7 @@ es:
 
   decretos:
     show:
-      info: Información de la Decreto
+      info: Información del Decreto
     index:
       btnheader:
         new: Nuevo
