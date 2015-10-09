@@ -1,0 +1,99 @@
+.content-wrapper {
+  background-color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+#decreto {
+
+  #decreto-table_wrapper {
+    margin-top: -30px;
+    th {
+      @extend .center;
+    }
+  }
+
+  .modal-header {
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #00A65A;
+
+    h4#nuevoLabel {
+      font-weight: bold;
+    }
+
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  #disp_norma_table th {
+    text-align: center;
+  }
+
+  .parent-group-btn:hover {
+    color: #00A65A;
+  }
+
+  #modaldec .clasification, #modaldec .dates {
+    display: none;
+  }
+
+  #modaldec #classify, #modaldec #dates {
+    margin-bottom: 5px;
+  }
+
+  .group-buttons {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 5px;
+  }
+
+  .group-buttons2 {
+    border-top: 1px solid #EEEEEE;
+    padding-top: 5px;
+  }
+
+  #disp_norma_table {
+    height: 114px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #destinies_table {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #modaldec .col-md-4, #modaldec .col-md-8 #second-column, #modaldec .col-md-8 .clasification, #modaldec .col-md-8 .dates {
+    & > .input-group{
+      padding-bottom: 5px;
+    }
+  }
+
+  #modaldec .input-group {
+    width: 100%;
+  }
+}
+
+#decreto-show {
+  color: gray;
+
+  .titles {
+    color: #676773;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .single-tab {
+    padding-left: 15px;
+  }
+
+  .double-tab {
+    padding-left: 30px;
+  }
+}
