@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824133559) do
+ActiveRecord::Schema.define(version: 20151013140029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,24 +35,6 @@ ActiveRecord::Schema.define(version: 20150824133559) do
 
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
-
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "bloque_periodos", id: false, force: :cascade do |t|
     t.integer  "bloque_id"
@@ -305,6 +287,14 @@ ActiveRecord::Schema.define(version: 20150824133559) do
     t.date     "anio"
   end
 
+  create_table "expedientes_despachos", force: :cascade do |t|
+    t.integer "expediente_id"
+    t.integer "despacho_id"
+  end
+
+  add_index "expedientes_despachos", ["despacho_id"], name: "index_expedientes_despachos_on_despacho_id", using: :btree
+  add_index "expedientes_despachos", ["expediente_id"], name: "index_expedientes_despachos_on_expediente_id", using: :btree
+
   create_table "expedientes_tags", id: false, force: :cascade do |t|
     t.integer "expediente_id"
     t.integer "tag_id"
@@ -532,6 +522,18 @@ ActiveRecord::Schema.define(version: 20150824133559) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "expediente_id"
+    t.string   "destino"
+    t.string   "iniciador"
+    t.string   "domicilio"
+    t.string   "telefono"
+    t.string   "email"
+    t.integer  "nro_exp"
+    t.integer  "anio_exp"
+    t.integer  "bis_exp"
+    t.string   "comision"
+    t.string   "concejales_firmantes"
+    t.string   "usuario"
+    t.date     "fecha"
   end
 
   add_index "tramites", ["expediente_id"], name: "index_tramites_on_expediente_id", using: :btree
