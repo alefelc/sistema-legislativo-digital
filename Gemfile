@@ -84,5 +84,11 @@ group :development do
   # For live reload chrome extension
   gem 'rb-fsevent'
   gem 'guard-livereload'
+
+  # Profiler for your development and production Ruby rack apps.
+  gem 'rack-mini-profiler'
+
+  # A very fast & simple Ruby web server.
+  gem 'thin'
 end
 

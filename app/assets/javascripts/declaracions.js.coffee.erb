@@ -116,12 +116,12 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'click', '#declaracion .remove-tr', ->
     id = $(this).data 'remove'
-    if confirm('Desea eliminar la norma')
+    if confirm("<%= I18n.t('norma.confirm_remove')%>")
       $.ajax
         url: "/declaracions/#{id}"
         type: 'DELETE'
         success: (result) ->
-          window.location.href = result.url
+          $('#declaracion-table').dataTable().fnDraw()
           return
 
   $('#declaracion #btn-new').on 'click', ->
@@ -130,7 +130,7 @@ $(document).on 'ready page:load', ->
       $('#declaracion-edit').empty()
       $('#declaracion-edit').append data
       $('#declaracion-edit .modal').modal 'show'
-      return    
+      return
 
   $(document).on 'click', '#declaracion .linktoedit', ->
     $(document).off 'keydown'
@@ -201,4 +201,4 @@ $(document).on 'ready page:load', ->
   ## hotkey delete declaration
   $.ctrl 'D', ->
     $('#declaracion table tbody').find('.info').find('.remove-tr').click()
-    return    
+    return

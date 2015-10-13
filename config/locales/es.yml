@@ -116,7 +116,7 @@ es:
       destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
-      calendar_day: Dia corrido    
+      calendar_day: Dia corrido
 
   especials:
     show:
@@ -170,7 +170,7 @@ es:
       destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
-      calendar_day: Dia corrido    
+      calendar_day: Dia corrido
 
   resolucions:
     show:
@@ -224,7 +224,7 @@ es:
       destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
-      calendar_day: Dia corrido    
+      calendar_day: Dia corrido
 
   ordenanzas:
     show:
@@ -332,10 +332,13 @@ es:
       destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
-      calendar_day: Dia corrido        
+      calendar_day: Dia corrido
 
   datatable:
     search: Ingrese búsqueda ...
+
+  norma:
+    confirm_remove: "¿Esta seguro que desea eliminar la norma? Esta acción no se puede deshacer."
 
   tokeninput:
     placeholder:
@@ -345,4 +348,4 @@ es:
       norma_example: 'Nro + Bis + Año  -  Ej: 10902015'
     hint:
       enter_exp: Ingrese Expediente
-      enter_norma: Ingrese Norma    
+      enter_norma: Ingrese Norma
