@@ -116,12 +116,12 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'click', '#especial .remove-tr', ->
     id = $(this).data 'remove'
-    if confirm('Desea eliminar la norma')
+    if confirm("<%= I18n.t('norma.confirm_remove')%>")
       $.ajax
         url: "/especials/#{id}"
         type: 'DELETE'
         success: (result) ->
-          window.location.href = result.url
+          $('#especial-table').dataTable().fnDraw()
           return
 
   $('#especial #btn-new').on 'click', ->
@@ -130,7 +130,7 @@ $(document).on 'ready page:load', ->
       $('#especial-edit').empty()
       $('#especial-edit').append data
       $('#especial-edit .modal').modal 'show'
-      return    
+      return
 
   $(document).on 'click', '#especial .linktoedit', ->
     $(document).off 'keydown'
@@ -201,4 +201,4 @@ $(document).on 'ready page:load', ->
   ## hotkey delete especial
   $.ctrl 'D', ->
     $('#especial table tbody').find('.info').find('.remove-tr').click()
-    return    
+    return
