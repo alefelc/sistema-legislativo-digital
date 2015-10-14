@@ -1,4 +1,6 @@
 class OtraNormasController < ApplicationController
+  before_action :authenticate_usuario!
+
   respond_to :json, :html
 
   def index
@@ -30,7 +32,7 @@ class OtraNormasController < ApplicationController
   def destroy
     OtraNorma.find(params[:id]).delete
     render json: {url: "/otra_normas"}
-  end  
+  end
 
   def create
     otra = params[:otra_norma].select { |key, value| ["letra", "nro", "bis", "descripcion",
@@ -108,7 +110,7 @@ class OtraNormasController < ApplicationController
     end
     (current_clasific - old_clasific).each { |id| @otra_norma.clasificacions <<  Clasificacion.find(id) }
     (old_clasific - current_clasific).each { |id| @otra_norma.clasificacions.delete(id) }
-    
+
     if params['linked_normas'].present?
       ## update params linked_normas the PATCH
       current_normas = []
