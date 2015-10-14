@@ -24,14 +24,17 @@
         .navbar-custom-menu
           %ul.nav.navbar-nav
             / User Account: style can be found in dropdown.less
-            %li.dropdown.user.user-menu
+            %li.dropdown.user.user-menu{ title: 'Usuario actual' }
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                 %img.user-image{ src: image_url("logo.jpg") }
                 %span.hidden-xs Nombre de Usuario
             / Control Sidebar Toggle Button
-            %li
+            %li{ title: 'Opciones de administrador' }
               %a{"data-toggle" => "control-sidebar", :href => "/admin"}
                 %i.fa.fa-gears
+            %li{ title: 'Salir del sistema' }
+              %a{"data-toggle" => "control-sidebar", :href => "/admin"}
+                %i.fa.fa-sign-out
     / ===============================================
     / Left side column. contains the sidebar
     %aside.main-sidebar

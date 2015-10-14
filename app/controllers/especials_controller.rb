@@ -1,4 +1,6 @@
 class EspecialsController < ApplicationController
+  before_action :authenticate_usuario!
+
   respond_to :json, :html
 
   def index
@@ -30,7 +32,7 @@ class EspecialsController < ApplicationController
   def destroy
     Especial.find(params[:id]).delete
     render json: {url: "/especials"}
-  end  
+  end
 
   def create
     esp = params[:especial].select { |key, value| ["letra", "nro", "bis", "descripcion",
@@ -108,7 +110,7 @@ class EspecialsController < ApplicationController
     end
     (current_clasific - old_clasific).each { |id| @especial.clasificacions <<  Clasificacion.find(id) }
     (old_clasific - current_clasific).each { |id| @especial.clasificacions.delete(id) }
-    
+
     if params['linked_normas'].present?
       ## update params linked_normas the PATCH
       current_normas = []

@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :usuarios
+  devise_for :usuario, ActiveAdmin::Devise.config
 
-  root to: "dashboard#index"
+  root to: 'dashboard#index'
 
   resources :declaracions do
     get 'search_exp', on: :collection

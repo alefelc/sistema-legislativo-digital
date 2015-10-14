@@ -1,4 +1,6 @@
 class DecretosController < ApplicationController
+  before_action :authenticate_usuario!
+
   respond_to :json, :html
 
   def index
@@ -30,7 +32,7 @@ class DecretosController < ApplicationController
   def destroy
     Decreto.find(params[:id]).delete
     render json: {url: "/decretos"}
-  end  
+  end
 
   def create
     dec = params[:decreto].select { |key, value| ["letra", "nro", "bis", "descripcion",
@@ -108,7 +110,7 @@ class DecretosController < ApplicationController
     end
     (current_clasific - old_clasific).each { |id| @decreto.clasificacions <<  Clasificacion.find(id) }
     (old_clasific - current_clasific).each { |id| @decreto.clasificacions.delete(id) }
-    
+
     if params['linked_normas'].present?
       ## update params linked_normas the PATCH
       current_normas = []
