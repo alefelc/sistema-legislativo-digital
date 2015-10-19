@@ -1,8 +1,7 @@
 class OtraNormaDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
-  def_delegator :@view, :index_otra
+  def_delegator :@view, :index_norma
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -27,7 +26,7 @@ class OtraNormaDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |otra|
       [
-        index_otra(otra),
+        index_norma(otra),
         otra.sumario,
         fechas(otra),
         norma_expediente(otra),

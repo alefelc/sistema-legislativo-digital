@@ -1,8 +1,7 @@
 class EspecialDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
-  def_delegator :@view, :index_esp
+  def_delegator :@view, :index_norma
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -27,7 +26,7 @@ class EspecialDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |esp|
       [
-        index_esp(esp),
+        index_norma(esp),
         esp.sumario,
         fechas(esp),
         norma_expediente(esp),
