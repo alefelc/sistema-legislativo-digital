@@ -4,7 +4,7 @@
     %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
     = t('.btnheader.new')
 
-  %table.table.table-striped.table-bordered#ordenanza-table{"data-source" => ordenanzas_path(format: :json)}
+  %table.datatable-keyevents.table.table-striped.table-bordered#ordenanza-table{"data-source" => ordenanzas_path(format: :json)}
     %thead
       %tr
         %th= t('.table.ordenanza')
