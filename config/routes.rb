@@ -46,7 +46,24 @@ Rails.application.routes.draw do
   end
 
   ## routes mesa de entradas
-  resources :despachos do 
+  resources :despachos do
     get 'search_exp', on: :collection
   end
+
+  resources :condonaciones do
+    get 'search_exp', on: :collection
+  end
+
+  resources :particulares do
+    get 'search_exp', on: :collection
+  end
+
+  resources :proyectos do
+    get 'search_exp', on: :collection
+  end
+
+  resources :tramites_administrativos do
+    get 'search_exp', on: :collection
+  end
+
 end
