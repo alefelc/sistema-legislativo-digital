@@ -1,8 +1,7 @@
 class DecretoDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
-  def_delegator :@view, :index_dec
+  def_delegator :@view, :index_norma
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -27,7 +26,7 @@ class DecretoDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |dec|
       [
-        index_dec(dec),
+        index_norma(dec),
         dec.sumario,
         fechas(dec),
         norma_expediente(dec),

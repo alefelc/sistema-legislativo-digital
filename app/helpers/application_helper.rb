@@ -1,10 +1,6 @@
 module ApplicationHelper
 
-  def dispositivos_a_norma norma
-    "dispositivos a norma"
-  end
-
-  def fechas norma
+  def fechas(norma)
     resp = ""
     if norma.sancion.present?
       resp = resp + "Sanción: #{norma.sancion}\n"
@@ -12,45 +8,24 @@ module ApplicationHelper
     norma.destinos.each do |d|
       case d.tipo
       when 0
-        resp = resp + "Comunic: #{d.fecha}\n"
+        return resp + "Comunic: #{d.fecha}\n"
       when 1
-        resp = resp + "Notific: #{d.fecha}\n"
+        return resp + "Notific: #{d.fecha}\n"
       when 2
-        resp = resp + "Public: #{d.fecha}\n"
+        return resp + "Public: #{d.fecha}\n"
       end
     end
-    resp
   end
 
-  def index_decl norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, declaracion_path(norma)
+  def index_norma(norma)
+    link_to "#{norma.nro}-#{norma.bis}/#{norma.sancion.try(:year)}", norma
   end
 
-  def index_ord norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, ordenanza_path(norma)
-  end
-
-  def index_dec norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, decreto_path(norma)
-  end
-
-  def index_resol norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, resolucion_path(norma)
-  end
-
-  def index_esp norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, especial_path(norma)
-  end
-
-  def index_otra norma
-    link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, otra_norma_path(norma)
-  end
-
-  def index_desp desp
+  def index_desp(desp)
     link_to desp.id.to_s, despacho_path(desp)
   end
 
-  def norma_expediente norma
+  def norma_expediente(norma)
     resp = ""
     norma.circuitos.each do |c|
       if (c.nro == 0)
@@ -80,59 +55,57 @@ module ApplicationHelper
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
-  def prepopulate_exps norma
+  def prepopulate_exps(norma)
     norma.expedientes.present? ? build_json_exp(norma.expedientes) : []
   end
 
-  def prepopulate_tags norma
+  def prepopulate_tags(norma)
     norma.tags.present? ? build_json_tags(norma.tags) : []
   end
 
-  def prepopulate_comisions desp
+  def prepopulate_comisions(desp)
     desp.comisions.present? ? build_json_comisions(desp.comisions) : []
   end
 
-  def prepopulate_concejals desp
+  def prepopulate_concejals(desp)
     desp.concejals.present? ? build_json_concejals(desp.concejals) : []
   end
 
-  def build_json_exp exps
+  def build_json_exp(exps)
     json_array = []
     exps.each do |x|
-      year = x.anio.present? ? x.anio.year.to_s : ""
       json_array << {
         id: x.id,
-        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year
+        indice: "#{x.nro_exp}/#{x.bis}/#{x.anio.try(:year)}"
       }
     end
     json_array
   end
 
-  def build_json_tags tags
+  def build_json_tags(tags)
     json_array = []
     tags.each { |x| json_array << { id: x.id, nombre: x.nombre } }
     json_array.to_json
   end
 
-  def build_json_comisions comisions
+  def build_json_comisions(comisions)
     json_array = []
     comisions.each { |x| json_array << [ id: x.id, denominacion: x.denominacion ] }
     json_array.to_json
   end
 
-  def build_json_concejals concejals
+  def build_json_concejals(concejals)
     json_array = []
     concejals.each { |x| json_array << [ id: x.id, nombre: x.apellido + ", " + x.nombre ] }
     json_array.to_json
   end
 
-  def indice norma
+  def indice(norma)
     x = norma.modifica
-    year = x.sancion.present? ? x.sancion.year.to_s : ""
-    "#{x.type}: #{x.nro}/#{x.bis}/#{year}"
+    "#{x.type}: #{x.nro}/#{x.bis}/#{x.sancion.try(:year)}"
   end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
@@ -141,7 +114,7 @@ module ApplicationHelper
     Digesto.last
   end
 
-  def tipo_destinos tipo
+  def tipo_destinos(tipo)
     case tipo
     when 0
       "Comunicación"
@@ -151,4 +124,27 @@ module ApplicationHelper
       "Publicación"
     end
   end
+
+  def get_sumario(norma)
+    norma.sumario.present? ? norma.sumario : " No tiene sumario"
+  end
+
+  def get_plazo_vigencia(norma)
+    "#{norma.plazo_anio.to_i} años, " +
+    "#{norma.plazo_mes.to_i} meses y " +
+    "#{norma.plazo_dia.to_i} dias "
+  end
+
+  def get_nro(norma)
+    norma.nro.present? ?  norma.nro.to_s : " Numero no asignado"
+  end
+
+  def get_anio_sancion(norma)
+    norma.sancion.present? ? " Año #{norma.sancion.year}" : " - Año no asignado"
+  end
+
+  def get_sancion(norma)
+    norma.sancion.present? ? " Sancionada el #{to_date(norma.sancion)}" : " Sancion no cargada"
+  end
+
 end

@@ -47,3 +47,30 @@ $.ctrl = (key, callback, args) ->
       isCtrl = false
     return
   return
+
+$(document).keydown (event) ->
+  table = $('.datatable-keyevents').dataTable()
+  currentRow = $('.datatable-keyevents tbody tr.info').get(0)
+  switch event.keyCode
+    ## arrow down
+    when 40
+      if $(currentRow).next().length != 0
+        $(currentRow).next().addClass 'info'
+        $(currentRow).removeClass 'info'
+    ## arrow up
+    when 38
+      if $(currentRow).prev().length != 0
+        $(currentRow).prev().addClass 'info'
+        $(currentRow).removeClass 'info'
+    ## arrow left
+    when 37
+      table.fnPageChange('previous')
+    ## arrow right
+    when 39
+      table.fnPageChange('next')
+    when 13
+      $('tr.info').find('td:eq(0) a').get(0).click()
+  ## Update scrollbar
+  rowpos = $('tr.info').position()
+  $(document).scrollTop(rowpos.top-45)
+  return

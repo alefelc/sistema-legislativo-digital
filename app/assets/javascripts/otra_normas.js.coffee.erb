@@ -161,33 +161,6 @@ $(document).on 'ready page:load', ->
     $(this).animate({ height: "#{40}" }, 200);
     return
 
-  $(document).keydown (event) ->
-    table = $('#otra_norma-table').dataTable()
-    currentRow = $('#otra_norma-table tbody tr.info').get(0)
-    switch event.keyCode
-      ## arrow down
-      when 40
-        if $(currentRow).next().length != 0
-          $(currentRow).next().addClass 'info'
-          $(currentRow).removeClass 'info'
-      ## arrow up
-      when 38
-        if $(currentRow).prev().length != 0
-          $(currentRow).prev().addClass 'info'
-          $(currentRow).removeClass 'info'
-      ## arrow left
-      when 37
-        table.fnPageChange('previous')
-      ## arrow right
-      when 39
-        table.fnPageChange('next')
-      when 13
-        $('tr.info').find('td:eq(0) a').get(0).click()
-    ## Update scrollbar
-    rowpos = $('tr.info').position()
-    $(document).scrollTop(rowpos.top-45)
-    return
-
   ## hotkey create otra_norma
   $.ctrl 'C', ->
     $('#otra_norma #btn-new').click()

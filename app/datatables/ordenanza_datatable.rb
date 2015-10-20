@@ -1,8 +1,7 @@
 class OrdenanzaDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :dispositivos_a_norma
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
-  def_delegator :@view, :index_ord
+  def_delegator :@view, :index_norma
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -27,7 +26,7 @@ class OrdenanzaDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |ord|
       [
-        index_ord(ord),
+        index_norma(ord),
         ord.sumario,
         fechas(ord),
         norma_expediente(ord),
