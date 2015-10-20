@@ -78,7 +78,7 @@
                               %td= tipo_destinos x.tipo
                               %td= x.destino
                               %td= x.fecha
-                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
+                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-table-row'
 
                 .group-buttons2
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
@@ -234,7 +234,7 @@
                               %td= refers_by_type x
                               %td= indice x
                               %td= show_dates x
-                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-tr'
+                              %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-table-row'
         .modal-footer
           = f.submit "Guardar", {class: "btn btn-primary modal-submit"}
 
