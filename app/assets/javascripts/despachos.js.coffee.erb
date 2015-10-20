@@ -35,7 +35,7 @@ $(document).on 'ready page:load', ->
       $('#despacho-edit').empty()
       $('#despacho-edit').append data
       $('#despacho-edit .modal').modal 'show'
-      return    
+      return
 
   $(document).on 'click', '#despacho .linktoedit', ->
     $(document).off 'keydown'
@@ -66,7 +66,7 @@ $(document).on 'ready page:load', ->
         concejals.push({id: con[0].id, text: con[0].nombre});
         return
       $('#despacho #despacho_concejals').select2('data', concejals);
-      
+
       return
 
   $(document).on 'focus', 'textarea', ->
@@ -75,33 +75,6 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'focusout', 'textarea', ->
     $(this).animate({ height: "#{40}" }, 200);
-    return
-
-  $(document).keydown (event) ->
-    table = $('#despacho-table').dataTable()
-    currentRow = $('#despacho-table tbody tr.info').get(0)
-    switch event.keyCode
-      ## arrow down
-      when 40
-        if $(currentRow).next().length != 0
-          $(currentRow).next().addClass 'info'
-          $(currentRow).removeClass 'info'
-      ## arrow up
-      when 38
-        if $(currentRow).prev().length != 0
-          $(currentRow).prev().addClass 'info'
-          $(currentRow).removeClass 'info'
-      ## arrow left
-      when 37
-        table.fnPageChange('previous')
-      ## arrow right
-      when 39
-        table.fnPageChange('next')
-      when 13
-        $('tr.info').find('td:eq(0) a').get(0).click()
-    ## Update scrollbar
-    rowpos = $('tr.info').position()
-    $(document).scrollTop(rowpos.top-45)
     return
 
   ## hotkey create despacho
@@ -117,4 +90,4 @@ $(document).on 'ready page:load', ->
   ## hotkey delete despacho
   $.ctrl 'D', ->
     $('#despacho table tbody').find('.info').find('.remove-tr').click()
-    return    
+    return
