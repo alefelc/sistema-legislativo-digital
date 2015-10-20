@@ -1,0 +1,45 @@
+#despacho-show
+  %h4= t('despachos.show.info')
+  %hr
+  #despacho-body
+    - desp = @despacho
+    %p
+      %span.titles= "Nro.: "
+      %span= desp.id
+      %span
+        &nbsp 
+        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Despacho"}
+    - fecha = desp.get_fecha
+      - if fecha.present?  
+      %p.single-tab
+        %span= "Fecha: "
+        %span= fecha
+    - fojas = desp.get_fojas
+      - if fojas.present?      
+      %p.single-tab
+        %span= "Nro. de Fojas: "
+        %span= fojas
+    - expedientes = desp.get_expedientes
+      - unless expedientes.empty?
+      %p.single-tab  
+        %span= "Expedientes Legislativos: "
+        - expedientes.each do |e|
+          %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}")
+    - comisiones = desp.get_comisiones
+      - unless comisiones.empty?
+      %p.single-tab  
+        %span.titles= "Comisiones: "
+        - comisiones.each do |c|
+          .double-tab= c.denominacion
+    - concejales = desp.get_concejales      
+      - unless concejales.empty?
+      %p.single-tab  
+        %span.titles= "Concejales: "
+        - concejales.each do |c|
+          .double-tab= c.apellido + ", " + c.nombre
+    - obs = desp.get_observaciones
+      - if obs.present?
+      %p.single-tab
+        %span= "Observaciones: "
+        %span= obs      
+    
