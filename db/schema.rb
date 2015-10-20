@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013140029) do
+ActiveRecord::Schema.define(version: 20151014113837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -521,22 +521,8 @@ ActiveRecord::Schema.define(version: 20151013140029) do
     t.string   "type"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "expediente_id"
-    t.string   "destino"
-    t.string   "iniciador"
-    t.string   "domicilio"
-    t.string   "telefono"
-    t.string   "email"
-    t.integer  "nro_exp"
-    t.integer  "anio_exp"
-    t.integer  "bis_exp"
-    t.string   "comision"
-    t.string   "concejales_firmantes"
-    t.string   "usuario"
     t.date     "fecha"
   end
-
-  add_index "tramites", ["expediente_id"], name: "index_tramites_on_expediente_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
