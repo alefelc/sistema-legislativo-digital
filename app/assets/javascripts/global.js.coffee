@@ -74,3 +74,7 @@ $(document).keydown (event) ->
   rowpos = $('tr.info').position()
   $(document).scrollTop(rowpos.top-45)
   return
+
+$(document).on 'click', '.remove-table-row', ->
+  $(this).parents('tr').remove()
+  return
