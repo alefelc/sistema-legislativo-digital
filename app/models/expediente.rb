@@ -1,7 +1,7 @@
 class Expediente < ActiveRecord::Base
 
 	#= Associations
-	has_many :despachos
+	has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
 	has_many :expediente_administrativos
 	has_many :circuitos
 	has_and_belongs_to_many :tags

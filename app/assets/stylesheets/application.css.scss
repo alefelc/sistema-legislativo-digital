@@ -9,6 +9,8 @@
 @import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
 @import "token-input";
 @import "token-input-bootstrap3";
+@import "select2.min";
+@import "select2-bootstrap";
 
 /* Stylesheets */
 @import "dashboard";
@@ -18,3 +20,4 @@
 @import "resolucions";
 @import "especials";
 @import "otra_normas";
+@import "despachos";

@@ -7,4 +7,8 @@ class Tramite < ActiveRecord::Base
   has_many :estado_tramites
   has_one :circuito
 
+  def to_date date
+    date.strftime("%d/%m/%Y") unless date.nil?
+  end
+
 end

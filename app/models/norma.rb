@@ -85,7 +85,7 @@ class Norma < ActiveRecord::Base
   end  
 
   def to_date date
-    date.strftime("%d/%m/%Y")
+    date.strftime("%d/%m/%Y") unless date.nil?
   end
 
   def get_circuitos

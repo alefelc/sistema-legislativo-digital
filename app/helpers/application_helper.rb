@@ -46,6 +46,10 @@ module ApplicationHelper
     link_to norma.nro.to_s + "-" + norma.bis.to_s + "/" + norma.sancion.try(:year).to_s, otra_norma_path(norma)
   end
 
+  def index_desp desp
+    link_to desp.id.to_s, despacho_path(desp)
+  end
+
   def norma_expediente norma
     resp = ""
     norma.circuitos.each do |c|
@@ -71,6 +75,8 @@ module ApplicationHelper
     return "Especial #{params[:id]}" if current_page?(controller: :especials, action: :show, id: params[:id].to_i)
     return "Otras Normas" if current_page?(controller: :otra_normas, action: :index)
     return "Otra Norma #{params[:id]}" if current_page?(controller: :otra_normas, action: :show, id: params[:id].to_i)
+    return "Despachos" if current_page?(controller: :despachos, action: :index)
+    return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
@@ -80,6 +86,14 @@ module ApplicationHelper
 
   def prepopulate_tags norma
     norma.tags.present? ? build_json_tags(norma.tags) : []
+  end
+
+  def prepopulate_comisions desp
+    desp.comisions.present? ? build_json_comisions(desp.comisions) : []
+  end
+
+  def prepopulate_concejals desp
+    desp.concejals.present? ? build_json_concejals(desp.concejals) : []
   end
 
   def build_json_exp exps
@@ -100,6 +114,18 @@ module ApplicationHelper
     json_array.to_json
   end
 
+  def build_json_comisions comisions
+    json_array = []
+    comisions.each { |x| json_array << [ id: x.id, denominacion: x.denominacion ] }
+    json_array.to_json
+  end
+
+  def build_json_concejals concejals
+    json_array = []
+    concejals.each { |x| json_array << [ id: x.id, nombre: x.apellido + ", " + x.nombre ] }
+    json_array.to_json
+  end
+
   def indice norma
     x = norma.modifica
     year = x.sancion.present? ? x.sancion.year.to_s : ""
@@ -107,7 +133,7 @@ module ApplicationHelper
   end
 
   def to_date date
-    date.strftime("%d/%m/%Y")
+    date.strftime("%d/%m/%Y") unless date.nil?
   end
 
   def get_digesto_actual
