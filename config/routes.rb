@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
 
+  ## routes norms
   resources :declaracions do
     get 'search_exp', on: :collection
     get 'search_norma', on: :collection
@@ -42,5 +43,10 @@ Rails.application.routes.draw do
 
   resources :dashboard do
     get 'search', on: :collection
+  end
+
+  ## routes mesa de entradas
+  resources :despachos do 
+    get 'search_exp', on: :collection
   end
 end

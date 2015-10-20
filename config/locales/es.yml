@@ -334,6 +334,27 @@ es:
       working_day: Dia hábil
       calendar_day: Dia corrido
 
+  despachos:
+    show:
+      info: Información del Despacho
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        despacho: Nro.
+        fojas: Nro. fojas
+        fecha: Fecha
+        expedientes: Expedientes
+        comisiones: Comisiones
+        concejales: Concejales
+        observaciones: Observaciones
+    modal_despacho:
+      title:
+        create_despacho: Creando Despacho
+      observations: Observaciones
+      new_despacho: Creando Despacho
+      fojas: Ingrese el número de fojas.
+
   datatable:
     search: Ingrese búsqueda ...
 
