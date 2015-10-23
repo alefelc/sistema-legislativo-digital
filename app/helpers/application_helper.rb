@@ -52,6 +52,8 @@ module ApplicationHelper
     return "Otra Norma #{params[:id]}" if current_page?(controller: :otra_normas, action: :show, id: params[:id].to_i)
     return "Despachos" if current_page?(controller: :despachos, action: :index)
     return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
+    return "Condonaciones" if current_page?(controller: :condonaciones, action: :index)
+    return "Condonacion #{params[:id]}" if current_page?(controller: :condonaciones, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 

@@ -334,6 +334,27 @@ es:
       working_day: Dia hábil
       calendar_day: Dia corrido
 
+  condonaciones:
+    show:
+      info: Información de la condonación
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        condonacion: Nro.
+        fojas: Nro. fojas
+        fecha: Fecha
+        observaciones: Observaciones
+        updated_at: Actualizado el
+    modal_condonacion:
+      title:
+        create_condonacion: Creando Condonación
+      observations: Observaciones
+      new_condonacion: Creando Condonación
+      fojas: Ingrese el número de fojas.
+      solicitud: Solicitud
+      solicitud_placeholder: Ingrese solicitud
+
   despachos:
     show:
       info: Información del Despacho
