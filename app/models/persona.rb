@@ -11,4 +11,8 @@ class Persona < ActiveRecord::Base
 
   has_many :estado_tramites, as: :ref
 
+  def full_name
+    "#{self.nombre} #{self.apellido}"
+  end
+
 end
