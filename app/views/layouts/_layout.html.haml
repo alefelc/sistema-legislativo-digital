@@ -40,55 +40,35 @@
     %aside.main-sidebar
       / sidebar: style can be found in sidebar.less
       %section.sidebar
-        / search form
-        %form.sidebar-form{:action => "#", :method => "get"}
-          .input-group
-            %input.form-control{:name => "q", :placeholder => "Search...", :type => "text"}
-              %span.input-group-btn
-                %button#search-btn.btn.btn-flat{:name => "search", :type => "submit"}
-                  %i.fa.fa-search
-        / /.search form
         / sidebar menu: : style can be found in sidebar.less
         %ul.sidebar-menu
-          %li.header MAIN NAVIGATION
+          %li.header Navegación Principal
           %li.treeview
             %a{:href => "#"}
               %i.fa.fa-share
-              %span Multilevel
+              %span Mesa de entradas
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{:href => "#"}
+                %a{ :href => despachos_path }
                   %i.fa.fa-circle-o
-                  Level One
+                  Despachos
               %li
-                %a{:href => "#"}
+                %a{ :href => condonaciones_path }
                   %i.fa.fa-circle-o
-                  Level One
-                  %i.fa.fa-angle-left.pull-right
-                %ul.treeview-menu
-                  %li
-                    %a{:href => "#"}
-                      %i.fa.fa-circle-o
-                      Level Two
-                  %li
-                    %a{:href => "#"}
-                      %i.fa.fa-circle-o
-                      Level Two
-                      %i.fa.fa-angle-left.pull-right
-                    %ul.treeview-menu
-                      %li
-                        %a{:href => "#"}
-                          %i.fa.fa-circle-o
-                          Level Three
-                      %li
-                        %a{:href => "#"}
-                          %i.fa.fa-circle-o
-                          Level Three
+                  Condonaciones
               %li
-                %a{:href => "#"}
+                %a{ :href => particulares_path }
                   %i.fa.fa-circle-o
-                  Level One
+                  Peticiones Particulares
+              %li
+                %a{ :href => proyectos_path }
+                  %i.fa.fa-circle-o
+                  Proyectos
+              %li
+                %a{ :href => comunicaciones_oficiales_path}
+                  %i.fa.fa-circle-o
+                  Comunicaciones Oficiales
           %li.treeview
             %a{:href => "#"}
               %i.fa.fa-share
@@ -119,32 +99,6 @@
                 %a{:href => resolucions_path}
                   %i.fa.fa-circle-o
                   =t('.norma.resolucion')
-          %li.treeview
-            %a{:href => "#"}
-              %i.fa.fa-share
-              %span Mesa de entradas
-              %i.fa.fa-angle-left.pull-right
-            %ul.treeview-menu
-              %li
-                %a{ :href => despachos_path }
-                  %i.fa.fa-circle-o
-                  Despachos
-              %li
-                %a{ :href => condonaciones_path }
-                  %i.fa.fa-circle-o
-                  Condonaciones
-              %li
-                %a{ :href => particulares_path }
-                  %i.fa.fa-circle-o
-                  Peticiones Particulares
-              %li
-                %a{ :href => proyectos_path }
-                  %i.fa.fa-circle-o
-                  Proyectos
-              %li
-                %a{ :href => tramites_administrativos_path}
-                  %i.fa.fa-circle-o
-                  Tramites Administrativos
       / /.sidebar
     / ===============================================
     / Contains page content
