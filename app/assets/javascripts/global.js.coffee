@@ -78,3 +78,16 @@ $(document).keydown (event) ->
 $(document).on 'click', '.remove-table-row', ->
   $(this).parents('tr').remove()
   return
+
+$(document).on 'ready page:load', ->
+  controller = window.location.pathname.split("/")[1]
+  if controller in ['despachos', 'comunicaciones_oficiales', 'proyectos', 'particulares', 'condonaciones']
+    $(document).find('.sidebar-menu .treeview:first').addClass('active')
+    $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
+    $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+    return
+  if controller in [ 'declaracions', 'decretos', 'especials', 'ordenanzas', 'otra_normas', 'resolucions' ]
+    $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
+    $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
+    $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+    return
