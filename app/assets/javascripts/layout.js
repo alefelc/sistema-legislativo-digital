@@ -33,11 +33,7 @@ $.AdminLTE = {};
  * Modify these options to suit your implementation
  */
 $.AdminLTE.options = {
-  //Add slimscroll to navbar menus
-  //This requires you to load the slimscroll plugin
   //in every page before app.js
-  navbarMenuSlimscroll: true,
-  navbarMenuSlimscrollWidth: "3px", //The width of the scroll bar
   navbarMenuHeight: "200px", //The height of the inner menu
   //General animation speed for JS animated elements such as box collapse/expand and
   //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
@@ -47,8 +43,6 @@ $.AdminLTE.options = {
   sidebarToggleSelector: "[data-toggle='offcanvas']",
   //Activate sidebar push menu
   sidebarPushMenu: true,
-  //Activate sidebar slimscroll if the fixed layout is set (requires SlimScroll Plugin)
-  sidebarSlimScroll: true,
   //Enable sidebar expand on hover effect for sidebar mini
   //This option is forced to true if both the fixed layout and sidebar mini
   //are used together
@@ -164,15 +158,6 @@ $(function () {
     $.AdminLTE.controlSidebar.activate();
   }
 
-  //Add slimscroll to navbar dropdown
-  if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
-    $(".navbar .menu").slimscroll({
-      height: o.navbarMenuHeight,
-      alwaysVisible: false,
-      size: o.navbarMenuSlimscrollWidth
-    }).css("width", "100%");
-  }
-
   //Activate sidebar push menu
   if (o.sidebarPushMenu) {
     $.AdminLTE.pushMenu.activate(o.sidebarToggleSelector);
@@ -232,16 +217,13 @@ function _init() {
    * @type Object
    * @usage $.AdminLTE.layout.activate()
    *        $.AdminLTE.layout.fix()
-   *        $.AdminLTE.layout.fixSidebar()
    */
   $.AdminLTE.layout = {
     activate: function () {
       var _this = this;
       _this.fix();
-      _this.fixSidebar();
       $(window, ".wrapper").resize(function () {
         _this.fix();
-        _this.fixSidebar();
       });
     },
     fix: function () {
@@ -272,30 +254,6 @@ function _init() {
 
       }
     },
-    fixSidebar: function () {
-      //Make sure the body tag has the .fixed class
-      if (!$("body").hasClass("fixed")) {
-        if (typeof $.fn.slimScroll != 'undefined') {
-          $(".sidebar").slimScroll({destroy: true}).height("auto");
-        }
-        return;
-      } else if (typeof $.fn.slimScroll == 'undefined' && window.console) {
-        window.console.error("Error: the fixed layout requires the slimscroll plugin!");
-      }
-      //Enable slimscroll for fixed layout
-      if ($.AdminLTE.options.sidebarSlimScroll) {
-        if (typeof $.fn.slimScroll != 'undefined') {
-          //Destroy if it exists
-          $(".sidebar").slimScroll({destroy: true}).height("auto");
-          //Add slimscroll
-          $(".sidebar").slimscroll({
-            height: ($(window).height() - $(".main-header").height()) + "px",
-            color: "rgba(0,0,0,0.2)",
-            size: "3px"
-          });
-        }
-      }
-    }
   };
 
   /* PushMenu()
