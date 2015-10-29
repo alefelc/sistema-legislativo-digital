@@ -1,0 +1,27 @@
+#particular-show
+  %h4= t('particulars.show.info')
+  %hr
+  #particular-body
+    - part = @particular
+    %p
+      %span.titles= "Nro.: "
+      %span= part.id
+      %span
+        &nbsp 
+        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Petición particular"}
+    - fecha = part.get_fecha
+      - if fecha.present?  
+      %p.single-tab
+        %span= "Fecha: "
+        %span= fecha
+    - fojas = part.get_fojas
+      - if fojas.present?      
+      %p.single-tab
+        %span= "Nro. de Fojas: "
+        %span= fojas
+    - obs = part.get_observaciones
+      - if obs.present?
+      %p.single-tab
+        %span= "Observaciones: "
+        %span= obs      
+    

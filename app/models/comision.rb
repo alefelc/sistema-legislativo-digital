@@ -8,4 +8,7 @@ class Comision < ActiveRecord::Base
 
   has_many :estado_tramites, as: :ref
 
+  def type
+    'Comision'
+  end  
 end

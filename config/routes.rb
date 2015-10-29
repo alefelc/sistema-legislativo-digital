@@ -52,8 +52,12 @@ Rails.application.routes.draw do
 
   resources :condonaciones
 
-  resources :particulares do
-    get 'search_exp', on: :collection
+  resources :particulars do
+    get 'get_iniciador', on: :collection
+  end
+
+  resources :personas do
+    
   end
 
   resources :proyectos do

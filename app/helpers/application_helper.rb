@@ -25,6 +25,10 @@ module ApplicationHelper
     link_to desp.id.to_s, despacho_path(desp)
   end
 
+  def index_part(part)
+    link_to part.id.to_s, particular_path(part)
+  end
+
   def norma_expediente(norma)
     resp = ""
     norma.circuitos.each do |c|
@@ -54,6 +58,8 @@ module ApplicationHelper
     return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
     return "Condonaciones" if current_page?(controller: :condonaciones, action: :index)
     return "Condonacion #{params[:id]}" if current_page?(controller: :condonaciones, action: :show, id: params[:id].to_i)
+    return "Peticiones Particulares" if current_page?(controller: :particulars, action: :index)
+    return "Petición Particular #{params[:id]}" if current_page?(controller: :particulars, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
@@ -71,6 +77,20 @@ module ApplicationHelper
 
   def prepopulate_concejals(desp)
     desp.concejals.present? ? build_json_concejals(desp.concejals) : []
+  end
+
+  def prepopulate_iniciadores(tramite)
+    iniciadores = []
+    comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : []
+    bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
+    personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
+    iniciadores = comisiones + bloques + personas
+  end
+
+  def build_json_iniciadores(pers)
+    json_array = []
+    pers.each { |x| json_array << { id: x.id, nombre: x.nombre , apellido: x.apellido, nro_doc: x.nro_doc, telefono: x.telefono, email: x.email, domicilio: x.domicilio, cuit: x.cuit, type: x.type} }
+    json_array.as_json
   end
 
   def build_json_exp(exps)
@@ -92,8 +112,20 @@ module ApplicationHelper
 
   def build_json_comisions(comisions)
     json_array = []
-    comisions.each { |x| json_array << [ id: x.id, denominacion: x.denominacion ] }
-    json_array.to_json
+    comisions.each { |x| json_array << [ id: x.id, denominacion: x.denominacion , type: "Comision" ] }
+    json_array.as_json
+  end
+
+  def build_json_comisions_select2(comisions)
+    json_array = []
+    comisions.each { |x| json_array << { id: x.id, denominacion: x.denominacion , type: "Comision" } }
+    json_array.as_json
+  end
+
+  def build_json_bloques_select2(bloques)
+    json_array = []
+    bloques.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "Bloque" } }
+    json_array.as_json
   end
 
   def build_json_concejals(concejals)
