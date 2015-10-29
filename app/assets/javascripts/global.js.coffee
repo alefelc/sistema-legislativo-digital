@@ -79,7 +79,16 @@ $(document).on 'click', '.remove-table-row', ->
   $(this).parents('tr').remove()
   return
 
+$(document).on 'focus', 'textarea', ->
+  $(this).elastic()
+  return
+
+$(document).on 'focusout', 'textarea', ->
+  $(this).animate({ height: "#{40}" }, 200);
+  return
+
 $(document).on 'ready page:load', ->
+
   controller = window.location.pathname.split("/")[1]
   if controller in ['despachos', 'comunicaciones_oficiales', 'proyectos', 'particulares', 'condonaciones']
     $(document).find('.sidebar-menu .treeview:first').addClass('active')
@@ -91,3 +100,4 @@ $(document).on 'ready page:load', ->
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
     return
+
