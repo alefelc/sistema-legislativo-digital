@@ -60,8 +60,6 @@ Rails.application.routes.draw do
     get 'search_exp', on: :collection
   end
 
-  resources :tramites_administrativos do
-    get 'search_exp', on: :collection
-  end
+  resources :comunicaciones_oficiales
 
 end

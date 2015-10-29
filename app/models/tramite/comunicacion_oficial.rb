@@ -1,0 +1,3 @@
+class ComunicacionOficial < Tramite
+
+end
