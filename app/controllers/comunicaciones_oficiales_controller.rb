@@ -11,7 +11,7 @@ class ComunicacionesOficialesController < ApplicationController
   def new
     @comunicacion_oficial = ComunicacionOficial.new
     respond_to do |format|
-      format.html {render partial: "modal_communicacion_oficial", locals: { actionvar: "create"}}
+      format.html { render partial: "modal_comunicacion_oficial", locals: { actionvar: "create" } }
     end
   end
 
@@ -22,7 +22,7 @@ class ComunicacionesOficialesController < ApplicationController
   def edit
     @comunicacion_oficial = ComunicacionOficial.find(params[:id])
     respond_to do |format|
-      format.html {render partial: "modal_communicacion_oficial", locals: { actionvar: "update"}}
+      format.html { render partial: "modal_comunicacion_oficial", locals: { actionvar: "update" } }
     end
   end
 

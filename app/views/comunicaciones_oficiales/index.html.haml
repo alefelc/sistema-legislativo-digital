@@ -1,0 +1,17 @@
+#comunicacion-oficial
+  #comunicacion-oficial-edit
+  %button#btn-new.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+    = t('.btnheader.new')
+
+  %table.datatable-keyevents.table.table-striped.table-bordered#comunicacion-oficial-table{"data-source" => comunicaciones_oficiales_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.nro')
+        %th{width: "10%"}= t('.table.fojas')
+        %th= t('.table.particular')
+        %th= t('.table.asunto')
+        %th= t('.table.observaciones')
+        %th= t('.table.updated_at')
+        %th
+    %tbody
