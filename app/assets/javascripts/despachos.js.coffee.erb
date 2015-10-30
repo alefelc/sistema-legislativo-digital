@@ -9,14 +9,14 @@ $(document).on 'ready page:load', ->
       $('#despacho-table tbody tr:eq(0)').addClass 'info'
       return
     aoColumns: [
-      { sortable: false, "width": "1%" , sClass: "center"}
+      { sortable: false, "sWidth": "1%" , sClass: "center"}
       { sortable: false }
       { sortable: false }
       { sortable: false }
       { sortable: false }
       { sortable: false }
-      { sortable: false, "width": "14%" }
-      { sortable: false, "width": "1%" }
+      { sortable: false, "sWidth": "14%" }
+      { sortable: false, "sWidth": "1%" }
     ]
 
   $(document).on 'click', '#despacho .remove-tr', ->

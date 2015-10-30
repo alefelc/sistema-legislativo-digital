@@ -30,8 +30,14 @@ module Sld
     # Load subfolder controllers
     config.autoload_paths += Dir[Rails.root.join('app', 'controller', '{**}')]
 
+    # Disable miniProfiler
+    Rack::MiniProfiler.config.start_hidden = true
+
     # Default I18n internalization
     config.i18n.default_locale = :es
+
+    # TimeZone
+    config.time_zone = 'Buenos Aires'
 
     # Date
     # ----------------------------

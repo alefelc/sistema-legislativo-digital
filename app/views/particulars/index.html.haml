@@ -1,0 +1,18 @@
+#particular
+  #particular-edit
+  %button#btn-new.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+    = t('.btnheader.new')
+
+  %table.datatable-keyevents.table.table-striped.table-bordered#particular-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => particulars_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.particular')
+        %th= t('.table.fojas')
+        %th= t('.table.iniciador')
+        %th= t('.table.asunto')
+        %th= t('.table.observaciones')
+        %th= t('.table.estado')
+        %th= t('.table.actualizado')
+        %th
+    %tbody

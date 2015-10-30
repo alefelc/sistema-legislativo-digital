@@ -8,4 +8,7 @@ class Bloque < ActiveRecord::Base
 
   has_many :estado_tramites, as: :ref
 
+  def type
+    'Bloque'
+  end
 end

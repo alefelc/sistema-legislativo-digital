@@ -399,6 +399,40 @@ es:
       new_despacho: Creando Despacho
       fojas: Ingrese el número de fojas.
 
+  particulars:
+    show:
+      info: Información de la Petición Particular
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        particular: Nro.
+        iniciador: Iniciador
+        asunto: Asunto
+        fojas: Nro. fojas
+        fecha: Fecha
+        estado: Estado Actual
+        actualizado: Actualizado
+        observaciones: Observaciones
+    modal_particular:
+      title:
+        create_particular: Creando Petición Particular
+      observations: Observaciones
+      asunto: Ingrese asunto
+      asunto_label: Asunto
+      new_particular: Creando Petición Particular
+      fojas: Ingrese el número de fojas.
+      nombre: Ingrese Nombre.
+      apellido: Ingrese Apellido.
+      doc: Ingrese Nro. Documento.
+      tel: Ingrese Teléfono.
+      email: Ingrese Email.
+      domicilio: Ingrese Domicilio.
+      cuit: Ingrese CUIT/CUIL.
+      iniciador: Iniciador.
+      iniciadores: Iniciadores
+      confirm_create: Desea crear el particular.
+
   datatable:
     search: Ingrese búsqueda ...
 
@@ -414,3 +448,10 @@ es:
     hint:
       enter_exp: Ingrese Expediente
       enter_norma: Ingrese Norma
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+  time:
+    formats:
+      default: "%d/%m/%Y - %H:%M"

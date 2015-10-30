@@ -1,0 +1,95 @@
+.content-wrapper {
+  background-color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+#particular {
+
+  #particular-table_wrapper {
+    margin-top: -30px;
+    th {
+      @extend .center;
+    }
+  }
+
+  .modal-header {
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #00A65A;
+
+    h4#nuevoLabel {
+      font-weight: bold;
+    }
+
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  .parent-group-btn:hover {
+    color: #00A65A;
+  }
+
+  .group-buttons {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 5px;
+  }
+
+  .group-buttons2 {
+    border-top: 1px solid #EEEEEE;
+    padding-top: 5px;
+  }
+
+  #modalpart .col-md-6, #modalpart .col-md-6 #second-column {
+    & > .input-group{
+      padding-bottom: 5px;
+    }
+
+    #edit_iniciador{
+      display: none;
+      font-size: 20px;
+    }
+
+    #add_iniciador{
+      display: block;
+      font-size: 20px;
+    }
+
+  }
+
+  #modalpart .col-md-6 #second-column {
+    border: 5px solid ghostwhite;
+  }
+
+  #modalpart #btn-submit-particular {
+    position: relative;
+    right: 50%;
+  }
+
+  #modalpart .input-group {
+    width: 100%;
+  }
+}
+
+#particular-show {
+  color: gray;
+
+  .titles {
+    color: #676773;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .single-tab {
+    padding-left: 15px;
+  }
+
+  .double-tab {
+    padding-left: 30px;
+  }
+}
