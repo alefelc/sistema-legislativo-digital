@@ -39,6 +39,8 @@ class ParticularsController < ApplicationController
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
         @particular.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
+        @particular.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
+        @particular.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
       end
     end
 
@@ -52,16 +54,37 @@ class ParticularsController < ApplicationController
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
-      current_iniciadores = []
-      old_iniciadores = @particular.personas.map{ |x| x.id }
+      current_iniciadores_personas = []
+      current_iniciadores_bloques = []
+      current_iniciadores_comisions = []
+      old_iniciadores_personas = @particular.personas.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores.include?(value["id"])
+        unless old_iniciadores_personas.include?(value["id"])
           @particular.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         end
-        current_iniciadores << value["id"]
+        current_iniciadores_personas << value["id"]
       end
+
+      old_iniciadores_bloques = @particular.bloques.map{ |x| x.id }
+      JSON.parse(params['iniciadores']).each do |key, value|
+        unless old_iniciadores_bloques.include?(value["id"])
+          @particular.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
+        end
+        current_iniciadores_bloques << value["id"]
+      end
+
+      old_iniciadores_comisions = @particular.comisions.map{ |x| x.id }
+      JSON.parse(params['iniciadores']).each do |key, value|
+        unless old_iniciadores_comisions.include?(value["id"])
+          @particular.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
+        end
+        current_iniciadores_comisions << value["id"]
+      end
+
       # delete iniciadores
-      (old_iniciadores - current_iniciadores).each { |id| @particular.personas.delete(id) }
+      (old_iniciadores_personas - current_iniciadores_personas).each { |id| @particular.personas.delete(id) }
+      (old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @particular.bloques.delete(id) }
+      (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @particular.comisions.delete(id) }
     end
 
     redirect_to action: :index

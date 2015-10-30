@@ -81,11 +81,11 @@ module ApplicationHelper
 
   def prepopulate_iniciadores(tramite)
     iniciadores = []
-    comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : []
+    comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : [] 
     bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
     personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
     iniciadores = comisiones + bloques + personas
-  end
+  end  
 
   def build_json_iniciadores(pers)
     json_array = []
