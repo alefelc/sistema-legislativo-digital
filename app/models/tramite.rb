@@ -19,6 +19,14 @@ class Tramite < ActiveRecord::Base
     self.nro_fojas.to_s
   end
 
+  def get_asunto
+    self.asunto.to_s
+  end
+
+  def get_date_time
+    self.updated_at
+  end  
+
   def get_observaciones
     self.observaciones
   end

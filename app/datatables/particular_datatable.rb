@@ -26,7 +26,7 @@ class ParticularDatatable < AjaxDatatablesRails::Base
       [
         index_part(part),
         part.nro_fojas.to_s,
-        "inicador",
+        get_iniciadores(part),
         part.asunto.to_s,
         part.observaciones.to_s,
         "Estado actual",
@@ -35,6 +35,24 @@ class ParticularDatatable < AjaxDatatablesRails::Base
       ]
     end
   end
+
+  def get_iniciadores part
+    resp = ""
+    iniciadores_bloques = part.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
+    iniciadores_bloques.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    end  
+    iniciadores_comisions = part.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
+    iniciadores_comisions.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    end
+    iniciadores_personas = part.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_personas.each do |b|
+      resp = resp + b[:type] + ": " + b[:apellido] + ", " + b[:nombre] + ";\n"
+    end
+
+    resp
+  end  
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
@@ -66,7 +84,7 @@ class ParticularDatatable < AjaxDatatablesRails::Base
         particular = particular.where(query)
       end  
     end
-    particular
+    particular.includes(:bloques).includes(:comisions).includes(:personas)
   end
 
   def per_page
