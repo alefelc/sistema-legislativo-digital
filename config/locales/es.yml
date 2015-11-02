@@ -429,7 +429,7 @@ es:
       email: Ingrese Email.
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
-      iniciador: Iniciador.
+      iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
 
