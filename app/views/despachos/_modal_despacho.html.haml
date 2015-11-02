@@ -4,27 +4,27 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t('.new_despacho')
+        %h4#nuevoLabel.modal-title= t(".#{actionvar}_despacho") + " #{@despacho.id}"
       = form_for @despacho, url: { action: actionvar } do |f|
         = hidden_field_tag :exps_ids
         .modal-body
           .row
-            .col-md-8#first-column
+            .col-md-6#first-column
               .input-group
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1"}
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.fojas'), type: :number }
               .input-group
                 = f.label :fecha, { class: "input-group-addon", id: "basic-addon2"}
-                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon2", type: :date}  
+                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon2", type: :date}
               .input-group
                 = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
                 = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
                                                type: "text", data: { load: prepopulate_exps(@despacho) }}
               .input-group
-                = f.label :comisions, { class: "input-group-addon", id: "basic-addon4" }
+                = f.label :comisions, t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
                 = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
               .input-group
-                = f.label :concejals, { class: "input-group-addon", id: "basic-addon5" }
+                = f.label :concejals, t('.concejals'), { class: "input-group-addon", id: "basic-addon5" }
                 = f.select(:concejals, options_for_select(get_options_concejals()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_concejals", data: { load: prepopulate_concejals(@despacho) }})
               .input-group
                 = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
@@ -32,16 +32,16 @@
             .col-md-8
               #second-column
         .modal-footer
-          = f.submit "Guardar", {class: "btn btn-primary modal-submit"}
+          = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
 
 :javascript
   wi = $(window).width()-20;
   margin = 10;
   $("#despacho .modal-xs").css('width', wi);
   $("#despacho .modal-xs").css('margin-left', margin);
-  
+
   //var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-  
+
   function format_comisions(style) {
     var originalOption = $(style.element);
     return "<div class='comision-token' data-id=" + style.id + ">" + style.text + "</div>";
@@ -86,7 +86,7 @@
 
   $(document).on('click', '#despacho .modal-submit', function(event) {
     event.preventDefault();
-  
+
     //add exp ids to form
     var expsIds = []
     $("#despacho .exps-token").each(function(key, value) {
@@ -96,7 +96,7 @@
     $("#despacho #exps_ids").val(expsIds);
     $("#despacho #new_despacho, [id^='edit_despacho']").submit();
   });
-  
+
   $('#modaldesp').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
@@ -142,4 +142,4 @@
     $('#despacho div.dataTables_filter input').focus();
   });
 
-  
+
