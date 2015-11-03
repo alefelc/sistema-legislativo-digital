@@ -48,26 +48,29 @@ Rails.application.routes.draw do
   ## routes mesa de entradas
   resources :despachos do
     get 'search_exp', on: :collection
+    get 'get_derivacion', on: :collection
   end
 
   resources :condonacions do
     get 'get_iniciador', on: :collection
+    get 'get_derivacion', on: :collection
   end
 
   resources :particulars do
     get 'get_iniciador', on: :collection
+    get 'get_derivacion', on: :collection
   end
 
-  resources :personas do
-    
-  end
+  resources :personas
 
   resources :proyectos do
     get 'get_iniciador', on: :collection
+    get 'get_derivacion', on: :collection
   end
 
   resources :comunicacion_oficials do
     get 'get_iniciador', on: :collection
+    get 'get_derivacion', on: :collection
   end
 
 end
