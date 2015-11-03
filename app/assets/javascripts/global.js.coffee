@@ -40,10 +40,12 @@ $.ctrl = (key, callback, args) ->
       isCtrl = true
     if e.keyCode == key.charCodeAt(0) and isCtrl
       callback.apply this, args
+      isCtrl = false
       return false
+    isCtrl = false  
     return
   ).keyup (e) ->
-    if e.ctrlKey
+    if e.keyCode == 17
       isCtrl = false
     return
   return
