@@ -63,7 +63,7 @@ Rails.application.routes.draw do
   end
 
   resources :proyectos do
-    get 'search_exp', on: :collection
+    get 'get_iniciador', on: :collection
   end
 
   resources :comunicaciones_oficiales
