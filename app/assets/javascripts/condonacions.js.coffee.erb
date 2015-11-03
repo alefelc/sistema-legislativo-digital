@@ -9,20 +9,21 @@ $(document).on 'ready page:load', ->
       $('#condonacion-table tbody tr:eq(0)').addClass 'info'
       return
     aoColumns: [
-      { sortable: false, "width": "1%" , sClass: "center"}
+      { sortable: false, "width": "10%" , sClass: "center"}
+      { sortable: false, "width": "10%" }
       { sortable: false }
       { sortable: false }
       { sortable: false }
       { sortable: false }
       { sortable: false, "width": "14%" }
-      { sortable: false, "width": "1%" }
+      { sortable: false, "width": "8%" }
     ]
 
   $(document).on 'click', '#condonacion .remove-tr', ->
     id = $(this).data 'remove'
-    if confirm('Desea eliminar la condonacion?')
+    if confirm('Desea eliminar la Condonación')
       $.ajax
-        url: "/condonaciones/#{id}"
+        url: "/condonacions/#{id}"
         type: 'DELETE'
         success: (result) ->
           window.location.href = result.url
@@ -30,19 +31,51 @@ $(document).on 'ready page:load', ->
 
   $('#condonacion #btn-new').on 'click', ->
     $(document).off 'keydown'
-    $.get '/condonaciones/new', (data) ->
+    $.get '/condonacions/new', (data) ->
       $('#condonacion-edit').empty()
       $('#condonacion-edit').append data
       $('#condonacion-edit .modal').modal 'show'
       return
+  
+  $(document).on 'click', '#condonacion #btn_add_iniciador', (event) ->
+    event.preventDefault()
+    return
+
+  $(document).on 'click', '#condonacion #btn_edit_iniciador', (event) ->
+    event.preventDefault()
+    return    
 
   $(document).on 'click', '#condonacion .linktoedit', ->
     $(document).off 'keydown'
     id = $(this).data 'id'
     $('#condonacion-edit').empty()
-    $.get "/condonaciones/#{id}/edit", (data) ->
+    $.get "/condonacions/#{id}/edit", (data) ->
       $('#condonacion-edit').append data
       $('#condonacion-edit .modal').modal 'show'
+      
+      ## Preload iniciadores-tokens
+      tokenData = $('#condonacion #condonacion_iniciadores').data 'load'
+      iniciadores = [];
+      $.each tokenData, (index, ini) ->
+        if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
+          iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
+        else
+          if(ini.type == "Comision" || ini.type == "Bloque")
+            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
+          else
+            ## otro caso
+        return
+      $('#condonacion #condonacion_iniciadores').select2('data', iniciadores)
+
+      return
+
+  $(document).on 'focus', 'textarea', ->
+    $(this).elastic();
+    return
+
+  $(document).on 'focusout', 'textarea', ->
+    $(this).animate({ height: "#{40}" }, 200);
+    return
 
   ## hotkey create condonacion
   $.ctrl 'C', ->
