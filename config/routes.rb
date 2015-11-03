@@ -66,6 +66,8 @@ Rails.application.routes.draw do
     get 'get_iniciador', on: :collection
   end
 
-  resources :comunicaciones_oficiales
+  resources :comunicacion_oficials do
+    get 'get_iniciador', on: :collection
+  end
 
 end
