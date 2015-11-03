@@ -37,6 +37,10 @@ module ApplicationHelper
     link_to pro.id.to_s, proyecto_path(pro)
   end
 
+  def index_com(com)
+    link_to com.id.to_s, comunicacion_oficial_path(com)
+  end
+
   def norma_expediente(norma)
     resp = ""
     norma.circuitos.each do |c|
@@ -70,6 +74,8 @@ module ApplicationHelper
     return "Petición Particular #{params[:id]}" if current_page?(controller: :particulars, action: :show, id: params[:id].to_i)
     return "Proyectos" if current_page?(controller: :proyectos, action: :index)
     return "Proyecto #{params[:id]}" if current_page?(controller: :proyectos, action: :show, id: params[:id].to_i)
+    return "Comunicaciones Oficiales" if current_page?(controller: :comunicacion_oficials, action: :index)
+    return "Comunicación Oficial #{params[:id]}" if current_page?(controller: :comunicacion_oficials, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 

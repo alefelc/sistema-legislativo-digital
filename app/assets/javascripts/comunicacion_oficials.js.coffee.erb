@@ -1,0 +1,93 @@
+$(document).on 'ready page:load', ->
+  $('#comunicacion-oficial-table').dataTable
+    ajaxSource: $('#comunicacion-oficial-table').data('source')
+    fnInitComplete: ->
+      $('#comunicacion-oficial div.dataTables_filter input').focus()
+      $('#comunicacion-oficial div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      return
+    fnDrawCallback: ->
+      $('#comunicacion-oficial-table tbody tr:eq(0)').addClass 'info'
+      return
+    aoColumns: [
+      { sortable: false, "width": "10%" , sClass: "center"}
+      { sortable: false, "width": "10%" }
+      { sortable: false }
+      { sortable: false }
+      { sortable: false }
+      { sortable: false }
+      { sortable: false, "width": "14%" }
+      { sortable: false, "width": "8%" }
+    ]
+
+  $(document).on 'click', '#comunicacion-oficial .remove-tr', ->
+    id = $(this).data 'remove'
+    if confirm('Desea eliminar la Comunicación Oficial')
+      $.ajax
+        url: "/comunicacion_oficials/#{id}"
+        type: 'DELETE'
+        success: (result) ->
+          window.location.href = result.url
+          return
+
+  $('#comunicacion-oficial #btn-new').on 'click', ->
+    $(document).off 'keydown'
+    $.get '/comunicacion_oficials/new', (data) ->
+      $('#comunicacion-oficial-edit').empty()
+      $('#comunicacion-oficial-edit').append data
+      $('#comunicacion-oficial-edit .modal').modal 'show'
+      return
+  
+  $(document).on 'click', '#comunicacion-oficial #btn_add_iniciador', (event) ->
+    event.preventDefault()
+    return
+
+  $(document).on 'click', '#comunicacion-oficial #btn_edit_iniciador', (event) ->
+    event.preventDefault()
+    return    
+
+  $(document).on 'click', '#comunicacion-oficial .linktoedit', ->
+    $(document).off 'keydown'
+    id = $(this).data 'id'
+    $('#comunicacion-oficial-edit').empty()
+    $.get "/comunicacion_oficials/#{id}/edit", (data) ->
+      $('#comunicacion-oficial-edit').append data
+      $('#comunicacion-oficial-edit .modal').modal 'show'
+      
+      ## Preload iniciadores-tokens
+      tokenData = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').data 'load'
+      iniciadores = [];
+      $.each tokenData, (index, ini) ->
+        if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
+          iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
+        else
+          if(ini.type == "Comision" || ini.type == "Bloque")
+            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
+          else
+            ## otro caso
+        return
+      $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data', iniciadores)
+
+      return
+
+  $(document).on 'focus', 'textarea', ->
+    $(this).elastic();
+    return
+
+  $(document).on 'focusout', 'textarea', ->
+    $(this).animate({ height: "#{40}" }, 200);
+    return
+
+  ## hotkey create comunicacion oficial
+  $.ctrl 'C', ->
+    $('#comunicacion-oficial #btn-new').click()
+    return
+
+  ## hotkey edit comunicacion oficial
+  $.ctrl 'E', ->
+    $('#comunicacion-oficial table tbody').find('.info').find('.linktoedit').click()
+    return
+
+  ## hotkey delete comunicacion oficial
+  $.ctrl 'D', ->
+    $('#comunicacion-oficial table tbody').find('.info').find('.remove-tr').click()
+    return
