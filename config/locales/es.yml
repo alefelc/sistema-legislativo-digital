@@ -433,6 +433,40 @@ es:
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
 
+  proyectos:
+    show:
+      info: Información del Proyecto.
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        proyecto: Nro.
+        iniciador: Iniciadores
+        asunto: Asunto
+        fojas: Nro. fojas
+        fecha: Fecha
+        estado: Estado Actual
+        actualizado: Actualizado
+        observaciones: Observaciones
+    modal_proyecto:
+      title:
+        create_proyecto: Creando Proyecto
+      observations: Observaciones
+      asunto: Ingrese asunto
+      asunto_label: Asunto
+      new_proyecto: Creando Proyecto
+      fojas: Ingrese el número de fojas.
+      nombre: Ingrese Nombre.
+      apellido: Ingrese Apellido.
+      doc: Ingrese Nro. Documento.
+      tel: Ingrese Teléfono.
+      email: Ingrese Email.
+      domicilio: Ingrese Domicilio.
+      cuit: Ingrese CUIT/CUIL.
+      iniciador: Nuevo Iniciador.
+      iniciadores: Iniciadores
+      confirm_create: Desea crear el proyecto.    
+
   condonacions:
     show:
       info: Información de la Condonación

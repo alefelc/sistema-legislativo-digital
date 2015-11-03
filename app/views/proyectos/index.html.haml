@@ -1,18 +1,18 @@
-#despacho
-  #despacho-edit
+#proyecto
+  #proyecto-edit
   %button#btn-new.btn.btn-primary
     %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
     = t('.btnheader.new')
 
-  %table.datatable-keyevents.table.table-striped.table-bordered#despacho-table{"data-source" => despachos_path(format: :json)}
+  %table.datatable-keyevents.table.table-striped.table-bordered#proyecto-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => proyectos_path(format: :json)}
     %thead
       %tr
-        %th= t('.table.despacho')
-        %th{width: "10%"}= t('.table.fojas')
-        %th= t('.table.expedientes')
-        %th= t('.table.fecha')
-        %th= t('.table.comisiones')
-        %th= t('.table.concejales')
+        %th= t('.table.proyecto')
+        %th= t('.table.fojas')
+        %th= t('.table.iniciadores')
+        %th= t('.table.asunto')
         %th= t('.table.observaciones')
+        %th= t('.table.estado')
+        %th= t('.table.actualizado')
         %th
     %tbody
