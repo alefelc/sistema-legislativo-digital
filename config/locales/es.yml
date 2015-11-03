@@ -349,6 +349,8 @@ es:
     modal_condonacion:
       title:
         create_condonacion: Creando Condonación
+      create_condonacion: Creando Condonación
+      update_condonacion: Editando Condonación
       observations: Observaciones
       new_condonacion: Creando Condonación
       fojas: Ingrese el número de fojas.
@@ -396,8 +398,11 @@ es:
       title:
         create_despacho: Creando Despacho
       observations: Observaciones
-      new_despacho: Creando Despacho
+      create_despacho: Creando Despacho
+      update_despacho: Editando despacho
       fojas: Ingrese el número de fojas.
+      concejals: Concejales
+      comisions: Comisiones
 
   particulars:
     show:
@@ -418,6 +423,8 @@ es:
       title:
         create_particular: Creando Petición Particular
       observations: Observaciones
+      create_particular: Creando Petición Particular
+      update_particular: Editando Petición Particular
       asunto: Ingrese asunto
       asunto_label: Asunto
       new_particular: Creando Petición Particular
@@ -454,7 +461,9 @@ es:
       observations: Observaciones
       asunto: Ingrese asunto
       asunto_label: Asunto
-      new_comunicacion_oficial: Creando Comunicación Oficial
+
+      create: Creando Comunicación Oficial
+      update: Editando Comunicación Oficial
       fojas: Ingrese el número de fojas.
       nombre: Ingrese Nombre.
       apellido: Ingrese Apellido.
@@ -465,7 +474,7 @@ es:
       cuit: Ingrese CUIT/CUIL.
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
-      confirm_create: Desea crear el particular.    
+      confirm_create: Desea crear el particular.
 
   proyectos:
     show:
@@ -488,7 +497,8 @@ es:
       observations: Observaciones
       asunto: Ingrese asunto
       asunto_label: Asunto
-      new_proyecto: Creando Proyecto
+      create: Creando Proyecto
+      update: Editando Proyecto
       fojas: Ingrese el número de fojas.
       nombre: Ingrese Nombre.
       apellido: Ingrese Apellido.
@@ -499,7 +509,7 @@ es:
       cuit: Ingrese CUIT/CUIL.
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
-      confirm_create: Desea crear el proyecto.    
+      confirm_create: Desea crear el proyecto.
 
   condonacions:
     show:
@@ -522,7 +532,8 @@ es:
       observations: Observaciones
       asunto: Ingrese asunto
       asunto_label: Asunto
-      new_condonacion: Creando Condonación
+      create: Creando Condonación
+      update: Editando Condonación
       fojas: Ingrese el número de fojas.
       nombre: Ingrese Nombre.
       apellido: Ingrese Apellido.
@@ -533,7 +544,7 @@ es:
       cuit: Ingrese CUIT/CUIL.
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
-      confirm_create: Desea crear el particular.    
+      confirm_create: Desea crear el particular.
 
   datatable:
     search: Ingrese búsqueda ...

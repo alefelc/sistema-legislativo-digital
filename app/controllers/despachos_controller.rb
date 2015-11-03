@@ -29,7 +29,7 @@ class DespachosController < ApplicationController
   def destroy
     Despacho.find(params[:id]).delete
     render json: {url: "/despachos"}
-  end  
+  end
 
   def create
     desp = params[:despacho].select { |key, value| ["nro_fojas", "fecha", "observaciones"].include?(key) }
@@ -59,7 +59,7 @@ class DespachosController < ApplicationController
   def update
     desp = params[:despacho].select { |key, value| ["nro_fojas", "fecha","observaciones"].include?(key) }
     @despacho = Despacho.find(params[:id])
-    
+
 
     @despacho.update desp.to_hash
 
@@ -94,6 +94,20 @@ class DespachosController < ApplicationController
     expedientes = Expediente.where("CONCAT(nro_exp, bis, EXTRACT(year from anio)) ilike ?",
                                    "%#{params[:q]}%").order("nro_exp::int asc").first(15)
     render json: build_json_exp(expedientes)
+  end
+
+  def get_derivacion
+    com = Comision.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(7)
+    bloques = Bloque.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(7)
+    per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+                                   "%#{params[:q]}%").order(apellido: :asc).first(7)
+    com = com.as_json(methods: 'type')
+    bloques = bloques.as_json(methods: 'type')
+    per = per.as_json(methods: 'type' )
+    q = com + bloques + per
+    render json: q
   end
 
   private

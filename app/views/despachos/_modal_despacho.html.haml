@@ -4,44 +4,56 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t('.new_despacho')
+        %h4#nuevoLabel.modal-title= t(".#{actionvar}_despacho") + " #{@despacho.id}"
       = form_for @despacho, url: { action: actionvar } do |f|
         = hidden_field_tag :exps_ids
+        = hidden_field_tag :states
         .modal-body
           .row
-            .col-md-8#first-column
+            .col-md-6#first-column
               .input-group
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1"}
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.fojas'), type: :number }
               .input-group
                 = f.label :fecha, { class: "input-group-addon", id: "basic-addon2"}
-                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon2", type: :date}  
+                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon2", type: :date}
               .input-group
                 = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
                 = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
                                                type: "text", data: { load: prepopulate_exps(@despacho) }}
               .input-group
-                = f.label :comisions, { class: "input-group-addon", id: "basic-addon4" }
+                = f.label :comisions, t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
                 = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
               .input-group
-                = f.label :concejals, { class: "input-group-addon", id: "basic-addon5" }
+                = f.label :concejals, t('.concejals'), { class: "input-group-addon", id: "basic-addon5" }
                 = f.select(:concejals, options_for_select(get_options_concejals()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_concejals", data: { load: prepopulate_concejals(@despacho) }})
               .input-group
                 = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
                 = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
-            .col-md-8
-              #second-column
+            .col-md-6#second-column
+              .input-group
+                = label_tag nil, 'Derivado a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'derived-states' }
+                .input-group-addon.parent-group-btn.btn#add-state
+                  %i.fa.fa-plus-circle.fa-1x
+              %table.table.table-striped.table-bordered#states-table
+                %thead
+                  %tr
+                    %th= "Estado"
+                    %th= "Fecha"
+                    %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
+                %tbody
         .modal-footer
-          = f.submit "Guardar", {class: "btn btn-primary modal-submit"}
+          = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
 
 :javascript
   wi = $(window).width()-20;
   margin = 10;
   $("#despacho .modal-xs").css('width', wi);
   $("#despacho .modal-xs").css('margin-left', margin);
-  
+
   //var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-  
+
   function format_comisions(style) {
     var originalOption = $(style.element);
     return "<div class='comision-token' data-id=" + style.id + ">" + style.text + "</div>";
@@ -86,7 +98,7 @@
 
   $(document).on('click', '#despacho .modal-submit', function(event) {
     event.preventDefault();
-  
+
     //add exp ids to form
     var expsIds = []
     $("#despacho .exps-token").each(function(key, value) {
@@ -96,7 +108,7 @@
     $("#despacho #exps_ids").val(expsIds);
     $("#despacho #new_despacho, [id^='edit_despacho']").submit();
   });
-  
+
   $('#modaldesp').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
@@ -142,4 +154,81 @@
     $('#despacho div.dataTables_filter input').focus();
   });
 
-  
+  function format_derivaciones(style) {
+    var originalOption = $(style.element);
+    var iniciador = "";
+    iniciador = style.apellido + ', ' + style.nombre;
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+    }else{
+      //Casos para comisiones y bloques, etc
+      if (style.type == "Comision" || style.type == "Bloque"){
+        iniciador = style.denominacion;
+        return "<div class='derivacion-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+      }else{
+        //otros casos
+      }
+    }
+  }
+
+  function format_derivaciones_result(style) {
+    var originalOption = $(style.element);
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div>" + style.type + " " + style.apellido + ', ' + style.nombre + "</div>";
+    }else{
+      //caso de comisiones y bloques
+      if (style.type == "Comision" || style.type == "Bloque"){
+        return "<div>" + style.type + " " + style.denominacion + "</div>";
+      }else{
+        //caso de cualquier otro type
+        return "<div>" + style.apellido + "</div>";
+      }
+    }
+  }
+
+  $("#despacho #derived-states").select2({
+    placeholder: "Buscar derivaciones",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_derivaciones,
+    formatResult: format_derivaciones_result,
+    multiple: true,
+    ajax: {
+      url: "/despachos/get_derivacion",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#despacho #add-state').on('click', function(){
+    $('#despacho .derivacion-token').each(function(key, value){
+      var id = $(value).data('id');
+      var type = $(value).data('type');
+      var text;
+      if ($(value).type == 'Concejal' || $(value).type == 'Fisica' || $(value).type == 'Juridica')
+        text = $(value).apellido + ", " + $(value).nombre;
+      else
+        text = $(value).text();
+
+      var tr = "<tr class='derivacion-tr' data-id='" + id + "' data-type='" + type + "'>" +
+        "<td> Derivado a " + type + ": " + text + "</td>" +
+        "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+      $('#states-table tbody').append(tr);
+    });
+
+    $('#despacho #derived-states').select2("val", "");
+  });

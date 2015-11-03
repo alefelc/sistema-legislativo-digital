@@ -39,7 +39,7 @@ class DespachoDatatable < AjaxDatatablesRails::Base
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
-  end  
+  end
 
   def despacho_comisiones desp
     string = ""
@@ -77,7 +77,7 @@ class DespachoDatatable < AjaxDatatablesRails::Base
       else
         query = "(CONCAT(personas.apellido, ' ', personas.nombre) ilike '%#{params[:sSearch]}%') OR (comisions.denominacion ilike '%#{params[:sSearch]}%')"
         despacho = despacho.where(query).joins(:concejals).joins(:comisions)
-      end  
+      end
     end
     despacho.includes(:expedientes).includes(:comisions).includes(:personas)
   end

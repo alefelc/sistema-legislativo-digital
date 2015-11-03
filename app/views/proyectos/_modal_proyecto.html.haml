@@ -4,9 +4,10 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t('.new_proyecto')
+        %h4#nuevoLabel.modal-title= t(".#{actionvar}") + " #{@proyecto.id}"
       = form_for @proyecto, url: { action: actionvar } do |f|
         = hidden_field_tag :iniciadores
+        = hidden_field_tag :states
         .modal-body
           .row
             .col-md-6#first-column
@@ -18,17 +19,29 @@
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon8", :placeholder => t('.fojas'), type: :number }
               .input-group
                 = f.label t('.asunto_label'), { class: "input-group-addon", id: "basic-addon9"}
-                = f.text_area :asunto, {class: "form-control", "aria-describedby" => "basic-addon9", :placeholder => t('.asunto'), type: :text}          
+                = f.text_area :asunto, {class: "form-control", "aria-describedby" => "basic-addon9", :placeholder => t('.asunto'), type: :text}
               .input-group
                 = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon10"}
                 = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.observations'), type: :text }
+              .input-group
+                = label_tag nil, 'Derivado a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'derived-states' }
+                .input-group-addon.parent-group-btn.btn#add-state
+                  %i.fa.fa-plus-circle.fa-1x
+              %table.table.table-striped.table-bordered#states-table
+                %thead
+                  %tr
+                    %th= "Estado"
+                    %th= "Fecha"
+                    %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
+                %tbody
             .col-md-6
               #second-column
                 .input-group
                   = label_tag nil, t('.iniciador'), { class: "input-group-addon", id: "basic-addon0"}
                   .input-group
-                    = label_tag nil, "Tipo", { class: "input-group-addon", id: "basic-addon01"}  
-                    #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador), { class: "form-control", "aria-describedby": "basic-addon01"}  
+                    = label_tag nil, "Tipo", { class: "input-group-addon", id: "basic-addon01"}
+                    #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador), { class: "form-control", "aria-describedby": "basic-addon01"}
                   .input-group
                     = label_tag nil, "Nombre", { class: "input-group-addon", id: "basic-addon1"}
                     = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.nombre'), type: :text }
@@ -57,7 +70,7 @@
                 .parent-group-btn.btn.btn-xs#edit_iniciador
                   %button.btn.parent-group-btn#btn_edit_iniciador
                     %span
-                      %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"   
+                      %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
         .modal-footer
           = f.submit "Guardar Proyecto", {class: "btn btn-primary modal-submit", id: "btn-submit-proyecto"}
 
@@ -66,7 +79,7 @@
   margin = 10;
   $("#proyecto .modal-xs").css('width', wi);
   $("#proyecto .modal-xs").css('margin-left', margin);
-  
+
   function format_iniciadores(style) {
     var originalOption = $(style.element);
     var iniciador = "";
@@ -77,7 +90,7 @@
       //Casos para comisiones y bloques, etc
       if (style.type == "Comision" || style.type == "Bloque"){
         iniciador = style.denominacion;
-        return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";  
+        return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
       }else{
         //otros casos
       }
@@ -95,8 +108,8 @@
       }else{
         //caso de cualquier otro type
         return "<div>" + style.apellido + "</div>";
-      }  
-    }  
+      }
+    }
   }
 
   $("#proyecto_iniciadores").select2({
@@ -164,7 +177,7 @@
         $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
       }
-    }    
+    }
   });
 
   $('#proyecto_iniciadores').on('choice-selected', function(e, choice) {
@@ -303,7 +316,7 @@
 
   $('#proyecto .modal-submit').on('click', function(event) {
     event.preventDefault();
-    
+
     var iniciadores = {};
     var index = 0;
     $("#proyecto .iniciador-token").each(function(key, value) {
@@ -313,11 +326,11 @@
       };
       index++;
     });
-    
+
     $("#proyecto #iniciadores").val(JSON.stringify(iniciadores));
     $("#proyecto #new_proyecto, [id^='edit_proyecto']").submit();
   });
-  
+
   $('#modalpro').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
@@ -361,4 +374,83 @@
     });
 
     $('#proyecto div.dataTables_filter input').focus();
+  });
+
+  function format_derivaciones(style) {
+    var originalOption = $(style.element);
+    var iniciador = "";
+    iniciador = style.apellido + ', ' + style.nombre;
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+    }else{
+      //Casos para comisiones y bloques, etc
+      if (style.type == "Comision" || style.type == "Bloque"){
+        iniciador = style.denominacion;
+        return "<div class='derivacion-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+      }else{
+        //otros casos
+      }
+    }
+  }
+
+  function format_derivaciones_result(style) {
+    var originalOption = $(style.element);
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div>" + style.type + " " + style.apellido + ', ' + style.nombre + "</div>";
+    }else{
+      //caso de comisiones y bloques
+      if (style.type == "Comision" || style.type == "Bloque"){
+        return "<div>" + style.type + " " + style.denominacion + "</div>";
+      }else{
+        //caso de cualquier otro type
+        return "<div>" + style.apellido + "</div>";
+      }
+    }
+  }
+
+  $("#proyecto #derived-states").select2({
+    placeholder: "Buscar derivaciones",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_derivaciones,
+    formatResult: format_derivaciones_result,
+    multiple: true,
+    ajax: {
+      url: "/proyectos/get_derivacion",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#proyecto #add-state').on('click', function(){
+    $('#proyecto .derivacion-token').each(function(key, value){
+      var id = $(value).data('id');
+      var type = $(value).data('type');
+      var text;
+      if ($(value).type == 'Concejal' || $(value).type == 'Fisica' || $(value).type == 'Juridica')
+        text = $(value).apellido + ", " + $(value).nombre;
+      else
+        text = $(value).text();
+
+      var tr = "<tr class='derivacion-tr' data-id='" + id + "' data-type='" + type + "'>" +
+        "<td> Derivado a " + type + ": " + text + "</td>" +
+        "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+      $('#states-table tbody').append(tr);
+    });
+
+    $('#proyecto #derived-states').select2("val", "");
   });

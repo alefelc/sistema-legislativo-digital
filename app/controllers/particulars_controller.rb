@@ -101,10 +101,24 @@ class ParticularsController < ApplicationController
     bloques = bloques.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
     q = com + bloques + per
-    agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""} 
+    agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
     iniciadores = q.push(agregar_nuevo);
     render json: iniciadores
-  end  
+  end
+
+  def get_derivacion
+    com = Comision.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(7)
+    bloques = Bloque.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(7)
+    per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+                                   "%#{params[:q]}%").order(apellido: :asc).first(7)
+    com = com.as_json(methods: 'type')
+    bloques = bloques.as_json(methods: 'type')
+    per = per.as_json(methods: 'type' )
+    q = com + bloques + per
+    render json: q
+  end
 
   private
 
