@@ -1,0 +1,46 @@
+#condonacion-show
+  %h4= t('condonacions.show.info')
+  %hr
+  #condonacion-body
+    - cond = @condonacion
+    %p
+      %span.titles= "Nro.: "
+      %span= cond.id
+      %span
+        &nbsp 
+        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Petición condonacion"}
+    - fojas = cond.get_fojas
+      - if fojas.present?      
+      %p.single-tab
+        %span= "Nro. de Fojas: "
+        %span= fojas
+    - asunto = cond.get_asunto
+      - if asunto.present?
+      %p.single-tab
+        %span.titles= "Asunto: "
+        %span= asunto    
+    - iniciadores_bloques = get_iniciadores_bloques(cond)
+    - iniciadores_comisions = get_iniciadores_comisions(cond)
+    - iniciadores_personas = get_iniciadores_personas(cond)
+      - if iniciadores_bloques.present? || iniciadores_comisions.present? || iniciadores_personas.present?     
+      %p.single-tab
+        .single-tab.titles= "Iniciadores: "
+        .double-tab.titles= "Bloques: "
+        - iniciadores_bloques.each do |b|
+          .double-tab= b[:denominacion]
+        .double-tab.titles= "Comisiones: "
+        - iniciadores_comisions.each do |b|
+          .double-tab= b[:denominacion]
+        .double-tab.titles= "Personas: "
+        - iniciadores_personas.each do |b|
+          .double-tab= b[:type] + ": " + b[:apellido] + ", " + b[:nombre]    
+    - actualizado = cond.get_date_time
+      - if actualizado.present?
+      %p.single-tab
+        %span= "Creado/Actualizado: "
+        %span= to_date_time(actualizado)
+    - obs = cond.get_observaciones
+      - if obs.present?
+      %p.single-tab
+        %span= "Observaciones: "
+        %span= obs

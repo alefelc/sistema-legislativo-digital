@@ -1,7 +1,5 @@
 class CondonacionDatatable < AjaxDatatablesRails::Base
-  def_delegator :@view, :link_to
-  def_delegator :@view, :condonacione_path
-
+  def_delegator :@view, :index_cond
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -26,40 +24,67 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |cond|
       [
-        link_to(cond.id, condonacione_path(cond)),
+        index_cond(cond),
         cond.nro_fojas.to_s,
-        cond.personas.first.try(:nombre),
-        cond.asunto,
-        cond.observaciones,
-        to_date(cond.updated_at),
+        get_iniciadores(cond),
+        cond.asunto.to_s,
+        cond.observaciones.to_s,
+        "Estado actual",
+        to_date_time(cond.updated_at),
         associated_file(cond)
       ]
     end
   end
 
+  def get_iniciadores cond
+    resp = ""
+    iniciadores_bloques = cond.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
+    iniciadores_bloques.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    end  
+    iniciadores_comisions = cond.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
+    iniciadores_comisions.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    end
+    iniciadores_personas = cond.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_personas.each do |b|
+      resp = resp + b[:type] + ": " + b[:apellido] + ", " + b[:nombre] + ";\n"
+    end
+
+    resp
+  end  
+
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
+  def to_date_time date
+    date.strftime("%d/%m/%Y - %R") unless date.nil?
+  end  
+
   def associated_file cond
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{cond.id}' title='Borrar condonacion'></i>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{cond.id}' title='Editar condonacion'></i>" +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar condonacion'></i></div>"
+    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{cond.id}' title='Borrar condonación'></i>" +
+    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{cond.id}' title='Editar condonación'></i>" +
+    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar condonación'></i></div>"
+  end
+
+  def condonacions
+    fetch_records
   end
 
   def fetch_records
     condonacion = Condonacion.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
       unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]}) OR (expedientes.nro_exp = '#{params[:sSearch]}')"
-        condonacion = condonacion.where(query).joins(:expedientes)
+        query = "(tramites.id = #{params[:sSearch]})"
+        condonacion = condonacion.where(query)
       else
-        query = "(CONCAT(personas.apellido, ' ', personas.nombre) ilike '%#{params[:sSearch]}%') OR (comisions.denominacion ilike '%#{params[:sSearch]}%')"
-        condonacion = condonacion.where(query).joins(:concejals).joins(:comisions)
-      end
+        query = ""
+        condonacion = condonacion.where(query)
+      end  
     end
-    condonacion.includes(:personas)
+    condonacion.includes(:bloques).includes(:comisions).includes(:personas)
   end
 
   def per_page

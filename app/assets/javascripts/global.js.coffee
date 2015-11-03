@@ -90,7 +90,7 @@ $(document).on 'focusout', 'textarea', ->
 $(document).on 'ready page:load', ->
 
   controller = window.location.pathname.split("/")[1]
-  if controller in ['despachos', 'comunicaciones_oficiales', 'proyectos', 'particulars', 'condonaciones']
+  if controller in ['despachos', 'comunicaciones_oficiales', 'proyectos', 'particulars', 'condonacions']
     $(document).find('.sidebar-menu .treeview:first').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')

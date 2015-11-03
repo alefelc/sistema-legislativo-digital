@@ -50,7 +50,9 @@ Rails.application.routes.draw do
     get 'search_exp', on: :collection
   end
 
-  resources :condonaciones
+  resources :condonacions do
+    get 'get_iniciador', on: :collection
+  end
 
   resources :particulars do
     get 'get_iniciador', on: :collection

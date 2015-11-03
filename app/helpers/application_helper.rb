@@ -29,6 +29,10 @@ module ApplicationHelper
     link_to part.id.to_s, particular_path(part)
   end
 
+  def index_cond(cond)
+    link_to cond.id.to_s, condonacion_path(cond)
+  end
+
   def norma_expediente(norma)
     resp = ""
     norma.circuitos.each do |c|
@@ -56,8 +60,8 @@ module ApplicationHelper
     return "Otra Norma #{params[:id]}" if current_page?(controller: :otra_normas, action: :show, id: params[:id].to_i)
     return "Despachos" if current_page?(controller: :despachos, action: :index)
     return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
-    return "Condonaciones" if current_page?(controller: :condonaciones, action: :index)
-    return "Condonacion #{params[:id]}" if current_page?(controller: :condonaciones, action: :show, id: params[:id].to_i)
+    return "Condonaciones" if current_page?(controller: :condonacions, action: :index)
+    return "Condonacion #{params[:id]}" if current_page?(controller: :condonacions, action: :show, id: params[:id].to_i)
     return "Peticiones Particulares" if current_page?(controller: :particulars, action: :index)
     return "Petición Particular #{params[:id]}" if current_page?(controller: :particulars, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
