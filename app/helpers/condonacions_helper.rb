@@ -1,8 +1,9 @@
 module CondonacionsHelper
-  def tipo_iniciador
+  def tipo_iniciador_condonacion
     [
       ["Física", "Fisica"],
-      ["Jurídica", "Juridica"]
+      ["Jurídica", "Juridica"],
+      ["Reparticion Oficial", "ReparticionOficial"]
     ]
   end
 
@@ -16,6 +17,10 @@ module CondonacionsHelper
 
   def get_iniciadores_comisions cond
     cond.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
+  end
+
+  def get_iniciadores_reparticiones cond
+    cond.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
   end
 
   def get_iniciadores_personas cond

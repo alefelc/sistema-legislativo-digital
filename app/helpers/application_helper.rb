@@ -97,10 +97,18 @@ module ApplicationHelper
 
   def prepopulate_iniciadores(tramite)
     iniciadores = []
-    comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : [] 
-    bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
-    personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
-    iniciadores = comisiones + bloques + personas
+    case tramite.type
+    when "Despacho"
+    when "Condonacion"
+      reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
+      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
+      iniciadores = reparticiones + personas
+    when "Peticion"
+    when "Proyecto"
+    when "ComunicacionOficial"
+    else
+    end  
+    iniciadores
   end  
 
   def build_json_iniciadores(pers)
@@ -135,6 +143,12 @@ module ApplicationHelper
   def build_json_comisions_select2(comisions)
     json_array = []
     comisions.each { |x| json_array << { id: x.id, denominacion: x.denominacion , type: "Comision" } }
+    json_array.as_json
+  end
+
+  def build_json_reparticiones_select2(reparticiones)
+    json_array = []
+    reparticiones.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "ReparticionOficial" } }
     json_array.as_json
   end
 

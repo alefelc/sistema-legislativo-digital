@@ -39,8 +39,27 @@ class CondonacionsController < ApplicationController
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
         @condonacion.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
-        @condonacion.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
-        @condonacion.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
+        @condonacion.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
+        ##@condonacion.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
+        ##@condonacion.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
+      end
+    end
+
+    ## add state initial
+    @condonacion.estado_tramites.create do |e|
+      e.nombre = "iniciado"
+      e.tipo = 1
+    end
+
+    ## get params states the POST and save
+    unless params[:states].blank?
+      JSON.parse(params['states']).each do |key, value|
+        @condonacion.estado_tramites.create do |e|
+          e.nombre = "derivado"
+          e.tipo = 2
+          e.ref_id = value["idref"]
+          e.ref_type = value["typeref"]
+        end
       end
     end
 
@@ -55,8 +74,9 @@ class CondonacionsController < ApplicationController
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
       current_iniciadores_personas = []
-      current_iniciadores_bloques = []
-      current_iniciadores_comisions = []
+      current_iniciadores_repartciones = []
+      ##current_iniciadores_bloques = []
+      ##current_iniciadores_comisions = []
       old_iniciadores_personas = @condonacion.personas.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_personas.include?(value["id"])
@@ -65,58 +85,92 @@ class CondonacionsController < ApplicationController
         current_iniciadores_personas << value["id"]
       end
 
-      old_iniciadores_bloques = @condonacion.bloques.map{ |x| x.id }
+      old_iniciadores_reparticiones = @condonacion.reparticion_oficials.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores_bloques.include?(value["id"])
-          @condonacion.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
+        unless old_iniciadores_reparticiones.include?(value["id"])
+          @condonacion.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
         end
-        current_iniciadores_bloques << value["id"]
+        current_iniciadores_repartciones << value["id"]
       end
 
-      old_iniciadores_comisions = @condonacion.comisions.map{ |x| x.id }
-      JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores_comisions.include?(value["id"])
-          @condonacion.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
-        end
-        current_iniciadores_comisions << value["id"]
-      end
+      ##old_iniciadores_bloques = @condonacion.bloques.map{ |x| x.id }
+      ##JSON.parse(params['iniciadores']).each do |key, value|
+      ##  unless old_iniciadores_bloques.include?(value["id"])
+      ##    @condonacion.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
+      ##  end
+      ##  current_iniciadores_bloques << value["id"]
+      ##end
+
+      ##old_iniciadores_comisions = @condonacion.comisions.map{ |x| x.id }
+      ##JSON.parse(params['iniciadores']).each do |key, value|
+      ##  unless old_iniciadores_comisions.include?(value["id"])
+      ##    @condonacion.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
+      ##  end
+      ##  current_iniciadores_comisions << value["id"]
+      ##end
 
       # delete iniciadores
       (old_iniciadores_personas - current_iniciadores_personas).each { |id| @condonacion.personas.delete(id) }
-      (old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @condonacion.bloques.delete(id) }
-      (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @condonacion.comisions.delete(id) }
+      (old_iniciadores_reparticiones - current_iniciadores_repartciones).each { |id| @condonacion.reparticion_oficials.delete(id) }
+      ##(old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @condonacion.bloques.delete(id) }
+      ##(old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @condonacion.comisions.delete(id) }
+    end
+
+    ## update params states the PATCH
+    if params['states'].present?
+      current_states = []
+      old_states = @condonacion.estado_tramites.where(tipo: 2).map{ |x| x.id }
+      JSON.parse(params['states']).each do |key, value|
+        unless old_states.include?(value["id"])
+          @condonacion.estado_tramites.create do |e|
+            e.nombre = "derivado"
+            e.tipo = 2
+            e.ref_id = value["idref"]
+            e.ref_type = value["typeref"]
+          end
+        end
+        current_states << value["id"]
+      end
+      # delete states
+      (old_states - current_states).each { |id| @condonacion.estado_tramites.delete(id) }
     end
 
     redirect_to action: :index
   end
 
   def get_iniciador
-    com = Comision.where("denominacion ilike ?",
-                                   "%#{params[:q]}%").first(7)
-    bloques = Bloque.where("denominacion ilike ?",
+    ##com = Comision.where("denominacion ilike ?",
+    ##                               "%#{params[:q]}%").first(7)
+    ##bloques = Bloque.where("denominacion ilike ?",
+    ##                               "%#{params[:q]}%").first(7)
+    repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
-    com = com.as_json(methods: 'type')
-    bloques = bloques.as_json(methods: 'type')
+    ##com = com.as_json(methods: 'type')
+    ##bloques = bloques.as_json(methods: 'type')
+    repart = repart.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
-    q = com + bloques + per
-    agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
+    q = per + repart ##com + bloques
+    agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "denominacion"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
     iniciadores = q.push(agregar_nuevo);
     render json: iniciadores
   end
 
   def get_derivacion
+    areas = Area.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(10)
     com = Comision.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     bloques = Bloque.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
+    areas = areas.as_json(methods: 'type')
     com = com.as_json(methods: 'type')
     bloques = bloques.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
-    q = com + bloques + per
+    q = areas + com + bloques + per
     render json: q
   end
 

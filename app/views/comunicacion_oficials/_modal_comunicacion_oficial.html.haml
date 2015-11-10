@@ -26,8 +26,6 @@
               .input-group
                 = label_tag nil, 'Derivado a', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'derived-states' }
-                .input-group-addon.parent-group-btn.btn#add-state
-                  %i.fa.fa-plus-circle.fa-1x
               %table.table.table-striped.table-bordered#states-table
                 %thead
                   %tr
@@ -35,6 +33,15 @@
                     %th= "Fecha"
                     %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
                 %tbody
+                  - @comunicacion_oficial.estado_tramites.where(tipo: 2).each do |x|
+                    - if (x.ref_type == 'Concejal' || x.ref_type == 'Fisica' || x.ref_type == 'Juridica')
+                      - text = x.ref.apellido + ", " + x.ref.nombre;
+                    - else
+                      - text = x.ref.denominacion;   
+                    %tr{ class: 'derivacion-tr', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                      %td= "Derivado a " + x.ref_type + ": " + text
+                      %td= to_date(x.created_at)
+                      %td= icon 'fa fa-times fa-1x', nil, class: 'btn btn-xs remove-table-row'
             .col-md-6
               #second-column
                 .input-group
@@ -100,11 +107,11 @@
   function format_result_iniciadores(style) {
     var originalOption = $(style.element);
     if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
-      return "<div>" + style.type + " " + style.apellido + ', ' + style.nombre + "</div>";
+      return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
     }else{
       //caso de comisiones y bloques
       if (style.type == "Comision" || style.type == "Bloque"){
-        return "<div>" + style.type + " " + style.denominacion + "</div>";
+        return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
       }else{
         //caso de cualquier otro type
         return "<div>" + style.apellido + "</div>";
@@ -327,6 +334,20 @@
       index++;
     });
 
+    //add derived states to form
+    var states = {};
+    var index = 0;
+    $("#comunicacion-oficial .derivacion-tr").each(function(key, value) {
+      states[index] = {
+        id: $(value).data("id"),
+        tipo: $(value).data("tipo"),
+        idref: $(value).data("idref"),
+        typeref: $(value).data("typeref"),
+      };
+      index++;
+    });
+
+    $("#comunicacion-oficial #states").val(JSON.stringify(states));
     $("#comunicacion-oficial #iniciadores").val(JSON.stringify(iniciadores));
     $("#comunicacion-oficial #new_comunicacion_oficial, [id^='edit_comunicacion_oficial']").submit();
   });
@@ -384,7 +405,7 @@
       return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
     }else{
       //Casos para comisiones y bloques, etc
-      if (style.type == "Comision" || style.type == "Bloque"){
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
         iniciador = style.denominacion;
         return "<div class='derivacion-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
       }else{
@@ -396,11 +417,11 @@
   function format_derivaciones_result(style) {
     var originalOption = $(style.element);
     if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
-      return "<div>" + style.type + " " + style.apellido + ', ' + style.nombre + "</div>";
+      return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
     }else{
       //caso de comisiones y bloques
-      if (style.type == "Comision" || style.type == "Bloque"){
-        return "<div>" + style.type + " " + style.denominacion + "</div>";
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
+        return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
       }else{
         //caso de cualquier otro type
         return "<div>" + style.apellido + "</div>";
@@ -434,23 +455,24 @@
       },
       cache: true
     }
-  });
+  }).on("select2-selecting", function(e) {
+    // token selected
+    var data = e.object;
+    
+    var idref = data.id;
+    var typeref = data.type;
+    var text;
+    
+    if (data.type == 'Concejal' || data.type == 'Fisica' || data.type == 'Juridica')
+      text = data.apellido + ", " + data.nombre;
+    else
+      text = data.denominacion;
 
-  $('#comunicacion-oficial #add-state').on('click', function(){
-    $('#comunicacion-oficial .derivacion-token').each(function(key, value){
-      var id = $(value).data('id');
-      var type = $(value).data('type');
-      var text;
-      if ($(value).type == 'Concejal' || $(value).type == 'Fisica' || $(value).type == 'Juridica')
-        text = $(value).apellido + ", " + $(value).nombre;
-      else
-        text = $(value).text();
-
-      var tr = "<tr class='derivacion-tr' data-id='" + id + "' data-type='" + type + "'>" +
-        "<td> Derivado a " + type + ": " + text + "</td>" +
-        "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
-      $('#states-table tbody').append(tr);
-    });
-
+    var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
+      "<td> Derivado a " + typeref + ": " + text + "</td>" +
+      "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+    
+    $('#comunicacion-oficial #states-table tbody').append(tr);
+  }).on("change", function(e) {
     $('#comunicacion-oficial #derived-states').select2("val", "");
   });

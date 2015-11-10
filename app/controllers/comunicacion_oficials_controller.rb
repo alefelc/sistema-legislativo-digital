@@ -44,6 +44,24 @@ class ComunicacionOficialsController < ApplicationController
       end
     end
 
+    ## add state initial
+    @comunicacion_oficial.estado_tramites.create do |e|
+      e.nombre = "iniciado"
+      e.tipo = 1
+    end
+
+    ## get params states the POST and save
+    unless params[:states].blank?
+      JSON.parse(params['states']).each do |key, value|
+        @comunicacion_oficial.estado_tramites.create do |e|
+          e.nombre = "derivado"
+          e.tipo = 2
+          e.ref_id = value["idref"]
+          e.ref_type = value["typeref"]
+        end
+      end
+    end
+
     redirect_to action: :index
   end
 
@@ -87,6 +105,25 @@ class ComunicacionOficialsController < ApplicationController
       (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @comunicacion_oficial.comisions.delete(id) }
     end
 
+    ## update params states the PATCH
+    if params['states'].present?
+      current_states = []
+      old_states = @comunicacion_oficial.estado_tramites.where(tipo: 2).map{ |x| x.id }
+      JSON.parse(params['states']).each do |key, value|
+        unless old_states.include?(value["id"])
+          @comunicacion_oficial.estado_tramites.create do |e|
+            e.nombre = "derivado"
+            e.tipo = 2
+            e.ref_id = value["idref"]
+            e.ref_type = value["typeref"]
+          end
+        end
+        current_states << value["id"]
+      end
+      # delete states
+      (old_states - current_states).each { |id| @comunicacion_oficial.estado_tramites.delete(id) }
+    end
+
     redirect_to action: :index
   end
 
@@ -107,6 +144,8 @@ class ComunicacionOficialsController < ApplicationController
   end
 
   def get_derivacion
+    areas = Area.where("denominacion ilike ?",
+                                   "%#{params[:q]}%").first(10)
     com = Comision.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     bloques = Bloque.where("denominacion ilike ?",
@@ -114,9 +153,10 @@ class ComunicacionOficialsController < ApplicationController
     per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
     com = com.as_json(methods: 'type')
+    areas = areas.as_json(methods: 'type')
     bloques = bloques.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
-    q = com + bloques + per
+    q = areas + com + bloques + per
     render json: q
   end
 
