@@ -60,7 +60,7 @@ $(document).on 'ready page:load', ->
         if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
-          if(ini.type == "Comision" || ini.type == "Bloque")
+          if(ini.type == "ReparticionOficial" || ini.type == "Comision" || ini.type == "Bloque")
             iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
           else
             ## otro caso
@@ -68,14 +68,6 @@ $(document).on 'ready page:load', ->
       $('#condonacion #condonacion_iniciadores').select2('data', iniciadores)
 
       return
-
-  $(document).on 'focus', 'textarea', ->
-    $(this).elastic();
-    return
-
-  $(document).on 'focusout', 'textarea', ->
-    $(this).animate({ height: "#{40}" }, 200);
-    return
 
   ## hotkey create condonacion
   $.ctrl 'C', ->

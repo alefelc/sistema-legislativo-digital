@@ -4,6 +4,11 @@ class Tramite < ActiveRecord::Base
 	has_and_belongs_to_many :personas
 	has_and_belongs_to_many :bloques
 	has_and_belongs_to_many :comisions
+  has_and_belongs_to_many :organo_de_gobiernos
+  has_and_belongs_to_many :dependencia_municipals, join_table: 'dependencias_tramites'
+  has_and_belongs_to_many :reparticion_oficials
+  has_and_belongs_to_many :areas
+  
   has_many :estado_tramites
   has_one :circuito
 

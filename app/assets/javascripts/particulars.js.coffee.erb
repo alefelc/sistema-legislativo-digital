@@ -69,14 +69,6 @@ $(document).on 'ready page:load', ->
 
       return
 
-  $(document).on 'focus', 'textarea', ->
-    $(this).elastic();
-    return
-
-  $(document).on 'focusout', 'textarea', ->
-    $(this).animate({ height: "#{40}" }, 200);
-    return
-
   ## hotkey create particular
   $.ctrl 'C', ->
     $('#particular #btn-new').click()

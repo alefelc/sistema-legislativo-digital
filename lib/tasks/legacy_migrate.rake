@@ -27,6 +27,8 @@ namespace :legacy_migrate do
                tags
                expedientes_tags
                normas_tags
+               areas
+               gobierno
                data_refactoring
              ]
 
@@ -773,6 +775,28 @@ namespace :legacy_migrate do
       end
     end
     puts "\nFinalizada carga tags a normas\n"
+  end
+
+  desc "Carga de areas"
+  task areas: :environment do
+    Area.create denominacion: "PRESIDENCIA", codigo: "PRES"
+    Area.create denominacion: "SECRETARIA", codigo: "SEC"
+    Area.create denominacion: "DIRECCION GRAL LEGISLATIVA", codigo: "LEG"
+    Area.create denominacion: "DIRECCION GRAL ADMINISTRATIVA", codigo: "ADM"
+    Area.create denominacion: "DIRECCION GENERAL DE COMISIONES Y RECURSOS HUMANOS", codigo: "RRHH"
+    Area.create denominacion: "DIRECCION GRAL DE INFORMATICA", codigo: "INF"
+    Area.create denominacion: "CONTABILIDAD", codigo: "CONT"
+    Area.create denominacion: "MESA DE ENTRADAS", codigo: "MESA"
+    Area.create denominacion: "ARCHIVO", codigo: "ARCH"
+    Area.create denominacion: "PRENSA", codigo: "PREN"
+    puts "\nFinalizada carga areas\n"
+  end
+
+  desc "Carga de organos de gobierno"
+  task gobierno: :environment do
+    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL (DEM)", codigo: "DEM"
+    OrganoDeGobierno.create denominacion: "CONCEJO DELIBERANTE RIO CUARTO", codigo: "CONC"
+    puts "\nFinalizada carga organos de gobierno\n"
   end
 
   ### QUEDAN PENDIENTES!!!

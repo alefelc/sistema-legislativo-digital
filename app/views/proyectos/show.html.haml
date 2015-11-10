@@ -44,3 +44,31 @@
       %p.single-tab
         %span= "Observaciones: "
         %span= obs
+    %p.single-tab
+      .single-tab.titles= "Estados del trámite: "
+      .single-tab  
+        %table.table.table-striped.table-bordered#states-table-show
+          %thead
+            %tr
+              %th{style: "text-align:center;"}= "Estado"
+              %th= "Fecha"
+          %tbody
+            - pro.estado_tramites.each do |x|
+              - case x.tipo
+              - when "1"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  %td= "Iniciado"
+                  %td= to_date_time(x.created_at)  
+              - when "2"
+                - if (x.ref_type == 'Concejal' || x.ref_type == 'Fisica' || x.ref_type == 'Juridica')
+                  - text = x.ref.apellido + ", " + x.ref.nombre;
+                - else
+                  - text = x.ref.denominacion;   
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                  %td= "Derivado a " + x.ref_type + ": " + text
+                  %td= to_date_time(x.created_at)
+              - when "3"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  %td= "Concluido en... " 
+                  %td= to_date_time(x.created_at)
+              - else    
