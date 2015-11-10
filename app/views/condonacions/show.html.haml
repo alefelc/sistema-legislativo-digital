@@ -26,11 +26,11 @@
         .single-tab.titles= "Iniciadores: "
         .double-tab.titles= "Personas: "
         - iniciadores_personas.each do |b|
-          .double-tab= b[:type] + ": " + b[:apellido] + ", " + b[:nombre]
+          .double-tab= b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s
         - if iniciadores_reparticiones.present?
           .double-tab.titles= "Reparticiones Oficiales: "
           - iniciadores_reparticiones.each do |r|
-            .double-tab= r[:denominacion]  
+            .double-tab= r[:denominacion].to_s  
     - actualizado = cond.get_date_time
       - if actualizado.present?
       %p.single-tab
