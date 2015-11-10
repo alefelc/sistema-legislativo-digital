@@ -1,5 +1,5 @@
 module ParticularsHelper
-  def tipo_iniciador
+  def tipo_iniciador_particular
     [
       ["Física", "Fisica"],
       ["Jurídica", "Juridica"]

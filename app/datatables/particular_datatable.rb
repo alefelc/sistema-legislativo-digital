@@ -38,17 +38,17 @@ class ParticularDatatable < AjaxDatatablesRails::Base
 
   def get_iniciadores part
     resp = ""
-    iniciadores_bloques = part.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
-    iniciadores_bloques.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    end  
-    iniciadores_comisions = part.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
-    iniciadores_comisions.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    end
+    ##iniciadores_bloques = part.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
+    ##iniciadores_bloques.each do |b|
+    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    ##end  
+    ##iniciadores_comisions = part.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
+    ##iniciadores_comisions.each do |b|
+    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+    ##end
     iniciadores_personas = part.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
     iniciadores_personas.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido] + ", " + b[:nombre] + ";\n"
+      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
 
     resp
