@@ -104,6 +104,8 @@ module ApplicationHelper
       personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
       iniciadores = reparticiones + personas
     when "Peticion"
+      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
+      iniciadores = personas
     when "Proyecto"
     when "ComunicacionOficial"
     else
