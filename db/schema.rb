@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014113837) do
+ActiveRecord::Schema.define(version: 20151106124622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,21 @@ ActiveRecord::Schema.define(version: 20151014113837) do
 
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "denominacion"
+    t.string   "codigo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "areas_tramites", id: false, force: :cascade do |t|
+    t.integer "area_id"
+    t.integer "tramite_id"
+  end
+
+  add_index "areas_tramites", ["area_id"], name: "index_areas_tramites_on_area_id", using: :btree
+  add_index "areas_tramites", ["tramite_id"], name: "index_areas_tramites_on_tramite_id", using: :btree
 
   create_table "bloque_periodos", id: false, force: :cascade do |t|
     t.integer  "bloque_id"
@@ -191,6 +206,14 @@ ActiveRecord::Schema.define(version: 20151014113837) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "dependencias_tramites", id: false, force: :cascade do |t|
+    t.integer "dependencia_municipal_id"
+    t.integer "tramite_id"
+  end
+
+  add_index "dependencias_tramites", ["dependencia_municipal_id"], name: "index_dependencias_tramites_on_dependencia_municipal_id", using: :btree
+  add_index "dependencias_tramites", ["tramite_id"], name: "index_dependencias_tramites_on_tramite_id", using: :btree
 
   create_table "despachos_concejals", id: false, force: :cascade do |t|
     t.integer "despacho_id"
@@ -391,6 +414,21 @@ ActiveRecord::Schema.define(version: 20151014113837) do
   add_index "orden_del_dia_seccions", ["orden_del_dia_id"], name: "index_orden_del_dia_seccions_on_orden_del_dia_id", using: :btree
   add_index "orden_del_dia_seccions", ["seccion_id"], name: "index_orden_del_dia_seccions_on_seccion_id", using: :btree
 
+  create_table "organo_de_gobiernos", force: :cascade do |t|
+    t.string   "denominacion"
+    t.string   "codigo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "organo_de_gobiernos_tramites", id: false, force: :cascade do |t|
+    t.integer "organo_de_gobierno_id"
+    t.integer "tramite_id"
+  end
+
+  add_index "organo_de_gobiernos_tramites", ["organo_de_gobierno_id"], name: "index_organo_de_gobiernos_tramites_on_organo_de_gobierno_id", using: :btree
+  add_index "organo_de_gobiernos_tramites", ["tramite_id"], name: "index_organo_de_gobiernos_tramites_on_tramite_id", using: :btree
+
   create_table "otra_publicacions", force: :cascade do |t|
     t.string   "nombre"
     t.text     "observacion"
@@ -455,6 +493,14 @@ ActiveRecord::Schema.define(version: 20151014113837) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "reparticion_oficials_tramites", id: false, force: :cascade do |t|
+    t.integer "reparticion_oficial_id"
+    t.integer "tramite_id"
+  end
+
+  add_index "reparticion_oficials_tramites", ["reparticion_oficial_id"], name: "index_reparticion_oficials_tramites_on_reparticion_oficial_id", using: :btree
+  add_index "reparticion_oficials_tramites", ["tramite_id"], name: "index_reparticion_oficials_tramites_on_tramite_id", using: :btree
 
   create_table "rols", force: :cascade do |t|
     t.string   "tipo"
