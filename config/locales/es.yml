@@ -542,6 +542,8 @@ es:
       email: Ingrese Email.
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
+      denominacion: Ingrese denominación.
+      codigo: Ingrese Código.
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
