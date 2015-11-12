@@ -21,7 +21,7 @@ $(document).on 'ready page:load', ->
 
   $(document).on 'click', '#comunicacion-oficial .remove-tr', ->
     id = $(this).data 'remove'
-    if confirm('Desea eliminar la Comunicación Oficial')
+    if confirm('Desea eliminar el Proyecto')
       $.ajax
         url: "/comunicacion_oficials/#{id}"
         type: 'DELETE'
@@ -57,10 +57,10 @@ $(document).on 'ready page:load', ->
       tokenData = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').data 'load'
       iniciadores = [];
       $.each tokenData, (index, ini) ->
-        if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
+        if(ini.type == "Concejal")
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
-          if(ini.type == "Comision" || ini.type == "Bloque")
+          if(ini.type == "ReparticionOficial" || ini.type == "DependenciaMunicipal" || ini.type == "OrganoDeGobierno" || ini.type == "Area" || ini.type == "Comision" || ini.type == "Bloque")
             iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
           else
             ## otro caso
@@ -69,17 +69,17 @@ $(document).on 'ready page:load', ->
 
       return
 
-  ## hotkey create comunicacion oficial
+  ## hotkey create comunicacion-oficial
   $.ctrl 'C', ->
     $('#comunicacion-oficial #btn-new').click()
     return
 
-  ## hotkey edit comunicacion oficial
+  ## hotkey edit comunicacion-oficial
   $.ctrl 'E', ->
     $('#comunicacion-oficial table tbody').find('.info').find('.linktoedit').click()
     return
 
-  ## hotkey delete comunicacion oficial
+  ## hotkey delete comunicacion-oficial
   $.ctrl 'D', ->
     $('#comunicacion-oficial table tbody').find('.info').find('.remove-tr').click()
     return

@@ -38,17 +38,33 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
 
   def get_iniciadores com
     resp = ""
+    iniciadores_organos = com.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion } }
+    iniciadores_organos.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
+    end
+    iniciadores_areas = com.areas.map{ |x| {type: "Area", denominacion: x.denominacion } }
+    iniciadores_areas.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
+    end
     iniciadores_bloques = com.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
     iniciadores_bloques.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end  
     iniciadores_comisions = com.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
     iniciadores_comisions.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end
     iniciadores_personas = com.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
     iniciadores_personas.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido] + ", " + b[:nombre] + ";\n"
+      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
+    end
+    iniciadores_reparticiones = com.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
+    iniciadores_reparticiones.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
+    end
+    iniciadores_dependencias = com.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
+    iniciadores_dependencias.each do |b|
+      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end
 
     resp
