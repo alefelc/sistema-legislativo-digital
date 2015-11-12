@@ -334,29 +334,6 @@ es:
       working_day: Dia hábil
       calendar_day: Dia corrido
 
-  comunicaciones_oficiales:
-    show:
-      info: Información de la comunicación oficial
-    index:
-      btnheader:
-        new: Nuevo
-      table:
-        nro: Nro
-        particular: Particular
-        asunto: Asunto
-        fojas: Nro. fojas
-        fecha: Fecha
-        observaciones: Observaciones
-        updated_at: Actualizado el
-    modal_comunicacion_oficial:
-      title:
-        create_comunicacion: Creando comunicación oficial
-      observations: Observaciones
-      new_comunicacion: Creando comunicación oficial
-      fojas: Ingrese el número de fojas
-      solicitud: Solicitud
-      solicitud_placeholder: Ingrese solicitud
-
   despachos:
     show:
       info: Información del Despacho
@@ -438,7 +415,6 @@ es:
       observations: Observaciones
       asunto: Ingrese asunto
       asunto_label: Asunto
-
       create: Creando Comunicación Oficial
       update: Editando Comunicación Oficial
       fojas: Ingrese el número de fojas.
@@ -449,6 +425,7 @@ es:
       email: Ingrese Email.
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
+      denominacion: Ingrese denominación.
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
