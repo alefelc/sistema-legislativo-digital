@@ -98,7 +98,6 @@ module ApplicationHelper
   def prepopulate_iniciadores(tramite)
     iniciadores = []
     case tramite.type
-    when "Despacho"
     when "Condonacion"
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
       personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
@@ -107,6 +106,14 @@ module ApplicationHelper
       personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
       iniciadores = personas
     when "Proyecto"
+      bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
+      comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : []
+      areas = tramite.areas.present? ? build_json_areas_select2(tramite.areas) : []
+      org_gobiernos = tramite.organo_de_gobiernos.present? ? build_json_organo_de_gobiernos_select2(tramite.organo_de_gobiernos) : []
+      reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
+      dependencias = tramite.dependencia_municipals.present? ? build_json_dependencias_select2(tramite.dependencia_municipals) : []
+      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
+      iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + personas
     when "ComunicacionOficial"
     else
     end  
@@ -151,6 +158,24 @@ module ApplicationHelper
   def build_json_reparticiones_select2(reparticiones)
     json_array = []
     reparticiones.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "ReparticionOficial" } }
+    json_array.as_json
+  end
+
+  def build_json_dependencias_select2(dependencias)
+    json_array = []
+    dependencias.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "DependenciaMunicipal" } }
+    json_array.as_json
+  end
+
+  def build_json_areas_select2(areas)
+    json_array = []
+    areas.each { |x| json_array << { id: x.id, denominacion: x.denominacion, codigo: x.codigo , type: "Area" } }
+    json_array.as_json
+  end
+
+  def build_json_organo_de_gobiernos_select2(organos)
+    json_array = []
+    organos.each { |x| json_array << { id: x.id, denominacion: x.denominacion, codigo: x.codigo, type: "OrganoDeGobierno" } }
     json_array.as_json
   end
 
