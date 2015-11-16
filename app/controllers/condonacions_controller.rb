@@ -146,7 +146,7 @@ class CondonacionsController < ApplicationController
     repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
-                                   "%#{params[:q]}%").order(apellido: :asc).first(7)
+                                   "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     ##com = com.as_json(methods: 'type')
     ##bloques = bloques.as_json(methods: 'type')
     repart = repart.as_json(methods: 'type')

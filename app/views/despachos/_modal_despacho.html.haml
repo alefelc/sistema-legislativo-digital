@@ -130,6 +130,10 @@
     $("#despacho #new_despacho, [id^='edit_despacho']").submit();
   });
 
+  $('#modaldesp').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
+  });
+
   $('#modaldesp').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
