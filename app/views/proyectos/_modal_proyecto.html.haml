@@ -50,8 +50,8 @@
                     = label_tag nil, "Tipo", { class: "input-group-addon", id: "basic-addon01"}
                     #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador_proyecto), { class: "form-control", "aria-describedby": "basic-addon01"}
                   .input-group
-                    = label_tag nil, "Nombre", { class: "input-group-addon", id: "basic-addon1"}
-                    = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.nombre'), type: :text }
+                    = label_tag nil, "Nombre", { class: "input-group-addon", id: "nombre-label"}
+                    = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "nombre-label", :placeholder => t('.nombre'), type: :text }
                   .input-group
                     = label_tag nil, "Apellido", { class: "input-group-addon", id: "basic-addon2"}
                     = text_field_tag 'iniciador[apellido]', nil ,{ class: "form-control", "aria-describedby": "basic-addon2", :placeholder => t('.apellido'), type: :text }
@@ -70,7 +70,7 @@
                   .input-group
                     = label_tag nil, "CUIT/CUIL", { class: "input-group-addon", id: "basic-addon7"}
                     = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
-                  .input-group
+                  .input-group#denominacion-group
                     = label_tag nil, "Denominación", { class: "input-group-addon", id: "basic-addon8"}
                     = text_field_tag 'iniciador[denominacion]', nil ,{ class: "form-control", "aria-describedby": "basic-addon8", :placeholder => t('.denominacion'), type: :text }  
                 .parent-group-btn.btn.btn-xs#add_iniciador
@@ -153,6 +153,8 @@
       },
       cache: true
     }
+  }).on("select2-focus", function(e) {
+      $('#btn_add_iniciador').removeAttr("disabled");
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
@@ -169,11 +171,12 @@
       $("#proyecto_iniciadores").select2("close");
       $('#proyecto #iniciador_nombre').focus();
     }else{
-      if(data.type == 'Fisica' || data.type == 'Juridica'){
+      if(data.type == 'Fisica'){
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','block');
         $('#proyecto #add_iniciador').css('display','none');
         $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#proyecto #nombre-label').text('Nombre');
         $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
         $('#proyecto #iniciador_apellido').val(data.apellido).removeAttr('disabled');
         $('#proyecto #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
@@ -182,12 +185,28 @@
         $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
         $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
         $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      }else if (data.type == 'Juridica'){
+        $('#proyecto #edit_iniciador').data('id',data.id);
+        $('#proyecto #edit_iniciador').css('display','block');
+        $('#proyecto #add_iniciador').css('display','none');
+        $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#proyecto #nombre-label').text('Denominación');
+        $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+        $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
+        $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
+        $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
+        $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
+        $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+        $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+        $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+        $('#proyecto #denominacion-group').css('display','none');
       }else{
         if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
           $('#proyecto #edit_iniciador').data('id',data.id);
           $('#proyecto #edit_iniciador').css('display','none');
           $('#proyecto #add_iniciador').css('display','none');
           $('#proyecto #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+          $('#proyecto #nombre-label').text('Nombre');
           $('#proyecto #iniciador_nombre').val('').attr('disabled', 'disabled');
           $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
           $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
@@ -195,11 +214,13 @@
           $('#proyecto #iniciador_email').val('').attr('disabled', 'disabled');
           $('#proyecto #iniciador_domicilio').val('').attr('disabled', 'disabled');
           $('#proyecto #iniciador_cuit').val('').attr('disabled', 'disabled');
+          $('#proyecto #denominacion-group').css('display','inherit');
           $('#proyecto #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
         }else{
           $('#proyecto #edit_iniciador').css('display','none');
           $('#proyecto #add_iniciador').css('display','none');
           $('#proyecto #iniciador_tipo').val('').attr('disabled','disabled');
+          $('#proyecto #nombre-label').text('Nombre');
           $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
           $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
           $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
@@ -207,6 +228,7 @@
           $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
           $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
           $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+          $('#proyecto #denominacion-group').css('display','inherit');
           $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
         }  
       }
@@ -217,9 +239,10 @@
   $('#proyecto #iniciador_tipo').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
-    if(valueSelected == "Fisica" || valueSelected == "Juridica"){
+    if(valueSelected == "Fisica"){
       $('#proyecto #edit_iniciador').css('display','none');
       $('#proyecto #add_iniciador').css('display','block');
+      $('#proyecto #nombre-label').text('Nombre');
       $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
       $('#proyecto #iniciador_apellido').val('').removeAttr('disabled');
       $('#proyecto #iniciador_doc').val('').removeAttr('disabled');
@@ -228,10 +251,24 @@
       $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
       $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
       $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+    }else if (valueSelected == "Juridica"){
+      $('#proyecto #edit_iniciador').css('display','none');
+      $('#proyecto #add_iniciador').css('display','block');
+      $('#proyecto #nombre-label').text('Denominación');
+      $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
+      $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
+      $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
+      $('#proyecto #iniciador_tel').val('').removeAttr('disabled');
+      $('#proyecto #iniciador_email').val('').removeAttr('disabled');
+      $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
+      $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
+      $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#proyecto #denominacion-group').css('display','none');
     }else{
-      if(valueSelected == "ReparticionOficial"){
+      if(valueSelected == "ReparticionOficial" || valueSelected == "DependenciaMunicipal"){
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','block');
+        $('#proyecto #nombre-label').text('Nombre');
         $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
@@ -239,6 +276,7 @@
         $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#proyecto #denominacion-group').css('display','inherit');
         $('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
       }      
     } 
@@ -247,11 +285,12 @@
   $('#proyecto_iniciadores').on('choice-selected', function(e, choice) {
     // token selected
     var data = $(choice).data('select2-data');
-    if(data.type == 'Fisica' || data.type == 'Juridica'){
+    if(data.type == 'Fisica'){
       $('#proyecto #edit_iniciador').data('id',data.id);
       $('#proyecto #edit_iniciador').css('display','block');
       $('#proyecto #add_iniciador').css('display','none');
       $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#proyecto #nombre-label').text('Nombre');
       $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
       $('#proyecto #iniciador_apellido').val(data.apellido).removeAttr('disabled');
       $('#proyecto #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
@@ -260,12 +299,28 @@
       $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
       $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
       $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+    }else if (data.type == 'Juridica'){
+      $('#proyecto #edit_iniciador').data('id',data.id);
+      $('#proyecto #edit_iniciador').css('display','block');
+      $('#proyecto #add_iniciador').css('display','none');
+      $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#proyecto #nombre-label').text('Denominación');
+      $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+      $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
+      $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
+      $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
+      $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
+      $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+      $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+      $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      $('#proyecto #denominacion-group').css('display','none');
     }else{
       if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','none');
         $('#proyecto #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+        $('#proyecto #nombre-label').text('Nombre');
         $('#proyecto #iniciador_nombre').val('').attr('disabled', 'disabled');
         $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
         $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
@@ -273,11 +328,13 @@
         $('#proyecto #iniciador_email').val('').attr('disabled', 'disabled');
         $('#proyecto #iniciador_domicilio').val('').attr('disabled', 'disabled');
         $('#proyecto #iniciador_cuit').val('').attr('disabled', 'disabled');
+        $('#proyecto #denominacion-group').css('display','inherit');
         $('#proyecto #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
       }else{
         $('#proyecto #add_iniciador').css('display','none');
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #iniciador_tipo').val('').attr('disabled','disabled');
+        $('#proyecto #nombre-label').text('Nombre');
         $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
@@ -285,6 +342,7 @@
         $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
         $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#proyecto #denominacion-group').css('display','inherit');
         $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
       }
     }
@@ -295,6 +353,7 @@
     $('#proyecto #edit_iniciador').css('display','none');
     $('#proyecto #add_iniciador').css('display','block');
     $('#proyecto #iniciador_tipo').val('Fisica').removeAttr('disabled');
+    $('#proyecto #nombre-label').text('Nombre');
     $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
     $('#proyecto #iniciador_apellido').val('').removeAttr('disabled');
     $('#proyecto #iniciador_doc').val('').removeAttr('disabled');
@@ -302,7 +361,8 @@
     $('#proyecto #iniciador_email').val('').removeAttr('disabled');
     $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
     $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
+    $('#proyecto #denominacion-group').css('display','none');
+    //$('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
   });
 
   $('#proyecto_nro_fojas, #proyecto_asunto, #proyecto_observaciones').on("focus", function(e) {
@@ -317,6 +377,7 @@
     $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
     $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
     $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+    $('#btn_add_iniciador').attr('disabled', 'disabled');
   });
 
   $('#proyecto #edit_iniciador').on('click', function(event) {
@@ -378,6 +439,11 @@
         if (tipo == "ReparticionOficial"){
           url_iniciador = "/reparticion_oficials"
           iniciador = {reparticion: { denominacion: $('#proyecto #iniciador_denominacion').val()}}
+        }else{
+          if (tipo == "DependenciaMunicipal"){
+            url_iniciador = "/dependencia_municipals"
+            iniciador = {dependencia: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
+          }
         }
       }            
       $.ajax({
@@ -391,7 +457,7 @@
           if (iniciador.type == "Fisica" || iniciador.type == "Juridica"){
             ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
           }else{
-            if (iniciador.type == "ReparticionOficial"){
+            if (iniciador.type == "ReparticionOficial" || iniciador.type == "DependenciaMunicipal"){
               ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
             }
           }
@@ -445,6 +511,10 @@
     $("#proyecto #states").val(JSON.stringify(states));
     $("#proyecto #iniciadores").val(JSON.stringify(iniciadores));
     $("#proyecto #new_proyecto, [id^='edit_proyecto']").submit();
+  });
+
+  $('#modalpro').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
   });
 
   $('#modalpro').on('hidden.bs.modal', function () {

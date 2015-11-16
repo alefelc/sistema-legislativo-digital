@@ -65,6 +65,8 @@ Rails.application.routes.draw do
 
   resources :reparticion_oficials
 
+  resources :dependencia_municipals
+
   resources :proyectos do
     get 'get_iniciador', on: :collection
     get 'get_derivacion', on: :collection

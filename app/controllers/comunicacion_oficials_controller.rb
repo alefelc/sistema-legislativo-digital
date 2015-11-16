@@ -176,24 +176,27 @@ class ComunicacionOficialsController < ApplicationController
                                    "%#{params[:q]}%").first(2)
     areas = Area.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    com = Comision.where("denominacion ilike ?",
+    com = Periodo.last.comisions.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    bloques = Bloque.where("denominacion ilike ?",
+    bloques = Periodo.last.bloques.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     depend = DependenciaMunicipal.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    per = Concejal.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    conc = Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
+    ##per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    ##                               "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     organos = organos.as_json(methods: 'type')
     areas = areas.as_json(methods: 'type')
     com = com.as_json(methods: 'type')
     bloques = bloques.as_json(methods: 'type')
     repart = repart.as_json(methods: 'type')
     depend = depend.as_json(methods: 'type')
-    per = per.as_json(methods: 'type' )
-    q = organos + areas + bloques + com + repart + depend + per
+    conc = conc.as_json(methods: 'type' )
+    ##per = per.as_json(methods: 'type' )
+    q = organos + areas + bloques + com + repart + depend + conc ##+ per
     agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
     iniciadores = q.push(agregar_nuevo);
     render json: iniciadores

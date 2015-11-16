@@ -3,7 +3,8 @@ module ProyectosHelper
     [
       ["Física", "Fisica"],
       ["Jurídica", "Juridica"],
-      ["Reparticion Oficial", "ReparticionOficial"]
+      ["Reparticion Oficial", "ReparticionOficial"],
+      ["Dependencia Municipal", "DependenciaMunicipal"]
     ]
   end
 

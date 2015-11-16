@@ -1,7 +1,8 @@
 module ComunicacionOficialsHelper
   def tipo_iniciador_comunicacion
     [
-      ["Reparticion Oficial", "ReparticionOficial"]
+      ["Reparticion Oficial", "ReparticionOficial"],
+      ["Dependencia Municipal", "DependenciaMunicipal"]
     ]
   end
 

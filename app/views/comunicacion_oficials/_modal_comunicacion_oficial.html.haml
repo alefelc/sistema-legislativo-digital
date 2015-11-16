@@ -74,11 +74,11 @@
                     = label_tag nil, "Denominación", { class: "input-group-addon", id: "basic-addon8"}
                     = text_field_tag 'iniciador[denominacion]', nil ,{ class: "form-control", "aria-describedby": "basic-addon8", :placeholder => t('.denominacion'), type: :text }    
                 .parent-group-btn.btn.btn-xs#add_iniciador
-                  %button.btn.parent-group-btn#btn_add_iniciador
+                  %button.btn.btn-default.parent-group-btn#btn_add_iniciador
                     %span
                       %i.fa.fa-check-circle.fa-1x= " Guardar Iniciador"
                 .parent-group-btn.btn.btn-xs#edit_iniciador
-                  %button.btn.parent-group-btn#btn_edit_iniciador
+                  %button.btn.btn-default.parent-group-btn#btn_edit_iniciador
                     %span
                       %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
         .modal-footer
@@ -153,6 +153,8 @@
       },
       cache: true
     }
+  }).on("select2-focus", function(e) {
+      $('#btn_add_iniciador').removeAttr("disabled");
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
@@ -229,7 +231,7 @@
       $('#comunicacion-oficial #iniciador_cuit').val('').removeAttr('disabled');
       $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
     }else{
-      if(valueSelected == "ReparticionOficial"){
+      if(valueSelected == "ReparticionOficial" || valueSelected == "DependenciaMunicipal"){
         $('#comunicacion-oficial #edit_iniciador').css('display','none');
         $('#comunicacion-oficial #add_iniciador').css('display','block');
         $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
@@ -317,6 +319,7 @@
     $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
     $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
     $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+    $('#btn_add_iniciador').attr('disabled', 'disabled');
   });
 
   $('#comunicacion-oficial #edit_iniciador').on('click', function(event) {
@@ -378,6 +381,11 @@
         if (tipo == "ReparticionOficial"){
           url_iniciador = "/reparticion_oficials"
           iniciador = {reparticion: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
+        }else{
+          if (tipo == "DependenciaMunicipal"){
+            url_iniciador = "/dependencia_municipals"
+            iniciador = {dependencia: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
+          }
         }
       }            
       $.ajax({
@@ -391,7 +399,7 @@
           if (iniciador.type == "Fisica" || iniciador.type == "Juridica"){
             ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
           }else{
-            if (iniciador.type == "ReparticionOficial"){
+            if (iniciador.type == "ReparticionOficial" || iniciador.type == "DependenciaMunicipal"){
               ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
             }
           }
@@ -445,6 +453,10 @@
     $("#comunicacion-oficial #states").val(JSON.stringify(states));
     $("#comunicacion-oficial #iniciadores").val(JSON.stringify(iniciadores));
     $("#comunicacion-oficial #new_comunicacion_oficial, [id^='edit_comunicacion_oficial']").submit();
+  });
+
+  $('#modalcom').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
   });
 
   $('#modalcom').on('hidden.bs.modal', function () {

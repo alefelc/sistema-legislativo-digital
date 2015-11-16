@@ -49,8 +49,8 @@
                   = label_tag nil, "Tipo", { class: "input-group-addon", id: "basic-addon01"}
                   #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador_particular), { class: "form-control", "aria-describedby": "basic-addon01"}
                 .input-group
-                  = label_tag nil, "Nombre", { class: "input-group-addon", id: "basic-addon1"}
-                  = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.nombre'), type: :text }
+                  = label_tag nil, "Nombre", { class: "input-group-addon", id: "nombre-label"}
+                  = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "nombre-label", :placeholder => t('.nombre'), type: :text }
                 .input-group
                   = label_tag nil, "Apellido", { class: "input-group-addon", id: "basic-addon2"}
                   = text_field_tag 'iniciador[apellido]', nil ,{ class: "form-control", "aria-describedby": "basic-addon2", :placeholder => t('.apellido'), type: :text }
@@ -66,7 +66,7 @@
                 .input-group
                   = label_tag nil, "Domicilio", { class: "input-group-addon", id: "basic-addon6"}
                   = text_field_tag 'iniciador[domicilio]', nil ,{ class: "form-control", "aria-describedby": "basic-addon6", :placeholder => t('.domicilio'), type: :text }
-                .input-group
+                .input-group#denominacion-group
                   = label_tag nil, "CUIT/CUIL", { class: "input-group-addon", id: "basic-addon7"}
                   = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
               .parent-group-btn.btn.btn-xs#add_iniciador
@@ -133,6 +133,8 @@
       },
       cache: true
     }
+  }).on("select2-focus", function(e) {
+      $('#btn_add_iniciador').removeAttr("disabled");
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
@@ -148,14 +150,28 @@
       $("#particular_iniciadores").select2("close");
       $('#particular #iniciador_nombre').focus();
     }else{
-      if(data.type == 'Fisica' || data.type == 'Juridica'){
+      if(data.type == 'Fisica'){
         $('#particular #edit_iniciador').data('id',data.id);
         $('#particular #edit_iniciador').css('display','block');
         $('#particular #add_iniciador').css('display','none');
         $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#particular #nombre-label').text('Nombre');
         $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
         $('#particular #iniciador_apellido').val(data.apellido).removeAttr('disabled');
         $('#particular #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
+        $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
+        $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
+        $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+        $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+      }else if (data.type == 'Juridica'){
+        $('#particular #edit_iniciador').data('id',data.id);
+        $('#particular #edit_iniciador').css('display','block');
+        $('#particular #add_iniciador').css('display','none');
+        $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#particular #nombre-label').text('Denominación');
+        $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+        $('#particular #iniciador_apellido').val('').attr('disabled', 'disabled');
+        $('#particular #iniciador_doc').val('').attr('disabled', 'disabled');
         $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
         $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
         $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
@@ -164,6 +180,7 @@
         $('#particular #edit_iniciador').css('display','none');
         $('#particular #add_iniciador').css('display','none');
         $('#particular #iniciador_tipo').val('').attr('disabled','disabled');
+        $('#particular #nombre-label').text('Nombre');
         $('#particular #iniciador_nombre').val('').attr('disabled','disabled');
         $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
         $('#particular #iniciador_doc').val('').attr('disabled','disabled');
@@ -175,17 +192,63 @@
     }
   });
 
+  // change select type initiator
+  $('#particular #iniciador_tipo').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    if(valueSelected == "Fisica"){
+      $('#particular #edit_iniciador').css('display','none');
+      $('#particular #add_iniciador').css('display','block');
+      $('#particular #nombre-label').text('Nombre');
+      $('#particular #iniciador_nombre').val('').removeAttr('disabled');
+      $('#particular #iniciador_apellido').val('').removeAttr('disabled');
+      $('#particular #iniciador_doc').val('').removeAttr('disabled');
+      $('#particular #iniciador_tel').val('').removeAttr('disabled');
+      $('#particular #iniciador_email').val('').removeAttr('disabled');
+      $('#particular #iniciador_domicilio').val('').removeAttr('disabled');
+      $('#particular #iniciador_cuit').val('').removeAttr('disabled');
+      $('#particular #iniciador_denominacion').val('').attr('disabled','disabled');
+    }else if( valueSelected == "Juridica" ){
+      $('#particular #edit_iniciador').css('display','none');
+      $('#particular #add_iniciador').css('display','block');
+      $('#particular #nombre-label').text('Denominación');
+      $('#particular #iniciador_nombre').val('').removeAttr('disabled');
+      $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
+      $('#particular #iniciador_doc').val('').attr('disabled','disabled');
+      $('#particular #iniciador_tel').val('').removeAttr('disabled');
+      $('#particular #iniciador_email').val('').removeAttr('disabled');
+      $('#particular #iniciador_domicilio').val('').removeAttr('disabled');
+      $('#particular #iniciador_cuit').val('').removeAttr('disabled');
+      $('#particular #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#particular #denominacion-group').css('display','none');
+    } 
+  });
+
   $('#particular_iniciadores').on('choice-selected', function(e, choice) {
     // token selected
     var data = $(choice).data('select2-data');
-    if(data.type == 'Fisica' || data.type == 'Juridica'){
+    if(data.type == 'Fisica'){
       $('#particular #edit_iniciador').data('id',data.id);
       $('#particular #edit_iniciador').css('display','block');
       $('#particular #add_iniciador').css('display','none');
       $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#particular #nombre-label').text('Nombre');
       $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
       $('#particular #iniciador_apellido').val(data.apellido).removeAttr('disabled');
       $('#particular #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
+      $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
+      $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
+      $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+      $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+    }else if (data.type == 'Juridica'){
+      $('#particular #edit_iniciador').data('id',data.id);
+      $('#particular #edit_iniciador').css('display','block');
+      $('#particular #add_iniciador').css('display','none');
+      $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#particular #nombre-label').text('Denominación');
+      $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+      $('#particular #iniciador_apellido').val('').attr('disabled', 'disabled');
+      $('#particular #iniciador_doc').val('').attr('disabled', 'disabled');
       $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
       $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
       $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
@@ -194,6 +257,7 @@
       $('#particular #add_iniciador').css('display','none');
       $('#particular #edit_iniciador').css('display','none');
       $('#particular #iniciador_tipo').val('').attr('disabled','disabled');
+      $('#particular #nombre-label').text('Nombre');
       $('#particular #iniciador_nombre').val('').attr('disabled','disabled');
       $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
       $('#particular #iniciador_doc').val('').attr('disabled','disabled');
@@ -209,6 +273,7 @@
     $('#particular #edit_iniciador').css('display','none');
     $('#particular #add_iniciador').css('display','block');
     $('#particular #iniciador_tipo').val('Fisica').removeAttr('disabled');
+    $('#particular #nombre-label').text('Nombre');
     $('#particular #iniciador_nombre').val('').removeAttr('disabled');
     $('#particular #iniciador_apellido').val('').removeAttr('disabled');
     $('#particular #iniciador_doc').val('').removeAttr('disabled');
@@ -229,6 +294,7 @@
     $('#particular #iniciador_email').val('').attr('disabled','disabled');
     $('#particular #iniciador_domicilio').val('').attr('disabled','disabled');
     $('#particular #iniciador_cuit').val('').attr('disabled','disabled');
+    $('#btn_add_iniciador').attr('disabled', 'disabled');
   });
 
   $('#particular #edit_iniciador').on('click', function(event) {
@@ -338,6 +404,10 @@
     $("#particular #states").val(JSON.stringify(states));
     $("#particular #iniciadores").val(JSON.stringify(iniciadores));
     $("#particular #new_peticion, [id^='edit_peticion']").submit();
+  });
+
+  $('#modalpart').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
   });
 
   $('#modalpart').on('hidden.bs.modal', function () {
