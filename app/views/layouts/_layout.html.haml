@@ -99,6 +99,16 @@
                 %a{:href => resolucions_path}
                   %i.fa.fa-circle-o
                   =t('.norma.resolucion')
+          %li.treeview
+            %a{:href => "#"}
+              %i.fa.fa-share
+              %span= t('.expedientes')
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{:href => expedientes_path}
+                  %i.fa.fa-circle-o
+                  =t('.expediente.legislativo')
       / /.sidebar
     / ===============================================
     / Contains page content
