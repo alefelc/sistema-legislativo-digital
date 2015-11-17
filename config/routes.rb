@@ -77,4 +77,6 @@ Rails.application.routes.draw do
     get 'get_derivacion', on: :collection
   end
 
+  resources :expedientes 
+  
 end

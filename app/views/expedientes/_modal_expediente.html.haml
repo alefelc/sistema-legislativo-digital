@@ -1,0 +1,73 @@
+#modal-expediente.modal.fade{ "aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1" }
+  .modal-dialog.modal-xs{ :role => "document" }
+    .modal-content
+      .modal-header
+        %button.close{ "aria-label" => "Close", "data-dismiss" => "modal", :type => "button" }
+          %span{ "aria-hidden" => "true" } &times;
+        %h4#nuevoLabel.modal-title= t('.expediente')
+      = form_for @expediente, url: { action: actionvar } do |f|
+
+        .modal-body
+          .row
+            .col-md-6
+              .input-group
+                = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
+                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
+              .input-group
+                = f.label :anio, { class: "input-group-addon", id: "basic-addon2" }
+                = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
+            .col-md-6
+
+        .modal-footer
+          = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
+
+:javascript
+  wi = $(window).width() - 20;
+  margin = 10;
+  $("#modal-expediente .modal-xs").css('width', wi);
+  $("#modal-expediente .modal-xs").css('margin-left', margin);
+
+  $('#modal-expediente').on('hidden.bs.modal', function () {
+    $(document).keydown(function(event) {
+      var currentRow, rowpos, table;
+      table = $('#expedientes-table').dataTable();
+      currentRow = $('#expedientes-table tbody tr.info').get(0);
+      switch (event.keyCode) {
+        case 40:
+          if ($(currentRow).next().length !== 0) {
+            $(currentRow).next().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 38:
+          if ($(currentRow).prev().length !== 0) {
+            $(currentRow).prev().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 37:
+          table.fnPageChange('previous');
+          break;
+        case 39:
+          table.fnPageChange('next');
+          break;
+        case 13:
+          $('#modal-expediente tr.info').find('td:eq(0) a').get(0).click();
+      }
+      rowpos = $('#modal-expediente tr.info').position();
+      $(document).scrollTop(rowpos.top - 45);
+    });
+    $.ctrl('C', function() {
+      $('#modal-expediente #btn-new').click();
+    });
+
+    $.ctrl('E', function() {
+      $('#modal-expediente table tbody').find('.info').find('.linktoedit').click();
+    });
+
+    $.ctrl('D', function() {
+      $('#modal-expediente table tbody').find('.info').find('.remove-tr').click();
+    });
+
+    $('#modal-expediente div.dataTables_filter input').focus();
+  });

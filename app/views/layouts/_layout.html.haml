@@ -69,6 +69,14 @@
                 %a{ :href => comunicacion_oficials_path}
                   %i.fa.fa-circle-o
                   Comunicaciones Oficiales
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Reportes
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Estadísticas
           %li.treeview
             %a{:href => "#"}
               %i.fa.fa-share
@@ -99,6 +107,32 @@
                 %a{:href => resolucions_path}
                   %i.fa.fa-circle-o
                   =t('.norma.resolucion')
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Reportes
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Estadísticas
+          %li.treeview
+            %a{:href => "#"}
+              %i.fa.fa-share
+              %span= t('.expedientes')
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{:href => expedientes_path}
+                  %i.fa.fa-circle-o
+                  =t('.expediente.legislativo')
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Reportes
+              %li
+                %a{:href => '#'}
+                  %i.fa.fa-circle-o
+                  Estadísticas
       / /.sidebar
     / ===============================================
     / Contains page content
