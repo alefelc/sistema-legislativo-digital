@@ -1,0 +1,68 @@
+$(document).on 'ready page:load', ->
+  $('#expedientes-table').dataTable
+    ajaxSource: $('#expedientes-table').data('source')
+    fnInitComplete: ->
+      $('#expedientes div.dataTables_filter input').focus()
+      $('#expedientes div.dataTables_filter input').attr('placeholder', "<%= I18n.t('datatable.search') %>")
+      return
+    fnDrawCallback: ->
+      $('#expedientes-table tbody tr').find('td:eq(1)').each ->
+        $(this).text $(this).text().substring(0, 125) + '...'
+        return
+      $('#expedientes-table tbody tr:eq(0)').addClass 'info'
+      return
+    aoColumns: [
+      { sortable: false, "width": "12%" , sClass: "center"}
+      { sortable: false }
+      { sortable: false }
+      { sortable: false, "width": "14%" }
+      { sortable: false, "width": "1%" }
+    ]
+  $(document).on 'click', '#expedientes .remove-tr', ->
+    id = $(this).data 'remove'
+    if confirm("<%= I18n.t('norma.confirm_remove')%>")
+      $.ajax
+        url: "/expedientess/#{id}"
+        type: 'DELETE'
+        success: (result) ->
+          $('#expedientes-table').dataTable().fnDraw()
+          return
+
+  $('#expedientes #btn-new').on 'click', ->
+    $(document).off 'keydown'
+    $.get '/expedientes/new', (data) ->
+      $('#expedientes-edit').empty()
+      $('#expedientes-edit').append data
+      $('#expedientes-edit .modal').modal 'show'
+      return
+
+  $(document).on 'click', '#expedientes .linktoedit', ->
+    $(document).off 'keydown'
+    id = $(this).data 'id'
+    $('#expedientes-edit').empty()
+    $.get "/expedientess/#{id}/edit", (data) ->
+      $('#expedientes-edit').append data
+      $('#expedientes-edit .modal').modal 'show'
+
+      ## Preload token inputs
+      tokenData = $('#expedientes #exped_token').data 'load'
+      $.each tokenData, (index, exp) ->
+        $('#expedientes #exped_token').tokenInput 'add', exp
+        return
+
+      tokenTag = $('#expedientes #tags-tokeninput').data 'load'
+      $.each tokenTag, (index, tag) ->
+        $('#expedientes #tags-tokeninput').tokenInput 'add', tag
+        return
+
+      return
+
+  ## hotkey create expedientes
+  $.ctrl 'C', ->
+    $('#expedientes #btn-new').click()
+    return
+
+  ## hotkey edit expedientes
+  $.ctrl 'E', ->
+    $('#expedientes table tbody').find('.info').find('.linktoedit').click()
+    return

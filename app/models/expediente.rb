@@ -30,4 +30,9 @@ class Expediente < ActiveRecord::Base
     end    
   end
 
+  before_create :put_expediente_number
+
+  def put_expediente_number
+    self.nro_exp = (Expediente.last.nro_exp.to_i + 1).to_s
+  end
 end

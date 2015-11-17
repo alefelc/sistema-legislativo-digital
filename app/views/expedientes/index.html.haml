@@ -1,0 +1,15 @@
+#expedientes
+  #expedientes-edit
+  %button#btn-new.btn.btn-primary
+    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+    = t('.btnheader.new')
+
+  %table.datatable-keyevents.table.table-striped.table-bordered#expedientes-table{"data-source" => expedientes_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.expediente')
+        %th= t('.table.sumario')
+        %th{width: "15%"}= t('.table.fecha')
+        %th Circuitos
+        %th
+    %tbody

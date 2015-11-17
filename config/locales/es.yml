@@ -10,6 +10,9 @@ es:
         ordenanza: Ordenanzas
         especiales: Normas Especiales
         otras: Otras Normas
+      expedientes: Expedientes
+      expediente:
+        legislativo: Expedientes Legislativos
   declaracions:
     show:
       info: Información de la Declaración
@@ -117,6 +120,23 @@ es:
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
+
+  expedientes:
+    show:
+      info: Información del expediente
+    index:
+      btnheader:
+        new: Nuevo
+      table:
+        expediente: Expediente
+        sumario: Sumario
+        fechas: Fechas
+        description: Descripción
+    modal_expediente:
+      title:
+        create_expediente: Creando Expediente
+      fojas: Nro. Fojas
+      anio: Fecha
 
   especials:
     show:
