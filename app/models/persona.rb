@@ -6,7 +6,6 @@ class Persona < ActiveRecord::Base
   # belongs_to :bloque
 
   #== Persona Associations
-  has_one :usuario
   has_and_belongs_to_many :tramites
 
   has_many :estado_tramites, as: :ref

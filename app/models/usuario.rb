@@ -7,6 +7,7 @@ class Usuario < ActiveRecord::Base
   #== Associations
   has_and_belongs_to_many :rols
   belongs_to :persona
+  belongs_to :personal
 
 
 end

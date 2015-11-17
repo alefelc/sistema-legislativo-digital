@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106124622) do
+ActiveRecord::Schema.define(version: 20151117114640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -452,6 +452,17 @@ ActiveRecord::Schema.define(version: 20151106124622) do
   add_index "periodos_personas", ["concejal_id"], name: "index_periodos_personas_on_concejal_id", using: :btree
   add_index "periodos_personas", ["periodo_id"], name: "index_periodos_personas_on_periodo_id", using: :btree
 
+  create_table "personals", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "apellido"
+    t.string   "nro_doc"
+    t.string   "telefono"
+    t.string   "email"
+    t.string   "domicilio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "personas", force: :cascade do |t|
     t.string   "nombre"
     t.string   "apellido"
@@ -584,10 +595,12 @@ ActiveRecord::Schema.define(version: 20151106124622) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "persona_id"
+    t.integer  "personal_id"
   end
 
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
+  add_index "usuarios", ["personal_id"], name: "index_usuarios_on_personal_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
 
 end
