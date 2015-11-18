@@ -796,6 +796,20 @@ namespace :legacy_migrate do
 
   desc "Carga de personal"
   task personal: :environment do
+
+    require "#{Rails.root}/lib/tasks/legacy/legacy_classes.rb"
+
+    # Iteramos por todos los concejales legacy
+    LegacyConcejal.all.each do |c|
+      print "."
+      if c.PERIODOD == 2012  
+        Personal.create do |x|
+          x.nombre = c.NOMBRE
+          x.apellido = c.APELLIDO
+        end
+      end  
+    end
+
     Personal.create apellido: "ANDRADA", nombre:"MARIA CELESTE"
     Personal.create apellido: "ARIAS", nombre:"ALDO"
     Personal.create apellido: "ARIAS", nombre:"MARCELA ROMINA SOLEDAD"

@@ -29,7 +29,6 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
         get_iniciadores(com),
         com.asunto.to_s,
         com.observaciones.to_s,
-        "Estado actual",
         to_date_time(com.updated_at),
         associated_file(com)
       ]

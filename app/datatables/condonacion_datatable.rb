@@ -29,7 +29,6 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
         get_iniciadores(cond),
         cond.asunto.to_s,
         cond.observaciones.to_s,
-        "Estado actual",
         to_date_time(cond.updated_at),
         associated_file(cond)
       ]

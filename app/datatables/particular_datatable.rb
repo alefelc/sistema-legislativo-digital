@@ -29,7 +29,6 @@ class ParticularDatatable < AjaxDatatablesRails::Base
         get_iniciadores(part),
         part.asunto.to_s,
         part.observaciones.to_s,
-        "Estado actual",
         to_date_time(part.updated_at),
         associated_file(part)
       ]
