@@ -31,9 +31,9 @@ ActiveAdmin.register Peticion do
   end
 
   # parent
-  menu label: "Peticiones generales"
+  menu label: "Peticiones"
 
-  index title: "Peticiones Generales" do
+  index title: "Peticiones" do
     column "Nro. Trámite", :id
     column :nro_fojas
     column :iniciador
