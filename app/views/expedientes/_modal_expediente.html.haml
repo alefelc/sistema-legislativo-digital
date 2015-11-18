@@ -4,7 +4,7 @@
       .modal-header
         %button.close{ "aria-label" => "Close", "data-dismiss" => "modal", :type => "button" }
           %span{ "aria-hidden" => "true" } &times;
-        %h4#nuevoLabel.modal-title= t('.expediente')
+        %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
       = form_for @expediente, url: { action: actionvar } do |f|
 
         .modal-body
@@ -16,6 +16,15 @@
               .input-group
                 = f.label :anio, { class: "input-group-addon", id: "basic-addon2" }
                 = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
+              .input-group
+                = f.label :tema, { class: "input-group-addon", id: "basic-addon3" }
+                = f.text_area :tema, { class: "form-control", "aria-describedby": "basic-addon3", placeholder: 'Sumario', type: :text }
+              .input-group
+                = f.label :observacion, { class: "input-group-addon", id: "basic-addon4" }
+                = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
+              .input-group
+                = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
             .col-md-6
 
         .modal-footer
@@ -52,22 +61,75 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#modal-expediente tr.info').find('td:eq(0) a').get(0).click();
+          $('#expedientes tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#modal-expediente tr.info').position();
+      rowpos = $('#expedientes tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
+
     $.ctrl('C', function() {
-      $('#modal-expediente #btn-new').click();
+      $('#expedientes #btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#modal-expediente table tbody').find('.info').find('.linktoedit').click();
+      $('#expedientes table tbody').find('.info').find('.linktoedit').click();
     });
 
-    $.ctrl('D', function() {
-      $('#modal-expediente table tbody').find('.info').find('.remove-tr').click();
-    });
+    $('#expedientes div.dataTables_filter input').focus();
+  });
 
-    $('#modal-expediente div.dataTables_filter input').focus();
+  function format_tramites(tramite) {
+    return "<div class='tramite-token' data-id='" + tramite.id + "'> Tramite nro: " + tramite.id + "</div>";
+  }
+
+  function format_tramites_result(tramite) {
+    return "<div>" + tramite.id + "</div>";
+  }
+
+  $("#modal-expediente #tramites").select2({
+    placeholder: "Buscar trámites pendientes",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_tramites,
+    formatResult: format_tramites_result,
+    multiple: true,
+    ajax: {
+      url: "/expedientes/get_tramites_pendientes",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  }).on("select2-selecting", function(e) {
+    // token selected
+    var data = e.object;
+
+    var idref = data.id;
+    var typeref = data.type;
+    var text;
+
+    if (data.type == 'Concejal' || data.type == 'Fisica' || data.type == 'Juridica')
+      text = data.apellido + ", " + data.nombre;
+    else
+      text = data.denominacion;
+
+    var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
+      "<td> Derivado a " + typeref + ": " + text + "</td>" +
+      "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+
+    $('#despacho #states-table tbody').append(tr);
+  }).on("change", function(e) {
+    $('#despacho #derived-states').select2("val", "");
   });

@@ -17,6 +17,10 @@ module ApplicationHelper
     end
   end
 
+  def index_exp(exp)
+    link_to exp.nro_exp, exp
+  end
+
   def index_norma(norma)
     link_to "#{norma.nro}-#{norma.bis}/#{norma.sancion.try(:year)}", norma
   end

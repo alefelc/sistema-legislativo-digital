@@ -22,7 +22,7 @@ $(document).on 'ready page:load', ->
     id = $(this).data 'remove'
     if confirm("<%= I18n.t('norma.confirm_remove')%>")
       $.ajax
-        url: "/expedientess/#{id}"
+        url: "/expedientes/#{id}"
         type: 'DELETE'
         success: (result) ->
           $('#expedientes-table').dataTable().fnDraw()
@@ -40,7 +40,7 @@ $(document).on 'ready page:load', ->
     $(document).off 'keydown'
     id = $(this).data 'id'
     $('#expedientes-edit').empty()
-    $.get "/expedientess/#{id}/edit", (data) ->
+    $.get "/expedientes/#{id}/edit", (data) ->
       $('#expedientes-edit').append data
       $('#expedientes-edit .modal').modal 'show'
 

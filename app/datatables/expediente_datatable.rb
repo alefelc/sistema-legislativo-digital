@@ -1,4 +1,5 @@
 class ExpedienteDatatable < AjaxDatatablesRails::Base
+  def_delegator :@view, :index_exp
 
   def as_json(options = {})
     {
@@ -24,7 +25,7 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
   def data
     records.map do |exp|
       [
-        exp.nro_exp,
+        index_exp(exp),
         exp.tema,
         exp.anio,
         exp.circuitos.count,

@@ -27,7 +27,7 @@ class Expediente < ActiveRecord::Base
       " Año " + self.anio.year.to_s + " - "
     else
       " - Año no asignado"
-    end    
+    end
   end
 
   before_create :put_expediente_number
