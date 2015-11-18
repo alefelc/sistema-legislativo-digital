@@ -29,7 +29,6 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
         get_iniciadores(pro),
         pro.asunto.to_s,
         pro.observaciones.to_s,
-        "Estado actual",
         to_date_time(pro.updated_at),
         associated_file(pro)
       ]
