@@ -58,7 +58,7 @@
                   %td= "Iniciado"
                   %td= to_date_time(x.created_at)  
               - when "2"
-                - if (x.ref_type == 'Concejal' || x.ref_type == 'Fisica' || x.ref_type == 'Juridica')
+                - if (x.ref_type == 'Personal')
                   - text = x.ref.apellido + ", " + x.ref.nombre;
                 - else
                   - text = x.ref.denominacion;   

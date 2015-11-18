@@ -42,7 +42,7 @@
                     %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
                 %tbody
                   - @despacho.estado_tramites.where(tipo: 2).each do |x|
-                    - if (x.ref_type == 'Concejal' || x.ref_type == 'Fisica' || x.ref_type == 'Juridica')
+                    - if (x.ref_type == 'Personal')
                       - text = x.ref.apellido + ", " + x.ref.nombre;
                     - else
                       - text = x.ref.denominacion;   
@@ -183,7 +183,7 @@
     var originalOption = $(style.element);
     var iniciador = "";
     iniciador = style.apellido + ', ' + style.nombre;
-    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+    if (style.type == "Personal" ) {
       return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
     }else{
       //Casos para comisiones y bloques, etc
@@ -198,7 +198,7 @@
 
   function format_derivaciones_result(style) {
     var originalOption = $(style.element);
-    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+    if (style.type == "Personal") {
       return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
     }else{
       //caso de comisiones y bloques
@@ -245,11 +245,12 @@
     var typeref = data.type;
     var text;
     
-    if (data.type == 'Concejal' || data.type == 'Fisica' || data.type == 'Juridica')
+    if (data.type == 'Personal')
       text = data.apellido + ", " + data.nombre;
     else
       text = data.denominacion;
-
+    
+    //tipo: 1-iniciado, 2-derivado, 3-finalizado
     var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
