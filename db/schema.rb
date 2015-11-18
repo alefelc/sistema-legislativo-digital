@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117114640) do
+ActiveRecord::Schema.define(version: 20151118141946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,9 @@ ActiveRecord::Schema.define(version: 20151117114640) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "nro"
+    t.string   "tema"
+    t.date     "anio"
+    t.integer  "fojas"
   end
 
   add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
