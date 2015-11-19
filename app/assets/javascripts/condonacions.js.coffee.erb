@@ -18,16 +18,6 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "8%" }
     ]
 
-  $(document).on 'click', '#condonacion .remove-tr', ->
-    id = $(this).data 'remove'
-    if confirm('Desea eliminar la Condonación')
-      $.ajax
-        url: "/condonacions/#{id}"
-        type: 'DELETE'
-        success: (result) ->
-          window.location.href = result.url
-          return
-
   $('#condonacion #btn-new').on 'click', ->
     $(document).off 'keydown'
     $.get '/condonacions/new', (data) ->
@@ -35,14 +25,14 @@ $(document).on 'ready page:load', ->
       $('#condonacion-edit').append data
       $('#condonacion-edit .modal').modal 'show'
       return
-  
+
   $(document).on 'click', '#condonacion #btn_add_iniciador', (event) ->
     event.preventDefault()
     return
 
   $(document).on 'click', '#condonacion #btn_edit_iniciador', (event) ->
     event.preventDefault()
-    return    
+    return
 
   $(document).on 'click', '#condonacion .linktoedit', ->
     $(document).off 'keydown'
@@ -51,7 +41,7 @@ $(document).on 'ready page:load', ->
     $.get "/condonacions/#{id}/edit", (data) ->
       $('#condonacion-edit').append data
       $('#condonacion-edit .modal').modal 'show'
-      
+
       ## Preload iniciadores-tokens
       tokenData = $('#condonacion #condonacion_iniciadores').data 'load'
       iniciadores = [];
@@ -60,7 +50,7 @@ $(document).on 'ready page:load', ->
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
           if(ini.type == "ReparticionOficial" || ini.type == "Comision" || ini.type == "Bloque")
-            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
+            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})
           else
             ## otro caso
         return
@@ -76,9 +66,4 @@ $(document).on 'ready page:load', ->
   ## hotkey edit condonacion
   $.ctrl 'E', ->
     $('#condonacion table tbody').find('.info').find('.linktoedit').click()
-    return
-
-  ## hotkey delete condonacion
-  $.ctrl 'D', ->
-    $('#condonacion table tbody').find('.info').find('.remove-tr').click()
     return

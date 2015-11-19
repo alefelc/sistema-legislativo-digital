@@ -18,16 +18,6 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "8%" }
     ]
 
-  $(document).on 'click', '#particular .remove-tr', ->
-    id = $(this).data 'remove'
-    if confirm('Desea eliminar la Petición Particular')
-      $.ajax
-        url: "/particulars/#{id}"
-        type: 'DELETE'
-        success: (result) ->
-          window.location.href = result.url
-          return
-
   $('#particular #btn-new').on 'click', ->
     $(document).off 'keydown'
     $.get '/particulars/new', (data) ->
@@ -35,14 +25,14 @@ $(document).on 'ready page:load', ->
       $('#particular-edit').append data
       $('#particular-edit .modal').modal 'show'
       return
-  
+
   $(document).on 'click', '#particular #btn_add_iniciador', (event) ->
     event.preventDefault()
     return
 
   $(document).on 'click', '#particular #btn_edit_iniciador', (event) ->
     event.preventDefault()
-    return    
+    return
 
   $(document).on 'click', '#particular .linktoedit', ->
     $(document).off 'keydown'
@@ -51,7 +41,7 @@ $(document).on 'ready page:load', ->
     $.get "/particulars/#{id}/edit", (data) ->
       $('#particular-edit').append data
       $('#particular-edit .modal').modal 'show'
-      
+
       ## Preload iniciadores-tokens
       tokenData = $('#particular #particular_iniciadores').data 'load'
       iniciadores = [];
@@ -73,9 +63,4 @@ $(document).on 'ready page:load', ->
   ## hotkey edit particular
   $.ctrl 'E', ->
     $('#particular table tbody').find('.info').find('.linktoedit').click()
-    return
-
-  ## hotkey delete particular
-  $.ctrl 'D', ->
-    $('#particular table tbody').find('.info').find('.remove-tr').click()
     return
