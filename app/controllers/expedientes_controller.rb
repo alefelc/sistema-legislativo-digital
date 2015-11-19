@@ -18,7 +18,7 @@ class ExpedientesController < ApplicationController
   end
 
   def show
-
+    @expediente = Expediente.find(params[:id])
   end
 
   def edit
