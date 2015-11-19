@@ -79,7 +79,6 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
 
   def associated_file pro
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{pro.id}' title='Borrar proyecto'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{pro.id}' title='Editar proyecto'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar proyecto'></i></div>"
   end

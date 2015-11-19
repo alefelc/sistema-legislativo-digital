@@ -37,7 +37,6 @@ class ResolucionDatatable < AjaxDatatablesRails::Base
 
   def associated_file resol
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{resol.id}' title='Borrar norma'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{resol.id}' title='Editar norma'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar norma'></i></div>"
   end
