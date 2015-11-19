@@ -66,7 +66,6 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
 
   def associated_file cond
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{cond.id}' title='Borrar condonación'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{cond.id}' title='Editar condonación'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar condonación'></i></div>"
   end

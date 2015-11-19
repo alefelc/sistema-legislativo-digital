@@ -18,16 +18,6 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "8%" }
     ]
 
-  $(document).on 'click', '#comunicacion-oficial .remove-tr', ->
-    id = $(this).data 'remove'
-    if confirm('Desea eliminar el Proyecto')
-      $.ajax
-        url: "/comunicacion_oficials/#{id}"
-        type: 'DELETE'
-        success: (result) ->
-          window.location.href = result.url
-          return
-
   $('#comunicacion-oficial #btn-new').on 'click', ->
     $(document).off 'keydown'
     $.get '/comunicacion_oficials/new', (data) ->
@@ -35,14 +25,14 @@ $(document).on 'ready page:load', ->
       $('#comunicacion-oficial-edit').append data
       $('#comunicacion-oficial-edit .modal').modal 'show'
       return
-  
+
   $(document).on 'click', '#comunicacion-oficial #btn_add_iniciador', (event) ->
     event.preventDefault()
     return
 
   $(document).on 'click', '#comunicacion-oficial #btn_edit_iniciador', (event) ->
     event.preventDefault()
-    return    
+    return
 
   $(document).on 'click', '#comunicacion-oficial .linktoedit', ->
     $(document).off 'keydown'
@@ -51,7 +41,7 @@ $(document).on 'ready page:load', ->
     $.get "/comunicacion_oficials/#{id}/edit", (data) ->
       $('#comunicacion-oficial-edit').append data
       $('#comunicacion-oficial-edit .modal').modal 'show'
-      
+
       ## Preload iniciadores-tokens
       tokenData = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').data 'load'
       iniciadores = [];
@@ -60,7 +50,7 @@ $(document).on 'ready page:load', ->
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
           if(ini.type == "ReparticionOficial" || ini.type == "DependenciaMunicipal" || ini.type == "OrganoDeGobierno" || ini.type == "Area" || ini.type == "Comision" || ini.type == "Bloque")
-            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
+            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})
           else
             ## otro caso
         return
@@ -76,9 +66,4 @@ $(document).on 'ready page:load', ->
   ## hotkey edit comunicacion-oficial
   $.ctrl 'E', ->
     $('#comunicacion-oficial table tbody').find('.info').find('.linktoedit').click()
-    return
-
-  ## hotkey delete comunicacion-oficial
-  $.ctrl 'D', ->
-    $('#comunicacion-oficial table tbody').find('.info').find('.remove-tr').click()
     return

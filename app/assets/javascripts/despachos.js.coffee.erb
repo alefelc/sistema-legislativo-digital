@@ -19,23 +19,13 @@ $(document).on 'ready page:load', ->
       { sortable: false, "sWidth": "1%" }
     ]
 
-  $(document).on 'click', '#despacho .remove-tr', ->
-    id = $(this).data 'remove'
-    if confirm('Desea eliminar el Despacho')
-      $.ajax
-        url: "/despachos/#{id}"
-        type: 'DELETE'
-        success: (result) ->
-          window.location.href = result.url
-          return
-
   $('#despacho #btn-new').on 'click', ->
     $(document).off 'keydown'
     $.get '/despachos/new', (data) ->
       $('#despacho-edit').empty()
       $('#despacho-edit').append data
       $('#despacho-edit .modal').modal 'show'
-      return  
+      return
 
   $(document).on 'click', '#despacho .linktoedit', ->
     $(document).off 'keydown'
@@ -78,9 +68,4 @@ $(document).on 'ready page:load', ->
   ## hotkey edit despacho
   $.ctrl 'E', ->
     $('#despacho table tbody').find('.info').find('.linktoedit').click()
-    return
-
-  ## hotkey delete despacho
-  $.ctrl 'D', ->
-    $('#despacho table tbody').find('.info').find('.remove-tr').click()
     return

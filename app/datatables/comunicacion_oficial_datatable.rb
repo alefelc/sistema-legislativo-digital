@@ -79,7 +79,6 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
 
   def associated_file com
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{com.id}' title='Borrar comunicación oficial'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{com.id}' title='Editar comunicación oficial'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar comunicación oficial'></i></div>"
   end

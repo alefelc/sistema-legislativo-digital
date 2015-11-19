@@ -37,7 +37,6 @@ class OrdenanzaDatatable < AjaxDatatablesRails::Base
 
   def associated_file ord
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-times remove-tr' data-remove='#{ord.id}' title='Borrar norma'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{ord.id}' title='Editar norma'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar norma'></i></div>"
   end
