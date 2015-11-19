@@ -80,6 +80,8 @@ module ApplicationHelper
     return "Proyecto #{params[:id]}" if current_page?(controller: :proyectos, action: :show, id: params[:id].to_i)
     return "Comunicaciones Oficiales" if current_page?(controller: :comunicacion_oficials, action: :index)
     return "Comunicación Oficial #{params[:id]}" if current_page?(controller: :comunicacion_oficials, action: :show, id: params[:id].to_i)
+    return "Expedientes" if current_page?(controller: :expedientes, action: :index)
+    return "Expediente #{params[:id]}" if current_page?(controller: :expedientes, action: :show, id: params[:id].to_i)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 

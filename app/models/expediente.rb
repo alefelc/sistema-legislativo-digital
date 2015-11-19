@@ -30,6 +30,34 @@ class Expediente < ActiveRecord::Base
     end
   end
 
+  def get_fojas
+    self.nro_fojas.to_s
+  end
+
+  def get_exps_adm
+    self.expediente_administrativos
+  end
+
+  def get_circuitos
+    self.circuitos.where.not(nro:0).order(nro: :asc)
+  end  
+
+  def get_despachos
+    self.despachos
+  end
+
+  def to_date date
+    date.strftime("%d/%m/%Y") unless date.nil?
+  end
+
+  def get_anio
+    to_date(self.anio).to_s unless self.anio.nil?
+  end
+
+  def get_observaciones
+    self.observacion
+  end
+
   before_create :put_expediente_number
 
   def put_expediente_number

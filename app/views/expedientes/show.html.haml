@@ -1,0 +1,72 @@
+#expediente-show
+  %h4= t('expedientes.show.info')
+  %hr
+  #expediente-body
+    - exp = @expediente
+    - nro_exp= exp.nro_exp
+      - if nro_exp.present?  
+      %p
+        %span.titles= "Expediente Nro.: "
+        %span= nro_exp
+        %span
+          &nbsp 
+          %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Expediente"}
+    - fojas = exp.get_fojas
+      - if fojas.present?      
+      %p.single-tab
+        %span.titles= "Nro. de Fojas: "
+        %span= fojas
+    - asunto = exp.tema
+      - if asunto.present?
+      %p.single-tab
+        %span.titles= "Asunto: "
+        %span= asunto
+    - circuitos = exp.get_circuitos
+      - unless circuitos.empty?
+      %p.single-tab  
+        %span.titles= "Circuitos: "
+        - circuitos.each do |c|
+          %span= link_to("Nro: " + c.nro.to_s , "/circuitos/#{c.id}") + " - "
+    - normas = exp.circuitos.map{ |x| x.normas}.first
+      - unless normas.empty?
+      %p.single-tab  
+        %span.titles= "Normas: "
+        - normas.each do |n|
+          %span= link_to(n.type + ": " + n.nro.to_s , n) + " - "      
+    - despachos = exp.get_despachos
+      - unless despachos.empty?
+      %p.single-tab  
+        %span.titles= "Despachos: "
+        - despachos.each do |d|
+          %span= link_to(d.id.to_s , "/despachos/#{d.id}") + " - "
+    - tags = exp.tags
+      - unless tags.empty?
+      %p.single-tab
+        %span.titles= "Voces Claves: "
+        - tags.each do |t|
+          %span= t.nombre.to_s + " - "
+    - exp_adm = exp.get_exps_adm
+      - unless exp_adm.empty?
+      %p.single-tab  
+        %span.titles= "Expedientes Administrativos: "
+        - exp_adm.each do |e|
+          %span= link_to(e.nro_exp + e.get_anio_expediente_adm, "/expediente_administrativos/#{e.id}")                
+    - obs = exp.get_observaciones
+      - if obs.present?
+      %p.single-tab
+        %span.titles= "Observaciones: "
+        %span= obs        
+    - anio = exp.get_anio
+      - if anio.present?  
+      %p.single-tab
+        %span= "Creado el: "
+        %span= anio
+    %p.single-tab
+      .single-tab.titles= "Estados del Expediente: "
+      .single-tab  
+        %table.table.table-striped.table-bordered#states-table-show
+          %thead
+            %tr
+              %th{style: "text-align:center;"}= "Estado"
+              %th= "Fecha"
+          %tbody
