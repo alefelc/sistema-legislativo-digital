@@ -54,9 +54,9 @@
         %span= "Expedientes Legislativos: "
         - circuitos.each do |c|
           - if (c.nro == 0)
-            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}")
+            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}") + " - "
           - else
-            %span= "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp, "expediente/#{c.expediente.id}") + c.expediente.get_anio_expediente
+            %span= "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "expediente/#{c.expediente.id}") + " - "
     %p.single-tab
       - decl_me_modifican.select { |x| x.tipo_relacion == "promul" }.each do |r|
         %span= "Promulgado el " + to_date(r.desde).to_s

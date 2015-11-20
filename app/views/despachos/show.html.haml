@@ -24,7 +24,7 @@
       %p.single-tab  
         %span= "Expedientes Legislativos: "
         - expedientes.each do |e|
-          %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}")
+          %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}") + " - "
     - comisiones = desp.get_comisiones
       - unless comisiones.empty?
       %p.single-tab  
