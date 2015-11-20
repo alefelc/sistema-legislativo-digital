@@ -42,7 +42,9 @@ class ExpedientesController < ApplicationController
   end
 
   def get_tramites_pendientes
-    render json: Tramite.last(10)
+    tramites = Tramite.where("id::text ilike ?",
+                                   "%#{params[:q]}%").first(10)
+    render json: tramites
   end
 
   private
