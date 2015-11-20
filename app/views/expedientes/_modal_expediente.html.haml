@@ -79,11 +79,11 @@
   });
 
   function format_tramites(tramite) {
-    return "<div class='tramite-token' data-id='" + tramite.id + "'> Tramite nro: " + tramite.id + "</div>";
+    return "<div class='tramite-token' data-id='" + tramite.id + "'> Tramite Nro: " + tramite.id + "</div>";
   }
 
   function format_tramites_result(tramite) {
-    return "<div>" + tramite.id + "</div>";
+    return "<div>" + "Nro: " + tramite.id + "</div>";
   }
 
   $("#modal-expediente #tramites").select2({
@@ -112,24 +112,4 @@
       },
       cache: true
     }
-  }).on("select2-selecting", function(e) {
-    // token selected
-    var data = e.object;
-
-    var idref = data.id;
-    var typeref = data.type;
-    var text;
-
-    if (data.type == 'Concejal' || data.type == 'Fisica' || data.type == 'Juridica')
-      text = data.apellido + ", " + data.nombre;
-    else
-      text = data.denominacion;
-
-    var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
-      "<td> Derivado a " + typeref + ": " + text + "</td>" +
-      "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
-
-    $('#despacho #states-table tbody').append(tr);
-  }).on("change", function(e) {
-    $('#despacho #derived-states').select2("val", "");
   });

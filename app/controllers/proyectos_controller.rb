@@ -37,7 +37,7 @@ class ProyectosController < ApplicationController
 
     ## add state initial
     @proyecto.estado_tramites.create do |e|
-      e.nombre = "iniciado"
+      e.nombre = "Iniciado"
       e.tipo = 1
     end
 
@@ -58,7 +58,7 @@ class ProyectosController < ApplicationController
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|
         @proyecto.estado_tramites.create do |e|
-          e.nombre = "derivado"
+          e.nombre = "Derivado"
           e.tipo = 2
           e.ref_id = value["idref"]
           e.ref_type = value["typeref"]
@@ -156,7 +156,7 @@ class ProyectosController < ApplicationController
       JSON.parse(params['states']).each do |key, value|
         unless old_states.include?(value["id"])
           @proyecto.estado_tramites.create do |e|
-            e.nombre = "derivado"
+            e.nombre = "Derivado"
             e.tipo = 2
             e.ref_id = value["idref"]
             e.ref_type = value["typeref"]

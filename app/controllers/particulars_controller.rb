@@ -46,7 +46,7 @@ class ParticularsController < ApplicationController
 
     ## add state initial
     @particular.estado_tramites.create do |e|
-      e.nombre = "iniciado"
+      e.nombre = "Iniciado"
       e.tipo = 1
     end
 
@@ -54,7 +54,7 @@ class ParticularsController < ApplicationController
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|
         @particular.estado_tramites.create do |e|
-          e.nombre = "derivado"
+          e.nombre = "Derivado"
           e.tipo = 2
           e.ref_id = value["idref"]
           e.ref_type = value["typeref"]
@@ -112,7 +112,7 @@ class ParticularsController < ApplicationController
       JSON.parse(params['states']).each do |key, value|
         unless old_states.include?(value["id"])
           @particular.estado_tramites.create do |e|
-            e.nombre = "derivado"
+            e.nombre = "Derivado"
             e.tipo = 2
             e.ref_id = value["idref"]
             e.ref_type = value["typeref"]

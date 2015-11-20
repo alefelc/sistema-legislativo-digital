@@ -55,7 +55,7 @@ class DespachosController < ApplicationController
 
     ## add state initial
     @despacho.estado_tramites.create do |e|
-      e.nombre = "iniciado"
+      e.nombre = "Iniciado"
       e.tipo = 1
     end
 
@@ -63,7 +63,7 @@ class DespachosController < ApplicationController
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|
         @despacho.estado_tramites.create do |e|
-          e.nombre = "derivado"
+          e.nombre = "Derivado"
           e.tipo = 2
           e.ref_id = value["idref"]
           e.ref_type = value["typeref"]
@@ -112,7 +112,7 @@ class DespachosController < ApplicationController
       JSON.parse(params['states']).each do |key, value|
         unless old_states.include?(value["id"])
           @despacho.estado_tramites.create do |e|
-            e.nombre = "derivado"
+            e.nombre = "Derivado"
             e.tipo = 2
             e.ref_id = value["idref"]
             e.ref_type = value["typeref"]
