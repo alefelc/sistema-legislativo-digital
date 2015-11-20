@@ -61,6 +61,30 @@
       %p.single-tab
         %span= "Creado el: "
         %span= anio
+    %hr
+    %p.single-tab
+      - adjuntados = exp.adjuntados
+        - unless adjuntados.empty?
+        %span.single-tab= "Expedientes adjuntados fisicamente: "
+        - adjuntados.each do |a|
+          %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "
+      %br
+      - adjunta = exp.adjunta
+        - if adjunta.present?
+        %span.single-tab= "Adjunta fisicamente a expediente: "
+        %span= link_to("Nro: " + adjunta.nro_exp + adjunta.get_anio_expediente, adjunta)    
+    %hr
+    %p.single-tab
+      - acumulados = exp.acumulados
+        - unless acumulados.empty?
+        %span.single-tab= "Expedientes acumulados: "
+        - acumulados.each do |a|
+          %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "
+      %br
+      - acumula = exp.acumula
+        - if acumula.present?
+        %span.single-tab= "Acumula a expediente: "
+        %span= link_to("Nro: " + acumula.nro_exp + acumula.get_anio_expediente, acumula)  
     %p.single-tab
       .single-tab.titles= "Estados del Expediente: "
       .single-tab  

@@ -24,7 +24,7 @@ class Expediente < ActiveRecord::Base
 
   def get_anio_expediente
     if self.anio.present?
-      " Año " + self.anio.year.to_s + " - "
+      " Año " + self.anio.year.to_s
     else
       " - Año no asignado"
     end
