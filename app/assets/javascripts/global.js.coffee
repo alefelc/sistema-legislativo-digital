@@ -103,7 +103,7 @@ $(document).on 'ready page:load', ->
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
     return
 
-  if controller in [ 'expedientes' ]
+  if controller in [ 'expedientes', 'pendientes' ]
     $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')

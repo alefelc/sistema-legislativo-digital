@@ -81,4 +81,6 @@ Rails.application.routes.draw do
     get 'get_tramites_pendientes', on: :collection
   end
 
+  resources :pendientes
+  
 end

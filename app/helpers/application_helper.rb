@@ -45,6 +45,23 @@ module ApplicationHelper
     link_to com.id.to_s, comunicacion_oficial_path(com)
   end
 
+  def index_tra(tra)
+    case tra.type
+    when "Proyecto"
+      link_to tra.id.to_s, proyecto_path(tra) 
+    when "Peticion"
+      link_to tra.id.to_s, particular_path(tra)
+    when "Despacho"
+      link_to tra.id.to_s, despacho_path(tra)
+    when "Condonacion"  
+      link_to tra.id.to_s, condonacion_path(tra)
+    when "ComunicacionOficial"  
+      link_to tra.id.to_s, comunicacion_oficial_path(tra)
+    else
+    end
+  end
+
+
   def norma_expediente(norma)
     resp = ""
     norma.circuitos.each do |c|
@@ -82,6 +99,7 @@ module ApplicationHelper
     return "Comunicación Oficial #{params[:id]}" if current_page?(controller: :comunicacion_oficials, action: :show, id: params[:id].to_i)
     return "Expedientes" if current_page?(controller: :expedientes, action: :index)
     return "Expediente #{params[:id]}" if current_page?(controller: :expedientes, action: :show, id: params[:id].to_i)
+    return "Trámites Pendientes" if current_page?(controller: :pendientes, action: :index)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 
