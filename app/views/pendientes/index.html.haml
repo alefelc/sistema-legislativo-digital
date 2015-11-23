@@ -1,0 +1,11 @@
+#pendiente
+  %br
+
+  %table.datatable-keyevents.table.table-striped.table-bordered#pendiente-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => pendientes_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.pendiente')
+        %th= t('.table.tipo')
+        %th= t('.table.asunto')
+        %th
+    %tbody
