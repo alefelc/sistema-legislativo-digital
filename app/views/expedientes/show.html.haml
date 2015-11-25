@@ -22,25 +22,25 @@
         %span.titles= "Asunto: "
         %span= asunto
     - circuitos = exp.get_circuitos
-      - unless circuitos.empty?
+      - if circuitos.present?
       %p.single-tab  
         %span.titles= "Circuitos: "
         - circuitos.each do |c|
           %span= link_to("Nro: " + c.nro.to_s , "/circuitos/#{c.id}") + " - "
     - normas = exp.circuitos.map{ |x| x.normas}.first
-      - unless normas.empty?
+      - if normas.present?
       %p.single-tab  
         %span.titles= "Normas: "
         - normas.each do |n|
           %span= link_to(n.type + ": " + n.nro.to_s , n) + " - "      
     - despachos = exp.get_despachos
-      - unless despachos.empty?
+      - if despachos.present?
       %p.single-tab  
         %span.titles= "Despachos: "
         - despachos.each do |d|
           %span= link_to(d.id.to_s , "/despachos/#{d.id}") + " - "
     - tags = exp.tags
-      - unless tags.empty?
+      - if tags.present?
       %p.single-tab
         %span.titles= "Voces Claves: "
         - tags.each do |t|
@@ -64,7 +64,7 @@
     %hr
     %p.single-tab
       - adjuntados = exp.adjuntados
-        - unless adjuntados.empty?
+        - if adjuntados.present?
         %span.single-tab= "Expedientes adjuntados fisicamente: "
         - adjuntados.each do |a|
           %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "
@@ -76,7 +76,7 @@
     %hr
     %p.single-tab
       - acumulados = exp.acumulados
-        - unless acumulados.empty?
+        - if acumulados.present?
         %span.single-tab= "Expedientes acumulados: "
         - acumulados.each do |a|
           %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "

@@ -6,7 +6,7 @@
           %span{ "aria-hidden" => "true" } &times;
         %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
       = form_for @expediente, url: { action: actionvar } do |f|
-
+        = hidden_field_tag :tramites_pendientes
         .modal-body
           .row
             .col-md-6
@@ -35,6 +35,27 @@
   margin = 10;
   $("#modal-expediente .modal-xs").css('width', wi);
   $("#modal-expediente .modal-xs").css('margin-left', margin);
+
+  $('#modal-expediente .modal-submit').on('click', function(event) {
+    event.preventDefault();
+
+    var tramites = {};
+    var index = 0;
+    $("#modal-expediente .tramite-token").each(function(key, value) {
+      tramites[index] = {
+        id: $(value).data("id"),
+        type: $(value).data("type")
+      };
+      index++;
+    });
+
+    $("#modal-expediente #tramites_pendientes").val(JSON.stringify(tramites));
+    $("#modal-expediente #new_expediente, [id^='edit_expediente']").submit();
+  });
+
+  $('#modal-expediente').on('shown.bs.modal', function() {
+    $('form:first *:input[type!=hidden]:first').focus();
+  });
 
   $('#modal-expediente').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
@@ -79,11 +100,11 @@
   });
 
   function format_tramites(tramite) {
-    return "<div class='tramite-token' data-id='" + tramite.id + "'> Tramite Nro: " + tramite.id + "</div>";
+    return "<div class='tramite-token' data-type='" + tramite.type + "' data-id='" + tramite.id + "'>" + tramite.type + " Nro: " + tramite.id + "</div>";
   }
 
   function format_tramites_result(tramite) {
-    return "<div>" + "Nro: " + tramite.id + "</div>";
+    return "<div>" + "<b><i><small>" + "[" + tramite.type + "]" + "</small></i></b>" + " Nro: " + tramite.id + "</div>";
   }
 
   $("#modal-expediente #tramites").select2({

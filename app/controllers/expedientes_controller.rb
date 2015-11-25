@@ -33,7 +33,28 @@ class ExpedientesController < ApplicationController
   end
 
   def create
-    Expediente.create params[:expediente].to_hash
+    exp = params[:expediente]
+    @expediente = Expediente.create exp.to_hash
+
+    @circuito = Circuito.create nro: 0, expediente: @expediente
+
+    ##add relation exp and tramites
+    unless params[:tramites_pendientes].blank?
+      JSON.parse(params[:tramites_pendientes]).each do |key, value|
+        tramite = Tramite.find(value["id"])
+        @circuito.tramite = tramite
+        @circuito.save
+
+        #set finalized state to tramite
+        tramite.estado_tramites.create do |e|
+          e.nombre = "Finalizado"
+          e.tipo = 3
+          e.ref_id = @expediente.id
+          e.ref_type = @expediente.type
+        end
+      end
+    end
+
     redirect_to action: :index
   end
 
@@ -43,14 +64,14 @@ class ExpedientesController < ApplicationController
 
   def get_tramites_pendientes
     tramites = Tramite.where("id::text ilike ?",
-                                   "%#{params[:q]}%").first(10)
-    render json: tramites
+                                   "%#{params[:q]}%").where(pendiente: true).order(updated_at: :desc).first(10)
+    render json: tramites.as_json(methods: 'type')
   end
 
   private
 
   def expediente_params
-    params.require(:expediente).permit("nro_fojas", "tema",  "anio", "observacion", "bis")
+    params.require(:expediente).permit("nro_fojas","tema",  "anio", "observacion", "bis")
   end
 
 end
