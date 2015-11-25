@@ -67,6 +67,14 @@
                   %td= to_date_time(x.created_at)
               - when "3"
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td= "Concluido en... " 
+                  %td 
+                    %span= "Finalizado en "
+                    %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro_exp.to_s , x.ref)  
                   %td= to_date_time(x.created_at)
+              - when "4" #caso para tramites finalizados pero q no terminan en expediente
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  %td 
+                    %span= "Finalizado en "
+                    %span= x.especificacion.to_s
+                  %td= to_date_time(x.created_at)    
               - else
