@@ -7,6 +7,9 @@ class Expediente < ActiveRecord::Base
 	has_and_belongs_to_many :tags
 	has_many :normas
 
+  #== polymorfic association
+  has_many :estado_tramites, as: :ref
+
   #== Shortcut association
   has_many :estado_expedientes, through: :circuitos
 
@@ -56,6 +59,10 @@ class Expediente < ActiveRecord::Base
 
   def get_observaciones
     self.observacion
+  end
+
+  def type
+    "Expediente"
   end
 
   before_create :put_expediente_number

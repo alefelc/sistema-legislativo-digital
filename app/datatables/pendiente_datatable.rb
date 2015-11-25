@@ -26,52 +26,18 @@ class PendienteDatatable < AjaxDatatablesRails::Base
       [
         index_tra(tra),
         tra.type,
-        #get_iniciadores(tra),
-        #tra.asunto.to_s,
-        #tra.observaciones.to_s,
-        #to_date_time(tra.updated_at),
         tra.asunto,
         associated_file(tra)
       ]
     end
   end
 
-  def get_iniciadores tra
-    resp = ""
-    iniciadores_organos = tra.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion } }
-    iniciadores_organos.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_areas = tra.areas.map{ |x| {type: "Area", denominacion: x.denominacion } }
-    iniciadores_areas.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_bloques = tra.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
-    iniciadores_bloques.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end  
-    iniciadores_comisions = tra.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
-    iniciadores_comisions.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_personas = tra.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_personas.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
-    end
-    iniciadores_reparticiones = tra.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
-    iniciadores_reparticiones.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_dependencias = tra.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
-    iniciadores_dependencias.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-
-    resp
-  end  
-
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
+  end
+
+  def to_date_for_input date
+    date.strftime("%Y-%m-%d") unless date.nil?
   end
 
   def to_date_time date
@@ -80,7 +46,7 @@ class PendienteDatatable < AjaxDatatablesRails::Base
 
   def associated_file tra
     "<div style='display: flex'>" +
-    "<i class='linktocreate btn btn-xs btn-success fa fa-check-square-o u' data-id='#{tra.id}' title='Crear Expediente'></i>"+ "</div>"
+    "<i class='linktocreate btn btn-xs btn-success fa fa-check-square-o u' data-id='#{tra.id}' data-type='#{tra.type}' data-nro_fojas='#{tra.nro_fojas}' data-asunto='#{tra.asunto}' data-fecha='#{to_date_for_input(tra.created_at)}' title='Crear Expediente'></i>"+ "</div>"
   end
 
   def pendientes
@@ -89,7 +55,7 @@ class PendienteDatatable < AjaxDatatablesRails::Base
 
   def fetch_records
     ## buscar los que esten derivados a legislacion y no finalizados
-    tramite = Tramite.page(page).per(per_page).order(id: :desc)
+    tramite = Tramite.page(page).per(per_page).where(pendiente: true).order(updated_at: :desc)
     if params[:sSearch].present?
       unless params[:sSearch].to_i.zero?
         query = "(tramites.id = #{params[:sSearch]})"

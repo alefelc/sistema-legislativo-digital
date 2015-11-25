@@ -14,3 +14,28 @@ $(document).on 'ready page:load', ->
       { sortable: false }
       { sortable: false, "width": "4%" }
     ]
+
+  $(document).on 'click', '#pendiente .linktocreate', ->
+    $(document).off 'keydown'
+    id_tra = $(this).data 'id'
+    type_tra = $(this).data 'type'
+    nro_fojas = $(this).data 'nro_fojas'
+    tema = $(this).data 'asunto'
+    anio = $(this).data 'fecha'
+    $('#expediente-create').empty()
+    $.get "/expedientes/new", (data) ->
+      $('#expediente-create').append data
+      $('#expediente-create .modal').modal 'show'
+      
+      ## Preload inputs fields expediente
+      $('#modal-expediente #expediente_nro_fojas').val(nro_fojas);
+      $('#modal-expediente #expediente_anio').val(anio);
+      $('#modal-expediente #expediente_tema').val(tema);
+
+
+      ## Preload select2 input tramites pendientes
+      tramites = [];
+      tramites.push({id: id_tra, type: type_tra});
+      $('#modal-expediente #tramites').select2('data', tramites);
+
+      return
