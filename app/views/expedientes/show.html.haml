@@ -123,3 +123,16 @@
               %th{style: "text-align:center;"}= "Estado"
               %th= "Fecha"
           %tbody
+            - exp.estado_expedientes.each do |x|
+              - case x.tipo
+              - when "1"
+                - esp1 = x.especificacion1
+                - if (esp1.present?)
+                  %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td= "Iniciado " + esp1.to_s + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                -else
+                  %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td= "Iniciado"
+                    %td= to_date(x.fecha)    
+              - else
