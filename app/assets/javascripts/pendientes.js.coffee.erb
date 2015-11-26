@@ -37,5 +37,6 @@ $(document).on 'ready page:load', ->
       tramites = [];
       tramites.push({id: id_tra, type: type_tra});
       $('#modal-expediente #tramites').select2('data', tramites);
+      $('#modal-expediente #group-tramites').css('visibility', 'hidden');
 
       return
