@@ -36,4 +36,8 @@ class Tramite < ActiveRecord::Base
     self.observaciones
   end
 
+  def get_iniciadores
+    self.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }.to_a + self.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }.to_a + self.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }.to_a + self.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }.to_a + self.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }.to_a
+  end
+
 end

@@ -22,7 +22,7 @@
               .input-group
                 = f.label :observacion, { class: "input-group-addon", id: "basic-addon4" }
                 = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
-              .input-group
+              .input-group#group-tramites
                 = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
             .col-md-6

@@ -21,6 +21,35 @@
       %p.single-tab
         %span.titles= "Asunto: "
         %span= asunto
+    - tramite = exp.circuitos.first.tramite
+      - if tramite.present?
+      %p.single-tab
+      - iniciadores = tramite.get_iniciadores
+        - if iniciadores.present?
+        .single-tab.titles= "Iniciadores: "
+        - iniciadores.each do |i|
+          - case i[:type]
+          - when "OrganoDeGobierno"   
+            .double-tab.titles= "Organos de Gobierno: "
+            .double-tab= i[:denominacion].to_s
+          - when "Area"   
+            .double-tab.titles= "Areas: "
+            .double-tab= i[:denominacion].to_s
+          - when "Bloque"   
+            .double-tab.titles= "Bloques: "
+            .double-tab= i[:denominacion].to_s
+          - when "Comision"   
+            .double-tab.titles= "Comisiones: "
+            .double-tab= i[:denominacion].to_s
+          - when "ReparticionOficial"   
+            .double-tab.titles= "Reparticiones Oficiales: "
+            .double-tab= i[:denominacion].to_s
+          - when "DependenciaMunicipal"   
+            .double-tab.titles= "Dependencias Municipales: "
+            .double-tab= i[:denominacion].to_s
+          - else   
+            .double-tab.titles= "Personas: "
+            .double-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
     - circuitos = exp.get_circuitos
       - if circuitos.present?
       %p.single-tab  
