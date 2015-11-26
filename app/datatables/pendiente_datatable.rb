@@ -77,7 +77,7 @@ class PendienteDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    Tramite.all
+    Tramite.where(pendiente: true).order(updated_at: :desc)
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
