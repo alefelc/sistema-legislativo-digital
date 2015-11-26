@@ -38,6 +38,13 @@ class ExpedientesController < ApplicationController
 
     @circuito = Circuito.create nro: 0, expediente: @expediente
 
+    ## set initial state
+    @circuito.estado_expedientes.create do |e|
+      e.nombre = "Iniciado"
+      e.tipo = 1
+      e.fecha = @expediente.anio
+    end
+
     ##add relation exp and tramites
     unless params[:tramites_pendientes].blank?
       JSON.parse(params[:tramites_pendientes]).each do |key, value|
