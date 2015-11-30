@@ -62,6 +62,15 @@ class ParticularsController < ApplicationController
       end
     end
 
+    ## add final state
+    unless params[:finalizado].blank?
+      @particular.estado_tramites.create do |e|
+        e.nombre = "Finalizado"
+        e.especificacion = params[:finalizado]
+        e.tipo = 4
+      end      
+    end
+
     redirect_to action: :index
   end
 
@@ -122,6 +131,21 @@ class ParticularsController < ApplicationController
       end
       # delete states
       (old_states - current_states).each { |id| @particular.estado_tramites.delete(id) }
+    end
+
+    ## update final state
+    finalizado = params[:finalizado]
+    unless finalizado.blank?
+      estado = @particular.estado_tramites.find_by(tipo: "4")
+      if estado.present? 
+        estado.update especificacion: params[:finalizado]
+      else
+        @particular.estado_tramites.create do |e|
+          e.nombre = "Finalizado"
+          e.especificacion = params[:finalizado]
+          e.tipo = 4
+        end
+      end    
     end
 
     redirect_to action: :index
