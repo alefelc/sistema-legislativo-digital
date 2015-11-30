@@ -98,7 +98,7 @@
               - when "4" #caso para tramites finalizados pero q no terminan en expediente
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
                   %td 
-                    %span= "Finalizado en "
+                    %span= "Finalizado: "
                     %span= x.especificacion.to_s
-                  %td= to_date_time(x.created_at)    
+                  %td= to_date_time(x.updated_at)    
               - else    
