@@ -46,7 +46,7 @@ class PendienteDatatable < AjaxDatatablesRails::Base
 
   def associated_file tra
     "<div style='display: flex'>" +
-    "<i class='linktocreate btn btn-xs btn-success fa fa-check-square-o u' data-id='#{tra.id}' data-type='#{tra.type}' data-nro_fojas='#{tra.nro_fojas}' data-asunto='#{tra.asunto}' data-fecha='#{to_date_for_input(tra.created_at)}' title='Crear Expediente'></i>"+ "</div>"
+    "<i class='linktoedit btn btn-xs btn-success fa fa-check-square-o u' data-id='#{tra.id}' data-type='#{tra.type}' data-nro_fojas='#{tra.nro_fojas}' data-asunto='#{tra.asunto}' data-fecha='#{to_date_for_input(tra.created_at)}' title='Crear Expediente'></i>"+ "</div>"
   end
 
   def pendientes
