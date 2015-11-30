@@ -414,6 +414,7 @@ es:
       title:
         create_particular: Creando Petición Particular
       observations: Observaciones
+      final: Finaliza en
       create_particular: Creando Petición Particular
       update_particular: Editando Petición Particular
       asunto: Ingrese asunto
@@ -450,6 +451,7 @@ es:
       title:
         create_comunicacion_oficial: Creando Comunicaion Oficial
       observations: Observaciones
+      final: Finaliza en
       asunto: Ingrese asunto
       asunto_label: Asunto
       create: Creando Comunicación Oficial
@@ -486,6 +488,7 @@ es:
       title:
         create_proyecto: Creando Proyecto
       observations: Observaciones
+      final: Finaliza en
       asunto: Ingrese asunto
       asunto_label: Asunto
       create: Creando Proyecto
@@ -522,6 +525,7 @@ es:
       title:
         create_condonacion: Creando Condonación
       observations: Observaciones
+      final: Finaliza en
       asunto: Ingrese asunto
       asunto_label: Asunto
       create: Creando Condonación
