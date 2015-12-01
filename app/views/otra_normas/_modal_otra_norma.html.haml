@@ -350,12 +350,12 @@
     $("#otra_norma #new_otra_norma, [id^='edit_otra_norma']").submit();
     $("[id^='edit_otra_norma']")
   });
-  
-  $('#modalotra').on('hidden.bs.modal', function () {
+
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#otra_norma-table').dataTable();
-      currentRow = $('#otra_norma-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -376,20 +376,18 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#otra_norma tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
       rowpos = $('#otra_norma tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
     $.ctrl('C', function() {
-      $('#otra_norma #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#otra_norma table tbody').find('.info').find('.linktoedit').click();
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#otra_norma div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });
-
-  

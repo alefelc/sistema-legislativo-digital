@@ -455,15 +455,15 @@
     $("#comunicacion-oficial #new_comunicacion_oficial, [id^='edit_comunicacion_oficial']").submit();
   });
 
-  $('#modalcom').on('shown.bs.modal', function () {
+  $('.modal').on('shown.bs.modal', function () {
     $('form:first *:input[type!=hidden]:first').focus();
   });
 
-  $('#modalcom').on('hidden.bs.modal', function () {
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#comunicacion-oficial-table').dataTable();
-      currentRow = $('#comunicacion-oficial-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -484,20 +484,21 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#comunicacion-oficial tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#comunicacion-oficial tr.info').position();
+      rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
+
     $.ctrl('C', function() {
-      $('#comunicacion-oficial #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#comunicacion-oficial table tbody').find('.info').find('.linktoedit').click();
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#comunicacion-oficial div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });
 
   function format_derivaciones(style) {
@@ -561,11 +562,11 @@
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object;
-    
+
     var idref = data.id;
     var typeref = data.type;
     var text;
-    
+
     if (data.type == 'Personal')
       text = data.apellido + ", " + data.nombre;
     else
@@ -574,7 +575,7 @@
     var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
-    
+
     $('#comunicacion-oficial #states-table tbody').append(tr);
   }).on("change", function(e) {
     $('#comunicacion-oficial #derived-states').select2("val", "");

@@ -137,8 +137,8 @@
   $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#despacho-table').dataTable();
-      currentRow = $('#despacho-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -159,20 +159,21 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#despacho tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#despacho tr.info').position();
+      rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
+
     $.ctrl('C', function() {
-      $('#despacho #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#despacho table tbody').find('.info').find('.linktoedit').click();
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#despacho div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });
 
   function format_derivaciones(style) {

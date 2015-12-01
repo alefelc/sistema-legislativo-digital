@@ -406,15 +406,15 @@
     $("#particular #new_peticion, [id^='edit_peticion']").submit();
   });
 
-  $('#modalpart').on('shown.bs.modal', function () {
+  $('.modal').on('shown.bs.modal', function () {
     $('form:first *:input[type!=hidden]:first').focus();
   });
 
-  $('#modalpart').on('hidden.bs.modal', function () {
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#particular-table').dataTable();
-      currentRow = $('#particular-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -435,20 +435,20 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#particular tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#particular tr.info').position();
+      rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
     $.ctrl('C', function() {
-      $('#particular #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#particular table tbody').find('.info').find('.linktoedit').click();
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#particular div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });
 
   function format_derivaciones(style) {
