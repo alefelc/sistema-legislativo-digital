@@ -6,4 +6,5 @@
 //= require jquery.tokeninput.min
 //= require select2.min
 //= require jquery.elastic.min
+//= require Chart.min
 //= require_tree .
