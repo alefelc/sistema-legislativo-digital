@@ -351,11 +351,11 @@
     $("[id^='edit_ordenanza']")
   });
   
-  $('#modalord').on('hidden.bs.modal', function () {
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#ordenanza-table').dataTable();
-      currentRow = $('#ordenanza-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -376,20 +376,19 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#ordenanza tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#ordenanza tr.info').position();
+      rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
     $.ctrl('C', function() {
-      $('#ordenanza #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#ordenanza table tbody').find('.info').find('.linktoedit').click();
+      $('table.table-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#ordenanza div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });
 
-  

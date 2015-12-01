@@ -322,7 +322,7 @@
         to_day: $(value).data("hasta-dia"),
         to_month: $(value).data("hasta-mes"),
         to_year: $(value).data("hasta-anio"),
-        type_day: $(value).data("dia-tipo"),
+        type_day: $(value).data("dia-tipo
         relation_type: $(value).data("tipo-relacion")
       };
       index++;
@@ -350,12 +350,12 @@
     $("#declaracion #new_declaracion, [id^='edit_declaracion']").submit();
     $("[id^='edit_declaracion']")
   });
-  
-  $('#modaldecl').on('hidden.bs.modal', function () {
+
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
-      table = $('#declaracion-table').dataTable();
-      currentRow = $('#declaracion-table tbody tr.info').get(0);
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
       switch (event.keyCode) {
         case 40:
           if ($(currentRow).next().length !== 0) {
@@ -378,16 +378,17 @@
         case 13:
           $('#declaracion tr.info').find('td:eq(0) a').get(0).click();
       }
-      rowpos = $('#declaracion tr.info').position();
+      rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);
     });
+
     $.ctrl('C', function() {
-      $('#declaracion #btn-new').click();
+      $('#btn-new').click();
     });
 
     $.ctrl('E', function() {
-      $('#declaracion table tbody').find('.info').find('.linktoedit').click();
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
     });
 
-    $('#declaracion div.dataTables_filter input').focus();
+    $('div.dataTables_filter input').focus();
   });

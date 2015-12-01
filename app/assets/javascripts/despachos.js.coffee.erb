@@ -43,22 +43,21 @@ $(document).on 'ready page:load', ->
 
       ## Preload select2 input comisions
       tokenComision = $('#despacho #despacho_comisions').data 'load'
-      comisions = [];
+      comisions = []
       $.each tokenComision, (index, com) ->
-        comisions.push({id: com[0].id, text: com[0].denominacion});
+        comisions.push({id: com[0].id, text: com[0].denominacion})
         return
-      $('#despacho #despacho_comisions').select2('data', comisions);
+      $('#despacho #despacho_comisions').select2('data', comisions)
 
       ## Preload select2 input concejals
       tokenConcejal = $('#despacho #despacho_concejals').data 'load'
-      concejals = [];
+      concejals = []
       $.each tokenConcejal, (index, con) ->
-        concejals.push({id: con[0].id, text: con[0].nombre});
+        concejals.push({id: con[0].id, text: con[0].nombre})
         return
-      $('#despacho #despacho_concejals').select2('data', concejals);
+      $('#despacho #despacho_concejals').select2('data', concejals)
 
       return
-
 
   ## hotkey create despacho
   $.ctrl 'C', ->
