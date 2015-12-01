@@ -45,7 +45,7 @@
                     - if (x.ref_type == 'Personal')
                       - text = x.ref.apellido + ", " + x.ref.nombre;
                     - else
-                      - text = x.ref.denominacion;   
+                      - text = x.ref.denominacion;
                     %tr{ class: 'derivacion-tr', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                       %td= "Derivado a " + x.ref_type + ": " + text
                       %td= to_date(x.created_at)
@@ -130,11 +130,11 @@
     $("#despacho #new_despacho, [id^='edit_despacho']").submit();
   });
 
-  $('#modaldesp').on('shown.bs.modal', function () {
+  $('.modal').on('shown.bs.modal', function () {
     $('form:first *:input[type!=hidden]:first').focus();
   });
 
-  $('#modaldesp').on('hidden.bs.modal', function () {
+  $('.modal').on('hidden.bs.modal', function () {
     $(document).keydown(function(event) {
       var currentRow, rowpos, table;
       table = $('#despacho-table').dataTable();
@@ -236,21 +236,21 @@
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object;
-    
+
     var idref = data.id;
     var typeref = data.type;
     var text;
-    
+
     if (data.type == 'Personal')
       text = data.apellido + ", " + data.nombre;
     else
       text = data.denominacion;
-    
+
     //tipo: 1-iniciado, 2-derivado, 3-finalizado
     var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
-    
+
     $('#despacho #states-table tbody').append(tr);
   }).on("change", function(e) {
     $('#despacho #derived-states').select2("val", "");
