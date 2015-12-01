@@ -82,5 +82,16 @@ Rails.application.routes.draw do
   end
 
   resources :pendientes
-  
+
+  namespace :statitics do
+    get 'mesa_de_entradas'
+    get 'expedientes'
+    get 'normas'
+  end
+
+  namespace :reports do
+    get 'mesa_de_entradas'
+    get 'expedientes'
+    get 'normas'
+  end
 end
