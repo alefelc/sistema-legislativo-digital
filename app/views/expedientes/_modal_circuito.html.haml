@@ -1,0 +1,268 @@
+#modal-circuito.modal.fade{ "aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1" }
+  .modal-dialog.modal-xs{ :role => "document" }
+    .modal-content
+      .modal-header
+        %button.close{ "aria-label" => "Close", "data-dismiss" => "modal", :type => "button" }
+          %span{ "aria-hidden" => "true" } &times;
+        %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
+      = form_for @expediente, url: { action: actionvar } do |f|
+        = hidden_field_tag :tramites_pendientes
+        = hidden_field_tag :expediente, @expediente.id
+        = hidden_field_tag 'circuito[nro]'
+        .modal-body
+          .row
+            .col-md-6
+              .input-group
+                = f.label "Circuitos", t('.circuitos'), { class: "input-group-addon", id: "basic-addon01" }
+                = text_field_tag :circuitos, nil, { style: 'width: 100%', id: 'circuitos' }
+              .input-group
+                = label_tag nil, "Nro Fojas", { class: "input-group-addon", id: "fojas-label"}
+                = text_field_tag 'circuito[fojas]', nil ,{ class: "form-control field-circuit", "aria-describedby": "fojas-label", id: 'fojas-field',:placeholder => "Ingrese Nro Fojas", type: :integer }
+              .input-group
+                = label_tag nil, "Año", { class: "input-group-addon", id: "basic-addon02"}
+                = text_field_tag 'circuito[anio]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon02", id: 'anio-field', :placeholder => "Ingrese Año", type: :date }
+              .input-group
+                = label_tag nil, "Tema", { class: "input-group-addon", id: "basic-addon03"}
+                = text_field_tag 'circuito[tema]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon03", id: 'tema-field', :placeholder => "Ingrese Tema", type: :text }
+              .input-group#group-tramites
+                = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
+            .col-md-6
+              .input-group
+                = f.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
+                = text_field_tag 'estado[fecha]', nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
+                = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
+                = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
+                = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp2' }
+                .input-group-addon.parent-group-btn.btn#add_state
+                  %i.fa.fa-plus-circle.fa-2x
+              #states-table-column
+                .row
+                  .col-xs-12
+                    %table.table.table-striped.table-bordered#states-table
+                      %thead
+                        %tr
+                          %th= t('.table.state')
+                          %th= t('.table.specification')
+                          %th= t('.table.date')
+                          %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                      %tbody
+        .modal-footer
+          = f.submit "Guardar Circuito", {class: "btn btn-primary modal-submit", id: "btn-submit-circuito"}
+
+:javascript
+  wi = $(window).width() - 20;
+  margin = 10;
+  $("#modal-circuito .modal-xs").css('width', wi);
+  $("#modal-circuito .modal-xs").css('margin-left', margin);
+
+  $('#modal-circuito #estados').on('change', function() {
+    switch(this.value) {
+      case "3":
+        // A comision
+        var comisions = [["Plan. y Coord. Labor", 6], ["GOBIERNO,PET.GEN., ETC", 18], ["COM. REFORMA POLITICA", 36], ["Economía y Presupuesto", 37], ["Desarrollo Humano - Salud y Promoción Social", 38], ["Desarrollo Humano - Educación, Cultura y Deporte", 39], ["Desarrollo Urbano y Obras Públicas", 40], ["Desarrollo Urbano y Servicios Públicos", 41], ["Desarrollo Económico, Producción y Empleo", 42], ["Planificación y Coordinación de Gestión", 43], ["DERECHOS HUMANOS", 45], ["COMISION ESPECIAL DE REFORMA DEL REGLAMENTO INTERNO", 49], ["COMISION INVESTIGADORA RESOLUCION Nº 851/11", 50]];
+        var seloption = "";
+
+        $.each(comisions,function(i){
+            seloption += '<option value="'+comisions[i][1]+'">'+comisions[i][0]+'</option>'; 
+        });
+
+        $('#modal-circuito #esp1').empty();
+        $('#modal-circuito #esp2').empty();
+        $('#modal-circuito #esp1').append(seloption);
+        break;
+      case "2":
+        // Orden del Dia
+        var options = [["Asunto Entrado",1],["Asunto a Tratar",2]];  
+        var seloption = "";
+
+        $.each(options,function(i){
+            seloption += '<option value="'+options[i][1]+'">'+options[i][0]+'</option>'; 
+        });
+
+        $('#modal-circuito #esp1').empty();
+        $('#modal-circuito #esp2').empty();
+        $('#modal-circuito #esp1').append(seloption);
+        break;
+      case "5":
+        // Sancionado
+        var options1 = [["Aprob. Art. 151 R.I.",1],["Aprob. S/T c/desp.",2],["Aprob. S/T s/desp.",3],["Aprobado",4],["Arch. S/T c/desp.",5],["Arch. S/T s/desp.",6],["Archivado",7],["Decision Acuerdo",8], ["Decisión Art. 71",9],["Rech. S/T c/desp.",10],["Rech. S/T s/desp.",11],["Rechazado",12],["Retirado",13]];
+        var options2 = [["Aprob. Simple",14],["1° Lectura",15],["2° Lectura",16]];  
+        var seloption1 = "";
+        var seloption2 = "";
+
+        $.each(options1,function(i){
+            seloption1 += '<option value="'+options1[i][1]+'">'+options1[i][0]+'</option>'; 
+        });
+
+        $.each(options2,function(i){
+            seloption2 += '<option value="'+options2[i][1]+'">'+options2[i][0]+'</option>'; 
+        });
+
+        $('#modal-circuito #esp1').empty();
+        $('#modal-circuito #esp1').append(seloption1);
+        $('#modal-circuito #esp2').empty();
+        $('#modal-circuito #esp2').append(seloption2);
+        break;
+      default:
+        $('#modal-circuito #esp1').empty();
+        $('#modal-circuito #esp2').empty();
+        break;  
+    }
+  });
+
+  $('#modal-circuito .modal-submit').on('click', function(event) {
+    event.preventDefault();
+
+    var tramites = {};
+    var index = 0;
+    $("#modal-circuito .tramite-token").each(function(key, value) {
+      tramites[index] = {
+        id: $(value).data("id"),
+        type: $(value).data("type")
+      };
+      index++;
+    });
+    
+    circuit_nro = $('#modal-circuito .circuito-token').data('nro');
+
+    $("#modal-circuito #tramites_pendientes").val(JSON.stringify(tramites));
+    $("#modal-circuito #circuito_nro").val(circuit_nro);
+    $('#modal-circuito .edit_expediente').get(0).setAttribute('action', 'circuitos/update');
+    $("#modal-circuito #new_circuito, [id^='edit_expediente']").submit();
+  });
+
+  $('#modal-circuito').on('shown.bs.modal', function() {
+    $('form:first *:input[type!=hidden]:first').focus();
+  });
+
+  $('#modal-circuito').on('hidden.bs.modal', function () {
+    $(document).keydown(function(event) {
+      var currentRow, rowpos, table;
+      table = $('#expedientes-table').dataTable();
+      currentRow = $('#expedientes-table tbody tr.info').get(0);
+      switch (event.keyCode) {
+        case 40:
+          if ($(currentRow).next().length !== 0) {
+            $(currentRow).next().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 38:
+          if ($(currentRow).prev().length !== 0) {
+            $(currentRow).prev().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 37:
+          table.fnPageChange('previous');
+          break;
+        case 39:
+          table.fnPageChange('next');
+          break;
+        case 13:
+          $('#expedientes tr.info').find('td:eq(0) a').get(0).click();
+      }
+      rowpos = $('#expedientes tr.info').position();
+      $(document).scrollTop(rowpos.top - 45);
+    });
+
+    $.ctrl('C', function() {
+      $('#expedientes #btn-new').click();
+    });
+
+    $.ctrl('E', function() {
+      $('#expedientes table tbody').find('.info').find('.linktoedit').click();
+    });
+
+    $('#expedientes div.dataTables_filter input').focus();
+  });
+
+  function format_tramites(tramite) {
+    return "<div class='tramite-token' data-type='" + tramite.type + "' data-id='" + tramite.id + "'>" + tramite.type + " Nro: " + tramite.id + "</div>";
+  }
+
+  function format_tramites_result(tramite) {
+    return "<div>" + "<b><i><small>" + "[" + tramite.type + "]" + "</small></i></b>" + " Nro: " + tramite.id + "</div>";
+  }
+
+  $("#modal-circuito #tramites").select2({
+    placeholder: "Buscar trámites pendientes",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_tramites,
+    formatResult: format_tramites_result,
+    multiple: true,
+    ajax: {
+      url: "/expedientes/get_tramites_pendientes",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  function format_circuitos(circuito) {
+    return "<div class='circuito-token' data-nro='" + circuito.nro + "' data-id='" + circuito.id + "' data-tema='" + circuito.tema + "' data-anio='" + circuito.anio + "' data-fojas='" + circuito.fojas + "' data-type='" + circuito.type + "' data-expediente_id='" + circuito.expediente_id + "'>" + " Nro: " + circuito.nro + "</div>";
+  }
+
+  function format_circuitos_result(circuito) {
+    if (circuito.type == "Agregar Nuevo"){
+      return "<div>" +  circuito.type + "</div>";
+    }else{
+      return "<div>" +  "Nro: " + circuito.nro + "</div>";
+    }  
+  }
+
+  $("#modal-circuito #circuitos").select2({
+    placeholder: "Seleccionar circuito",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_circuitos,
+    formatResult: format_circuitos_result,
+    ajax: {
+      url: "/expedientes/#{@expediente.id}/get_circuitos",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  }).on("select2-selecting", function(e) {
+    c = e.object;
+    if (e.val == "nuevo"){
+      $('#modal-circuito #fojas-field').val('');
+      $('#modal-circuito #anio-field').val('');
+      $('#modal-circuito #tema-field').val('');
+      $("#modal-circuito #tramites").select2('val', '');
+    }else{
+      //caso de editar circuitos
+      $('#modal-circuito #fojas-field').val(parseInt(c.fojas));
+      $('#modal-circuito #anio-field').val(c.anio);
+      $('#modal-circuito #tema-field').val(c.tema);
+      $("#modal-circuito #tramites").select2('data', c.get_tramites)
+    }
+  });   
