@@ -21,41 +21,81 @@
       %p.single-tab
         %span.titles= "Asunto: "
         %span= asunto
-    - tramite = exp.circuitos.first.tramite
-      - if tramite.present?
-      %p.single-tab
-      - iniciadores = tramite.get_iniciadores
-        - if iniciadores.present?
-        .single-tab.titles= "Iniciadores: "
-        - iniciadores.each do |i|
-          - case i[:type]
-          - when "OrganoDeGobierno"   
-            .double-tab.titles= "Organos de Gobierno: "
-            .double-tab= i[:denominacion].to_s
-          - when "Area"   
-            .double-tab.titles= "Areas: "
-            .double-tab= i[:denominacion].to_s
-          - when "Bloque"   
-            .double-tab.titles= "Bloques: "
-            .double-tab= i[:denominacion].to_s
-          - when "Comision"   
-            .double-tab.titles= "Comisiones: "
-            .double-tab= i[:denominacion].to_s
-          - when "ReparticionOficial"   
-            .double-tab.titles= "Reparticiones Oficiales: "
-            .double-tab= i[:denominacion].to_s
-          - when "DependenciaMunicipal"   
-            .double-tab.titles= "Dependencias Municipales: "
-            .double-tab= i[:denominacion].to_s
-          - else   
-            .double-tab.titles= "Personas: "
-            .double-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
+    - tramites = exp.circuitos.first.tramites
+      - if tramites.present?
+        - tramites.each do |tramite|
+        %p.single-tab  
+          %span.titles= "Tramite Legislativo: "
+          %span= link_to(tramite.type + " Nro: " + tramite.id.to_s , tramite)
+          - iniciadores = tramite.get_iniciadores
+            - if iniciadores.present?
+            .double-tab.titles= "Iniciadores: "
+            - iniciadores.each do |i|
+              - case i[:type]
+              - when "OrganoDeGobierno"   
+                .triple-tab.titles= "Organos de Gobierno: "
+                .triple-tab= i[:denominacion].to_s
+              - when "Area"   
+                .triple-tab.titles= "Areas: "
+                .triple-tab= i[:denominacion].to_s
+              - when "Bloque"   
+                .triple-tab.titles= "Bloques: "
+                .triple-tab= i[:denominacion].to_s
+              - when "Comision"   
+                .triple-tab.titles= "Comisiones: "
+                .triple-tab= i[:denominacion].to_s
+              - when "ReparticionOficial"   
+                .triple-tab.titles= "Reparticiones Oficiales: "
+                .triple-tab= i[:denominacion].to_s
+              - when "DependenciaMunicipal"   
+                .triple-tab.titles= "Dependencias Municipales: "
+                .triple-tab= i[:denominacion].to_s
+              - else   
+                .triple-tab.titles= "Personas: "
+                .triple-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
     - circuitos = exp.get_circuitos
       - if circuitos.present?
       %p.single-tab  
-        %span.titles= "Circuitos: "
+        .single-tab.titles= "Circuitos del Expediente: "
         - circuitos.each do |c|
-          %span= link_to("Nro: " + c.nro.to_s , "/circuitos/#{c.id}") + " - "
+          %span.double-tab.titles= "Nro.: "
+          %span= c.nro.to_s
+          .triple-tab= "Nro. Fojas: " + c.fojas.to_s
+          .triple-tab= "Asunto: " + c.tema.to_s
+          .triple-tab= "Fecha: #{c.anio.nil? ? "" : to_date(c.anio)}"
+          .triple-tab
+            - tramites = c.tramites
+              - if tramites.present?
+                - tramites.each do |tramite|
+                %p
+                  %span= "Tramite Legislativo: "
+                  %span= link_to(tramite.type + " Nro: " + tramite.id.to_s , tramite)
+                  - iniciadores = tramite.get_iniciadores
+                    - if iniciadores.present?
+                    .single-tab.titles= "Iniciadores: "
+                    - iniciadores.each do |i|
+                      - case i[:type]
+                      - when "OrganoDeGobierno"   
+                        .double-tab= "Organos de Gobierno: "
+                        .double-tab= i[:denominacion].to_s
+                      - when "Area"   
+                        .double-tab= "Areas: "
+                        .double-tab= i[:denominacion].to_s
+                      - when "Bloque"   
+                        .double-tab= "Bloques: "
+                        .double-tab= i[:denominacion].to_s
+                      - when "Comision"   
+                        .double-tab= "Comisiones: "
+                        .double-tab= i[:denominacion].to_s
+                      - when "ReparticionOficial"   
+                        .double-tab= "Reparticiones Oficiales: "
+                        .double-tab= i[:denominacion].to_s
+                      - when "DependenciaMunicipal"   
+                        .double-tab= "Dependencias Municipales: "
+                        .double-tab= i[:denominacion].to_s
+                      - else   
+                        .double-tab= "Personas: "
+                        .double-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
     - normas = exp.circuitos.map{ |x| x.normas}.first
       - if normas.present?
       %p.single-tab  
@@ -123,7 +163,7 @@
               %th{style: "text-align:center;"}= "Estado"
               %th= "Fecha"
           %tbody
-            - exp.estado_expedientes.each do |x|
+            - exp.circuitos.find_by(nro: 0).estado_expedientes.each do |x|
               - case x.tipo
               - when "1"
                 - esp1 = x.especificacion1

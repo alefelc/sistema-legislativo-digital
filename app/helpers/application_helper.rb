@@ -1,4 +1,13 @@
 module ApplicationHelper
+  def get_estados
+    [
+      ["Seleccione Estado", 0],
+      ["A Comisión", 3],
+      ["Orden del Día", 2],
+      ["Sancionado", 5],
+      ["Retirado", 7]
+    ]
+  end
 
   def fechas(norma)
     resp = ""

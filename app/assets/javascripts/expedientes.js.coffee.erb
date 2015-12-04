@@ -18,6 +18,28 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "14%" }
       { sortable: false, "width": "1%" }
     ]
+  
+  $(document).on 'click', '#modal-circuito #add_state', ->
+    fecha = $("#modal-circuito #fecha").val()
+    estado = $("#modal-circuito #estados option:selected").val()
+    estado_text = estado = $("#modal-circuito #estados option:selected").text()
+    esp1 = $("#modal-circuito #esp1 option:selected").val()
+    esp1_text = $("#modal-circuito #esp1 option:selected").text()
+    esp2 = $("#modal-circuito #esp2 option:selected").val()
+    esp2_text = $("#modal-circuito #esp2 option:selected").text()
+    row = "<tr class='states-tr' data-id=''" +
+    " data-fecha='#{fecha}' data-estado='#{estado}' data-esp1='#{esp1}'" +
+    " data-esp2='#{esp2}'> " +
+    "<td> #{estado_text} </td> " +
+    "<td> #{esp1_text + " --> " + esp2_text} </td>" +
+    "<td> #{fecha} </td>" +
+    "<td> <i class='fa fa-times remove-table-row btn btn-xs'></i> </td> </tr>"
+    $('#modal-circuito #states-table-column tbody').append(row)
+    $('#modal-circuito #fecha').val("");
+    $('#modal-circuito #estados').val("0");
+    $('#modal-circuito #esp1').empty();
+    $('#modal-circuito #esp2').empty();
+    
 
   $('#expedientes #btn-new').on 'click', ->
     $(document).off 'keydown'
@@ -35,16 +57,15 @@ $(document).on 'ready page:load', ->
       $('#expedientes-edit').append data
       $('#expedientes-edit .modal').modal 'show'
 
-      ## Preload token inputs
-      tokenData = $('#expedientes #exped_token').data 'load'
-      $.each tokenData, (index, exp) ->
-        $('#expedientes #exped_token').tokenInput 'add', exp
-        return
+      return
 
-      tokenTag = $('#expedientes #tags-tokeninput').data 'load'
-      $.each tokenTag, (index, tag) ->
-        $('#expedientes #tags-tokeninput').tokenInput 'add', tag
-        return
+  $(document).on 'click', '#expedientes .linktocircuit', ->
+    $(document).off 'keydown'
+    id = $(this).data 'id'
+    $('#expedientes-edit').empty()
+    $.get "/expedientes/#{id}/edit_circuit", (data) ->
+      $('#expedientes-edit').append data
+      $('#expedientes-edit .modal').modal 'show'
 
       return
 

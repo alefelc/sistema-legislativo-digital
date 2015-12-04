@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123133654) do
+ActiveRecord::Schema.define(version: 20151201133457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,7 +128,6 @@ ActiveRecord::Schema.define(version: 20151123133654) do
 
   create_table "circuitos", force: :cascade do |t|
     t.integer  "expediente_id"
-    t.integer  "tramite_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "nro"
@@ -138,7 +137,6 @@ ActiveRecord::Schema.define(version: 20151123133654) do
   end
 
   add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
-  add_index "circuitos", ["tramite_id"], name: "index_circuitos_on_tramite_id", using: :btree
 
   create_table "circuitos_normas", id: false, force: :cascade do |t|
     t.integer "circuito_id"
@@ -583,7 +581,10 @@ ActiveRecord::Schema.define(version: 20151123133654) do
     t.datetime "updated_at",                              null: false
     t.date     "fecha"
     t.boolean  "pendiente",               default: false
+    t.integer  "circuito_id"
   end
+
+  add_index "tramites", ["circuito_id"], name: "index_tramites_on_circuito_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

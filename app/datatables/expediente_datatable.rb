@@ -1,5 +1,6 @@
 class ExpedienteDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_exp
+  def_delegator :@view, :to_date
 
   def as_json(options = {})
     {
@@ -27,8 +28,8 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
       [
         index_exp(exp),
         exp.tema,
-        exp.anio,
-        exp.circuitos.count,
+        to_date(exp.anio),
+        exp.circuitos.count-1,
         associated_file(exp)
       ]
     end
@@ -37,7 +38,8 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
   def associated_file(exp)
     "<div style='display: flex'>" +
     "<i class='btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' title='Imprimir Carátula'></i>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{exp.id}' title='Editar Expediente'></i>" +
+    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>" +
+    "<i class='linktocircuit btn btn-xs btn-info fa fa-copyright' data-id='#{exp.id}' title='Editar Circuitos'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar Expediente'></i></div>"
   end
 

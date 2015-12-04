@@ -28,6 +28,13 @@ class ExpedientesController < ApplicationController
     end
   end
 
+  def edit_circuit
+    @expediente = Expediente.find params[:id]
+    respond_to do |format|
+      format.html { render partial: "modal_circuito", locals: { actionvar: "update" } }
+    end
+  end
+
   def destroy
 
   end
@@ -49,8 +56,7 @@ class ExpedientesController < ApplicationController
     unless params[:tramites_pendientes].blank?
       JSON.parse(params[:tramites_pendientes]).each do |key, value|
         tramite = Tramite.find(value["id"])
-        @circuito.tramite = tramite
-        @circuito.save
+        @circuito.tramites << tramite
 
         #set finalized state to tramite
         tramite.estado_tramites.create do |e|
@@ -73,6 +79,18 @@ class ExpedientesController < ApplicationController
     tramites = Tramite.where("id::text ilike ?",
                                    "%#{params[:q]}%").where(pendiente: true).order(updated_at: :desc).first(10)
     render json: tramites.as_json(methods: 'type')
+  end
+
+  def get_circuitos
+    circuitos = Expediente.find(params[:id]).circuitos.where("nro <> 0")
+    nuevo = [:id => "nuevo",
+        :expediente_id => 23798,
+                  :nro => circuitos.count+1,
+                 :tema => nil,
+                 :anio => nil,
+                :fojas => nil,
+              :type => "Agregar Nuevo"]
+    render json: circuitos.as_json(methods: 'get_tramites') + nuevo
   end
 
   private
