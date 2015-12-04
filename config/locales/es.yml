@@ -154,6 +154,19 @@ es:
       update_expediente: Editando Expediente
       fojas: Nro. Fojas
       anio: Fecha
+    modal_circuito:
+      title:
+        create_expediente: Creando Expediente
+      create_expediente: Creando Expediente
+      update_expediente: Editando Expediente
+      fojas: Nro. Fojas
+      anio: Fecha  
+      circuitos: Circuitos
+      estados: Agregar Estado
+      table:
+        state: Estado
+        specification: Especificacion
+        date: Fecha
 
   especials:
     show:
