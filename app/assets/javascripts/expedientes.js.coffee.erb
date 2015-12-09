@@ -18,7 +18,7 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "14%" }
       { sortable: false, "width": "1%" }
     ]
-  
+
   $(document).on 'click', '#modal-circuito #add_state', ->
     fecha = $("#modal-circuito #fecha").val()
     estado = $("#modal-circuito #estados option:selected").val()
@@ -35,11 +35,10 @@ $(document).on 'ready page:load', ->
     "<td> #{fecha} </td>" +
     "<td> <i class='fa fa-times remove-table-row btn btn-xs'></i> </td> </tr>"
     $('#modal-circuito #states-table-column tbody').append(row)
-    $('#modal-circuito #fecha').val("");
-    $('#modal-circuito #estados').val("0");
-    $('#modal-circuito #esp1').empty();
-    $('#modal-circuito #esp2').empty();
-    
+    $('#modal-circuito #fecha').val("")
+    $('#modal-circuito #estados').val("0")
+    $('#modal-circuito #esp1').empty()
+    $('#modal-circuito #esp2').empty()
 
   $('#expedientes #btn-new').on 'click', ->
     $(document).off 'keydown'

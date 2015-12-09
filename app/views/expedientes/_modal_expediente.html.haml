@@ -7,6 +7,8 @@
         %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
       = form_for @expediente, url: { action: actionvar } do |f|
         = hidden_field_tag :tramites_pendientes
+        = hidden_field_tag :acumula_exp
+        = hidden_field_tag :adjunta_exp
         .modal-body
           .row
             .col-md-6
@@ -14,19 +16,24 @@
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
               .input-group
-                = f.label :anio, { class: "input-group-addon", id: "basic-addon2" }
+                = f.label "Año", { class: "input-group-addon", id: "basic-addon2" }
                 = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
               .input-group
                 = f.label :tema, { class: "input-group-addon", id: "basic-addon3" }
                 = f.text_area :tema, { class: "form-control", "aria-describedby": "basic-addon3", placeholder: 'Sumario', type: :text }
               .input-group
-                = f.label :observacion, { class: "input-group-addon", id: "basic-addon4" }
+                = f.label "Observación", { class: "input-group-addon", id: "basic-addon4" }
                 = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
               .input-group#group-tramites
                 = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
             .col-md-6
-
+              .input-group
+                = label_tag nil, 'Acumula a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { style: 'width: 100%', id: 'acumula' }
+              .input-group
+                = label_tag nil, 'Adjuntada Fisicamente a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { style: 'width: 100%', id: 'adjunta' }
         .modal-footer
           = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
 
@@ -49,6 +56,11 @@
       index++;
     });
 
+    var adjunta = $("#modal-expediente .adjunta-token").data('adjunta');
+    var acumula = $("#modal-expediente .acumula-token").data('acumula');
+
+    $("#modal-expediente #acumula_exp").val(tramites);
+    $("#modal-expediente #adjunta_exp").val(adjunta);
     $("#modal-expediente #tramites_pendientes").val(JSON.stringify(tramites));
     $("#modal-expediente #new_expediente, [id^='edit_expediente']").submit();
   });
@@ -116,6 +128,68 @@
     multiple: true,
     ajax: {
       url: "/expedientes/get_tramites_pendientes",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $("#modal-expediente #acumula").select2({
+    placeholder: "Buscar expedientes...",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: function(exp) {
+      return "<div class='acumula-token' data-acumula=" + exp.id + "> Expediente Nro: " + exp.nro_exp + "</div>";
+    },
+    formatResult: function(exp) {
+      return "<div><b><i><small> Expediente Nro: " + exp.nro_exp + "</small></i></b></div>";
+    },
+    ajax: {
+      url: "/expedientes/search",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $("#modal-expediente #adjunta").select2({
+    placeholder: "Buscar expedientes...",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: function(exp) {
+      return "<div class='adjunta-token' data-adjunta=" + exp.id + "> Expediente Nro: " + exp.nro_exp + "</div>";
+    },
+    formatResult: function(exp) {
+      return "<div><b><i><small> Expediente Nro: " + exp.nro_exp + "</small></i></b></div>";
+    },
+    ajax: {
+      url: "/expedientes/search",
       dataType: 'json',
       delay: 250,
       data: function (params) {
