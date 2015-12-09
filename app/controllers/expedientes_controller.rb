@@ -43,20 +43,11 @@ class ExpedientesController < ApplicationController
     exp = params[:expediente]
     @expediente = Expediente.create exp.to_hash
 
-    @circuito = Circuito.create nro: 0, expediente: @expediente
-
-    ## set initial state
-    @circuito.estado_expedientes.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-      e.fecha = @expediente.anio
-    end
-
     ##add relation exp and tramites
     unless params[:tramites_pendientes].blank?
       JSON.parse(params[:tramites_pendientes]).each do |key, value|
         tramite = Tramite.find(value["id"])
-        @circuito.tramites << tramite
+        @expediente.circuitos.first.tramites << tramite
 
         #set finalized state to tramite
         tramite.estado_tramites.create do |e|
@@ -66,13 +57,33 @@ class ExpedientesController < ApplicationController
           e.ref_type = @expediente.type
         end
       end
+
+      unless params[:adjunta_exp].blank?
+        @expediente.adjunta = Expediente.find(params[:adjunta_exp])
+      end
+
+      unless params[:acumula_exp].blank?
+        @expediente.acumula = Expediente.find(params[:aumula_exp])
+      end
     end
 
     redirect_to action: :index
   end
 
   def update
+    exp = params[:expediente]
+    @expediente = Expediente.find params[:id]
+    @expediente.update exp.as_json
 
+    unless params[:adjunta_exp].blank?
+      @expediente.adjunta = Expediente.find(params[:adjunta_exp])
+    end
+
+    unless params[:acumula_exp].blank?
+      @expediente.acumula = Expediente.find(params[:aumula_exp])
+    end
+
+    redirect_to action: :index
   end
 
   def get_tramites_pendientes
@@ -93,10 +104,15 @@ class ExpedientesController < ApplicationController
     render json: nuevo + circuitos.as_json(methods: ['get_tramites', 'estados'])
   end
 
+  def search
+    expedientes = Expediente.where("nro_exp ilike ?", "%#{params[:q]}%").first(10)
+    render json: expedientes
+  end
+
   private
 
   def expediente_params
-    params.require(:expediente).permit("nro_fojas","tema",  "anio", "observacion", "bis")
+    params.require(:expediente).permit("nro_fojas", "tema", "anio", "observacion")
   end
 
 end

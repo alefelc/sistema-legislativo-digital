@@ -1,19 +1,16 @@
 class Expediente < ActiveRecord::Base
 
-	#= Associations
-	has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
-	has_many :expediente_administrativos
-	has_many :circuitos
-	has_and_belongs_to_many :tags
-	has_many :normas
-
-  #== polymorfic association
-  has_many :estado_tramites, as: :ref
+  #= Associations
+  has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
+  has_many :expediente_administrativos
+  has_many :circuitos
+  has_and_belongs_to_many :tags
+  has_many :normas
 
   #== Shortcut association
   has_many :estado_expedientes, through: :circuitos
 
-	#== Association recursive expediente acumula
+  #== Association recursive expediente acumula
   has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumula_id"
   has_many :acumulados, through: :acumulados_relationship
   has_one :acumula_relationship, class_name: "Acumula", foreign_key: "acumulado_id"
@@ -25,12 +22,21 @@ class Expediente < ActiveRecord::Base
   has_one :adjunta_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
   has_one :adjunta, through: :adjunta_relationship
 
+  #== Callbacks
+  before_create :put_expediente_number
+  after_create :zero_circuit_by_default
+
+  def put_expediente_number
+    self.nro_exp = (Expediente.last.nro_exp.to_i + 1).to_s
+  end
+
+  def zero_circuit_by_default
+    circuit = Circuito.create nro: 0, expediente: self
+    circuit.estado_expedientes.create nombre: "Iniciado", tipo: 1, fecha: self.anio
+  end
+
   def get_anio_expediente
-    if self.anio.present?
-      " Año " + self.anio.year.to_s
-    else
-      " - Año no asignado"
-    end
+    self.anio.present? ? " Año " + self.anio.year.to_s : " - Año no asignado"
   end
 
   def get_fojas
@@ -43,7 +49,7 @@ class Expediente < ActiveRecord::Base
 
   def get_circuitos
     self.circuitos.where.not(nro:0).order(nro: :asc)
-  end  
+  end
 
   def get_despachos
     self.despachos
@@ -65,9 +71,4 @@ class Expediente < ActiveRecord::Base
     "Expediente"
   end
 
-  before_create :put_expediente_number
-
-  def put_expediente_number
-    self.nro_exp = (Expediente.last.nro_exp.to_i + 1).to_s
-  end
 end
