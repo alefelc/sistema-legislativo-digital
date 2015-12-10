@@ -82,7 +82,7 @@ class ExpedientesController < ApplicationController
   end
 
   def get_circuitos
-    circuitos = Expediente.find(params[:id]).circuitos.where("nro <> 0")
+    circuitos = Expediente.find(params[:id]).circuitos.where("nro <> 0").order(id: :asc)
     nuevo = [:id => "nuevo",
         :expediente_id => 23798,
                   :nro => circuitos.count+1,
@@ -90,7 +90,7 @@ class ExpedientesController < ApplicationController
                  :anio => nil,
                 :fojas => nil,
               :type => "Agregar Nuevo"]
-    render json: circuitos.as_json(methods: 'get_tramites') + nuevo
+    render json: nuevo + circuitos.as_json(methods: ['get_tramites', 'estados'])
   end
 
   private

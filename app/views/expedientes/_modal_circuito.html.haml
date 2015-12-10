@@ -9,6 +9,7 @@
         = hidden_field_tag :tramites_pendientes
         = hidden_field_tag :expediente, @expediente.id
         = hidden_field_tag 'circuito[nro]'
+        = hidden_field_tag :estados_circuito
         .modal-body
           .row
             .col-md-6
@@ -30,7 +31,7 @@
             .col-md-6
               .input-group
                 = f.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
-                = text_field_tag 'estado[fecha]', nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
+                = text_field_tag nil, nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
                 = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
                 = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
                 = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp2' }
@@ -123,9 +124,24 @@
       };
       index++;
     });
+
+    //add states expedient to form
+    var states = {};
+    var index = 0;
+    $("#modal-circuito .states-tr").each(function(key, value) {
+      states[index] = {
+        id: $(value).data("id"),
+        fecha: $(value).data("fecha"),
+        especificacion1: $(value).data("esp1"),
+        especificacion2: $(value).data("esp2"),
+        tipo: $(value).data("estado")
+      };
+      index++;
+    });
     
     circuit_nro = $('#modal-circuito .circuito-token').data('nro');
 
+    $("#modal-circuito #estados_circuito").val(JSON.stringify(states));
     $("#modal-circuito #tramites_pendientes").val(JSON.stringify(tramites));
     $("#modal-circuito #circuito_nro").val(circuit_nro);
     $('#modal-circuito .edit_expediente').get(0).setAttribute('action', 'circuitos/update');
@@ -252,6 +268,7 @@
       cache: true
     }
   }).on("select2-selecting", function(e) {
+    $('#modal-circuito #states-table-column tbody').empty();
     c = e.object;
     if (e.val == "nuevo"){
       $('#modal-circuito #fojas-field').val('');
@@ -264,5 +281,6 @@
       $('#modal-circuito #anio-field').val(c.anio);
       $('#modal-circuito #tema-field').val(c.tema);
       $("#modal-circuito #tramites").select2('data', c.get_tramites)
+      $('#modal-circuito #states-table-column tbody').append(c.estados)
     }
   });   
