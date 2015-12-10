@@ -28,6 +28,43 @@ class CircuitosController < ApplicationController
             end
           end
         end
+
+        ## add initial state
+        circuito.estado_expedientes.create do |e|
+            puts "crea estado inicial"
+            e.tipo = 1
+            e.nombre = "Iniciado"
+            e.fecha = circuito.anio
+        end          
+
+        ## add states
+        new_states = JSON.parse(params[:estados_circuito]).select{ |x, y| not y.has_key?(:id) }
+        new_states.each do |key, value|
+          circuito.estado_expedientes.create do |ne|
+            ne.tipo = value['tipo']
+            ne.fecha = value['fecha']
+            case value['tipo']
+            when 2
+              # orden del dia
+              ne.nombre = "Orden del Día"
+              ne.especificacion1 = value['especificacion1']
+            when 3
+              # a comision
+              ne.nombre = "A Comisión"
+              ne.especificacion1 = value['especificacion1']
+            when 5
+              # sancionado
+              ne.nombre = "Sancionado"
+              ne.especificacion1 = value['especificacion1']
+              ne.especificacion2 = value['especificacion2']
+            when 7
+              # retirado
+              ne.nombre = "Retirado"
+            else
+            end
+          end
+        end
+
       else
         ## caso del update del circuito
         circuito = Circuito.find(c)
@@ -59,7 +96,46 @@ class CircuitosController < ApplicationController
           tramite.estado_tramites.find_by(ref_id: expediente.id, tipo: "3").delete
           tramite.pendiente = true
           tramite.save
-        end  
+        end
+
+        ## add states
+        current_states = JSON.parse(params[:estados_circuito]).select{ |x, y| y.has_key?('id') }.map{ |x, y| y['id'] }
+        new_states = JSON.parse(params[:estados_circuito]).select{ |x, y| not y.has_key?('id') }
+        old_states = circuito.estado_expedientes.map{ |x| x.id }
+        puts current_states
+        puts "fin current"
+        puts new_states
+        puts "fin new"
+        puts old_states
+        puts "fin old"
+        new_states.each do |key, value|
+          puts "entro al new"
+          circuito.estado_expedientes.create do |ne|
+            ne.tipo = value['tipo']
+            ne.fecha = value['fecha']
+            case value['tipo']
+            when 2
+              # orden del dia
+              ne.nombre = "Orden del Día"
+              ne.especificacion1 = value['especificacion1']
+            when 3
+              # a comision
+              ne.nombre = "A Comisión"
+              ne.especificacion1 = value['especificacion1']
+            when 5
+              # sancionado
+              ne.nombre = "Sancionado"
+              ne.especificacion1 = value['especificacion1']
+              ne.especificacion2 = value['especificacion2']
+            when 7
+              # retirado
+              ne.nombre = "Retirado"
+            else
+            end
+          end
+        end
+        puts (old_states - current_states)
+        (old_states - current_states).each { |id| circuito.estado_expedientes.delete(id) }  
       end  
     end  
 

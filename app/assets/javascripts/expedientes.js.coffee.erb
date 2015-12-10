@@ -22,14 +22,14 @@ $(document).on 'ready page:load', ->
   $(document).on 'click', '#modal-circuito #add_state', ->
     fecha = $("#modal-circuito #fecha").val()
     estado = $("#modal-circuito #estados option:selected").val()
-    estado_text = estado = $("#modal-circuito #estados option:selected").text()
+    estado_text = $("#modal-circuito #estados option:selected").text()
     esp1 = $("#modal-circuito #esp1 option:selected").val()
     esp1_text = $("#modal-circuito #esp1 option:selected").text()
     esp2 = $("#modal-circuito #esp2 option:selected").val()
     esp2_text = $("#modal-circuito #esp2 option:selected").text()
-    row = "<tr class='states-tr' data-id=''" +
-    " data-fecha='#{fecha}' data-estado='#{estado}' data-esp1='#{esp1}'" +
-    " data-esp2='#{esp2}'> " +
+    row = "<tr class='states-tr'" +
+    " data-fecha='#{fecha}' data-estado='#{estado}' data-esp1='#{esp1_text}'" +
+    " data-esp2='#{esp2_text}'> " +
     "<td> #{estado_text} </td> " +
     "<td> #{esp1_text + " --> " + esp2_text} </td>" +
     "<td> #{fecha} </td>" +

@@ -16,6 +16,21 @@ class Circuito < ActiveRecord::Base
 
   def type
     "Circuito"
+  end
+
+  def estados
+    tr_html = ""
+    estados = self.estado_expedientes.order(id: :asc)
+    estados.each do |e|
+      tr_html += "<tr class='states-tr' data-id='#{e.id}'" +
+                  " data-fecha='#{e.fecha}' data-estado='#{e.tipo}' data-esp1='#{e.especificacion1}'" +
+                  " data-esp2='#{e.especificacion2}'> " +
+                  "<td> #{e.nombre.to_s} </td> " +
+                  "<td> #{e.especificacion1} -->  #{e.especificacion2} </td>" +
+                  "<td> #{e.fecha} </td>" +
+                  "<td> </td> </tr>"
+    end
+    tr_html  
   end  
 
   def get_tramites

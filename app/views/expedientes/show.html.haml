@@ -163,16 +163,80 @@
               %th{style: "text-align:center;"}= "Estado"
               %th= "Fecha"
           %tbody
-            - exp.circuitos.find_by(nro: 0).estado_expedientes.each do |x|
+            - exp.estado_expedientes.includes(:circuito).order(fecha: :asc).each do |x|
+              - nro_c = x.circuito.nro
               - case x.tipo
               - when "1"
-                - esp1 = x.especificacion1
-                - if (esp1.present?)
-                  %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                    %td= "Iniciado " + esp1.to_s + x.especificacion2.to_s 
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Iniciado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
                     %td= to_date(x.fecha)
-                -else
-                  %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                    %td= "Iniciado"
+                  - else
+                    %td= "Iniciado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+              - when "2"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Orden del Día " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                  - else
+                    %td= "Orden del Día Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
+              - when "3"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "A Comisión " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                  - else
+                    %td= "A Comisión Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
+              - when "4"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Dictaminado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                  - else
+                    %td= "Dictaminado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
+              - when "5"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - normas = get_sancion_estado(exp, x)
+                  - if nro_c == 0
+                    %td
+                      %span= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                      - normas.each do |n|
+                        %span= " - "
+                        %span= link_to(n.type.to_s + " ".to_s + n.nro.to_s , n)
+                    %td= to_date(x.fecha)
+                  - else
+                    %td
+                      %span= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                      - normas.each do |n|
+                        %span= " - "
+                        %span= link_to(n.type.to_s + " ".to_s + n.nro.to_s , n) 
+                    %td= to_date(x.fecha)  
+              - when "6"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Observado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                  - else
+                    %td= "Observado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
+              - when "7"
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Retirado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)
+                  - else
+                    %td= "Retirado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
+              - when "8" ## Estado Sancionado pero con referencia a la norma(relacion polimorfica)
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
                     %td= to_date(x.fecha)    
+                  - else
+                    %td= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td= to_date(x.fecha)  
               - else

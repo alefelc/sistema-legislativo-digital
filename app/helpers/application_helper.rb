@@ -279,4 +279,8 @@ module ApplicationHelper
     norma.sancion.present? ? " Sancionada el #{to_date(norma.sancion)}" : " Sancion no cargada"
   end
 
+  def get_sancion_estado(exp, estado_exp)
+    exp.circuitos.find_by(nro: 0).normas.where(sancion:estado_exp.fecha)
+  end  
+
 end
