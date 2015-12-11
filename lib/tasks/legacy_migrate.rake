@@ -274,7 +274,7 @@ namespace :legacy_migrate do
         ee = EstadoExpediente.create nombre: t.ESTADO,
           especificacion1: t.ESPECIF1, especificacion2: t.ESPECIF2,
           tipo: t.B_EST, fecha: t.FECHA
-        exp.circuitos[0].estado_expedientes << ee
+        exp.circuitos.find_by(nro: 0).estado_expedientes << ee
       else
         puts "Soy nil! #{t.IND_EXP}"
       end
