@@ -19,6 +19,27 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "1%" }
     ]
 
+  $(document).on 'click', '#modal-expediente #add_state', ->
+    fecha = $("#modal-expediente #fecha").val()
+    estado = $("#modal-expediente #estados option:selected").val()
+    estado_text = estado = $("#modal-expediente #estados option:selected").text()
+    esp1 = $("#modal-expediente #esp1 option:selected").val()
+    esp1_text = $("#modal-expediente #esp1 option:selected").text()
+    esp2 = $("#modal-expediente #esp2 option:selected").val()
+    esp2_text = $("#modal-expediente #esp2 option:selected").text()
+    row = "<tr class='states-tr' data-id=''" +
+    " data-fecha='#{fecha}' data-estado='#{estado}' data-esp1='#{esp1}'" +
+    " data-esp2='#{esp2}'> " +
+    "<td> #{estado_text} </td> " +
+    "<td> #{esp1_text + " --> " + esp2_text} </td>" +
+    "<td> #{fecha} </td>" +
+    "<td> <i class='fa fa-times remove-table-row btn btn-xs'></i> </td> </tr>"
+    $('#modal-expediente #states-table-column tbody').append(row)
+    $('#modal-expediente #fecha').val("")
+    $('#modal-expediente #estados').val("0")
+    $('#modal-expediente #esp1').empty()
+    $('#modal-expediente #esp2').empty()
+
   $(document).on 'click', '#modal-circuito #add_state', ->
     fecha = $("#modal-circuito #fecha").val()
     estado = $("#modal-circuito #estados option:selected").val()

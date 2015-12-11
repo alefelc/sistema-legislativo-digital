@@ -63,7 +63,7 @@ class ExpedientesController < ApplicationController
       end
 
       unless params[:acumula_exp].blank?
-        @expediente.acumula = Expediente.find(params[:aumula_exp])
+        @expediente.acumula = Expediente.find(params[:acumula_exp])
       end
     end
 
@@ -75,12 +75,47 @@ class ExpedientesController < ApplicationController
     @expediente = Expediente.find params[:id]
     @expediente.update exp.as_json
 
-    unless params[:adjunta_exp].blank?
+    if params[:adjunta_exp].blank? && @expediente.adjunta.present?
+      @expediente.adjunta.delete
+    end
+    if params[:adjunta_exp].present?
       @expediente.adjunta = Expediente.find(params[:adjunta_exp])
     end
 
-    unless params[:acumula_exp].blank?
-      @expediente.acumula = Expediente.find(params[:aumula_exp])
+    if params[:acumula_exp].blank? && @expediente.acumula.present?
+      @expediente.adjunta.delete
+    end
+    if params[:acumula_exp].present?
+      @expediente.acumula = Expediente.find(params[:acumula_exp])
+    end
+
+    circuito = @expediente.circuitos.find_by nro: 0
+    current_tramites = []
+    old_tramites = circuito.tramites.map{ |x| x.id }
+    JSON.parse(params[:tramites_pendientes]).each do |key, value|
+      unless old_tramites.include?(value["id"])
+        tramite = Tramite.find(value["id"])
+        circuito.tramites << tramite
+
+        #set finalized state to tramite
+        tramite.estado_tramites.create do |e|
+          e.nombre = "Finalizado"
+          e.tipo = 3
+          e.especificacion = "Circuito Nro: " + circuito.nro.to_s
+          e.ref_id = @expediente.id
+          e.ref_type = @expediente.type
+        end
+      end
+      current_tramites << value["id"]
+    end
+
+    # delete tramites and final state
+    (old_tramites - current_tramites).each do |id|
+      circuito.tramites.delete(id)
+      tramite = Tramite.find(id)
+      tramite.estado_tramites.find_by(ref_id: @expediente.id, tipo: "3").delete
+      tramite.pendiente = true
+      tramite.save
     end
 
     redirect_to action: :index

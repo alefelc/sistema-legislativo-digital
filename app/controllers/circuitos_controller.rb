@@ -35,7 +35,7 @@ class CircuitosController < ApplicationController
             e.tipo = 1
             e.nombre = "Iniciado"
             e.fecha = circuito.anio
-        end          
+        end
 
         ## add states
         new_states = JSON.parse(params[:estados_circuito]).select{ |x, y| not y.has_key?(:id) }
@@ -90,7 +90,7 @@ class CircuitosController < ApplicationController
         end
 
         # delete tramites and final state
-        (old_tramites - current_tramites).each do |id| 
+        (old_tramites - current_tramites).each do |id|
           circuito.tramites.delete(id)
           tramite = Tramite.find(id)
           tramite.estado_tramites.find_by(ref_id: expediente.id, tipo: "3").delete
@@ -135,9 +135,9 @@ class CircuitosController < ApplicationController
           end
         end
         puts (old_states - current_states)
-        (old_states - current_states).each { |id| circuito.estado_expedientes.delete(id) }  
-      end  
-    end  
+        (old_states - current_states).each { |id| circuito.estado_expedientes.delete(id) }
+      end
+    end
 
     redirect_to action: 'index', controller: 'expedientes'
   end

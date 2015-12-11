@@ -27,7 +27,7 @@ es:
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado
-        observaciones: Observaciones       
+        observaciones: Observaciones
   declaracions:
     show:
       info: Información de la Declaración
@@ -154,13 +154,17 @@ es:
       update_expediente: Editando Expediente
       fojas: Nro. Fojas
       anio: Fecha
+      table:
+        state: Estado
+        specification: Especificación
+        date: Fecha
     modal_circuito:
       title:
         create_expediente: Creando Expediente
       create_expediente: Creando Expediente
       update_expediente: Editando Expediente
       fojas: Nro. Fojas
-      anio: Fecha  
+      anio: Fecha
       circuitos: Circuitos
       estados: Agregar Estado
       table:
