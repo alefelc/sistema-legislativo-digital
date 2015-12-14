@@ -31,7 +31,6 @@ class CircuitosController < ApplicationController
 
         ## add initial state
         circuito.estado_expedientes.create do |e|
-            puts "crea estado inicial"
             e.tipo = 1
             e.nombre = "Iniciado"
             e.fecha = circuito.anio

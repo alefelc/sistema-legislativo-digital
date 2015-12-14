@@ -67,6 +67,37 @@ class ExpedientesController < ApplicationController
       end
     end
 
+    circuito = @expediente.circuitos.first
+
+    if params[:estados_expedientes].present?
+      new_states = JSON.parse(params[:estados_expedientes])
+      new_states.each do |key, value|
+        circuito.estado_expedientes.create do |ne|
+          ne.tipo = value['tipo']
+          ne.fecha = value['fecha']
+          case value['tipo']
+          when 2
+            # orden del dia
+            ne.nombre = "Orden del Día"
+            ne.especificacion1 = value['especificacion1']
+          when 3
+            # a comision
+            ne.nombre = "A Comisión"
+            ne.especificacion1 = value['especificacion1']
+          when 5
+            # sancionado
+            ne.nombre = "Sancionado"
+            ne.especificacion1 = value['especificacion1']
+            ne.especificacion2 = value['especificacion2']
+          when 7
+            # retirado
+            ne.nombre = "Retirado"
+          else
+          end
+        end
+      end
+    end
+
     redirect_to action: :index
   end
 
@@ -116,6 +147,35 @@ class ExpedientesController < ApplicationController
       tramite.estado_tramites.find_by(ref_id: @expediente.id, tipo: "3").delete
       tramite.pendiente = true
       tramite.save
+    end
+
+    if params[:estados_expedientes].present?
+      new_states = JSON.parse(params[:estados_expedientes])
+      new_states.each do |key, value|
+        circuito.estado_expedientes.create do |ne|
+          ne.tipo = value['tipo']
+          ne.fecha = value['fecha']
+          case value['tipo']
+          when 2
+            # orden del dia
+            ne.nombre = "Orden del Día"
+            ne.especificacion1 = value['especificacion1']
+          when 3
+            # a comision
+            ne.nombre = "A Comisión"
+            ne.especificacion1 = value['especificacion1']
+          when 5
+            # sancionado
+            ne.nombre = "Sancionado"
+            ne.especificacion1 = value['especificacion1']
+            ne.especificacion2 = value['especificacion2']
+          when 7
+            # retirado
+            ne.nombre = "Retirado"
+          else
+          end
+        end
+      end
     end
 
     redirect_to action: :index

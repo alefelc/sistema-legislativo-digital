@@ -7,6 +7,9 @@ class Expediente < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_many :normas
 
+  #== polymorfic association
+  has_many :estado_tramites, as: :ref
+
   #== Shortcut association
   has_many :estado_expedientes, through: :circuitos
 
@@ -25,6 +28,11 @@ class Expediente < ActiveRecord::Base
   #== Callbacks
   before_create :put_expediente_number
   after_create :zero_circuit_by_default
+  before_create :set_bis
+
+  def set_bis
+    self.bis = 0
+  end
 
   def put_expediente_number
     self.nro_exp = (Expediente.last.nro_exp.to_i + 1).to_s
