@@ -11,7 +11,7 @@ module DespachosHelper
   def get_options_comisions
     Periodo.last.comisions.order(:denominacion).collect{|c| [c.denominacion, c.id]}
   end
-  
+
   def get_options_concejals
     Periodo.last.concejals.order(:apellido, :nombre).collect{|c| [c.apellido + ", " + c.nombre, c.id]}
   end

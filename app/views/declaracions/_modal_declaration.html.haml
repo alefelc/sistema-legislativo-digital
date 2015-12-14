@@ -322,7 +322,7 @@
         to_day: $(value).data("hasta-dia"),
         to_month: $(value).data("hasta-mes"),
         to_year: $(value).data("hasta-anio"),
-        type_day: $(value).data("dia-tipo
+        type_day: $(value).data("dia-tipo"),
         relation_type: $(value).data("tipo-relacion")
       };
       index++;
@@ -376,7 +376,7 @@
           table.fnPageChange('next');
           break;
         case 13:
-          $('#declaracion tr.info').find('td:eq(0) a').get(0).click();
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
       }
       rowpos = $('table.datatable-keyevents tr.info').position();
       $(document).scrollTop(rowpos.top - 45);

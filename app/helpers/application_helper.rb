@@ -128,6 +128,17 @@ module ApplicationHelper
     desp.concejals.present? ? build_json_concejals(desp.concejals) : []
   end
 
+  def prepopulate_tramites(exp)
+    exp.circuitos.present? ? exp.circuitos.find_by(nro: 0).get_tramites : ""
+  end
+
+  def prepopulate_adjunta_exp(exp)
+    exp.present? ? exp.adjunta : ""
+  end
+
+  def prepopulate_acumula_exp(exp)
+    exp.present? ? exp.acumula : ""
+  end
   def prepopulate_iniciadores(tramite)
     iniciadores = []
     case tramite.type

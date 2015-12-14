@@ -43,20 +43,11 @@ class ExpedientesController < ApplicationController
     exp = params[:expediente]
     @expediente = Expediente.create exp.to_hash
 
-    @circuito = Circuito.create nro: 0, expediente: @expediente
-
-    ## set initial state
-    @circuito.estado_expedientes.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-      e.fecha = @expediente.anio
-    end
-
     ##add relation exp and tramites
     unless params[:tramites_pendientes].blank?
       JSON.parse(params[:tramites_pendientes]).each do |key, value|
         tramite = Tramite.find(value["id"])
-        @circuito.tramites << tramite
+        @expediente.circuitos.first.tramites << tramite
 
         #set finalized state to tramite
         tramite.estado_tramites.create do |e|
@@ -66,13 +57,128 @@ class ExpedientesController < ApplicationController
           e.ref_type = @expediente.type
         end
       end
+
+      unless params[:adjunta_exp].blank?
+        @expediente.adjunta = Expediente.find(params[:adjunta_exp])
+      end
+
+      unless params[:acumula_exp].blank?
+        @expediente.acumula = Expediente.find(params[:acumula_exp])
+      end
+    end
+
+    circuito = @expediente.circuitos.first
+
+    if params[:estados_expedientes].present?
+      new_states = JSON.parse(params[:estados_expedientes])
+      new_states.each do |key, value|
+        circuito.estado_expedientes.create do |ne|
+          ne.tipo = value['tipo']
+          ne.fecha = value['fecha']
+          case value['tipo']
+          when 2
+            # orden del dia
+            ne.nombre = "Orden del Día"
+            ne.especificacion1 = value['especificacion1']
+          when 3
+            # a comision
+            ne.nombre = "A Comisión"
+            ne.especificacion1 = value['especificacion1']
+          when 5
+            # sancionado
+            ne.nombre = "Sancionado"
+            ne.especificacion1 = value['especificacion1']
+            ne.especificacion2 = value['especificacion2']
+          when 7
+            # retirado
+            ne.nombre = "Retirado"
+          else
+          end
+        end
+      end
     end
 
     redirect_to action: :index
   end
 
   def update
+    exp = params[:expediente]
+    @expediente = Expediente.find params[:id]
+    @expediente.update exp.as_json
 
+    if params[:adjunta_exp].blank? && @expediente.adjunta.present?
+      @expediente.adjunta.delete
+    end
+    if params[:adjunta_exp].present?
+      @expediente.adjunta = Expediente.find(params[:adjunta_exp])
+    end
+
+    if params[:acumula_exp].blank? && @expediente.acumula.present?
+      @expediente.adjunta.delete
+    end
+    if params[:acumula_exp].present?
+      @expediente.acumula = Expediente.find(params[:acumula_exp])
+    end
+
+    circuito = @expediente.circuitos.find_by nro: 0
+    current_tramites = []
+    old_tramites = circuito.tramites.map{ |x| x.id }
+    JSON.parse(params[:tramites_pendientes]).each do |key, value|
+      unless old_tramites.include?(value["id"])
+        tramite = Tramite.find(value["id"])
+        circuito.tramites << tramite
+
+        #set finalized state to tramite
+        tramite.estado_tramites.create do |e|
+          e.nombre = "Finalizado"
+          e.tipo = 3
+          e.especificacion = "Circuito Nro: " + circuito.nro.to_s
+          e.ref_id = @expediente.id
+          e.ref_type = @expediente.type
+        end
+      end
+      current_tramites << value["id"]
+    end
+
+    # delete tramites and final state
+    (old_tramites - current_tramites).each do |id|
+      circuito.tramites.delete(id)
+      tramite = Tramite.find(id)
+      tramite.estado_tramites.find_by(ref_id: @expediente.id, tipo: "3").delete
+      tramite.pendiente = true
+      tramite.save
+    end
+
+    if params[:estados_expedientes].present?
+      new_states = JSON.parse(params[:estados_expedientes])
+      new_states.each do |key, value|
+        circuito.estado_expedientes.create do |ne|
+          ne.tipo = value['tipo']
+          ne.fecha = value['fecha']
+          case value['tipo']
+          when 2
+            # orden del dia
+            ne.nombre = "Orden del Día"
+            ne.especificacion1 = value['especificacion1']
+          when 3
+            # a comision
+            ne.nombre = "A Comisión"
+            ne.especificacion1 = value['especificacion1']
+          when 5
+            # sancionado
+            ne.nombre = "Sancionado"
+            ne.especificacion1 = value['especificacion1']
+            ne.especificacion2 = value['especificacion2']
+          when 7
+            # retirado
+            ne.nombre = "Retirado"
+          else
+          end
+        end
+      end
+    end
+
+    redirect_to action: :index
   end
 
   def get_tramites_pendientes
@@ -93,10 +199,15 @@ class ExpedientesController < ApplicationController
     render json: nuevo + circuitos.as_json(methods: ['get_tramites', 'estados'])
   end
 
+  def search
+    expedientes = Expediente.where("nro_exp ilike ?", "%#{params[:q]}%").first(10)
+    render json: expedientes
+  end
+
   private
 
   def expediente_params
-    params.require(:expediente).permit("nro_fojas","tema",  "anio", "observacion", "bis")
+    params.require(:expediente).permit("nro_fojas", "tema", "anio", "observacion")
   end
 
 end

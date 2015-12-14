@@ -7,6 +7,9 @@
         %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
       = form_for @expediente, url: { action: actionvar } do |f|
         = hidden_field_tag :tramites_pendientes
+        = hidden_field_tag :acumula_exp
+        = hidden_field_tag :adjunta_exp
+        = hidden_field_tag :estados_expedientes
         .modal-body
           .row
             .col-md-6
@@ -14,19 +17,50 @@
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
               .input-group
-                = f.label :anio, { class: "input-group-addon", id: "basic-addon2" }
+                = f.label "Año", { class: "input-group-addon", id: "basic-addon2" }
                 = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
               .input-group
                 = f.label :tema, { class: "input-group-addon", id: "basic-addon3" }
                 = f.text_area :tema, { class: "form-control", "aria-describedby": "basic-addon3", placeholder: 'Sumario', type: :text }
               .input-group
-                = f.label :observacion, { class: "input-group-addon", id: "basic-addon4" }
+                = f.label "Observación", { class: "input-group-addon", id: "basic-addon4" }
                 = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
               .input-group#group-tramites
                 = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
-                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
+                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites', data: { load: prepopulate_tramites(@expediente) } }
+              .input-group
+                = label_tag nil, 'Acumula a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { style: 'width: 100%', id: 'acumula', data: { load: prepopulate_acumula_exp(@expediente) } }
+              .input-group
+                = label_tag nil, 'Adjuntada Fisicamente a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { style: 'width: 100%', id: 'adjunta', data: { load: prepopulate_adjunta_exp(@expediente) }}
             .col-md-6
-
+              .input-group
+                = f.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
+                = text_field_tag nil, nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
+                = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
+                = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
+                = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp2' }
+                .input-group-addon.parent-group-btn.btn#add_state
+                  %i.fa.fa-plus-circle.fa-2x
+              #states-table-column
+                .row
+                  .col-xs-12
+                    %table.table.table-striped.table-bordered#states-table
+                      %thead
+                        %tr
+                          %th= t('.table.state')
+                          %th= t('.table.specification')
+                          %th{ width: "17%" }= t('.table.date')
+                          %th{ width: "1%" }= icon 'trash', '', class: 'fa-1x'
+                      %tbody
+                        - if @expediente.present? && @expediente.circuitos.find_by(nro: 0).present?
+                          - @expediente.circuitos.find_by(nro: 0).estado_expedientes.order(fecha: :asc).each do |est|
+                            %tr
+                              %td= est.nombre
+                              %td= "#{est.especificacion1} -->  #{est.especificacion2}"
+                              %td= est.fecha
+                              %td
         .modal-footer
           = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
 
@@ -49,7 +83,27 @@
       index++;
     });
 
+    //add states expedient to form
+    var states = {};
+    var index = 0;
+    $("#modal-expediente .states-tr").each(function(key, value) {
+      states[index] = {
+        id: $(value).data("id"),
+        fecha: $(value).data("fecha"),
+        especificacion1: $(value).data("esp1"),
+        especificacion2: $(value).data("esp2"),
+        tipo: $(value).data("estado")
+      };
+      index++;
+    });
+
+    var adjunta = $("#modal-expediente .adjunta-token").data('adjunta');
+    var acumula = $("#modal-expediente .acumula-token").data('acumula');
+
+    $("#modal-expediente #acumula_exp").val(acumula);
+    $("#modal-expediente #adjunta_exp").val(adjunta);
     $("#modal-expediente #tramites_pendientes").val(JSON.stringify(tramites));
+    $("#modal-expediente #estados_expedientes").val(JSON.stringify(states));
     $("#modal-expediente #new_expediente, [id^='edit_expediente']").submit();
   });
 
@@ -134,3 +188,136 @@
       cache: true
     }
   });
+
+  $("#modal-expediente #acumula").select2({
+    placeholder: "Buscar expedientes...",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: function(exp) {
+      return "<div class='acumula-token' data-acumula=" + exp.id + "> Expediente Nro: " + exp.nro_exp + "</div>";
+    },
+    formatResult: function(exp) {
+      return "<div><b><i><small> Expediente Nro: " + exp.nro_exp + "</small></i></b></div>";
+    },
+    ajax: {
+      url: "/expedientes/search",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $("#modal-expediente #adjunta").select2({
+    placeholder: "Buscar expedientes...",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: function(exp) {
+      return "<div class='adjunta-token' data-adjunta=" + exp.id + "> Expediente Nro: " + exp.nro_exp + "</div>";
+    },
+    formatResult: function(exp) {
+      return "<div><b><i><small> Expediente Nro: " + exp.nro_exp + "</small></i></b></div>";
+    },
+    ajax: {
+      url: "/expedientes/search",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#modal-expediente #estados').on('change', function() {
+    switch(this.value) {
+      case "3":
+        // A comision
+        var comisions = [["Plan. y Coord. Labor", 6], ["GOBIERNO,PET.GEN., ETC", 18], ["COM. REFORMA POLITICA", 36], ["Economía y Presupuesto", 37], ["Desarrollo Humano - Salud y Promoción Social", 38], ["Desarrollo Humano - Educación, Cultura y Deporte", 39], ["Desarrollo Urbano y Obras Públicas", 40], ["Desarrollo Urbano y Servicios Públicos", 41], ["Desarrollo Económico, Producción y Empleo", 42], ["Planificación y Coordinación de Gestión", 43], ["DERECHOS HUMANOS", 45], ["COMISION ESPECIAL DE REFORMA DEL REGLAMENTO INTERNO", 49], ["COMISION INVESTIGADORA RESOLUCION Nº 851/11", 50]];
+        var seloption = "";
+
+        $.each(comisions,function(i){
+            seloption += '<option value="'+comisions[i][1]+'">'+comisions[i][0]+'</option>';
+        });
+
+        $('#modal-expediente #esp1').empty();
+        $('#modal-expediente #esp2').empty();
+        $('#modal-expediente #esp1').append(seloption);
+        break;
+      case "2":
+        // Orden del Dia
+        var options = [["Asunto Entrado",1],["Asunto a Tratar",2]];
+        var seloption = "";
+
+        $.each(options,function(i){
+            seloption += '<option value="'+options[i][1]+'">'+options[i][0]+'</option>';
+        });
+
+        $('#modal-expediente #esp1').empty();
+        $('#modal-expediente #esp2').empty();
+        $('#modal-expediente #esp1').append(seloption);
+        break;
+      case "5":
+        // Sancionado
+        var options1 = [["Aprob. Art. 151 R.I.",1],["Aprob. S/T c/desp.",2],["Aprob. S/T s/desp.",3],["Aprobado",4],["Arch. S/T c/desp.",5],["Arch. S/T s/desp.",6],["Archivado",7],["Decision Acuerdo",8], ["Decisión Art. 71",9],["Rech. S/T c/desp.",10],["Rech. S/T s/desp.",11],["Rechazado",12],["Retirado",13]];
+        var options2 = [["Aprob. Simple",14],["1° Lectura",15],["2° Lectura",16]];
+        var seloption1 = "";
+        var seloption2 = "";
+
+        $.each(options1,function(i){
+            seloption1 += '<option value="'+options1[i][1]+'">'+options1[i][0]+'</option>';
+        });
+
+        $.each(options2,function(i){
+            seloption2 += '<option value="'+options2[i][1]+'">'+options2[i][0]+'</option>';
+        });
+
+        $('#modal-expediente #esp1').empty();
+        $('#modal-expediente #esp1').append(seloption1);
+        $('#modal-expediente #esp2').empty();
+        $('#modal-expediente #esp2').append(seloption2);
+        break;
+      default:
+        $('#modal-expediente #esp1').empty();
+        $('#modal-expediente #esp2').empty();
+        break;
+    }
+  });
+
+  //Preload select2 input tramites
+  var tokenTramites = $('#modal-expediente #tramites').data('load');
+  var tramites = []
+  $.each(tokenTramites, function(index, tram) {
+    tramites.push({id: tram.id, type: tram.type});
+  });
+  $('#modal-expediente #tramites').select2('data', tramites);
+
+  // Preload select2 input acumula
+  var tokenAcumula = $('#modal-expediente #acumula').data('load');
+  $('#modal-expediente #acumula').select2('data', tokenAcumula);
+
+  // Preload select2 input adjunta
+  var tokenAdjunta = $('#modal-expediente #adjunta').data('load');
+  $('#modal-expediente #adjunta').select2('data', tokenAdjunta);

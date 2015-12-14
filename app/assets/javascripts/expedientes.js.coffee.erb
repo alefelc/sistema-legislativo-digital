@@ -18,7 +18,26 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "14%" }
       { sortable: false, "width": "1%" }
     ]
-  
+
+  $(document).on 'click', '#modal-expediente #add_state', ->
+    fecha = $("#modal-expediente #fecha").val()
+    estado = $("#modal-expediente #estados option:selected").val()
+    estado_text = $("#modal-expediente #estados option:selected").text()
+    esp1_text = $("#modal-expediente #esp1 option:selected").text()
+    esp2_text = $("#modal-expediente #esp2 option:selected").text()
+    row = "<tr class='states-tr' data-id=''" +
+    " data-fecha='#{fecha || ''}' data-estado='#{estado || ''}' data-esp1='#{esp1_text || ''}'" +
+    " data-esp2='#{esp2_text || ''}'> " +
+    "<td> #{estado_text} </td> " +
+    "<td> #{esp1_text + " --> " + esp2_text} </td>" +
+    "<td> #{fecha} </td>" +
+    "<td> <i class='fa fa-times remove-table-row btn btn-xs'></i> </td> </tr>"
+    $('#modal-expediente #states-table-column tbody').append(row)
+    $('#modal-expediente #fecha').val("")
+    $('#modal-expediente #estados').val("0")
+    $('#modal-expediente #esp1').empty()
+    $('#modal-expediente #esp2').empty()
+
   $(document).on 'click', '#modal-circuito #add_state', ->
     fecha = $("#modal-circuito #fecha").val()
     estado = $("#modal-circuito #estados option:selected").val()
@@ -35,11 +54,10 @@ $(document).on 'ready page:load', ->
     "<td> #{fecha} </td>" +
     "<td> <i class='fa fa-times remove-table-row btn btn-xs'></i> </td> </tr>"
     $('#modal-circuito #states-table-column tbody').append(row)
-    $('#modal-circuito #fecha').val("");
-    $('#modal-circuito #estados').val("0");
-    $('#modal-circuito #esp1').empty();
-    $('#modal-circuito #esp2').empty();
-    
+    $('#modal-circuito #fecha').val("")
+    $('#modal-circuito #estados').val("0")
+    $('#modal-circuito #esp1').empty()
+    $('#modal-circuito #esp2').empty()
 
   $('#expedientes #btn-new').on 'click', ->
     $(document).off 'keydown'
