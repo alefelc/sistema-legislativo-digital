@@ -10,6 +10,7 @@
         = hidden_field_tag :acumula_exp
         = hidden_field_tag :adjunta_exp
         = hidden_field_tag :estados_expedientes
+        = hidden_field_tag :tags_ids
         .modal-body
           .row
             .col-md-6
@@ -34,6 +35,9 @@
               .input-group
                 = label_tag nil, 'Adjuntada Fisicamente a', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { style: 'width: 100%', id: 'adjunta', data: { load: prepopulate_adjunta_exp(@expediente) }}
+              .input-group
+                = f.label t('.tags'), { class: "input-group-addon", id: "basic-addon9" }
+                %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon9", type: :text, data: { load: prepopulate_tags(@expediente) } }
             .col-md-6
               .input-group
                 = f.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
@@ -97,11 +101,17 @@
       index++;
     });
 
+    var tagsIds = [];
+    $("#modal-expediente .tags-token").each(function(key, value) {
+      tagsIds.push($(this).data("id"));
+    })
+
     var adjunta = $("#modal-expediente .adjunta-token").data('adjunta');
     var acumula = $("#modal-expediente .acumula-token").data('acumula');
 
     $("#modal-expediente #acumula_exp").val(acumula);
     $("#modal-expediente #adjunta_exp").val(adjunta);
+    $("#modal-expediente #tags_ids").val(tagsIds);
     $("#modal-expediente #tramites_pendientes").val(JSON.stringify(tramites));
     $("#modal-expediente #estados_expedientes").val(JSON.stringify(states));
     $("#modal-expediente #new_expediente, [id^='edit_expediente']").submit();
@@ -321,3 +331,26 @@
   // Preload select2 input adjunta
   var tokenAdjunta = $('#modal-expediente #adjunta').data('load');
   $('#modal-expediente #adjunta').select2('data', tokenAdjunta);
+
+  // Tags
+  $('#modal-expediente #tags-tokeninput').tokenInput('/expedientes/search_tag', {
+    preventDuplicates: true,
+    propertyToSearch: 'nombre',
+    theme: 'bootstrap',
+    zindex: 1050,
+    hintText: "#{ I18n.t('tokeninput.placeholder.tag_example') }",
+    tokenFormatter: function(tag) {
+      return "<li><p class='tags-token' data-id='" + tag.id + "' style='color: black'> " + tag.nombre + "</p></li>";
+    },
+    resultsFormatter: function(tag) {
+      return '<li><p>' + tag.nombre + '</p></li>';
+    },
+    allowTabOut: true,
+    placeholder: "#{ I18n.t('tokeninput.placeholder.tag') }"
+  });
+
+  var tokenTag = $('#modal-expediente #tags-tokeninput').data('load');
+  $.each(tokenTag, function(index, tag) {
+    $('#modal-expediente #tags-tokeninput').tokenInput('add', tag)
+  });
+
