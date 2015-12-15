@@ -8,6 +8,44 @@ module ApplicationHelper
       ["Retirado", 7]
     ]
   end
+  
+  def sancion_options1
+    [
+      ["Aprob. Art. 151 R.I.","Aprob. Art. 151 R.I."],
+      ["Aprob. S/T c/desp.","Aprob. S/T c/desp."],
+      ["Aprob. S/T s/desp.","Aprob. S/T s/desp."],
+      ["Aprobado","Aprobado"],
+      ["Arch. S/T c/desp.","Arch. S/T c/desp."],
+      ["Arch. S/T s/desp.","Arch. S/T s/desp."],
+      ["Archivado","Archivado"],
+      ["Decision Acuerdo","Decision Acuerdo"],
+      ["Decisión Art. 71","Decisión Art. 71"],
+      ["Rech. S/T c/desp.","Rech. S/T c/desp."],
+      ["Rech. S/T s/desp.","Rech. S/T s/desp."],
+      ["Rechazado","Rechazado"],
+      ["Retirado","Retirado"]
+    ]
+  end  
+
+  def sancion_options2
+    [
+      ["Aprob. Simple","Aprob. Simple"],
+      ["1° Lectura","1° Lectura"],
+      ["2° Lectura","2° Lectura"]
+    ]
+  end
+
+  def dictamina_options1
+    Periodo.last.comisions.map{ |x| [x.denominacion, x.denominacion] }
+  end  
+
+  def dictamina_options2
+    [
+      ["Mayoría","Mayoría"],
+      ["Minoría","Minoría"],
+      ["Unánime","Unánime"]
+    ]
+  end
 
   def fechas(norma)
     resp = ""
@@ -75,9 +113,9 @@ module ApplicationHelper
     resp = ""
     norma.circuitos.each do |c|
       if (c.nro == 0)
-        resp = resp + "Expediente: " + link_to(c.expediente.nro_exp, "expedientes/#{c.expediente.id}") + "\n"
+        resp = resp + "Expediente: " + link_to(c.expediente.nro_exp, "/expedientes/#{c.expediente.id}") + "\n"
       else
-        resp= resp + "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp, "expediente/#{c.expediente.id}") + "\n"
+        resp= resp + "Circuito nro: #{c.nro}--> Expediente: " + link_to(c.expediente.nro_exp, "/expedientes/#{c.expediente.id}") + "\n"
       end
     end
     resp
@@ -113,7 +151,11 @@ module ApplicationHelper
   end
 
   def prepopulate_exps(norma)
-    norma.expedientes.present? ? build_json_exp(norma.expedientes) : []
+    norma.expedientes.present? ? build_json_exp(norma.expedientes, norma) : []
+  end
+
+  def prepopulate_exps_despacho(despacho)
+    despacho.expedientes.present? ? build_json_exp_despacho(despacho.expedientes, despacho) : []
   end
 
   def prepopulate_tags(norma)
@@ -178,12 +220,31 @@ module ApplicationHelper
     json_array.as_json
   end
 
-  def build_json_exp(exps)
+  def build_json_exp(exps , norma)
     json_array = []
     exps.each do |x|
+      nro_c = x.circuitos.count - 1
+      array_c = norma.circuitos.map { |x| x.nro }
       json_array << {
         id: x.id,
-        indice: "#{x.nro_exp}/#{x.bis}/#{x.anio.try(:year)}"
+        indice: "#{x.nro_exp}/#{x.bis}/#{x.anio.try(:year)}",
+        nro_c: nro_c,
+        array_c: array_c
+      }
+    end
+    json_array
+  end
+
+  def build_json_exp_despacho(exps, despacho)
+    json_array = []
+    exps.each do |x|
+      nro_c = x.circuitos.count - 1
+      array_c = despacho.circuitos.map { |x| x.nro }
+      json_array << {
+        id: x.id,
+        indice: "#{x.nro_exp}/#{x.bis}/#{x.anio.try(:year)}",
+        nro_c: nro_c,
+        array_c: array_c
       }
     end
     json_array

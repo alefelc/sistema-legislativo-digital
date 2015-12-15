@@ -47,10 +47,42 @@ class DespachosController < ApplicationController
       @despacho.concejals << Concejal.where(id: concejals)
     end
 
-    ## get params exps_ids the POST
-    expedientes = params[:exps_ids]
-    unless expedientes.blank?
-      @despacho.expedientes << Expediente.where(id: expedientes)
+    ## get params circuitos the POST
+    unless params[:circuitos].blank?
+      JSON.parse(params[:circuitos]).each do |key, value|
+        id = value["id"]
+        array_c = value["circ"]
+        expediente = Expediente.find(id)
+        if array_c.empty?
+          ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
+          circuito_zero = expediente.circuitos.find_by(nro: 0)
+          @despacho.circuitos << circuito_zero
+          circuito_zero.estado_expedientes.create do |ne|
+            ne.nombre = "Dictaminado"
+            ne.tipo = "9"
+            ne.fecha = params[:despacho][:fecha]
+            ne.especificacion1 = params[:especificacion1]
+            ne.especificacion2 = params[:especificacion2]
+            ne.ref_id = @despacho.id
+            ne.ref_type = @despacho.type
+          end  
+        else
+          ## la dictaminacion recaer sobre algun circuito
+          array_c.each do |nro_c| 
+            circuito = expediente.circuitos.find_by(nro: nro_c)
+            @despacho.circuitos << circuito 
+            circuito.estado_expedientes.create do |ne|
+              ne.nombre = "Dictaminado"
+              ne.tipo = "9"
+              ne.fecha = params[:despacho][:fecha]
+              ne.especificacion1 = params[:especificacion1]
+              ne.especificacion2 = params[:especificacion2]
+              ne.ref_id = @despacho.id
+              ne.ref_type = @despacho.type
+            end
+          end   
+        end  
+      end
     end
 
     ## add state initial
@@ -97,13 +129,45 @@ class DespachosController < ApplicationController
     clear_concejals = (old_concejals - current_concejals)
     @despacho.concejals.delete(Concejal.where(id: clear_concejals))
 
-    ## update params exps_ids the PATCH
-    current_exps = params[:exps_ids].split(',')
-    old_exps = @despacho.expedientes.map{ |x| x.id.to_s}
-    associated_expedientes = (current_exps - old_exps)
-    @despacho.expedientes << Expediente.where(id: associated_expedientes)
-    clear_expedientes = (old_exps - current_exps)
-    @despacho.expedientes.delete(Expediente.where(id: clear_expedientes))
+    ## update params circuitos the PATCH
+    @despacho.circuitos.each do |c|
+      c.estado_expedientes.where(tipo: "9", ref_id: @despacho.id).delete_all
+    end
+    @despacho.circuitos.delete_all
+    JSON.parse(params[:circuitos]).each do |key, value|
+      id = value["id"]
+      array_c = value["circ"]
+      expediente = Expediente.find(id)
+      if array_c.empty?
+        ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
+        circuito_zero = expediente.circuitos.find_by(nro: 0)
+        @despacho.circuitos << circuito_zero
+        circuito_zero.estado_expedientes.create do |ne|
+          ne.nombre = "Dictaminado"
+          ne.tipo = "9"
+          ne.fecha = params[:despacho][:fecha]
+          ne.especificacion1 = params[:especificacion1]
+          ne.especificacion2 = params[:especificacion2]
+          ne.ref_id = @despacho.id
+          ne.ref_type = @despacho.type
+        end  
+      else
+        ## la sancion recaer sobre algun circuito
+        array_c.each do |nro_c| 
+          circuito = expediente.circuitos.find_by(nro: nro_c)
+          @despacho.circuitos << circuito 
+          circuito.estado_expedientes.create do |ne|
+            ne.nombre = "Dictaminado"
+            ne.tipo = "9"
+            ne.fecha = params[:despacho][:fecha]
+            ne.especificacion1 = params[:especificacion1]
+            ne.especificacion2 = params[:especificacion2]
+            ne.ref_id = @despacho.id
+            ne.ref_type = @despacho.type
+          end
+        end   
+      end  
+    end
 
     ## update params states the PATCH
     if params['states'].present?
@@ -160,9 +224,13 @@ class DespachosController < ApplicationController
     json_array = []
     exps.each do |x|
       year = x.anio.present? ? x.anio.year.to_s : ""
+      nro_c = x.circuitos.count - 1
+      array_c = []
       json_array << {
         id: x.id,
-        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year
+        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year,
+        nro_c: nro_c,
+        array_c: array_c
       }
     end
     json_array

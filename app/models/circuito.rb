@@ -4,6 +4,7 @@ class Circuito < ActiveRecord::Base
   belongs_to :expediente
   has_many :estado_expedientes
   has_many :tramites
+  has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
 
   #== polymorfic association
   has_many :estado_tramites, as: :ref

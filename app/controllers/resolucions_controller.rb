@@ -43,9 +43,42 @@ class ResolucionsController < ApplicationController
     ## get params tags_ids the POST
     params[:tags_ids].split(',').each { |id| @resolucion.tags << Tag.find(id) } unless params[:tags_ids].blank?
 
-    ## get params exps_ids the POST
-    unless params[:exps_ids].blank?
-      params[:exps_ids].split(',').each { |id| @resolucion.circuitos << Expediente.find(id).circuitos.find_by(nro: 0) }
+    ## get params circuitos the POST
+    unless params[:circuitos].blank?
+      JSON.parse(params[:circuitos]).each do |key, value|
+        id = value["id"]
+        array_c = value["circ"]
+        expediente = Expediente.find(id)
+        if array_c.empty?
+          ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
+          circuito_zero = expediente.circuitos.find_by(nro: 0)
+          @resolucion.circuitos << circuito_zero
+          circuito_zero.estado_expedientes.create do |ne|
+            ne.nombre = "Sancionado"
+            ne.tipo = "8"
+            ne.fecha = params[:resolucion][:sancion]
+            ne.especificacion1 = params[:especificacion1]
+            ne.especificacion2 = params[:especificacion2]
+            ne.ref_id = @resolucion.id
+            ne.ref_type = @resolucion.type
+          end  
+        else
+          ## la sancion recaer sobre algun circuito
+          array_c.each do |nro_c| 
+            circuito = expediente.circuitos.find_by(nro: nro_c)
+            @resolucion.circuitos << circuito 
+            circuito.estado_expedientes.create do |ne|
+              ne.nombre = "Sancionado"
+              ne.tipo = "8"
+              ne.fecha = params[:resolucion][:sancion]
+              ne.especificacion1 = params[:especificacion1]
+              ne.especificacion2 = params[:especificacion2]
+              ne.ref_id = @resolucion.id
+              ne.ref_type = @resolucion.type
+            end
+          end   
+        end  
+      end
     end
 
     ## get params clasifications_ids the POST and save
@@ -96,11 +129,45 @@ class ResolucionsController < ApplicationController
     (current_tags - old_tag).each { |id| @resolucion.tags << Tag.find(id) }
     (old_tag - current_tags).each { |id| @resolucion.tags.delete(id) }
 
-    ## update params exps_ids the PATCH
-    current_exps = params[:exps_ids].split(',')
-    old_exps = @resolucion.expedientes.map{ |x| x.id.to_s}
-    (current_exps - old_exps).each { |id| @resolucion.circuitos << Expediente.find(id).circuitos.find_by(nro: 0) }
-    (old_exps - current_exps).each { |id| @resolucion.circuitos.delete(Expediente.find(id).circuitos.find_by(nro: 0).id) }
+    ## update params circuitos the PATCH
+    @resolucion.circuitos.each do |c|
+      c.estado_expedientes.where(tipo: "8").delete_all
+    end
+    @resolucion.circuitos.delete_all
+    JSON.parse(params[:circuitos]).each do |key, value|
+      id = value["id"]
+      array_c = value["circ"]
+      expediente = Expediente.find(id)
+      if array_c.empty?
+        ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
+        circuito_zero = expediente.circuitos.find_by(nro: 0)
+        @resolucion.circuitos << circuito_zero
+        circuito_zero.estado_expedientes.create do |ne|
+          ne.nombre = "Sancionado"
+          ne.tipo = "8"
+          ne.fecha = params[:resolucion][:sancion]
+          ne.especificacion1 = params[:especificacion1]
+          ne.especificacion2 = params[:especificacion2]
+          ne.ref_id = @resolucion.id
+          ne.ref_type = @resolucion.type
+        end  
+      else
+        ## la sancion recaer sobre algun circuito
+        array_c.each do |nro_c| 
+          circuito = expediente.circuitos.find_by(nro: nro_c)
+          @resolucion.circuitos << circuito 
+          circuito.estado_expedientes.create do |ne|
+            ne.nombre = "Sancionado"
+            ne.tipo = "8"
+            ne.fecha = params[:resolucion][:sancion]
+            ne.especificacion1 = params[:especificacion1]
+            ne.especificacion2 = params[:especificacion2]
+            ne.ref_id = @resolucion.id
+            ne.ref_type = @resolucion.type
+          end
+        end   
+      end  
+    end
 
     ## update params clasifications_ids the PATCH
     current_clasific = []
@@ -178,9 +245,13 @@ class ResolucionsController < ApplicationController
     json_array = []
     exps.each do |x|
       year = x.anio.present? ? x.anio.year.to_s : ""
+      nro_c = x.circuitos.count - 1
+      array_c = []
       json_array << {
         id: x.id,
-        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year
+        indice: x.nro_exp + "/" + x.bis.to_s + "/" + year,
+        nro_c: nro_c,
+        array_c: array_c
       }
     end
     json_array

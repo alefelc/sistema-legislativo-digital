@@ -1,5 +1,5 @@
 class Expediente < ActiveRecord::Base
-
+  
   #= Associations
   has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
   has_many :expediente_administrativos
@@ -60,7 +60,7 @@ class Expediente < ActiveRecord::Base
   end
 
   def get_despachos
-    self.despachos
+    #self.despachos
   end
 
   def to_date date
