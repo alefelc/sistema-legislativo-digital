@@ -11,11 +11,11 @@ class EstadoTramite < ActiveRecord::Base
     if (self.tipo == "2" && self.ref_type == "Area")
       derivado = self.ref
       if (derivado.codigo == "LEG")
-        self.tramite.pendiente = true
+        self.tramite.update pendiente: true
       end  
     else
       if (self.tipo == "3" || self.tipo == "4")
-        self.tramite.pendiente = false
+        self.tramite.update pendiente: false
       end  
     end  
   end

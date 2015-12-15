@@ -110,14 +110,14 @@ class ExpedientesController < ApplicationController
     @expediente.update exp.as_json
 
     if params[:adjunta_exp].blank? && @expediente.adjunta.present?
-      @expediente.adjunta.delete
+      @expediente.adjunta.try :delete
     end
     if params[:adjunta_exp].present?
       @expediente.adjunta = Expediente.find(params[:adjunta_exp])
     end
 
     if params[:acumula_exp].blank? && @expediente.acumula.present?
-      @expediente.adjunta.delete
+      @expediente.adjunta.try :delete
     end
     if params[:acumula_exp].present?
       @expediente.acumula = Expediente.find(params[:acumula_exp])
