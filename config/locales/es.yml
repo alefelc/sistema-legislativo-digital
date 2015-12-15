@@ -158,6 +158,7 @@ es:
         state: Estado
         specification: Especificación
         date: Fecha
+      tags: Voces Claves
     modal_circuito:
       title:
         create_expediente: Creando Expediente
