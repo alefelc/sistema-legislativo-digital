@@ -98,6 +98,9 @@ class ExpedientesController < ApplicationController
       end
     end
 
+    ## get params tags_ids the POST
+    params[:tags_ids].split(',').each { |id| @expediente.tags << Tag.find(id) } unless params[:tags_ids].blank?
+
     redirect_to action: :index
   end
 
@@ -149,34 +152,38 @@ class ExpedientesController < ApplicationController
       tramite.save
     end
 
-    if params[:estados_expedientes].present?
-      new_states = JSON.parse(params[:estados_expedientes])
-      new_states.each do |key, value|
-        circuito.estado_expedientes.create do |ne|
-          ne.tipo = value['tipo']
-          ne.fecha = value['fecha']
-          case value['tipo']
-          when 2
-            # orden del dia
-            ne.nombre = "Orden del Día"
-            ne.especificacion1 = value['especificacion1']
-          when 3
-            # a comision
-            ne.nombre = "A Comisión"
-            ne.especificacion1 = value['especificacion1']
-          when 5
-            # sancionado
-            ne.nombre = "Sancionado"
-            ne.especificacion1 = value['especificacion1']
-            ne.especificacion2 = value['especificacion2']
-          when 7
-            # retirado
-            ne.nombre = "Retirado"
-          else
-          end
+    new_states = JSON.parse(params[:estados_expedientes])
+    new_states.each do |key, value|
+      circuito.estado_expedientes.create do |ne|
+        ne.tipo = value['tipo']
+        ne.fecha = value['fecha']
+        case value['tipo']
+        when 2
+          # orden del dia
+          ne.nombre = "Orden del Día"
+          ne.especificacion1 = value['especificacion1']
+        when 3
+          # a comision
+          ne.nombre = "A Comisión"
+          ne.especificacion1 = value['especificacion1']
+        when 5
+          # sancionado
+          ne.nombre = "Sancionado"
+          ne.especificacion1 = value['especificacion1']
+          ne.especificacion2 = value['especificacion2']
+        when 7
+          # retirado
+          ne.nombre = "Retirado"
+        else
         end
       end
     end
+
+    ## update params tags_ids the PATCH
+    current_tags = params[:tags_ids].split(',')
+    old_tag = @expediente.tags.map{ |x| x.id.to_s }
+    (current_tags - old_tag).each { |id| @expediente.tags << Tag.find(id) }
+    (old_tag - current_tags).each { |id| @expediente.tags.delete(id) }
 
     redirect_to action: :index
   end
@@ -202,6 +209,11 @@ class ExpedientesController < ApplicationController
   def search
     expedientes = Expediente.where("nro_exp ilike ?", "%#{params[:q]}%").first(10)
     render json: expedientes
+  end
+
+  def search_tag
+    tags = Tag.where("nombre ilike '%#{params[:q]}%'").first(5)
+    render json: tags
   end
 
   private
