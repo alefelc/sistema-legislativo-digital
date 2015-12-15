@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201133457) do
+ActiveRecord::Schema.define(version: 20151214142625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(version: 20151201133457) do
   end
 
   add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
+
+  create_table "circuitos_despachos", force: :cascade do |t|
+    t.integer "circuito_id"
+    t.integer "despacho_id"
+  end
+
+  add_index "circuitos_despachos", ["circuito_id"], name: "index_circuitos_despachos_on_circuito_id", using: :btree
+  add_index "circuitos_despachos", ["despacho_id"], name: "index_circuitos_despachos_on_despacho_id", using: :btree
 
   create_table "circuitos_normas", id: false, force: :cascade do |t|
     t.integer "circuito_id"
@@ -310,14 +318,6 @@ ActiveRecord::Schema.define(version: 20151201133457) do
     t.datetime "updated_at",  null: false
     t.date     "anio"
   end
-
-  create_table "expedientes_despachos", force: :cascade do |t|
-    t.integer "expediente_id"
-    t.integer "despacho_id"
-  end
-
-  add_index "expedientes_despachos", ["despacho_id"], name: "index_expedientes_despachos_on_despacho_id", using: :btree
-  add_index "expedientes_despachos", ["expediente_id"], name: "index_expedientes_despachos_on_expediente_id", using: :btree
 
   create_table "expedientes_tags", id: false, force: :cascade do |t|
     t.integer "expediente_id"

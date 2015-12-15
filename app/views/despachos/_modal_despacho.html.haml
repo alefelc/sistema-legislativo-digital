@@ -6,7 +6,7 @@
           %span{"aria-hidden" => "true"} &times;
         %h4#nuevoLabel.modal-title= t(".#{actionvar}_despacho") + " #{@despacho.id}"
       = form_for @despacho, url: { action: actionvar } do |f|
-        = hidden_field_tag :exps_ids
+        = hidden_field_tag :circuitos
         = hidden_field_tag :states
         .modal-body
           .row
@@ -15,12 +15,14 @@
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1"}
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.fojas'), type: :number }
               .input-group
-                = f.label :fecha, { class: "input-group-addon", id: "basic-addon2"}
-                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon2", type: :date}
-              .input-group
-                = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
-                = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
-                                               type: "text", data: { load: prepopulate_exps(@despacho) }}
+                = label_tag nil, "Dictamina", { class: "input-group-addon", id: "basic-addon08"}
+                = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date}  
+                = select_tag "especificacion1", options_for_select(dictamina_options1), { class: "form-control", "aria-describedby": "basic-addon008"}
+                = select_tag "especificacion2", options_for_select(dictamina_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
+                .input-group
+                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
+                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
+                                                 type: "text", data: { load: prepopulate_exps_despacho(@despacho) }}
               .input-group
                 = f.label :comisions, t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
                 = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
@@ -97,7 +99,20 @@
       return '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>';
     },
     tokenFormatter: function(exp) {
-      return "<li><p class='exps-token' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p></li>";
+      console.log(exp)
+      array_c = exp.array_c;
+      inputs = "";
+      for (i = 1; i <= exp.nro_c; i++) {
+        if (jQuery.inArray( i, array_c ) != -1){
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px' checked>Circuito "+ i +"<br>";
+        }
+        else{
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px'>Circuito "+ i +"<br>";
+        }  
+      }
+      return "<li><p class='exps-token' data-nro_c='"+ exp.nro_c +"' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p><br>"+
+      inputs+
+      "</li>";
     },
     allowTabOut: true,
     placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
@@ -106,10 +121,21 @@
   $(document).on('click', '#despacho .modal-submit', function(event) {
     event.preventDefault();
 
-    //add exp ids to form
-    var expsIds = []
+    //add exp ids and circuitos checked to form
+    var circuitos = {}
+    var index = 0
     $("#despacho .exps-token").each(function(key, value) {
-      expsIds.push($(value).data("id"))
+      c = []
+      $("#despacho ." + $(value).data("id")).each(function(key, value) {
+        if ($(this).is(':checked')){
+          c.push($(value).data("nro"))
+        }
+      })
+      circuitos[index] = {
+        id: $(value).data("id"),
+        circ: c  
+      }
+      index++;
     });
 
     //add derived states to form
@@ -126,7 +152,7 @@
     });
 
     $("#despacho #states").val(JSON.stringify(states));
-    $("#despacho #exps_ids").val(expsIds);
+    $("#despacho #circuitos").val(JSON.stringify(circuitos));
     $("#despacho #new_despacho, [id^='edit_despacho']").submit();
   });
 

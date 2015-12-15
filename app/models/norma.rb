@@ -21,7 +21,7 @@ class Norma < ActiveRecord::Base
   has_many :me_modifican, through: :relationship_me_modifican, source: :me_modifica
 
   def expedientes
-    self.circuitos.map { |x| x.expediente }
+    self.circuitos.map { |x| x.expediente }.uniq
   end
 
   def com_date

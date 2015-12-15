@@ -101,13 +101,7 @@
       %p.single-tab  
         %span.titles= "Normas: "
         - normas.each do |n|
-          %span= link_to(n.type + ": " + n.nro.to_s , n) + " - "      
-    - despachos = exp.get_despachos
-      - if despachos.present?
-      %p.single-tab  
-        %span.titles= "Despachos: "
-        - despachos.each do |d|
-          %span= link_to(d.id.to_s , "/despachos/#{d.id}") + " - "
+          %span= link_to(n.type + ": " + n.nro.to_s , n) + " - "
     - tags = exp.tags
       - if tags.present?
       %p.single-tab
@@ -234,9 +228,25 @@
               - when "8" ## Estado Sancionado pero con referencia a la norma(relacion polimorfica)
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
                   - if nro_c == 0
-                    %td= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
+                    %td
+                      %span= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
+                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro.to_s , x.ref)
                     %td= to_date(x.fecha)    
                   - else
-                    %td= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s 
-                    %td= to_date(x.fecha)  
+                    %td
+                      %span= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
+                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro.to_s , x.ref)
+                    %td= to_date(x.fecha)
+              - when "9" ## Estado Dictaminado pero con referencia al despacho(relacion polimorfica)
+                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  - if nro_c == 0
+                    %td
+                      %span= "Dictaminado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
+                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.id.to_s , x.ref)
+                    %td= to_date(x.fecha)    
+                  - else
+                    %td
+                      %span= "Dictaminado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
+                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.id.to_s , x.ref)
+                    %td= to_date(x.fecha)        
               - else

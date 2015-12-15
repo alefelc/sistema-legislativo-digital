@@ -72,13 +72,13 @@ class DespachoDatatable < AjaxDatatablesRails::Base
     if params[:sSearch].present?
       unless params[:sSearch].to_i.zero?
         query = "(tramites.id = #{params[:sSearch]}) OR (expedientes.nro_exp = '#{params[:sSearch]}')"
-        despacho = despacho.where(query).joins(:expedientes)
+        despacho = despacho.where(query)
       else
         query = "(CONCAT(personas.apellido, ' ', personas.nombre) ilike '%#{params[:sSearch]}%') OR (comisions.denominacion ilike '%#{params[:sSearch]}%')"
         despacho = despacho.where(query).joins(:concejals).joins(:comisions)
       end
     end
-    despacho.includes(:expedientes).includes(:comisions).includes(:personas)
+    despacho.includes(:circuitos).includes(:comisions).includes(:personas).includes(circuitos: [:expediente])
   end
 
   def per_page

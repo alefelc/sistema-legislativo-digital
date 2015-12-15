@@ -7,7 +7,7 @@
         %h4#nuevoLabel.modal-title= t('.new_declaracion')
       = form_for @declaracion, url: { action: actionvar } do |f|
         = hidden_field_tag :tags_ids
-        = hidden_field_tag :exps_ids
+        = hidden_field_tag :circuitos
         = hidden_field_tag :linked_normas
         = hidden_field_tag :destinies
         .modal-body
@@ -25,9 +25,6 @@
                 = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
                 = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => t('.summary'), type: :text}
               .input-group
-                = f.label :sancion, { class: "input-group-addon", id: "basic-addon4"}
-                = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date}
-              .input-group
                 = f.label t('.validate_entry'), { class: "input-group-addon", id: "basic-addon5"}
                 = f.text_field :entrada_vigencia, {class: "form-control", "aria-describedby" => "basic-addon5", type: :date }
               .input-group
@@ -42,6 +39,9 @@
               .input-group
                 = f.label t('.tags'), { class: "input-group-addon", id: "basic-addon13" }
                 %input#tags-tokeninput.form-control{"aria-describedby" => "basic-addon13", type: :text, data: { load: prepopulate_tags(@declaracion) } }
+              .input-group
+                = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
+                = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
             .col-md-8
               .group-buttons
                 %button#classify.btn.btn-default{:type => "button"}
@@ -182,12 +182,14 @@
                   %button#ready.btn.btn-success{:type => "button"}= t('.btn_clasification.ready')
               #second-column
                 .input-group
-                  = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
-                  = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
-                .input-group
-                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
-                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon8", id: "exped_token",
-                                                 type: "text", data: { load: prepopulate_exps(@declaracion) }}
+                  = label_tag nil, "Sanción", { class: "input-group-addon", id: "basic-addon08"}
+                  = f.text_field :sancion, {class: "form-control", "aria-describedby" => "basic-addon4", type: :date}  
+                  = select_tag "especificacion1", options_for_select(sancion_options1), { class: "form-control", "aria-describedby": "basic-addon008"}
+                  = select_tag "especificacion2", options_for_select(sancion_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
+                  .input-group
+                    = f.label :expedientes, { class: "input-group-addon", id: "basic-addon8" }
+                    = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon8", id: "exped_token",
+                                                   type: "text", data: { load: prepopulate_exps(@declaracion) }}
                 .input-group
                   = label_tag nil, t('.norma_disp'), { class: "input-group-addon", id: "basic-addon9"}
                   #refer_type= select_tag nil, options_for_select(refers_type), { class: "form-control", "aria-describedby": "basic-addon9"}
@@ -254,7 +256,19 @@
       return '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>';
     },
     tokenFormatter: function(exp) {
-      return "<li><p class='exps-token' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p></li>";
+      array_c = exp.array_c;
+      inputs = "";
+      for (i = 1; i <= exp.nro_c; i++) {
+        if (jQuery.inArray( i, array_c ) != -1){
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px' checked>Circuito "+ i +"<br>";
+        }
+        else{
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px'>Circuito "+ i +"<br>";
+        }  
+      }
+      return "<li><p class='exps-token' data-nro_c='"+ exp.nro_c +"' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p><br>"+
+      inputs+
+      "</li>";
     },
     allowTabOut: true,
     placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
@@ -327,10 +341,24 @@
       };
       index++;
     })
-    var expsIds = []
+
+    //add exp ids and circuitos checked to form
+    var circuitos = {}
+    var index = 0
     $("#declaracion .exps-token").each(function(key, value) {
-      expsIds.push($(value).data("id"))
-    })
+      c = []
+      $("#declaracion ." + $(value).data("id")).each(function(key, value) {
+        if ($(this).is(':checked')){
+          c.push($(value).data("nro"))
+        }
+      })
+      circuitos[index] = {
+        id: $(value).data("id"),
+        circ: c  
+      }
+      index++;
+    });
+
     //add exp ids to form
     var destinies = {}
     var index = 0
@@ -343,9 +371,10 @@
       }
       index++;
     });
+
     $("#declaracion #tags_ids").val(tagsIds);
-    $("#declaracion #exps_ids").val(expsIds);
     $("#declaracion #destinies").val(JSON.stringify(destinies));
+    $("#declaracion #circuitos").val(JSON.stringify(circuitos));
     $("#declaracion #linked_normas").val(JSON.stringify(linkedNormasIds));
     $("#declaracion #new_declaracion, [id^='edit_declaracion']").submit();
     $("[id^='edit_declaracion']")
