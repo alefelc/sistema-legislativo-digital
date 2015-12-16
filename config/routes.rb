@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     get 'get_derivacion', on: :collection
   end
 
+  resources :peticions, path: "particulars"
+
   resources :personas
 
   resources :reparticion_oficials

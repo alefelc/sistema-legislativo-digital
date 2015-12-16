@@ -117,7 +117,7 @@ class ExpedientesController < ApplicationController
     end
 
     if params[:acumula_exp].blank? && @expediente.acumula.present?
-      @expediente.adjunta.delete
+      @expediente.acumula.delete
     end
     if params[:acumula_exp].present?
       @expediente.acumula = Expediente.find(params[:acumula_exp])
