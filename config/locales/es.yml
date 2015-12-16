@@ -410,7 +410,7 @@ es:
       create_despacho: Creando Despacho
       update_despacho: Editando despacho
       fojas: Ingrese el número de fojas.
-      concejals: Concejales
+      concejals: Concejales firmantes
       comisions: Comisiones
 
   particulars:

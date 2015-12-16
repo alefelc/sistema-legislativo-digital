@@ -37,6 +37,8 @@ class DespachosController < ApplicationController
 
     ## get params comisions the POST
     comisions = params[:despacho][:comisions]
+    ## remuevo el primer elemento porq viene uno vacio siempre "", sino resolver desde el coffee los parametros q se envian
+    comisions.delete_at(0) unless comisions.empty?
     unless comisions.blank?
       @despacho.comisions << Comision.where(id: comisions)
     end
@@ -57,29 +59,35 @@ class DespachosController < ApplicationController
           ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
           circuito_zero = expediente.circuitos.find_by(nro: 0)
           @despacho.circuitos << circuito_zero
-          circuito_zero.estado_expedientes.create do |ne|
-            ne.nombre = "Dictaminado"
-            ne.tipo = "9"
-            ne.fecha = params[:despacho][:fecha]
-            ne.especificacion1 = params[:especificacion1]
-            ne.especificacion2 = params[:especificacion2]
-            ne.ref_id = @despacho.id
-            ne.ref_type = @despacho.type
+          comisions.each do |c|
+            esp1 = Comision.find_by(id: c).denominacion.to_s      
+            circuito_zero.estado_expedientes.create do |ne|
+              ne.nombre = "Dictaminado"
+              ne.tipo = "9"
+              ne.fecha = params[:despacho][:fecha]
+              ne.especificacion1 = esp1
+              ne.especificacion2 = params[:especificacion2]
+              ne.ref_id = @despacho.id
+              ne.ref_type = @despacho.type
+            end
           end  
         else
           ## la dictaminacion recaer sobre algun circuito
           array_c.each do |nro_c| 
             circuito = expediente.circuitos.find_by(nro: nro_c)
             @despacho.circuitos << circuito 
-            circuito.estado_expedientes.create do |ne|
-              ne.nombre = "Dictaminado"
-              ne.tipo = "9"
-              ne.fecha = params[:despacho][:fecha]
-              ne.especificacion1 = params[:especificacion1]
-              ne.especificacion2 = params[:especificacion2]
-              ne.ref_id = @despacho.id
-              ne.ref_type = @despacho.type
-            end
+            comisions.each do |c|
+              esp1 = Comision.find_by(id: c).denominacion.to_s  
+              circuito.estado_expedientes.create do |ne|
+                ne.nombre = "Dictaminado"
+                ne.tipo = "9"
+                ne.fecha = params[:despacho][:fecha]
+                ne.especificacion1 = esp1
+                ne.especificacion2 = params[:especificacion2]
+                ne.ref_id = @despacho.id
+                ne.ref_type = @despacho.type
+              end
+            end  
           end   
         end  
       end
@@ -115,6 +123,8 @@ class DespachosController < ApplicationController
 
     ## update params comisions the PATCH
     current_comisions = params[:despacho][:comisions]
+    ## remuevo el primer elemento porq viene uno vacio siempre "", sino resolver desde el coffee los parametros q se envian
+    current_comisions.delete_at(0) unless current_comisions.empty?
     old_comisions = @despacho.comisions.map{ |x| x.id.to_s}
     associated_comisions = (current_comisions - old_comisions)
     @despacho.comisions << Comision.where(id: associated_comisions)
@@ -142,29 +152,35 @@ class DespachosController < ApplicationController
         ## no se sancionan circuitos sino solamente el expediente osea el circuito 0
         circuito_zero = expediente.circuitos.find_by(nro: 0)
         @despacho.circuitos << circuito_zero
-        circuito_zero.estado_expedientes.create do |ne|
-          ne.nombre = "Dictaminado"
-          ne.tipo = "9"
-          ne.fecha = params[:despacho][:fecha]
-          ne.especificacion1 = params[:especificacion1]
-          ne.especificacion2 = params[:especificacion2]
-          ne.ref_id = @despacho.id
-          ne.ref_type = @despacho.type
-        end  
-      else
-        ## la sancion recaer sobre algun circuito
-        array_c.each do |nro_c| 
-          circuito = expediente.circuitos.find_by(nro: nro_c)
-          @despacho.circuitos << circuito 
-          circuito.estado_expedientes.create do |ne|
+        current_comisions.each do |c|
+          esp1 = Comision.find_by(id: c).denominacion.to_s
+          circuito_zero.estado_expedientes.create do |ne|
             ne.nombre = "Dictaminado"
             ne.tipo = "9"
             ne.fecha = params[:despacho][:fecha]
-            ne.especificacion1 = params[:especificacion1]
+            ne.especificacion1 = esp1
             ne.especificacion2 = params[:especificacion2]
             ne.ref_id = @despacho.id
             ne.ref_type = @despacho.type
           end
+        end    
+      else
+        ## la sancion recaer sobre algun circuito
+        array_c.each do |nro_c| 
+          circuito = expediente.circuitos.find_by(nro: nro_c)
+          @despacho.circuitos << circuito
+          current_comisions.each do |c|
+            esp1 = Comision.find_by(id: c).denominacion.to_s 
+            circuito.estado_expedientes.create do |ne|
+              ne.nombre = "Dictaminado"
+              ne.tipo = "9"
+              ne.fecha = params[:despacho][:fecha]
+              ne.especificacion1 = esp1
+              ne.especificacion2 = params[:especificacion2]
+              ne.ref_id = @despacho.id
+              ne.ref_type = @despacho.type
+            end
+          end  
         end   
       end  
     end

@@ -53,25 +53,25 @@
                   #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador_particular), { class: "form-control", "aria-describedby": "basic-addon01"}
                 .input-group
                   = label_tag nil, "Nombre", { class: "input-group-addon", id: "nombre-label"}
-                  = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control", "aria-describedby": "nombre-label", :placeholder => t('.nombre'), type: :text }
+                  = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control input-initiator", "aria-describedby": "nombre-label", :placeholder => t('.nombre'), type: :text }
                 .input-group
                   = label_tag nil, "Apellido", { class: "input-group-addon", id: "basic-addon2"}
-                  = text_field_tag 'iniciador[apellido]', nil ,{ class: "form-control", "aria-describedby": "basic-addon2", :placeholder => t('.apellido'), type: :text }
+                  = text_field_tag 'iniciador[apellido]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon2", :placeholder => t('.apellido'), type: :text }
                 .input-group
                   = label_tag nil, "DNI", { class: "input-group-addon", id: "basic-addon3"}
-                  = text_field_tag 'iniciador[doc]', nil ,{ class: "form-control", "aria-describedby": "basic-addon3", :placeholder => t('.doc'), type: :text }
+                  = text_field_tag 'iniciador[doc]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon3", :placeholder => t('.doc'), type: :text }
                 .input-group
                   = label_tag nil, "Teléfono", { class: "input-group-addon", id: "basic-addon4"}
-                  = text_field_tag 'iniciador[tel]', nil ,{ class: "form-control", "aria-describedby": "basic-addon4", :placeholder => t('.tel'), type: :text }
+                  = text_field_tag 'iniciador[tel]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon4", :placeholder => t('.tel'), type: :text }
                 .input-group
                   = label_tag nil, "Email", { class: "input-group-addon", id: "basic-addon5"}
-                  = text_field_tag 'iniciador[email]', nil ,{ class: "form-control", "aria-describedby": "basic-addon5", :placeholder => t('.email'), type: :text }
+                  = text_field_tag 'iniciador[email]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon5", :placeholder => t('.email'), type: :text }
                 .input-group
                   = label_tag nil, "Domicilio", { class: "input-group-addon", id: "basic-addon6"}
-                  = text_field_tag 'iniciador[domicilio]', nil ,{ class: "form-control", "aria-describedby": "basic-addon6", :placeholder => t('.domicilio'), type: :text }
+                  = text_field_tag 'iniciador[domicilio]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon6", :placeholder => t('.domicilio'), type: :text }
                 .input-group#denominacion-group
                   = label_tag nil, "CUIT/CUIL", { class: "input-group-addon", id: "basic-addon7"}
-                  = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
+                  = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
               .parent-group-btn.btn.btn-xs#add_iniciador
                 %button.btn.parent-group-btn#btn_add_iniciador
                   %span
@@ -411,6 +411,10 @@
 
   $('.modal').on('shown.bs.modal', function () {
     $('form:first *:input[type!=hidden]:first').focus();
+    $('.input-initiator').keypress(function(event){
+      if (event.keyCode == 10 || event.keyCode == 13) 
+        event.preventDefault();
+    });
   });
 
   $('.modal').on('hidden.bs.modal', function () {
