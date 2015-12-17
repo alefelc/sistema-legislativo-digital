@@ -1,1 +1,13 @@
-Missing implementation....
+#expediente-report
+  %br
+  %table.datatable-keyevents.table.table-striped.table-bordered#expediente-report-table{"data-source" => expediente_reports_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.expediente')
+        %th= t('.table.fojas')
+        %th= t('.table.tramites')
+        %th= t('.table.sumario')
+        %th= t('.table.fecha')
+        %th= t('.table.circuitos')
+    %tbody
+

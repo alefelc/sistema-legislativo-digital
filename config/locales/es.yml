@@ -14,6 +14,37 @@ es:
       expediente:
         legislativo: Expedientes Legislativos
         pendientes: Trámites Pendientes
+  reports:
+    mesa_de_entradas:
+      table:
+        tramite: Nro.
+        iniciadores: Iniciadores / Particular / Comision
+        asunto: Asunto / Solicitud
+        tipo: Tramite
+        fojas: Nro. fojas
+        fecha: Fecha
+        estado: Estado Actual
+        actualizado: Actualizado
+        observaciones: Observaciones
+    expedientes:
+      table:
+        expediente: Expediente
+        fojas: Nro. fojas
+        tramites: Tramites
+        sumario: Sumario
+        fechas: Fechas
+        description: Descripción
+        circuitos: Circuitos
+    normas:
+      table:
+        norma: Nro-Bis/Año
+        sumario: Sumario
+        sancion: Sanción
+        fechas: Fechas
+        description: Descripción
+        relationships: Norma a Dispositivos
+        relationships2: Dispositivos a Norma
+        expedientes: Sanciona Exp N°    
   pendientes:
     index:
       btnheader:

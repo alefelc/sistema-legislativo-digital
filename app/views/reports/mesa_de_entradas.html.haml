@@ -1,1 +1,13 @@
-Missing implementation....
+#tramite
+  %br
+  %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => tramites_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.tramite')
+        %th= t('.table.tipo')
+        %th= t('.table.fojas')
+        %th= t('.table.asunto')
+        %th= t('.table.iniciadores')
+        %th= t('.table.observaciones')
+        %th= t('.table.actualizado')
+    %tbody

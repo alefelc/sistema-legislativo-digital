@@ -102,4 +102,10 @@ Rails.application.routes.draw do
     get 'expedientes'
     get 'normas'
   end
+
+  resources :tramites
+
+  resources :expediente_reports
+
+  resources :normas
 end

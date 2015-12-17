@@ -1,1 +1,10 @@
-Missing implementation....
+#norma
+  %br
+  %table.datatable-keyevents.table.table-striped.table-bordered#norma-table{"data-source" => normas_path(format: :json)}
+    %thead
+      %tr
+        %th= t('.table.norma')
+        %th= t('.table.sumario')
+        %th{width: "15%"}= t('.table.fechas')
+        %th= t('.table.expedientes')
+    %tbody

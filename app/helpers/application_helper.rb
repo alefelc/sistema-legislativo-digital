@@ -88,6 +88,18 @@ module ApplicationHelper
     link_to pro.id.to_s, proyecto_path(pro)
   end
 
+  def index_tramite(tramite)
+    link_to tramite.id.to_s, tramite
+  end
+
+  def index_tramites(tramites)
+    resp = ""
+    tramites.each do |t|
+      resp += t.type.to_s + ": " + link_to(t.id.to_s, t) + " \n"
+    end
+    resp
+  end
+
   def index_com(com)
     link_to com.id.to_s, comunicacion_oficial_path(com)
   end
@@ -147,6 +159,9 @@ module ApplicationHelper
     return "Expedientes" if current_page?(controller: :expedientes, action: :index)
     return "Expediente #{params[:id]}" if current_page?(controller: :expedientes, action: :show, id: params[:id].to_i)
     return "Trámites Pendientes" if current_page?(controller: :pendientes, action: :index)
+    return "Reportes de Trámites" if current_page?(controller: :reports, action: :mesa_de_entradas)
+    return "Reportes de Expedientes" if current_page?(controller: :reports, action: :expedientes)
+    return "Reportes de Normas" if current_page?(controller: :reports, action: :normas)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
   end
 

@@ -92,11 +92,42 @@ $(document).on 'focusout', 'textarea', ->
 $(document).on 'ready', ->
 
   controller = window.location.pathname.split("/")[1]
+  action = window.location.pathname.split("/")[2]
   if controller in ['despachos', 'comunicacion_oficials', 'proyectos', 'particulars', 'condonacions']
     $(document).find('.sidebar-menu .treeview:first').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
 
+  if controller in ['reports']
+    switch action
+      when 'mesa_de_entradas'
+        $(document).find('.sidebar-menu .treeview:first').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+      when 'expedientes'  
+        $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+      when 'normas'  
+        $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
+
+  if controller in ['statitics']
+    switch action
+      when 'mesa_de_entradas'
+        $(document).find('.sidebar-menu .treeview:first').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+      when 'expedientes'  
+        $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+      when 'normas'  
+        $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')      
+  
   if controller in [ 'declaracions', 'decretos', 'especials', 'ordenanzas', 'otra_normas', 'resolucions' ]
     $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')

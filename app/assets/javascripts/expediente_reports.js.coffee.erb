@@ -1,0 +1,21 @@
+$(document).on 'ready page:load', ->
+  $('#expediente-report-table').dataTable
+    ajaxSource: $('#expediente-report-table').data('source')
+    fnInitComplete: ->
+      $('#expediente-report div.dataTables_filter input').focus()
+      $('#expediente-report div.dataTables_filter input').attr('placeholder', "<%= I18n.t('datatable.search') %>")
+      return
+    fnDrawCallback: ->
+      $('#expediente-report-table tbody tr').find('td:eq(3)').each ->
+        $(this).text $(this).text().substring(0, 125) + '...'
+        return
+      $('#expediente-report-table tbody tr:eq(0)').addClass 'info'
+      return
+    aoColumns: [
+      { sortable: false, "width": "12%" , sClass: "center"}
+      { sortable: false, "width": "1%" }
+      { sortable: false, "width": "10%" }
+      { sortable: false }
+      { sortable: false, "width": "8%" }
+      { sortable: false, "width": "8%" }
+    ]
