@@ -20,7 +20,7 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %span#path-name= resolve_path_name
+        %span#path-name= resolve_path_name.present? ? resolve_path_name : yield(:title)
         .navbar-custom-menu
           %ul.nav.navbar-nav
             / User Account: style can be found in dropdown.less
