@@ -53,9 +53,16 @@
 }
 
 #caratula #column-two-p-two #numero-text{ 
-  font-size: 7ex;
+  padding-left: 2%;
+  font-size: 10ex;
   text-decoration: bold;
+  font-weight: bold;
 } 
+
+#caratula #ingreso-text{
+  text-decoration: bold;
+  font-weight: bold;
+}
 
 #caratula #logo{
   text-align :center;
