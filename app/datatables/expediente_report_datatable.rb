@@ -29,7 +29,7 @@ class ExpedienteReportDatatable < AjaxDatatablesRails::Base
       [
         index_exp(exp),
         exp.nro_fojas.to_s,
-        index_tramites(exp.circuitos.find_by(nro: 0).tramites),
+        tramites(exp.circuitos.find_by(nro: 0).try(:tramites)),
         exp.tema,
         to_date(exp.anio),
         exp.circuitos.count-1
@@ -63,6 +63,10 @@ class ExpedienteReportDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     Expediente.all
+  end
+
+  def tramites(tram)
+    tram.nil? ? '' : index_tramites(tram)
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
