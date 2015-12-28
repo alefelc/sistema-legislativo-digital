@@ -1,0 +1,68 @@
+#caratula{
+  display: none;
+}
+
+#caratula #column-one{
+  width: 30%;
+  position: absolute;
+  float: left;
+  padding-left: 8%;
+}
+
+#caratula #title{
+  border: 1px solid black;
+  text-align :center;
+  font-size: 0.8em;
+}
+
+#caratula .titles{
+  text-decoration: underline;
+  font-size: 0.8em;
+}
+
+#caratula .titles-two{
+  text-decoration: underline;
+  font-size: 2.5ex;
+  font-weight: bold;
+}
+
+#caratula #column-two{
+  width: 68%;
+  border: 2px solid black;
+  margin-left: 31%;
+}
+
+#caratula #column-one-p-one{
+  text-align :right;
+  padding-top: 120px;
+}
+
+#caratula #column-two-p-one{
+  padding-top: 20px;
+  text-align :center;
+  font-size: 4ex;
+}
+
+#caratula #column-two-p-two{
+  margin-left: 2%;
+}
+
+#caratula h7{
+  padding-left: 10px;
+  padding-right: 10px;  
+}
+
+#caratula #column-two-p-two #numero-text{ 
+  font-size: 7ex;
+  text-decoration: bold;
+} 
+
+#caratula #logo{
+  text-align :center;
+}
+
+#caratula #carat-image{
+  padding: 2%;
+  height: 8em;
+  width: 7em;
+}    

@@ -17,3 +17,21 @@ $(document).on 'ready page:load', ->
       { sortable: false }
       { sortable: false, "width": "14%" }
     ]
+
+  $('#norma #btn-print').on 'click', ->
+    $('#norma-table').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      prepend: "<p><h1>Reporte - Normas</h1></p><br>"
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print normas
+  $.ctrl 'P', ->
+    $('#norma #btn-print').click()
+    return     

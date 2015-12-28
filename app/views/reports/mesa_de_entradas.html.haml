@@ -1,5 +1,7 @@
 #tramite
-  %br
+  %button#btn-print.btn.btn-danger
+    %span.glyphicon.glyphicon-print{ "aria-hidden": true }
+    = t('.btnheader.print')
   %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => tramites_path(format: :json)}
     %thead
       %tr

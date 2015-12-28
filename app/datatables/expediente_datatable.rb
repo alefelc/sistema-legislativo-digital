@@ -36,8 +36,35 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
   end
 
   def associated_file(exp)
+    iniciador= "" 
+    exp.circuitos.find_by(nro: 0).tramites.each do |tramite|
+      iniciadores = tramite.get_iniciadores
+      if iniciadores.present?
+        iniciadores.each do |i|
+          case i[:type]
+          when "OrganoDeGobierno"   
+            iniciador += "Organo de Gobierno: " + i[:denominacion].to_s + " / \n"
+          when "Area"   
+            iniciador += "Area: " + i[:denominacion].to_s + " / \n"
+          when "Bloque"   
+            iniciador += "Bloque: " + i[:denominacion].to_s + " / \n"
+          when "Comision"   
+            iniciador += "Comision: " + i[:denominacion].to_s + " / \n" 
+          when "ReparticionOficial"   
+            iniciador += "Reparticion Oficial: " + i[:denominacion].to_s + " / \n"
+          when "DependenciaMunicipal"   
+            iniciador += "Dependenci Municipal: " + i[:denominacion].to_s + " / \n"
+          when "Concejal"
+            iniciador += i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i.bloque.denominacion.to_s}" + " / \n"
+          else   
+            iniciador += "Persona " + i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s + " / \n"
+          end
+        end    
+      end
+    end
+    iniciador = iniciador.upcase[0..-4]          
     "<div style='display: flex'>" +
-    "<i class='btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' title='Imprimir Carátula'></i>" +
+    "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>" +
     "<i class='linktocircuit btn btn-xs btn-info fa fa-copyright' data-id='#{exp.id}' title='Editar Circuitos'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar Expediente'></i></div>"

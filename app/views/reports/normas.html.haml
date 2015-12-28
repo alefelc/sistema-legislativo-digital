@@ -1,5 +1,7 @@
 #norma
-  %br
+  %button#btn-print.btn.btn-danger
+    %span.glyphicon.glyphicon-print{ "aria-hidden": true }
+    = t('.btnheader.print')
   %table.datatable-keyevents.table.table-striped.table-bordered#norma-table{"data-source" => normas_path(format: :json)}
     %thead
       %tr

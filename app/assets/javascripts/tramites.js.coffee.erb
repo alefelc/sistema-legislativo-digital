@@ -17,3 +17,22 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "13%" }
       { sortable: false, "width": "13%" }
     ]
+
+  $('#tramite #btn-print').on 'click', ->
+    $('#tramite-table').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      prepend: "<p><h1>Reporte - Mesa de entradas</h1></p><br>"
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print tramites
+  $.ctrl 'P', ->
+    $('#tramite #btn-print').click()
+    return      
+
