@@ -8,7 +8,7 @@ module ApplicationHelper
       ["Retirado", 7]
     ]
   end
-  
+
   def sancion_options1
     [
       ["Aprob. Art. 151 R.I.","Aprob. Art. 151 R.I."],
@@ -135,17 +135,11 @@ module ApplicationHelper
 
   def resolve_path_name
     return "Declaraciones" if current_page?(controller: :declaracions, action: :index)
-    return "Declaración #{params[:id]}" if current_page?(controller: :declaracions, action: :show, id: params[:id].to_i)
     return "Ordenanzas" if current_page?(controller: :ordenanzas, action: :index)
-    return "Ordenanza #{params[:id]}" if current_page?(controller: :ordenanzas, action: :show, id: params[:id].to_i)
     return "Decretos" if current_page?(controller: :decretos, action: :index)
-    return "Decreto #{params[:id]}" if current_page?(controller: :decretos, action: :show, id: params[:id].to_i)
     return "Resoluciones" if current_page?(controller: :resolucions, action: :index)
-    return "Resolución #{params[:id]}" if current_page?(controller: :resolucions, action: :show, id: params[:id].to_i)
     return "Especiales" if current_page?(controller: :especials, action: :index)
-    return "Especial #{params[:id]}" if current_page?(controller: :especials, action: :show, id: params[:id].to_i)
     return "Otras Normas" if current_page?(controller: :otra_normas, action: :index)
-    return "Otra Norma #{params[:id]}" if current_page?(controller: :otra_normas, action: :show, id: params[:id].to_i)
     return "Despachos" if current_page?(controller: :despachos, action: :index)
     return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
     return "Condonaciones" if current_page?(controller: :condonacions, action: :index)
@@ -157,12 +151,12 @@ module ApplicationHelper
     return "Comunicaciones Oficiales" if current_page?(controller: :comunicacion_oficials, action: :index)
     return "Comunicación Oficial #{params[:id]}" if current_page?(controller: :comunicacion_oficials, action: :show, id: params[:id].to_i)
     return "Expedientes" if current_page?(controller: :expedientes, action: :index)
-    return "Expediente #{params[:id]}" if current_page?(controller: :expedientes, action: :show, id: params[:id].to_i)
     return "Trámites Pendientes" if current_page?(controller: :pendientes, action: :index)
     return "Reportes de Trámites" if current_page?(controller: :reports, action: :mesa_de_entradas)
     return "Reportes de Expedientes" if current_page?(controller: :reports, action: :expedientes)
     return "Reportes de Normas" if current_page?(controller: :reports, action: :normas)
     return "Inicio" if current_page?(controller: :dashboard, action: :index)
+    return ""
   end
 
   def prepopulate_exps(norma)
@@ -196,6 +190,7 @@ module ApplicationHelper
   def prepopulate_acumula_exp(exp)
     exp.present? ? exp.acumula : ""
   end
+
   def prepopulate_iniciadores(tramite)
     iniciadores = []
     case tramite.type
