@@ -16,6 +16,8 @@ es:
         pendientes: Trámites Pendientes
   reports:
     mesa_de_entradas:
+      btnheader:
+        print: Imprimir reporte
       table:
         tramite: Nro.
         iniciadores: Iniciadores / Particular / Comision
@@ -27,6 +29,8 @@ es:
         actualizado: Actualizado
         observaciones: Observaciones
     expedientes:
+      btnheader:
+        print: Imprimir reporte
       table:
         expediente: Expediente
         fojas: Nro. fojas
@@ -36,6 +40,8 @@ es:
         description: Descripción
         circuitos: Circuitos
     normas:
+      btnheader:
+        print: Imprimir reporte
       table:
         norma: Nro-Bis/Año
         sumario: Sumario
@@ -49,6 +55,7 @@ es:
     index:
       btnheader:
         new: Nuevo
+        print: Imprimir reporte
       table:
         pendiente: Nro.
         iniciador: Iniciadores

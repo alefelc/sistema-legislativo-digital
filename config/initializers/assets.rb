@@ -12,4 +12,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w[ logo.jpg
                                                  select2-spinner.gif
                                                  select2.png
-                                                 select2x2.png ]
+                                                 select2x2.png
+                                                 print.css
+                                                 logo-carat.png ]
