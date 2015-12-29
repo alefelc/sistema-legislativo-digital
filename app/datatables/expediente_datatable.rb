@@ -43,21 +43,21 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
         iniciadores.each do |i|
           case i[:type]
           when "OrganoDeGobierno"   
-            iniciador += "Organo de Gobierno: " + i[:denominacion].to_s + " / \n"
+            iniciador += i[:denominacion].to_s + " / \n"
           when "Area"   
-            iniciador += "Area: " + i[:denominacion].to_s + " / \n"
+            iniciador += i[:denominacion].to_s + " / \n"
           when "Bloque"   
-            iniciador += "Bloque: " + i[:denominacion].to_s + " / \n"
+            iniciador += i[:denominacion].to_s + " / \n"
           when "Comision"   
-            iniciador += "Comision: " + i[:denominacion].to_s + " / \n" 
+            iniciador += i[:denominacion].to_s + " / \n" 
           when "ReparticionOficial"   
-            iniciador += "Reparticion Oficial: " + i[:denominacion].to_s + " / \n"
+            iniciador += i[:denominacion].to_s + " / \n"
           when "DependenciaMunicipal"   
-            iniciador += "Dependenci Municipal: " + i[:denominacion].to_s + " / \n"
+            iniciador += i[:denominacion].to_s + " / \n"
           when "Concejal"
-            iniciador += i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i.bloque.denominacion.to_s}" + " / \n"
+            iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i.bloque.denominacion.to_s}" + " / \n"
           else   
-            iniciador += "Persona " + i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s + " / \n"
+            iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " / \n"
           end
         end    
       end
