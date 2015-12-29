@@ -34,6 +34,8 @@ $(document).on 'ready page:load', ->
       deferred: $.Deferred()
       timeout: 250
     $('#norma-table').DataTable().draw()
+    $('#norma div.dataTables_filter input').focus()
+
   ## hotkey print normas
   $.ctrl 'P', ->
     $('#norma #btn-print').click()
