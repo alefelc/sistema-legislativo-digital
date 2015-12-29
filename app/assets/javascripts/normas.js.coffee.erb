@@ -19,6 +19,9 @@ $(document).on 'ready page:load', ->
     ]
 
   $('#norma #btn-print').on 'click', ->
+    $('#norma-table a').each (index, elem) ->
+      $(elem).removeAttr 'href'
+      return
     $('#norma-table').print
       globalStyles: true
       mediaPrint: false
@@ -30,7 +33,7 @@ $(document).on 'ready page:load', ->
       manuallyCopyFormValues: true
       deferred: $.Deferred()
       timeout: 250
-
+    $('#norma-table').DataTable().draw()
   ## hotkey print normas
   $.ctrl 'P', ->
     $('#norma #btn-print').click()

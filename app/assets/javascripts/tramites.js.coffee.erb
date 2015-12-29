@@ -19,6 +19,9 @@ $(document).on 'ready page:load', ->
     ]
 
   $('#tramite #btn-print').on 'click', ->
+    $('#tramite-table a').each (index, elem) ->
+      $(elem).removeAttr 'href'
+      return
     $('#tramite-table').print
       globalStyles: true
       mediaPrint: false
@@ -30,7 +33,7 @@ $(document).on 'ready page:load', ->
       manuallyCopyFormValues: true
       deferred: $.Deferred()
       timeout: 250
-
+    $('#tramite-table').DataTable().draw()
   ## hotkey print tramites
   $.ctrl 'P', ->
     $('#tramite #btn-print').click()
