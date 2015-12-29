@@ -36,33 +36,33 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
   end
 
   def associated_file(exp)
-    iniciador= "" 
+    iniciador= ""
     exp.circuitos.find_by(nro: 0).tramites.each do |tramite|
       iniciadores = tramite.get_iniciadores
       if iniciadores.present?
         iniciadores.each do |i|
           case i[:type]
-          when "OrganoDeGobierno"   
+          when "OrganoDeGobierno"
             iniciador += i[:denominacion].to_s + " / \n"
-          when "Area"   
+          when "Area"
             iniciador += i[:denominacion].to_s + " / \n"
-          when "Bloque"   
+          when "Bloque"
             iniciador += i[:denominacion].to_s + " / \n"
-          when "Comision"   
-            iniciador += i[:denominacion].to_s + " / \n" 
-          when "ReparticionOficial"   
+          when "Comision"
             iniciador += i[:denominacion].to_s + " / \n"
-          when "DependenciaMunicipal"   
+          when "ReparticionOficial"
+            iniciador += i[:denominacion].to_s + " / \n"
+          when "DependenciaMunicipal"
             iniciador += i[:denominacion].to_s + " / \n"
           when "Concejal"
-            iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i.bloque.denominacion.to_s}" + " / \n"
-          else   
+            iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i[:bloque]}" + " / \n"
+          else
             iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " / \n"
           end
-        end    
+        end
       end
     end
-    iniciador = iniciador.upcase[0..-4]          
+    iniciador = iniciador.upcase[0..-4]
     "<div style='display: flex'>" +
     "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>" +
