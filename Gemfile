@@ -38,10 +38,10 @@ gem 'rails-i18n'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn', group: :production
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'capistrano-rails', group: :development
 
 # Activeadmin
 gem 'activeadmin', github: 'activeadmin'
