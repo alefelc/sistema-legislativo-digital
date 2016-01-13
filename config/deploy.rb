@@ -9,7 +9,7 @@ set :migration_role, 'migrator'
 set :conditionally_migrate, true
 
 # Defaults to [:web]
-set :assets_roles, [:web, :app]
+set :assets_roles, [:app]
 
 # Defaults to 'assets'
 # This should match config.assets.prefix in your rails config/application.rb

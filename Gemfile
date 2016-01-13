@@ -43,9 +43,9 @@ gem 'rails-i18n'
 gem 'unicorn', group: :production
 
 # Capistrano for deployment
-gem 'capistrano-rails'
+gem 'capistrano', '~> 3.1'
+gem 'capistrano-rails', '~> 1.1'
 gem 'capistrano-rvm'
-gem 'capistrano3-unicorn'
 
 # Activeadmin
 gem 'activeadmin', github: 'activeadmin'
@@ -58,6 +58,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 
 # Sprockets Rails integration
 gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'sprockets'
 
 # Icons
 gem 'font-awesome-sass', '~> 4.4.0'
