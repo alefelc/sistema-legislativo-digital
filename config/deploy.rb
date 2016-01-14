@@ -11,10 +11,6 @@ set :conditionally_migrate, true
 # Defaults to [:web]
 set :assets_roles, [:app]
 
-# Defaults to 'assets'
-# This should match config.assets.prefix in your rails config/application.rb
-set :assets_prefix, 'prepackaged-assets'
-
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
