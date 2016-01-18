@@ -7,10 +7,10 @@
       %span.titles= "Nro.: "
       %span= part.id
       %span
-        &nbsp 
+        &nbsp
         %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Petición particular"}
     - fojas = part.get_fojas
-      - if fojas.present?      
+      - if fojas.present?
       %p.single-tab
         %span= "Nro. de Fojas: "
         %span= fojas
@@ -18,16 +18,16 @@
       - if asunto.present?
       %p.single-tab
         %span.titles= "Asunto: "
-        %span= asunto    
+        %span= asunto
     - iniciadores_bloques = get_iniciadores_bloques(part)
     - iniciadores_comisions = get_iniciadores_comisions(part)
     - iniciadores_personas = get_iniciadores_personas(part)
-      - if iniciadores_bloques.present? || iniciadores_comisions.present? || iniciadores_personas.present?     
+      - if iniciadores_bloques.present? || iniciadores_comisions.present? || iniciadores_personas.present?
       %p.single-tab
         .single-tab.titles= "Iniciadores: "
         .double-tab.titles= "Personas: "
         - iniciadores_personas.each do |b|
-          .double-tab= b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s    
+          .double-tab= b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s
     - actualizado = part.get_date_time
       - if actualizado.present?
       %p.single-tab
@@ -40,37 +40,38 @@
         %span= obs
     %p.single-tab
       .single-tab.titles= "Estados del trámite: "
-      .single-tab  
+      .single-tab
         %table.table.table-striped.table-bordered#states-table-show
           %thead
             %tr
-              %th{style: "text-align:center;"}= "Estado"
-              %th= "Fecha"
+              %th.center{ width: "15%" }= "Fecha"
+              %th.center{ width: "85%" }= "Estado"
           %tbody
             - part.estado_tramites.each do |x|
               - case x.tipo
               - when "1"
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                  %td= to_date_time(x.created_at)
                   %td= "Iniciado"
-                  %td= to_date_time(x.created_at)  
               - when "2"
                 - if (x.ref_type == 'Personal')
                   - text = x.ref.apellido + ", " + x.ref.nombre;
                 - else
-                  - text = x.ref.denominacion;   
+                  - text = x.ref.denominacion;
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                  %td= "Derivado a " + x.ref_type + ": " + text
                   %td= to_date_time(x.created_at)
+                  %td= "Derivado a " + x.ref_type + ": " + text
               - when "3"
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td 
+                  %td= to_date_time(x.created_at)
+                  %td
                     %span= "Finalizado en "
                     %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro_exp.to_s , x.ref)
-                  %td= to_date_time(x.created_at)
               - when "4" #caso para tramites finalizados pero q no terminan en expediente
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td 
+                  %td= to_date_time(x.updated_at)
+                  %td
                     %span= "Finalizado: "
                     %span= x.especificacion.to_s
-                  %td= to_date_time(x.updated_at)    
-              - else    
+              - else
+                ERROR

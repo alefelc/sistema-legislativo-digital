@@ -25,7 +25,7 @@ module ApplicationHelper
       ["Rechazado","Rechazado"],
       ["Retirado","Retirado"]
     ]
-  end  
+  end
 
   def sancion_options2
     [
@@ -37,10 +37,11 @@ module ApplicationHelper
 
   def dictamina_options1
     Periodo.last.comisions.map{ |x| [x.denominacion, x.denominacion] }
-  end  
+  end
 
   def dictamina_options2
     [
+      ["",""],
       ["Mayoría","Mayoría"],
       ["Minoría","Minoría"],
       ["Unánime","Unánime"]
@@ -107,14 +108,14 @@ module ApplicationHelper
   def index_tra(tra)
     case tra.type
     when "Proyecto"
-      link_to tra.id.to_s, proyecto_path(tra) 
+      link_to tra.id.to_s, proyecto_path(tra)
     when "Peticion"
       link_to tra.id.to_s, particular_path(tra)
     when "Despacho"
       link_to tra.id.to_s, despacho_path(tra)
-    when "Condonacion"  
+    when "Condonacion"
       link_to tra.id.to_s, condonacion_path(tra)
-    when "ComunicacionOficial"  
+    when "ComunicacionOficial"
       link_to tra.id.to_s, comunicacion_oficial_path(tra)
     else
     end
@@ -220,9 +221,9 @@ module ApplicationHelper
       personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
       iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + personas
     else
-    end  
+    end
     iniciadores
-  end  
+  end
 
   def build_json_iniciadores(pers)
     json_array = []
@@ -363,6 +364,6 @@ module ApplicationHelper
 
   def get_sancion_estado(exp, estado_exp)
     exp.circuitos.find_by(nro: 0).normas.where(sancion:estado_exp.fecha)
-  end  
+  end
 
 end

@@ -17,16 +17,16 @@
               .input-group
                 = label_tag nil, "Dictamina", { class: "input-group-addon", id: "basic-addon08"}
                 .input-group
+                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
+                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
+                                                 type: "text", data: { load: prepopulate_exps_despacho(@despacho) }}
+                .input-group
                   = f.label "", "Fecha", { class: "input-group-addon", id: "basic-addon04" }
-                  = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon04", type: :date}  
+                  = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon04", type: :date}
                 .input-group
                   = f.label "", t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
                   = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
                 = select_tag "especificacion2", options_for_select(dictamina_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
-                .input-group
-                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
-                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
-                                                 type: "text", data: { load: prepopulate_exps_despacho(@despacho) }}
               .input-group
                 = f.label :concejals, t('.concejals'), { class: "input-group-addon", id: "basic-addon5" }
                 = f.select(:concejals, options_for_select(get_options_concejals()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_concejals", data: { load: prepopulate_concejals(@despacho) }})
@@ -109,7 +109,7 @@
         }
         else{
           inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px'>Circuito "+ i +"<br>";
-        }  
+        }
       }
       return "<li><p class='exps-token' data-nro_c='"+ exp.nro_c +"' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p><br>"+
       inputs+
@@ -134,7 +134,7 @@
       })
       circuitos[index] = {
         id: $(value).data("id"),
-        circ: c  
+        circ: c
       }
       index++;
     });
