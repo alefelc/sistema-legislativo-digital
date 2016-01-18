@@ -1,14 +1,12 @@
+- desp = @despacho
 #despacho-show
-  %h4= t('despachos.show.info')
+  %p
+    %h4.titles= t('despachos.show.info') + " Nro.: #{desp.id}"
   %hr
   #despacho-body
-    - desp = @despacho
-    %p
-      %span.titles= "Nro.: "
-      %span= desp.id
-      %span
-        &nbsp
-        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Despacho"}
+    %span
+      &nbsp
+      %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Descargar Despacho"}
     - fecha = desp.get_fecha
       - if fecha.present?
       %p.single-tab
