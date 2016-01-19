@@ -1,7 +1,26 @@
+#filter-expedientes.modal.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4.modal-title Modal title
+      .modal-body
+        %p One fine body&hellip;
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button.btn.btn-primary{:type => "button"} Save changes
+
 #expediente-report
+
   %button#btn-print.btn.btn-danger
     %span.glyphicon.glyphicon-print{ "aria-hidden": true }
     = t('.btnheader.print')
+
+  %button.btn.btn-primary{ "data-target": "#filter-expedientes", "data-toggle": "modal", type: "button" }
+    %span.fa.fa-filter{ "aria-hidden": true }
+    Filtrar datos
+
   %table.datatable-keyevents.table.table-striped.table-bordered#expediente-report-table{"data-source" => expediente_reports_path(format: :json)}
     %thead
       %tr

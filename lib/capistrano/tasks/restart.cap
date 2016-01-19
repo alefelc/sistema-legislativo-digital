@@ -1,0 +1,15 @@
+namespace :deploy do
+  desc 'Restart unicorn application'
+  task :restart_unicorn do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "/etc/init.d/unicorn_#{fetch(:full_app_name)} restart"
+    end
+  end
+
+  desc 'Restart database'
+  task :restart_db do
+    on roles(:app) do
+      execute "cd #{fetch(:deploy_to)}/current/ && RAILS_ENV=production ~/.rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle exec rake db:reset"
+    end
+  end
+end

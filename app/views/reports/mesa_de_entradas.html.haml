@@ -1,7 +1,26 @@
+#filter-entradas.modal.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4.modal-title Modal title
+      .modal-body
+        %p One fine body&hellip;
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button.btn.btn-primary{:type => "button"} Save changes
+
 #tramite
+
   %button#btn-print.btn.btn-danger
-    %span.glyphicon.glyphicon-print{ "aria-hidden": true }
+    %span.glyphicon.glyphicon-print
     = t('.btnheader.print')
+
+  %button.btn.btn-primary{ "data-target": "#filter-entradas", "data-toggle": "modal", type: "button" }
+    %span.fa.fa-filter{ "aria-hidden": true }
+    Filtrar datos
+
   %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => tramites_path(format: :json)}
     %thead
       %tr
