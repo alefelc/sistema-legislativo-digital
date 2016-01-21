@@ -50,7 +50,7 @@ es:
         description: Descripción
         relationships: Norma a Dispositivos
         relationships2: Dispositivos a Norma
-        expedientes: Sanciona Exp N°    
+        expedientes: Sanciona Exp N°
   pendientes:
     index:
       btnheader:
@@ -429,7 +429,7 @@ es:
 
   despachos:
     show:
-      info: Información del Despacho
+      info: "Despacho Nro: "
     index:
       btnheader:
         new: Nuevo
