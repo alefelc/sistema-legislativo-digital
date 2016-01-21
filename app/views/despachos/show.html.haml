@@ -1,75 +1,79 @@
 - desp = @despacho
 #despacho-show
-  %h4.main-title= t('despachos.show.info') + " #{desp.id}"
-  %hr
+  .row
+    .col-md-8
+      %h3.main-title= t('despachos.show.info') + " #{desp.id}"
+      %hr
+    .col-md-4
+      .float-right
+        %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Despacho" }
+          = "Imprimir"
+        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: "Descargar Despacho" }
+          = "Descargar"
 
   #despacho-body
     .panel.panel-success
       .panel-heading= "Información"
       .panel-body
-        .float-right
-          %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Despacho" }
-            = "Imprimir"
-          %a.btn.btn-lg.btn-primary.fa.fa-download{ title: "Descargar Despacho" }
-            = "Descargar"
         - expedientes = desp.get_expedientes
           - unless expedientes.empty?
           %p.single-tab
-            %span= "Expedientes Legislativo/s: "
+            %span.titles= "Vinculado a Expediente/s Legislativo/s: "
             - expedientes.each do |e|
               %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}") + " - "
         - fojas = desp.get_fojas
           - if fojas.present?
           %p.single-tab
-            %span= "Nro. de Fojas: "
+            %span.titles= "Número de Fojas: "
             %span= fojas
         - fecha = desp.get_fecha
           - if fecha.present?
           %p.single-tab
-            %span= "Fecha: "
+            %span.titles= "Fecha del Dictamen: "
             %span= fecha
         - obs = desp.get_observaciones
           - if obs.present?
           %p.single-tab
-            %span= "Observaciones: "
+            %span.titles= "Observaciones: "
             %span= obs
 
-    .row
-      .col-xs-12.col-sm-6
-        - comisiones = desp.get_comisiones
-        - unless comisiones.empty?
-          .panel.panel-info
-            .panel-heading= "Comisiones"
-            .panel-body
-              %p.single-tab
+        .row.single-tab
+          .col-xs-12.col-sm-12
+            - comisiones = desp.get_comisiones
+            - unless comisiones.empty?
+              .titles= "Comisiones Dictaminantes"
               - comisiones.each do |c|
                 .double-tab= c.denominacion
 
-      .col-xs-12.col-sm-6
-        - concejales = desp.get_concejales
-        - unless concejales.empty?
-          .panel.panel-info
-            .panel-heading= "Concejales"
-            .panel-body
-              %p.single-tab
+          %p.single-tab
+          %p.single-tab
+          .col-xs-12.col-sm-12
+            - concejales = desp.get_concejales
+            - unless concejales.empty?
+              .titles= "Concejales Firmantes"
               - concejales.each do |c|
                 .double-tab= c.apellido.to_s + ", " + c.nombre.to_s
+          %p.single-tab
+          - obs = desp.get_observaciones
+          .single-tab
+            %span.titles.simple-tab= "Tipo de Dictamen"
+            %p.double-tab= "Mayoria"
 
     .panel.panel-info
-      .panel-heading= "Estados"
+      .panel-heading= "Trámites del despacho"
       .panel-body.without-padding
         %table.table.table-striped#states-table-show
           %thead
             %tr
               %th.center{ width: "15%" }= "Fecha"
-              %th.center{ width: "85%" }= "Estado"
+              %th{ width: "85%" }= "Estado"
           %tbody
             - desp.estado_tramites.each do |x|
               - case x.tipo
               - when "1"
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
                   %td.center= to_date_time(x.created_at)
-                  %td.center= "Presentado"
+                  %td= "Presentado"
               - when "2"
                 - if (x.ref_type == 'Personal')
                   - text = x.ref.apellido.to_s + ", " + x.ref.nombre.to_s;
@@ -77,17 +81,17 @@
                   - text = x.ref.denominacion;
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                   %td.center= to_date_time(x.created_at)
-                  %td.center= "Derivado a " + x.ref_type + ": " + text
+                  %td= "Derivado a " + x.ref_type + ": " + text
               - when "3"
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
                   %td.center= to_date_time(x.created_at)
-                  %td.center
+                  %td
                     %span= "Finalizado en "
                     %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro_exp.to_s , x.ref)
               - when "4" #caso para tramites finalizados pero q no terminan en expediente
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
                   %td.center= to_date_time(x.created_at)
-                  %td.center
+                  %td
                     %span= "Finalizado en "
                     %span= x.especificacion.to_s
               - else

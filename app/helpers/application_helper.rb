@@ -142,7 +142,7 @@ module ApplicationHelper
     return "Especiales" if current_page?(controller: :especials, action: :index)
     return "Otras Normas" if current_page?(controller: :otra_normas, action: :index)
     return "Despachos" if current_page?(controller: :despachos, action: :index)
-    return "Despacho #{params[:id]}" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
+    return "Despacho de Comisión" if current_page?(controller: :despachos, action: :show, id: params[:id].to_i)
     return "Condonaciones" if current_page?(controller: :condonacions, action: :index)
     return "Condonacion #{params[:id]}" if current_page?(controller: :condonacions, action: :show, id: params[:id].to_i)
     return "Peticiones Particulares" if current_page?(controller: :particulars, action: :index)
