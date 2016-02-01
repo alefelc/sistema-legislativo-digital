@@ -23,7 +23,7 @@ es:
         iniciadores: Iniciadores / Particular / Comision
         asunto: Asunto / Solicitud
         tipo: Tramite
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado
@@ -33,7 +33,7 @@ es:
         print: Imprimir reporte
       table:
         expediente: Expediente
-        fojas: Nro. fojas
+        fojas: Fojas
         tramites: Tramites
         sumario: Sumario
         fechas: Fechas
@@ -60,7 +60,7 @@ es:
         pendiente: Nro.
         iniciador: Iniciadores
         asunto: Asunto
-        fojas: Nro. fojas
+        fojas: Fojas
         tipo: Tipo Tramite.
         fecha: Fecha
         estado: Estado Actual
@@ -190,7 +190,7 @@ es:
         create_expediente: Creando Expediente
       create_expediente: Creando Expediente
       update_expediente: Editando Expediente
-      fojas: Nro. Fojas
+      fojas: Fojas
       anio: Fecha
       table:
         state: Estado
@@ -202,7 +202,7 @@ es:
         create_expediente: Creando Expediente
       create_expediente: Creando Expediente
       update_expediente: Editando Expediente
-      fojas: Nro. Fojas
+      fojas: Fojas
       anio: Fecha
       circuitos: Circuitos
       estados: Agregar Estado
@@ -435,7 +435,7 @@ es:
         new: Nuevo
       table:
         despacho: Nro.
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         expedientes: Expedientes
         comisiones: Comisiones
@@ -461,7 +461,7 @@ es:
         particular: Nro.
         iniciador: Iniciadores
         asunto: Asunto
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado
@@ -498,7 +498,7 @@ es:
         comunicacion_oficial: Nro.
         iniciador: Iniciadores
         asunto: Asunto
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado
@@ -535,7 +535,7 @@ es:
         proyecto: Nro.
         iniciador: Iniciadores
         asunto: Asunto
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado
@@ -572,7 +572,7 @@ es:
         condonacion: Nro.
         iniciador: Iniciadores
         asunto: Asunto
-        fojas: Nro. fojas
+        fojas: Fojas
         fecha: Fecha
         estado: Estado Actual
         actualizado: Actualizado

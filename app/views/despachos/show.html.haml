@@ -1,10 +1,9 @@
 - desp = @despacho
 #despacho-show
   .row
-    .col-md-8
+    .col-md-3
       %h3.main-title= t('despachos.show.info') + " #{desp.id}"
-      %hr
-    .col-md-4
+    .col-md-4.float-right
       .float-right
         %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Despacho" }
           = "Imprimir"
@@ -52,12 +51,10 @@
             - unless concejales.empty?
               .titles= "Concejales Firmantes"
               - concejales.each do |c|
-                .double-tab= c.apellido.to_s + ", " + c.nombre.to_s
-          %p.single-tab
-          - obs = desp.get_observaciones
+                .double-tab= "#{c.apellido.titleize}, #{c.nombre.titleize}"
           .single-tab
             %span.titles.simple-tab= "Tipo de Dictamen"
-            %p.double-tab= "Mayoria"
+            %p.double-tab= "RESOLVER"
 
     .panel.panel-info
       .panel-heading= "Trámites del despacho"
