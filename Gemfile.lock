@@ -16,14 +16,6 @@ GIT
       ransack (~> 1.3)
       sass-rails
 
-GIT
-  remote: git://github.com/capistrano/rails.git
-  revision: 61aeb40c1e41d2e6d57818edd1ba8c541873efb7
-  specs:
-    capistrano-rails (1.1.5)
-      capistrano (~> 3.1)
-      capistrano-bundler (~> 1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -93,6 +85,11 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
+    capistrano-rails (1.1.5)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rails-console (1.0.2)
+      capistrano (>= 3.1.0, < 4.0.0)
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
@@ -312,7 +309,7 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (5.0.1)
+    unicorn (4.8.3)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -334,8 +331,10 @@ DEPENDENCIES
   better_errors
   bootstrap-sass (~> 3.3.5)
   capistrano (~> 3.1)
-  capistrano-rails!
-  capistrano-rvm
+  capistrano-bundler (~> 1.1.2)
+  capistrano-rails (~> 1.1)
+  capistrano-rails-console (~> 1.0, >= 1.0.2)
+  capistrano-rvm (~> 0.1.1)
   coffee-rails (~> 4.1.0)
   devise
   font-awesome-sass (~> 4.4.0)
@@ -362,7 +361,7 @@ DEPENDENCIES
   therubyracer
   thin
   uglifier (>= 1.3.0)
-  unicorn
+  unicorn (~> 4.8.2)
   web-console (~> 2.0)
 
 BUNDLED WITH
