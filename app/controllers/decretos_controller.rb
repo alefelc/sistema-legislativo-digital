@@ -1,5 +1,5 @@
 class DecretosController < ApplicationController
-  before_action :authenticate_usuario!
+  # before_action :authenticate_usuario!
 
   respond_to :json, :html
 
@@ -61,12 +61,12 @@ class DecretosController < ApplicationController
             ne.especificacion2 = params[:especificacion2]
             ne.ref_id = @decreto.id
             ne.ref_type = @decreto.type
-          end  
+          end
         else
           ## la sancion recaer sobre algun circuito
-          array_c.each do |nro_c| 
+          array_c.each do |nro_c|
             circuito = expediente.circuitos.find_by(nro: nro_c)
-            @decreto.circuitos << circuito 
+            @decreto.circuitos << circuito
             circuito.estado_expedientes.create do |ne|
               ne.nombre = "Sancionado"
               ne.tipo = "8"
@@ -76,8 +76,8 @@ class DecretosController < ApplicationController
               ne.ref_id = @decreto.id
               ne.ref_type = @decreto.type
             end
-          end   
-        end  
+          end
+        end
       end
     end
 
@@ -150,12 +150,12 @@ class DecretosController < ApplicationController
           ne.especificacion2 = params[:especificacion2]
           ne.ref_id = @decreto.id
           ne.ref_type = @decreto.type
-        end  
+        end
       else
         ## la sancion recaer sobre algun circuito
-        array_c.each do |nro_c| 
+        array_c.each do |nro_c|
           circuito = expediente.circuitos.find_by(nro: nro_c)
-          @decreto.circuitos << circuito 
+          @decreto.circuitos << circuito
           circuito.estado_expedientes.create do |ne|
             ne.nombre = "Sancionado"
             ne.tipo = "8"
@@ -165,8 +165,8 @@ class DecretosController < ApplicationController
             ne.ref_id = @decreto.id
             ne.ref_type = @decreto.type
           end
-        end   
-      end  
+        end
+      end
     end
 
     ## update params clasifications_ids the PATCH

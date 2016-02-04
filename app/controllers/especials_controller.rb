@@ -1,5 +1,5 @@
 class EspecialsController < ApplicationController
-  before_action :authenticate_usuario!
+  # before_action :authenticate_usuario!
 
   respond_to :json, :html
 
@@ -61,12 +61,12 @@ class EspecialsController < ApplicationController
             ne.especificacion2 = params[:especificacion2]
             ne.ref_id = @especial.id
             ne.ref_type = @especial.type
-          end  
+          end
         else
           ## la sancion recaer sobre algun circuito
-          array_c.each do |nro_c| 
+          array_c.each do |nro_c|
             circuito = expediente.circuitos.find_by(nro: nro_c)
-            @especial.circuitos << circuito 
+            @especial.circuitos << circuito
             circuito.estado_expedientes.create do |ne|
               ne.nombre = "Sancionado"
               ne.tipo = "8"
@@ -76,8 +76,8 @@ class EspecialsController < ApplicationController
               ne.ref_id = @especial.id
               ne.ref_type = @especial.type
             end
-          end   
-        end  
+          end
+        end
       end
     end
 
@@ -150,12 +150,12 @@ class EspecialsController < ApplicationController
           ne.especificacion2 = params[:especificacion2]
           ne.ref_id = @especial.id
           ne.ref_type = @especial.type
-        end  
+        end
       else
         ## la sancion recaer sobre algun circuito
-        array_c.each do |nro_c| 
+        array_c.each do |nro_c|
           circuito = expediente.circuitos.find_by(nro: nro_c)
-          @especial.circuitos << circuito 
+          @especial.circuitos << circuito
           circuito.estado_expedientes.create do |ne|
             ne.nombre = "Sancionado"
             ne.tipo = "8"
@@ -165,8 +165,8 @@ class EspecialsController < ApplicationController
             ne.ref_id = @especial.id
             ne.ref_type = @especial.type
           end
-        end   
-      end  
+        end
+      end
     end
 
     ## update params clasifications_ids the PATCH

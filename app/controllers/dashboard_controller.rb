@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_usuario!
+  # before_action :authenticate_usuario!
 
   respond_to :json
   def index

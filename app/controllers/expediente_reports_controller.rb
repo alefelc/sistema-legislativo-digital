@@ -1,5 +1,5 @@
 class ExpedienteReportsController < ApplicationController
-  before_action :authenticate_usuario!
+  # before_action :authenticate_usuario!
 
   respond_to :json, :html
 
@@ -11,15 +11,15 @@ class ExpedienteReportsController < ApplicationController
   end
 
   def new
-    
+
   end
 
   def show
-    
+
   end
 
   def edit
-    
+
   end
 
   def destroy
@@ -27,11 +27,11 @@ class ExpedienteReportsController < ApplicationController
   end
 
   def create
-    
+
   end
 
   def update
-    
+
   end
 
   private

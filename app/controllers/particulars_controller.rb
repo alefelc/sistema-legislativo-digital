@@ -68,7 +68,7 @@ class ParticularsController < ApplicationController
         e.nombre = "Finalizado"
         e.especificacion = params[:finalizado]
         e.tipo = 4
-      end      
+      end
     end
 
     redirect_to action: :index
@@ -137,7 +137,7 @@ class ParticularsController < ApplicationController
     finalizado = params[:finalizado]
     unless finalizado.blank?
       estado = @particular.estado_tramites.find_by(tipo: "4")
-      if estado.present? 
+      if estado.present?
         estado.update especificacion: params[:finalizado]
       else
         @particular.estado_tramites.create do |e|
@@ -145,7 +145,7 @@ class ParticularsController < ApplicationController
           e.especificacion = params[:finalizado]
           e.tipo = 4
         end
-      end    
+      end
     end
 
     redirect_to action: :index
@@ -161,7 +161,7 @@ class ParticularsController < ApplicationController
     ##com = com.as_json(methods: 'type')
     ##bloques = bloques.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
-    q = per ##com + bloques 
+    q = per ##com + bloques
     agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
     iniciadores = q.push(agregar_nuevo);
     render json: iniciadores

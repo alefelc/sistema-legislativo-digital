@@ -1,5 +1,5 @@
 class OtraNormasController < ApplicationController
-  before_action :authenticate_usuario!
+  # before_action :authenticate_usuario!
 
   respond_to :json, :html
 
@@ -61,12 +61,12 @@ class OtraNormasController < ApplicationController
             ne.especificacion2 = params[:especificacion2]
             ne.ref_id = @otra_norma.id
             ne.ref_type = @otra_norma.type
-          end  
+          end
         else
           ## la sancion recaer sobre algun circuito
-          array_c.each do |nro_c| 
+          array_c.each do |nro_c|
             circuito = expediente.circuitos.find_by(nro: nro_c)
-            @otra_norma.circuitos << circuito 
+            @otra_norma.circuitos << circuito
             circuito.estado_expedientes.create do |ne|
               ne.nombre = "Sancionado"
               ne.tipo = "8"
@@ -76,8 +76,8 @@ class OtraNormasController < ApplicationController
               ne.ref_id = @otra_norma.id
               ne.ref_type = @otra_norma.type
             end
-          end   
-        end  
+          end
+        end
       end
     end
 
@@ -150,12 +150,12 @@ class OtraNormasController < ApplicationController
           ne.especificacion2 = params[:especificacion2]
           ne.ref_id = @otra_norma.id
           ne.ref_type = @otra_norma.type
-        end  
+        end
       else
         ## la sancion recaer sobre algun circuito
-        array_c.each do |nro_c| 
+        array_c.each do |nro_c|
           circuito = expediente.circuitos.find_by(nro: nro_c)
-          @otra_norma.circuitos << circuito 
+          @otra_norma.circuitos << circuito
           circuito.estado_expedientes.create do |ne|
             ne.nombre = "Sancionado"
             ne.tipo = "8"
@@ -165,8 +165,8 @@ class OtraNormasController < ApplicationController
             ne.ref_id = @otra_norma.id
             ne.ref_type = @otra_norma.type
           end
-        end   
-      end  
+        end
+      end
     end
 
     ## update params clasifications_ids the PATCH
