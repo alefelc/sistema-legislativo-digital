@@ -4143,11 +4143,20 @@ table.text-center th {
   width: 100%!important;
 }
 #path-name {
-  padding-left: 30%;
-  font-size: 34px;
+  font-size: 30px;
   color: white;
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-weight: bold;
+}
+.navbar-title {
+  display: flex;
+}
+.takeoff-padding {
+  padding: 0px !important;
+}
+.row-fluid [class*="span"].center, .center {
+  margin: 0 auto;
+  float: none;
 }
 /*
  * Misc: print

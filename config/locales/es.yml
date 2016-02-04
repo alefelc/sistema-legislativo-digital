@@ -179,7 +179,7 @@ es:
       info: Información del expediente
     index:
       btnheader:
-        new: Nuevo
+        new: Nuevo Expediente
       table:
         expediente: Expediente
         sumario: Sumario
@@ -378,7 +378,7 @@ es:
       info: Información del Decreto
     index:
       btnheader:
-        new: Nuevo
+        new: Nuevo Decreto
       table:
         decreto: Nro-Bis/Año
         sumario: Sumario
@@ -432,7 +432,7 @@ es:
       info: "Despacho Nro: "
     index:
       btnheader:
-        new: Nuevo
+        new: Nuevo Despacho
       table:
         despacho: Nro.
         fojas: Fojas
