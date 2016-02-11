@@ -453,7 +453,7 @@ es:
 
   particulars:
     show:
-      info: Información de la Petición Particular
+      info: "Petición Particular Nro: "
     index:
       btnheader:
         new: Nuevo
@@ -490,7 +490,7 @@ es:
 
   comunicacion_oficials:
     show:
-      info: Información de la Comunicación Oficial.
+      info: "Comunicación Oficial Nro: "
     index:
       btnheader:
         new: Nuevo
@@ -527,7 +527,7 @@ es:
 
   proyectos:
     show:
-      info: Información del Proyecto.
+      info: "Proyecto Nro: "
     index:
       btnheader:
         new: Nuevo
@@ -564,7 +564,7 @@ es:
 
   condonacions:
     show:
-      info: Información de la Condonación
+      info: "Condonación Nro: "
     index:
       btnheader:
         new: Nuevo

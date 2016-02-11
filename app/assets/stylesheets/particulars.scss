@@ -81,7 +81,6 @@
 
   .titles {
     color: #676773;
-    text-decoration: underline;
     font-weight: bold;
   }
 
@@ -91,5 +90,21 @@
 
   .double-tab {
     padding-left: 30px;
+  }
+
+  .main-title {
+    margin-top: 5px;
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .without-padding {
+    padding: 0px !important;
+  }
+
+  #states-table-particular-show {
+    margin: 0px;
   }
 }

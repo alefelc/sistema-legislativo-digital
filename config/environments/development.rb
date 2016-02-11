@@ -42,5 +42,5 @@ Rails.application.configure do
   # Default settings for devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.assets.prefix = "/dev-assets"
+  #config.assets.prefix = "/dev-assets"
 end
