@@ -94,7 +94,7 @@ $(document).on 'ready page:load', ->
       manuallyCopyFormValues: true
       deferred: $.Deferred()
       timeout: 1000
-    $('#expedientes #caratula #ingreso-text').empty()  
+    $('#expedientes #caratula #ingreso-text').empty()
     $('#expedientes #caratula #numero-text').empty()
     $('#expedientes #caratula #iniciador-text').empty()
     $('#expedientes #caratula #asunto-text').empty()
@@ -104,7 +104,7 @@ $(document).on 'ready page:load', ->
     $('#expedientes #caratula #iniciador-text').append '&nbsp;'
     $('#expedientes #caratula #asunto-text').append '&nbsp;'
     $('#expedientes #caratula').css('display','none')
-    return  
+    return
 
   $(document).on 'click', '#expedientes .linktocircuit', ->
     $(document).off 'keydown'
@@ -124,4 +124,21 @@ $(document).on 'ready page:load', ->
   ## hotkey edit expedientes
   $.ctrl 'E', ->
     $('#expedientes table tbody').find('.info').find('.linktoedit').click()
+    return
+
+  $('#expediente-show #print-expediente').on 'click', ->
+    $('#expediente-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print expediente
+  $.ctrl 'P', ->
+    $('#expediente-show #print-expediente').click()
     return

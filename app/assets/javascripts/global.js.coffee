@@ -36,7 +36,7 @@ $.ctrl = (key, callback, args) ->
     if !args
       args = []
     # IE barks when args is null
-    if e.ctrlKey
+    if e.ctrlKey || e.metaKey
       isCtrl = true
     if e.keyCode == key.charCodeAt(0) and isCtrl
       callback.apply this, args
@@ -51,30 +51,32 @@ $.ctrl = (key, callback, args) ->
   return
 
 $(document).keydown (event) ->
-  table = $('.datatable-keyevents').dataTable()
-  currentRow = $('.datatable-keyevents tbody tr.info').get(0)
-  switch event.keyCode
-    ## arrow down
-    when 40
-      if $(currentRow).next().length != 0
-        $(currentRow).next().addClass 'info'
-        $(currentRow).removeClass 'info'
-    ## arrow up
-    when 38
-      if $(currentRow).prev().length != 0
-        $(currentRow).prev().addClass 'info'
-        $(currentRow).removeClass 'info'
-    ## arrow left
-    when 37
-      table.fnPageChange('previous')
-    ## arrow right
-    when 39
-      table.fnPageChange('next')
-    when 13
-      $('tr.info').find('td:eq(0) a').get(0).click()
-  ## Update scrollbar
-  rowpos = $('tr.info').position()
-  $(document).scrollTop(rowpos.top-45)
+  if $('.datatable-keyevents').length
+    table = $('.datatable-keyevents').dataTable()
+    currentRow = $('.datatable-keyevents tbody tr.info').get(0)
+    switch event.keyCode
+      ## arrow down
+      when 40
+        if $(currentRow).next().length != 0
+          $(currentRow).next().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow up
+      when 38
+        if $(currentRow).prev().length != 0
+          $(currentRow).prev().addClass 'info'
+          $(currentRow).removeClass 'info'
+      ## arrow left
+      when 37
+        table.fnPageChange('previous')
+      ## arrow right
+      when 39
+        table.fnPageChange('next')
+      when 13
+        $('tr.info').find('td:eq(0) a').get(0).click()
+
+    ## Update scrollbar
+    rowpos = $('tr.info').position()
+    $(document).scrollTop(rowpos.top-45)
   return
 
 $(document).on 'click', '.remove-table-row', ->
@@ -104,11 +106,11 @@ $(document).on 'ready', ->
         $(document).find('.sidebar-menu .treeview:first').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
-      when 'expedientes'  
+      when 'expedientes'
         $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
-      when 'normas'  
+      when 'normas'
         $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
@@ -119,15 +121,15 @@ $(document).on 'ready', ->
         $(document).find('.sidebar-menu .treeview:first').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
-      when 'expedientes'  
+      when 'expedientes'
         $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
-      when 'normas'  
+      when 'normas'
         $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
-        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')      
-  
+        $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
+
   if controller in [ 'declaracions', 'decretos', 'especials', 'ordenanzas', 'otra_normas', 'resolucions' ]
     $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')

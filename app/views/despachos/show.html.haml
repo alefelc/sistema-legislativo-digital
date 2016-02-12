@@ -4,57 +4,58 @@
   #despacho-header.row
     .col-md-8
       %h3.main-title= t('despachos.show.info') + " #{desp.id}"
-    .col-md-4.float-right
+    .col-md-4.float-right.no-print
       .float-right
         %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Despacho" }
           = "Imprimir"
         %a.btn.btn-lg.btn-primary.fa.fa-download{ title: "Descargar Despacho" }
           = "Descargar"
 
-  #despacho-body.panel.panel-success
-    .panel-heading= "Información"
-    .panel-body
-      - expedientes = desp.get_expedientes
-        - unless expedientes.empty?
-        %p.single-tab
-          %span.titles= "Vinculado a Expediente/s Legislativo/s: "
-          - expedientes.each do |e|
-            %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}") + " - "
-      - fojas = desp.get_fojas
-        - if fojas.present?
-        %p.single-tab
-          %span.titles= "Número de Fojas: "
-          %span= fojas
-      - fecha = desp.get_fecha
-        - if fecha.present?
-        %p.single-tab
-          %span.titles= "Fecha del Dictamen: "
-          %span= fecha
-      - obs = desp.get_observaciones
-        - if obs.present?
-        %p.single-tab
-          %span.titles= "Observaciones: "
-          %span= obs
+  #despacho-body
+    .panel.panel-success
+      .panel-heading= "Información"
+      .panel-body
+        - expedientes = desp.get_expedientes
+          - unless expedientes.empty?
+          %p.single-tab
+            %span.titles= "Vinculado a Expediente/s Legislativo/s: "
+            - expedientes.each do |e|
+              %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}") + " - "
+        - fojas = desp.get_fojas
+          - if fojas.present?
+          %p.single-tab
+            %span.titles= "Número de Fojas: "
+            %span= fojas
+        - fecha = desp.get_fecha
+          - if fecha.present?
+          %p.single-tab
+            %span.titles= "Fecha del Dictamen: "
+            %span= fecha
+        - obs = desp.get_observaciones
+          - if obs.present?
+          %p.single-tab
+            %span.titles= "Observaciones: "
+            %span= obs
 
-      .row.single-tab
-        .col-xs-12.col-sm-12
-          - comisiones = desp.get_comisiones
-          - unless comisiones.empty?
-            .titles= "Comisiones Dictaminantes"
-            - comisiones.each do |c|
-              .double-tab= c.denominacion
+        .row.single-tab
+          .col-xs-12.col-sm-12
+            - comisiones = desp.get_comisiones
+            - unless comisiones.empty?
+              .titles= "Comisiones Dictaminantes"
+              - comisiones.each do |c|
+                .double-tab= c.denominacion
 
-        %p.single-tab
-        %p.single-tab
-        .col-xs-12.col-sm-12
-          - concejales = desp.get_concejales
-          - unless concejales.empty?
-            .titles= "Concejales Firmantes"
-            - concejales.each do |c|
-              .double-tab= "#{c.apellido.titleize}, #{c.nombre.titleize}"
-        .single-tab
-          %span.titles.simple-tab= "Tipo de Dictamen"
-          %p.double-tab= "RESOLVER"
+          %p.single-tab
+          %p.single-tab
+          .col-xs-12.col-sm-12
+            - concejales = desp.get_concejales
+            - unless concejales.empty?
+              .titles= "Concejales Firmantes"
+              - concejales.each do |c|
+                .double-tab= "#{c.apellido.titleize}, #{c.nombre.titleize}"
+          .single-tab
+            %span.titles.simple-tab= "Tipo de Dictamen"
+            %p.double-tab= "RESOLVER"
 
     .panel.panel-info
       .panel-heading= "Trámites del Despacho"

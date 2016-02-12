@@ -50,7 +50,7 @@ $(document).on 'ready page:load', ->
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
           if(ini.type == "ReparticionOficial" || ini.type == "DependenciaMunicipal" || ini.type == "OrganoDeGobierno" || ini.type == "Area" || ini.type == "Comision" || ini.type == "Bloque")
-            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})  
+            iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})
           else
             ## otro caso
         return
@@ -66,4 +66,21 @@ $(document).on 'ready page:load', ->
   ## hotkey edit proyecto
   $.ctrl 'E', ->
     $('#proyecto table tbody').find('.info').find('.linktoedit').click()
+    return
+
+  $('#proyecto-show #print-proyecto').on 'click', ->
+    $('#proyecto-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print proyecto
+  $.ctrl 'P', ->
+    $('#proyecto-show #print-proyecto').click()
     return

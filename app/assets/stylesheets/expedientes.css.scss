@@ -1,7 +1,7 @@
 #expedientes {
-  
+
   #expedientes-table_wrapper {
-    margin-top: -30px;
+    margin-top: -35px;
     th {
       @extend .center;
     }
@@ -69,7 +69,6 @@
 
   .titles {
     color: #676773;
-    text-decoration: underline;
     font-weight: bold;
   }
 
@@ -81,12 +80,24 @@
     padding-left: 30px;
   }
 
-  .triple-tab {
-    padding-left: 45px;
+  .float-right {
+    float: right;
+  }
+
+  .without-padding {
+    padding: 0px !important;
+  }
+
+  #states-table-expediente-show {
+    margin: 0px;
+  }
+
+  .main-title {
+    margin-top: 5px;
   }
 }
 
 #modal-circuito #btn-submit-circuito{
   position: relative;
   right: 45%;
-}  
+}

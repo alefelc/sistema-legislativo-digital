@@ -68,3 +68,20 @@ $(document).on 'ready page:load', ->
   $.ctrl 'E', ->
     $('#despacho table tbody').find('.info').find('.linktoedit').click()
     return
+
+  $('#despacho-show #print-despacho').on 'click', ->
+    $('#despacho-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print despacho
+  $.ctrl 'P', ->
+    $('#despacho-show #print-despacho').click()
+    return

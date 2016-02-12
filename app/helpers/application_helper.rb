@@ -142,15 +142,15 @@ module ApplicationHelper
     return "Especiales" if current_page? controller: :especials, action: :index
     return "Otras Normas" if current_page? controller: :otra_normas, action: :index
     return "Despachos" if current_page? controller: :despachos, action: :index
-    return "Despacho de Comisión" if current_page? controller: :despachos, action: :show
+    return "Despacho de Comisión" if current_page? controller: :despachos, action: :show, :id => params[:id].to_s
     return "Condonaciones" if current_page? controller: :condonacions, action: :index
-    return "Condonación" if current_page? controller: :condonacions, action: :show
+    return "Condonación" if current_page? controller: :condonacions, action: :show, :id => params[:id].to_s
     return "Peticiones Particulares" if current_page? controller: :particulars, action: :index
-    return "Petición Particular" if current_page? controller: :particulars, action: :show
+    return "Petición Particular" if current_page? controller: :particulars, action: :show, :id => params[:id].to_s
     return "Proyectos" if current_page? controller: :proyectos, action: :index
-    return "Proyecto" if current_page? controller: :proyectos, action: :show
+    return "Proyecto" if current_page? controller: :proyectos, action: :show, :id => params[:id].to_s
     return "Comunicaciones Oficiales" if current_page? controller: :comunicacion_oficials, action: :index
-    return "Comunicación Oficial" if current_page? controller: :comunicacion_oficials, action: :show
+    return "Comunicación Oficial" if current_page? controller: :comunicacion_oficials, action: :show, :id => params[:id].to_s
     return "Expedientes" if current_page? controller: :expedientes, action: :index
     return "Trámites Pendientes" if current_page? controller: :pendientes, action: :index
     return "Reportes de Trámites" if current_page? controller: :reports, action: :mesa_de_entradas

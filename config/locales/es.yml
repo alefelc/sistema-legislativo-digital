@@ -176,7 +176,7 @@ es:
 
   expedientes:
     show:
-      info: Información del expediente
+      info: "Expediente Nro: "
     index:
       btnheader:
         new: Nuevo Expediente

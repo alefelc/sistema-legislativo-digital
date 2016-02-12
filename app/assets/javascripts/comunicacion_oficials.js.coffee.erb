@@ -67,3 +67,20 @@ $(document).on 'ready page:load', ->
   $.ctrl 'E', ->
     $('#comunicacion-oficial table tbody').find('.info').find('.linktoedit').click()
     return
+
+  $('#comunicacion-oficial-show #print-comunicacion-oficial').on 'click', ->
+    $('#comunicacion-oficial-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print comunicacion oficial
+  $.ctrl 'P', ->
+    $('#comunicacion-oficial-show #print-comunicacion-oficial').click()
+    return

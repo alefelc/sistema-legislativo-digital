@@ -67,3 +67,20 @@ $(document).on 'ready page:load', ->
   $.ctrl 'E', ->
     $('#condonacion table tbody').find('.info').find('.linktoedit').click()
     return
+
+  $('#condonacion-show #print-condonacion').on 'click', ->
+    $('#condonacion-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
+
+  ## hotkey print condonacion
+  $.ctrl 'P', ->
+    $('#condonacion-show #print-condonacion').click()
+    return
