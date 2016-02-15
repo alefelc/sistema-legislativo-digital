@@ -456,7 +456,7 @@ es:
       info: "Petición Particular Nro: "
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Petición
       table:
         particular: Nro.
         iniciador: Iniciadores
@@ -530,7 +530,7 @@ es:
       info: "Proyecto Nro: "
     index:
       btnheader:
-        new: Nuevo
+        new: Nuevo Proyecto
       table:
         proyecto: Nro.
         iniciador: Iniciadores
@@ -567,7 +567,7 @@ es:
       info: "Condonación Nro: "
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Condonación
       table:
         condonacion: Nro.
         iniciador: Iniciadores
