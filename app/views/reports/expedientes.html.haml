@@ -1,15 +1,58 @@
 #filter-expedientes.modal.fade{:role => "dialog", :tabindex => "-1"}
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4.modal-title Modal title
+        %h4.modal-title Filtrando Expedientes
+
       .modal-body
-        %p One fine body&hellip;
+        .row
+          .col-md-6
+            .form-group
+              = label_tag :exp, "Rango de Expedientes"
+              = text_field_tag :fojas, nil, class: 'form-control'
+            .form-group
+              = label_tag :fojas, "Cantidad de fojas"
+              = text_field_tag :fojas, nil, class: 'form-control'
+            .form-group
+              = label_tag :sumario, "Sumario"
+              = text_field_tag :sumario, nil, class: 'form-control'
+            .form-group
+              = label_tag :iniciador, "Iniciador/es"
+              = text_field_tag :iniciador, nil, class: 'form-control'
+            .form-group
+              = label_tag :circuitos, "Circuitos"
+              = text_field_tag :circuitos, nil, class: 'form-control'
+            .form-group
+              = label_tag :observations, "Observaciones"
+              = text_field_tag :observations, nil, class: 'form-control'
+            .form-group
+              = label_tag :tags, "Voces Claves / Etiquetas"
+              = text_field_tag :tags, nil, class: 'form-control'
+          .col-md-6
+            .form-group
+              = label_tag :tramites, "Trámites Relacionados"
+              = text_field_tag :tramites, nil, class: 'form-control'
+            .form-group
+              = label_tag :fecha_exp, "Fecha Expediente"
+              = text_field_tag :fecha_exp, nil, class: 'form-control'
+            .form-group
+              = label_tag :estados, "Estados"
+              = text_field_tag :estados, nil, class: 'form-control'
+            .form-group
+              = label_tag :created_updated, "Creado / Actualizado el"
+              = text_field_tag :created_updated, nil, class: 'form-control'
+            .form-group
+              = label_tag :exp_acum, "Expedientes Acumulados"
+              = text_field_tag :exp_acum, nil, class: 'form-control'
+            .form-group
+              = label_tag :exp_adjunto, "Expedientes Adjuntados Físicamente"
+              = text_field_tag :exp_adjunto, nil, class: 'form-control'
+
       .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
-        %button.btn.btn-primary{:type => "button"} Save changes
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cerrar
+        %button.btn.btn-primary{:type => "button"} Filtrar
 
 #expediente-report
 

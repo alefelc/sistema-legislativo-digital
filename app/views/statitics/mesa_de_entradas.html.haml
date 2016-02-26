@@ -1,4 +1,3 @@
-/ Content Header (Page header)
 #statitics-mesa-entradas
 
   %section.content-header{ style: "padding-top: 0px" }
@@ -11,19 +10,13 @@
         %a#print-statitics-mesa-entradas.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Estadísticas", style: "float: right" }
           = "Imprimir"
 
-  / Main content
   %section.content
     .row
       .col-md-6
         / AREA CHART
         .box.box-primary
           .box-header.with-border
-            %h3.box-title Area Chart
-            -# .box-tools.pull-right
-            -#   %button.btn.btn-box-tool{"data-widget" => "collapse"}
-            -#     %i.fa.fa-minus
-            -#   %button.btn.btn-box-tool{"data-widget" => "remove"}
-            -#     %i.fa.fa-times
+            %h3.box-title Ejemplo 1 (Area Chart)
           .box-body
             .chart
               %canvas#areaChart{:style => "height:250px"}
@@ -32,12 +25,7 @@
         / DONUT CHART
         .box.box-danger
           .box-header.with-border
-            %h3.box-title Donut Chart
-            -# .box-tools.pull-right
-            -#   %button.btn.btn-box-tool{"data-widget" => "collapse"}
-            -#     %i.fa.fa-minus
-            -#   %button.btn.btn-box-tool{"data-widget" => "remove"}
-            -#     %i.fa.fa-times
+            %h3.box-title Ejemplo 2 (Donut Chart)
           .box-body
             %canvas#pieChart{:style => "height:250px"}
           / /.box-body
@@ -47,12 +35,7 @@
         / LINE CHART
         .box.box-info
           .box-header.with-border
-            %h3.box-title Line Chart
-            -# .box-tools.pull-right
-            -#   %button.btn.btn-box-tool{"data-widget" => "collapse"}
-            -#     %i.fa.fa-minus
-            -#   %button.btn.btn-box-tool{"data-widget" => "remove"}
-            -#     %i.fa.fa-times
+            %h3.box-title Ejemplo 3 (Line Chart)
           .box-body
             .chart
               %canvas#lineChart{:style => "height:250px"}
@@ -61,12 +44,7 @@
         / BAR CHART
         .box.box-success
           .box-header.with-border
-            %h3.box-title Bar Chart
-            -# .box-tools.pull-right
-            -#   %button.btn.btn-box-tool{"data-widget" => "collapse"}
-            -#     %i.fa.fa-minus
-            -#   %button.btn.btn-box-tool{"data-widget" => "remove"}
-            -#     %i.fa.fa-times
+            %h3.box-title Ejemplo 4 (Bar Chart)
           .box-body
             .chart
               %canvas#barChart{:style => "height:230px"}

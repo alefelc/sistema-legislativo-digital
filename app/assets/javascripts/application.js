@@ -7,4 +7,5 @@
 //= require select2.min
 //= require jquery.elastic.min
 //= require Chart.min
+//= require bootstrap-multiselect
 //= require_tree .

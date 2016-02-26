@@ -70,6 +70,9 @@ gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'kaminari'
 
+# Bootstrap Multiselect v0.9.13
+gem 'bootstrap-multiselect-rails'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -102,4 +105,3 @@ group :development do
   # A very fast & simple Ruby web server.
   gem 'thin'
 end
-

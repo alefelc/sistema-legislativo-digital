@@ -45,7 +45,17 @@
     padding-top: 5px;
   }
 
+  #modaldesp #first-column {
+    box-shadow: 0 0 25px black;
+    border-radius: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    left: 10px;
+  }
+
   #modaldesp .col-md-4, #modaldesp .col-md-8 #second-column {
+    padding-left: 20px;
+    padding-right: 10px;
     & > .input-group{
       padding-bottom: 5px;
     }

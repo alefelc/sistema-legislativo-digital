@@ -22,7 +22,14 @@
                                                  type: "text", data: { load: prepopulate_exps_despacho(@despacho) }}
                 .input-group
                   = f.label "", "Fecha", { class: "input-group-addon", id: "basic-addon04" }
-                  = f.text_field :fecha, {class: "form-control", "aria-describedby" => "basic-addon04", type: :date}
+                  .row
+                    .col-md-8
+                      = f.text_field :fecha, { class: "form-control", "aria-describedby" => "basic-addon04", type: :date }
+                      %div#hidden_date{ style: 'display: none' }
+                        = date_select :fecha_especial, nil, { class: "form-control", "aria-describedby" => "basic-addon04", type: :date }
+                    .col-md-4{ style: "padding-left: 0px" }
+                      %a#special-date.btn.btn-default
+                        Fecha No Determinada
                 .input-group
                   = f.label "", t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
                   = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
@@ -282,4 +289,9 @@
     $('#despacho #states-table tbody').append(tr);
   }).on("change", function(e) {
     $('#despacho #derived-states').select2("val", "");
+  });
+
+  $("#special-date").on("click", function() {
+    $('#despacho_fecha').css('display', 'none')
+    $('#hidden_date').css('display', '')
   });

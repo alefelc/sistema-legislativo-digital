@@ -1047,7 +1047,7 @@ a:focus {
   border-bottom-left-radius: 4px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
-  height: 175px;
+  height: 40px;
   padding: 10px;
   text-align: center;
 }
@@ -1065,6 +1065,11 @@ a:focus {
   color: rgba(255, 255, 255, 0.8);
   font-size: 17px;
   margin-top: 10px;
+}
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > h4 {
+  margin-top: 0px;
+  font-weight: bold;
+
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
   display: block;

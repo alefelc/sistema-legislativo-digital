@@ -22,11 +22,11 @@
           %p.single-tab
             %span.titles= "Nro. de Fojas: "
             %span= fojas
-        - asunto = exp.tema
-        - if asunto.present?
+        - sumario = exp.tema
+        - if sumario.present?
           %p.single-tab
-            %span.titles= "Asunto: "
-            %span= asunto
+            %span.titles= "Sumario: "
+            %span= sumario
         - tramites = exp.circuitos.first.tramites
         - if tramites.present?
           - tramites.each do |tramite|
@@ -67,7 +67,7 @@
               %span.double-tab.titles= "Nro.: "
               %span= c.nro.to_s
               .triple-tab.titles= "Nro. Fojas: " + c.fojas.to_s
-              .triple-tab.titles= "Asunto: " + c.tema.to_s
+              .triple-tab.titles= "Sumario: " + c.tema.to_s
               .triple-tab.titles= "Fecha: #{c.anio.nil? ? "" : to_date(c.anio)}"
               .triple-tab
                 - tramites = c.tramites

@@ -71,7 +71,7 @@ es:
       info: Información de la Declaración
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Declaración
       table:
         declaracion: Nro-Bis/Año
         sumario: Sumario
@@ -125,7 +125,7 @@ es:
       info: Información de la Otra Norma
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Otra Norma
       table:
         otra_norma: Nro-Bis/Año
         sumario: Sumario
@@ -216,7 +216,7 @@ es:
       info: Información de la Norma Especial
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Norma Especial
       table:
         especial: Nro-Bis/Año
         sumario: Sumario
@@ -270,7 +270,7 @@ es:
       info: Información de la Resolución
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Resolución
       table:
         resolucion: Nro-Bis/Año
         sumario: Sumario
@@ -324,7 +324,7 @@ es:
       info: Información de la Ordenanza
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Ordenanza
       table:
         ordenanza: Nro-Bis/Año
         sumario: Sumario
@@ -493,7 +493,7 @@ es:
       info: "Comunicación Oficial Nro: "
     index:
       btnheader:
-        new: Nuevo
+        new: Nueva Comunicación
       table:
         comunicacion_oficial: Nro.
         iniciador: Iniciadores
@@ -622,3 +622,9 @@ es:
   time:
     formats:
       default: "%d/%m/%Y - %H:%M"
+  devise:
+    sessions:
+      usuario:
+        signed_in: Iniciaste sesión correctamente
+
+         es.devise.sessions.usuario.signed_in

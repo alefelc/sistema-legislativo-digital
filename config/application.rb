@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -38,10 +39,10 @@ module Sld
 
     # Date
     # ----------------------------
-    #Date::DATE_FORMATS[:default] = "%d/%m/%Y" 
+    #Date::DATE_FORMATS[:default] = "%d/%m/%Y"
 
     # DateTime / Time
     # ----------------------------
-    #Time::DATE_FORMATS[:default] = "%d/%m/%Y - %H:%M" 
+    #Time::DATE_FORMATS[:default] = "%d/%m/%Y - %H:%M"
   end
 end

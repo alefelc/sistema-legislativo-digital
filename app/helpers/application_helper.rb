@@ -366,4 +366,14 @@ module ApplicationHelper
     exp.circuitos.find_by(nro: 0).normas.where(sancion:estado_exp.fecha)
   end
 
+  def tramites_type
+    [
+      ["Despachos"],
+      ["Condonaciones"],
+      ["Peticiones Particulares"],
+      ["Proyectos"],
+      ["Comunicaciones Oficiales"]
+    ]
+  end
+
 end

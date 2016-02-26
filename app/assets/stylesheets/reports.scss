@@ -1,10 +1,20 @@
-#tramite {
-
-  #tramite-table_wrapper {
-    margin-top: -35px;
-    th {
-      @extend .center;
-    }
+#tramite-table_wrapper {
+  margin-top: -35px;
+  th {
+    @extend .center;
   }
+}
 
+#norma-table_wrapper {
+  margin-top: -35px;
+  th {
+    @extend .center;
+  }
+}
+
+#expediente-report-table_wrapper {
+  margin-top: -35px;
+  th {
+    @extend .center;
+  }
 }
