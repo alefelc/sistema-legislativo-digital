@@ -27,29 +27,41 @@
             .navbar-custom-menu
               %ul.nav.navbar-nav
                 / User Account: style can be found in dropdown.less
-                %li.dropdown.user.user-menu
-                  %a.dropdown-toggle.btn.btn-xs.btn-success{"data-toggle" => "dropdown", :href => "#"}
-                    - if current_usuario.present?
+                - if current_usuario.present?
+                  %li.dropdown.user.user-menu
+                    %a.dropdown-toggle.btn.btn-xs.btn-success{"data-toggle" => "dropdown", :href => "#"}
                       %img.user-image{ src: asset_path('logo.jpg') }
                         %span.hidden-xs= current_usuario.email
-                    - else
+                    %ul.dropdown-menu
+                      / User image
+                      %li.user-header
+                        %h4 Usuario Actual
+                      / Menu Body
+                      / Before this check if the current user is an administrator
+                      %li.user-body
+                        .col-xs-12.text-center
+                          %a.btn.btn-warning.fa.fa-gears{ href: "/admin", title: "Opciones de Administrador" } Administrador
+                      / Menu Footer
+                      %li.user-footer
+                        -# .pull-left
+                        -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
+                        .pull-right
+                          %a.btn.btn-danger.fa.fa-sign-out{ href: destroy_usuario_session_path, title: "Salir del Sistema" } Salir
+                - else
+                  %li.dropdown.user.user-menu
+                    %a.dropdown-toggle.btn.btn-xs.btn-success{"data-toggle" => "dropdown", :href => "#"}
                       %img.user-image{ src: asset_path('sign_in') }
                         %span.hidden-xs Ingreso al Sistema
-                  %ul.dropdown-menu
-                    / User image
-                    %li.user-header
-                      %h4 Usuario Actual
-                    / Menu Body
-                    / Before this check if the current user is an administrator
-                    %li.user-body
-                      .col-xs-12.text-center
-                        %a.btn.btn-warning.fa.fa-gears{ href: "/admin", title: "Opciones de Administrador" } Administrador
-                    / Menu Footer
-                    %li.user-footer
-                      -# .pull-left
-                      -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
-                      .pull-right
-                        %a.btn.btn-danger.fa.fa-sign-out{ href: destroy_usuario_session_path, title: "Salir del Sistema" } Salir
+                    %ul.dropdown-menu
+                      / User image
+                      / Menu Body
+                      / Before this check if the current user is an administrator
+                      / Menu Footer
+                      %li.user-footer
+                        -# .pull-left
+                        -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
+                        .pull-right
+                          %a.btn.btn-primary.fa.fa-sign-in{ href: new_usuario_session_path, title: "Ingresar al Sistema" } Ingresar
 
     / ===============================================
     / Left side column. contains the sidebar

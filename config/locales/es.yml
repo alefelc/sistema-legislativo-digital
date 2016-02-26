@@ -623,8 +623,9 @@ es:
     formats:
       default: "%d/%m/%Y - %H:%M"
   devise:
+    failure:
+      usuario:
+        unauthenticated: "El usuario no ha iniciado sesión."
     sessions:
       usuario:
         signed_in: Iniciaste sesión correctamente
-
-         es.devise.sessions.usuario.signed_in
