@@ -92,7 +92,9 @@
                   - "#{ x.ref.apellido }, #{ x.ref.nombre }"
                 - else
                   - x.ref.denominacion
-                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                - attrs = { 'data-id': x.id, 'data-tipo': x.tipo,
+                            'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                %tr.derivacion-tr-show{ attrs }
                   %td= to_date_time x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
