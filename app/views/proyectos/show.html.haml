@@ -83,7 +83,7 @@
                           .subtitle (Dependencia Municipal)
                       - iniciadores_personas.each do |b|
                         .double-tab{ style: 'display: flex' }
-                          = "#{ b[:type] }: #{ b[:apellido] }, #{ b[:nombre] }"
+                          = type_name_initiator b
                           %p &nbsp;
                           .subtitle (Particular)
 

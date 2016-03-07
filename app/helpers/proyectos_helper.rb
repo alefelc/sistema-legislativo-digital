@@ -40,4 +40,8 @@ module ProyectosHelper
     pro.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }  
   end
 
+  def type_name_initiator(init)
+    "#{ init[:type] }: #{ init[:apellido] }, #{ init[:nombre] }"
+  end
+
 end
