@@ -41,7 +41,7 @@
             - @particular.estado_tramites.each do |x|
               - case x.tipo
               - when '1'
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo }
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   %td= to_date_time x.created_at
                   %td
                     Iniciado por:
@@ -54,19 +54,19 @@
                   - "#{ x.ref.apellido }, #{ x.ref.nombre }"
                 - else
                   - x.ref.denominacion
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                   %td= to_date_time x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo }
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   %td= to_date_time x.created_at
                   %td
                     %span= 'Finalizado en '
                     %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }", x.ref
 
               - when '4' #caso para tramites finalizados pero q no terminan en expediente
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo}
                   %td= to_date_time x.updated_at
                   %td
                     %span= 'Finalizado: '

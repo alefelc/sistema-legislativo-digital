@@ -11,7 +11,7 @@
     Filtrar datos
   - table_attr = { style: 'table-layout: fixed; word-wrap: break-word;',
                        'data-source' => tramites_path(format: :json) }
-  %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{ table_attr }
+  %table.datatable-keyevents#tramite-table{ table_attr }
     %thead
       %tr
         %th= t('.table.tramite')
