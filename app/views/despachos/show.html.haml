@@ -1,96 +1,100 @@
-- desp = @despacho
+- expedientes = @despacho.get_expedientes
+- fojas = @despacho.get_fojas
+- fecha = @despacho.get_fecha
+- obs = @despacho.get_observaciones
+- comisiones = @despacho.get_comisiones
+- concejales = @despacho.get_concejales
+
 #despacho-show
 
   #despacho-header.row
     .col-md-8
-      %h3.main-title= t('despachos.show.info') + " #{desp.id}"
+      %h3.main-title= t('despachos.show.info') + " #{ @despacho.id }"
     .col-md-4.float-right.no-print
       .float-right
-        %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Despacho" }
-          = "Imprimir"
-        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: "Descargar Despacho" }
-          = "Descargar"
+        %a#print-despacho.btn.btn-lg.btn-danger.fa.fa-download{ title: 'Imprimir Despacho' }
+          Imprimir
+        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Despacho' }
+          Descargar
 
   #despacho-body
     .panel.panel-success
-      .panel-heading= "Información"
+      .panel-heading= 'Información'
       .panel-body
-        - expedientes = desp.get_expedientes
-          - unless expedientes.empty?
-          %p.single-tab
-            %span.titles= "Vinculado a Expediente/s Legislativo/s: "
-            - expedientes.each do |e|
-              %span= link_to(e.nro_exp + e.get_anio_expediente, "/expedientes/#{e.id}") + " - "
-        - fojas = desp.get_fojas
-          - if fojas.present?
-          %p.single-tab
-            %span.titles= "Número de Fojas: "
-            %span= fojas
-        - fecha = desp.get_fecha
-          - if fecha.present?
-          %p.single-tab
-            %span.titles= "Fecha del Dictamen: "
-            %span= fecha
-        - obs = desp.get_observaciones
-          - if obs.present?
-          %p.single-tab
-            %span.titles= "Observaciones: "
-            %span= obs
 
-        .row.single-tab
-          .col-xs-12.col-sm-12
-            - comisiones = desp.get_comisiones
-            - unless comisiones.empty?
-              .titles= "Comisiones Dictaminantes"
-              - comisiones.each do |c|
-                .double-tab= c.denominacion
+        %p.single-tab
+          %span.titles= 'Vinculado a Expediente/s Legislativo/s: '
+          %span= '-.' if expedientes.empty?
+          - expedientes.each do |e|
+            %span= link_to(e.nro_exp + e.get_anio_expediente, e ) + ' - '
 
-          %p.single-tab
-          %p.single-tab
-          .col-xs-12.col-sm-12
-            - concejales = desp.get_concejales
-            - unless concejales.empty?
-              .titles= "Concejales Firmantes"
-              - concejales.each do |c|
-                .double-tab= "#{c.apellido.titleize}, #{c.nombre.titleize}"
-          .single-tab
-            %span.titles.simple-tab= "Tipo de Dictamen"
-            %p.double-tab= "RESOLVER"
+        %p.single-tab
+          %span.titles= 'Número de Fojas: '
+          %span= fojas.present? ? fojas : '-.'
+
+        %p.single-tab
+          %span.titles= 'Fecha del Dictamen: '
+          %span= fecha.present? ? fecha : '-.'
+
+        .col-xs-12.col-sm-12
+          .titles= 'Comisiones Dictaminantes: '
+          .double-tab= '-.' if comisiones.empty?
+          - comisiones.each do |c|
+            .double-tab= c.denominacion
+
+        .col-xs-12.col-sm-12
+          .titles= 'Concejales Firmantes'
+          .double-tab= '-.' if concejales.empty?
+          - concejales.each do |c|
+            .double-tab= "#{ c.apellido.titleize }, #{ c.nombre.titleize }"
+
+        .single-tab
+          %span.titles.simple-tab= 'Tipo de Dictamen'
+          %p.double-tab= "RESOLVER"
 
     .panel.panel-info
-      .panel-heading= "Trámites del Despacho"
+      .panel-heading= 'Trámites del Despacho'
       .panel-body.without-padding
         %table.table.table-striped#states-table-despacho-show
           %thead
             %tr
-              %th.center{ width: "15%" }= "Fecha"
-              %th{ width: "85%" }= "Estado"
+              %th.center{ width: '15%' }= 'Fecha'
+              %th{ width: '85%' }= 'Estado'
           %tbody
-            - desp.estado_tramites.each do |x|
+            - @despacho.estado_tramites.each do |x|
               - case x.tipo
-              - when "1"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td.center= to_date_time(x.created_at)
-                  %td= "Presentado"
-              - when "2"
-                - if (x.ref_type == 'Personal')
-                  - text = x.ref.apellido.to_s + ", " + x.ref.nombre.to_s;
+              - when '1'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                  %td.center= to_date_time x.created_at
+                  %td= 'Presentado'
+
+              - when '2'
+                - text = if x.ref_type == 'Personal'
+                  - "#{ x.ref.apellido }, #{ x.ref.nombre }"
                 - else
-                  - text = x.ref.denominacion;
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                  %td.center= to_date_time(x.created_at)
-                  %td= "Derivado a " + x.ref_type + ": " + text
-              - when "3"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td.center= to_date_time(x.created_at)
+                  - x.ref.denominacion
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo,
+                                        'data-idref': x.ref_id, 'data-typeref': x.ref_type }
+                  %td.center= to_date_time x.created_at
+                  %td= "Derivado a #{ x.ref_type }: #{ text }"
+
+              - when '3'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo}
+                  %td.center= to_date_time x.created_at
                   %td
-                    %span= "Finalizado en "
-                    %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro_exp.to_s , x.ref)
-              - when "4" #caso para tramites finalizados pero q no terminan en expediente
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td.center= to_date_time(x.created_at)
+                    %span= 'Finalizado en '
+                    %span= link_to "#{x.ref_type} #{x.ref.nro_exp}" , x.ref
+
+              - when '4' #caso para tramites finalizados pero q no terminan en expediente
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                  %td.center= to_date_time x.created_at
                   %td
-                    %span= "Finalizado en "
-                    %span= x.especificacion.to_s
+                    %span= 'Finalizado en '
+                    %span= x.especificacion
               - else
                 ERROR - Please contact with the administrator.
+
+    .panel.panel-danger
+      .panel-heading= 'Observaciones'
+      .panel-body
+        %span= obs.present? ? obs : '-.'

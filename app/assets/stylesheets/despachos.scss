@@ -46,8 +46,8 @@
   }
 
   #modaldesp #first-column {
-    box-shadow: 0 0 25px black;
-    border-radius: 5px;
+    box-shadow: 0 0 15px black;
+    border-radius: 1px;
     padding-left: 0px;
     padding-right: 0px;
     left: 10px;
@@ -69,33 +69,8 @@
 #despacho-show {
   color: gray;
 
-  .titles {
-    color: #676773;
-    font-weight: bold;
-  }
-
-  .single-tab {
-    padding-left: 15px;
-  }
-
-  .double-tab {
-    padding-left: 30px;
-  }
-
-  .float-right {
-    float: right;
-  }
-
-  .without-padding {
-    padding: 0px !important;
-  }
 
   #states-table-despacho-show {
     margin: 0px;
   }
-
-  .main-title {
-    margin-top: 5px;
-  }
-
 }

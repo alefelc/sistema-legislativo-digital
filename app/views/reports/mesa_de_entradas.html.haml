@@ -1,61 +1,17 @@
-#filter-entradas.modal.fade{:role => "dialog", :tabindex => "-1"}
-  .modal-dialog.modal-lg
-    .modal-content
-      .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} &times;
-        %h4.modal-title Filtrando Trámites
-
-      .modal-body
-        .row
-          .col-md-6
-            .form-group
-              .row
-                .col-md-12
-                  = label_tag :tramites_type, "Seleccione tipo de trámites"
-                .col-md-12
-                  = select_tag :tramites_type, options_for_select(tramites_type), multiple: :multiple, class: 'form-control'
-            .form-group
-              = label_tag :fojas, "Cantidad de fojas"
-              = text_field_tag :fojas, nil, class: 'form-control'
-            .form-group
-              = label_tag :asunto, "Asunto / Solicitud"
-              = text_field_tag :asunto, nil, class: 'form-control'
-            .form-group
-              = label_tag :iniciador, "Iniciadores / Particular / Comision"
-              = text_field_tag :iniciador, nil, class: 'form-control'
-            .form-group
-              = label_tag :observaciones, "Observaciones"
-              = text_field_tag :observaciones, nil, class: 'form-control'
-          .col-md-6
-            .form-group
-              = label_tag :vinculo_exp, "Vinculado a Expediente/s (sólo despachos)"
-              = text_field_tag :vinculo_exp, nil, class: 'form-control'
-            .form-group
-              = label_tag :fecha_dictamen, "Fecha de Dictamen (sólo despachos)"
-              = text_field_tag :fecha_dictamen, nil, class: 'form-control'
-            .form-group
-              = label_tag :estados, "Estados"
-              = text_field_tag :estados, nil, class: 'form-control'
-            .form-group
-              = label_tag :created_updated, "Creado / Actualizado el"
-              = text_field_tag :created_updated, nil, class: 'form-control'
-
-      .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cerrar
-        %button.btn.btn-primary{:type => "button"} Filtrar
+#reception-desk.modal.fade{ role: 'dialog', tabindex: '-1' }
+  = render partial: 'reception_desk_filters'
 
 #tramite
-
   %button#btn-print.btn.btn-danger
     %span.glyphicon.glyphicon-print
     = t('.btnheader.print')
 
-  %button.btn.btn-primary{ "data-target": "#filter-entradas", "data-toggle": "modal", type: "button" }
+  %button.btn.btn-primary{ 'data-target': '#reception-desk', 'data-toggle': 'modal' }
     %span.fa.fa-filter{ "aria-hidden": true }
     Filtrar datos
-
-  %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => tramites_path(format: :json)}
+  - table_attr = { style: 'table-layout: fixed; word-wrap: break-word;',
+                       'data-source' => tramites_path(format: :json) }
+  %table.datatable-keyevents.table.table-striped.table-bordered#tramite-table{ table_attr }
     %thead
       %tr
         %th= t('.table.tramite')
@@ -66,30 +22,3 @@
         %th= t('.table.observaciones')
         %th= t('.table.actualizado')
     %tbody
-
-:javascript
-  $("#tramites_type").multiselect({
-    buttonText:
-      function(options, select) {
-        if (options.length === 0)
-          return 'Seleccione algún trámite ...';
-        else if (options.length > 3)
-          return 'Mas de 3 tipos de trámites ...';
-        else {
-          var labels = [];
-          options.each(function() {
-            if ($(this).attr('label') !== undefined) {
-              labels.push($(this).attr('label'));
-            }
-            else {
-              labels.push($(this).html());
-            }
-          });
-          return labels.join(', ') + '';
-        }
-      },
-      onInitialized:
-        function(select, container) {
-          $("#tramites_type")
-        }
-  });

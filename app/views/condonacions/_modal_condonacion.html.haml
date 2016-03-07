@@ -12,11 +12,11 @@
           .row
             .col-md-6#first-column
               .input-group
-                = f.label t('.iniciadores'), { class: "input-group-addon", id: "basic-addon08" }
-                = text_field_tag nil, nil, {:multiple => "multiple", :style => "width:100%", :id => "condonacion_iniciadores", data: { load: prepopulate_iniciadores(@condonacion) }}
-              .input-group
                 = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon8"}
                 = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon8", :placeholder => t('.fojas'), type: :number }
+              .input-group
+                = f.label t('.iniciadores'), { class: "input-group-addon", id: "basic-addon08" }
+                = text_field_tag nil, nil, {:multiple => "multiple", :style => "width:100%", :id => "condonacion_iniciadores", data: { load: prepopulate_iniciadores(@condonacion) }}
               .input-group
                 = f.label t('.asunto_label'), { class: "input-group-addon", id: "basic-addon9"}
                 = f.text_area :asunto, {class: "form-control", "aria-describedby" => "basic-addon9", :placeholder => t('.asunto'), type: :text}
@@ -79,13 +79,13 @@
                 .parent-group-btn.btn.btn-xs#add_iniciador
                   %button.btn.parent-group-btn#btn_add_iniciador
                     %span
-                      %i.fa.fa-check-circle.fa-1x= " Guardar Iniciador"
+                      %i.fa.fa-check-circle.fa-1x= " C Iniciador"
                 .parent-group-btn.btn.btn-xs#edit_iniciador
                   %button.btn.parent-group-btn#btn_edit_iniciador
                     %span
                       %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
         .modal-footer
-          = f.submit "Guardar Condonación", {class: "btn btn-primary modal-submit", id: "btn-submit-condonacion"}
+          = f.submit actionvar == 'create' ? 'Guardar Nueva Condonación' : 'Guardar Cambios Condonación', {class: "btn btn-primary modal-submit", id: "btn-submit-condonacion"}
 
 :javascript
   wi = $(window).width()-20;

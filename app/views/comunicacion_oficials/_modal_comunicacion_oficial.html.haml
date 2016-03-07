@@ -85,7 +85,7 @@
                     %span
                       %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
         .modal-footer
-          = f.submit "Guardar Petición", {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
+          = f.submit  actionvar == 'create' ? 'Guardar Nueva Comunicación Oficial' : 'Guardar Cambios Comunicación Oficial', {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
 
 :javascript
   wi = $(window).width()-20;

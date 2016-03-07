@@ -8,4 +8,5 @@
 //= require jquery.elastic.min
 //= require Chart.min
 //= require bootstrap-multiselect
+//= require reception_desk
 //= require_tree .

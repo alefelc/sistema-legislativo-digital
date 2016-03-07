@@ -1,67 +1,21 @@
-#modaldesp.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog.modal-xs{:role => "document"}
+#modaldesp.modal.fade{ 'aria-labelledby': 'nuevoLabel', role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-xs{ role: 'document' }
     .modal-content
+
       .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t(".#{actionvar}_despacho") + " #{@despacho.id}"
+        %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
+          %span{ 'aria-hidden': true } &times;
+        %h4#nuevoLabel.modal-title= "#{ t(".#{actionvar}_despacho") } #{ @despacho.id }"
+
       = form_for @despacho, url: { action: actionvar } do |f|
         = hidden_field_tag :circuitos
         = hidden_field_tag :states
+
         .modal-body
-          .row
-            .col-md-6#first-column
-              .input-group
-                = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1"}
-                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.fojas'), type: :number }
-              .input-group
-                = label_tag nil, "Dictamina", { class: "input-group-addon", id: "basic-addon08"}
-                .input-group
-                  = f.label :expedientes, { class: "input-group-addon", id: "basic-addon3" }
-                  = f.text_field :expedientes, { class: "form-control", "aria-describedby": "basic-addon3", id: "exped_token",
-                                                 type: "text", data: { load: prepopulate_exps_despacho(@despacho) }}
-                .input-group
-                  = f.label "", "Fecha", { class: "input-group-addon", id: "basic-addon04" }
-                  .row
-                    .col-md-8
-                      = f.text_field :fecha, { class: "form-control", "aria-describedby" => "basic-addon04", type: :date }
-                      %div#hidden_date{ style: 'display: none' }
-                        = date_select :fecha_especial, nil, { class: "form-control", "aria-describedby" => "basic-addon04", type: :date }
-                    .col-md-4{ style: "padding-left: 0px" }
-                      %a#special-date.btn.btn-default
-                        Fecha No Determinada
-                .input-group
-                  = f.label "", t('.comisions'), { class: "input-group-addon", id: "basic-addon4" }
-                  = f.select(:comisions, options_for_select(get_options_comisions()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_comisions", data: { load: prepopulate_comisions(@despacho) }})
-                = select_tag "especificacion2", options_for_select(dictamina_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
-              .input-group
-                = f.label :concejals, t('.concejals'), { class: "input-group-addon", id: "basic-addon5" }
-                = f.select(:concejals, options_for_select(get_options_concejals()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_concejals", data: { load: prepopulate_concejals(@despacho) }})
-              .input-group
-                = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon7"}
-                = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon7", :placeholder => t('.observations'), type: :text }
-            .col-md-6#second-column
-              .input-group
-                = label_tag nil, 'Derivado a', { class: 'input-group-addon', id: 'basic-addon8' }
-                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'derived-states' }
-              %table.table.table-striped.table-bordered#states-table
-                %thead
-                  %tr
-                    %th= "Estado"
-                    %th= "Fecha"
-                    %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
-                %tbody
-                  - @despacho.estado_tramites.where(tipo: 2).each do |x|
-                    - if (x.ref_type == 'Personal')
-                      - text = x.ref.apellido + ", " + x.ref.nombre;
-                    - else
-                      - text = x.ref.denominacion;
-                    %tr{ class: 'derivacion-tr', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                      %td= "Derivado a " + x.ref_type + ": " + text
-                      %td= to_date(x.created_at)
-                      %td= icon 'fa fa-times fa-1x', nil, class: 'btn btn-xs remove-table-row'
+          = render partial: 'body_despacho', f: f
+
         .modal-footer
-          = f.submit "Guardar Despacho", { class: "btn btn-primary modal-submit" }
+          = f.submit actionvar == 'create' ? 'Guardar Nuevo Despacho' : 'Guardar Cambios Despacho', { class: "btn btn-primary modal-submit" }
 
 :javascript
   wi = $(window).width()-20;
