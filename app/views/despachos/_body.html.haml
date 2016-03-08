@@ -29,7 +29,9 @@
       .input-group
         = f.label '', t('.comisions'), { class: 'input-group-addon', id: 'basic-addon4' }
         = f.select(:comisions, options_for_select(get_options_comisions()), {}, {multiple: 'multiple', style: 'width:100%', id: 'despacho_comisions', data: { load: prepopulate_comisions(@despacho) } })
-      = select_tag "especificacion2", options_for_select(dictamina_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
+      .input-group
+        = f.label '', 'Tipo de dictamen', { class: 'input-group-addon', id: 'basic-addon4' }
+        = select_tag "especificacion2", options_for_select(dictamina_options2), { class: "form-control", "aria-describedby": "basic-addon0008"}
     .input-group
       = f.label :concejals, t('.concejals'), { class: "input-group-addon", id: "basic-addon5" }
       = f.select(:concejals, options_for_select(get_options_concejals()), {}, {:multiple => "multiple", :style => "width:100%", :id => "despacho_concejals", data: { load: prepopulate_concejals(@despacho) }})

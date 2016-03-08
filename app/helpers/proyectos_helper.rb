@@ -13,7 +13,7 @@ module ProyectosHelper
   end
 
   def get_iniciadores_bloques pro
-    pro.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }  
+    pro.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
   end
 
   def get_iniciadores_comisions pro
@@ -37,7 +37,7 @@ module ProyectosHelper
   end
 
   def get_iniciadores_personas pro
-    pro.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }  
+    pro.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
   end
 
   def type_name_initiator(init)

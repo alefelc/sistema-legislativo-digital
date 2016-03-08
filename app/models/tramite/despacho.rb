@@ -6,7 +6,7 @@ class Despacho < Tramite
 	has_and_belongs_to_many :circuitos, join_table: 'circuitos_despachos'
 
   has_many :estado_expedientes, as: :ref
-  
+
   def expedientes
     self.circuitos.map { |x| x.expediente }.uniq
   end
@@ -18,9 +18,9 @@ class Despacho < Tramite
   def get_comisiones
     self.comisions
   end
-  
+
   def get_concejales
     self.concejals
-  end  
+  end
 
 end
