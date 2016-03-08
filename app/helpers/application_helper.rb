@@ -41,7 +41,7 @@ module ApplicationHelper
 
   def dictamina_options2
     [
-      ["",""],
+      ["No Especificado","NoEspecificado"],
       ["Mayoría","Mayoría"],
       ["Minoría","Minoría"],
       ["Unánime","Unánime"]

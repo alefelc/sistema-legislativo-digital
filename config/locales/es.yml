@@ -176,7 +176,7 @@ es:
 
   expedientes:
     show:
-      info: "Expediente Nro: "
+      info: 'Expediente Nro: '
     index:
       btnheader:
         new: Nuevo Expediente
@@ -429,7 +429,7 @@ es:
 
   despachos:
     show:
-      info: "Despacho Nro: "
+      info: 'Despacho Nro: '
     index:
       btnheader:
         new: Nuevo Despacho
@@ -441,19 +441,18 @@ es:
         comisiones: Comisiones
         concejales: Concejales
         observaciones: Observaciones
-    modal_despacho:
-      title:
-        create_despacho: Creando Despacho
+    modal:
+      create: Creando Despacho
+      update: Editando despacho
+    body:
       observations: Observaciones
-      create_despacho: Creando Despacho
-      update_despacho: Editando despacho
       fojas: Ingrese el número de fojas.
       concejals: Concejales firmantes
       comisions: Comisiones
 
   particulars:
     show:
-      info: "Petición Particular Nro: "
+      info: 'Petición Particular Nro: '
     index:
       btnheader:
         new: Nueva Petición
@@ -490,7 +489,7 @@ es:
 
   comunicacion_oficials:
     show:
-      info: "Comunicación Oficial Nro: "
+      info: 'Comunicación Oficial Nro: '
     index:
       btnheader:
         new: Nueva Comunicación
@@ -527,7 +526,7 @@ es:
 
   proyectos:
     show:
-      info: "Proyecto Nro: "
+      info: 'Proyecto Nro: '
     index:
       btnheader:
         new: Nuevo Proyecto
@@ -564,7 +563,7 @@ es:
 
   condonacions:
     show:
-      info: "Condonación Nro: "
+      info: 'Condonación Nro: '
     index:
       btnheader:
         new: Nueva Condonación
@@ -604,7 +603,7 @@ es:
     search: Ingrese búsqueda ...
 
   norma:
-    confirm_remove: "¿Esta seguro que desea eliminar la norma? Esta acción no se puede deshacer."
+    confirm_remove: '¿Esta seguro que desea eliminar la norma? Esta acción no se puede deshacer.'
 
   tokeninput:
     placeholder:
@@ -618,14 +617,14 @@ es:
 
   date:
     formats:
-      default: "%d/%m/%Y"
+      default: '%d/%m/%Y'
   time:
     formats:
-      default: "%d/%m/%Y - %H:%M"
+      default: '%d/%m/%Y - %H:%M'
   devise:
     failure:
       usuario:
-        unauthenticated: "El usuario no ha iniciado sesión."
+        unauthenticated: 'El usuario no ha iniciado sesión.'
     sessions:
       usuario:
         signed_in: Iniciaste sesión correctamente

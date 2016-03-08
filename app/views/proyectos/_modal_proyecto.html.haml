@@ -85,7 +85,7 @@
                     %span
                       %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
         .modal-footer
-          = f.submit "Guardar Proyecto", {class: "btn btn-primary modal-submit", id: "btn-submit-proyecto"}
+          = f.submit  actionvar == 'create' ? 'Guardar Nuevo Proyecto' : 'Guardar Cambios Proyecto', {class: "btn btn-primary modal-submit", id: "btn-submit-proyecto"}
 
 :javascript
   wi = $(window).width()-20;

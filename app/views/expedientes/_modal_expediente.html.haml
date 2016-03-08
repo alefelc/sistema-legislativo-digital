@@ -14,24 +14,30 @@
         .modal-body
           .row
             .col-md-6
-              .input-group
-                = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
-                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
-              .input-group
-                = f.label "Año", { class: "input-group-addon", id: "basic-addon2" }
-                = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
-              .input-group
-                = f.label :tema, { class: "input-group-addon", id: "basic-addon3" }
-                = f.text_area :tema, { class: "form-control", "aria-describedby": "basic-addon3", placeholder: 'Sumario', type: :text }
-              .input-group
-                = f.label "Observación", { class: "input-group-addon", id: "basic-addon4" }
-                = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
               .input-group#group-tramites
                 = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites', data: { load: prepopulate_tramites(@expediente) } }
               .input-group
-                = label_tag nil, 'Acumula a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
+                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
+              .input-group
+                = f.label 'expedientes_administrativos', { class: "input-group-addon", id: "basic-addon1" }
+                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
+              .input-group
+                = f.label "Fecha", { class: "input-group-addon", id: "basic-addon2" }
+                = f.text_field :anio, { class: "form-control", "aria-describedby": "basic-addon2", type: :date }
+              .input-group
+                = f.label 'Sumario', { class: "input-group-addon", id: "basic-addon3" }
+                = f.text_area :tema, { class: "form-control", "aria-describedby": "basic-addon3", placeholder: 'Ingrese sumario...', type: :text }
+              .input-group
+                = f.label "Observación", { class: "input-group-addon", id: "basic-addon4" }
+                = f.text_area :observacion, { class: "form-control", "aria-describedby": "basic-addon4", placeholder: 'Observaciones', type: :text }
+              .input-group
+                = label_tag nil, 'Acumulado en', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { style: 'width: 100%', id: 'acumula', data: { load: prepopulate_acumula_exp(@expediente) } }
+              .input-group
+                = label_tag nil, 'Acumula a', { class: 'input-group-addon', id: 'basic-addon8' }
+                = text_field_tag nil, nil, { style: 'width: 100%', id: 'acumula', data: { load: prepopulate_acumula_exp(@expediente) }, readonly: true }
               .input-group
                 = label_tag nil, 'Adjuntada Fisicamente a', { class: 'input-group-addon', id: 'basic-addon8' }
                 = text_field_tag nil, nil, { style: 'width: 100%', id: 'adjunta', data: { load: prepopulate_adjunta_exp(@expediente) }}
@@ -41,6 +47,8 @@
             .col-md-6
               .input-group
                 = f.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
+                = text_field_tag nil, nil, { class: "form-control field-state", "aria-describedby": "basic-addon9",
+                   placeholder: 'Sesion nro...' }
                 = text_field_tag nil, nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
                 = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
                 = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
@@ -66,7 +74,7 @@
                               %td= est.fecha
                               %td
         .modal-footer
-          = f.submit "Guardar", { class: "btn btn-primary modal-submit" }
+          = f.submit "Guardar Nuevo Expediente", { class: "btn btn-primary modal-submit" }
 
 :javascript
   wi = $(window).width() - 20;

@@ -11,7 +11,7 @@ class DespachosController < ApplicationController
   def new
     @despacho = Despacho.new
     respond_to do |format|
-      format.html {render partial: "modal_despacho", locals: { actionvar: "create"}}
+      format.html { render partial: 'modal', locals: { actionvar: 'create' } }
     end
   end
 
@@ -22,17 +22,17 @@ class DespachosController < ApplicationController
   def edit
     @despacho = Despacho.find(params[:id])
     respond_to do |format|
-      format.html {render partial: "modal_despacho", locals: { actionvar: "update"}}
+      format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end
   end
 
   def destroy
     Despacho.find(params[:id]).delete
-    render json: {url: "/despachos"}
+    render json: { url: '/despachos' }
   end
 
   def create
-    desp = params[:despacho].select { |key, value| ["nro_fojas", "fecha", "observaciones"].include?(key) }
+    desp = params[:despacho].select { |key, value| %w(nro_fojas fecha observaciones).include?(key) }
     @despacho = Despacho.create desp.to_hash
 
     ## get params comisions the POST
@@ -60,7 +60,7 @@ class DespachosController < ApplicationController
           circuito_zero = expediente.circuitos.find_by(nro: 0)
           @despacho.circuitos << circuito_zero
           comisions.each do |c|
-            esp1 = Comision.find_by(id: c).denominacion.to_s      
+            esp1 = Comision.find_by(id: c).denominacion.to_s
             circuito_zero.estado_expedientes.create do |ne|
               ne.nombre = "Dictaminado"
               ne.tipo = "9"
@@ -70,14 +70,14 @@ class DespachosController < ApplicationController
               ne.ref_id = @despacho.id
               ne.ref_type = @despacho.type
             end
-          end  
+          end
         else
           ## la dictaminacion recaer sobre algun circuito
-          array_c.each do |nro_c| 
+          array_c.each do |nro_c|
             circuito = expediente.circuitos.find_by(nro: nro_c)
-            @despacho.circuitos << circuito 
+            @despacho.circuitos << circuito
             comisions.each do |c|
-              esp1 = Comision.find_by(id: c).denominacion.to_s  
+              esp1 = Comision.find_by(id: c).denominacion.to_s
               circuito.estado_expedientes.create do |ne|
                 ne.nombre = "Dictaminado"
                 ne.tipo = "9"
@@ -87,9 +87,9 @@ class DespachosController < ApplicationController
                 ne.ref_id = @despacho.id
                 ne.ref_type = @despacho.type
               end
-            end  
-          end   
-        end  
+            end
+          end
+        end
       end
     end
 
@@ -163,14 +163,14 @@ class DespachosController < ApplicationController
             ne.ref_id = @despacho.id
             ne.ref_type = @despacho.type
           end
-        end    
+        end
       else
         ## la sancion recaer sobre algun circuito
-        array_c.each do |nro_c| 
+        array_c.each do |nro_c|
           circuito = expediente.circuitos.find_by(nro: nro_c)
           @despacho.circuitos << circuito
           current_comisions.each do |c|
-            esp1 = Comision.find_by(id: c).denominacion.to_s 
+            esp1 = Comision.find_by(id: c).denominacion.to_s
             circuito.estado_expedientes.create do |ne|
               ne.nombre = "Dictaminado"
               ne.tipo = "9"
@@ -180,9 +180,9 @@ class DespachosController < ApplicationController
               ne.ref_id = @despacho.id
               ne.ref_type = @despacho.type
             end
-          end  
-        end   
-      end  
+          end
+        end
+      end
     end
 
     ## update params states the PATCH
