@@ -4,7 +4,7 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t(".#{actionvar}") + " #{@condonacion.id}"
+        %h4#nuevoLabel.modal-title= t(".#{ actionvar }") + " #{ @condonacion.id }"
       = form_for @condonacion, url: { action: actionvar } do |f|
         = hidden_field_tag :iniciadores
         = hidden_field_tag :states

@@ -11,24 +11,24 @@ class CondonacionsController < ApplicationController
   def new
     @condonacion = Condonacion.new
     respond_to do |format|
-      format.html {render partial: "modal_condonacion", locals: { actionvar: "create"}}
+      format.html { render partial: 'modal', locals: { actionvar: 'create' } }
     end
   end
 
   def show
-    @condonacion = Condonacion.find(params[:id])
+    @condonacion = Condonacion.find params[:id]
   end
 
   def edit
-    @condonacion = Condonacion.find(params[:id])
+    @condonacion = Condonacion.find params[:id]
     respond_to do |format|
-      format.html {render partial: "modal_condonacion", locals: { actionvar: "update"}}
+      format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end
   end
 
   def destroy
     Condonacion.find(params[:id]).delete
-    render json: {url: "/condonacions"}
+    render json: { url: '/condonacions' }
   end
 
   def create

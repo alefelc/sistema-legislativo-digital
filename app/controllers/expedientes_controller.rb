@@ -12,26 +12,20 @@ class ExpedientesController < ApplicationController
 
   def new
     @expediente = Expediente.new
+    @circuitos = []
     respond_to do |format|
-      format.html { render partial: "modal_expediente", locals: { actionvar: "create" } }
+      format.html { render partial: 'modal', locals: { actionvar: 'create' } }
     end
   end
 
   def show
-    @expediente = Expediente.find(params[:id])
+    @expediente = Expediente.find params[:id]
   end
 
   def edit
     @expediente = Expediente.find params[:id]
     respond_to do |format|
-      format.html { render partial: "modal_expediente", locals: { actionvar: "update" } }
-    end
-  end
-
-  def edit_circuit
-    @expediente = Expediente.find params[:id]
-    respond_to do |format|
-      format.html { render partial: "modal_circuito", locals: { actionvar: "update" } }
+      format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end
   end
 

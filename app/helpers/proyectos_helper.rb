@@ -8,10 +8,6 @@ module ProyectosHelper
     ]
   end
 
-  def to_date_time date
-    date.strftime("%d/%m/%Y - %R") unless date.nil?
-  end
-
   def get_iniciadores_bloques pro
     pro.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
   end

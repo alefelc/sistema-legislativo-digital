@@ -50,7 +50,7 @@
 
         .single-tab
           %span.titles.simple-tab= 'Tipo de Dictamen'
-          %p.double-tab= "RESOLVER"
+          %p.double-tab= dictamen_type(@despacho, expedientes)
 
     .panel.panel-info
       .panel-heading= 'Trámites del Despacho'
@@ -65,7 +65,7 @@
               - case x.tipo
               - when '1'
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td.center= to_date_time x.created_at
+                  %td.center= to_date x.created_at
                   %td= 'Presentado'
 
               - when '2'
@@ -75,19 +75,19 @@
                   - x.ref.denominacion
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo,
                                         'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                  %td.center= to_date_time x.created_at
+                  %td.center= to_date x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
-                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo}
-                  %td.center= to_date_time x.created_at
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                  %td.center= to_date x.created_at
                   %td
                     %span= 'Finalizado en '
-                    %span= link_to "#{x.ref_type} #{x.ref.nro_exp}" , x.ref
+                    %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }" , x.ref
 
               - when '4' #caso para tramites finalizados pero q no terminan en expediente
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td.center= to_date_time x.created_at
+                  %td.center= to_date x.created_at
                   %td
                     %span= 'Finalizado en '
                     %span= x.especificacion

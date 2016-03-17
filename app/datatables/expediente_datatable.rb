@@ -37,6 +37,7 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
 
   def associated_file(exp)
     iniciador= ""
+    puts ap exp if exp.circuitos.find_by(nro: 0).nil?
     exp.circuitos.find_by(nro: 0).tramites.each do |tramite|
       iniciadores = tramite.get_iniciadores
       if iniciadores.present?
@@ -66,7 +67,6 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
     "<div style='display: flex'>" +
     "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
     "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>" +
-    "<i class='linktocircuit btn btn-xs btn-info fa fa-copyright' data-id='#{exp.id}' title='Editar Circuitos'></i>" +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar Expediente'></i></div>"
   end
 

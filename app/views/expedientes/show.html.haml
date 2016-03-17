@@ -1,256 +1,245 @@
-- content_for :title, "Expediente"
+- content_for :title, 'Expediente'
 
-- exp = @expediente
+- fojas = @expediente.get_fojas
+- sumario = @expediente.tema
+- tramites = @expediente.circuitos.first.tramites
+- circuitos = @expediente.get_circuitos
+- tags = @expediente.tags
+- obs = @expediente.get_observaciones
+
 #expediente-show
 
   #expediente-header.row
     .col-md-8
-      %h3.main-title= t('expedientes.show.info') + " #{exp.nro_exp || "S/N" }"
+      %h3.main-title= "#{t('expedientes.show.info')} #{@expediente.nro_exp || 'S/N'}"
     .col-md-4.float-right.no-print
       .float-right
-        %a#print-expediente.btn.btn-lg.btn-danger.fa.fa-download{ title: "Imprimir Expediente" }
-          = "Imprimir"
-        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: "Descargar Expediente" }
-          = "Descargar"
+        %a#print-expediente.btn.btn-lg.btn-danger.fa.fa-download{ title: 'Imprimir Expediente' }
+          Imprimir
+        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Expediente' }
+          Descargar
 
   #expediente-body
     .panel.panel-success
-      .panel-heading= "Información"
+      .panel-heading Información del Expediente
       .panel-body
-        - fojas = exp.get_fojas
-        - if fojas.present?
+        %p.single-tab
+          %span.titles Nro. de Fojas:
+          = fojas.present? ? fojas : '-.'
+        %p.single-tab
+          %span.titles Sumario:
+          = sumario.present? ? sumario : '-.'
+        - tramites.each do |tramite|
           %p.single-tab
-            %span.titles= "Nro. de Fojas: "
-            %span= fojas
-        - sumario = exp.tema
-        - if sumario.present?
-          %p.single-tab
-            %span.titles= "Sumario: "
-            %span= sumario
-        - tramites = exp.circuitos.first.tramites
-        - if tramites.present?
-          - tramites.each do |tramite|
-            %p.single-tab
-              %span.titles= "Tramite Legislativo: "
-              %span= link_to(tramite.type + " Nro: " + tramite.id.to_s , tramite)
-              - iniciadores = tramite.get_iniciadores
-                - if iniciadores.present?
-                .double-tab.titles= "Iniciadores: "
-                - iniciadores.each do |i|
-                  - case i[:type]
-                  - when "OrganoDeGobierno"
-                    .triple-tab.titles= "Organos de Gobierno: "
-                    .triple-tab= i[:denominacion].to_s
-                  - when "Area"
-                    .triple-tab.titles= "Areas: "
-                    .triple-tab= i[:denominacion].to_s
-                  - when "Bloque"
-                    .triple-tab.titles= "Bloques: "
-                    .triple-tab= i[:denominacion].to_s
-                  - when "Comision"
-                    .triple-tab.titles= "Comisiones: "
-                    .triple-tab= i[:denominacion].to_s
-                  - when "ReparticionOficial"
-                    .triple-tab.titles= "Reparticiones Oficiales: "
-                    .triple-tab= i[:denominacion].to_s
-                  - when "DependenciaMunicipal"
-                    .triple-tab.titles= "Dependencias Municipales: "
-                    .triple-tab= i[:denominacion].to_s
-                  - else
-                    .triple-tab.titles= "Personas: "
-                    .triple-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
-        - circuitos = exp.get_circuitos
-        - if circuitos.present?
-          %p.single-tab
-            .single-tab.titles= "Circuitos del Expediente: "
-            - circuitos.each do |c|
-              %span.double-tab.titles= "Nro.: "
-              %span= c.nro.to_s
-              .triple-tab.titles= "Nro. Fojas: " + c.fojas.to_s
-              .triple-tab.titles= "Sumario: " + c.tema.to_s
-              .triple-tab.titles= "Fecha: #{c.anio.nil? ? "" : to_date(c.anio)}"
-              .triple-tab
-                - tramites = c.tramites
-                - if tramites.present?
-                  - tramites.each do |tramite|
-                    %p
-                      %span.titles= "Tramite Legislativo: "
-                      %span= link_to(tramite.type + " Nro: " + tramite.id.to_s , tramite)
-                      - iniciadores = tramite.get_iniciadores
-                        - if iniciadores.present?
-                        .single-tab.titles= "Iniciadores: "
-                        - iniciadores.each do |i|
-                          - case i[:type]
-                          - when "OrganoDeGobierno"
-                            .double-tab.titles= "Organos de Gobierno: "
-                            .double-tab= i[:denominacion].to_s
-                          - when "Area"
-                            .double-tab.titles= "Areas: "
-                            .double-tab= i[:denominacion].to_s
-                          - when "Bloque"
-                            .double-tab.titles= "Bloques: "
-                            .double-tab= i[:denominacion].to_s
-                          - when "Comision"
-                            .double-tab.titles= "Comisiones: "
-                            .double-tab= i[:denominacion].to_s
-                          - when "ReparticionOficial"
-                            .double-tab.titles= "Reparticiones Oficiales: "
-                            .double-tab= i[:denominacion].to_s
-                          - when "DependenciaMunicipal"
-                            .double-tab.titles= "Dependencias Municipales: "
-                            .double-tab= i[:denominacion].to_s
-                          - else
-                            .double-tab.titles= "Personas: "
-                            .double-tab= i[:type] + ": " + i[:apellido].to_s + ", " + i[:nombre].to_s
-        - normas = exp.circuitos.map{ |x| x.normas}.first
-        - if normas.present?
-          %p.single-tab
-            %span.titles= "Normas: "
-            - normas.each do |n|
-              %span= link_to(n.type + ": " + n.nro.to_s , n) + " - "
-        - tags = exp.tags
-        - if tags.present?
-          %p.single-tab
-            %span.titles= "Voces Claves: "
-            - tags.each do |t|
-              %span= t.nombre.to_s + " - "
-        - exp_adm = exp.get_exps_adm
-        - unless exp_adm.empty?
-          %p.single-tab
-            %span.titles= "Expedientes Administrativos: "
-            - exp_adm.each do |e|
-              %span= link_to(e.nro_exp + e.get_anio_expediente_adm, "/expediente_administrativos/#{e.id}")
-        - obs = exp.get_observaciones
-        - if obs.present?
-          %p.single-tab
-            %span.titles= "Observaciones: "
-            %span= obs
-        - anio = exp.get_anio
-        - if anio.present?
-          %p.single-tab
-            %span.titles= "Fecha: "
-            %span= anio
-          - adjuntados = exp.adjuntados
-          - if adjuntados.present?
-            %p.single-tab
-              %span.single-tab.titles= "Expedientes adjuntados fisicamente: "
-            - adjuntados.each do |a|
-              %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "
-          - adjunta = exp.adjunta
-          - if adjunta.present?
-            %span.single-tab.titles= "Adjunta fisicamente a expediente: "
-            %span= link_to("Nro: " + adjunta.nro_exp + adjunta.get_anio_expediente, adjunta)
-          - acumulados = exp.acumulados
-          - if acumulados.present?
-            %p.single-tab
-              %span.single-tab.titles= "Expedientes acumulados: "
-            - acumulados.each do |a|
-              %span= link_to("Nro: " + a.nro_exp + a.get_anio_expediente, a) + " - "
-          - acumula = exp.acumula
-          - if acumula.present?
-            %span.single-tab.titles= "Acumula a expediente: "
-            %span= link_to("Nro: " + acumula.nro_exp + acumula.get_anio_expediente, acumula)
+            %span.titles Tramite Legislativo:
+            %span= link_to "#{tramite.type} Nro: #{tramite.id}" , tramite
+            - iniciadores = tramite.try :get_iniciadores
+            %span= '-.' if iniciadores.empty?
+            - if iniciadores.present?
+              .double-tab.titles Iniciadores:
+              - iniciadores.each do |i|
+                - case i[:type]
+                - when 'OrganoDeGobierno'
+                  .triple-tab.titles Organos de Gobierno
+                  .triple-tab= i[:denominacion]
+                - when 'Area'
+                  .triple-tab.titles Areas:
+                  .triple-tab= i[:denominacion]
+                - when 'Bloque'
+                  .triple-tab.titles Bloques:
+                  .triple-tab= i[:denominacion]
+                - when 'Comision'
+                  .triple-tab.titles Comisiones:
+                  .triple-tab= i[:denominacion]
+                - when 'ReparticionOficial'
+                  .triple-tab.titles Reparticiones Oficiales:
+                  .triple-tab= i[:denominacion]
+                - when 'DependenciaMunicipal'
+                  .triple-tab.titles Dependencias Municipales:
+                  .triple-tab= i[:denominacion]
+                - else
+                  .triple-tab.titles Personas:
+                  .triple-tab= "#{i[:type]}: #{i[:apellido]}, #{i[:nombre]}"
 
+    - circuitos.each do |c|
+      .panel.panel-success
+        .panel-heading= "Circuito del Expediente Nro: #{c.nro}"
+        .panel-body
+          %p.single-tab.titles= "Nro. Fojas: #{c.fojas}"
+          %p.single-tab.titles= "Sumario: #{c.tema}"
+          %p.single-tab.titles= "Fecha: #{c.anio.nil? ? '' : to_date(c.anio)}"
+          .triple-tab
+            - tramites = c.tramites
+            - if tramites.present?
+              - tramites.each do |tramite|
+                %p
+                  %span.titles Tramite Legislativo:
+                  %span= link_to "#{tramite.type} Nro: #{tramite.id}", tramite
+                  - iniciadores = tramite.get_iniciadores
+                  - if iniciadores.present?
+                    .single-tab.titles Iniciadores:
+                    - iniciadores.each do |i|
+                      - case i[:type]
+                      - when 'OrganoDeGobierno'
+                        .double-tab.titles Organos de Gobierno:
+                        .double-tab= i[:denominacion].to_s
+                      - when 'Area'
+                        .double-tab.titles Areas:
+                        .double-tab= i[:denominacion].to_s
+                      - when 'Bloque'
+                        .double-tab.titles Bloques:
+                        .double-tab= i[:denominacion].to_s
+                      - when 'Comision'
+                        .double-tab.titles Comisiones:
+                        .double-tab= i[:denominacion].to_s
+                      - when 'ReparticionOficial'
+                        .double-tab.titles Reparticiones Oficiales:
+                        .double-tab= i[:denominacion].to_s
+                      - when 'DependenciaMunicipal'
+                        .double-tab.titles Dependencias Municipales:
+                        .double-tab= i[:denominacion].to_s
+                      - else
+                        .double-tab.titles Personas:
+                        .double-tab= "#{i[:type]}: #{i[:apellido]}, #{i[:nombre]}"
+    - normas = @expediente.circuitos.map{ |x| x.normas}.first
+    - exp_adm = @expediente.get_exps_adm
+    - unless exp_adm.empty?
+      %p.single-tab
+        %span.titles Expedientes Administrativos:
+        - exp_adm.each do |e|
+          %span= link_to(e.nro_exp + e.get_anio_expediente_adm, "/expediente_administrativos/#{ e.id }")
+      - adjuntados = @expediente.adjuntados
+      - if adjuntados.present?
+        %p.single-tab
+          %span.single-tab.titles Expedientes adjuntados fisicamente:
+        - adjuntados.each do |a|
+          %span= link_to("Nro: #{a.nro_exp}/#{a.get_anio_expediente}", a) + " - "
+      - adjunta = @expediente.adjunta
+      - if adjunta.present?
+        %span.single-tab.titles Adjunta fisicamente a expediente:
+        %span= link_to("Nro: #{adjunta.nro_exp}/#{adjunta.get_anio_expediente}", adjunta)
+      - acumulados = @expediente.acumulados
+      - if acumulados.present?
+        %p.single-tab
+          %span.single-tab.titles Expedientes acumulados:
+        - acumulados.each do |a|
+          %span= link_to("Nro: #{a.nro_exp}/#{a.get_anio_expediente}", a) + " - "
+      - acumula = @expediente.acumula
+      - if acumula.present?
+        %span.single-tab.titles Acumula a expediente:
+        %span= link_to "Nro: #{acumula.nro_exp}/#{acumula.get_anio_expediente}", acumula
 
     .panel.panel-info
-      .panel-heading= "Trámites del Expediente"
+      .panel-heading Trámites del Expediente
       .panel-body.without-padding
         %table.table.table-striped#states-table-expediente-show
           %thead
             %tr
-              %th.center{ width: "15%" }= "Fecha"
-              %th{ width: "85%" }= "Estado"
+              %th.center{ width: '15%' } Fecha
+              %th{ width: '85%' } Estado
           %tbody
-            - exp.estado_expedientes.includes(:circuito).order(fecha: :asc).each do |x|
+            - @expediente.estado_expedientes.includes(:circuito).order(fecha: :asc).each do |x|
               - nro_c = x.circuito.nro
               - case x.tipo
-              - when "1"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+              - when '1'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "Iniciado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "Iniciado #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "Iniciado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "2"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td.center= to_date x.fecha
+                    %td= "Iniciado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '2'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "Orden del Día " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "Orden del Día #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "Orden del Día Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "3"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td.center= to_date x.fecha
+                    %td= "Orden del Día Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '3'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "A Comisión " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "A Comisión #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "A Comisión Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "4"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td.center= to_date x.fecha
+                    %td= "A Comisión Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '4'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "Dictaminado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "Dictaminado #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "Dictaminado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "5"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
-                  - normas = get_sancion_estado(exp, x)
+                    %td.center= to_date x.fecha
+                    %td= "Dictaminado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '5'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                  - normas = get_sancion_estado @expediente, x
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                      %span= "Sancionado #{x.especificacion1} / #{x.especificacion2}"
                       - normas.each do |n|
                         %span= " - "
-                        %span= link_to(n.type.to_s + " ".to_s + n.nro.to_s , n)
+                        %span= link_to "#{n.type} #{n.nro}" , n
                   - else
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                      %span= "Sancionado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
                       - normas.each do |n|
                         %span= " - "
-                        %span= link_to(n.type.to_s + " ".to_s + n.nro.to_s , n)
-              - when "6"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                        %span= link_to "#{n.type} #{n.nro}", n
+              - when '6'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "Observado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "Observado #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "Observado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "7"
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td.center= to_date x.fecha
+                    %td= "Observado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '7'
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
-                    %td= "Retirado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
+                    %td.center= to_date x.fecha
+                    %td= "Retirado #{x.especificacion1} / #{x.especificacion2}"
                   - else
-                    %td= to_date_time(x.fecha)
-                    %td= "Retirado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s
-              - when "8" ## Estado Sancionado pero con referencia a la norma(relacion polimorfica)
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                    %td.center= to_date x.fecha
+                    %td= "Retirado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+              - when '8' ## Estado Sancionado pero con referencia a la norma(relacion polimorfica)
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Sancionado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
-                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro.to_s , x.ref)
+                      %span= "Sancionado #{x.especificacion1} / #{x.especificacion2}"
+                      %span= link_to "#{x.ref_type} #{x.ref.nro}", x.ref
                   - else
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Sancionado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
-                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.nro.to_s , x.ref)
-              - when "9" ## Estado Dictaminado pero con referencia al despacho(relacion polimorfica)
-                %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo}
+                      %span= "Sancionado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+                      %span= link_to "#{x.ref_type} #{x.ref.nro}", x.ref
+              - when '9' ## Estado Dictaminado pero con referencia al despacho(relacion polimorfica)
+                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
                   - if nro_c == 0
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Dictaminado " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
-                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.id.to_s , x.ref)
+                      %span= "Dictaminado #{x.especificacion1} / #{x.especificacion2}"
+                      %span= link_to "#{x.ref_type} #{x.ref.id}", x.ref
                   - else
-                    %td= to_date_time(x.fecha)
+                    %td.center= to_date x.fecha
                     %td
-                      %span= "Dictaminado Circuito Nro #{nro_c} " + x.especificacion1.to_s + " / " + x.especificacion2.to_s + " "
-                      %span= link_to(x.ref_type.to_s + " ".to_s + x.ref.id.to_s , x.ref)
+                      %span= "Dictaminado Circuito Nro #{nro_c} #{x.especificacion1} / #{x.especificacion2}"
+                      %span= link_to "#{x.ref_type} #{x.ref.id}", x.ref
               - else
+                CODE ERROR
+    .panel.panel-danger
+      .panel-heading Observaciones
+      .panel-body
+        %p.single-tab
+          %span= obs.present? ? obs : '-.'
+
+        %p.single-tab
+          %span.titles Voces Claves
+          %span= '-.' if tags.empty?
+          - tags.each do |t|
+            %span= "#{t.nombre} - "
