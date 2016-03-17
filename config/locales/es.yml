@@ -185,7 +185,7 @@ es:
         sumario: Sumario
         fechas: Fechas
         description: Descripción
-    modal_expediente:
+    modal:
       title:
         create_expediente: Creando Expediente
       create_expediente: Creando Expediente
@@ -197,6 +197,9 @@ es:
         specification: Especificación
         date: Fecha
       tags: Voces Claves
+      submit:
+        create: Crear Nuevo Expediente
+        update: Guardar Cambios Expediente
     modal_circuito:
       title:
         create_expediente: Creando Expediente
@@ -444,6 +447,10 @@ es:
     modal:
       create: Creando Despacho
       update: Editando despacho
+      submit:
+        create: Guardar Nuevo Despacho
+        update: Guardar Cambios Despacho
+
     body:
       observations: Observaciones
       fojas: Ingrese el número de fojas.
@@ -576,7 +583,7 @@ es:
         estado: Estado Actual
         actualizado: Actualizado
         observaciones: Observaciones
-    modal_condonacion:
+    modal:
       title:
         create_condonacion: Creando Condonación
       observations: Observaciones

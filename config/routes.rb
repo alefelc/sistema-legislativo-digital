@@ -82,7 +82,6 @@ Rails.application.routes.draw do
   resources :expedientes do
     get 'get_tramites_pendientes', on: :collection
     get 'get_circuitos', on: :member
-    get 'edit_circuit', on: :member
     get 'search', on: :collection
     get 'search_tag', on: :collection
   end

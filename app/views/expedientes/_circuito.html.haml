@@ -1,0 +1,44 @@
+= form_for @expediente, url: { action: actionvar } do |circ|
+  = hidden_field_tag :tramites_pendientes
+  = hidden_field_tag :expediente, @expediente.id
+  = hidden_field_tag 'circuito[nro]'
+  = hidden_field_tag :estados_circuito
+  .modal-body
+    .row
+      .col-md-6
+        .input-group
+          = circ.label "Circuitos", t('.circuitos'), { class: "input-group-addon", id: "basic-addon01" }
+          = text_field_tag :circuitos, nil, { style: 'width: 100%', id: 'circuitos' }
+        .input-group
+          = label_tag nil, "Nro Fojas", { class: "input-group-addon", id: "fojas-label"}
+          = text_field_tag 'circuito[fojas]', nil ,{ class: "form-control field-circuit", "aria-describedby": "fojas-label", id: 'fojas-field',:placeholder => "Ingrese Nro Fojas", type: :integer }
+        .input-group
+          = label_tag nil, "Año", { class: "input-group-addon", id: "basic-addon02"}
+          = text_field_tag 'circuito[anio]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon02", id: 'anio-field', :placeholder => "Ingrese Año", type: :date }
+        .input-group
+          = label_tag nil, "Tema", { class: "input-group-addon", id: "basic-addon03"}
+          = text_field_tag 'circuito[tema]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon03", id: 'tema-field', :placeholder => "Ingrese Tema", type: :text }
+        .input-group#group-tramites
+          = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
+          = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
+      .col-md-6
+        .input-group
+          = circ.label "Estados", t('.estados'), { class: "input-group-addon", id: "basic-addon9" }
+          = text_field_tag nil, nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
+          = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
+          = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
+          = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp2' }
+          .input-group-addon.parent-group-btn.btn#add_state
+            %i.fa.fa-plus-circle.fa-2x
+        #states-table-column
+          .row
+            .col-xs-12
+              %table.table.table-striped.table-bordered#states-table
+                %thead
+                  %tr
+                    %th= t('.table.state')
+                    %th= t('.table.specification')
+                    %th= t('.table.date')
+                    %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                %tbody
+  = circ.submit "Guardar Circuito", { class: "btn btn-primary modal-submit", id: "btn-submit-circuito" }

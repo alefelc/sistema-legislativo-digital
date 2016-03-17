@@ -15,4 +15,12 @@ module DespachosHelper
   def get_options_concejals
     Periodo.last.concejals.order(:apellido, :nombre).collect{|c| [c.apellido + ", " + c.nombre, c.id]}
   end
+
+  def dictamen_type(desp, exps)
+    EstadoExpediente.find_by(
+      ref_id: desp.id,
+      ref_type: desp.type,
+      circuito_id: exps.first.circuitos.find_by(nro: 0).id
+    ).especificacion2
+  end
 end

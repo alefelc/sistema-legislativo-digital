@@ -15,7 +15,7 @@
           = render partial: 'body', locals: { f: f }
 
         .modal-footer
-          = f.submit actionvar == 'create' ? 'Guardar Nuevo Despacho' : 'Guardar Cambios Despacho', { class: "btn btn-primary modal-submit" }
+          = f.submit t(".submit.#{ actionvar }"), class: 'btn btn-primary modal-submit'
 
 :javascript
   wi = $(window).width()-20;
