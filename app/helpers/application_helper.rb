@@ -376,7 +376,7 @@ module ApplicationHelper
     ]
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
 end

@@ -24,6 +24,7 @@ class ExpedientesController < ApplicationController
 
   def edit
     @expediente = Expediente.find params[:id]
+    @circuitos = @expediente.get_circuitos
     respond_to do |format|
       format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end

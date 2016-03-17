@@ -1,5 +1,11 @@
 #expedientes {
 
+  #modal-expediente #exp-panel .row {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
   #expedientes-table_wrapper {
     margin-top: -35px;
     th {
@@ -74,10 +80,9 @@
   #states-table-expediente-show {
     margin: 0px;
   }
-
 }
 
-#modal-circuito #btn-submit-circuito{
+#modal-circuito #btn-submit-circuito {
   position: relative;
   right: 45%;
 }

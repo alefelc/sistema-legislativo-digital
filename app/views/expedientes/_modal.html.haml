@@ -16,6 +16,12 @@
             %ul.nav.nav-tabs{ role: 'tablist' }
               %li.active{ role: 'presentation' }
                 %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#exp-panel', role: 'tab' } Expediente
+
+              - @circuitos.each do |c|
+                %li{ role: 'presentation' }
+                  %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#new-circ-panel', role: 'tab' }
+                    = "Circuito Nro #{c.nro}"
+
               %li{ role: 'presentation' }
                 %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#new-circ-panel', role: 'tab' } Nuevo Circuito
 
@@ -66,7 +72,7 @@
                       %i.fa.fa-plus-circle.fa-2x
                   #states-table-column
                     .row
-                      .col-xs-12
+                      .col-xs-12.without-padding
                         %table.table.table-striped.table-bordered#states-table
                           %thead
                             %tr
@@ -83,7 +89,7 @@
                                   %td= est.fecha
                                   %td
             .tab-pane#new-circ-panel{ role: 'tabpanel' }
-              = render partial: 'circuito', locals: { actionvar: 'update' }
+              = render partial: 'circuit'
 
         .modal-footer
           = f.submit t(".submit.#{ actionvar }"), { class: "btn btn-primary modal-submit" }
