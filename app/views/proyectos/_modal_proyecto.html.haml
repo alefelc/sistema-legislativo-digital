@@ -37,14 +37,20 @@
                     - if (x.ref_type == 'Personal')
                       - text = x.ref.apellido + ", " + x.ref.nombre;
                     - else
-                      - text = x.ref.denominacion;   
+                      - text = x.ref.denominacion;
                     %tr{ class: 'derivacion-tr', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                       %td= "Derivado a " + x.ref_type + ": " + text
                       %td= to_date(x.created_at)
                       %td= icon 'fa fa-times fa-1x', nil, class: 'btn btn-xs remove-table-row'
               .input-group
                 = f.label t('.final'), { class: "input-group-addon", id: "basic-addon011"}
-                = text_area_tag :finalizado, nil, {class: "form-control", "aria-describedby" => "basic-addon011", type: :text }  
+                = text_area_tag :finalizado, nil, {class: "form-control", "aria-describedby" => "basic-addon011", type: :text }
+              .input-group
+                = f.label t('.exp_adm'), { class: "input-group-addon" }
+                = text_field_tag :expediente_administrativos, nil, { class: "form-control" }
+              .input-group
+                = f.label t('.fojas_exp_adm'), { class: "input-group-addon" }
+                = text_field_tag :fojas_exp_adm, nil, { class: "form-control" }
             .col-md-6
               #second-column
                 .input-group
@@ -75,7 +81,7 @@
                     = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
                   .input-group#denominacion-group
                     = label_tag nil, "Denominación", { class: "input-group-addon", id: "basic-addon8"}
-                    = text_field_tag 'iniciador[denominacion]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon8", :placeholder => t('.denominacion'), type: :text }  
+                    = text_field_tag 'iniciador[denominacion]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon8", :placeholder => t('.denominacion'), type: :text }
                 .parent-group-btn.btn.btn-xs#add_iniciador
                   %button.btn.parent-group-btn#btn_add_iniciador
                     %span
@@ -233,7 +239,7 @@
           $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
           $('#proyecto #denominacion-group').css('display','inherit');
           $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
-        }  
+        }
       }
     }
   });
@@ -281,8 +287,8 @@
         $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
         $('#proyecto #denominacion-group').css('display','inherit');
         $('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
-      }      
-    } 
+      }
+    }
   });
 
   $('#proyecto_iniciadores').on('choice-selected', function(e, choice) {
@@ -448,7 +454,7 @@
             iniciador = {dependencia: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
           }
         }
-      }            
+      }
       $.ajax({
         url: url_iniciador,
         type: 'POST',
@@ -519,7 +525,7 @@
   $('.modal').on('shown.bs.modal', function () {
     $('form:first *:input[type!=hidden]:first').focus();
     $('.input-initiator').keypress(function(event){
-      if (event.keyCode == 10 || event.keyCode == 13) 
+      if (event.keyCode == 10 || event.keyCode == 13)
         event.preventDefault();
     });
   });
@@ -627,11 +633,11 @@
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object;
-    
+
     var idref = data.id;
     var typeref = data.type;
     var text;
-    
+
     if (data.type == 'Personal')
       text = data.apellido + ", " + data.nombre;
     else
@@ -640,7 +646,7 @@
     var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
-    
+
     $('#proyecto #states-table tbody').append(tr);
   }).on("change", function(e) {
     $('#proyecto #derived-states').select2("val", "");

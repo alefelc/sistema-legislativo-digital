@@ -493,6 +493,9 @@ es:
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
+      exp_adm: Expediente administrativo
+      fojas_exp_adm: Fojas exp administrativo
+
 
   comunicacion_oficials:
     show:
@@ -511,7 +514,7 @@ es:
         observaciones: Observaciones
     modal_comunicacion_oficial:
       title:
-        create_comunicacion_oficial: Creando Comunicaion Oficial
+        create_comunicacion_oficial: Creando Comunicación Oficial
       observations: Observaciones
       final: Finaliza en
       asunto: Ingrese asunto
@@ -530,6 +533,9 @@ es:
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
+      exp_adm: Expediente administrativo
+      fojas_exp_adm: Fojas exp administrativo
+
 
   proyectos:
     show:
@@ -567,6 +573,9 @@ es:
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el proyecto.
+      exp_adm: Expediente administrativo
+      fojas_exp_adm: Fojas exp administrativo
+
 
   condonacions:
     show:
@@ -605,6 +614,8 @@ es:
       iniciador: Nuevo Iniciador.
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
+      exp_adm: Expediente administrativo
+      fojas_exp_adm: Fojas exp administrativo
 
   datatable:
     search: Ingrese búsqueda ...

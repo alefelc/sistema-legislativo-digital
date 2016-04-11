@@ -29,37 +29,6 @@
         %p.single-tab
           %span.titles Sumario:
           = sumario.present? ? sumario : '-.'
-        - tramites.each do |tramite|
-          %p.single-tab
-            %span.titles Tramite Legislativo:
-            %span= link_to "#{tramite.type} Nro: #{tramite.id}" , tramite
-            - iniciadores = tramite.try :get_iniciadores
-            %span= '-.' if iniciadores.empty?
-            - if iniciadores.present?
-              .double-tab.titles Iniciadores:
-              - iniciadores.each do |i|
-                - case i[:type]
-                - when 'OrganoDeGobierno'
-                  .triple-tab.titles Organos de Gobierno
-                  .triple-tab= i[:denominacion]
-                - when 'Area'
-                  .triple-tab.titles Areas:
-                  .triple-tab= i[:denominacion]
-                - when 'Bloque'
-                  .triple-tab.titles Bloques:
-                  .triple-tab= i[:denominacion]
-                - when 'Comision'
-                  .triple-tab.titles Comisiones:
-                  .triple-tab= i[:denominacion]
-                - when 'ReparticionOficial'
-                  .triple-tab.titles Reparticiones Oficiales:
-                  .triple-tab= i[:denominacion]
-                - when 'DependenciaMunicipal'
-                  .triple-tab.titles Dependencias Municipales:
-                  .triple-tab= i[:denominacion]
-                - else
-                  .triple-tab.titles Personas:
-                  .triple-tab= "#{i[:type]}: #{i[:apellido]}, #{i[:nombre]}"
 
     - circuitos.each do |c|
       .panel.panel-success
@@ -68,39 +37,7 @@
           %p.single-tab.titles= "Nro. Fojas: #{c.fojas}"
           %p.single-tab.titles= "Sumario: #{c.tema}"
           %p.single-tab.titles= "Fecha: #{c.anio.nil? ? '' : to_date(c.anio)}"
-          .triple-tab
-            - tramites = c.tramites
-            - if tramites.present?
-              - tramites.each do |tramite|
-                %p
-                  %span.titles Tramite Legislativo:
-                  %span= link_to "#{tramite.type} Nro: #{tramite.id}", tramite
-                  - iniciadores = tramite.get_iniciadores
-                  - if iniciadores.present?
-                    .single-tab.titles Iniciadores:
-                    - iniciadores.each do |i|
-                      - case i[:type]
-                      - when 'OrganoDeGobierno'
-                        .double-tab.titles Organos de Gobierno:
-                        .double-tab= i[:denominacion].to_s
-                      - when 'Area'
-                        .double-tab.titles Areas:
-                        .double-tab= i[:denominacion].to_s
-                      - when 'Bloque'
-                        .double-tab.titles Bloques:
-                        .double-tab= i[:denominacion].to_s
-                      - when 'Comision'
-                        .double-tab.titles Comisiones:
-                        .double-tab= i[:denominacion].to_s
-                      - when 'ReparticionOficial'
-                        .double-tab.titles Reparticiones Oficiales:
-                        .double-tab= i[:denominacion].to_s
-                      - when 'DependenciaMunicipal'
-                        .double-tab.titles Dependencias Municipales:
-                        .double-tab= i[:denominacion].to_s
-                      - else
-                        .double-tab.titles Personas:
-                        .double-tab= "#{i[:type]}: #{i[:apellido]}, #{i[:nombre]}"
+
     - normas = @expediente.circuitos.map{ |x| x.normas}.first
     - exp_adm = @expediente.get_exps_adm
     - unless exp_adm.empty?
@@ -232,6 +169,7 @@
                       %span= link_to "#{x.ref_type} #{x.ref.id}", x.ref
               - else
                 CODE ERROR
+
     .panel.panel-danger
       .panel-heading Observaciones
       .panel-body

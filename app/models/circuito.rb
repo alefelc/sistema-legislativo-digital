@@ -1,19 +1,20 @@
 class Circuito < ActiveRecord::Base
-
   # == Associations
   belongs_to :expediente
   has_many :estado_expedientes
   has_many :tramites
   has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
 
-  #== polymorfic association
+  #== Polymorfic association
   has_many :estado_tramites, as: :ref
 
-  #== asociacion con orden del dia
+  #== Asociacion con orden del dia
   has_many :circuito_ordens
   has_many :orden_del_dias, :through => :circuito_ordens
 
   has_and_belongs_to_many :normas
+
+  before_create :set_circuit_number
 
   def type
     "Circuito"
@@ -38,4 +39,15 @@ class Circuito < ActiveRecord::Base
     self.tramites.as_json(methods: 'type')
   end
 
+  private
+
+  def set_circuit_number
+    if self.nro.nil?
+      if expediente.present?
+        self.nro = expediente.last_circuit.nro + 1
+      else
+        self.nro = nil
+      end
+    end
+  end
 end

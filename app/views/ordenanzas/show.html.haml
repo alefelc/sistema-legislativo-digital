@@ -8,9 +8,6 @@
     - ord_me_modifican = ord.relationship_me_modifican.to_a
     - ord_modifica = ord.relationship_modificadas.to_a
     %p
-      %span.titles= "Nro Identificador: "
-      %span= ord.id
-    %p
       %span.titles= "Ordenanza Nro: "
       %span= get_nro(ord) + get_anio_sancion(ord)
       %span
@@ -67,31 +64,10 @@
         %span= link_to(" Decreto " + r.me_modifica.nro.to_s, r.me_modifica)
     %p.single-tab
       - ord.get_destinos(0).each do |d|
-        %span= "Comunicada al " + d.destino.to_s + " el " + to_date(d.fecha).to_s
+        %span= "Comunicada al DEM el " + to_date(d.fecha).to_s
     %p.single-tab
       - ord.get_destinos(1).each do |d|
         %span= "Notificada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s
-    - desc = ord.descripcion
-      - if desc.present?
-      %p
-        %span.titles= "Descripción: "
-        %span= desc
-    - obs = ord.observaciones
-      - if obs.present?
-      %p
-        %span.titles= "Observaciónes: "
-        %span= obs
-    - org = ord.organismo_origen
-      - if org.present?
-      %p
-        %span.titles= "Organismo origen: "
-        %span= org
-    %p
-      - tags = ord.tags
-        - unless tags.empty?
-        %span.titles= "Voces Claves: "
-        - tags.each do |t|
-          %span= t.nombre + " - "
     %hr
     %p.single-tab
       - rel = ord_me_modifican.select{ |x| x.tipo_relacion == "reglamen" }
@@ -117,7 +93,7 @@
     %p.single-tab
       - rel = ord_me_modifican.select{ |x| x.tipo_relacion == "delegado" }
         - unless rel.empty?
-        .single-tab= "Delagada por: "
+        .single-tab= "Delegada por: "
         - rel.each do |r|
           - norm_dest = r.me_modifica
           .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
@@ -202,7 +178,7 @@
     %p.single-tab
       - rel = ord_modifica.select{ |x| x.tipo_relacion == "delegado" }
         - unless rel.empty?
-        .single-tab= "Delaga a: "
+        .single-tab= "Delega a: "
         - rel.each do |r|
           - norm_dest = r.modifica
           .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
@@ -269,3 +245,20 @@
         - rel.each do |r|
           - norm_dest = r.modifica
           .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+
+    - obs = ord.observaciones
+      - if obs.present?
+      %p
+        %span.titles= "Observaciónes: "
+        %span= obs
+    - org = ord.organismo_origen
+      - if org.present?
+      %p
+        %span.titles= "Organismo origen: "
+        %span= org
+    %p
+      - tags = ord.tags
+        - unless tags.empty?
+        %span.titles= "Voces Claves: "
+        - tags.each do |t|
+          %span= t.nombre + " - "

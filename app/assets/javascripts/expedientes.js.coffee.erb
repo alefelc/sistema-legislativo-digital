@@ -74,7 +74,6 @@ $(document).on 'ready page:load', ->
     $.get "/expedientes/#{id}/edit", (data) ->
       $('#expedientes-edit').append data
       $('#expedientes-edit .modal').modal 'show'
-
       return
 
   $(document).on 'click', '#expedientes .linktoprint', ->
@@ -105,16 +104,6 @@ $(document).on 'ready page:load', ->
     $('#expedientes #caratula #asunto-text').append '&nbsp;'
     $('#expedientes #caratula').css('display','none')
     return
-
-  $(document).on 'click', '#expedientes .linktocircuit', ->
-    $(document).off 'keydown'
-    id = $(this).data 'id'
-    $('#expedientes-edit').empty()
-    $.get "/expedientes/#{id}/edit_circuit", (data) ->
-      $('#expedientes-edit').append data
-      $('#expedientes-edit .modal').modal 'show'
-
-      return
 
   ## hotkey create expedientes
   $.ctrl 'C', ->

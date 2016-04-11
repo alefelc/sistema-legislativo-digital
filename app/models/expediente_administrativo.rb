@@ -1,6 +1,10 @@
 class ExpedienteAdministrativo < ActiveRecord::Base
-
+  #== Associations
 	belongs_to :expediente
+  belongs_to :tramite
+
+  #== Validations
+  validates :nro_exp, presence: true
 
   def get_anio_expediente_adm
     if self.anio.present?
@@ -9,5 +13,4 @@ class ExpedienteAdministrativo < ActiveRecord::Base
       " - Año no asignado"
     end
   end
-
 end

@@ -1,26 +1,25 @@
-= form_tag '/circuitos' do |c|
-  = hidden_field_tag :tramites_pendientes
-  = hidden_field_tag 'circuito[nro]'
-  = hidden_field_tag :estados_circuito
-  .modal-body
+= f.fields_for :circuitos, @circuitos do |f|
+  .modal-body.tab-pane{ id: "#{f.object.id}-circ-panel", role: 'tabpanel' }
+    /= f.hidden_field :tramites_pendientes
+    /= f.hidden_field :estados_circuito
     .row
       .col-md-6
         .input-group
-          = label_tag nil, "Nro Fojas", { class: "input-group-addon", id: "fojas-label"}
-          = text_field_tag 'circuito[fojas]', nil ,{ class: "form-control field-circuit", "aria-describedby": "fojas-label", id: 'fojas-field',:placeholder => "Ingrese Nro Fojas", type: :integer }
+          = label_tag :nro_fojas, 'Nro de fojas', { class: 'input-group-addon' }
+          = f.text_field :fojas, { class: 'form-control', placeholder: 'Ingrese nro. fojas', type: :number }
         .input-group
-          = label_tag nil, "Año", { class: "input-group-addon", id: "basic-addon02"}
-          = text_field_tag 'circuito[anio]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon02", id: 'anio-field', :placeholder => "Ingrese Año", type: :date }
+          = label_tag :fecha, 'Fecha', { class: 'input-group-addon' }
+          = f.text_field :anio, { class: 'form-control', placeholder: 'Ingrese año', type: :date }
         .input-group
-          = label_tag nil, "Tema", { class: "input-group-addon", id: "basic-addon03"}
-          = text_field_tag 'circuito[tema]', nil ,{ class: "form-control field-circuit", "aria-describedby": "basic-addon03", id: 'tema-field', :placeholder => "Ingrese Tema", type: :text }
+          = label_tag :sumario, 'Sumario', { class: 'input-group-addon' }
+          = f.text_field :tema, { class: 'form-control', placeholder: 'Ingrese tema', type: :text }
         .input-group#group-tramites
-          = label_tag nil, 'Trámites', { class: 'input-group-addon', id: 'basic-addon8' }
-          = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites' }
+          /= label_tag :tramites, 'Trámites', { class: 'input-group-addon' }
+          /= f.text_field :tramites, { multiple: :multiple, style: 'width: 100%' }
       .col-md-6
         .input-group
-          = label_tag nil, "Estados", { class: "input-group-addon", id: "basic-addon9" }
-          = text_field_tag nil, nil ,{ class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
+          = label_tag :estados, 'Estados', { class: 'input-group-addon' }
+          = text_field_tag nil, nil, { class: "form-control field-state", "aria-describedby": "basic-addon9", id: 'fecha', :placeholder => "Ingrese Fecha", type: :date }
           = select_tag nil, options_for_select(get_estados), { class: "form-control field-state", style: 'width: 100%', id: 'estados' }
           = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp1' }
           = select_tag nil, nil, { class: "form-control field-state", style: 'width: 100%', id: 'esp2' }
@@ -35,5 +34,5 @@
                     %th= t('.table.state')
                     %th= t('.table.specification')
                     %th= t('.table.date')
-                    %th{width: "1%"}= icon 'trash', '', class: 'fa-1x'
+                    %th{ width: '1%' }= icon 'trash', '', class: 'fa-1x'
                 %tbody

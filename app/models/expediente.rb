@@ -30,6 +30,13 @@ class Expediente < ActiveRecord::Base
   after_create :zero_circuit_by_default
   before_create :set_bis
 
+  #== Nested attributes
+  accepts_nested_attributes_for :circuitos
+
+  def last_circuit
+    self.circuitos.order(:nro).last
+  end
+
   def set_bis
     self.bis = 0
   end
@@ -56,7 +63,7 @@ class Expediente < ActiveRecord::Base
   end
 
   def get_circuitos
-    self.circuitos.where.not(nro:0).order(nro: :asc)
+    self.circuitos.where.not(nro: 0).order(nro: :asc)
   end
 
   def get_despachos

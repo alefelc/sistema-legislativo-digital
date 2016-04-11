@@ -1,5 +1,4 @@
 class Tramite < ActiveRecord::Base
-
 	#== Associations
 	has_and_belongs_to_many :personas
 	has_and_belongs_to_many :bloques
@@ -8,8 +7,8 @@ class Tramite < ActiveRecord::Base
   has_and_belongs_to_many :dependencia_municipals, join_table: 'dependencias_tramites'
   has_and_belongs_to_many :reparticion_oficials
   has_and_belongs_to_many :areas
-
   has_many :estado_tramites
+  has_many :expediente_administrativos
   has_one :circuito
 
   def to_date date
@@ -39,5 +38,4 @@ class Tramite < ActiveRecord::Base
   def get_iniciadores
     self.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }.to_a + self.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }.to_a + self.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }.to_a + self.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }.to_a + self.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre, bloque: x.try(:bloque).try(:denominacion) } }.to_a
   end
-
 end

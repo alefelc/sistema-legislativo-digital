@@ -107,4 +107,6 @@ Rails.application.routes.draw do
   resources :expediente_reports
 
   resources :normas
+
+  get 'expediente_administrativos/index'
 end
