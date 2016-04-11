@@ -1,9 +1,9 @@
-#modal-expediente.modal.fade{ "aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1" }
-  .modal-dialog.modal-xs{ :role => "document" }
+#modal-expediente.modal.fade{ 'aria-labelledby': 'nuevoLabel', role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-xs{ role: 'document' }
     .modal-content
       .modal-header
-        %button.close{ "aria-label" => "Close", "data-dismiss" => "modal", :type => "button" }
-          %span{ "aria-hidden" => "true" } &times;
+        %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
+          %span{ 'aria-hidden': 'true' } &times;
         %h4#nuevoLabel.modal-title= t(".#{actionvar}_expediente") + " #{@expediente.id}"
       = form_for @expediente, url: { action: actionvar } do |f|
         = hidden_field_tag :tramites_pendientes
@@ -12,18 +12,15 @@
         = hidden_field_tag :estados_expedientes
         = hidden_field_tag :tags_ids
         .modal-body
-          - if actionvar == "update"
+          - if actionvar == 'update'
             %ul.nav.nav-tabs{ role: 'tablist' }
               %li.active{ role: 'presentation' }
-                %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#exp-panel', role: 'tab' } Expediente
+                %a{ 'aria-controls': 'exp-panel', 'data-toggle': 'tab', href: '#exp-panel', role: 'tab' } Expediente
 
               - @circuitos.each do |c|
                 %li{ role: 'presentation' }
-                  %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#new-circ-panel', role: 'tab' }
-                    = "Circuito Nro #{c.nro}"
-
-              %li{ role: 'presentation' }
-                %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: '#new-circ-panel', role: 'tab' } Nuevo Circuito
+                  %a{ 'aria-controls' => 'exp-panel', 'data-toggle' => 'tab', href: "##{c.id}-circ-panel", role: 'tab' }
+                    = c.id.nil? ? "Nuevo Circuito" : "Circuito Nro #{c.nro}"
 
           .tab-content
             .tab-pane.active#exp-panel{ role: 'tabpanel' }
@@ -34,9 +31,6 @@
                     = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'tramites', data: { load: prepopulate_tramites(@expediente) } }
                   .input-group
                     = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon1" }
-                    = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
-                  .input-group
-                    = f.label 'expedientes_administrativos', { class: "input-group-addon", id: "basic-addon1" }
                     = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon1", placeholder: t('.fojas'), type: :number }
                   .input-group
                     = f.label "Fecha", { class: "input-group-addon", id: "basic-addon2" }
@@ -88,11 +82,11 @@
                                   %td= "#{est.especificacion1} -->  #{est.especificacion2}"
                                   %td= est.fecha
                                   %td
-            .tab-pane#new-circ-panel{ role: 'tabpanel' }
-              = render partial: 'circuit'
+            - if actionvar == 'update'
+              = render partial: 'circuit', locals: { f: f }
 
         .modal-footer
-          = f.submit t(".submit.#{ actionvar }"), { class: "btn btn-primary modal-submit" }
+          = f.submit t(".submit.#{ actionvar }"), class: "btn btn-primary modal-submit"
 
 :javascript
   wi = $(window).width() - 20;

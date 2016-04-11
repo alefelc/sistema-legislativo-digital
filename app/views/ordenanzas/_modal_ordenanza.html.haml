@@ -19,9 +19,6 @@
                 = f.text_field :nro, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.number'), type: :number }
                 = f.text_field :bis, { class: "form-control", "aria-describedby": "basic-addon1", :placeholder => t('.bis'), type: :number }
               .input-group
-                = f.label t('.description'), { class: "input-group-addon", id: "basic-addon3"}
-                = f.text_area :descripcion, {class: "form-control", "aria-describedby" => "basic-addon3", :placeholder => t('.description'), type: :text}
-              .input-group
                 = f.label :sumario, { class: "input-group-addon", id: "basic-addon2"}
                 = f.text_area :sumario, {class: "form-control", "aria-describedby" => "basic-addon2", :placeholder => t('.summary'), type: :text}  
               .input-group

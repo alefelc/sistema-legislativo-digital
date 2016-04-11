@@ -24,7 +24,7 @@ class ExpedientesController < ApplicationController
 
   def edit
     @expediente = Expediente.find params[:id]
-    @circuitos = @expediente.get_circuitos
+    @circuitos = @expediente.get_circuitos << Circuito.new
     respond_to do |format|
       format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end
@@ -100,7 +100,8 @@ class ExpedientesController < ApplicationController
   end
 
   def update
-    exp = params[:expediente]
+    exp = params[:expediente].slice :nro_fojas, :anio, :tema, :observacion
+
     @expediente = Expediente.find params[:id]
     @expediente.update exp.as_json
 
@@ -180,6 +181,19 @@ class ExpedientesController < ApplicationController
     (current_tags - old_tag).each { |id| @expediente.tags << Tag.find(id) }
     (old_tag - current_tags).each { |id| @expediente.tags.delete(id) }
 
+    circuits = params[:expediente][:circuitos_attributes]
+    if circuits.present?
+      circs_values = circuits.values
+      circs_values.each do |param|
+        if param.key? :id
+          Circuito.update(param[:id], param.slice(:fojas, :anio, :tema))
+        else
+          if any_value?(param)
+            @expediente.circuitos.create param.slice(:fojas, :anio, :tema)
+          end
+        end
+      end
+    end
     redirect_to action: :index
   end
 
@@ -193,7 +207,7 @@ class ExpedientesController < ApplicationController
     circuitos = Expediente.find(params[:id]).circuitos.where("nro <> 0").order(id: :asc)
     nuevo = [:id => "nuevo",
         :expediente_id => 23798,
-                  :nro => circuitos.count+1,
+                  :nro => circuitos.count + 1,
                  :tema => nil,
                  :anio => nil,
                 :fojas => nil,
@@ -214,7 +228,13 @@ class ExpedientesController < ApplicationController
   private
 
   def expediente_params
-    params.require(:expediente).permit("nro_fojas", "tema", "anio", "observacion")
+    params.require(:expediente).permit("nro_fojas", "tema", "anio", "observacion", "circuitos_attributes": [ :id, :fojas, :anio, :tema, :tramites, :estados_circuito, :nro ])
+  end
+
+  def any_value?(hash)
+    flag = false
+    hash.each { |key, value|  flag = true if value.present? }
+    return flag
   end
 
 end
