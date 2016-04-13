@@ -152,3 +152,15 @@ $(document).on 'ready page:load', ->
   $.ctrl 'E', ->
     $('#ordenanza table tbody').find('.info').find('.linktoedit').click()
     return
+
+  $('#ordenanza-show #print-ordenanza').on 'click', ->
+    $('#ordenanza-show').print
+      globalStyles: true
+      mediaPrint: false
+      stylesheet: null
+      noPrintSelector: '.no-print'
+      iframe: true
+      append: null
+      manuallyCopyFormValues: true
+      deferred: $.Deferred()
+      timeout: 250
