@@ -324,7 +324,7 @@ es:
 
   ordenanzas:
     show:
-      info: Información de la Ordenanza
+      info: "Ordenanza Nro: %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Ordenanza

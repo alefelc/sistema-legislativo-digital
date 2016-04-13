@@ -341,7 +341,7 @@ module ApplicationHelper
   end
 
   def get_sumario(norma)
-    norma.sumario.present? ? norma.sumario : " No tiene sumario"
+    norma.sumario.present? ? norma.sumario : ' No tiene sumario'
   end
 
   def get_plazo_vigencia(norma)
