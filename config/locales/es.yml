@@ -122,7 +122,7 @@ es:
 
   otra_normas:
     show:
-      info: Información de la Otra Norma
+      info: "Otra Norma nro %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Otra Norma
@@ -211,12 +211,12 @@ es:
       estados: Agregar Estado
       table:
         state: Estado
-        specification: Especificacion
+        specification: Especificación
         date: Fecha
 
   especials:
     show:
-      info: Información de la Norma Especial
+      info: "Norma Especial nro %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Norma Especial
@@ -270,7 +270,7 @@ es:
 
   resolucions:
     show:
-      info: Información de la Resolución
+      info: "Resolución nro %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Resolución

@@ -1,264 +1,265 @@
-- content_for :title, "Otra Norma: #{@otra_norma.nro}"
+- content_for :title, "Otra Norma"
+- otra = @otra_norma
+- otra_me_modifican = otra.relationship_me_modifican.to_a
+- otra_modifica = otra.relationship_modificadas.to_a
+- circuitos = otra.circuitos
+- entrada_vigencia = otra.entrada_vigencia
+- finaliza_vigencia = otra.finaliza_vigencia
+- plazo_vigencia = get_plazo_vigencia(otra)
+- desc = otra.descripcion
+- obs = otra.observaciones
+- org = otra.organismo_origen
+- tags = otra.tags
 
 #otra_norma-show
-  %h4= t('otra_normas.show.info')
-  %hr
+
+  #otra_norma-header.row
+    .col-md-5
+      %h3.main-title= "#{t 'otra_normas.show.info', number: otra.nro, year: otra.anio}"
+    .col-md-7.float-right.no-print
+      .float-right
+        %a#print-otra_norma.btn.btn-lg.btn-danger.fa.fa-print{ title: 'Imprimir Otra Norma' }
+          Imprimir
+        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Texto Original' }
+          Texto Original
+
   #otra_norma-body
-    - otra = @otra_norma
-    - otra_me_modifican = otra.relationship_me_modifican.to_a
-    - otra_modifica = otra.relationship_modificadas.to_a
-    %p
-      %span.titles= "Nro Identificador: "
-      %span= otra.id
-    %p
-      %span.titles= "Otra Norma Nro: "
-      %span= get_nro(otra) + get_anio_sancion(otra)
-      %span
-        &nbsp
-        %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Texto Original"}
-    - cap = otra.capitulos
-      - unless cap.empty?
-      %p
-        // aca chequear si pertenece al digesto para mostrar esto
-        %span.titles= "Ubicación #{get_digesto_actual.nombre}: "
-        - cap.each  do |c|
-          %p.single-tab
-            %span= "Libro #{c.titulo.libro.orden}-#{c.titulo.libro.nombre}"
-            %span= "/ Titulo #{c.titulo.orden}-#{c.titulo.nombre}"
-            %span= "/ Capitulo #{c.orden}-#{c.nombre}"
-            - otra.capitulos_normas.each do |n|
-              - if c.id == n.capitulo_id
-                %span= "/ Nro Orden: #{n.orden}"
-            %span
-              &nbsp
-              %i.btn.btn-xs.btn-default.fa.fa-download{ title: "Texto del digesto"}
-    %p
-      %span.titles= "Tema: "
-      %span= otra.sumario
-    %p.single-tab
-      %span= get_sancion(otra)
-    %p.single-tab
-      - entrada_vigencia = otra.entrada_vigencia
-      - finaliza_vigencia = otra.finaliza_vigencia
-      - plazo_vigencia = get_plazo_vigencia(otra)
+    .panel.panel-success
+      .panel-heading Información de Otra Norma
+      .panel-body
+        %p
+          %span.titles= "Sumario: "
+          %span= otra.sumario
+
+        %p.single-tab
+          - unless circuitos.empty?
+            %span= "Expedientes Legislativos: "
+            - circuitos.each do |c|
+              - if (c.nro == 0)
+                %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}") + " - "
+              - else
+                %span= "Circuito nro: #{c.nro}--> Expediente: "
+                %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}")
+                %span= " - "
+
+      %p.single-tab
+        %span= get_sancion(otra)
+
+      %p.single-tab
         - if entrada_vigencia.present?
-        .single-tab.titles= "Vigencia: "
+          .single-tab.titles= "Vigencia: "
         - if entrada_vigencia.present?
           .double-tab= "Entra en vigencia el: " + to_date(entrada_vigencia).to_s
         - if finaliza_vigencia.present?
           .double-tab= "Finaliza vigencia el: " + to_date(finaliza_vigencia).to_s
         - else
           .double-tab= "Finaliza vigencia en: " + plazo_vigencia + " a partir de la entrada en vigencia"
-    =render partial: "clasification_otra_norma", locals: { otra: otra }
-    %p.single-tab
-      - circuitos = otra.circuitos
-        - unless circuitos.empty?
-        %span= "Expedientes Legislativos: "
-        - circuitos.each do |c|
-          - if (c.nro == 0)
-            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}") + " - "
-          - else
-            %span= "Circuito nro: #{c.nro}--> Expediente: "
-            %span= link_to(c.expediente.nro_exp + c.expediente.get_anio_expediente, "/expedientes/#{c.expediente.id}")
-            %span= " - "
-    %p.single-tab
-      - otra_me_modifican.select{ |x| x.tipo_relacion == "promul"}.each do |r|
-        %span= "Promulgado el " + to_date(r.desde).to_s
-        %span= link_to(" Decreto " + r.me_modifica.nro.to_s, r.me_modifica)
-    %p.single-tab
-      - otra.get_destinos(0).each do |d|
-        %span= "Comunicada al " + d.destino.to_s + " el " + to_date(d.fecha).to_s
-    %p.single-tab
-      - otra.get_destinos(1).each do |d|
-        %span= "Notificada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s
-    - desc = otra.descripcion
-      - if desc.present?
-      %p
-        %span.titles= "Descripción: "
-        %span= desc
-    - obs = otra.observaciones
-      - if obs.present?
-      %p
-        %span.titles= "Observaciónes: "
-        %span= obs
-    - org = otra.organismo_origen
-      - if org.present?
-      %p
-        %span.titles= "Organismo origen: "
-        %span= org
-    %p
-      - tags = otra.tags
-        - unless tags.empty?
-        %span.titles= "Voces Claves: "
-        - tags.each do |t|
-          %span= t.nombre + " - "
-    %hr
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "reglamen" }
-        - unless rel.empty?
-        .single-tab= "Reglamentada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "suspvig" }
-        - unless rel.empty?
-        .single-tab= "Vigencia Suspendida por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "adrefe" }
-        - unless rel.empty?
-        .single-tab= "Ratificada Ad Referendum por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "delegado" }
-        - unless rel.empty?
-        .single-tab= "Delagada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "restiv" }
-        - unless rel.empty?
-        .single-tab= "Vigencia restituida por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "aclarac" }
-        - unless rel.empty?
-        .single-tab= "Es aclarada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "prorrog" }
-        - unless rel.empty?
-        .single-tab= "Suspension prorrogada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "vetop" }
-        - unless rel.empty?
-        .single-tab= "Vetada parcialmente por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "derog" }
-        - unless rel.empty?
-        .single-tab= "Derogada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "modif" }
-        - unless rel.empty?
-        .single-tab= "Modificada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "provig" }
-        - unless rel.empty?
-        .single-tab= "Vigencia Prorrogada por: "
-        - rel.each do |r|
-          - norm_dest = r.me_modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %hr
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "reglamen" }
-        - unless rel.empty?
-        .single-tab= "Reglamenta a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "suspvig" }
-        - unless rel.empty?
-        .single-tab= "Suspende vigencia a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "adrefe" }
-        - unless rel.empty?
-        .single-tab= "Ratifica Ad Referendum a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "delegado" }
-        - unless rel.empty?
-        .single-tab= "Delaga a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "restiv" }
-        - unless rel.empty?
-        .single-tab= "Restituye Vigencia a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "aclarac" }
-        - unless rel.empty?
-        .single-tab= "Aclara a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "prorrog" }
-        - unless rel.empty?
-        .single-tab= "Prorroga suspension a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "vetop" }
-        - unless rel.empty?
-        .single-tab= "Veta parcialmente a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "vetot" }
-        - unless rel.empty?
-        .single-tab= "Veta totalmente a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "derog" }
-        - unless rel.empty?
-        .single-tab= "Deroga a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "modif" }
-        - unless rel.empty?
-        .single-tab= "Modifica a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "provig" }
-        - unless rel.empty?
-        .single-tab= "Prorroga vigencia a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-    %p.single-tab
-      - rel = otra_modifica.select{ |x| x.tipo_relacion  == "promul" }
-        - unless rel.empty?
-        .single-tab= "Promulga a: "
-        - rel.each do |r|
-          - norm_dest = r.modifica
-          .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+
+      %p.single-tab
+        - otra_me_modifican.select{ |x| x.tipo_relacion == "promul"}.each do |r|
+          %span= "Promulgado el " + to_date(r.desde).to_s
+          %span= link_to(" Decreto " + r.me_modifica.nro.to_s, r.me_modifica)
+
+      %p.single-tab
+        - otra.get_destinos(0).each do |d|
+          %span= "Comunicada al " + d.destino.to_s + " el " + to_date(d.fecha).to_s
+
+      %p.single-tab
+        - otra.get_destinos(1).each do |d|
+          %span= "Notificada a " + d.destino.to_s + " el " + to_date(d.fecha).to_s
+
+      = render partial: "clasification_otra_norma", locals: { otra: otra }
+
+
+    .panel.panel-info
+      .panel-heading Vínculos con normas
+      .panel-body
+
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "reglamen" }
+            - unless rel.empty?
+            .single-tab= "Reglamentada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "suspvig" }
+            - unless rel.empty?
+            .single-tab= "Vigencia Suspendida por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "adrefe" }
+            - unless rel.empty?
+            .single-tab= "Ratificada Ad Referendum por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "delegado" }
+            - unless rel.empty?
+            .single-tab= "Delagada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "restiv" }
+            - unless rel.empty?
+            .single-tab= "Vigencia restituida por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "aclarac" }
+            - unless rel.empty?
+            .single-tab= "Es aclarada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "prorrog" }
+            - unless rel.empty?
+            .single-tab= "Suspension prorrogada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "vetop" }
+            - unless rel.empty?
+            .single-tab= "Vetada parcialmente por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "derog" }
+            - unless rel.empty?
+            .single-tab= "Derogada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "modif" }
+            - unless rel.empty?
+            .single-tab= "Modificada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_me_modifican.select{ |x| x.tipo_relacion  == "provig" }
+            - unless rel.empty?
+            .single-tab= "Vigencia Prorrogada por: "
+            - rel.each do |r|
+              - norm_dest = r.me_modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "reglamen" }
+            - unless rel.empty?
+            .single-tab= "Reglamenta a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "suspvig" }
+            - unless rel.empty?
+            .single-tab= "Suspende vigencia a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "adrefe" }
+            - unless rel.empty?
+            .single-tab= "Ratifica Ad Referendum a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "delegado" }
+            - unless rel.empty?
+            .single-tab= "Delaga a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "restiv" }
+            - unless rel.empty?
+            .single-tab= "Restituye Vigencia a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "aclarac" }
+            - unless rel.empty?
+            .single-tab= "Aclara a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "prorrog" }
+            - unless rel.empty?
+            .single-tab= "Prorroga suspension a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "vetop" }
+            - unless rel.empty?
+            .single-tab= "Veta parcialmente a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "vetot" }
+            - unless rel.empty?
+            .single-tab= "Veta totalmente a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "derog" }
+            - unless rel.empty?
+            .single-tab= "Deroga a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "modif" }
+            - unless rel.empty?
+            .single-tab= "Modifica a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "provig" }
+            - unless rel.empty?
+            .single-tab= "Prorroga vigencia a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+        %p.single-tab
+          - rel = otra_modifica.select{ |x| x.tipo_relacion  == "promul" }
+            - unless rel.empty?
+            .single-tab= "Promulga a: "
+            - rel.each do |r|
+              - norm_dest = r.modifica
+              .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
+
+    .panel.panel-danger
+      .panel-heading Observaciones
+      .panel-body
+        %p.single-tab
+          %span= obs || ''
+
+        %p.single-tab
+          %span.titles Descripción:
+          %span= desc.present? ? desc : '-.'
+
+        %p.single-tab
+          %span.titles Voces claves:
+          %span= '-.' if tags.empty?
+          - tags.each do |t|
+            %span= "#{t.nombre} - "
+
+        %p.single-tab
+          %span.titles Organismo origen:
+          %span= otra.organismo_origen? ? otra.organismo_origen : '-.'
