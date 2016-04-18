@@ -324,7 +324,7 @@ es:
 
   ordenanzas:
     show:
-      info: "Ordenanza Nro: %{number} año %{year}"
+      info: "Ordenanza nro %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Ordenanza
@@ -378,7 +378,7 @@ es:
 
   decretos:
     show:
-      info: Información del Decreto
+      info: "Decreto nro %{number} año %{year}"
     index:
       btnheader:
         new: Nuevo Decreto

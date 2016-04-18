@@ -21,6 +21,7 @@ class ProyectosController < ApplicationController
 
   def edit
     @proyecto = Proyecto.find(params[:id])
+    @exp_adm = @proyecto.expediente_administrativos.first
     respond_to do |format|
       format.html {render partial: "modal_proyecto", locals: { actionvar: "update"}}
     end
@@ -72,7 +73,7 @@ class ProyectosController < ApplicationController
         e.nombre = "Finalizado"
         e.especificacion = params[:finalizado]
         e.tipo = 4
-      end      
+      end
     end
 
     redirect_to action: :index
@@ -181,7 +182,7 @@ class ProyectosController < ApplicationController
     finalizado = params[:finalizado]
     unless finalizado.blank?
       estado = @proyecto.estado_tramites.find_by(tipo: "4")
-      if estado.present? 
+      if estado.present?
         estado.update especificacion: params[:finalizado]
       else
         @proyecto.estado_tramites.create do |e|
@@ -189,7 +190,19 @@ class ProyectosController < ApplicationController
           e.especificacion = params[:finalizado]
           e.tipo = 4
         end
-      end    
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      exp = {
+        nro_exp: params[:expediente_administrativo],
+        nro_fojas: params[:fojas_exp_adm]
+      }
+      if @proyecto.expediente_administrativos.present?
+        @proyecto.expediente_administrativos.first.update_attributes exp
+      else
+        @proyecto.expediente_administrativos.create exp
+      end
     end
 
     redirect_to action: :index

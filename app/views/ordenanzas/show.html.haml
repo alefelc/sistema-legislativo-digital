@@ -56,13 +56,13 @@
             .double-tab= "Entra en vigencia el: " + to_date(entrada_vigencia).to_s
           - if finaliza_vigencia.present?
             .double-tab= "Finaliza vigencia el: " + to_date(finaliza_vigencia).to_s
-          - else
+          - if @ordenanza.plazo_dia.present? || @ordenanza.plazo_mes.present? || @ordenanza.plazo_anio.present?
             .double-tab= "Finaliza vigencia en: " + plazo_vigencia + " a partir de la entrada en vigencia"
 
         %p
           .double-tab
             - if @ordenanza.sancion.present?
-              %span= "Sancionada el #{to_date@ordenanza.sancion}"
+              %span= "Sancionada el #{to_date @ordenanza.sancion}"
           .double-tab
             - ord_me_modifican.select{ |x| x.tipo_relacion == "promul"}.each do |r|
               %span= "Promulgado el " + to_date(r.desde).to_s
@@ -270,14 +270,14 @@
       .panel-heading Observaciones
       .panel-body
         %p.single-tab
-          %span= obs.present? ? obs : '-.'
+          %span= obs || ''
 
         %p.single-tab
-          %span.titles Voces Claves
+          %span.titles Voces claves:
           %span= '-.' if tags.empty?
           - tags.each do |t|
             %span= "#{t.nombre} - "
 
         %p.single-tab
-          %span.titles Organismo Origen:
+          %span.titles Organismo origen:
           %span= ord.organismo_origen? ? ord.organismo_origen : '-.'

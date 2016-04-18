@@ -21,6 +21,7 @@ class ParticularsController < ApplicationController
 
   def edit
     @particular = Peticion.find(params[:id])
+    @exp_adm = @particular.expediente_administrativos.first
     respond_to do |format|
       format.html {render partial: "modal_particular", locals: { actionvar: "update"}}
     end
@@ -68,6 +69,13 @@ class ParticularsController < ApplicationController
         e.nombre = "Finalizado"
         e.especificacion = params[:finalizado]
         e.tipo = 4
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      @particular.expediente_administrativos.create do |e|
+        e.nro_exp = params[:expediente_administrativo]
+        e.nro_fojas = params[:fojas_exp_adm]
       end
     end
 
@@ -145,6 +153,18 @@ class ParticularsController < ApplicationController
           e.especificacion = params[:finalizado]
           e.tipo = 4
         end
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      exp = {
+        nro_exp: params[:expediente_administrativo],
+        nro_fojas: params[:fojas_exp_adm]
+      }
+      if @particular.expediente_administrativos.present?
+        @particular.expediente_administrativos.first.update_attributes exp
+      else
+        @particular.expediente_administrativos.create exp
       end
     end
 

@@ -21,6 +21,7 @@ class CondonacionsController < ApplicationController
 
   def edit
     @condonacion = Condonacion.find params[:id]
+    @exp_adm = @condonacion.expediente_administrativos.first
     respond_to do |format|
       format.html { render partial: 'modal', locals: { actionvar: 'update' } }
     end
@@ -69,7 +70,14 @@ class CondonacionsController < ApplicationController
         e.nombre = "Finalizado"
         e.especificacion = params[:finalizado]
         e.tipo = 4
-      end      
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      @condonacion.expediente_administrativos.create do |e|
+        e.nro_exp = params[:expediente_administrativo]
+        e.nro_fojas = params[:fojas_exp_adm]
+      end
     end
 
     redirect_to action: :index
@@ -148,7 +156,7 @@ class CondonacionsController < ApplicationController
     finalizado = params[:finalizado]
     unless finalizado.blank?
       estado = @condonacion.estado_tramites.find_by(tipo: "4")
-      if estado.present? 
+      if estado.present?
         estado.update especificacion: params[:finalizado]
       else
         @condonacion.estado_tramites.create do |e|
@@ -156,7 +164,19 @@ class CondonacionsController < ApplicationController
           e.especificacion = params[:finalizado]
           e.tipo = 4
         end
-      end    
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      exp = {
+        nro_exp: params[:expediente_administrativo],
+        nro_fojas: params[:fojas_exp_adm]
+      }
+      if @condonacion.expediente_administrativos.present?
+        @condonacion.expediente_administrativos.first.update_attributes exp
+      else
+        @condonacion.expediente_administrativos.create exp
+      end
     end
 
     redirect_to action: :index
