@@ -47,7 +47,7 @@
                 = text_area_tag :finalizado, nil, {class: "form-control", "aria-describedby" => "basic-addon011", type: :text }
               .input-group
                 = f.label t('.exp_adm'), { class: "input-group-addon", type: :number }
-                = text_field_tag :expediente_administrativo, @exp_adm.try(:nro_exp).to_s, { class: "form-control", type: :number }
+                = text_field_tag :expediente_administrativo, @exp_adm.try(:nro_exp), { class: "form-control", type: :number }
               .input-group
                 = f.label t('.fojas_exp_adm'), { class: "input-group-addon" }
                 = text_field_tag :fojas_exp_adm, @exp_adm.try(:nro_fojas), { class: "form-control", type: :number }

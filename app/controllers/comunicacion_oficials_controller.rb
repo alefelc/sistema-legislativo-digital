@@ -21,6 +21,7 @@ class ComunicacionOficialsController < ApplicationController
 
   def edit
     @comunicacion_oficial = ComunicacionOficial.find(params[:id])
+    @exp_adm = @comunicacion_oficial.expediente_administrativos.first
     respond_to do |format|
       format.html {render partial: "modal_comunicacion_oficial", locals: { actionvar: "update"}}
     end
@@ -72,7 +73,14 @@ class ComunicacionOficialsController < ApplicationController
         e.nombre = "Finalizado"
         e.especificacion = params[:finalizado]
         e.tipo = 4
-      end      
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      @comunicacion_oficial.expediente_administrativos.create do |e|
+        e.nro_exp = params[:expediente_administrativo]
+        e.nro_fojas = params[:fojas_exp_adm]
+      end
     end
 
     redirect_to action: :index
@@ -181,7 +189,7 @@ class ComunicacionOficialsController < ApplicationController
     finalizado = params[:finalizado]
     unless finalizado.blank?
       estado = @comunicacion_oficial.estado_tramites.find_by(tipo: "4")
-      if estado.present? 
+      if estado.present?
         estado.update especificacion: params[:finalizado]
       else
         @comunicacion_oficial.estado_tramites.create do |e|
@@ -189,7 +197,19 @@ class ComunicacionOficialsController < ApplicationController
           e.especificacion = params[:finalizado]
           e.tipo = 4
         end
-      end    
+      end
+    end
+
+    unless params[:expediente_administrativo].blank?
+      exp = {
+        nro_exp: params[:expediente_administrativo],
+        nro_fojas: params[:fojas_exp_adm]
+      }
+      if @comunicacion_oficial.expediente_administrativos.present?
+        @comunicacion_oficial.expediente_administrativos.first.update_attributes exp
+      else
+        @comunicacion_oficial.expediente_administrativos.create exp
+      end
     end
 
     redirect_to action: :index

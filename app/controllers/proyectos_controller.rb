@@ -76,6 +76,13 @@ class ProyectosController < ApplicationController
       end
     end
 
+    unless params[:expediente_administrativo].blank?
+      @proyecto.expediente_administrativos.create do |e|
+        e.nro_exp = params[:expediente_administrativo]
+        e.nro_fojas = params[:fojas_exp_adm]
+      end
+    end
+
     redirect_to action: :index
   end
 

@@ -155,7 +155,6 @@
             - rel.each do |r|
               - norm_dest = r.me_modifica
               .double-tab= link_to(norm_dest.type + " " + norm_dest.nro.to_s + get_anio_sancion(norm_dest), norm_dest)
-        %hr
         %p.single-tab
           - rel = resol_modifica.select{ |x| x.tipo_relacion == "reglamen" }
           - unless rel.empty?
