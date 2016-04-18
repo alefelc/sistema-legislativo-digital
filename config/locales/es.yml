@@ -68,7 +68,7 @@ es:
         observaciones: Observaciones
   declaracions:
     show:
-      info: Información de la Declaración
+      info: "Ordenanza nro %{number} año %{year}"
     index:
       btnheader:
         new: Nueva Declaración

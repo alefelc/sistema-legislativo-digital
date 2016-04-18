@@ -88,7 +88,7 @@
         = render partial: "clasification_ordenanza", locals: { ord: ord }
 
     .panel.panel-info
-      .panel-heading Vínculos con otras normas
+      .panel-heading Vínculos con normas
       .panel-body
         %p.single-tab
           - rel = ord_me_modifican.select{ |x| x.tipo_relacion == "reglamen" }
