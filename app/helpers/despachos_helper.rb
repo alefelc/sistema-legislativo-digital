@@ -21,6 +21,6 @@ module DespachosHelper
       ref_id: desp.id,
       ref_type: desp.type,
       circuito_id: exps.first.circuitos.find_by(nro: 0).id
-    ).especificacion2
+    ).try(:especificacion2)
   end
 end

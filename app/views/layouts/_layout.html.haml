@@ -3,7 +3,7 @@
   .wrapper
     %header.main-header
       / Logo
-      %a.logo{:href => root_path}
+      %a.logo{ href: root_path }
         / mini logo for sidebar mini 50x50 pixels
         %span.logo-mini
           %b> S
@@ -12,11 +12,11 @@
         %span.logo-lg
           %b=t('.sld')
       / Header Navbar: style can be found in header.less
-      %nav.navbar.navbar-static-top{:role => "navigation"}
+      %nav.navbar.navbar-static-top{ role: 'navigation' }
 
         / Sidebar toggle button
-        %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
-          %span.sr-only Toggle navigation
+        %a.sidebar-toggle{ 'data-toggle' => 'offcanvas', href: '#', role: 'button' }
+          %span.sr-only
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
@@ -29,7 +29,7 @@
                 / User Account: style can be found in dropdown.less
                 - if current_usuario.present?
                   %li.dropdown.user.user-menu
-                    %a.dropdown-toggle.btn.btn-xs.btn-success{"data-toggle" => "dropdown", :href => "#"}
+                    %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#' }
                       %img.user-image{ src: asset_path('logo.jpg') }
                         %span.hidden-xs= current_usuario.email
                     %ul.dropdown-menu
@@ -40,16 +40,17 @@
                       / Before this check if the current user is an administrator
                       %li.user-body
                         .col-xs-12.text-center
-                          %a.btn.btn-warning.fa.fa-gears{ href: "/admin", title: "Opciones de Administrador" } Administrador
+                          %a.btn.btn-warning.fa.fa-gears{ href: '/admin',
+                            title: 'Opciones de Administrador' } Administrador
                       / Menu Footer
                       %li.user-footer
                         -# .pull-left
                         -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
                         .pull-right
-                          %a.btn.btn-danger.fa.fa-sign-out{ href: destroy_usuario_session_path, title: "Salir del Sistema" } Salir
+                          %a.btn.btn-danger.fa.fa-sign-out{ href: destroy_usuario_session_path, title: 'Salir del Sistema' } Salir
                 - else
                   %li.dropdown.user.user-menu
-                    %a.dropdown-toggle.btn.btn-xs.btn-success{"data-toggle" => "dropdown", :href => "#"}
+                    %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#'}
                       %img.user-image{ src: image_path('sign_in') }
                         %span.hidden-xs Ingreso al Sistema
                     %ul.dropdown-menu
@@ -58,10 +59,14 @@
                       / Before this check if the current user is an administrator
                       / Menu Footer
                       %li.user-footer
-                        -# .pull-left
-                        -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
-                        .pull-right
-                          %a.btn.btn-primary.fa.fa-sign-in{ href: new_usuario_session_path, title: "Ingresar al Sistema" } Ingresar
+                        = form_tag session_path(:usuario) do
+                          = text_field_tag 'usuario[email]'
+                          = password_field_tag 'usuario[password]'
+                          = check_box_tag 'usuario[remember_me]'
+                          = label_tag 'usuario[remember_me]', 'Remember me'
+                          %button Sign in
+                          = link_to "Forgot your password?", new_password_path(:usuario)
+
 
     / ===============================================
     / Left side column. contains the sidebar
@@ -78,94 +83,94 @@
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{ :href => despachos_path }
+                %a{ href: despachos_path }
                   %i.fa.fa-circle-o
                   Despachos
               %li
-                %a{ :href => condonacions_path }
+                %a{ href: condonacions_path }
                   %i.fa.fa-circle-o
                   Condonaciones
               %li
-                %a{ :href => particulars_path }
+                %a{ href: particulars_path }
                   %i.fa.fa-circle-o
                   Peticiones Particulares
               %li
-                %a{ :href => proyectos_path }
+                %a{ href: proyectos_path }
                   %i.fa.fa-circle-o
                   Proyectos
               %li
-                %a{ :href => comunicacion_oficials_path }
+                %a{ href: comunicacion_oficials_path }
                   %i.fa.fa-circle-o
                   Comunicaciones Oficiales
-              %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
+              %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
               %li
-                %a{ :href => reports_mesa_de_entradas_path }
+                %a{ href: reports_mesa_de_entradas_path }
                   %i.fa.fa-circle-o
                   Reportes
               %li
-                %a{ :href => statitics_mesa_de_entradas_path }
+                %a{ href: statitics_mesa_de_entradas_path }
                   %i.fa.fa-circle-o
                   Estadísticas
           %li.treeview
-            %a{:href => "#"}
+            %a{ href: '#' }
               %i.fa.fa-share
-              %span= t('.expedientes')
+              %span= t '.expedientes'
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{:href => expedientes_path}
+                %a{ href: expedientes_path }
                   %i.fa.fa-circle-o
-                  =t('.expediente.legislativo')
+                  = t '.expediente.legislativo'
               %li
-                %a{:href => pendientes_path}
+                %a{ href: pendientes_path }
                   %i.fa.fa-circle-o
-                  =t('.expediente.pendientes')
+                  = t '.expediente.pendientes'
               %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
               %li
-                %a{ :href => reports_expedientes_path }
+                %a{ href: reports_expedientes_path }
                   %i.fa.fa-circle-o
                   Reportes
               %li
-                %a{ :href => statitics_expedientes_path }
+                %a{ href: statitics_expedientes_path }
                   %i.fa.fa-circle-o
                   Estadísticas
           %li.treeview
-            %a{:href => "#"}
+            %a{ href: '#' }
               %i.fa.fa-share
-              %span=t('.normas')
+              %span= t '.normas'
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{:href => declaracions_path}
+                %a{ href: declaracions_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.declaracion')
+                  = t '.norma.declaracion'
               %li
-                %a{:href => decretos_path}
+                %a{ href: decretos_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.decreto')
+                  = t '.norma.decreto'
               %li
-                %a{:href => especials_path}
+                %a{ href: especials_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.especiales')
+                  = t '.norma.especiales'
               %li
-                %a{:href => ordenanzas_path}
+                %a{ href: ordenanzas_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.ordenanza')
+                  = t '.norma.ordenanza'
               %li
-                %a{:href => otra_normas_path}
+                %a{ href: otra_normas_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.otras')
+                  = t '.norma.otras'
               %li
-                %a{:href => resolucions_path}
+                %a{ href: resolucions_path }
                   %i.fa.fa-circle-o
-                  =t('.norma.resolucion')
-              %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
+                  = t '.norma.resolucion'
+              %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
               %li
-                %a{ :href => reports_normas_path }
+                %a{ href: reports_normas_path }
                   %i.fa.fa-circle-o
                   Reportes
               %li
-                %a{ :href => statitics_normas_path }
+                %a{ href: statitics_normas_path }
                   %i.fa.fa-circle-o
                   Estadísticas
       / /.sidebar
@@ -181,8 +186,8 @@
         %b Version
         0.0.1
       %strong
-        Copyright &copy; 2015
-        = succeed "." do
-          %a{:href => "#"} Abella - Gasparrini
+        Copyright &copy; 2016
+        = succeed '.' do
+          %a{ href: '#' } Abella - Gasparrini
       All rights reserved.
   / ./wrapper
