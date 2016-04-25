@@ -12,9 +12,7 @@ set :use_sudo, false
 
 set :bundle_binstubs, nil
 
-#set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
-set :linked_files, %w{config/database.yml}
-
+set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 
 set :linked_dirs, fetch(:linked_dirs, []).push('shared/log', 'shared/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 

@@ -9,3 +9,8 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( print.js )
+Rails.application.config.assets.precompile += %w[
+                                                 select2-spinner.gif
+                                                 select2.png
+                                                 select2x2.png
+                                                 sign_in.png ]
