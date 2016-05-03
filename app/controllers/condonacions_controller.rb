@@ -21,10 +21,9 @@ class CondonacionsController < ApplicationController
 
   def edit
     @condonacion = Condonacion.find params[:id]
-    @exp_adm = @condonacion.expediente_administrativos.first
-    respond_to do |format|
-      format.html { render partial: 'modal', locals: { actionvar: 'update' } }
-    end
+    @administrative_file = ExpedienteAdministrativo.new
+    @administrative_files = []
+    render layout: false
   end
 
   def destroy

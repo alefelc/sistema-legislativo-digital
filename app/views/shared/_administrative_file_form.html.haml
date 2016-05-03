@@ -1,0 +1,36 @@
+.input-group
+  = form_for @administrative_file, url: { action: 'create', remote: true } do |f|
+    .input-group{ style: 'margin-top: 10px' }
+      = f.label :nro_exp, { class: 'input-group-addon' }
+      = f.text_field :nro_exp, { class: 'form-control', type: :number, min: '1', step: '1' }
+
+      = f.label :letra, { class: 'input-group-addon' }
+      = f.text_field :letra, { class: 'form-control', type: :text }
+
+      = f.label :nro_fojas, { class: 'input-group-addon' }
+      = f.text_field :nro_fojas, { class: 'form-control', type: :number, step: '1', min: '0' }
+
+      = f.label :year, { class: 'input-group-addon' }
+      = f.text_field :year, { class: 'form-control', type: :number, step: '1', min: '1900' }
+    %span
+      %button.btn.btn-default.pull-right{ type: :submit, style: 'margin-top: 10px' }
+        %i.fa.fa-plus-circle.fa-1x
+        Asociar exp. administrativo
+
+%hr
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Nro. Expediente
+      %th Letra
+      %th Nro. fojas
+      %th Año
+
+  %tbody
+    - @administrative_files.each do |x|
+      %tr{ class: 'destiny-row', 'data-id': x.id, 'data-value': x.tipo, 'data-destiny': x.destino, 'data-date': x.fecha }
+        %td= x.nro_exp
+        %td= x.nro_fojas
+        %td= x.fecha
+        %td= icon 'fa fa-times', nil, class: 'btn btn-xs remove-table-row'
+

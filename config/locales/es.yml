@@ -576,47 +576,6 @@ es:
       exp_adm: Expediente administrativo
       fojas_exp_adm: Fojas exp administrativo
 
-
-  condonacions:
-    show:
-      info: 'Condonación Nro: '
-    index:
-      btnheader:
-        new: Nueva Condonación
-      table:
-        condonacion: Nro.
-        iniciador: Iniciadores
-        asunto: Asunto
-        fojas: Fojas
-        fecha: Fecha
-        estado: Estado Actual
-        actualizado: Actualizado
-        observaciones: Observaciones
-    modal:
-      title:
-        create_condonacion: Creando Condonación
-      observations: Observaciones
-      final: Finaliza en
-      asunto: Ingrese asunto
-      asunto_label: Asunto
-      create: Creando Condonación
-      update: Editando Condonación
-      fojas: Ingrese el número de fojas.
-      nombre: Ingrese Nombre.
-      apellido: Ingrese Apellido.
-      doc: Ingrese Nro. Documento.
-      tel: Ingrese Teléfono.
-      email: Ingrese Email.
-      domicilio: Ingrese Domicilio.
-      cuit: Ingrese CUIT/CUIL.
-      denominacion: Ingrese denominación.
-      codigo: Ingrese Código.
-      iniciador: Nuevo Iniciador.
-      iniciadores: Iniciadores
-      confirm_create: Desea crear el particular.
-      exp_adm: Expediente administrativo
-      fojas_exp_adm: Fojas exp administrativo
-
   datatable:
     search: Ingrese búsqueda ...
 

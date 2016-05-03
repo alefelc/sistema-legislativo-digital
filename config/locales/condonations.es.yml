@@ -1,0 +1,16 @@
+es:
+  condonacions:
+    show:
+      info: 'Condonación Nro: '
+    index:
+      btnheader:
+        new: Nueva Condonación
+      table:
+        condonacion: Nro.
+        iniciador: Iniciadores
+        asunto: Asunto
+        fojas: Fojas
+        fecha: Fecha
+        estado: Estado Actual
+        actualizado: Actualizado
+        observaciones: Observaciones

@@ -1,0 +1,37 @@
+.input-group
+  = label_tag nil, t('.iniciador'), { class: 'input-group-addon', id: 'basic-addon0' }
+  .input-group
+    = label_tag nil, 'Tipo', { class: 'input-group-addon', id: 'basic-addon01' }
+    #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador_condonacion), { class: 'form-control', 'aria-describedby': 'basic-addon01' }
+  .input-group
+    = label_tag nil, 'Nombre', { class: 'input-group-addon', id: 'nombre-label' }
+    = text_field_tag 'iniciador[nombre]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'nombre-label', placeholder: t('.nombre'), type: :text }
+  .input-group
+    = label_tag nil, 'Apellido', { class: 'input-group-addon', id: 'basic-addon2' }
+    = text_field_tag 'iniciador[apellido]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon2', placeholder: t('.apellido'), type: :text }
+  .input-group
+    = label_tag nil, 'DNI', { class: 'input-group-addon', id: 'basic-addon3' }
+    = text_field_tag 'iniciador[doc]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon3', placeholder: t('.doc'), type: :text }
+  .input-group
+    = label_tag nil, 'Teléfono', { class: 'input-group-addon', id: 'basic-addon4' }
+    = text_field_tag 'iniciador[tel]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon4', placeholder: t('.tel'), type: :text }
+  .input-group
+    = label_tag nil, 'Email', { class: 'input-group-addon', id: 'basic-addon5' }
+    = text_field_tag 'iniciador[email]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon5', placeholder: t('.email'), type: :text }
+  .input-group
+    = label_tag nil, 'Domicilio', { class: 'input-group-addon', id: 'basic-addon6' }
+    = text_field_tag 'iniciador[domicilio]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon6', placeholder: t('.domicilio'), type: :text }
+  .input-group
+    = label_tag nil, 'CUIT/CUIL', { class: 'input-group-addon', id: 'basic-addon7' }
+    = text_field_tag 'iniciador[cuit]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon7', placeholder: t('.cuit'), type: :number }
+  .input-group#denominacion-group
+    = label_tag nil, 'Denominación', { class: 'input-group-addon', id: 'basic-addon7' }
+    = text_field_tag 'iniciador[denominacion]', nil ,{ class: 'form-control input-initiator', 'aria-describedby': 'basic-addon7', placeholder: t('.denominacion'), type: :text }
+.parent-group-btn.btn.btn-xs#add_iniciador
+  %button.btn.parent-group-btn#btn_add_iniciador
+    %span
+      %i.fa.fa-check-circle.fa-1x= " C Iniciador"
+.parent-group-btn.btn.btn-xs#edit_iniciador
+  %button.btn.parent-group-btn#btn_edit_iniciador
+    %span
+      %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"

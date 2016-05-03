@@ -1,0 +1,29 @@
+es:
+  shared:
+    process_form:
+      title:
+        create_condonacion: Creando Condonación
+      iniciadores: Iniciadores
+      observations: Observaciones
+      final: Finaliza en
+      asunto: Ingrese asunto
+      asunto_label: Asunto
+      create: Creando Condonación
+      update: Editando Condonación
+      fojas: Ingrese el número de fojas.
+      codigo: Ingrese Código.
+    initiator_form:
+      nombre: Ingrese Nombre.
+      apellido: Ingrese Apellido.
+      doc: Ingrese Nro. Documento.
+      tel: Ingrese Teléfono.
+      email: Ingrese Email.
+      iniciador: Nuevo Iniciador.
+      confirm_create: Desea crear el particular.
+      cuit: Ingrese CUIT/CUIL.
+      denominacion: Ingrese denominación.
+      domicilio: Ingrese Domicilio.
+  helpers:
+    label:
+      expediente_administrativo:
+        year: Año
