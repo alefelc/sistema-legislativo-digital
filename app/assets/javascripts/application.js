@@ -9,4 +9,7 @@
 //= require Chart.min
 //= require bootstrap-multiselect
 //= require reception
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
