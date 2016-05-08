@@ -21,7 +21,7 @@ class CondonacionsController < ApplicationController
 
   def edit
     @condonacion = Condonacion.find params[:id]
-    @administrative_file = ExpedienteAdministrativo.new
+    @process_id = params[:id]
     @administrative_files = []
     render layout: false
   end

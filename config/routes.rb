@@ -108,5 +108,7 @@ Rails.application.routes.draw do
 
   resources :normas
 
+  resources :administrative_files, only: [:create, :index]
+
   get 'expediente_administrativos/index'
 end
