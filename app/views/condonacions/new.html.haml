@@ -4,7 +4,7 @@
       .modal-header
         %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
           %span{ 'aria-hidden' => 'true' } &times;
-        %h4#nuevoLabel.modal-title= "Editando condonación #{@condonacion.id}"
+        %h4#nuevoLabel.modal-title Nueva condonación
       = form_for @condonacion do |f|
         .modal-body
           .row
@@ -15,18 +15,13 @@
                 %li.active{ role: 'presentation' }
                   %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
                     Nuevo iniciador
-                %li{ role: 'presentation' }
-                  %a{ 'data-toggle' => 'tab', href: '#administrative-files', role: 'tab' }
-                    Expedientes administrativos
               .tab-content{ style: 'padding-top:1%' }
                 .tab-pane.active#new-initiator{ role: 'tabpanel' }
                   #second-column
                     = render '/shared/initiator_form'
-                .tab-pane#administrative-files{ role: 'tabpanel' }
-                  = render '/shared/administrative_file_form'
 
         .modal-footer
-          = f.submit 'Guardar cambios Condonación', { class: 'btn btn-primary modal-submit', id: 'btn-submit-condonacion' }
+          = f.submit 'Crear condonación', { class: 'btn btn-primary modal-submit', id: 'btn-submit-condonacion' }
 
 :javascript
 
@@ -579,4 +574,3 @@
   }).on("change", function(e) {
     $('#condonacion #derived-states').select2("val", "");
   });
-

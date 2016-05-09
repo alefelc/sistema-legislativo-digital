@@ -10,9 +10,7 @@ class CondonacionsController < ApplicationController
 
   def new
     @condonacion = Condonacion.new
-    respond_to do |format|
-      format.html { render partial: 'modal', locals: { actionvar: 'create' } }
-    end
+    render layout: false
   end
 
   def show
