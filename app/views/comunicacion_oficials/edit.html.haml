@@ -1,0 +1,535 @@
+#modalcom.modal.fade{"aria-labelledby" => "nuevoLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-xs{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#nuevoLabel.modal-title= "Editando comunicación oficial #{@process.id}"
+      = form_for @process do |f|
+        = hidden_field_tag :iniciadores
+        = hidden_field_tag :states
+        .modal-body
+          .row
+            .col-md-6#first-column
+              = render '/shared/process_form', f: f
+            .col-md-6
+              %ul.nav.nav-tabs{ role: 'tablist' }
+                %li.active{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
+                    Nuevo iniciador
+                %li{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', href: '#administrative-files', role: 'tab' }
+                    Expedientes administrativos
+              .tab-content{ style: 'padding-top:1%' }
+                .tab-pane.active#new-initiator{ role: 'tabpanel' }
+                  #second-column
+                    = render '/shared/initiator_form'
+                .tab-pane#administrative-files{ role: 'tabpanel' }
+                  = render '/shared/administrative_file_form'
+
+        .modal-footer
+          = f.submit 'Guardar Cambios Comunicación Oficial', {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
+
+:javascript
+
+  ReactRailsUJS.mountComponents('#modalcom');
+
+  wi = $(window).width()-20;
+  margin = 10;
+  $("#comunicacion-oficial .modal-xs").css('width', wi);
+  $("#comunicacion-oficial .modal-xs").css('margin-left', margin);
+
+  function format_iniciadores(style) {
+    var originalOption = $(style.element);
+    var iniciador = "";
+    iniciador = style.apellido + ', ' + style.nombre;
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div class='iniciador-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+    }else{
+      //Casos para comisiones y bloques, etc
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "DependenciaMunicipal"){
+        iniciador = style.denominacion;
+        return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+      }else{
+        if (style.type == "Area" || style.type == "OrganoDeGobierno"){
+          iniciador = style.denominacion;
+          return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "' data-codigo='"+ style.codigo + "'>" + iniciador + "</div>";
+        }else{
+          //otros casos
+        }
+      }
+    }
+  }
+
+  function format_result_iniciadores(style) {
+    var originalOption = $(style.element);
+    if (style.type == "Juridica" || style.type == "Fisica" || style.type == "Concejal" ) {
+      return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
+    }else{
+      //caso de comisiones y bloques
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "DependenciaMunicipal" || style.type == "Area" || style.type == "OrganoDeGobierno" ){
+        return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
+      }else{
+        //caso de cualquier otro type
+        return "<div>" + style.apellido + "</div>";
+      }
+    }
+  }
+
+  $("#process_iniciadores").select2({
+    placeholder: "Buscar Iniciadores",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_iniciadores,
+    formatResult: format_result_iniciadores,
+    multiple: true,
+    ajax: {
+      url: "/comunicacion_oficials/get_iniciador",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  }).on("select2-focus", function(e) {
+      $('#btn_add_iniciador').removeAttr("disabled");
+  }).on("select2-selecting", function(e) {
+    // token selected
+    var data = e.object
+    if (data.apellido == 'Agregar Nuevo'){
+      e.preventDefault();
+      $('#comunicacion-oficial #iniciador_nombre').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_apellido').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_doc').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_tel').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_email').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_domicilio').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_cuit').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_denominacion').val('');
+      $("#process_iniciadores").select2("close");
+      $('#comunicacion-oficial #iniciador_denominacion').focus();
+    }else{
+      if(data.type == 'Fisica' || data.type == 'Juridica'){
+        $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
+        $('#comunicacion-oficial #edit_iniciador').css('display','block');
+        $('#comunicacion-oficial #add_iniciador').css('display','none');
+        $('#comunicacion-oficial #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_apellido').val(data.apellido).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_tel').val(data.telefono).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_email').val(data.email).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      }else{
+        if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
+          $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
+          $('#comunicacion-oficial #edit_iniciador').css('display','none');
+          $('#comunicacion-oficial #add_iniciador').css('display','none');
+          $('#comunicacion-oficial #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_email').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+        }else{
+          $('#comunicacion-oficial #edit_iniciador').css('display','none');
+          $('#comunicacion-oficial #add_iniciador').css('display','none');
+          $('#comunicacion-oficial #iniciador_tipo').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+        }
+      }
+    }
+  });
+
+  // change select type initiator
+  $('#comunicacion-oficial #iniciador_tipo').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    if(valueSelected == "Fisica" || valueSelected == "Juridica"){
+      $('#comunicacion-oficial #edit_iniciador').css('display','none');
+      $('#comunicacion-oficial #add_iniciador').css('display','block');
+      $('#comunicacion-oficial #iniciador_nombre').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_apellido').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_doc').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_tel').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_email').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_domicilio').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_cuit').val('').removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+    }else{
+      if(valueSelected == "ReparticionOficial" || valueSelected == "DependenciaMunicipal"){
+        $('#comunicacion-oficial #edit_iniciador').css('display','none');
+        $('#comunicacion-oficial #add_iniciador').css('display','block');
+        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_denominacion').val('').removeAttr('disabled');
+      }
+    }
+  });
+
+  $('#process_iniciadores').on('choice-selected', function(e, choice) {
+    // token selected
+    var data = $(choice).data('select2-data');
+    if(data.type == 'Fisica' || data.type == 'Juridica'){
+      $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
+      $('#comunicacion-oficial #edit_iniciador').css('display','block');
+      $('#comunicacion-oficial #add_iniciador').css('display','none');
+      $('#comunicacion-oficial #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_nombre').val(data.nombre).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_apellido').val(data.apellido).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_tel').val(data.telefono).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_email').val(data.email).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+      $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled', 'disabled');
+    }else{
+      if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
+        $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
+        $('#comunicacion-oficial #edit_iniciador').css('display','none');
+        $('#comunicacion-oficial #add_iniciador').css('display','none');
+        $('#comunicacion-oficial #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+      }else{
+        $('#comunicacion-oficial #add_iniciador').css('display','none');
+        $('#comunicacion-oficial #edit_iniciador').css('display','none');
+        $('#comunicacion-oficial #iniciador_tipo').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+      }
+    }
+  });
+
+  $('.select2-input').on("focus", function(e) {
+    // token unselected
+    $('#comunicacion-oficial #edit_iniciador').css('display','none');
+    $('#comunicacion-oficial #add_iniciador').css('display','block');
+    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial').removeAttr('disabled');
+    $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_denominacion').val('').removeAttr('disabled');
+  });
+
+  $('#comunicacion_oficial_nro_fojas, #comunicacion_oficial_asunto, #comunicacion_oficial_observaciones').on("focus", function(e) {
+    $('#comunicacion-oficial #edit_iniciador').css('display','none');
+    $('#comunicacion-oficial #add_iniciador').css('display','none');
+    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
+    $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+    $('#btn_add_iniciador').attr('disabled', 'disabled');
+  });
+
+  $('#comunicacion-oficial #edit_iniciador').on('click', function(event) {
+    //update inicador Fisico o Juridico
+    if (confirm("Desea editar el iniciador seleccionado")) {
+      var id = $(this).data('id');
+      var iniciador = { persona: { nombre: $('#comunicacion-oficial #iniciador_nombre').val(),
+                                    apellido: $('#comunicacion-oficial #iniciador_apellido').val(),
+                                    nro_doc: $('#comunicacion-oficial #iniciador_doc').val(),
+                                    telefono: $('#comunicacion-oficial #iniciador_tel').val(),
+                                    email: $('#comunicacion-oficial #iniciador_email').val(),
+                                    domicilio: $('#comunicacion-oficial #iniciador_domicilio').val(),
+                                    cuit: $('#comunicacion-oficial #iniciador_cuit').val() }};
+      $.ajax({
+        url: "/personas/" + id,
+        type: 'PATCH',
+        data: iniciador ,
+        dataType: 'json',
+        success: function(result) {
+          var iniciador = result.iniciador
+          var ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
+          var iniciadores = $('#comunicacion-oficial #process_iniciadores').select2('data');
+          iniciadores.unshift(ini);
+          $('#comunicacion-oficial #process_iniciadores').select2('data', iniciadores);
+          // Clear fields
+          $('#comunicacion-oficial #iniciador_nombre').val('');
+          $('#comunicacion-oficial #iniciador_apellido').val('');
+          $('#comunicacion-oficial #iniciador_doc').val('');
+          $('#comunicacion-oficial #iniciador_tel').val('');
+          $('#comunicacion-oficial #iniciador_email').val('');
+          $('#comunicacion-oficial #iniciador_domicilio').val('');
+          $('#comunicacion-oficial #iniciador_cuit').val('');
+          $('#comunicacion-oficial #comunicacion-oficial_nro_fojas').focus();
+        },
+        error: function () {
+            alert("No se pudo actualizar el iniciador");
+        }
+      });
+    }
+  });
+
+  $('#comunicacion-oficial #add_iniciador').on('click', function(event) {
+    //create iniciador
+    if (confirm("Desea crear el iniciador")) {
+      var iniciador;
+      var tipo = $('#comunicacion-oficial #iniciador_tipo').val();
+      var url_iniciador;
+      if (tipo == "Fisica" || tipo == "Juridica"){
+        url_iniciador = "/personas"
+        iniciador = { persona: {  type: $('#comunicacion-oficial #iniciador_tipo').val(),
+                  nombre: $('#comunicacion-oficial #iniciador_nombre').val(),
+                  apellido: $('#comunicacion-oficial #iniciador_apellido').val(),
+                  nro_doc: $('#comunicacion-oficial #iniciador_doc').val(),
+                  telefono: $('#comunicacion-oficial #iniciador_tel').val(),
+                  email: $('#comunicacion-oficial #iniciador_email').val(),
+                  domicilio: $('#comunicacion-oficial #iniciador_domicilio').val(),
+                  cuit: $('#comunicacion-oficial #iniciador_cuit').val()}};
+      }else{
+        if (tipo == "ReparticionOficial"){
+          url_iniciador = "/reparticion_oficials"
+          iniciador = {reparticion: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
+        }else{
+          if (tipo == "DependenciaMunicipal"){
+            url_iniciador = "/dependencia_municipals"
+            iniciador = {dependencia: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
+          }
+        }
+      }
+      $.ajax({
+        url: url_iniciador,
+        type: 'POST',
+        data: iniciador ,
+        dataType: 'json',
+        success: function(result) {
+          var iniciador = result.iniciador
+          var ini;
+          if (iniciador.type == "Fisica" || iniciador.type == "Juridica"){
+            ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
+          }else{
+            if (iniciador.type == "ReparticionOficial" || iniciador.type == "DependenciaMunicipal"){
+              ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
+            }
+          }
+          var iniciadores = $('#comunicacion-oficial #process_iniciadores').select2('data');
+          iniciadores.push(ini);
+          $('#comunicacion-oficial #process_iniciadores').select2('data', iniciadores);
+          // Clear fields
+          $('#comunicacion-oficial #iniciador_nombre').val('');
+          $('#comunicacion-oficial #iniciador_apellido').val('');
+          $('#comunicacion-oficial #iniciador_doc').val('');
+          $('#comunicacion-oficial #iniciador_tel').val('');
+          $('#comunicacion-oficial #iniciador_email').val('');
+          $('#comunicacion-oficial #iniciador_domicilio').val('');
+          $('#comunicacion-oficial #iniciador_cuit').val('');
+          $('#comunicacion-oficial #iniciador_denominacion').val('');
+          $('#comunicacion-oficial #comunicacion-oficial_nro_fojas').focus();
+        },
+        error: function () {
+            alert("No se pudo crear el iniciador");
+        }
+      });
+    }
+  });
+
+  $('#comunicacion-oficial .modal-submit').on('click', function(event) {
+    event.preventDefault();
+
+    var iniciadores = {};
+    var index = 0;
+    $("#comunicacion-oficial .iniciador-token").each(function(key, value) {
+      iniciadores[index] = {
+        id: $(value).data("id"),
+        type: $(value).data("type")
+      };
+      index++;
+    });
+
+    //add derived states to form
+    var states = {};
+    var index = 0;
+    $("#comunicacion-oficial .derivacion-tr").each(function(key, value) {
+      states[index] = {
+        id: $(value).data("id"),
+        tipo: $(value).data("tipo"),
+        idref: $(value).data("idref"),
+        typeref: $(value).data("typeref"),
+      };
+      index++;
+    });
+
+    $("#comunicacion-oficial #states").val(JSON.stringify(states));
+    $("#comunicacion-oficial #iniciadores").val(JSON.stringify(iniciadores));
+    $("#comunicacion-oficial #new_comunicacion_oficial, [id^='edit_comunicacion_oficial']").submit();
+  });
+
+  $('.modal').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
+    $('.input-initiator').keypress(function(event){
+      if (event.keyCode == 10 || event.keyCode == 13)
+        event.preventDefault();
+    });
+  });
+
+  $('.modal').on('hidden.bs.modal', function () {
+    $(document).keydown(function(event) {
+      var currentRow, rowpos, table;
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
+      switch (event.keyCode) {
+        case 40:
+          if ($(currentRow).next().length !== 0) {
+            $(currentRow).next().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 38:
+          if ($(currentRow).prev().length !== 0) {
+            $(currentRow).prev().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 37:
+          table.fnPageChange('previous');
+          break;
+        case 39:
+          table.fnPageChange('next');
+          break;
+        case 13:
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
+      }
+      rowpos = $('table.datatable-keyevents tr.info').position();
+      $(document).scrollTop(rowpos.top - 45);
+    });
+
+    $.ctrl('C', function() {
+      $('#btn-new').click();
+    });
+
+    $.ctrl('E', function() {
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
+    });
+
+    $('div.dataTables_filter input').focus();
+  });
+
+  function format_derivaciones(style) {
+    var originalOption = $(style.element);
+    var iniciador = "";
+    iniciador = style.apellido + ', ' + style.nombre;
+    if (style.type == "Personal") {
+      return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+    }else{
+      //Casos para comisiones y bloques, etc
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
+        iniciador = style.denominacion;
+        return "<div class='derivacion-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+      }else{
+        //otros casos
+      }
+    }
+  }
+
+  function format_derivaciones_result(style) {
+    var originalOption = $(style.element);
+    if (style.type == "Personal") {
+      return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
+    }else{
+      //caso de comisiones y bloques
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
+        return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
+      }else{
+        //caso de cualquier otro type
+        return "<div>" + style.apellido + "</div>";
+      }
+    }
+  }
+
+  $("#comunicacion-oficial #derived-states").select2({
+    placeholder: "Buscar derivaciones",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_derivaciones,
+    formatResult: format_derivaciones_result,
+    multiple: true,
+    ajax: {
+      url: "/comunicacion_oficials/get_derivacion",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  }).on("select2-selecting", function(e) {
+    // token selected
+    var data = e.object;
+
+    var idref = data.id;
+    var typeref = data.type;
+    var text;
+
+    if (data.type == 'Personal')
+      text = data.apellido + ", " + data.nombre;
+    else
+      text = data.denominacion;
+
+    var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
+      "<td> Derivado a " + typeref + ": " + text + "</td>" +
+      "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+
+    $('#comunicacion-oficial #states-table tbody').append(tr);
+  }).on("change", function(e) {
+    $('#comunicacion-oficial #derived-states').select2("val", "");
+  });

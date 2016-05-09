@@ -9,22 +9,18 @@ class ProyectosController < ApplicationController
   end
 
   def new
-    @proyecto = Proyecto.new
-    respond_to do |format|
-      format.html {render partial: "modal_proyecto", locals: { actionvar: "create"}}
-    end
+    @process = Proyecto.new
+    render layout: false
   end
 
   def show
-    @proyecto = Proyecto.find(params[:id])
+    @proyecto = Proyecto.find params[:id]
   end
 
   def edit
-    @proyecto = Proyecto.find(params[:id])
-    @exp_adm = @proyecto.expediente_administrativos.first
-    respond_to do |format|
-      format.html {render partial: "modal_proyecto", locals: { actionvar: "update"}}
-    end
+    @process = Proyecto.find params[:id]
+    @process_id = params[:id]
+    render layout: false
   end
 
   def destroy

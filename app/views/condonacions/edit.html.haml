@@ -4,8 +4,8 @@
       .modal-header
         %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
           %span{ 'aria-hidden' => 'true' } &times;
-        %h4#nuevoLabel.modal-title= "Editando condonación #{@condonacion.id}"
-      = form_for @condonacion do |f|
+        %h4#nuevoLabel.modal-title= "Editando condonación #{@process.id}"
+      = form_for @process do |f|
         .modal-body
           .row
             .col-md-6#first-column
@@ -69,7 +69,7 @@
     }
   }
 
-  $("#condonacion_iniciadores").select2({
+  $("#process_iniciadores").select2({
     placeholder: "Buscar Iniciadores",
     allowClear: true,
     theme: 'bootstrap',
@@ -110,7 +110,7 @@
       $('#condonacion #iniciador_domicilio').val('');
       $('#condonacion #iniciador_cuit').val('');
       $('#condonacion #iniciador_denominacion').val('').attr('disabled', 'disabled');
-      $("#condonacion_iniciadores").select2("close");
+      $("#process_iniciadores").select2("close");
       $('#condonacion #iniciador_nombre').focus();
     }else{
       if(data.type == 'Fisica'){
@@ -224,7 +224,7 @@
     }
   });
 
-  $('#condonacion_iniciadores').on('choice-selected', function(e, choice) {
+  $('#process_iniciadores').on('choice-selected', function(e, choice) {
     // token selected
     var data = $(choice).data('select2-data');
     if(data.type == 'Fisica'){
@@ -342,9 +342,9 @@
         success: function(result) {
           var iniciador = result.iniciador
           var ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
-          var iniciadores = $('#condonacion #condonacion_iniciadores').select2('data');
+          var iniciadores = $('#condonacion #process_iniciadores').select2('data');
           iniciadores.unshift(ini);
-          $('#condonacion #condonacion_iniciadores').select2('data', iniciadores);
+          $('#condonacion #process_iniciadores').select2('data', iniciadores);
           // Clear fields
           $('#condonacion #iniciador_nombre').val('');
           $('#condonacion #iniciador_apellido').val('');
@@ -399,9 +399,9 @@
               ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
             }
           }
-          var iniciadores = $('#condonacion #condonacion_iniciadores').select2('data');
+          var iniciadores = $('#condonacion #process_iniciadores').select2('data');
           iniciadores.push(ini);
-          $('#condonacion #condonacion_iniciadores').select2('data', iniciadores);
+          $('#condonacion #process_iniciadores').select2('data', iniciadores);
           // Clear fields
           $('#condonacion #iniciador_nombre').val('');
           $('#condonacion #iniciador_apellido').val('');

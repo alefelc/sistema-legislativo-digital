@@ -43,7 +43,7 @@ $(document).on 'ready page:load', ->
       $('#condonacion-edit .modal').modal 'show'
 
       ## Preload iniciadores-tokens
-      tokenData = $('#condonacion #condonacion_iniciadores').data 'load'
+      tokenData = $('#condonacion #process_iniciadores').data 'load'
       iniciadores = [];
       $.each tokenData, (index, ini) ->
         if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
@@ -54,7 +54,7 @@ $(document).on 'ready page:load', ->
           else
             ## otro caso
         return
-      $('#condonacion #condonacion_iniciadores').select2('data', iniciadores)
+      $('#condonacion #process_iniciadores').select2('data', iniciadores)
 
       return
 

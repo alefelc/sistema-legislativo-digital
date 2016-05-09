@@ -9,22 +9,18 @@ class ComunicacionOficialsController < ApplicationController
   end
 
   def new
-    @comunicacion_oficial = ComunicacionOficial.new
-    respond_to do |format|
-      format.html {render partial: "modal_comunicacion_oficial", locals: { actionvar: "create"}}
-    end
+    @process = ComunicacionOficial.new
+    render layout: false
   end
 
   def show
-    @comunicacion_oficial = ComunicacionOficial.find(params[:id])
+    @comunicacion_oficial = ComunicacionOficial.find params[:id]
   end
 
   def edit
-    @comunicacion_oficial = ComunicacionOficial.find(params[:id])
-    @exp_adm = @comunicacion_oficial.expediente_administrativos.first
-    respond_to do |format|
-      format.html {render partial: "modal_comunicacion_oficial", locals: { actionvar: "update"}}
-    end
+    @process = ComunicacionOficial.find params[:id]
+    @process_id = params[:id]
+    render layout: false
   end
 
   def destroy

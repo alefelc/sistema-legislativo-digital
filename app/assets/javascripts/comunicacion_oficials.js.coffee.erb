@@ -43,7 +43,7 @@ $(document).on 'ready page:load', ->
       $('#comunicacion-oficial-edit .modal').modal 'show'
 
       ## Preload iniciadores-tokens
-      tokenData = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').data 'load'
+      tokenData = $('#comunicacion-oficial #process_iniciadores').data 'load'
       iniciadores = [];
       $.each tokenData, (index, ini) ->
         if(ini.type == "Concejal")
@@ -54,7 +54,7 @@ $(document).on 'ready page:load', ->
           else
             ## otro caso
         return
-      $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data', iniciadores)
+      $('#comunicacion-oficial #process_iniciadores').select2('data', iniciadores)
 
       return
 

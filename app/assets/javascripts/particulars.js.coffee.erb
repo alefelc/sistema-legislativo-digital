@@ -43,7 +43,7 @@ $(document).on 'ready page:load', ->
       $('#particular-edit .modal').modal 'show'
 
       ## Preload iniciadores-tokens
-      tokenData = $('#particular #particular_iniciadores').data 'load'
+      tokenData = $('#particular #process_iniciadores').data 'load'
       iniciadores = [];
       $.each tokenData, (index, ini) ->
         if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
@@ -51,7 +51,7 @@ $(document).on 'ready page:load', ->
         else
           ## otro caso
         return
-      $('#particular #particular_iniciadores').select2('data', iniciadores)
+      $('#particular #process_iniciadores').select2('data', iniciadores)
 
       return
 

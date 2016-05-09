@@ -4,96 +4,29 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} &times;
-        %h4#nuevoLabel.modal-title= t(".#{actionvar}") + " #{@comunicacion_oficial.id}"
-      = form_for @comunicacion_oficial, url: { action: actionvar } do |f|
+        %h4#nuevoLabel.modal-title Creando Comunicación Oficial
+      = form_for @process do |f|
         = hidden_field_tag :iniciadores
         = hidden_field_tag :states
         .modal-body
           .row
             .col-md-6#first-column
-              .input-group
-                = f.label t('.iniciadores'), { class: "input-group-addon", id: "basic-addon08" }
-                = text_field_tag nil, nil, {:multiple => "multiple", :style => "width:100%", :id => "comunicacion-oficial_iniciadores", data: { load: prepopulate_iniciadores(@comunicacion_oficial) }}
-              .input-group
-                = f.label :nro_fojas, { class: "input-group-addon", id: "basic-addon8"}
-                = f.text_field :nro_fojas, { class: "form-control", "aria-describedby": "basic-addon8", :placeholder => t('.fojas'), type: :number }
-              .input-group
-                = f.label t('.asunto_label'), { class: "input-group-addon", id: "basic-addon9"}
-                = f.text_area :asunto, {class: "form-control", "aria-describedby" => "basic-addon9", :placeholder => t('.asunto'), type: :text}
-              .input-group
-                = f.label t('.observations'), { class: "input-group-addon", id: "basic-addon10"}
-                = f.text_area :observaciones, {class: "form-control", "aria-describedby" => "basic-addon10", :placeholder => t('.observations'), type: :text }
-              .input-group
-                = label_tag nil, 'Derivado a', { class: 'input-group-addon', id: 'basic-addon8' }
-                = text_field_tag nil, nil, { multiple: :multiple, style: 'width: 100%', id: 'derived-states' }
-              %table.table.table-striped.table-bordered#states-table
-                %thead
-                  %tr
-                    %th= "Estado"
-                    %th= "Fecha"
-                    %th{ width: "1%" }= icon('fa fa-trash', class: 'fa-1x')
-                %tbody
-                  - @comunicacion_oficial.estado_tramites.where(tipo: 2).each do |x|
-                    - if (x.ref_type == 'Personal')
-                      - text = x.ref.apellido + ", " + x.ref.nombre;
-                    - else
-                      - text = x.ref.denominacion;
-                    %tr{ class: 'derivacion-tr', 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                      %td= "Derivado a " + x.ref_type + ": " + text
-                      %td= to_date(x.created_at)
-                      %td= icon 'fa fa-times fa-1x', nil, class: 'btn btn-xs remove-table-row'
-              .input-group
-                = f.label t('.final'), { class: "input-group-addon", id: "basic-addon011"}
-                = text_area_tag :finalizado, nil, {class: "form-control", "aria-describedby" => "basic-addon011", type: :text }
-              .input-group
-                = f.label t('.exp_adm'), { class: "input-group-addon" }
-                = text_field_tag :expediente_administrativo, @exp_adm.try(:nro_exp).to_s, { class: "form-control" }
-              .input-group
-                = f.label t('.fojas_exp_adm'), { class: "input-group-addon" }
-                = text_field_tag :fojas_exp_adm, @exp_adm.try(:nro_fojas), { class: "form-control" }
+              = render '/shared/process_form', f: f
             .col-md-6
-              #second-column
-                .input-group
-                  = label_tag nil, t('.iniciador'), { class: "input-group-addon", id: "basic-addon0"}
-                  .input-group
-                    = label_tag nil, "Tipo", { class: "input-group-addon", id: "basic-addon01"}
-                    #refer_type= select_tag 'iniciador[tipo]', options_for_select(tipo_iniciador_comunicacion), { class: "form-control", "aria-describedby": "basic-addon01"}
-                  .input-group
-                    = label_tag nil, "Nombre", { class: "input-group-addon", id: "basic-addon1"}
-                    = text_field_tag 'iniciador[nombre]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon1", :placeholder => t('.nombre'), type: :text }
-                  .input-group
-                    = label_tag nil, "Apellido", { class: "input-group-addon", id: "basic-addon2"}
-                    = text_field_tag 'iniciador[apellido]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon2", :placeholder => t('.apellido'), type: :text }
-                  .input-group
-                    = label_tag nil, "DNI", { class: "input-group-addon", id: "basic-addon3"}
-                    = text_field_tag 'iniciador[doc]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon3", :placeholder => t('.doc'), type: :text }
-                  .input-group
-                    = label_tag nil, "Teléfono", { class: "input-group-addon", id: "basic-addon4"}
-                    = text_field_tag 'iniciador[tel]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon4", :placeholder => t('.tel'), type: :text }
-                  .input-group
-                    = label_tag nil, "Email", { class: "input-group-addon", id: "basic-addon5"}
-                    = text_field_tag 'iniciador[email]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon5", :placeholder => t('.email'), type: :text }
-                  .input-group
-                    = label_tag nil, "Domicilio", { class: "input-group-addon", id: "basic-addon6"}
-                    = text_field_tag 'iniciador[domicilio]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon6", :placeholder => t('.domicilio'), type: :text }
-                  .input-group
-                    = label_tag nil, "CUIT/CUIL", { class: "input-group-addon", id: "basic-addon7"}
-                    = text_field_tag 'iniciador[cuit]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon7", :placeholder => t('.cuit'), type: :number }
-                  .input-group
-                    = label_tag nil, "Denominación", { class: "input-group-addon", id: "basic-addon8"}
-                    = text_field_tag 'iniciador[denominacion]', nil ,{ class: "form-control input-initiator", "aria-describedby": "basic-addon8", :placeholder => t('.denominacion'), type: :text }
-                .parent-group-btn.btn.btn-xs#add_iniciador
-                  %button.btn.btn-default.parent-group-btn#btn_add_iniciador
-                    %span
-                      %i.fa.fa-check-circle.fa-1x= " Guardar Iniciador"
-                .parent-group-btn.btn.btn-xs#edit_iniciador
-                  %button.btn.btn-default.parent-group-btn#btn_edit_iniciador
-                    %span
-                      %i.fa.fa-pencil-square.fa-1x= " Editar Iniciador"
+              %ul.nav.nav-tabs{ role: 'tablist' }
+                %li.active{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
+                    Nuevo iniciador
+              .tab-content{ style: 'padding-top:1%' }
+                .tab-pane.active#new-initiator{ role: 'tabpanel' }
+                  #second-column
+                    = render '/shared/initiator_form'
+
         .modal-footer
-          = f.submit  actionvar == 'create' ? 'Guardar Nueva Comunicación Oficial' : 'Guardar Cambios Comunicación Oficial', {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
+          = f.submit 'Crear Comunicación Oficial', {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
 
 :javascript
+
   wi = $(window).width()-20;
   margin = 10;
   $("#comunicacion-oficial .modal-xs").css('width', wi);
@@ -136,7 +69,7 @@
     }
   }
 
-  $("#comunicacion-oficial_iniciadores").select2({
+  $("#process_iniciadores").select2({
     placeholder: "Buscar Iniciadores",
     allowClear: true,
     theme: 'bootstrap',
@@ -177,7 +110,7 @@
       $('#comunicacion-oficial #iniciador_domicilio').attr('disabled', 'disabled');
       $('#comunicacion-oficial #iniciador_cuit').attr('disabled', 'disabled');
       $('#comunicacion-oficial #iniciador_denominacion').val('');
-      $("#comunicacion-oficial_iniciadores").select2("close");
+      $("#process_iniciadores").select2("close");
       $('#comunicacion-oficial #iniciador_denominacion').focus();
     }else{
       if(data.type == 'Fisica' || data.type == 'Juridica'){
@@ -255,7 +188,7 @@
     }
   });
 
-  $('#comunicacion-oficial_iniciadores').on('choice-selected', function(e, choice) {
+  $('#process_iniciadores').on('choice-selected', function(e, choice) {
     // token selected
     var data = $(choice).data('select2-data');
     if(data.type == 'Fisica' || data.type == 'Juridica'){
@@ -350,9 +283,9 @@
         success: function(result) {
           var iniciador = result.iniciador
           var ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
-          var iniciadores = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data');
+          var iniciadores = $('#comunicacion-oficial #process_iniciadores').select2('data');
           iniciadores.unshift(ini);
-          $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data', iniciadores);
+          $('#comunicacion-oficial #process_iniciadores').select2('data', iniciadores);
           // Clear fields
           $('#comunicacion-oficial #iniciador_nombre').val('');
           $('#comunicacion-oficial #iniciador_apellido').val('');
@@ -412,9 +345,9 @@
               ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
             }
           }
-          var iniciadores = $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data');
+          var iniciadores = $('#comunicacion-oficial #process_iniciadores').select2('data');
           iniciadores.push(ini);
-          $('#comunicacion-oficial #comunicacion-oficial_iniciadores').select2('data', iniciadores);
+          $('#comunicacion-oficial #process_iniciadores').select2('data', iniciadores);
           // Clear fields
           $('#comunicacion-oficial #iniciador_nombre').val('');
           $('#comunicacion-oficial #iniciador_apellido').val('');

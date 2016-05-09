@@ -9,7 +9,7 @@ class CondonacionsController < ApplicationController
   end
 
   def new
-    @condonacion = Condonacion.new
+    @process = Condonacion.new
     render layout: false
   end
 
@@ -18,9 +18,8 @@ class CondonacionsController < ApplicationController
   end
 
   def edit
-    @condonacion = Condonacion.find params[:id]
+    @process = Condonacion.find params[:id]
     @process_id = params[:id]
-    @administrative_files = []
     render layout: false
   end
 

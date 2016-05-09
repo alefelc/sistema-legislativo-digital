@@ -9,10 +9,8 @@ class ParticularsController < ApplicationController
   end
 
   def new
-    @particular = Peticion.new
-    respond_to do |format|
-      format.html {render partial: "modal_particular", locals: { actionvar: "create"}}
-    end
+    @process = Peticion.new
+    render layout: false
   end
 
   def show
@@ -20,11 +18,9 @@ class ParticularsController < ApplicationController
   end
 
   def edit
-    @particular = Peticion.find(params[:id])
-    @exp_adm = @particular.expediente_administrativos.first
-    respond_to do |format|
-      format.html {render partial: "modal_particular", locals: { actionvar: "update"}}
-    end
+    @process = Peticion.find(params[:id])
+    @process_id = params[:id]
+    render layout: false
   end
 
   def destroy
