@@ -6,6 +6,10 @@ var AllAdministrativeFiles = React.createClass({
     $.ajax({
       url: '/administrative_files',
       type: 'GET',
+      data: {
+        id: this.props.id,
+        type: this.props.type
+      },
       success: (response) => {
         this.setState({ adminFiles: response });
       }
