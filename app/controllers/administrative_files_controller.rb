@@ -1,10 +1,9 @@
 class AdministrativeFilesController < ApplicationController
   def create
-    response = {}
     case params[:type]
     when 'process'
       process = Tramite.find params[:id]
-      result = ExpedienteAdministrativo.create administrative_files_params.dup
+      result = process.expediente_administrativos.create administrative_files_params.dup
       if result.created_at.present?
         render json: takeoff_nil_values(result.as_json)
       else
@@ -18,6 +17,8 @@ class AdministrativeFilesController < ApplicationController
     when 'process'
       process = Tramite.find params[:id]
       render json: process.expediente_administrativos.as_json
+    else
+      render json: []
     end
   end
 

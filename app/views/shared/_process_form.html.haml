@@ -32,6 +32,11 @@
         %td= "Derivado a #{x.ref_type}: #{text}"
         %td= to_date(x.created_at)
         %td= icon 'fa fa-times fa-1x', nil, class: 'btn btn-xs remove-table-row'
+    %tr
+      %td
+      %td
+      %td
+
 .input-group
   = f.label t('.final'), { class: 'input-group-addon' }
   = text_area_tag :finalizado, nil, { class: 'form-control', 'aria-describedby' => 'basic-addon011', type: :text }
