@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  #before_action :authenticate_usuario!
+  #before_action :authenticate_user!
 
   respond_to :json, :html
 

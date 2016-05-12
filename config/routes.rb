@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  devise_for :usuario, ActiveAdmin::Devise.config
+  devise_for :user, ActiveAdmin::Devise.config
 
   root to: 'dashboard#index'
 

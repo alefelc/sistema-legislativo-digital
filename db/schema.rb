@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503130116) do
+ActiveRecord::Schema.define(version: 20160512154522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -522,13 +522,13 @@ ActiveRecord::Schema.define(version: 20160503130116) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rols_usuarios", id: false, force: :cascade do |t|
-    t.integer "usuario_id"
+  create_table "rols_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
     t.integer "rol_id"
   end
 
-  add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
-  add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
+  add_index "rols_users", ["rol_id"], name: "index_rols_users_on_rol_id", using: :btree
+  add_index "rols_users", ["user_id"], name: "index_rols_users_on_user_id", using: :btree
 
   create_table "seccions", force: :cascade do |t|
     t.string   "nombre"
@@ -588,7 +588,7 @@ ActiveRecord::Schema.define(version: 20160503130116) do
 
   add_index "tramites", ["circuito_id"], name: "index_tramites_on_circuito_id", using: :btree
 
-  create_table "usuarios", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -605,9 +605,9 @@ ActiveRecord::Schema.define(version: 20160503130116) do
     t.integer  "personal_id"
   end
 
-  add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
-  add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
-  add_index "usuarios", ["personal_id"], name: "index_usuarios_on_personal_id", using: :btree
-  add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["persona_id"], name: "index_users_on_persona_id", using: :btree
+  add_index "users", ["personal_id"], name: "index_users_on_personal_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

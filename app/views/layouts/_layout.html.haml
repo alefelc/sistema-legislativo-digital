@@ -27,11 +27,11 @@
             .navbar-custom-menu
               %ul.nav.navbar-nav
                 / User Account: style can be found in dropdown.less
-                - if current_usuario.present?
+                - if current_user.present?
                   %li.dropdown.user.user-menu
                     %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#' }
                       %img.user-image{ src: asset_path('logo.jpg') }
-                        %span.hidden-xs= current_usuario.email
+                        %span.hidden-xs= current_user.email
                     %ul.dropdown-menu
                       / User image
                       %li.user-header
@@ -59,13 +59,13 @@
                       / Before this check if the current user is an administrator
                       / Menu Footer
                       %li.user-footer
-                        = form_tag session_path(:usuario) do
+                        = form_tag session_path(:user) do
                           = label_tag 'Usuario'
-                          = text_field_tag 'usuario[email]', nil, class: 'form-control'
+                          = text_field_tag 'user[email]', nil, class: 'form-control'
                           = label_tag 'Contraseña'
-                          = password_field_tag 'usuario[password]', nil, class: 'form-control'
-                          //= check_box_tag 'usuario[remember_me]'
-                          //= label_tag 'usuario[remember_me]', 'Remember me'
+                          = password_field_tag 'user[password]', nil, class: 'form-control'
+                          //= check_box_tag 'user[remember_me]'
+                          //= label_tag 'user[remember_me]', 'Remember me'
                           %span.pull-right{ style: 'padding-top: 10px' }
                             %button.btn.btn-success Entrar
                           //= link_to "Olvidaste la contraseña?", new_password_path(:usuario)

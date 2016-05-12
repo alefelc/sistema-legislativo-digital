@@ -600,8 +600,8 @@ es:
       default: '%d/%m/%Y - %H:%M'
   devise:
     failure:
-      usuario:
+      user:
         unauthenticated: 'El usuario no ha iniciado sesión.'
     sessions:
-      usuario:
+      user:
         signed_in: Iniciaste sesión correctamente
