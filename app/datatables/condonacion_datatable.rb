@@ -1,5 +1,7 @@
 class CondonacionDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_cond
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -40,7 +42,7 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
     ##iniciadores_bloques = cond.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
     ##iniciadores_bloques.each do |b|
     ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    ##end  
+    ##end
     ##iniciadores_comisions = cond.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
     ##iniciadores_comisions.each do |b|
     ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
@@ -54,19 +56,24 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
     resp
-  end  
+  end
 
   def to_date date
-    date.strftime("%d/%m/%Y") unless date.nil?
+    date.strftime('%d/%m/%Y') unless date.nil?
   end
 
   def to_date_time date
-    date.strftime("%d/%m/%Y - %R") unless date.nil?
-  end  
+    date.strftime('%d/%m/%Y - %R') unless date.nil?
+  end
 
   def associated_file cond
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{cond.id}' title='Editar condonación'></i>" +
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{cond.id}' title='Editar condonación'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar condonación'></i></div>"
   end
 
@@ -75,15 +82,15 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   end
 
   def fetch_records
-    condonacion = Condonacion.page(page).per(per_page).order(id: :desc)
+    condonacion = Condonacion.page(page).per(per_page).order id: :desc
     if params[:sSearch].present?
       unless params[:sSearch].to_i.zero?
         query = "(tramites.id = #{params[:sSearch]})"
         condonacion = condonacion.where(query)
       else
-        query = ""
+        query = ''
         condonacion = condonacion.where(query)
-      end  
+      end
     end
     condonacion.includes(:bloques).includes(:comisions).includes(:personas)
   end
@@ -99,6 +106,4 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Condonacion.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

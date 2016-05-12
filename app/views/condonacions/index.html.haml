@@ -1,8 +1,9 @@
 #condonacion
   #condonacion-edit
-  %button#btn-new.btn.btn-primary
-    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
-    = t('.btnheader.new')
+  - if current_user.present?
+    %button#btn-new.btn.btn-primary
+      %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+      = t('.btnheader.new')
 
   %table.datatable-keyevents.table.table-striped.table-bordered#condonacion-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => condonacions_path(format: :json)}
     %thead
