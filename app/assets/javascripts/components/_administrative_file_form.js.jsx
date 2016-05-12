@@ -41,7 +41,7 @@ var AdministrativeFileForm = React.createClass({
           <input className='form-control' ref='nro_fojas' type='number' step='1' min='0' />
         </div>
         <button onClick={this.handleClick} className='pull-right btn btn-default admin-file-button'>
-          Asociar exp. administrativo
+          Guardar exp. administrativo
         </button>
       </form>
     )

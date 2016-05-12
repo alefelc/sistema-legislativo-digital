@@ -5,24 +5,14 @@ class ApplicationController < ActionController::Base
   # Redirect back after sign in and sign out
   after_filter :store_location
 
-  def after_sign_out_path_for(resource_or_scope)
-    root_path
-  end
-
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
-    return unless request.get?
-    if (request.path != "/usuarios/sign_in" &&
-        request.path != "/usuarios/sign_up" &&
-        request.path != "/usuarios/password/new" &&
-        request.path != "/usuarios/password/edit" &&
-        request.path != "/usuarios/confirmation" &&
-        request.path != "/usuarios/sign_out" &&
-        !request.xhr?) # don't store ajax calls
-      session[:previous_url] = request.fullpath
-    end
+    session[:previous_url] = request.fullpath if !request.xhr? # don't store ajax calls
   end
 
+  private
+
+  # Overwriting the sign_in redirect path method
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
   end

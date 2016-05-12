@@ -46,8 +46,8 @@
                       %li.user-footer
                         -# .pull-left
                         -#   %a.btn.btn-primary.fa.fa-user{:href => "#"} Perfil
-                        .pull-right
-                          %a.btn.btn-danger.fa.fa-sign-out{ href: destroy_usuario_session_path, title: 'Salir del Sistema' } Salir
+                        #log-out.pull-right
+                          %a.btn.btn-danger.fa.fa-sign-out{ href: '#', title: 'Salir del Sistema' } Salir
                 - else
                   %li.dropdown.user.user-menu
                     %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#'}
@@ -60,12 +60,15 @@
                       / Menu Footer
                       %li.user-footer
                         = form_tag session_path(:usuario) do
-                          = text_field_tag 'usuario[email]'
-                          = password_field_tag 'usuario[password]'
-                          = check_box_tag 'usuario[remember_me]'
-                          = label_tag 'usuario[remember_me]', 'Remember me'
-                          %button Sign in
-                          = link_to "Forgot your password?", new_password_path(:usuario)
+                          = label_tag 'Usuario'
+                          = text_field_tag 'usuario[email]', nil, class: 'form-control'
+                          = label_tag 'Contraseña'
+                          = password_field_tag 'usuario[password]', nil, class: 'form-control'
+                          //= check_box_tag 'usuario[remember_me]'
+                          //= label_tag 'usuario[remember_me]', 'Remember me'
+                          %span.pull-right{ style: 'padding-top: 10px' }
+                            %button.btn.btn-success Entrar
+                          //= link_to "Olvidaste la contraseña?", new_password_path(:usuario)
 
 
     / ===============================================
@@ -191,3 +194,16 @@
           %a{ href: '#' } Abella - Gasparrini
       All rights reserved.
   / ./wrapper
+
+:javascript
+
+$(document).on('ready', function() {
+  $('#log-out').on('click', function(e) {
+    console.log('JOPUTA!')
+    $.ajax({
+      url: '/admin/logout',
+      type: 'DELETE',
+      complete: function() { window.location.reload() }
+    });
+  })
+});
