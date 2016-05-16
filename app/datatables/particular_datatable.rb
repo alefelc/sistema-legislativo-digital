@@ -1,5 +1,7 @@
 class ParticularDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_part
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -36,22 +38,16 @@ class ParticularDatatable < AjaxDatatablesRails::Base
   end
 
   def get_iniciadores part
-    resp = ""
-    ##iniciadores_bloques = part.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
-    ##iniciadores_bloques.each do |b|
-    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    ##end  
-    ##iniciadores_comisions = part.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
-    ##iniciadores_comisions.each do |b|
-    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    ##end
-    iniciadores_personas = part.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    resp = ''
+    iniciadores_personas = part.personas.map do |x|
+      { type: x.type, apellido: x.apellido, nombre: x.nombre }
+    end
     iniciadores_personas.each do |b|
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
 
     resp
-  end  
+  end
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
@@ -59,11 +55,16 @@ class ParticularDatatable < AjaxDatatablesRails::Base
 
   def to_date_time date
     date.strftime("%d/%m/%Y - %R") unless date.nil?
-  end  
+  end
 
   def associated_file part
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{part.id}' title='Editar petición particular'></i>" +
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{part.id}' title='Editar petición particular'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar petición particular'></i></div>"
   end
 
@@ -80,7 +81,7 @@ class ParticularDatatable < AjaxDatatablesRails::Base
       else
         query = ""
         particular = particular.where(query)
-      end  
+      end
     end
     particular.includes(:bloques).includes(:comisions).includes(:personas)
   end
@@ -96,6 +97,4 @@ class ParticularDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Peticion.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

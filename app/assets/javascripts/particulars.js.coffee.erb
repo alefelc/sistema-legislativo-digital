@@ -4,6 +4,7 @@ $(document).on 'ready page:load', ->
     fnInitComplete: ->
       $('#particular div.dataTables_filter input').focus()
       $('#particular div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      $('#btn-new').prependTo('#particular-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->
       $('#particular-table tbody tr:eq(0)').addClass 'info'

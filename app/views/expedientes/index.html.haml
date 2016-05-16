@@ -107,12 +107,15 @@
         %br
         %br
         %br
-  #expedientes-edit
-  %button#btn-new.btn.btn-primary
-    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
-    = t('.btnheader.new')
 
-  %table.datatable-keyevents.table.table-striped.table-bordered#expedientes-table{"data-source" => expedientes_path(format: :json)}
+  #expedientes-edit
+
+  - if current_user.present?
+    %button#btn-new.btn.btn-primary
+      %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+      = t('.btnheader.new')
+
+  %table.datatable-keyevents.table.table-striped.table-bordered#expedientes-table{ "data-source" => expedientes_path(format: :json) }
     %thead
       %tr
         %th= t('.table.expediente')

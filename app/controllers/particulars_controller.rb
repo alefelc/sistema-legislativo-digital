@@ -1,4 +1,6 @@
 class ParticularsController < ApplicationController
+  before_action :authenticate_user!, { except: [ :show, :index ] }
+
   respond_to :json, :html
 
   def index
@@ -36,8 +38,6 @@ class ParticularsController < ApplicationController
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
         @particular.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica"))
-        ##@particular.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
-        ##@particular.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
       end
     end
 
@@ -205,5 +205,4 @@ class ParticularsController < ApplicationController
   def particular_params
     params.require(:peticion).permit("nro_fojas", "asunto", "updated_at",  "observaciones")
   end
-
 end

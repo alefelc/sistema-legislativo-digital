@@ -1,4 +1,6 @@
 class DespachosController < ApplicationController
+  before_action :authenticate_user!, { except: [ :show, :index ] }
+
   respond_to :json, :html
 
   def index

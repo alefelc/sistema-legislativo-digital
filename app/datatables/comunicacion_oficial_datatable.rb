@@ -1,5 +1,7 @@
 class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_com
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -10,12 +12,10 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   end
 
   def sortable_columns
-    # Declare strings in this format: ModelName.column_name
     @sortable_columns ||= []
   end
 
   def searchable_columns
-    # Declare strings in this format: ModelName.column_name
     @searchable_columns ||= []
   end
 
@@ -48,7 +48,7 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
     iniciadores_bloques = com.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
     iniciadores_bloques.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end  
+    end
     iniciadores_comisions = com.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
     iniciadores_comisions.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
@@ -67,20 +67,26 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
     end
 
     resp
-  end  
+  end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
-  end  
+  end
 
-  def associated_file com
+  def associated_file(com)
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{com.id}' title='Editar comunicación oficial'></i>" +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar comunicación oficial'></i></div>"
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{com.id}' title='Editar comunicación oficial'></i>"
+    else
+      ''
+    end +
+    "<i class='btn btn-xs btn-success fa fa-download' " +
+    "title='Descargar comunicación oficial'></i></div>"
   end
 
   def comunicacion_oficials
@@ -96,7 +102,7 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
       else
         query = ""
         comunicacion_oficial = comunicacion_oficial.where(query)
-      end  
+      end
     end
     comunicacion_oficial.includes(:bloques).includes(:comisions).includes(:personas)
   end

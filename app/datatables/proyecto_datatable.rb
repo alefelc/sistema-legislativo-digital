@@ -1,5 +1,7 @@
 class ProyectoDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_pro
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -10,12 +12,10 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
   end
 
   def sortable_columns
-    # Declare strings in this format: ModelName.column_name
     @sortable_columns ||= []
   end
 
   def searchable_columns
-    # Declare strings in this format: ModelName.column_name
     @searchable_columns ||= []
   end
 
@@ -35,7 +35,7 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
     end
   end
 
-  def get_iniciadores pro
+  def get_iniciadores(pro)
     resp = ""
     iniciadores_organos = pro.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion } }
     iniciadores_organos.each do |b|
@@ -48,7 +48,7 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
     iniciadores_bloques = pro.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
     iniciadores_bloques.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end  
+    end
     iniciadores_comisions = pro.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
     iniciadores_comisions.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
@@ -67,20 +67,26 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
     end
 
     resp
-  end  
+  end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
-  end  
+  end
 
   def associated_file pro
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{pro.id}' title='Editar proyecto'></i>" +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar proyecto'></i></div>"
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{pro.id}' title='Editar proyecto'></i>"
+    else
+      ''
+    end +
+    "<i class='btn btn-xs btn-success fa fa-download' " +
+    "title='Descargar proyecto'></i></div>"
   end
 
   def proyectos
@@ -96,7 +102,7 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
       else
         query = ""
         proyecto = proyecto.where(query)
-      end  
+      end
     end
     proyecto.includes(:bloques).includes(:comisions).includes(:personas)
   end
@@ -112,6 +118,4 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Proyecto.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

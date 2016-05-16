@@ -88,7 +88,7 @@ Rails.application.routes.draw do
 
   resources :circuitos
 
-  resources :pendientes
+  resources :pendientes, only: :index
 
   namespace :statitics do
     get 'mesa_de_entradas'

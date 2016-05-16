@@ -1,6 +1,8 @@
 class DespachoDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_desp
   def_delegator :@view, :despacho_expedientes
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -42,24 +44,29 @@ class DespachoDatatable < AjaxDatatablesRails::Base
   end
 
   def despacho_comisiones desp
-    string = ""
+    string = ''
     desp.comisions.each do |c|
-      string << c.denominacion.to_s + "; "
+      string << "#{c.denominacion}; "
     end
     string[0..-3]
   end
 
   def despacho_concejales desp
-    string = ""
+    string = ''
     desp.concejals.each do |c|
-      string << c.apellido.to_s + ", "+ c.nombre.to_s + "; "
+      string << "#{c.apellido}, #{c.nombre}; "
     end
     string[0..-3]
   end
 
   def associated_file desp
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{desp.id}' title='Editar despacho'></i>" +
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{desp.id}' title='Editar despacho'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar despacho'></i></div>"
   end
 
@@ -71,11 +78,14 @@ class DespachoDatatable < AjaxDatatablesRails::Base
     despacho = Despacho.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
       unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]}) OR (expedientes.nro_exp = '#{params[:sSearch]}')"
-        despacho = despacho.where(query)
+        query = "(tramites.id = #{params[:sSearch]}) OR " +
+        "(expedientes.nro_exp = '#{params[:sSearch]}')"
+        despacho = despacho.where query
       else
-        query = "(CONCAT(personas.apellido, ' ', personas.nombre) ilike '%#{params[:sSearch]}%') OR (comisions.denominacion ilike '%#{params[:sSearch]}%')"
-        despacho = despacho.where(query).joins(:concejals).joins(:comisions)
+        query = "(CONCAT(personas.apellido, ' ', personas.nombre) ilike " +
+        "'%#{params[:sSearch]}%') OR (comisions.denominacion ilike " +
+        "'%#{params[:sSearch]}%')"
+        despacho = despacho.where(query).joins(:concejals).joins :comisions
       end
     end
     despacho.includes(:circuitos).includes(:comisions).includes(:personas).includes(circuitos: [:expediente])
@@ -92,6 +102,4 @@ class DespachoDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Despacho.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

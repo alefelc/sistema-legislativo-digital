@@ -38,22 +38,14 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   end
 
   def get_iniciadores cond
-    resp = ""
-    ##iniciadores_bloques = cond.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
-    ##iniciadores_bloques.each do |b|
-    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    ##end
-    ##iniciadores_comisions = cond.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
-    ##iniciadores_comisions.each do |b|
-    ##  resp = resp + b[:type] + ": " + b[:denominacion] + ";\n"
-    ##end
+    resp = ''
     iniciadores_reparticions = cond.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
     iniciadores_reparticions.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
+      resp = "#{resp}#{b[:type]}: #{b[:denominacion]};\n"
     end
     iniciadores_personas = cond.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
     iniciadores_personas.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
+      resp = "#{resp}#{b[:type]}: #{b[:apellido]}, #{b[:nombre]};\n"
     end
     resp
   end

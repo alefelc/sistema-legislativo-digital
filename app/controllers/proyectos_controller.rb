@@ -1,4 +1,6 @@
 class ProyectosController < ApplicationController
+  before_action :authenticate_user!, { except: [:show, :index] }
+
   respond_to :json, :html
 
   def index
@@ -25,7 +27,7 @@ class ProyectosController < ApplicationController
 
   def destroy
     Proyecto.find(params[:id]).delete
-    render json: {url: "/proyectos"}
+    render json: { url: '/proyectos' }
   end
 
   def create

@@ -1,6 +1,7 @@
 class ExpedienteDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_exp
   def_delegator :@view, :to_date
+  def_delegator :@view, :current_user
 
   def as_json(options = {})
     {
@@ -65,8 +66,12 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
     end
     iniciador = iniciador.upcase[0..-4]
     "<div style='display: flex'>" +
-    "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>" +
+    if current_user.present?
+      "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar Expediente'></i></div>"
   end
 

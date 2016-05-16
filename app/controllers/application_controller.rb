@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
   end
+
+  protected
+
+  def authenticate_user!
+    user_signed_in? ? super : redirect_to(root_path)
+  end
 end
