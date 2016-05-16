@@ -2,6 +2,8 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -37,7 +39,12 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
 
   def associated_file decl
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{decl.id}' title='Editar norma'></i>" +
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{decl.id}' title='Editar norma'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar norma'></i></div>"
   end
 
@@ -68,6 +75,4 @@ class DeclaracionDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Declaracion.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

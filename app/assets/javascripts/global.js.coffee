@@ -99,6 +99,17 @@ $(document).on 'ready', ->
     $(document).find('.sidebar-menu .treeview:first').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+    switch controller
+      when 'despachos'
+        $('a[href="/despachos"]').css('color', 'white')
+      when 'comunicacion_oficials'
+        $('a[href="/comunicacion_oficials"]').css('color', 'white')
+      when 'proyectos'
+        $('a[href="/proyectos"]').css('color', 'white')
+      when 'particulars'
+        $('a[href="/particulars"]').css('color', 'white')
+      when 'condonacions'
+        $('a[href="/condonacions"]').css('color', 'white')
 
   if controller in ['reports']
     switch action
@@ -106,14 +117,17 @@ $(document).on 'ready', ->
         $(document).find('.sidebar-menu .treeview:first').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+        $('a[href="/reports/mesa_de_entradas"]').css('color', 'white')
       when 'expedientes'
         $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+        $('a[href="/reports/expedientes"]').css('color', 'white')
       when 'normas'
         $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
+        $('a[href="/reports/normas"]').css('color', 'white')
 
   if controller in ['statitics']
     switch action
@@ -121,23 +135,44 @@ $(document).on 'ready', ->
         $(document).find('.sidebar-menu .treeview:first').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
+        $('a[href="/statitics/mesa_de_entradas"]').css('color', 'white')
       when 'expedientes'
         $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+        $('a[href="/statitics/expedientes"]').css('color', 'white')
       when 'normas'
         $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
         $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
+        $('a[href="/statitics/normas"]').css('color', 'white')
 
   if controller in [ 'declaracions', 'decretos', 'especials', 'ordenanzas', 'otra_normas', 'resolucions' ]
     $(document).find('.sidebar-menu .treeview:eq(2)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(2)').addClass('menu-open')
+    switch controller
+      when 'declaracions'
+        $('a[href="/declaracions"]').css('color', 'white')
+      when 'decretos'
+        $('a[href="/decretos"]').css('color', 'white')
+      when 'especials'
+        $('a[href="/especials"]').css('color', 'white')
+      when 'ordenanzas'
+        $('a[href="/ordenanzas"]').css('color', 'white')
+      when 'otra_normas'
+        $('a[href="/otra_normas"]').css('color', 'white')
+      when 'resolucions'
+        $('a[href="/resolucions"]').css('color', 'white')
 
   if controller in [ 'expedientes', 'pendientes' ]
     $(document).find('.sidebar-menu .treeview:eq(1)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(1)').addClass('menu-open')
+    switch controller
+      when 'expedientes'
+        $('a[href="/expedientes"]').css('color', 'white')
+      when 'pendientes'
+        $('a[href="/pendientes"]').css('color', 'white')
 
   return

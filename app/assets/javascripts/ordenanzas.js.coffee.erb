@@ -4,6 +4,7 @@ $(document).on 'ready page:load', ->
     fnInitComplete: ->
       $('#ordenanza div.dataTables_filter input').focus()
       $('#ordenanza div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      $('#btn-new').prependTo('#ordenanza-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->
       $('#ordenanza-table tbody tr').find('td:eq(1)').each ->

@@ -4,6 +4,7 @@ $(document).on 'ready page:load', ->
     fnInitComplete: ->
       $('#especial div.dataTables_filter input').focus()
       $('#especial div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
+      $('#btn-new').prependTo('#especial-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->
       $('#especial-table tbody tr').find('td:eq(1)').each ->

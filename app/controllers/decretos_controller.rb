@@ -1,5 +1,5 @@
 class DecretosController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!, { except: [:show, :index] }
 
   respond_to :json, :html
 

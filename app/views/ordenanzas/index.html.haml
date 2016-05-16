@@ -1,8 +1,10 @@
 #ordenanza
   #ordenanza-edit
-  %button#btn-new.btn.btn-primary
-    %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
-    = t('.btnheader.new')
+
+  - if current_user.present?
+    %button#btn-new.btn.btn-primary
+      %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
+      = t('.btnheader.new')
 
   %table.datatable-keyevents.table.table-striped.table-bordered#ordenanza-table{"data-source" => ordenanzas_path(format: :json)}
     %thead

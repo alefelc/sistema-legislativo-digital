@@ -2,6 +2,8 @@ class DecretoDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma
+  def_delegator :@view, :current_user
+
   def as_json(options = {})
     {
       :draw => params[:draw].to_i,
@@ -37,7 +39,12 @@ class DecretoDatatable < AjaxDatatablesRails::Base
 
   def associated_file dec
     "<div style='display: flex'>" +
-    "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' data-id='#{dec.id}' title='Editar norma'></i>" +
+    if current_user.present?
+      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "data-id='#{dec.id}' title='Editar norma'></i>"
+    else
+      ''
+    end +
     "<i class='btn btn-xs btn-success fa fa-download' title='Descargar norma'></i></div>"
   end
 
