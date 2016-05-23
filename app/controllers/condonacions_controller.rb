@@ -37,7 +37,7 @@ class CondonacionsController < ApplicationController
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
-        @condonacion.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
+        @condonacion.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         @condonacion.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
         ##@condonacion.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         ##@condonacion.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
@@ -88,16 +88,16 @@ class CondonacionsController < ApplicationController
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
-      current_iniciadores_personas = []
+      current_iniciadores_persons = []
       current_iniciadores_repartciones = []
       ##current_iniciadores_bloques = []
       ##current_iniciadores_comisions = []
-      old_iniciadores_personas = @condonacion.personas.map{ |x| x.id }
+      old_iniciadores_persons = @condonacion.persons.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores_personas.include?(value["id"])
-          @condonacion.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
+        unless old_iniciadores_persons.include?(value["id"])
+          @condonacion.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         end
-        current_iniciadores_personas << value["id"]
+        current_iniciadores_persons << value["id"]
       end
 
       old_iniciadores_reparticiones = @condonacion.reparticion_oficials.map{ |x| x.id }
@@ -125,7 +125,7 @@ class CondonacionsController < ApplicationController
       ##end
 
       # delete iniciadores
-      (old_iniciadores_personas - current_iniciadores_personas).each { |id| @condonacion.personas.delete(id) }
+      (old_iniciadores_persons - current_iniciadores_persons).each { |id| @condonacion.persons.delete(id) }
       (old_iniciadores_reparticiones - current_iniciadores_repartciones).each { |id| @condonacion.reparticion_oficials.delete(id) }
       ##(old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @condonacion.bloques.delete(id) }
       ##(old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @condonacion.comisions.delete(id) }
@@ -187,7 +187,7 @@ class CondonacionsController < ApplicationController
     ##                               "%#{params[:q]}%").first(7)
     repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     ##com = com.as_json(methods: 'type')
     ##bloques = bloques.as_json(methods: 'type')

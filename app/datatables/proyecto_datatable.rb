@@ -53,8 +53,8 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
     iniciadores_comisions.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end
-    iniciadores_personas = pro.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_personas.each do |b|
+    iniciadores_persons = pro.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_persons.each do |b|
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
     iniciadores_reparticiones = pro.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
@@ -104,7 +104,7 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
         proyecto = proyecto.where(query)
       end
     end
-    proyecto.includes(:bloques).includes(:comisions).includes(:personas)
+    proyecto.includes(:bloques).includes(:comisions).includes(:persons)
   end
 
   def per_page

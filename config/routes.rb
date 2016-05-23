@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  devise_for :user, ActiveAdmin::Devise.config
+  devise_for :user, ActiveAdmin::Devise.config.merge(skip: [:confirmations, :passwords, :registrations, :unlocks])
 
   root to: 'dashboard#index'
 
-  ## routes norms
   resources :declaracions do
     get 'search_exp', on: :collection
     get 'search_norma', on: :collection
@@ -63,7 +62,7 @@ Rails.application.routes.draw do
 
   resources :peticions, path: "particulars"
 
-  resources :personas
+  resources :persons, only: [:create, :update]
 
   resources :reparticion_oficials
 
@@ -109,6 +108,4 @@ Rails.application.routes.draw do
   resources :normas
 
   resources :administrative_files, only: [:create, :index]
-
-  get 'expediente_administrativos/index'
 end

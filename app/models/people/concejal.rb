@@ -1,4 +1,4 @@
-class Concejal < Persona
+class Concejal < Person
 
   #== Associations
   has_and_belongs_to_many :periodos

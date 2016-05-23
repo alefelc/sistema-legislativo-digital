@@ -275,7 +275,7 @@
     //update inicador Fisico o Juridico
     if (confirm("Desea editar el iniciador seleccionado")) {
       var id = $(this).data('id');
-      var iniciador = { persona: { nombre: $('#comunicacion-oficial #iniciador_nombre').val(),
+      var iniciador = { person: { nombre: $('#comunicacion-oficial #iniciador_nombre').val(),
                                     apellido: $('#comunicacion-oficial #iniciador_apellido').val(),
                                     nro_doc: $('#comunicacion-oficial #iniciador_doc').val(),
                                     telefono: $('#comunicacion-oficial #iniciador_tel').val(),
@@ -283,7 +283,7 @@
                                     domicilio: $('#comunicacion-oficial #iniciador_domicilio').val(),
                                     cuit: $('#comunicacion-oficial #iniciador_cuit').val() }};
       $.ajax({
-        url: "/personas/" + id,
+        url: "/persons/" + id,
         type: 'PATCH',
         data: iniciador ,
         dataType: 'json',
@@ -317,8 +317,8 @@
       var tipo = $('#comunicacion-oficial #iniciador_tipo').val();
       var url_iniciador;
       if (tipo == "Fisica" || tipo == "Juridica"){
-        url_iniciador = "/personas"
-        iniciador = { persona: {  type: $('#comunicacion-oficial #iniciador_tipo').val(),
+        url_iniciador = "/persons"
+        iniciador = { person: {  type: $('#comunicacion-oficial #iniciador_tipo').val(),
                   nombre: $('#comunicacion-oficial #iniciador_nombre').val(),
                   apellido: $('#comunicacion-oficial #iniciador_apellido').val(),
                   nro_doc: $('#comunicacion-oficial #iniciador_doc').val(),

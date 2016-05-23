@@ -1,6 +1,6 @@
 - fojas = @condonacion.get_fojas
 - asunto = @condonacion.get_asunto
-- iniciadores_personas = get_iniciadores_personas(@condonacion)
+- iniciadores_persons = get_iniciadores_persons(@condonacion)
 - iniciadores_reparticiones = get_iniciadores_reparticiones(@condonacion)
 - obs = @condonacion.get_observaciones
 
@@ -47,7 +47,7 @@
                   %td= to_date x.created_at
                   %td
                     Iniciado por:
-                    - iniciadores_personas.each do |b|
+                    - iniciadores_persons.each do |b|
                       .double-tab{ style: 'display: flex' }
                         = "#{ b[:apellido] }, #{ b[:nombre] }"
                         %p &nbsp;

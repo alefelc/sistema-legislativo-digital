@@ -1,4 +1,6 @@
 class AdministrativeFilesController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     case params[:type]
     when 'process'

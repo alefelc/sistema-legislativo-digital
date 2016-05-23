@@ -1,6 +1,6 @@
 class Tramite < ActiveRecord::Base
 	#== Associations
-	has_and_belongs_to_many :personas
+	has_and_belongs_to_many :persons
 	has_and_belongs_to_many :bloques
 	has_and_belongs_to_many :comisions
   has_and_belongs_to_many :organo_de_gobiernos
@@ -36,6 +36,6 @@ class Tramite < ActiveRecord::Base
   end
 
   def get_iniciadores
-    self.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }.to_a + self.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }.to_a + self.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }.to_a + self.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }.to_a + self.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre, bloque: x.try(:bloque).try(:denominacion) } }.to_a
+    self.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }.to_a + self.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }.to_a + self.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }.to_a + self.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }.to_a + self.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre, bloque: x.try(:bloque).try(:denominacion) } }.to_a
   end
 end

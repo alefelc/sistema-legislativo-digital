@@ -14,6 +14,6 @@ ActiveAdmin.register Concejal do
 # end
 
 # parent
-menu parent: "Personas", label: "Concejal"
+menu parent: 'Personas', label: 'Concejal'
 
 end

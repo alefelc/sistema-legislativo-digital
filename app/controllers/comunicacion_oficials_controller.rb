@@ -37,7 +37,7 @@ class ComunicacionOficialsController < ApplicationController
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
-        @comunicacion_oficial.personas << Persona.where(id: value["id"]) if ((value["type"] == "Concejal"))
+        @comunicacion_oficial.persons << Person.where(id: value["id"]) if ((value["type"] == "Concejal"))
         @comunicacion_oficial.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
         @comunicacion_oficial.dependencia_municipals << DependenciaMunicipal.where(id: value["id"]) if ((value["type"] == "DependenciaMunicipal"))
         @comunicacion_oficial.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
@@ -91,19 +91,19 @@ class ComunicacionOficialsController < ApplicationController
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
-      current_iniciadores_personas = []
+      current_iniciadores_persons = []
       current_iniciadores_organos = []
       current_iniciadores_areas = []
       current_iniciadores_bloques = []
       current_iniciadores_comisions = []
       current_iniciadores_reparticiones = []
       current_iniciadores_dependencias = []
-      old_iniciadores_personas = @comunicacion_oficial.personas.map{ |x| x.id }
+      old_iniciadores_persons = @comunicacion_oficial.persons.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores_personas.include?(value["id"])
-          @comunicacion_oficial.personas << Persona.where(id: value["id"]) if ((value["type"] == "Concejal"))
+        unless old_iniciadores_persons.include?(value["id"])
+          @comunicacion_oficial.persons << Person.where(id: value["id"]) if ((value["type"] == "Concejal"))
         end
-        current_iniciadores_personas << value["id"]
+        current_iniciadores_persons << value["id"]
       end
 
       old_iniciadores_organos = @comunicacion_oficial.organo_de_gobiernos.map{ |x| x.id }
@@ -157,7 +157,7 @@ class ComunicacionOficialsController < ApplicationController
       # delete iniciadores
       (old_iniciadores_organos - current_iniciadores_organos).each { |id| @comunicacion_oficial.organo_de_gobiernos.delete(id) }
       (old_iniciadores_areas - current_iniciadores_areas).each { |id| @comunicacion_oficial.areas.delete(id) }
-      (old_iniciadores_personas - current_iniciadores_personas).each { |id| @comunicacion_oficial.personas.delete(id) }
+      (old_iniciadores_persons - current_iniciadores_persons).each { |id| @comunicacion_oficial.persons.delete(id) }
       (old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @comunicacion_oficial.bloques.delete(id) }
       (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @comunicacion_oficial.comisions.delete(id) }
       (old_iniciadores_reparticiones - current_iniciadores_reparticiones).each { |id| @comunicacion_oficial.reparticion_oficials.delete(id) }
@@ -228,7 +228,7 @@ class ComunicacionOficialsController < ApplicationController
                                    "%#{params[:q]}%").first(7)
     conc = Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
-    ##per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    ##per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
     ##                               "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     organos = organos.as_json(methods: 'type')
     areas = areas.as_json(methods: 'type')

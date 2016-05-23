@@ -332,7 +332,7 @@
     //update inicador Fisico o Juridico
     if (confirm("Desea editar el iniciador seleccionado")) {
       var id = $(this).data('id');
-      var iniciador = { persona: { nombre: $('#proyecto #iniciador_nombre').val(),
+      var iniciador = { person: { nombre: $('#proyecto #iniciador_nombre').val(),
                                     apellido: $('#proyecto #iniciador_apellido').val(),
                                     nro_doc: $('#proyecto #iniciador_doc').val(),
                                     telefono: $('#proyecto #iniciador_tel').val(),
@@ -340,7 +340,7 @@
                                     domicilio: $('#proyecto #iniciador_domicilio').val(),
                                     cuit: $('#proyecto #iniciador_cuit').val() }};
       $.ajax({
-        url: "/personas/" + id,
+        url: "/persons/" + id,
         type: 'PATCH',
         data: iniciador ,
         dataType: 'json',
@@ -374,8 +374,8 @@
       var tipo = $('#proyecto #iniciador_tipo').val();
       var url_iniciador;
       if (tipo == "Fisica" || tipo == "Juridica"){
-        url_iniciador = "/personas"
-        iniciador = { persona: {  type: $('#proyecto #iniciador_tipo').val(),
+        url_iniciador = "/persons"
+        iniciador = { person: {  type: $('#proyecto #iniciador_tipo').val(),
                   nombre: $('#proyecto #iniciador_nombre').val(),
                   apellido: $('#proyecto #iniciador_apellido').val(),
                   nro_doc: $('#proyecto #iniciador_doc').val(),

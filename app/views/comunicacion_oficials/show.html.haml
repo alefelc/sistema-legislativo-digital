@@ -6,7 +6,7 @@
 - iniciadores_dependencias = get_iniciadores_dependencias(@comunicacion_oficial)
 - iniciadores_bloques = get_iniciadores_bloques(@comunicacion_oficial)
 - iniciadores_comisions = get_iniciadores_comisions(@comunicacion_oficial)
-- iniciadores_personas = get_iniciadores_personas(@comunicacion_oficial)
+- iniciadores_persons = get_iniciadores_persons(@comunicacion_oficial)
 - obs = @comunicacion_oficial.get_observaciones
 
 #comunicacion-oficial-show
@@ -81,7 +81,7 @@
                           = d[:denominacion].to_s
                           %p &nbsp;
                           .subtitle (Dependencia Municipal)
-                      - iniciadores_personas.each do |b|
+                      - iniciadores_persons.each do |b|
                         .double-tab{ style: 'display: flex' }
                           = "#{ b[:type] }: #{ b[:apellido] }, #{ b[:nombre] }"
                           %p &nbsp;

@@ -35,7 +35,7 @@
                     %ul.dropdown-menu
                       / User image
                       %li.user-header
-                        %h4 Usuario Actual
+                        %h4= current_user.person.full_name
                       / Menu Body
                       / Before this check if the current user is an administrator
                       %li.user-body

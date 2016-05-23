@@ -128,10 +128,8 @@ ActiveAdmin.setup do |config|
   # config.comments_registration_name = 'AdminComment'
 
   # == Batch Actions
-  #
-  # Enable and disable Batch Actions
-  #
-  config.batch_actions = true
+  # Disable Batch Actions
+  config.batch_actions = false
 
   # == Controller Filters
   #

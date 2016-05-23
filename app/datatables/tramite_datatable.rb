@@ -48,13 +48,13 @@ class TramiteDatatable < AjaxDatatablesRails::Base
     iniciadores_bloques = tra.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
     iniciadores_bloques.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end  
+    end
     iniciadores_comisions = tra.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
     iniciadores_comisions.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end
-    iniciadores_personas = tra.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_personas.each do |b|
+    iniciadores_persons = tra.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_persons.each do |b|
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
     iniciadores_reparticiones = tra.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
@@ -67,7 +67,7 @@ class TramiteDatatable < AjaxDatatablesRails::Base
     end
 
     resp
-  end  
+  end
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
@@ -90,9 +90,9 @@ class TramiteDatatable < AjaxDatatablesRails::Base
       else
         query = ""
         tramite = tramite.where(query)
-      end  
+      end
     end
-    tramite.includes(:bloques).includes(:comisions).includes(:personas)
+    tramite.includes(:bloques).includes(:comisions).includes(:persons)
   end
 
   def per_page

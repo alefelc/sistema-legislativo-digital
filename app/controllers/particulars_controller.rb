@@ -37,7 +37,7 @@ class ParticularsController < ApplicationController
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|
-        @particular.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica"))
+        @particular.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica"))
       end
     end
 
@@ -85,15 +85,15 @@ class ParticularsController < ApplicationController
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
-      current_iniciadores_personas = []
+      current_iniciadores_persons = []
       current_iniciadores_bloques = []
       current_iniciadores_comisions = []
-      old_iniciadores_personas = @particular.personas.map{ |x| x.id }
+      old_iniciadores_persons = @particular.persons.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
-        unless old_iniciadores_personas.include?(value["id"])
-          @particular.personas << Persona.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica"))
+        unless old_iniciadores_persons.include?(value["id"])
+          @particular.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica"))
         end
-        current_iniciadores_personas << value["id"]
+        current_iniciadores_persons << value["id"]
       end
 
       ##old_iniciadores_bloques = @particular.bloques.map{ |x| x.id }
@@ -113,7 +113,7 @@ class ParticularsController < ApplicationController
       ##end
 
       # delete iniciadores
-      (old_iniciadores_personas - current_iniciadores_personas).each { |id| @particular.personas.delete(id) }
+      (old_iniciadores_persons - current_iniciadores_persons).each { |id| @particular.persons.delete(id) }
       ##(old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @particular.bloques.delete(id) }
       ##(old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @particular.comisions.delete(id) }
     end
@@ -172,7 +172,7 @@ class ParticularsController < ApplicationController
     ##                               "%#{params[:q]}%").first(7)
     ##bloques = Bloque.where("denominacion ilike ?",
     ##                               "%#{params[:q]}%").first(7)
-    per = Persona.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).where.not(type: "Concejal").first(7)
     ##com = com.as_json(methods: 'type')
     ##bloques = bloques.as_json(methods: 'type')

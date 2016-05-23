@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512154522) do
+ActiveRecord::Schema.define(version: 20160523142249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,14 @@ ActiveRecord::Schema.define(version: 20160512154522) do
   add_index "comisions_despachos", ["comision_id"], name: "index_comisions_despachos_on_comision_id", using: :btree
   add_index "comisions_despachos", ["despacho_id"], name: "index_comisions_despachos_on_despacho_id", using: :btree
 
+  create_table "comisions_people", id: false, force: :cascade do |t|
+    t.integer "comision_id"
+    t.integer "concejal_id"
+  end
+
+  add_index "comisions_people", ["comision_id"], name: "index_comisions_people_on_comision_id", using: :btree
+  add_index "comisions_people", ["concejal_id"], name: "index_comisions_people_on_concejal_id", using: :btree
+
   create_table "comisions_periodos", id: false, force: :cascade do |t|
     t.integer "comision_id"
     t.integer "periodo_id"
@@ -193,14 +201,6 @@ ActiveRecord::Schema.define(version: 20160512154522) do
 
   add_index "comisions_periodos", ["comision_id"], name: "index_comisions_periodos_on_comision_id", using: :btree
   add_index "comisions_periodos", ["periodo_id"], name: "index_comisions_periodos_on_periodo_id", using: :btree
-
-  create_table "comisions_personas", id: false, force: :cascade do |t|
-    t.integer "comision_id"
-    t.integer "concejal_id"
-  end
-
-  add_index "comisions_personas", ["comision_id"], name: "index_comisions_personas_on_comision_id", using: :btree
-  add_index "comisions_personas", ["concejal_id"], name: "index_comisions_personas_on_concejal_id", using: :btree
 
   create_table "comisions_tramites", id: false, force: :cascade do |t|
     t.integer "comision_id"
@@ -440,33 +440,7 @@ ActiveRecord::Schema.define(version: 20160512154522) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "periodos", force: :cascade do |t|
-    t.date     "desde"
-    t.date     "hasta"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "periodos_personas", id: false, force: :cascade do |t|
-    t.integer "concejal_id"
-    t.integer "periodo_id"
-  end
-
-  add_index "periodos_personas", ["concejal_id"], name: "index_periodos_personas_on_concejal_id", using: :btree
-  add_index "periodos_personas", ["periodo_id"], name: "index_periodos_personas_on_periodo_id", using: :btree
-
-  create_table "personals", force: :cascade do |t|
-    t.string   "nombre"
-    t.string   "apellido"
-    t.string   "nro_doc"
-    t.string   "telefono"
-    t.string   "email"
-    t.string   "domicilio"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "personas", force: :cascade do |t|
+  create_table "people", force: :cascade do |t|
     t.string   "nombre"
     t.string   "apellido"
     t.integer  "tipo_doc"
@@ -482,15 +456,41 @@ ActiveRecord::Schema.define(version: 20160512154522) do
     t.integer  "cuit"
   end
 
-  add_index "personas", ["bloque_id"], name: "index_personas_on_bloque_id", using: :btree
+  add_index "people", ["bloque_id"], name: "index_people_on_bloque_id", using: :btree
 
-  create_table "personas_tramites", id: false, force: :cascade do |t|
-    t.integer "persona_id"
+  create_table "people_periodos", id: false, force: :cascade do |t|
+    t.integer "concejal_id"
+    t.integer "periodo_id"
+  end
+
+  add_index "people_periodos", ["concejal_id"], name: "index_people_periodos_on_concejal_id", using: :btree
+  add_index "people_periodos", ["periodo_id"], name: "index_people_periodos_on_periodo_id", using: :btree
+
+  create_table "people_tramites", id: false, force: :cascade do |t|
+    t.integer "person_id"
     t.integer "tramite_id"
   end
 
-  add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
-  add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
+  add_index "people_tramites", ["person_id"], name: "index_people_tramites_on_person_id", using: :btree
+  add_index "people_tramites", ["tramite_id"], name: "index_people_tramites_on_tramite_id", using: :btree
+
+  create_table "periodos", force: :cascade do |t|
+    t.date     "desde"
+    t.date     "hasta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "personals", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "apellido"
+    t.string   "nro_doc"
+    t.string   "telefono"
+    t.string   "email"
+    t.string   "domicilio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"
@@ -516,19 +516,19 @@ ActiveRecord::Schema.define(version: 20160512154522) do
   add_index "reparticion_oficials_tramites", ["reparticion_oficial_id"], name: "index_reparticion_oficials_tramites_on_reparticion_oficial_id", using: :btree
   add_index "reparticion_oficials_tramites", ["tramite_id"], name: "index_reparticion_oficials_tramites_on_tramite_id", using: :btree
 
-  create_table "rols", force: :cascade do |t|
-    t.string   "tipo"
+  create_table "roles", force: :cascade do |t|
+    t.string   "rol_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "rols_users", id: false, force: :cascade do |t|
+  create_table "roles_users", id: false, force: :cascade do |t|
     t.integer "user_id"
-    t.integer "rol_id"
+    t.integer "role_id"
   end
 
-  add_index "rols_users", ["rol_id"], name: "index_rols_users_on_rol_id", using: :btree
-  add_index "rols_users", ["user_id"], name: "index_rols_users_on_user_id", using: :btree
+  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
+  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "seccions", force: :cascade do |t|
     t.string   "nombre"
@@ -601,12 +601,12 @@ ActiveRecord::Schema.define(version: 20160512154522) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "persona_id"
+    t.integer  "person_id"
     t.integer  "personal_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["persona_id"], name: "index_users_on_persona_id", using: :btree
+  add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
   add_index "users", ["personal_id"], name: "index_users_on_personal_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

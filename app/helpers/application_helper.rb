@@ -197,11 +197,11 @@ module ApplicationHelper
     case tramite.type
     when "Condonacion"
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
-      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
-      iniciadores = reparticiones + personas
+      persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
+      iniciadores = reparticiones + persons
     when "Peticion"
-      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
-      iniciadores = personas
+      persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
+      iniciadores = persons
     when "Proyecto"
       bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
       comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : []
@@ -209,8 +209,8 @@ module ApplicationHelper
       org_gobiernos = tramite.organo_de_gobiernos.present? ? build_json_organo_de_gobiernos_select2(tramite.organo_de_gobiernos) : []
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
       dependencias = tramite.dependencia_municipals.present? ? build_json_dependencias_select2(tramite.dependencia_municipals) : []
-      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
-      iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + personas
+      persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
+      iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + persons
     when "ComunicacionOficial"
       bloques = tramite.bloques.present? ? build_json_bloques_select2(tramite.bloques) : []
       comisiones = tramite.comisions.present? ? build_json_comisions_select2(tramite.comisions) : []
@@ -218,8 +218,8 @@ module ApplicationHelper
       org_gobiernos = tramite.organo_de_gobiernos.present? ? build_json_organo_de_gobiernos_select2(tramite.organo_de_gobiernos) : []
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
       dependencias = tramite.dependencia_municipals.present? ? build_json_dependencias_select2(tramite.dependencia_municipals) : []
-      personas = tramite.personas.present? ? build_json_iniciadores(tramite.personas) : []
-      iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + personas
+      persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
+      iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + persons
     else
     end
     iniciadores

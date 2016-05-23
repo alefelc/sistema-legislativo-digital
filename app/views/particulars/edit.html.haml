@@ -253,7 +253,7 @@
     //update inicador Fisico o Juridico
     if (confirm("Desea editar el iniciador seleccionado")) {
       var id = $(this).data('id');
-      var iniciador = { persona: { nombre: $('#particular #iniciador_nombre').val(),
+      var iniciador = { person: { nombre: $('#particular #iniciador_nombre').val(),
                 apellido: $('#particular #iniciador_apellido').val(),
                 nro_doc: $('#particular #iniciador_doc').val(),
                 telefono: $('#particular #iniciador_tel').val(),
@@ -261,7 +261,7 @@
                 domicilio: $('#particular #iniciador_domicilio').val(),
                 cuit: $('#particular #iniciador_cuit').val() }};
       $.ajax({
-        url: "/personas/" + id,
+        url: "/persons/" + id,
         type: 'PATCH',
         data: iniciador ,
         dataType: 'json',
@@ -291,7 +291,7 @@
   $('#particular #add_iniciador').on('click', function(event) {
     //create iniciador
     if (confirm("Desea crear el iniciador")) {
-      var iniciador = { persona: {  type: $('#particular #iniciador_tipo').val(),
+      var iniciador = { person: {  type: $('#particular #iniciador_tipo').val(),
                 nombre: $('#particular #iniciador_nombre').val(),
                 apellido: $('#particular #iniciador_apellido').val(),
                 nro_doc: $('#particular #iniciador_doc').val(),
@@ -300,7 +300,7 @@
                 domicilio: $('#particular #iniciador_domicilio').val(),
                 cuit: $('#particular #iniciador_cuit').val() }};
       $.ajax({
-        url: "/personas",
+        url: "/persons",
         type: 'POST',
         data: iniciador ,
         dataType: 'json',

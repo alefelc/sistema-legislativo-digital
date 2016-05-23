@@ -39,10 +39,10 @@ class ParticularDatatable < AjaxDatatablesRails::Base
 
   def get_iniciadores part
     resp = ''
-    iniciadores_personas = part.personas.map do |x|
+    iniciadores_persons = part.persons.map do |x|
       { type: x.type, apellido: x.apellido, nombre: x.nombre }
     end
-    iniciadores_personas.each do |b|
+    iniciadores_persons.each do |b|
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
 
@@ -83,7 +83,7 @@ class ParticularDatatable < AjaxDatatablesRails::Base
         particular = particular.where(query)
       end
     end
-    particular.includes(:bloques).includes(:comisions).includes(:personas)
+    particular.includes(:bloques).includes(:comisions).includes(:persons)
   end
 
   def per_page

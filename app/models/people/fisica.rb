@@ -1,0 +1,2 @@
+class Fisica < Person
+end

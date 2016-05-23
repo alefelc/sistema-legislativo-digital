@@ -6,7 +6,7 @@
 - iniciadores_dependencias = get_iniciadores_dependencias(@proyecto)
 - iniciadores_bloques = get_iniciadores_bloques(@proyecto)
 - iniciadores_comisions = get_iniciadores_comisions(@proyecto)
-- iniciadores_personas = get_iniciadores_personas(@proyecto)
+- iniciadores_persons = get_iniciadores_persons(@proyecto)
 - obs = @proyecto.get_observaciones
 
 #proyecto-show
@@ -81,7 +81,7 @@
                           = d[:denominacion].to_s
                           %p &nbsp;
                           .subtitle (Dependencia Municipal)
-                      - iniciadores_personas.each do |b|
+                      - iniciadores_persons.each do |b|
                         .double-tab{ style: 'display: flex' }
                           = type_name_initiator b
                           %p &nbsp;

@@ -7,24 +7,24 @@ module CondonacionsHelper
     ]
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
 
-  def get_iniciadores_bloques cond
-    cond.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }  
+  def get_iniciadores_bloques(cond)
+    cond.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
   end
 
-  def get_iniciadores_comisions cond
+  def get_iniciadores_comisions(cond)
     cond.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
   end
 
-  def get_iniciadores_reparticiones cond
+  def get_iniciadores_reparticiones(cond)
     cond.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
   end
 
-  def get_iniciadores_personas cond
-    cond.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }  
+  def get_iniciadores_persons(cond)
+    cond.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
   end
 
 end

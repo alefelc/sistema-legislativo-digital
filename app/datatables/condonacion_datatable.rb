@@ -43,8 +43,8 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
     iniciadores_reparticions.each do |b|
       resp = "#{resp}#{b[:type]}: #{b[:denominacion]};\n"
     end
-    iniciadores_personas = cond.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_personas.each do |b|
+    iniciadores_persons = cond.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_persons.each do |b|
       resp = "#{resp}#{b[:type]}: #{b[:apellido]}, #{b[:nombre]};\n"
     end
     resp
@@ -84,7 +84,7 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
         condonacion = condonacion.where(query)
       end
     end
-    condonacion.includes(:bloques).includes(:comisions).includes(:personas)
+    condonacion.includes(:bloques).includes(:comisions).includes(:persons)
   end
 
   def per_page

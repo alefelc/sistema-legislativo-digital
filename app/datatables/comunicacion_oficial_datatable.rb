@@ -53,8 +53,8 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
     iniciadores_comisions.each do |b|
       resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
     end
-    iniciadores_personas = com.personas.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_personas.each do |b|
+    iniciadores_persons = com.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+    iniciadores_persons.each do |b|
       resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
     end
     iniciadores_reparticiones = com.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
@@ -104,7 +104,7 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
         comunicacion_oficial = comunicacion_oficial.where(query)
       end
     end
-    comunicacion_oficial.includes(:bloques).includes(:comisions).includes(:personas)
+    comunicacion_oficial.includes(:bloques).includes(:comisions).includes(:persons)
   end
 
   def per_page
