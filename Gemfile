@@ -76,6 +76,9 @@ gem 'kaminari', '0.16.3'
 # Bootstrap Multiselect v0.9.13
 gem 'bootstrap-multiselect-rails', '0.9.9'
 
+# A beautiful replacement for Javascript's "Alert"
+gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -104,6 +107,7 @@ group :development do
   # Use MySql legacy database
   gem 'mysql2', '0.4.1'
 end
+
 
 # This is required for deploy to heroku
 # ruby '2.2.2'
