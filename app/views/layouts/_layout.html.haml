@@ -59,17 +59,16 @@
                       / Before this check if the current user is an administrator
                       / Menu Footer
                       %li.user-footer
-                        = form_tag session_path(:user) do
+                        = form_tag user_session_path, remote: true, id: 'user-form' do
                           = label_tag 'Usuario'
-                          = text_field_tag 'user[email]', nil, class: 'form-control'
+                          = text_field_tag 'user[email]', nil, class: 'form-control', type: :email, placeholder: 'Ingrese email'
                           = label_tag 'Contraseña'
-                          = password_field_tag 'user[password]', nil, class: 'form-control'
+                          = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Ingrese contraseña'
                           //= check_box_tag 'user[remember_me]'
                           //= label_tag 'user[remember_me]', 'Remember me'
                           %span.pull-right{ style: 'padding-top: 10px' }
-                            %button.btn.btn-success Entrar
+                            %button.btn.btn-success#log-in{ type: 'submit' } Entrar
                           //= link_to "Olvidaste la contraseña?", new_password_path(:usuario)
-
 
     / ===============================================
     / Left side column. contains the sidebar
@@ -199,11 +198,24 @@
 :javascript
 
 $(document).on('ready', function() {
+
+  $(document).on('ajax:success', '#user-form', function() {
+    window.location.reload();
+  });
+
+  $(document).on('ajax:error', '#user-form', function() {
+    swal({
+      title: 'Email o contraseña NO válidos',
+      text: 'Por favor, intente nuevamente',
+      type: 'error'
+    });
+  });
+
   $('#log-out').on('click', function(e) {
     $.ajax({
-      url: '/admin/logout',
+      url: '/users/sign_out',
       type: 'DELETE',
-      complete: function() { window.location.reload() }
+      success: function() { window.location.reload() }
     });
-  })
+  });
 });
