@@ -96,13 +96,17 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   def fetch_records
     comunicacion_oficial = ComunicacionOficial.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
-      unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]})"
-        comunicacion_oficial = comunicacion_oficial.where(query)
-      else
-        query = ""
-        comunicacion_oficial = comunicacion_oficial.where(query)
-      end
+      query = "(tramites.id::text ilike '%#{params[:sSearch]}%') OR " +
+      "(CONCAT(people.apellido, ' ', people.nombre) ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.asunto ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
+      "'%#{params[:sSearch]}%')"
+
+      persons_join = "LEFT JOIN people_tramites ON " +
+      "people_tramites.tramite_id = tramites.id LEFT JOIN " +
+      "people ON people.id = people_tramites.person_id"
+
+      comunicacion_oficial = comunicacion_oficial.where(query).joins persons_join
     end
     comunicacion_oficial.includes(:bloques).includes(:comisions).includes(:persons)
   end

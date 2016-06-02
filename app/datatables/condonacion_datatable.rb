@@ -76,13 +76,16 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   def fetch_records
     condonacion = Condonacion.page(page).per(per_page).order id: :desc
     if params[:sSearch].present?
-      unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]})"
-        condonacion = condonacion.where(query)
-      else
-        query = ''
-        condonacion = condonacion.where(query)
-      end
+      query = "(tramites.id::text ilike '%#{params[:sSearch]}%') OR " +
+      "(CONCAT(people.apellido, ' ', people.nombre) ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.asunto ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
+      "'%#{params[:sSearch]}%')"
+
+      persons_join = "LEFT JOIN people_tramites ON " +
+      "people_tramites.tramite_id = tramites.id LEFT JOIN " +
+      "people ON people.id = people_tramites.person_id"
+      condonacion = condonacion.where(query).joins(persons_join)
     end
     condonacion.includes(:bloques).includes(:comisions).includes(:persons)
   end

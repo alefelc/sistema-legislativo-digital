@@ -77,16 +77,21 @@ class DespachoDatatable < AjaxDatatablesRails::Base
   def fetch_records
     despacho = Despacho.page(page).per(per_page).order(id: :desc)
     if params[:sSearch].present?
-      unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]}) OR " +
-        "(expedientes.nro_exp = '#{params[:sSearch]}')"
-        despacho = despacho.where query
-      else
-        query = "(CONCAT(persons.apellido, ' ', persons.nombre) ilike " +
-        "'%#{params[:sSearch]}%') OR (comisions.denominacion ilike " +
-        "'%#{params[:sSearch]}%')"
-        despacho = despacho.where(query).joins(:concejals).joins :comisions
-      end
+      query = "(tramites.id::text ilike '%#{params[:sSearch]}%') OR " +
+      #{}"(expedientes.nro_exp::text ilike '#{params[:sSearch]}') OR " +
+      "(CONCAT(people.apellido, ' ', people.nombre) ilike " +
+      "'%#{params[:sSearch]}%') OR (comisions.denominacion ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
+      "'%#{params[:sSearch]}%')"
+
+      concejals_comisions_join = 'LEFT JOIN despachos_concejals ON ' +
+      'despachos_concejals.despacho_id = tramites.id LEFT JOIN people ON ' +
+      'people.id = despachos_concejals.concejal_id ' +
+      'LEFT JOIN comisions_despachos ON ' +
+      'comisions_despachos.despacho_id = tramites.id LEFT JOIN comisions ON ' +
+      'comisions.id = comisions_despachos.comision_id'
+
+      despacho = despacho.where(query).joins(concejals_comisions_join).uniq
     end
     despacho.includes(:circuitos).includes(:comisions).includes(:persons).includes(circuitos: [:expediente])
   end
