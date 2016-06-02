@@ -5,5 +5,5 @@ class Personal < ActiveRecord::Base
 
   def type
     "Personal"
-  end  
+  end
 end

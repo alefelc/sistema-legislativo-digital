@@ -17,10 +17,12 @@ module DespachosHelper
   end
 
   def dictamen_type(desp, exps)
-    EstadoExpediente.find_by(
-      ref_id: desp.id,
-      ref_type: desp.type,
-      circuito_id: exps.first.circuitos.find_by(nro: 0).id
-    ).try(:especificacion2)
+    if exps.present?
+      EstadoExpediente.find_by(
+        ref_id: desp.id,
+        ref_type: desp.type,
+        circuito_id: exps.first.circuitos.find_by(nro: 0).id
+      ).try(:especificacion2)
+    end
   end
 end

@@ -59,20 +59,22 @@
                         .subtitle (Repartición Oficial)
 
               - when '2'
-                - text = if (x.ref_type == 'Personal')
-                  - "#{ x.ref.apellido }, #{ x.ref.nombre }"
-                - else
-                  - x.ref.denominacion
+                - text = if x.ref.present?
+                  - if (x.ref_type == 'Personal')
+                    - "#{ x.ref.apellido }, #{ x.ref.nombre }"
+                  - elsif x.ref.class.superclass.name != 'Person'
+                    - x.ref.denominacion
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                   %td= to_date x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
-                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.created_at
-                  %td
-                    %span= 'Finalizado en '
-                    %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }", x.ref
+                - if x.ref.present?
+                  %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                    %td= to_date x.created_at
+                    %td
+                      %span= 'Finalizado en '
+                      %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }", x.ref
 
               - when '4' #caso para tramites finalizados pero q no terminan en expediente
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }

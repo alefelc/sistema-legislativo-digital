@@ -79,11 +79,12 @@
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
-                %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td.center= to_date x.created_at
-                  %td
-                    %span= 'Finalizado en '
-                    %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }" , x.ref
+                - if x.ref.present?
+                  %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
+                    %td.center= to_date x.created_at
+                    %td
+                      %span= 'Finalizado en '
+                      %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }" , x.ref
 
               - when '4' #caso para tramites finalizados pero q no terminan en expediente
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
