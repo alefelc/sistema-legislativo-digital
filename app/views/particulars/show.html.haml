@@ -46,13 +46,11 @@
                   %td
                     Iniciado por:
                     %p.single-tab
-                      - iniciadores_persona
-                   s.each do |b|
+                      - iniciadores_persons.each do |b|
                         .double-tab= "#{ b[:type] }: #{ b[:apellido] }, #{ b[:nombre] }"
 
               - when '2'
-                - text = if x.ref_type == 'Persona
-               l'
+                - text = if x.ref_type == 'Personal'
                   - "#{ x.ref.apellido }, #{ x.ref.nombre }"
                 - else
                   - x.ref.denominacion
