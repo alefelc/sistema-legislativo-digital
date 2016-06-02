@@ -9,7 +9,7 @@ class Tramite < ActiveRecord::Base
   has_and_belongs_to_many :areas
   has_many :estado_tramites
   has_many :expediente_administrativos
-  has_one :circuito
+  belongs_to :circuito
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
