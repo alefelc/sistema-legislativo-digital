@@ -5,7 +5,7 @@
       .modal-header
         %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
           %span{ 'aria-hidden': true } &times;
-        %h4#nuevoLabel.modal-title= "#{ t(".#{actionvar}") } #{ @despacho.id }"
+        %h4#nuevoLabel.modal-title= "#{t(".#{actionvar}")} #{@despacho.id}"
 
       = form_for @despacho, url: { action: actionvar } do |f|
         = hidden_field_tag :circuitos
@@ -15,7 +15,7 @@
           = render partial: 'body', locals: { f: f }
 
         .modal-footer
-          = f.submit t(".submit.#{ actionvar }"), class: 'btn btn-primary modal-submit'
+          = f.submit t(".submit.#{actionvar}"), class: 'btn btn-primary modal-submit'
 
 :javascript
   wi = $(window).width()-20;
@@ -242,9 +242,4 @@
     $('#despacho #states-table tbody').append(tr);
   }).on("change", function(e) {
     $('#despacho #derived-states').select2("val", "");
-  });
-
-  $("#special-date").on("click", function() {
-    $('#despacho_fecha').css('display', 'none')
-    $('#hidden_date').css('display', '')
   });

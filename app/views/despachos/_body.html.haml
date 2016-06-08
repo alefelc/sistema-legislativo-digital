@@ -15,17 +15,15 @@
                                        id: 'exped_token', type: "text",
                                        data: { load: prepopulate_exps_despacho(@despacho) } }
       .input-group
-        = f.label '', 'Fecha', { class: 'input-group-addon', id: 'basic-addon04' }
+        = f.label '', 'Fecha', { class: 'input-group-addon' }
         .row
-          .col-md-7
-            = f.text_field :fecha, { class: 'form-control', 'aria-describedby': 'basic-addon04', type: :date }
-            %div#hidden_date{ style: 'display: none' }
-              = date_select :fecha_especial, nil, { class: 'form-control',
-                                                    'aria-describedby': 'basic-addon04',
-                                                    type: :date }
           .col-md-4
-            %a#special-date.btn.btn-default
-              Fecha No Determinada
+            %input.form-control{ placeholder: 'Dia' }
+          .col-md-4
+            %input.form-control{ placeholder: 'Mes' }
+          .col-md-4
+            %input.form-control{ placeholder: 'Año' }
+            =# f.text_field :fecha, { class: 'form-control', 'aria-describedby': 'basic-addon04', type: :date }
       .input-group
         = f.label '', t('.comisions'), { class: 'input-group-addon', id: 'basic-addon4' }
         = f.select(:comisions, options_for_select(get_options_comisions()), {}, {multiple: 'multiple', style: 'width:100%', id: 'despacho_comisions', data: { load: prepopulate_comisions(@despacho) } })

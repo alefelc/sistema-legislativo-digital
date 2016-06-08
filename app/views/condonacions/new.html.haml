@@ -15,13 +15,18 @@
                 %li.active{ role: 'presentation' }
                   %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
                     Nuevo iniciador
+                %li{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', href: '#administrative-files', role: 'tab' }
+                    Expedientes administrativos
               .tab-content{ style: 'padding-top:1%' }
                 .tab-pane.active#new-initiator{ role: 'tabpanel' }
                   #second-column
                     = render '/shared/initiator_form'
+                .tab-pane#administrative-files{ role: 'tabpanel' }
+                  = render '/shared/administrative_file_form'
 
         .modal-footer
-          = f.submit 'Crear condonación', { class: 'btn btn-primary modal-submit', id: 'btn-submit-condonacion' }
+          = f.submit 'Crear condonación', { class: 'btn btn-primary modal-submit' }
 
 :javascript
 
@@ -43,8 +48,6 @@
       if (style.type == "ReparticionOficial" || style.type == "Comision" || style.type == "Bloque"){
         iniciador = style.denominacion;
         return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "' data-denominacion='"+ style.denominacion + "'>" + iniciador + "</div>";
-      }else{
-        //otros casos
       }
     }
   }
@@ -91,7 +94,7 @@
       cache: true
     }
   }).on("select2-focus", function(e) {
-      $('#btn_add_iniciador').removeAttr("disabled");
+      //$('#btn_add_iniciador').removeAttr("disabled");
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object

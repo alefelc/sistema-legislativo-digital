@@ -26,13 +26,13 @@
                   = render '/shared/administrative_file_form'
 
         .modal-footer
-          = f.submit 'Guardar cambios Condonación', { class: 'btn btn-primary modal-submit', id: 'btn-submit-condonacion' }
+          = f.submit 'Guardar cambios Condonación', { class: 'btn btn-primary modal-submit' }
 
 :javascript
 
   ReactRailsUJS.mountComponents('#modalcond');
 
-  wi = $(window).width()-20;
+  wi = $(window).width() - 20;
   margin = 10;
   $("#condonacion .modal-xs").css('width', wi);
   $("#condonacion .modal-xs").css('margin-left', margin);
