@@ -75,7 +75,7 @@
               %th.center{ width: '15%' } Fecha
               %th{ width: '85%' } Estado
           %tbody
-            - @expediente.estado_expedientes.includes(:circuito).order(fecha: :asc).each do |x|
+            - @expediente.estado_expedientes.order(:id).includes(:circuito).order(fecha: :asc).each do |x|
               - nro_c = x.circuito.nro
               - case x.tipo
               - when '1'
