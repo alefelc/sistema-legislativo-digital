@@ -16,12 +16,17 @@
                   %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
                     Nuevo iniciador
                 %li{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', href: '#states-panel', role: 'tab' }
+                    Estados
+                %li{ role: 'presentation' }
                   %a{ 'data-toggle' => 'tab', href: '#administrative-files', role: 'tab' }
                     Expedientes administrativos
               .tab-content{ style: 'padding-top:1%' }
                 .tab-pane.active#new-initiator{ role: 'tabpanel' }
                   #second-column
                     = render '/shared/initiator_form'
+                .tab-pane#states-panel{ role: 'tabpanel' }
+                  = render '/shared/derivated_states'
                 .tab-pane#administrative-files{ role: 'tabpanel' }
                   = render '/shared/administrative_file_form'
 
