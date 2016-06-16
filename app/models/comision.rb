@@ -10,5 +10,5 @@ class Comision < ActiveRecord::Base
 
   def type
     'Comision'
-  end  
+  end
 end
