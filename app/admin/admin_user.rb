@@ -18,7 +18,7 @@ ActiveAdmin.register AdminUser do
         elsif current_admin_user.email.split('@')[1] == 'invitado.com'
           super - %w[ destroy new create edit ]
         elsif current_admin_user.email.split('@')[1] == 'entrada.com'
-          super
+          super - %w[ destroy new create edit ]
         else
           super - %w[ show destroy new create edit ]
         end
