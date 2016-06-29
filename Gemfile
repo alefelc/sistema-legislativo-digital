@@ -79,6 +79,8 @@ gem 'bootstrap-multiselect-rails', '0.9.9'
 # A beautiful replacement for Javascript's "Alert"
 gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
 
+gem 'alertify-rails'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -105,7 +107,7 @@ group :development do
   # gem 'rack-mini-profiler', '0.9.7'
 
   # Use MySql legacy database
-  gem 'mysql2', '0.4.1'
+  #gem 'mysql2', '0.4.1'
 end
 
 

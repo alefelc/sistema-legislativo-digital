@@ -57,6 +57,7 @@ GEM
       tzinfo (~> 1.1)
     ajax-datatables-rails (0.3.1)
       railties (>= 3.1)
+    alertify-rails (0.2.0)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.3)
@@ -183,7 +184,6 @@ GEM
     mini_portile (0.6.2)
     minitest (5.8.0)
     multi_json (1.11.2)
-    mysql2 (0.4.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.0.2)
@@ -304,6 +304,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   ajax-datatables-rails (= 0.3.1)
+  alertify-rails
   awesome_print (= 1.6.1)
   bcrypt (~> 3.1.7)
   better_errors (= 2.1.1)
@@ -324,7 +325,6 @@ DEPENDENCIES
   jquery-rails (= 4.0.4)
   kaminari (= 0.16.3)
   meta_request (= 0.3.4)
-  mysql2 (= 0.4.1)
   pg (= 0.18.2)
   quiet_assets (= 1.1.0)
   rails (= 4.2.1)

@@ -13,4 +13,5 @@
 //= require react_ujs
 //= require components
 //= require sweetalert
+//= require alertify
 //= require_tree .
