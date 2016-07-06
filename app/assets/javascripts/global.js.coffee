@@ -17,7 +17,7 @@ $.extend $.fn.dataTable.defaults,
     "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros"
     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)"
     "sInfoPostFix":    ""
-    "sSearch":         "Buscar:"
+    "sSearch":         ""
     "sUrl":            ""
     "sInfoThousands":  ","
     "sLoadingRecords": "Cargando..."
@@ -29,6 +29,7 @@ $.extend $.fn.dataTable.defaults,
     "oAria":
       "sSortAscending":  ": Activar para ordenar la columna de manera ascendente"
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    "searchPlaceholder": "¿Qué desea buscar?"
 
 $.ctrl = (key, callback, args) ->
   isCtrl = false

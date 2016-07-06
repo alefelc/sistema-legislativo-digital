@@ -576,9 +576,6 @@ es:
       exp_adm: Expediente administrativo
       fojas_exp_adm: Fojas exp administrativo
 
-  datatable:
-    search: Ingrese búsqueda ...
-
   norma:
     confirm_remove: '¿Esta seguro que desea eliminar la norma? Esta acción no se puede deshacer.'
 
