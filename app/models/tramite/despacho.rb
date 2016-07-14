@@ -23,4 +23,10 @@ class Despacho < Tramite
     self.concejals
   end
 
+  def fecha=(date)
+    d = Date.parse(date)
+    self.dia = d.day
+    self.mes = d.month
+    self.anio = d.year
+  end
 end

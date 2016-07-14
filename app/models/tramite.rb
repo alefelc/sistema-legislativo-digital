@@ -9,7 +9,7 @@ class Tramite < ActiveRecord::Base
   has_and_belongs_to_many :areas
   has_many :estado_tramites
   has_many :expediente_administrativos
-  belongs_to :circuito
+  belongs_to :circuito # I think this is deprecated!!!
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?

@@ -1,7 +1,6 @@
 class Expediente < ActiveRecord::Base
 
   #= Associations
-  has_and_belongs_to_many :despachos, join_table: 'expedientes_despachos'
   has_many :expediente_administrativos
   has_many :circuitos
   has_and_belongs_to_many :tags
@@ -42,7 +41,8 @@ class Expediente < ActiveRecord::Base
   end
 
   def put_expediente_number
-    self.nro_exp = (Expediente.last.nro_exp.to_i + 1).to_s
+    last = Expediente.last
+    self.nro_exp = (last.nro_exp.to_i + 1).to_s if last.present?
   end
 
   def zero_circuit_by_default
