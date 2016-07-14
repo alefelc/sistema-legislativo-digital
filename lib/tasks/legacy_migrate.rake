@@ -313,66 +313,6 @@ namespace :legacy_migrate do
     puts "\nFinalizada carga de estructura del digesto\n"
   end
 
-  desc "Carga de las clasificaciones"
-  task clasificacion: :environment do
-    ## Ordenanza - Contenido
-    Clasificacion.create nombre: "General"
-    Clasificacion.create nombre: "Individual y meros actos administrativos"
-    Clasificacion.create nombre: "De Servicios Públicos"
-    Clasificacion.create nombre: "Otras"
-    Clasificacion.create nombre: "Alcance general"
-    Clasificacion.create nombre: "Alcance especial"
-    ## Ordenanza - Vigencia
-    Clasificacion.create nombre: "Dictada por razones de emergencia"
-    Clasificacion.create nombre: "Que contienen normas generales y permanentes"
-    Clasificacion.create nombre: "Que NO contienen normas generales y permanentes"
-    Clasificacion.create nombre: "Motivos subsisten"
-    Clasificacion.create nombre: "Normas generales"
-    Clasificacion.create nombre: "Normas no generales"
-    Clasificacion.create nombre: "Plazo determinado y cumplido"
-    Clasificacion.create nombre: "Plazo determinado y NO cumplido"
-    Clasificacion.create nombre: "Vigencia sujeta a condición resolutoria"
-    Clasificacion.create nombre: "Objeto agotado"
-    Clasificacion.create nombre: "Cumplida"
-    Clasificacion.create nombre: "NO cumplida"
-    # Ordenanza - Derog.
-    Clasificacion.create nombre: "Derogación sujeta a condición suspensiva"
-    Clasificacion.create nombre: "Derog. tácita"
-    Clasificacion.create nombre: "Derog. cumplida"
-    Clasificacion.create nombre: "Derog. NO cumplida"
-    # Ordenanza - Modif.
-    Clasificacion.create nombre: "Dispone texto ordenado"
-    ## Decreto - Contenido
-    Clasificacion.create nombre: "Autónomo"
-    # Clasificacion.create nombre: "Individual y meros actos administrativos"
-    # Clasificacion.create nombre: "De servicios públicos"
-    # Clasificacion.create nombre: "Otras"
-    # Clasificacion.create nombre: "Alcance general"
-    # Clasificacion.create nombre: "Alcance especial"
-    # Decreto - vigencia
-    Clasificacion.create nombre: "De necesidad o urgencia"
-    Clasificacion.create nombre: "Dictado ad referendum"
-    # Clasificacion.create nombre: "Que contienen normas generales y permanentes"
-    # Clasificacion.create nombre: "Que NO contienen normas generales y permanentes"
-    # Clasificacion.create nombre: "Motivos subsisten"
-    # Clasificacion.create nombre: "Normas generales"
-    # Clasificacion.create nombre: "Normas no generales"
-    # Clasificacion.create nombre: "Plazo determinado y cumplido"
-    # Clasificacion.create nombre: "Plazo determinado y NO cumplido"
-    # Clasificacion.create nombre: "Vigencia sujeta a condición resolutoria"
-    # Clasificacion.create nombre: "Objeto agotado"
-    # Clasificacion.create nombre: "Cumplida"
-    # Clasificacion.create nombre: "NO cumplida"
-    # Decreto - derog.
-    # Clasificacion.create nombre: "Derogación sujeta a condición suspensiva"
-    # Clasificacion.create nombre: "Derog. tácita"
-    # Clasificacion.create nombre: "Derog. cumplida"
-    # Clasificacion.create nombre: "Derog. NO cumplida"
-    # Decreto - modif.
-    # Clasificacion.create nombre: "Dispone texto ordenado"
-    puts "\nFinalizada carga de clasificaciones de las normas\n"
-  end
-
   desc "Carga de las ordenanzas"
   task ordenanza: :environment do
     # requerimos los modelos legacy
@@ -424,7 +364,7 @@ namespace :legacy_migrate do
         if exp.present?
           ord.circuitos << exp.circuitos.find_by(nro: 0)
         else
-          puts "Soy ecxpediente nil! #{o.IND_EXP}"
+          puts "Soy expediente nil! #{o.IND_EXP}"
         end
       end
 
@@ -778,22 +718,6 @@ namespace :legacy_migrate do
     puts "\nFinalizada carga tags a normas\n"
   end
 
-  desc "Carga de areas"
-  task areas: :environment do
-    Area.create denominacion: "PRESIDENCIA", codigo: "PRES"
-    Area.create denominacion: "SECRETARIA", codigo: "SEC"
-    Area.create denominacion: "DIRECCION GRAL LEGISLATIVA", codigo: "LEG"
-    Area.create denominacion: "DIRECCION GRAL ADMINISTRATIVA", codigo: "ADM"
-    Area.create denominacion: "DIRECCION GENERAL DE COMISIONES Y RECURSOS HUMANOS", codigo: "RRHH"
-    Area.create denominacion: "DIRECCION GRAL DE INFORMATICA", codigo: "INF"
-    Area.create denominacion: "CONTABILIDAD", codigo: "CONT"
-    Area.create denominacion: "MESA DE ENTRADAS", codigo: "MESA"
-    Area.create denominacion: "ARCHIVO", codigo: "ARCH"
-    Area.create denominacion: "PRENSA", codigo: "PREN"
-    Area.create denominacion: "ACCION SOCIAL", codigo: "SOC"
-    puts "\nFinalizada carga areas\n"
-  end
-
   desc "Carga de personal"
   task personal: :environment do
 
@@ -802,80 +726,13 @@ namespace :legacy_migrate do
     # Iteramos por todos los concejales legacy
     LegacyConcejal.all.each do |c|
       print "."
-      if c.PERIODOD == 2012  
+      if c.PERIODOD == 2012
         Personal.create do |x|
           x.nombre = c.NOMBRE
           x.apellido = c.APELLIDO
         end
-      end  
+      end
     end
-
-    Personal.create apellido: "ANDRADA", nombre:"MARIA CELESTE"
-    Personal.create apellido: "ARIAS", nombre:"ALDO"
-    Personal.create apellido: "ARIAS", nombre:"MARCELA ROMINA SOLEDAD"
-    Personal.create apellido: "ARRIETA", nombre:"VICTOR MANUEL"
-    Personal.create apellido: "BARZOLA", nombre:"FRANCO MAXIMILIANO"
-    Personal.create apellido: "BAUDINO", nombre:"MARIA DEL VALLE"
-    Personal.create apellido: "BERTOLA", nombre:"NERINA NATALIA"
-    Personal.create apellido: "BOTTARINI", nombre:"AGUSTIN"
-    Personal.create apellido: "BRICCA", nombre:"DIEGO OSCAR"
-    Personal.create apellido: "BRINGAS", nombre:"HECTOR ALFREDO"
-    Personal.create apellido: "BRINGAS", nombre:"CLAUDIA  BEATRIZ"
-    Personal.create apellido: "BRITO", nombre:"MARINA SOLEDAD"
-    Personal.create apellido: "CANDELLERO", nombre:"CARINA"
-    Personal.create apellido: "CANEDO", nombre:"EDUARDO ARIEL CEFERINO"
-    Personal.create apellido: "CAZZOLA", nombre:"JAVIER"
-    Personal.create apellido: "CLAVEL", nombre:"GUILLERMO JOSE"
-    Personal.create apellido: "CORIA", nombre:"DAVID ANIBAL"
-    Personal.create apellido: "DE UNDURRAGA", nombre:"JOSE MARIA"
-    Personal.create apellido: "DELBORGO", nombre:"FEDERICO GASTON"
-    Personal.create apellido: "DEMASI", nombre:"ADRIAN MARTIN"
-    Personal.create apellido: "DEMO", nombre:"PABLO DANIEL"
-    Personal.create apellido: "ECHENIQUE", nombre:"MARIA ROSA"
-    Personal.create apellido: "EZCURRA", nombre:"JOSEFINA"
-    Personal.create apellido: "FARIAS", nombre:"RITA PAMELA"
-    Personal.create apellido: "FELICI", nombre:"CLAUDIA ISABEL"
-    Personal.create apellido: "FERREYRA", nombre:"ERNESTO LUIS"
-    Personal.create apellido: "FUNES", nombre:"EUGENIO SIMON"
-    Personal.create apellido: "GIMENEZ", nombre:"CAROLINA ANDREA"
-    Personal.create apellido: "GORDO", nombre:"PAOLA YANINA"
-    Personal.create apellido: "JUAREZ ORTEGA", nombre:"MARTIN EZEQUIEL"
-    Personal.create apellido: "JUSTRIBO", nombre:"ALBERTO CARLOS ARIEL"
-    Personal.create apellido: "LUCENA VIDORET", nombre:"MARIANO"
-    Personal.create apellido: "LUNA", nombre:"MIGUEL ALEJANDRO"
-    Personal.create apellido: "LUNA", nombre:"LUIS ALBERTO"
-    Personal.create apellido: "MAGOIA", nombre:"HERNAN FABRICIO"
-    Personal.create apellido: "MARCHIO", nombre:"DANIEL ESTEBAN"
-    Personal.create apellido: "MARCIN ROSAS", nombre:"JORGE OMAR"
-    Personal.create apellido: "MATUS", nombre:"CINTIA DEL ROSARIO"
-    Personal.create apellido: "MAZZETTI", nombre:"VANINA ISABEL"
-    Personal.create apellido: "NALLI", nombre:"MARIA ANTONELLA"
-    Personal.create apellido: "NAVARRO", nombre:"MARIO ALBERTO"
-    Personal.create apellido: "ORLANDO", nombre:"GRACIANA ELIZABETH"
-    Personal.create apellido: "PEREZ", nombre:"LUCAS JAVIER"
-    Personal.create apellido: "RAMOS", nombre:"MIGUEL ANGEL"
-    Personal.create apellido: "RE", nombre:"AGUSTIN"
-    Personal.create apellido: "RODRIGUEZ", nombre:"ALEJANDRO"
-    Personal.create apellido: "SANCHEZ", nombre:"LILIANA MARIA DEL CARMEN"
-    Personal.create apellido: "SASSAROLI", nombre:"DANIELA ALEJANDRA"
-    Personal.create apellido: "SETTO", nombre:"ANA MARIA"
-    Personal.create apellido: "SOTTILE ODIERNO", nombre:"MARIA CECILIA"
-    Personal.create apellido: "STEIGERWALD", nombre:"GUILLERMO JAVIER"
-    Personal.create apellido: "SUAREZ GONZALEZ", nombre:"SANTIAGO MARIA"
-    Personal.create apellido: "TESIO", nombre:"JEREMIAS EMANUEL"
-    Personal.create apellido: "TORRES", nombre:"RITA MAGALI"
-    Personal.create apellido: "VALDANO", nombre:"CHRISTIAN"
-    Personal.create apellido: "ADMIN", nombre:"ADMIN"
-    Personal.create apellido: "ABELLA", nombre:"RODRIGO"
-    Personal.create apellido: "GASPARRINI", nombre:"LEONEL"
-    puts "\nFinalizada carga personal\n"
-  end
-
-  desc "Carga de organos de gobierno"
-  task gobierno: :environment do
-    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL (DEM)", codigo: "DEM"
-    OrganoDeGobierno.create denominacion: "CONCEJO DELIBERANTE RIO CUARTO", codigo: "CONC"
-    puts "\nFinalizada carga organos de gobierno\n"
   end
 
   ### QUEDAN PENDIENTES!!!

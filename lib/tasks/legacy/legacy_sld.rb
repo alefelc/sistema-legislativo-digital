@@ -1,49 +1,40 @@
 # Model tramites
-
 class LegacyAdminUsers < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :admin_users
-end
+end#YA ESTA
 
 class LegacyComisions < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :comisions
-end
+end#YA ESTA
 
 class LegacyComisionsDespachos < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :comisions_despachos
-end
+end#YA ESTA
 
 class LegacyDespachosConcejals < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :despachos_concejals
-end
+end#YA ESTA
 
 class LegacyExpedientes < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :expedientes
-end
+end#YA ESTA
 
 class LegacyExpedientesDespachos < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :expedientes_despachos
-end
+end#YA ESTA
 
 class LegacyPersonas < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :personas
-end
+end#YA ESTA
 
 class LegacyTramite < ActiveRecord::Base
   establish_connection :sld_legacy
-  ActiveRecord::Base.record_timestamps = false
   self.table_name = :tramites
-end
+end#YA ESTA
