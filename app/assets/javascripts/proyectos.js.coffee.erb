@@ -3,7 +3,6 @@ $(document).on 'ready page:load', ->
     ajaxSource: $('#proyecto-table').data('source')
     fnInitComplete: ->
       $('#proyecto div.dataTables_filter input').focus()
-      $('#proyecto div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
       $('#btn-new').prependTo('#proyecto-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->

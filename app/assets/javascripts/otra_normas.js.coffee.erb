@@ -3,7 +3,6 @@ $(document).on 'ready page:load', ->
     ajaxSource: $('#otra_norma-table').data('source')
     fnInitComplete: ->
       $('#otra_norma div.dataTables_filter input').focus()
-      $('#otra_norma div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
       $('#btn-new').prependTo('#otra_norma-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->

@@ -64,10 +64,10 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
         end
       end
     end
-    iniciador = iniciador.upcase[0..-4]
+    iniciador =  iniciador.present? ? iniciador.upcase[0..-4] : ''
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.upcase}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
+      "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.try(:upcase)}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
       "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>"
     else
       ''

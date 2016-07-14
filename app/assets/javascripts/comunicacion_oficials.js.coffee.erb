@@ -3,7 +3,6 @@ $(document).on 'ready page:load', ->
     ajaxSource: $('#comunicacion-oficial-table').data('source')
     fnInitComplete: ->
       $('#comunicacion-oficial div.dataTables_filter input').focus()
-      $('#comunicacion-oficial div.dataTables_filter input').attr('placeholder', "<%= I18n.t('.datatable.search') %>")
       $('#btn-new').prependTo('#comunicacion-oficial-table_wrapper .col-sm-6:first')
       return
     fnDrawCallback: ->
