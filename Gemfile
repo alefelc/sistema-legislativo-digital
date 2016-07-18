@@ -26,6 +26,8 @@ gem 'react-rails', '1.7.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '4.0.4'
+gem 'momentjs-rails'
+gem 'bootstrap-daterangepicker-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -109,8 +111,3 @@ group :development do
   # Use MySql legacy database
   #gem 'mysql2', '0.4.1'
 end
-
-
-# This is required for deploy to heroku
-# ruby '2.2.2'
-# gem 'rails_12factor', group: :production

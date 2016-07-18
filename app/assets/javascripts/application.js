@@ -14,4 +14,6 @@
 //= require components
 //= require sweetalert
 //= require alertify
+//= require moment
+//= require daterangepicker
 //= require_tree .
