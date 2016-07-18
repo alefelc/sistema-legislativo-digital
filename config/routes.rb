@@ -102,10 +102,6 @@ Rails.application.routes.draw do
     get 'normas'
   end
 
-  resources :tramites
-
-  resources :expediente_reports
-
   resources :normas
 
   resources :administrative_files, only: [:create, :index]
