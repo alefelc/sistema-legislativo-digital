@@ -2,10 +2,10 @@ class TramiteDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_tramite
   def as_json(options = {})
     {
-      :draw => params[:draw].to_i,
-      :recordsTotal =>  get_raw_records.count(:all),
-      :recordsFiltered => filter_records(get_raw_records).count(:all),
-      :data => data
+      draw: params[:draw].to_i,
+      recordsTotal: get_raw_records.count(:all),
+      recordsFiltered: filter_records(get_raw_records).count(:all),
+      data: data
     }
   end
 
@@ -35,7 +35,7 @@ class TramiteDatatable < AjaxDatatablesRails::Base
     end
   end
 
-  def get_iniciadores tra
+  def get_iniciadores(tra)
     resp = ""
     iniciadores_organos = tra.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion } }
     iniciadores_organos.each do |b|
@@ -69,11 +69,11 @@ class TramiteDatatable < AjaxDatatablesRails::Base
     resp
   end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
 
@@ -83,16 +83,37 @@ class TramiteDatatable < AjaxDatatablesRails::Base
 
   def fetch_records
     tramite = Tramite.page(page).per(per_page).order(id: :desc)
-    if params[:sSearch].present?
-      unless params[:sSearch].to_i.zero?
-        query = "(tramites.id = #{params[:sSearch]})"
-        tramite = tramite.where(query)
-      else
-        query = ""
-        tramite = tramite.where(query)
+    if params[:filtering].present?
+      filters = JSON.parse(params[:filtering])
+      if filters['created_at'].present?
+        dates = filters['created_at']
+        from = Date.parse(dates['from']) - 1.day
+        to = Date.parse(dates['to']) + 1.day
+        tramite = tramite.where(created_at: from..to)
+      end
+      if filters['types'].present?
+        tramite = tramite.where(type: filters['types'].split(','))
       end
     end
-    tramite.includes(:bloques).includes(:comisions).includes(:persons)
+    if params[:sSearch].present?
+      query = "(tramites.id::text ilike '%#{params[:sSearch]}%') OR " +
+      "(CONCAT(people.apellido, ' ', people.nombre) ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.asunto ilike " +
+      "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
+      "'%#{params[:sSearch]}%')"
+
+      persons_join = "LEFT JOIN people_tramites ON " +
+      "people_tramites.tramite_id = tramites.id LEFT JOIN " +
+      "people ON people.id = people_tramites.person_id"
+      tramite = tramite.where(query).joins(persons_join)
+    end
+    tramite.includes(:bloques)
+           .includes(:comisions)
+           .includes(:areas)
+           .includes(:organo_de_gobiernos)
+           .includes(:dependencia_municipals)
+           .includes(:reparticion_oficials)
+           .includes(:persons)
   end
 
   def per_page
@@ -106,6 +127,4 @@ class TramiteDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     Tramite.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

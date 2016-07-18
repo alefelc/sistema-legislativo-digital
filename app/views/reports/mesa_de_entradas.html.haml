@@ -2,15 +2,16 @@
   = render partial: 'reception_filters'
 
 #tramite
-  %button#btn-print.btn.btn-danger
-    %span.glyphicon.glyphicon-print
-    = t('.btnheader.print')
+  .text-center
+    %button.btn.btn-primary{ 'data-target': '#reception', 'data-toggle': 'modal' }
+      %span.fa.fa-filter{ "aria-hidden": true }
+      Filtrar datos
+    - table_attr = { style: 'table-layout: fixed; word-wrap: break-word;',
+                         'data-source' => reports_mesa_de_entradas_path(format: :json) }
 
-  %button.btn.btn-primary{ 'data-target': '#reception', 'data-toggle': 'modal' }
-    %span.fa.fa-filter{ "aria-hidden": true }
-    Filtrar datos
-  - table_attr = { style: 'table-layout: fixed; word-wrap: break-word;',
-                       'data-source' => tramites_path(format: :json) }
+    %button#btn-print.btn.btn-danger
+      %span.glyphicon.glyphicon-print
+      = t('.btnheader.print')
   %table.datatable-keyevents#tramite-table{ table_attr }
     %thead
       %tr

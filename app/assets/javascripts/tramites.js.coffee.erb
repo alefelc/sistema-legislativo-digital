@@ -1,6 +1,11 @@
 $(document).on 'ready page:load', ->
   $('#tramite-table').dataTable
-    ajaxSource: $('#tramite-table').data('source')
+    lengthChange: true
+    ajax:
+      url: $('#tramite-table').data('source'),
+      data:(params) ->
+        params.filtering = $('#filter-values').val()
+        return params
     fnInitComplete: ->
       $('#tramite div.dataTables_filter input').focus()
       return
@@ -32,11 +37,10 @@ $(document).on 'ready page:load', ->
       manuallyCopyFormValues: true
       deferred: $.Deferred()
       timeout: 250
-    $('#tramite-table').DataTable().draw()
+    $('#tramite-table').DataTable().fnStandingRedraw()
     $('#tramite div.dataTables_filter input').focus()
 
   ## hotkey print tramites
   $.ctrl 'P', ->
     $('#tramite #btn-print').click()
     return
-

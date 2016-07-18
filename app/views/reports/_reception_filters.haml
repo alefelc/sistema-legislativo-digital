@@ -1,6 +1,7 @@
+= hidden_field_tag 'filter-values', {}
 .modal-dialog.modal-lg
   .modal-content
-    .modal-header
+    .modal-header.bg-primary
       %button.close{ 'data-dismiss': 'modal', type: 'button' }
         %span{ 'aria-hidden': 'true' } &times;
       %h4.modal-title Filtrando Trámites
@@ -14,31 +15,40 @@
             .col-md-12
               = select_tag :tramites_type, options_for_select(tramites_type),
                            multiple: :multiple, class: 'form-control'
-          .form-group
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :fojas, 'Cantidad de fojas'
-            = text_field_tag :fojas, nil, class: 'form-control'
-          .form-group
+            = text_field_tag :fojas, nil, class: 'form-control', disabled: true
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :asunto, 'Asunto / Solicitud'
-            = text_field_tag :asunto, nil, class: 'form-control'
-          .form-group
+            = text_field_tag :asunto, nil, class: 'form-control', disabled: true
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :iniciador, 'Iniciadores / Particular / Comision'
-            = text_field_tag :iniciador, nil, class: 'form-control'
-          .form-group
+            = text_field_tag :iniciador, nil, class: 'form-control', disabled: true
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :observaciones, 'Observaciones'
-            = text_field_tag :observaciones, nil, class: 'form-control'
+            = text_field_tag :observaciones, nil, class: 'form-control', disabled: true
         .col-md-6
           .form-group
+            = label_tag :created_at, 'Dia de creación del trámite'
+            #reportrange.report-range
+              %i.glyphicon.glyphicon-calendar.fa.fa-calendar
+              %span
+              %b.caret
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :vinculo_exp, 'Expediente/s (sólo despachos)'
-            = text_field_tag :vinculo_exp, nil, class: 'form-control'
-          .form-group
+            = text_field_tag :vinculo_exp, nil, class: 'form-control', disabled: true
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :fecha_dictamen, 'Fecha de Dictamen (sólo despachos)'
-            = text_field_tag :fecha_dictamen, nil, class: 'form-control'
-          .form-group
+            = text_field_tag :fecha_dictamen, nil, class: 'form-control', disabled: true
+          .form-group{ title: 'Disculpe... en desarrollo' }
             = label_tag :estados, 'Estados'
-            = text_field_tag :estados, nil, class: 'form-control'
+            = text_field_tag :estados, nil, class: 'form-control', disabled: true
 
     .modal-footer
+      %button.btn.btn-warning.pull-left#filter-clean{ type: 'button' }
+        Quitar filtros
       %button.btn.btn-default{ 'data-dismiss': 'modal', type: 'button' }
         Cerrar
-      %button.btn.btn-primary#filter-submit{ type: 'button' }
+      %button.btn.btn-primary#filter-submit{ 'data-dismiss': 'modal',
+        type: 'button' }
         Filtrar

@@ -380,11 +380,11 @@ module ApplicationHelper
 
   def tramites_type
     [
-      ["Despachos"],
-      ["Condonaciones"],
-      ["Peticiones Particulares"],
-      ["Proyectos"],
-      ["Comunicaciones Oficiales"]
+      ["Despachos", "Despacho"],
+      ["Condonaciones", "Condonacion"],
+      ["Peticiones Particulares", "Peticion"],
+      ["Proyectos", "Proyecto"],
+      ["Comunicaciones Oficiales", "Comunicacion"]
     ]
   end
 

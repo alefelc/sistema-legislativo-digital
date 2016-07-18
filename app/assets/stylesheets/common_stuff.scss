@@ -47,3 +47,11 @@ div.dataTables_filter label::before {
   margin-right: 5px;
   margin-left: 1px;
 }
+
+.report-range {
+  background: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  width: 100%
+}
