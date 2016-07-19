@@ -10,6 +10,7 @@ class Tramite < ActiveRecord::Base
   has_many :estado_tramites
   has_many :expediente_administrativos
   belongs_to :circuito # I think this is deprecated!!!
+  has_many :uploads
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
