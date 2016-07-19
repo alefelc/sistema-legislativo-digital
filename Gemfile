@@ -83,6 +83,9 @@ gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
 
 gem 'alertify-rails'
 
+# Easy file attachment management for ActiveRecord
+gem 'paperclip'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
