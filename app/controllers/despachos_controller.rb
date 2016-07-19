@@ -12,9 +12,7 @@ class DespachosController < ApplicationController
 
   def new
     @despacho = Despacho.new
-    respond_to do |format|
-      format.html { render partial: 'modal', locals: { actionvar: 'create' } }
-    end
+    render layout: false
   end
 
   def show
@@ -23,9 +21,7 @@ class DespachosController < ApplicationController
 
   def edit
     @despacho = Despacho.find(params[:id])
-    respond_to do |format|
-      format.html { render partial: 'modal', locals: { actionvar: 'update' } }
-    end
+    render layout: false
   end
 
   def destroy

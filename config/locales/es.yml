@@ -444,13 +444,15 @@ es:
         comisiones: Comisiones
         concejales: Concejales
         observaciones: Observaciones
-    modal:
+    new:
       create: Creando Despacho
-      update: Editando despacho
       submit:
         create: Guardar Nuevo Despacho
         update: Guardar Cambios Despacho
-
+    edit:
+      update: Editando despacho
+      submit:
+        update: Guardar Despacho
     body:
       observations: Observaciones
       fojas: Ingrese el número de fojas.

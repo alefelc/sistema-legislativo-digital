@@ -1,0 +1,245 @@
+#modaldesp.modal.fade{ 'aria-labelledby': 'nuevoLabel', role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-xs{ role: 'document' }
+    .modal-content
+
+      .modal-header
+        %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
+          %span{ 'aria-hidden': true } &times;
+        %h4#nuevoLabel.modal-title= "#{ t '.create' } #{@despacho.id}"
+
+      = form_for @despacho, url: { action: 'create' } do |f|
+        = hidden_field_tag :circuitos
+        = hidden_field_tag :states
+
+        .modal-body
+          = render partial: 'body', locals: { f: f }
+
+        .modal-footer
+          = f.submit t('.submit.create'), class: 'btn btn-primary modal-submit'
+
+:javascript
+  wi = $(window).width()-20;
+  margin = 10;
+  $("#despacho .modal-xs").css('width', wi);
+  $("#despacho .modal-xs").css('margin-left', margin);
+
+  //var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+
+  function format_comisions(style) {
+    var originalOption = $(style.element);
+    return "<div class='comision-token' data-id=" + style.id + ">" + style.text + "</div>";
+  }
+
+  function format_concejals(style) {
+    var originalOption = $(style.element);
+    return "<div class='concejal-token' data-id=" + style.id + ">" + style.text + "</div>";
+  }
+
+  $("#despacho_comisions").select2({
+    placeholder: "Seleccione las comisiones",
+    allowClear: true,
+    closeOnSelect:false,
+    theme: 'bootstrap',
+    formatSelection: format_comisions
+  });
+
+  $("#despacho_concejals").select2({
+    placeholder: "Seleccione los concejales",
+    allowClear: true,
+    closeOnSelect:false,
+    theme: 'bootstrap',
+    formatSelection: format_concejals
+  });
+
+  $('#despacho #exped_token').tokenInput('/despachos/search_exp', {
+    preventDuplicates: true,
+    propertyToSearch: 'indice',
+    theme: 'bootstrap',
+    zindex: 1050,
+    hintText: "#{t 'tokeninput.hint.enter_exp'}",
+    resultsFormatter: function(exp) {
+      return '<li><p style= \'color: black\'> Exp: ' + exp.indice + '</p></li>';
+    },
+    tokenFormatter: function(exp) {
+      array_c = exp.array_c;
+      inputs = "";
+      for (i = 1; i <= exp.nro_c; i++) {
+        if (jQuery.inArray( i, array_c ) != -1){
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px' checked>Circuito "+ i +"<br>";
+        }
+        else{
+          inputs += "<input type='checkbox' data-nro='"+ i +"' class='"+ exp.id +"' id='c"+ i +"' style='width: 20px'>Circuito "+ i +"<br>";
+        }
+      }
+      return "<li><p class='exps-token' data-nro_c='"+ exp.nro_c +"' data-id='" + exp.id + "'>" + " Exp: " + exp.indice + "</p><br>"+
+      inputs+
+      "</li>";
+    },
+    allowTabOut: true,
+    placeholder: "#{ I18n.t('tokeninput.placeholder.exp_example') }"
+  });
+
+  $(document).on('click', '#despacho .modal-submit', function(event) {
+    event.preventDefault();
+
+    //add exp ids and circuitos checked to form
+    var circuitos = {}
+    var index = 0
+    $("#despacho .exps-token").each(function(key, value) {
+      c = []
+      $("#despacho ." + $(value).data("id")).each(function(key, value) {
+        if ($(this).is(':checked')){
+          c.push($(value).data("nro"))
+        }
+      })
+      circuitos[index] = {
+        id: $(value).data("id"),
+        circ: c
+      }
+      index++;
+    });
+
+    //add derived states to form
+    var states = {};
+    var index = 0;
+    $("#despacho .derivacion-tr").each(function(key, value) {
+      states[index] = {
+        id: $(value).data("id"),
+        tipo: $(value).data("tipo"),
+        idref: $(value).data("idref"),
+        typeref: $(value).data("typeref"),
+      };
+      index++;
+    });
+
+    $("#despacho #states").val(JSON.stringify(states));
+    $("#despacho #circuitos").val(JSON.stringify(circuitos));
+    $("#despacho #new_despacho, [id^='edit_despacho']").submit();
+  });
+
+  $('.modal').on('shown.bs.modal', function () {
+    $('form:first *:input[type!=hidden]:first').focus();
+  });
+
+  $('.modal').on('hidden.bs.modal', function () {
+    $(document).keydown(function(event) {
+      var currentRow, rowpos, table;
+      table = $('table.datatable-keyevents').dataTable();
+      currentRow = $('table.datatable-keyevents tbody tr.info').get(0);
+      switch (event.keyCode) {
+        case 40:
+          if ($(currentRow).next().length !== 0) {
+            $(currentRow).next().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 38:
+          if ($(currentRow).prev().length !== 0) {
+            $(currentRow).prev().addClass('info');
+            $(currentRow).removeClass('info');
+          }
+          break;
+        case 37:
+          table.fnPageChange('previous');
+          break;
+        case 39:
+          table.fnPageChange('next');
+          break;
+        case 13:
+          $('table.datatable-keyevents tr.info').find('td:eq(0) a').get(0).click();
+      }
+      rowpos = $('table.datatable-keyevents tr.info').position();
+      $(document).scrollTop(rowpos.top - 45);
+    });
+
+    $.ctrl('C', function() {
+      $('#btn-new').click();
+    });
+
+    $.ctrl('E', function() {
+      $('table.datatable-keyevents tbody').find('.info').find('.linktoedit').click();
+    });
+
+    $('div.dataTables_filter input').focus();
+  });
+
+  function format_derivaciones(style) {
+    var originalOption = $(style.element);
+    var iniciador = "";
+    iniciador = style.apellido + ', ' + style.nombre;
+    if (style.type == "Personal" ) {
+      return "<div class='derivacion-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+    }else{
+      //Casos para comisiones y bloques, etc
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
+        iniciador = style.denominacion;
+        return "<div class='derivacion-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
+      }else{
+        //otros casos
+      }
+    }
+  }
+
+  function format_derivaciones_result(style) {
+    var originalOption = $(style.element);
+    if (style.type == "Personal") {
+      return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
+    }else{
+      //caso de comisiones y bloques
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "Area"){
+        return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
+      }else{
+        //caso de cualquier otro type
+        return "<div>" + style.apellido + "</div>";
+      }
+    }
+  }
+
+  $("#despacho #derived-states").select2({
+    placeholder: "Buscar derivaciones",
+    allowClear: true,
+    theme: 'bootstrap',
+    formatSelection: format_derivaciones,
+    formatResult: format_derivaciones_result,
+    multiple: true,
+    ajax: {
+      url: "/despachos/get_derivacion",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params
+        };
+      },
+      results: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  }).on("select2-selecting", function(e) {
+    // token selected
+    var data = e.object;
+
+    var idref = data.id;
+    var typeref = data.type;
+    var text;
+
+    if (data.type == 'Personal')
+      text = data.apellido + ", " + data.nombre;
+    else
+      text = data.denominacion;
+
+    //tipo: 1-iniciado, 2-derivado, 3-finalizado
+    var tr = "<tr class='derivacion-tr' data-id='' data-tipo='2' data-idref='" + idref + "' data-typeref='" + typeref + "'>" +
+      "<td> Derivado a " + typeref + ": " + text + "</td>" +
+      "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
+
+    $('#despacho #states-table tbody').append(tr);
+  }).on("change", function(e) {
+    $('#despacho #derived-states').select2("val", "");
+  });
