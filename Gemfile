@@ -78,13 +78,19 @@ gem 'kaminari', '0.16.3'
 # Bootstrap Multiselect v0.9.13
 gem 'bootstrap-multiselect-rails', '0.9.9'
 
-# A beautiful replacement for Javascript's "Alert"
+# A beautiful replacement for Javascript's "Alert".
 gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
 
 gem 'alertify-rails'
 
-# Easy file attachment management for ActiveRecord
+# Easy file attachment management for ActiveRecord.
 gem 'paperclip'
+
+# Dynamic nested forms.
+gem 'cocoon'
+
+# jQuery File Upload integrated for Rails.
+gem "jquery-fileupload-rails"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
