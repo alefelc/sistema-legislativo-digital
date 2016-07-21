@@ -49,16 +49,19 @@ Rails.application.routes.draw do
   resources :despachos do
     get 'search_exp', on: :collection
     get 'get_derivacion', on: :collection
+    post 'destroy_uploads', on: :member
   end
 
   resources :condonacions do
     get 'get_iniciador', on: :collection
     get 'get_derivacion', on: :collection
+    post 'destroy_uploads', on: :member
   end
 
   resources :particulars do
     get 'get_iniciador', on: :collection
     get 'get_derivacion', on: :collection
+    post 'destroy_uploads', on: :member
   end
 
   resources :peticions, path: "particulars"
@@ -72,11 +75,13 @@ Rails.application.routes.draw do
   resources :proyectos do
     get 'get_iniciador', on: :collection
     get 'get_derivacion', on: :collection
+    post 'destroy_uploads', on: :member
   end
 
   resources :comunicacion_oficials do
     get 'get_iniciador', on: :collection
     get 'get_derivacion', on: :collection
+    post 'destroy_uploads', on: :member
   end
 
   resources :expedientes do
