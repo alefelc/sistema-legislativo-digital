@@ -222,7 +222,6 @@ GEM
       rack (~> 1.4)
     rack-test (0.6.3)
       rack (>= 1.0)
-    railroady (1.5.1)
     rails (4.2.1)
       actionmailer (= 4.2.1)
       actionpack (= 4.2.1)
@@ -360,7 +359,6 @@ DEPENDENCIES
   paperclip
   pg (= 0.18.2)
   quiet_assets (= 1.1.0)
-  railroady
   rails (= 4.2.1)
   rails-assets-sweetalert!
   rails-erd
