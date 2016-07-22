@@ -120,3 +120,8 @@ group :development do
   # Use MySql legacy database
   #gem 'mysql2', '0.4.1'
 end
+
+group :development, :test do
+  gem 'rails-erd'
+end
+
