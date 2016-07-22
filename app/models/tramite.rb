@@ -12,6 +12,9 @@ class Tramite < ActiveRecord::Base
   belongs_to :circuito # I think this is deprecated!!!
   has_many :uploads
 
+  #== Nested attributes
+  accepts_nested_attributes_for :uploads
+
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
   end
