@@ -80,13 +80,11 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
   def associated_file pro
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "<i class='linktoedit btn btn-warning fa fa-pencil-square-o u' " +
       "data-id='#{pro.id}' title='Editar proyecto'></i>"
     else
       ''
-    end +
-    "<i class='btn btn-xs btn-success fa fa-download' " +
-    "title='Descargar proyecto'></i></div>"
+    end
   end
 
   def proyectos

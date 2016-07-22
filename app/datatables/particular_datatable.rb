@@ -60,12 +60,11 @@ class ParticularDatatable < AjaxDatatablesRails::Base
   def associated_file part
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "<i class='linktoedit btn btn-warning fa fa-pencil-square-o u' " +
       "data-id='#{part.id}' title='Editar petición particular'></i>"
     else
       ''
-    end +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar petición particular'></i></div>"
+    end
   end
 
   def particulars

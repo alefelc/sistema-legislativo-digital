@@ -80,13 +80,11 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   def associated_file(com)
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "<i class='linktoedit btn btn-warning fa fa-pencil-square-o u' " +
       "data-id='#{com.id}' title='Editar comunicación oficial'></i>"
     else
       ''
-    end +
-    "<i class='btn btn-xs btn-success fa fa-download' " +
-    "title='Descargar comunicación oficial'></i></div>"
+    end
   end
 
   def comunicacion_oficials

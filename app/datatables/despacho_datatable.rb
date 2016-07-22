@@ -39,11 +39,11 @@ class DespachoDatatable < AjaxDatatablesRails::Base
     end
   end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
-  def despacho_comisiones desp
+  def despacho_comisiones(desp)
     string = ''
     desp.comisions.each do |c|
       string << "#{c.denominacion}; "
@@ -51,7 +51,7 @@ class DespachoDatatable < AjaxDatatablesRails::Base
     string[0..-3]
   end
 
-  def despacho_concejales desp
+  def despacho_concejales(desp)
     string = ''
     desp.concejals.each do |c|
       string << "#{c.apellido}, #{c.nombre}; "
@@ -59,15 +59,14 @@ class DespachoDatatable < AjaxDatatablesRails::Base
     string[0..-3]
   end
 
-  def associated_file desp
+  def associated_file(desp)
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o u' " +
+      "<i class='linktoedit btn btn-warning fa fa-pencil-square-o u' " +
       "data-id='#{desp.id}' title='Editar despacho'></i>"
     else
       ''
-    end +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar despacho'></i></div>"
+    end
   end
 
   def despachos

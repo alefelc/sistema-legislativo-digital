@@ -67,12 +67,11 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
     iniciador =  iniciador.present? ? iniciador.upcase[0..-4] : ''
     "<div style='display: flex'>" +
     if current_user.present?
-      "<i class='linktoprint btn btn-xs btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.try(:upcase)}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
-      "<i class='linktoedit btn btn-xs btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>"
+      "<i class='linktoprint btn btn-danger fa fa-print' data-expediente='#{exp.id}' data-nro='#{exp.nro_exp}' data-iniciador='#{iniciador}' data-asunto='#{exp.tema.try(:upcase)}' data-anio='#{to_date(exp.anio)}' title='Imprimir Carátula'></i>" +
+      "<i class='linktoedit btn btn-warning fa fa-pencil-square-o' data-id='#{exp.id}' title='Editar Expediente'></i>"
     else
       ''
-    end +
-    "<i class='btn btn-xs btn-success fa fa-download' title='Descargar Expediente'></i></div>"
+    end
   end
 
   def expedientes
