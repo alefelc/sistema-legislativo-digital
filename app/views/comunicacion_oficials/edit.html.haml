@@ -23,6 +23,9 @@
                 %li{ role: 'presentation' }
                   %a{ 'data-toggle' => 'tab', href: '#administrative-files', role: 'tab' }
                     Expedientes administrativos
+                %li{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', 'aria-controls' => 'associated-files', href: '#associated-files', role: 'tab' }
+                    Archivos asociados
               .tab-content{ style: 'padding-top:1%' }
                 .tab-pane.active#new-initiator{ role: 'tabpanel' }
                   #second-column
@@ -31,6 +34,31 @@
                   = render '/shared/derivated_states'
                 .tab-pane#administrative-files{ role: 'tabpanel' }
                   = render '/shared/administrative_file_form'
+                .tab-pane#associated-files{ role: 'tabpanel' }
+                  = f.fields_for @upload, multiple: true do |file_form|
+                    = file_form.file_field :file, multiple: true
+                  %h3 Archivos cargados
+                  %table.table.table-bordered.upload-table
+                    %thead
+                      %tr
+                        %th Nombre del archivo
+                        %th Última modificación
+                        %th{ style: "width: 1%" }
+                    %tbody
+                      - @process.uploads.each do |up|
+                        %tr
+                          %td
+                            = up.file_file_name
+                          %td
+                            = to_date up.file_updated_at
+                          %td
+                            = link_to '', up.file.url, class: 'btn btn-success fa fa-download', title: 'Descargar archivo', download: up.file_file_name
+                            = link_to '', destroy_uploads_comunicacion_oficial_path(@process,{upload: up}), class: 'btn btn-danger fa fa-times destroy-file', title: 'Eliminar archivo', method: :post, remote: true
+                    %tfoot
+                      %tr
+                        %td
+                        %td
+                        %td
 
         .modal-footer
           = f.submit 'Guardar Cambios Comunicación Oficial', {class: "btn btn-primary modal-submit", id: "btn-submit-comunicacion-oficial"}
@@ -38,6 +66,14 @@
 :javascript
 
   ReactRailsUJS.mountComponents('#modalcom');
+
+  $('.destroy-file').on('ajax:success', function(){
+    $(this).parent().parent().remove();
+  });
+
+  $('.destroy-file').on('ajax:error', function(){
+    swal('Disculpe...', 'No fue posible eliminar el archivo', 'error')
+  });
 
   wi = $(window).width()-20;
   margin = 10;

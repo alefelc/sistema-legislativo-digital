@@ -12,6 +12,7 @@ class CondonacionsController < ApplicationController
 
   def new
     @process = Condonacion.new
+    @upload = Upload.new
     render layout: false
   end
 
@@ -21,6 +22,7 @@ class CondonacionsController < ApplicationController
 
   def edit
     @process = Condonacion.find params[:id]
+    @upload = Upload.new
     @process_id = params[:id]
     render layout: false
   end
@@ -33,6 +35,14 @@ class CondonacionsController < ApplicationController
   def create
     cond = params[:condonacion].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @condonacion = Condonacion.create cond.to_hash
+
+    if params[:condonacion][:upload].present?
+      params[:condonacion][:upload][:file].each do |file|
+        upload = @condonacion.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
@@ -85,6 +95,14 @@ class CondonacionsController < ApplicationController
     cond = params[:condonacion].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @condonacion = Condonacion.find(params[:id])
     @condonacion.update cond.to_hash
+
+    if params[:condonacion][:upload].present?
+      params[:condonacion][:upload][:file].each do |file|
+        upload = @condonacion.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
@@ -216,10 +234,20 @@ class CondonacionsController < ApplicationController
     render json: q
   end
 
+  def destroy_uploads
+    @upload = Upload.find(params[:upload])
+    if @upload.delete
+      render json:  { success: :ok }
+    else
+      render json: @upload.errors
+    end
+  end
+
   private
 
   def condonacion_params
-    params.require(:condonacion).permit("nro_fojas", "asunto", "updated_at",  "observaciones")
+    params.require(:condonacion).permit(:nro_fojas, :asunto, :updated_at,
+                                        :observaciones, upload: [:file])
   end
 
 end

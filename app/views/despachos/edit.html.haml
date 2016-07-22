@@ -7,7 +7,7 @@
           %span{ 'aria-hidden': true } &times;
         %h4#nuevoLabel.modal-title= "#{ t '.update' } #{@despacho.id}"
 
-      = form_for @despacho, url: { action: 'update' } do |f|
+      = form_for @despacho do |f|
         = hidden_field_tag :circuitos
         = hidden_field_tag :states
 

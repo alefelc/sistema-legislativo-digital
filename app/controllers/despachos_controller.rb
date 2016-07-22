@@ -12,6 +12,7 @@ class DespachosController < ApplicationController
 
   def new
     @despacho = Despacho.new
+    @upload = Upload.new
     render layout: false
   end
 
@@ -21,6 +22,7 @@ class DespachosController < ApplicationController
 
   def edit
     @despacho = Despacho.find(params[:id])
+    @upload = Upload.new
     render layout: false
   end
 
@@ -32,6 +34,15 @@ class DespachosController < ApplicationController
   def create
     desp = params[:despacho].select { |key, value| %w(nro_fojas fecha observaciones).include?(key) }
     @despacho = Despacho.create desp.to_hash
+
+    # Upload files
+    if params[:despacho][:upload].present?
+      params[:despacho][:upload][:file].each do |file|
+        upload = @despacho.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     ## get params comisions the POST
     comisions = params[:despacho][:comisions]
@@ -116,6 +127,13 @@ class DespachosController < ApplicationController
     desp = params[:despacho].select { |key, value| ["nro_fojas", "fecha","observaciones"].include?(key) }
     @despacho = Despacho.find(params[:id])
 
+    if params[:despacho][:upload].present?
+      params[:despacho][:upload][:file].each do |file|
+        upload = @despacho.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     @despacho.update desp.to_hash
 
@@ -228,10 +246,20 @@ class DespachosController < ApplicationController
     render json: q
   end
 
+  def destroy_uploads
+    @upload = Upload.find(params[:upload])
+    if @upload.delete
+      render json:  { success: :ok }
+    else
+      render json: @upload.errors
+    end
+  end
+
   private
 
   def despacho_params
-    params.require(:despacho).permit("nro_fojas", "fecha",  "observaciones")
+    params.require(:despacho).permit(:nro_fojas, :fecha, :observaciones,
+                                     upload: [:file])
   end
 
   def build_json_exp exps

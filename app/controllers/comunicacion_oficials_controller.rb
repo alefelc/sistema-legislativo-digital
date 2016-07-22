@@ -12,6 +12,7 @@ class ComunicacionOficialsController < ApplicationController
 
   def new
     @process = ComunicacionOficial.new
+    @upload = Upload.new
     render layout: false
   end
 
@@ -21,6 +22,7 @@ class ComunicacionOficialsController < ApplicationController
 
   def edit
     @process = ComunicacionOficial.find params[:id]
+    @upload = Upload.new
     @process_id = params[:id]
     render layout: false
   end
@@ -33,6 +35,14 @@ class ComunicacionOficialsController < ApplicationController
   def create
     com = params[:comunicacion_oficial].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @comunicacion_oficial = ComunicacionOficial.create com.to_hash
+
+    if params[:comunicacion_oficial][:upload].present?
+      params[:comunicacion_oficial][:upload][:file].each do |file|
+        upload = @comunicacion_oficial.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
@@ -88,6 +98,14 @@ class ComunicacionOficialsController < ApplicationController
     com = params[:comunicacion_oficial].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @comunicacion_oficial = ComunicacionOficial.find(params[:id])
     @comunicacion_oficial.update com.to_hash
+
+    if params[:comunicacion_oficial][:upload].present?
+      params[:comunicacion_oficial][:upload][:file].each do |file|
+        upload = @comunicacion_oficial.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
@@ -261,10 +279,20 @@ class ComunicacionOficialsController < ApplicationController
     render json: q
   end
 
+  def destroy_uploads
+    @upload = Upload.find(params[:upload])
+    if @upload.delete
+      render json:  { success: :ok }
+    else
+      render json: @upload.errors
+    end
+  end
+
   private
 
   def comunicacion_oficial_params
-    params.require(:comunicacion_oficial).permit("nro_fojas", "asunto", "updated_at",  "observaciones")
+    params.require(:comunicacion_oficial).permit(:nro_fojas, :asunto, :updated_at,
+                                                 :observaciones, upload: [:file])
   end
 
 end

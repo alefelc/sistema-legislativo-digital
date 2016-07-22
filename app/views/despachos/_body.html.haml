@@ -76,7 +76,36 @@
                   %td
                   %td
       #associated-files.tab-pane{ role: 'tabpanel' }
-        %br
-        .input-group{ title: 'Disculpe... Esta característica se encuentra en desarrollo' }
-          = label_tag nil, 'Cargar Archivos Asociados', { class: 'input-group-addon', id: 'basic-addon8' }
-          = text_field_tag nil, nil, { disabled: :disabled, multiple: :multiple, style: 'width: 100%' }
+        = f.fields_for @upload, multiple: true do |file_form|
+          = file_form.file_field :file, multiple: true
+        %h3 Archivos cargados
+        %table.table.table-bordered.upload-table
+          %thead
+            %tr
+              %th Nombre del archivo
+              %th Última modificación
+              %th{ style: "width: 1%" }
+          %tbody
+            - @despacho.uploads.each do |up|
+              %tr
+                %td
+                  = up.file_file_name
+                %td
+                  = to_date up.file_updated_at
+                %td
+                  = link_to '', up.file.url, class: 'btn btn-success fa fa-download', title: 'Descargar archivo', download: up.file_file_name
+                  = link_to '', destroy_uploads_despacho_path(@despacho,{upload: up}), class: 'btn btn-danger fa fa-times destroy-file', title: 'Eliminar archivo', method: :post, remote: true
+          %tfoot
+            %tr
+              %td
+              %td
+              %td
+
+:javascript
+  $('.destroy-file').on('ajax:success', function(){
+    $(this).parent().parent().remove();
+  });
+
+  $('.destroy-file').on('ajax:error', function(){
+    swal('Disculpe...', 'No fue posible eliminar el archivo', 'error')
+  });

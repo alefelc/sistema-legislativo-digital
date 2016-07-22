@@ -12,6 +12,7 @@ class ParticularsController < ApplicationController
 
   def new
     @process = Peticion.new
+    @upload = Upload.new
     render layout: false
   end
 
@@ -21,6 +22,7 @@ class ParticularsController < ApplicationController
 
   def edit
     @process = Peticion.find(params[:id])
+    @upload = Upload.new
     @process_id = params[:id]
     render layout: false
   end
@@ -33,6 +35,14 @@ class ParticularsController < ApplicationController
   def create
     part = params[:peticion].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @particular = Peticion.create part.to_hash
+
+    if params[:peticion][:upload].present?
+      params[:peticion][:upload][:file].each do |file|
+        upload = @particular.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
@@ -82,6 +92,14 @@ class ParticularsController < ApplicationController
     part = params[:peticion].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @particular = Peticion.find(params[:id])
     @particular.update part.to_hash
+
+    if params[:peticion][:upload].present?
+      params[:peticion][:upload][:file].each do |file|
+        upload = @particular.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
@@ -200,9 +218,19 @@ class ParticularsController < ApplicationController
     render json: q
   end
 
+  def destroy_uploads
+    @upload = Upload.find(params[:upload])
+    if @upload.delete
+      render json:  { success: :ok }
+    else
+      render json: @upload.errors
+    end
+  end
+
   private
 
   def particular_params
-    params.require(:peticion).permit("nro_fojas", "asunto", "updated_at",  "observaciones")
+    params.require(:peticion).permit(:nro_fojas, :asunto, :updated_at,
+                                     :observaciones, upload: [:file])
   end
 end

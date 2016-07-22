@@ -17,10 +17,39 @@
                 %li.active{ role: 'presentation' }
                   %a{ 'data-toggle' => 'tab', href: '#new-initiator', role: 'tab' }
                     Nuevo iniciador
+                %li{ role: 'presentation' }
+                  %a{ 'data-toggle' => 'tab', 'aria-controls' => 'associated-files', href: '#associated-files', role: 'tab' }
+                    Archivos asociados
               .tab-content{ style: 'padding-top:1%' }
                 .tab-pane.active#new-initiator{ role: 'tabpanel' }
                   #second-column
                     = render '/shared/initiator_form'
+                .tab-pane#associated-files{ role: 'tabpanel' }
+                  = f.fields_for @upload, multiple: true do |file_form|
+                    = file_form.file_field :file, multiple: true
+                  %h3 Archivos cargados
+                  %table.table.table-bordered.upload-table
+                    %thead
+                      %tr
+                        %th Nombre del archivo
+                        %th Última modificación
+                        %th{ style: "width: 1%" }
+                    %tbody
+                      - @process.uploads.each do |up|
+                        %tr
+                          %td
+                            = up.file_file_name
+                          %td
+                            = to_date up.file_updated_at
+                          %td
+                            = link_to '', up.file.url, class: 'btn btn-success fa fa-download', title: 'Descargar archivo', download: up.file_file_name
+                            = link_to '', destroy_uploads_particular_path(@process,{upload: up}), class: 'btn btn-danger fa fa-times destroy-file', title: 'Eliminar archivo', method: :post, remote: true
+                    %tfoot
+                      %tr
+                        %td
+                        %td
+                        %td
+
         .modal-footer
           = f.submit  'Crear Petición Particular', { class: "btn btn-primary modal-submit", id: "btn-submit-particular" }
 

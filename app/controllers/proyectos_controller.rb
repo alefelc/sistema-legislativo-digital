@@ -12,6 +12,7 @@ class ProyectosController < ApplicationController
 
   def new
     @process = Proyecto.new
+    @upload = Upload.new
     render layout: false
   end
 
@@ -22,6 +23,7 @@ class ProyectosController < ApplicationController
   def edit
     @process = Proyecto.find params[:id]
     @process_id = params[:id]
+    @upload = Upload.new
     render layout: false
   end
 
@@ -33,6 +35,14 @@ class ProyectosController < ApplicationController
   def create
     pro = params[:proyecto].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @proyecto = Proyecto.create pro.to_hash
+
+    if params[:proyecto][:upload].present?
+      params[:proyecto][:upload][:file].each do |file|
+        upload = @proyecto.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     ## add state initial
     @proyecto.estado_tramites.create do |e|
@@ -88,6 +98,14 @@ class ProyectosController < ApplicationController
     pro = params[:proyecto].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @proyecto = Proyecto.find(params[:id])
     @proyecto.update pro.to_hash
+
+    if params[:proyecto][:upload].present?
+      params[:proyecto][:upload][:file].each do |file|
+        upload = @proyecto.uploads.build
+        upload.file = file
+        upload.save
+      end
+    end
 
     if params['iniciadores'].present?
       ## update params iniciadores the PATCH
@@ -261,10 +279,20 @@ class ProyectosController < ApplicationController
     render json: q
   end
 
+  def destroy_uploads
+    @upload = Upload.find(params[:upload])
+    if @upload.delete
+      render json:  { success: :ok }
+    else
+      render json: @upload.errors
+    end
+  end
+
   private
 
   def proyecto_params
-    params.require(:proyecto).permit("nro_fojas", "asunto", "updated_at",  "observaciones")
+    params.require(:proyecto).permit(:nro_fojas, :asunto, :updated_at,
+                                     :observaciones, upload: [:file])
   end
 
 end
