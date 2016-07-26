@@ -3,7 +3,7 @@
 
 .input-group
   = f.label :nro_fojas, { class: 'input-group-addon', id: 'basic-addon8' }
-  = f.text_field :nro_fojas, { class: 'form-control', 'aria-describedby': 'basic-addon8', placeholder: t('.fojas'), type: :number }
+  = f.text_field :nro_fojas, { class: 'form-control', 'aria-describedby': 'basic-addon8', placeholder: t('.fojas'), type: :number, min: 1 }
 
 .input-group
   = f.label t('.iniciadores'), { class: 'input-group-addon', id: 'basic-addon08' }
