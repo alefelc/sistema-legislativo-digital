@@ -32,7 +32,10 @@ class DespachosController < ApplicationController
   end
 
   def create
-    desp = params[:despacho].select { |key, value| %w(nro_fojas fecha observaciones).include?(key) }
+    desp = params[:despacho].select do |key, value|
+      %w(nro_fojas fecha observaciones day month year).include?(key)
+    end
+
     @despacho = Despacho.create desp.to_hash
 
     # Upload files
@@ -124,7 +127,9 @@ class DespachosController < ApplicationController
   end
 
   def update
-    desp = params[:despacho].select { |key, value| ["nro_fojas", "fecha","observaciones"].include?(key) }
+    desp = params[:despacho].select do |key, value|
+      ["nro_fojas", "fecha","observaciones", "day", "month", "year"].include?(key)
+    end
     @despacho = Despacho.find(params[:id])
 
     if params[:despacho][:upload].present?
@@ -139,7 +144,8 @@ class DespachosController < ApplicationController
 
     ## update params comisions the PATCH
     current_comisions = params[:despacho][:comisions]
-    ## remuevo el primer elemento porq viene uno vacio siempre "", sino resolver desde el coffee los parametros q se envian
+    ## remuevo el primer elemento porq viene uno vacio siempre "",
+    ## sino resolver desde el coffee los parametros q se envian
     current_comisions.delete_at(0) unless current_comisions.empty?
     old_comisions = @despacho.comisions.map{ |x| x.id.to_s}
     associated_comisions = (current_comisions - old_comisions)
@@ -258,8 +264,8 @@ class DespachosController < ApplicationController
   private
 
   def despacho_params
-    params.require(:despacho).permit(:nro_fojas, :fecha, :observaciones,
-                                     upload: [:file])
+    params.require(:despacho).permit(:nro_fojas, :fecha, :observaciones, :day,
+                                     :month, :year, upload: [:file])
   end
 
   def build_json_exp exps

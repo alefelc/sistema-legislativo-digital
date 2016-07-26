@@ -18,12 +18,11 @@
         = f.label '', 'Fecha', { class: 'input-group-addon' }
         .row
           .col-md-4
-            %input.form-control{ placeholder: 'Dia' }
+            = f.select :day, day_options, { include_blank: true, prompt: 'Día' }, title: 'Día', class: 'form-control'
           .col-md-4
-            %input.form-control{ placeholder: 'Mes' }
+            = f.select :month, month_options, { include_blank: true, prompt: 'Mes' }, title: 'Mes', class: 'form-control'
           .col-md-4
-            %input.form-control{ placeholder: 'Año' }
-            =# f.text_field :fecha, { class: 'form-control', 'aria-describedby': 'basic-addon04', type: :date }
+            = f.select :year, year_options, { include_blank: true, prompt: 'Año' }, title: 'Año', class: 'form-control'
       .input-group
         = f.label '', t('.comisions'), { class: 'input-group-addon', id: 'basic-addon4' }
         = f.select(:comisions, options_for_select(get_options_comisions()), {}, {multiple: 'multiple', style: 'width:100%', id: 'despacho_comisions', data: { load: prepopulate_comisions(@despacho) } })
