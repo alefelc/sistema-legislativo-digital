@@ -492,7 +492,7 @@ es:
       email: Ingrese Email.
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
-      iniciador: Nuevo Iniciador.
+      iniciador: Nuevo Iniciador
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
       exp_adm: Expediente administrativo
@@ -532,7 +532,7 @@ es:
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
       denominacion: Ingrese denominación.
-      iniciador: Nuevo Iniciador.
+      iniciador: Nuevo Iniciador
       iniciadores: Iniciadores
       confirm_create: Desea crear el particular.
       exp_adm: Expediente administrativo
@@ -572,7 +572,7 @@ es:
       domicilio: Ingrese Domicilio.
       cuit: Ingrese CUIT/CUIL.
       denominacion: Ingrese denominación.
-      iniciador: Nuevo Iniciador.
+      iniciador: Nuevo Iniciador
       iniciadores: Iniciadores
       confirm_create: Desea crear el proyecto.
       exp_adm: Expediente administrativo

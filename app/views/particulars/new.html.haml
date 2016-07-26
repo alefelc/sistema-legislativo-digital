@@ -107,7 +107,7 @@
       cache: true
     }
   }).on("select2-focus", function(e) {
-      $('#btn_add_iniciador').removeAttr("disabled");
+      $('#btn_add_iniciador');
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
@@ -127,40 +127,40 @@
         $('#particular #edit_iniciador').data('id',data.id);
         $('#particular #edit_iniciador').css('display','block');
         $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#particular #iniciador_tipo').val(data.type);
         $('#particular #nombre-label').text('Nombre');
-        $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-        $('#particular #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-        $('#particular #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-        $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
-        $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
-        $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-        $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+        $('#particular #iniciador_nombre').val(data.nombre);
+        $('#particular #iniciador_apellido').val(data.apellido);
+        $('#particular #iniciador_doc').val(data.nro_doc);
+        $('#particular #iniciador_tel').val(data.telefono);
+        $('#particular #iniciador_email').val(data.email);
+        $('#particular #iniciador_domicilio').val(data.domicilio);
+        $('#particular #iniciador_cuit').val(data.cuit);
       }else if (data.type == 'Juridica'){
         $('#particular #edit_iniciador').data('id',data.id);
         $('#particular #edit_iniciador').css('display','block');
         $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#particular #iniciador_tipo').val(data.type);
         $('#particular #nombre-label').text('Denominación');
-        $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-        $('#particular #iniciador_apellido').val('').attr('disabled', 'disabled');
-        $('#particular #iniciador_doc').val('').attr('disabled', 'disabled');
-        $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
-        $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
-        $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-        $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+        $('#particular #iniciador_nombre').val(data.nombre);
+        $('#particular #iniciador_apellido').val('');
+        $('#particular #iniciador_doc').val('');
+        $('#particular #iniciador_tel').val(data.telefono);
+        $('#particular #iniciador_email').val(data.email);
+        $('#particular #iniciador_domicilio').val(data.domicilio);
+        $('#particular #iniciador_cuit').val(data.cuit);
       }else{
         $('#particular #edit_iniciador').css('display','none');
         $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val('').attr('disabled','disabled');
+        $('#particular #iniciador_tipo').val('');
         $('#particular #nombre-label').text('Nombre');
-        $('#particular #iniciador_nombre').val('').attr('disabled','disabled');
-        $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
-        $('#particular #iniciador_doc').val('').attr('disabled','disabled');
-        $('#particular #iniciador_tel').val('').attr('disabled','disabled');
-        $('#particular #iniciador_email').val('').attr('disabled','disabled');
-        $('#particular #iniciador_domicilio').val('').attr('disabled','disabled');
-        $('#particular #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#particular #iniciador_nombre').val('');
+        $('#particular #iniciador_apellido').val('');
+        $('#particular #iniciador_doc').val('');
+        $('#particular #iniciador_tel').val('');
+        $('#particular #iniciador_email').val('');
+        $('#particular #iniciador_domicilio').val('');
+        $('#particular #iniciador_cuit').val('');
       }
     }
   });
@@ -173,26 +173,26 @@
       $('#particular #edit_iniciador').css('display','none');
       $('#particular #add_iniciador').css('display','block');
       $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val('').removeAttr('disabled');
-      $('#particular #iniciador_apellido').val('').removeAttr('disabled');
-      $('#particular #iniciador_doc').val('').removeAttr('disabled');
-      $('#particular #iniciador_tel').val('').removeAttr('disabled');
-      $('#particular #iniciador_email').val('').removeAttr('disabled');
-      $('#particular #iniciador_domicilio').val('').removeAttr('disabled');
-      $('#particular #iniciador_cuit').val('').removeAttr('disabled');
-      $('#particular #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#particular #iniciador_nombre').val('');
+      $('#particular #iniciador_apellido').val('');
+      $('#particular #iniciador_doc').val('');
+      $('#particular #iniciador_tel').val('');
+      $('#particular #iniciador_email').val('');
+      $('#particular #iniciador_domicilio').val('');
+      $('#particular #iniciador_cuit').val('');
+      $('#particular #iniciador_denominacion').val('');
     }else if( valueSelected == "Juridica" ){
       $('#particular #edit_iniciador').css('display','none');
       $('#particular #add_iniciador').css('display','block');
       $('#particular #nombre-label').text('Denominación');
-      $('#particular #iniciador_nombre').val('').removeAttr('disabled');
-      $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
-      $('#particular #iniciador_doc').val('').attr('disabled','disabled');
-      $('#particular #iniciador_tel').val('').removeAttr('disabled');
-      $('#particular #iniciador_email').val('').removeAttr('disabled');
-      $('#particular #iniciador_domicilio').val('').removeAttr('disabled');
-      $('#particular #iniciador_cuit').val('').removeAttr('disabled');
-      $('#particular #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#particular #iniciador_nombre').val('');
+      $('#particular #iniciador_apellido').val('');
+      $('#particular #iniciador_doc').val('');
+      $('#particular #iniciador_tel').val('');
+      $('#particular #iniciador_email').val('');
+      $('#particular #iniciador_domicilio').val('');
+      $('#particular #iniciador_cuit').val('');
+      $('#particular #iniciador_denominacion').val('');
       $('#particular #denominacion-group').css('display','none');
     }
   });
@@ -204,40 +204,40 @@
       $('#particular #edit_iniciador').data('id',data.id);
       $('#particular #edit_iniciador').css('display','block');
       $('#particular #add_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#particular #iniciador_tipo').val(data.type);
       $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-      $('#particular #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-      $('#particular #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-      $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
-      $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
-      $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-      $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+      $('#particular #iniciador_nombre').val(data.nombre);
+      $('#particular #iniciador_apellido').val(data.apellido);
+      $('#particular #iniciador_doc').val(data.nro_doc);
+      $('#particular #iniciador_tel').val(data.telefono);
+      $('#particular #iniciador_email').val(data.email);
+      $('#particular #iniciador_domicilio').val(data.domicilio);
+      $('#particular #iniciador_cuit').val(data.cuit);
     }else if (data.type == 'Juridica'){
       $('#particular #edit_iniciador').data('id',data.id);
       $('#particular #edit_iniciador').css('display','block');
       $('#particular #add_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#particular #iniciador_tipo').val(data.type);
       $('#particular #nombre-label').text('Denominación');
-      $('#particular #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-      $('#particular #iniciador_apellido').val('').attr('disabled', 'disabled');
-      $('#particular #iniciador_doc').val('').attr('disabled', 'disabled');
-      $('#particular #iniciador_tel').val(data.telefono).removeAttr('disabled');
-      $('#particular #iniciador_email').val(data.email).removeAttr('disabled');
-      $('#particular #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-      $('#particular #iniciador_cuit').val(data.cuit).removeAttr('disabled');
+      $('#particular #iniciador_nombre').val(data.nombre);
+      $('#particular #iniciador_apellido').val('');
+      $('#particular #iniciador_doc').val('');
+      $('#particular #iniciador_tel').val(data.telefono);
+      $('#particular #iniciador_email').val(data.email);
+      $('#particular #iniciador_domicilio').val(data.domicilio);
+      $('#particular #iniciador_cuit').val(data.cuit);
     }else{
       $('#particular #add_iniciador').css('display','none');
       $('#particular #edit_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val('').attr('disabled','disabled');
+      $('#particular #iniciador_tipo').val('');
       $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val('').attr('disabled','disabled');
-      $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
-      $('#particular #iniciador_doc').val('').attr('disabled','disabled');
-      $('#particular #iniciador_tel').val('').attr('disabled','disabled');
-      $('#particular #iniciador_email').val('').attr('disabled','disabled');
-      $('#particular #iniciador_domicilio').val('').attr('disabled','disabled');
-      $('#particular #iniciador_cuit').val('').attr('disabled','disabled');
+      $('#particular #iniciador_nombre').val('');
+      $('#particular #iniciador_apellido').val('');
+      $('#particular #iniciador_doc').val('');
+      $('#particular #iniciador_tel').val('');
+      $('#particular #iniciador_email').val('');
+      $('#particular #iniciador_domicilio').val('');
+      $('#particular #iniciador_cuit').val('');
     }
   });
 
@@ -245,29 +245,29 @@
     // token unselected
     $('#particular #edit_iniciador').css('display','none');
     $('#particular #add_iniciador').css('display','block');
-    $('#particular #iniciador_tipo').val('Fisica').removeAttr('disabled');
+    $('#particular #iniciador_tipo').val('Fisica');
     $('#particular #nombre-label').text('Nombre');
-    $('#particular #iniciador_nombre').val('').removeAttr('disabled');
-    $('#particular #iniciador_apellido').val('').removeAttr('disabled');
-    $('#particular #iniciador_doc').val('').removeAttr('disabled');
-    $('#particular #iniciador_tel').val('').removeAttr('disabled');
-    $('#particular #iniciador_email').val('').removeAttr('disabled');
-    $('#particular #iniciador_domicilio').val('').removeAttr('disabled');
-    $('#particular #iniciador_cuit').val('').removeAttr('disabled');
+    $('#particular #iniciador_nombre').val('');
+    $('#particular #iniciador_apellido').val('');
+    $('#particular #iniciador_doc').val('');
+    $('#particular #iniciador_tel').val('');
+    $('#particular #iniciador_email').val('');
+    $('#particular #iniciador_domicilio').val('');
+    $('#particular #iniciador_cuit').val('');
   });
 
   $('#peticion_nro_fojas, #peticion_asunto, #peticion_observaciones').on("focus", function(e) {
     $('#particular #edit_iniciador').css('display','none');
     $('#particular #add_iniciador').css('display','none');
-    $('#particular #iniciador_tipo').val('').attr('disabled','disabled');
-    $('#particular #iniciador_nombre').val('').attr('disabled','disabled');
-    $('#particular #iniciador_apellido').val('').attr('disabled','disabled');
-    $('#particular #iniciador_doc').val('').attr('disabled','disabled');
-    $('#particular #iniciador_tel').val('').attr('disabled','disabled');
-    $('#particular #iniciador_email').val('').attr('disabled','disabled');
-    $('#particular #iniciador_domicilio').val('').attr('disabled','disabled');
-    $('#particular #iniciador_cuit').val('').attr('disabled','disabled');
-    $('#btn_add_iniciador').attr('disabled', 'disabled');
+    $('#particular #iniciador_tipo').val('');
+    $('#particular #iniciador_nombre').val('');
+    $('#particular #iniciador_apellido').val('');
+    $('#particular #iniciador_doc').val('');
+    $('#particular #iniciador_tel').val('');
+    $('#particular #iniciador_email').val('');
+    $('#particular #iniciador_domicilio').val('');
+    $('#particular #iniciador_cuit').val('');
+    $('#btn_add_iniciador');
   });
 
   $('#particular #edit_iniciador').on('click', function(event) {

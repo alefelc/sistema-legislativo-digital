@@ -124,7 +124,7 @@
       cache: true
     }
   }).on("select2-focus", function(e) {
-      $('#btn_add_iniciador').removeAttr("disabled");
+      $('#btn_add_iniciador');
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
@@ -137,7 +137,7 @@
       $('#proyecto #iniciador_email').val('');
       $('#proyecto #iniciador_domicilio').val('');
       $('#proyecto #iniciador_cuit').val('');
-      $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      $('#proyecto #iniciador_denominacion').val('');
       $("#process_iniciadores").select2("close");
       $('#proyecto #iniciador_nombre').focus();
     }else{
@@ -145,61 +145,61 @@
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','block');
         $('#proyecto #add_iniciador').css('display','none');
-        $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#proyecto #iniciador_tipo').val(data.type);
         $('#proyecto #nombre-label').text('Nombre');
-        $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-        $('#proyecto #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-        $('#proyecto #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-        $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
-        $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
-        $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-        $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-        $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+        $('#proyecto #iniciador_nombre').val(data.nombre);
+        $('#proyecto #iniciador_apellido').val(data.apellido);
+        $('#proyecto #iniciador_doc').val(data.nro_doc);
+        $('#proyecto #iniciador_tel').val(data.telefono);
+        $('#proyecto #iniciador_email').val(data.email);
+        $('#proyecto #iniciador_domicilio').val(data.domicilio);
+        $('#proyecto #iniciador_cuit').val(data.cuit);
+        $('#proyecto #iniciador_denominacion').val('');
       }else if (data.type == 'Juridica'){
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','block');
         $('#proyecto #add_iniciador').css('display','none');
-        $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+        $('#proyecto #iniciador_tipo').val(data.type);
         $('#proyecto #nombre-label').text('Denominación');
-        $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-        $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
-        $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
-        $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-        $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-        $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+        $('#proyecto #iniciador_nombre').val(data.nombre);
+        $('#proyecto #iniciador_apellido').val('');
+        $('#proyecto #iniciador_doc').val('');
+        $('#proyecto #iniciador_tel').val(data.telefono);
+        $('#proyecto #iniciador_email').val(data.email);
+        $('#proyecto #iniciador_domicilio').val(data.domicilio);
+        $('#proyecto #iniciador_cuit').val(data.cuit);
+        $('#proyecto #iniciador_denominacion').val('');
         $('#proyecto #denominacion-group').css('display','none');
       }else{
         if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
           $('#proyecto #edit_iniciador').data('id',data.id);
           $('#proyecto #edit_iniciador').css('display','none');
           $('#proyecto #add_iniciador').css('display','none');
-          $('#proyecto #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+          $('#proyecto #iniciador_tipo').val(data.type);
           $('#proyecto #nombre-label').text('Nombre');
-          $('#proyecto #iniciador_nombre').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_tel').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_email').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_domicilio').val('').attr('disabled', 'disabled');
-          $('#proyecto #iniciador_cuit').val('').attr('disabled', 'disabled');
+          $('#proyecto #iniciador_nombre').val('');
+          $('#proyecto #iniciador_apellido').val('');
+          $('#proyecto #iniciador_doc').val('');
+          $('#proyecto #iniciador_tel').val('');
+          $('#proyecto #iniciador_email').val('');
+          $('#proyecto #iniciador_domicilio').val('');
+          $('#proyecto #iniciador_cuit').val('');
           $('#proyecto #denominacion-group').css('display','inherit');
-          $('#proyecto #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+          $('#proyecto #iniciador_denominacion').val(data.denominacion);
         }else{
           $('#proyecto #edit_iniciador').css('display','none');
           $('#proyecto #add_iniciador').css('display','none');
-          $('#proyecto #iniciador_tipo').val('').attr('disabled','disabled');
+          $('#proyecto #iniciador_tipo').val('');
           $('#proyecto #nombre-label').text('Nombre');
-          $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_tel').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
-          $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+          $('#proyecto #iniciador_nombre').val('');
+          $('#proyecto #iniciador_apellido').val('');
+          $('#proyecto #iniciador_doc').val('');
+          $('#proyecto #iniciador_tel').val('');
+          $('#proyecto #iniciador_email').val('');
+          $('#proyecto #iniciador_domicilio').val('');
+          $('#proyecto #iniciador_cuit').val('');
           $('#proyecto #denominacion-group').css('display','inherit');
-          $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+          $('#proyecto #iniciador_denominacion').val('');
         }
       }
     }
@@ -213,41 +213,41 @@
       $('#proyecto #edit_iniciador').css('display','none');
       $('#proyecto #add_iniciador').css('display','block');
       $('#proyecto #nombre-label').text('Nombre');
-      $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_apellido').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_doc').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_tel').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_email').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#proyecto #iniciador_nombre').val('');
+      $('#proyecto #iniciador_apellido').val('');
+      $('#proyecto #iniciador_doc').val('');
+      $('#proyecto #iniciador_tel').val('');
+      $('#proyecto #iniciador_email').val('');
+      $('#proyecto #iniciador_domicilio').val('');
+      $('#proyecto #iniciador_cuit').val('');
+      $('#proyecto #iniciador_denominacion').val('');
     }else if (valueSelected == "Juridica"){
       $('#proyecto #edit_iniciador').css('display','none');
       $('#proyecto #add_iniciador').css('display','block');
       $('#proyecto #nombre-label').text('Denominación');
-      $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
-      $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
-      $('#proyecto #iniciador_tel').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_email').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
-      $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#proyecto #iniciador_nombre').val('');
+      $('#proyecto #iniciador_apellido').val('');
+      $('#proyecto #iniciador_doc').val('');
+      $('#proyecto #iniciador_tel').val('');
+      $('#proyecto #iniciador_email').val('');
+      $('#proyecto #iniciador_domicilio').val('');
+      $('#proyecto #iniciador_cuit').val('');
+      $('#proyecto #iniciador_denominacion').val('');
       $('#proyecto #denominacion-group').css('display','none');
     }else{
       if(valueSelected == "ReparticionOficial" || valueSelected == "DependenciaMunicipal"){
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','block');
         $('#proyecto #nombre-label').text('Nombre');
-        $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_tel').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#proyecto #iniciador_nombre').val('');
+        $('#proyecto #iniciador_apellido').val('');
+        $('#proyecto #iniciador_doc').val('');
+        $('#proyecto #iniciador_tel').val('');
+        $('#proyecto #iniciador_email').val('');
+        $('#proyecto #iniciador_domicilio').val('');
+        $('#proyecto #iniciador_cuit').val('');
         $('#proyecto #denominacion-group').css('display','inherit');
-        $('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
+        $('#proyecto #iniciador_denominacion').val('');
       }
     }
   });
@@ -259,61 +259,61 @@
       $('#proyecto #edit_iniciador').data('id',data.id);
       $('#proyecto #edit_iniciador').css('display','block');
       $('#proyecto #add_iniciador').css('display','none');
-      $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#proyecto #iniciador_tipo').val(data.type);
       $('#proyecto #nombre-label').text('Nombre');
-      $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-      $('#proyecto #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-      $('#proyecto #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-      $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
-      $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
-      $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-      $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-      $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      $('#proyecto #iniciador_nombre').val(data.nombre);
+      $('#proyecto #iniciador_apellido').val(data.apellido);
+      $('#proyecto #iniciador_doc').val(data.nro_doc);
+      $('#proyecto #iniciador_tel').val(data.telefono);
+      $('#proyecto #iniciador_email').val(data.email);
+      $('#proyecto #iniciador_domicilio').val(data.domicilio);
+      $('#proyecto #iniciador_cuit').val(data.cuit);
+      $('#proyecto #iniciador_denominacion').val('');
     }else if (data.type == 'Juridica'){
       $('#proyecto #edit_iniciador').data('id',data.id);
       $('#proyecto #edit_iniciador').css('display','block');
       $('#proyecto #add_iniciador').css('display','none');
-      $('#proyecto #iniciador_tipo').val(data.type).removeAttr('disabled');
+      $('#proyecto #iniciador_tipo').val(data.type);
       $('#proyecto #nombre-label').text('Denominación');
-      $('#proyecto #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-      $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
-      $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
-      $('#proyecto #iniciador_tel').val(data.telefono).removeAttr('disabled');
-      $('#proyecto #iniciador_email').val(data.email).removeAttr('disabled');
-      $('#proyecto #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-      $('#proyecto #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-      $('#proyecto #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      $('#proyecto #iniciador_nombre').val(data.nombre);
+      $('#proyecto #iniciador_apellido').val('');
+      $('#proyecto #iniciador_doc').val('');
+      $('#proyecto #iniciador_tel').val(data.telefono);
+      $('#proyecto #iniciador_email').val(data.email);
+      $('#proyecto #iniciador_domicilio').val(data.domicilio);
+      $('#proyecto #iniciador_cuit').val(data.cuit);
+      $('#proyecto #iniciador_denominacion').val('');
       $('#proyecto #denominacion-group').css('display','none');
     }else{
       if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','none');
-        $('#proyecto #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
+        $('#proyecto #iniciador_tipo').val(data.type);
         $('#proyecto #nombre-label').text('Nombre');
-        $('#proyecto #iniciador_nombre').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_apellido').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_doc').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_tel').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_email').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_domicilio').val('').attr('disabled', 'disabled');
-        $('#proyecto #iniciador_cuit').val('').attr('disabled', 'disabled');
+        $('#proyecto #iniciador_nombre').val('');
+        $('#proyecto #iniciador_apellido').val('');
+        $('#proyecto #iniciador_doc').val('');
+        $('#proyecto #iniciador_tel').val('');
+        $('#proyecto #iniciador_email').val('');
+        $('#proyecto #iniciador_domicilio').val('');
+        $('#proyecto #iniciador_cuit').val('');
         $('#proyecto #denominacion-group').css('display','inherit');
-        $('#proyecto #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+        $('#proyecto #iniciador_denominacion').val(data.denominacion);
       }else{
         $('#proyecto #add_iniciador').css('display','none');
         $('#proyecto #edit_iniciador').css('display','none');
-        $('#proyecto #iniciador_tipo').val('').attr('disabled','disabled');
+        $('#proyecto #iniciador_tipo').val('');
         $('#proyecto #nombre-label').text('Nombre');
-        $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_tel').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
-        $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
+        $('#proyecto #iniciador_nombre').val('');
+        $('#proyecto #iniciador_apellido').val('');
+        $('#proyecto #iniciador_doc').val('');
+        $('#proyecto #iniciador_tel').val('');
+        $('#proyecto #iniciador_email').val('');
+        $('#proyecto #iniciador_domicilio').val('');
+        $('#proyecto #iniciador_cuit').val('');
         $('#proyecto #denominacion-group').css('display','inherit');
-        $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
+        $('#proyecto #iniciador_denominacion').val('');
       }
     }
   });
@@ -322,32 +322,32 @@
     // token unselected
     $('#proyecto #edit_iniciador').css('display','none');
     $('#proyecto #add_iniciador').css('display','block');
-    $('#proyecto #iniciador_tipo').val('Fisica').removeAttr('disabled');
+    $('#proyecto #iniciador_tipo').val('Fisica');
     $('#proyecto #nombre-label').text('Nombre');
-    $('#proyecto #iniciador_nombre').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_apellido').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_doc').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_tel').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_email').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_domicilio').val('').removeAttr('disabled');
-    $('#proyecto #iniciador_cuit').val('').removeAttr('disabled');
+    $('#proyecto #iniciador_nombre').val('');
+    $('#proyecto #iniciador_apellido').val('');
+    $('#proyecto #iniciador_doc').val('');
+    $('#proyecto #iniciador_tel').val('');
+    $('#proyecto #iniciador_email').val('');
+    $('#proyecto #iniciador_domicilio').val('');
+    $('#proyecto #iniciador_cuit').val('');
     $('#proyecto #denominacion-group').css('display','none');
-    //$('#proyecto #iniciador_denominacion').val('').removeAttr('disabled');
+    //$('#proyecto #iniciador_denominacion').val('');
   });
 
   $('#proyecto_nro_fojas, #proyecto_asunto, #proyecto_observaciones').on("focus", function(e) {
     $('#proyecto #edit_iniciador').css('display','none');
     $('#proyecto #add_iniciador').css('display','none');
-    $('#proyecto #iniciador_tipo').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_nombre').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_apellido').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_doc').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_tel').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_email').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_domicilio').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_cuit').val('').attr('disabled','disabled');
-    $('#proyecto #iniciador_denominacion').val('').attr('disabled','disabled');
-    $('#btn_add_iniciador').attr('disabled', 'disabled');
+    $('#proyecto #iniciador_tipo').val('');
+    $('#proyecto #iniciador_nombre').val('');
+    $('#proyecto #iniciador_apellido').val('');
+    $('#proyecto #iniciador_doc').val('');
+    $('#proyecto #iniciador_tel').val('');
+    $('#proyecto #iniciador_email').val('');
+    $('#proyecto #iniciador_domicilio').val('');
+    $('#proyecto #iniciador_cuit').val('');
+    $('#proyecto #iniciador_denominacion').val('');
+    $('#btn_add_iniciador');
   });
 
   $('#proyecto #edit_iniciador').on('click', function(event) {

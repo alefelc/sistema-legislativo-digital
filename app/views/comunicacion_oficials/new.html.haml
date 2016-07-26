@@ -125,19 +125,19 @@
       cache: true
     }
   }).on("select2-focus", function(e) {
-      $('#btn_add_iniciador').removeAttr("disabled");
+      $('#btn_add_iniciador');
   }).on("select2-selecting", function(e) {
     // token selected
     var data = e.object
     if (data.apellido == 'Agregar Nuevo'){
       e.preventDefault();
-      $('#comunicacion-oficial #iniciador_nombre').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_apellido').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_doc').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_tel').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_email').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_domicilio').attr('disabled', 'disabled');
-      $('#comunicacion-oficial #iniciador_cuit').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_nombre');
+      $('#comunicacion-oficial #iniciador_apellido');
+      $('#comunicacion-oficial #iniciador_doc');
+      $('#comunicacion-oficial #iniciador_tel');
+      $('#comunicacion-oficial #iniciador_email');
+      $('#comunicacion-oficial #iniciador_domicilio');
+      $('#comunicacion-oficial #iniciador_cuit');
       $('#comunicacion-oficial #iniciador_denominacion').val('');
       $("#process_iniciadores").select2("close");
       $('#comunicacion-oficial #iniciador_denominacion').focus();
@@ -146,41 +146,41 @@
         $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
         $('#comunicacion-oficial #edit_iniciador').css('display','block');
         $('#comunicacion-oficial #add_iniciador').css('display','none');
-        $('#comunicacion-oficial #iniciador_tipo').val(data.type).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_tel').val(data.telefono).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_email').val(data.email).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-        $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_tipo').val(data.type);
+        $('#comunicacion-oficial #iniciador_nombre').val(data.nombre);
+        $('#comunicacion-oficial #iniciador_apellido').val(data.apellido);
+        $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc);
+        $('#comunicacion-oficial #iniciador_tel').val(data.telefono);
+        $('#comunicacion-oficial #iniciador_email').val(data.email);
+        $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio);
+        $('#comunicacion-oficial #iniciador_cuit').val(data.cuit);
+        $('#comunicacion-oficial #iniciador_denominacion').val('');
       }else{
         if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
           $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
           $('#comunicacion-oficial #edit_iniciador').css('display','none');
           $('#comunicacion-oficial #add_iniciador').css('display','none');
-          $('#comunicacion-oficial #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_email').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled', 'disabled');
-          $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+          $('#comunicacion-oficial #iniciador_tipo').val(data.type);
+          $('#comunicacion-oficial #iniciador_nombre').val('');
+          $('#comunicacion-oficial #iniciador_apellido').val('');
+          $('#comunicacion-oficial #iniciador_doc').val('');
+          $('#comunicacion-oficial #iniciador_tel').val('');
+          $('#comunicacion-oficial #iniciador_email').val('');
+          $('#comunicacion-oficial #iniciador_domicilio').val('');
+          $('#comunicacion-oficial #iniciador_cuit').val('');
+          $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion);
         }else{
           $('#comunicacion-oficial #edit_iniciador').css('display','none');
           $('#comunicacion-oficial #add_iniciador').css('display','none');
-          $('#comunicacion-oficial #iniciador_tipo').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
-          $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+          $('#comunicacion-oficial #iniciador_tipo').val('');
+          $('#comunicacion-oficial #iniciador_nombre').val('');
+          $('#comunicacion-oficial #iniciador_apellido').val('');
+          $('#comunicacion-oficial #iniciador_doc').val('');
+          $('#comunicacion-oficial #iniciador_tel').val('');
+          $('#comunicacion-oficial #iniciador_email').val('');
+          $('#comunicacion-oficial #iniciador_domicilio').val('');
+          $('#comunicacion-oficial #iniciador_cuit').val('');
+          $('#comunicacion-oficial #iniciador_denominacion').val('');
         }
       }
     }
@@ -193,26 +193,26 @@
     if(valueSelected == "Fisica" || valueSelected == "Juridica"){
       $('#comunicacion-oficial #edit_iniciador').css('display','none');
       $('#comunicacion-oficial #add_iniciador').css('display','block');
-      $('#comunicacion-oficial #iniciador_nombre').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_apellido').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_doc').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_tel').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_email').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_domicilio').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_cuit').val('').removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+      $('#comunicacion-oficial #iniciador_nombre').val('');
+      $('#comunicacion-oficial #iniciador_apellido').val('');
+      $('#comunicacion-oficial #iniciador_doc').val('');
+      $('#comunicacion-oficial #iniciador_tel').val('');
+      $('#comunicacion-oficial #iniciador_email').val('');
+      $('#comunicacion-oficial #iniciador_domicilio').val('');
+      $('#comunicacion-oficial #iniciador_cuit').val('');
+      $('#comunicacion-oficial #iniciador_denominacion').val('');
     }else{
       if(valueSelected == "ReparticionOficial" || valueSelected == "DependenciaMunicipal"){
         $('#comunicacion-oficial #edit_iniciador').css('display','none');
         $('#comunicacion-oficial #add_iniciador').css('display','block');
-        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_denominacion').val('').removeAttr('disabled');
+        $('#comunicacion-oficial #iniciador_nombre').val('');
+        $('#comunicacion-oficial #iniciador_apellido').val('');
+        $('#comunicacion-oficial #iniciador_doc').val('');
+        $('#comunicacion-oficial #iniciador_tel').val('');
+        $('#comunicacion-oficial #iniciador_email').val('');
+        $('#comunicacion-oficial #iniciador_domicilio').val('');
+        $('#comunicacion-oficial #iniciador_cuit').val('');
+        $('#comunicacion-oficial #iniciador_denominacion').val('');
       }
     }
   });
@@ -224,41 +224,41 @@
       $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
       $('#comunicacion-oficial #edit_iniciador').css('display','block');
       $('#comunicacion-oficial #add_iniciador').css('display','none');
-      $('#comunicacion-oficial #iniciador_tipo').val(data.type).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_nombre').val(data.nombre).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_apellido').val(data.apellido).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_tel').val(data.telefono).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_email').val(data.email).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_cuit').val(data.cuit).removeAttr('disabled');
-      $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled', 'disabled');
+      $('#comunicacion-oficial #iniciador_tipo').val(data.type);
+      $('#comunicacion-oficial #iniciador_nombre').val(data.nombre);
+      $('#comunicacion-oficial #iniciador_apellido').val(data.apellido);
+      $('#comunicacion-oficial #iniciador_doc').val(data.nro_doc);
+      $('#comunicacion-oficial #iniciador_tel').val(data.telefono);
+      $('#comunicacion-oficial #iniciador_email').val(data.email);
+      $('#comunicacion-oficial #iniciador_domicilio').val(data.domicilio);
+      $('#comunicacion-oficial #iniciador_cuit').val(data.cuit);
+      $('#comunicacion-oficial #iniciador_denominacion').val('');
     }else{
       if (data.type == 'ReparticionOficial' || data.type == 'DependenciaMunicipal'){
         $('#comunicacion-oficial #edit_iniciador').data('id',data.id);
         $('#comunicacion-oficial #edit_iniciador').css('display','none');
         $('#comunicacion-oficial #add_iniciador').css('display','none');
-        $('#comunicacion-oficial #iniciador_tipo').val(data.type).attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled', 'disabled');
-        $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion).attr('disabled', 'disabled');
+        $('#comunicacion-oficial #iniciador_tipo').val(data.type);
+        $('#comunicacion-oficial #iniciador_nombre').val('');
+        $('#comunicacion-oficial #iniciador_apellido').val('');
+        $('#comunicacion-oficial #iniciador_doc').val('');
+        $('#comunicacion-oficial #iniciador_tel').val('');
+        $('#comunicacion-oficial #iniciador_email').val('');
+        $('#comunicacion-oficial #iniciador_domicilio').val('');
+        $('#comunicacion-oficial #iniciador_cuit').val('');
+        $('#comunicacion-oficial #iniciador_denominacion').val(data.denominacion);
       }else{
         $('#comunicacion-oficial #add_iniciador').css('display','none');
         $('#comunicacion-oficial #edit_iniciador').css('display','none');
-        $('#comunicacion-oficial #iniciador_tipo').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
-        $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
+        $('#comunicacion-oficial #iniciador_tipo').val('');
+        $('#comunicacion-oficial #iniciador_nombre').val('');
+        $('#comunicacion-oficial #iniciador_apellido').val('');
+        $('#comunicacion-oficial #iniciador_doc').val('');
+        $('#comunicacion-oficial #iniciador_tel').val('');
+        $('#comunicacion-oficial #iniciador_email').val('');
+        $('#comunicacion-oficial #iniciador_domicilio').val('');
+        $('#comunicacion-oficial #iniciador_cuit').val('');
+        $('#comunicacion-oficial #iniciador_denominacion').val('');
       }
     }
   });
@@ -267,30 +267,30 @@
     // token unselected
     $('#comunicacion-oficial #edit_iniciador').css('display','none');
     $('#comunicacion-oficial #add_iniciador').css('display','block');
-    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial').removeAttr('disabled');
-    $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_denominacion').val('').removeAttr('disabled');
+    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial');
+    $('#comunicacion-oficial #iniciador_nombre').val('');
+    $('#comunicacion-oficial #iniciador_apellido').val('');
+    $('#comunicacion-oficial #iniciador_doc').val('');
+    $('#comunicacion-oficial #iniciador_tel').val('');
+    $('#comunicacion-oficial #iniciador_email').val('');
+    $('#comunicacion-oficial #iniciador_domicilio').val('');
+    $('#comunicacion-oficial #iniciador_cuit').val('');
+    $('#comunicacion-oficial #iniciador_denominacion').val('');
   });
 
   $('#comunicacion_oficial_nro_fojas, #comunicacion_oficial_asunto, #comunicacion_oficial_observaciones').on("focus", function(e) {
     $('#comunicacion-oficial #edit_iniciador').css('display','none');
     $('#comunicacion-oficial #add_iniciador').css('display','none');
-    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_nombre').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_apellido').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_doc').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_tel').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_email').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_domicilio').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_cuit').val('').attr('disabled','disabled');
-    $('#comunicacion-oficial #iniciador_denominacion').val('').attr('disabled','disabled');
-    $('#btn_add_iniciador').attr('disabled', 'disabled');
+    $('#comunicacion-oficial #iniciador_tipo').val('ReparticionOficial');
+    $('#comunicacion-oficial #iniciador_nombre').val('');
+    $('#comunicacion-oficial #iniciador_apellido').val('');
+    $('#comunicacion-oficial #iniciador_doc').val('');
+    $('#comunicacion-oficial #iniciador_tel').val('');
+    $('#comunicacion-oficial #iniciador_email').val('');
+    $('#comunicacion-oficial #iniciador_domicilio').val('');
+    $('#comunicacion-oficial #iniciador_cuit').val('');
+    $('#comunicacion-oficial #iniciador_denominacion').val('');
+    $('#btn_add_iniciador');
   });
 
   $('#comunicacion-oficial #edit_iniciador').on('click', function(event) {
