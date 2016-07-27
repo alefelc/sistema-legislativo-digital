@@ -54,12 +54,6 @@ class CondonacionsController < ApplicationController
       end
     end
 
-    ## add state initial
-    @condonacion.estado_tramites.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-    end
-
     ## get params states the POST and save
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|
@@ -249,5 +243,4 @@ class CondonacionsController < ApplicationController
     params.require(:condonacion).permit(:nro_fojas, :asunto, :updated_at,
                                         :observaciones, upload: [:file])
   end
-
 end

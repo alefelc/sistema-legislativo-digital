@@ -44,12 +44,6 @@ class ProyectosController < ApplicationController
       end
     end
 
-    ## add state initial
-    @proyecto.estado_tramites.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-    end
-
     ## get params iniciadores the POST
     unless params[:iniciadores].blank?
       JSON.parse(params['iniciadores']).each do |key, value|

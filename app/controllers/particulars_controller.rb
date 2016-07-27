@@ -51,12 +51,6 @@ class ParticularsController < ApplicationController
       end
     end
 
-    ## add state initial
-    @particular.estado_tramites.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-    end
-
     ## get params states the POST and save
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|

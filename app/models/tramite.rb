@@ -15,6 +15,9 @@ class Tramite < ActiveRecord::Base
   #== Nested attributes
   accepts_nested_attributes_for :uploads
 
+  # == Callbacks
+  after_create :initial_state
+
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
   end
@@ -41,5 +44,11 @@ class Tramite < ActiveRecord::Base
 
   def get_iniciadores
     self.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }.to_a + self.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }.to_a + self.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }.to_a + self.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }.to_a + self.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }.to_a + self.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre, bloque: x.try(:bloque).try(:denominacion) } }.to_a
+  end
+
+  private
+
+  def initial_state
+    self.estado_tramites.create nombre: 'Iniciado', tipo: 1
   end
 end

@@ -33,9 +33,4 @@ module ComunicacionOficialsHelper
   def get_iniciadores_areas(pro)
     pro.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }
   end
-
-  def get_iniciadores_persons(pro)
-    pro.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-  end
-
 end

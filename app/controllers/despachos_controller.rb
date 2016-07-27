@@ -105,12 +105,6 @@ class DespachosController < ApplicationController
       end
     end
 
-    ## add state initial
-    @despacho.estado_tramites.create do |e|
-      e.nombre = "Iniciado"
-      e.tipo = 1
-    end
-
     ## get params states the POST and save
     unless params[:states].blank?
       JSON.parse(params['states']).each do |key, value|
@@ -283,5 +277,4 @@ class DespachosController < ApplicationController
     end
     json_array
   end
-
 end

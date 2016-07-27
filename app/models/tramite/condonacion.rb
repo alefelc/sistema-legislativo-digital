@@ -1,6 +1,5 @@
 class Condonacion < Tramite
 
-  #== Associations
+  # == Associations
   has_many :documentacion_presentadas
-
 end

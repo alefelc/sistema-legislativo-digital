@@ -5,10 +5,10 @@ class DespachoDatatable < AjaxDatatablesRails::Base
 
   def as_json(options = {})
     {
-      :draw => params[:draw].to_i,
-      :recordsTotal =>  get_raw_records.count(:all),
-      :recordsFiltered => filter_records(get_raw_records).count(:all),
-      :data => data
+      draw: params[:draw].to_i,
+      recordsTotal:  get_raw_records.count(:all),
+      recordsFiltered: filter_records(get_raw_records).count(:all),
+      data: data
     }
   end
 

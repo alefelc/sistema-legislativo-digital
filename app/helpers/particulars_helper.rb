@@ -17,9 +17,4 @@ module ParticularsHelper
   def get_iniciadores_comisions(part)
     part.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
   end
-
-  def get_iniciadores_persons(part)
-    part.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }  
-  end
-
 end

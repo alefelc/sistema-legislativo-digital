@@ -80,7 +80,7 @@
           %li.header.center Navegación Principal
           %li.treeview
             %a{:href => "#"}
-              %i.fa.fa-share
+              %i.fa.fa-tags
               %span Mesa de entradas
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
@@ -107,15 +107,15 @@
               %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
               %li
                 %a{ href: reports_mesa_de_entradas_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-th-list
                   Reportes
               %li
                 %a{ href: statitics_mesa_de_entradas_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-bar-chart
                   Estadísticas
           %li.treeview
             %a{ href: '#' }
-              %i.fa.fa-share
+              %i.fa.fa-file-text-o
               %span= t '.expedientes'
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
@@ -131,15 +131,15 @@
               %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
               %li
                 %a{ href: reports_expedientes_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-th-list
                   Reportes
               %li
                 %a{ href: statitics_expedientes_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-bar-chart
                   Estadísticas
           %li.treeview
             %a{ href: '#' }
-              %i.fa.fa-share
+              %i.fa.fa-bank
               %span= t '.normas'
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
@@ -170,12 +170,37 @@
               %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
               %li
                 %a{ href: reports_normas_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-th-list
                   Reportes
               %li
                 %a{ href: statitics_normas_path }
-                  %i.fa.fa-circle-o
+                  %i.fa.fa-bar-chart
                   Estadísticas
+          %li.treeview
+            %a{ href: '#' }
+              %i.fa.fa-user
+              %span Personas
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{ href: '#Fisicas' }
+                  %i.fa.fa-circle-o
+                  Fisicas
+              %li
+                %a{ href: '#Juridicas' }
+                  %i.fa.fa-circle-o
+                  Juridicas
+          %li.header.center Configuración de sistema
+          %li.treeview
+            %a{:href => "#"}
+              %i.fa.fa-share
+              %span Usuarios
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
+              %li
+                %a{ href: '#users' }
+                  %i.fa.fa-circle-o
+                  Ver Usuarios
       / /.sidebar
     / ===============================================
     / Contains page content

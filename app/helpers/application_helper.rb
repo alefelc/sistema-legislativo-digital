@@ -391,4 +391,8 @@ module ApplicationHelper
   def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
+
+  def get_iniciadores_persons(process)
+    process.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
+  end
 end

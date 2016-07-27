@@ -32,12 +32,7 @@ module ProyectosHelper
     pro.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }
   end
 
-  def get_iniciadores_persons(pro)
-    pro.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-  end
-
   def type_name_initiator(init)
     "#{ init[:type] }: #{ init[:apellido] }, #{ init[:nombre] }"
   end
-
 end

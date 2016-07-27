@@ -22,9 +22,4 @@ module CondonacionsHelper
   def get_iniciadores_reparticiones(cond)
     cond.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
   end
-
-  def get_iniciadores_persons(cond)
-    cond.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-  end
-
 end
