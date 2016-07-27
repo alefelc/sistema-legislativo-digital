@@ -30,7 +30,7 @@ class DespachoDatatable < AjaxDatatablesRails::Base
         index_desp(desp),
         desp.nro_fojas.to_s,
         despacho_expedientes(desp),
-        to_date(desp.fecha),
+        fix_date(desp),
         despacho_comisiones(desp),
         despacho_concejales(desp),
         desp.observaciones.to_s,
@@ -105,5 +105,19 @@ class DespachoDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     Despacho.all
+  end
+
+  def fix_date(desp)
+    if desp.fecha.present?
+      to_date(desp.fecha)
+    elsif desp.day.present? && desp.month.present? && desp.year.present?
+      to_date(Date.parse("#{desp.day}/#{desp.month}/#{desp.year}"))
+    elsif desp.month.present? && desp.year.present?
+      "#{desp.month} - #{desp.year}"
+    elsif desp.year.present?
+      "Año: #{desp.year}"
+    else
+      ''
+    end
   end
 end
