@@ -1,6 +1,8 @@
 class CondonacionDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_cond
   def_delegator :@view, :current_user
+  def_delegator :@view, :person_path
+  def_delegator :@view, :link_to
 
   def as_json(options = {})
     {
@@ -38,16 +40,12 @@ class CondonacionDatatable < AjaxDatatablesRails::Base
   end
 
   def get_iniciadores cond
-    resp = ''
-    iniciadores_reparticions = cond.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
-    iniciadores_reparticions.each do |b|
-      resp = "#{resp}#{b[:type]}: #{b[:denominacion]};\n"
+    result = []
+    cond.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
+    cond.persons.each do |b|
+      result << link_to(b.full_name, person_path(b))
     end
-    iniciadores_persons = cond.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_persons.each do |b|
-      resp = "#{resp}#{b[:type]}: #{b[:apellido]}, #{b[:nombre]};\n"
-    end
-    resp
+    result.join(' - ')
   end
 
   def to_date date

@@ -1,0 +1,119 @@
+#person-show
+  %section.invoice
+    / title row
+    .row
+      .col-xs-12
+        %h2.page-header
+          %i.fa.fa-user
+          = t '.personal_data'
+          %small.pull-right= t '.created_at', date: @person.created_at
+      / /.col
+    / info row
+    .row.invoice-info
+      .col-xs-12
+        %i= t ".#{@person.type}"
+      .col-sm-6.invoice-col
+        %address
+          %strong= t '.name'
+          = @person.nombre || '-.'
+          %br/
+          %strong= t '.surname'
+          = @person.apellido || '-.'
+          %br/
+          %strong= t '.dni_cuit'
+          = @person.nro_doc || '-.'
+      / /.col
+      .col-sm-6.invoice-col
+        %address
+          %strong= t '.address'
+          = @person.domicilio || '-.'
+          %br/
+          %strong= t '.phone'
+          = @person.telefono || '-.'
+          %br/
+          %strong= t '.email'
+          = @person.email || '-.'
+
+      / /.col
+    / /.row
+    / Table row
+    -# .row
+    -#   .col-xs-12.table-responsive
+    -#     %table.table.table-striped
+    -#       %thead
+    -#         %tr
+    -#           %th Qty
+    -#           %th Product
+    -#           %th Serial #
+    -#           %th Description
+    -#           %th Subtotal
+    -#       %tbody
+    -#         %tr
+    -#           %td 1
+    -#           %td Call of Duty
+    -#           %td 455-981-221
+    -#           %td El snort testosterone trophy driving gloves handsome
+    -#           %td $64.50
+    -#         %tr
+    -#           %td 1
+    -#           %td Need for Speed IV
+    -#           %td 247-925-726
+    -#           %td Wes Anderson umami biodiesel
+    -#           %td $50.00
+    -#         %tr
+    -#           %td 1
+    -#           %td Monsters DVD
+    -#           %td 735-845-642
+    -#           %td Terry Richardson helvetica tousled street art master
+    -#           %td $10.70
+    -#         %tr
+    -#           %td 1
+    -#           %td Grown Ups Blue Ray
+    -#           %td 422-568-642
+    -#           %td Tousled lomo letterpress
+    -#           %td $25.99
+    -#   / /.col
+    -# / /.row
+    -# .row
+    -#   / accepted payments column
+    -#   .col-xs-6
+    -#     %p.lead Payment Methods:
+    -#     %img{:alt => "Visa", :src => "../../dist/img/credit/visa.png"}/
+    -#     %img{:alt => "Mastercard", :src => "../../dist/img/credit/mastercard.png"}/
+    -#     %img{:alt => "American Express", :src => "../../dist/img/credit/american-express.png"}/
+    -#     %img{:alt => "Paypal", :src => "../../dist/img/credit/paypal2.png"}/
+    -#     %p.text-muted.well.well-sm.no-shadow{:style => "margin-top: 10px;"}
+    -#       Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
+    -#       dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+    -#   / /.col
+    -#   .col-xs-6
+    -#     %p.lead Amount Due 2/22/2014
+    -#     .table-responsive
+    -#       %table.table
+    -#         %tbody
+    -#           %tr
+    -#             %th{:style => "width:50%"} Subtotal:
+    -#             %td $250.30
+    -#           %tr
+    -#             %th Tax (9.3%)
+    -#             %td $10.34
+    -#           %tr
+    -#             %th Shipping:
+    -#             %td $5.80
+    -#           %tr
+    -#             %th Total:
+    -#             %td $265.24
+    -#   / /.col
+    -# / /.row
+    -# / this row will not appear when printing
+    -# .row.no-print
+    -#   .col-xs-12
+    -#     %a.btn.btn-default{:href => "invoice-print.html", :target => "_blank"}
+    -#       %i.fa.fa-print
+    -#       Print
+    -#     %button.btn.btn-success.pull-right{:type => "button"}
+    -#       %i.fa.fa-credit-card
+    -#       Submit Payment
+    -#     %button.btn.btn-primary.pull-right{:style => "margin-right: 5px;", :type => "button"}
+    -#       %i.fa.fa-download
+    -#       Generate PDF

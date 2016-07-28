@@ -33,6 +33,7 @@ module Sld
 
     # Default I18n internalization
     config.i18n.default_locale = :es
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 
     # TimeZone
     config.time_zone = 'Buenos Aires'

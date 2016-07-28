@@ -110,4 +110,6 @@ Rails.application.routes.draw do
   resources :normas
 
   resources :administrative_files, only: [:create, :index]
+
+  resources :persons
 end

@@ -1,0 +1,7 @@
+Date::DATE_FORMATS[:default]="%d/%m/%Y"
+Time::DATE_FORMATS[:default_timeless]="%d/%m/%Y"
+Time::DATE_FORMATS[:default]="%d/%m/%Y %H:%M"
+Time::DATE_FORMATS[:default_yearless]="%d/%m %H:%M"
+Time::DATE_FORMATS[:default_tinyear]="%d/%m/%y %H:%M"
+Time::DATE_FORMATS[:type_time_to_input]="%Y-%m-%dT%H:%M"
+DateTime::DATE_FORMATS[:default] = "%d/%m/%Y"

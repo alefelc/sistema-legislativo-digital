@@ -1,0 +1,11 @@
+es:
+  persons:
+    show:
+      personal_data: Información personal
+      created_at: Creado el %{date}
+      name: "Nombre:"
+      surname: "Apellido:"
+      dni_cuit: "DNI / CUIT:"
+      address: "Domicilio:"
+      phone: "Teléfono:"
+      email: "Email:"

@@ -1,6 +1,8 @@
 class ParticularDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_part
   def_delegator :@view, :current_user
+  def_delegator :@view, :link_to
+  def_delegator :@view, :person_path
 
   def as_json(options = {})
     {
@@ -37,27 +39,23 @@ class ParticularDatatable < AjaxDatatablesRails::Base
     end
   end
 
-  def get_iniciadores part
-    resp = ''
-    iniciadores_persons = part.persons.map do |x|
-      { type: x.type, apellido: x.apellido, nombre: x.nombre }
+  def get_iniciadores(part)
+    result = []
+    part.persons.map do |p|
+      result << link_to(p.full_name, person_path(p))
     end
-    iniciadores_persons.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
-    end
-
-    resp
+    result.join(' - ')
   end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 
-  def to_date_time date
+  def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
 
-  def associated_file part
+  def associated_file(part)
     "<div style='display: flex'>" +
     if current_user.present?
       "<i class='linktoedit btn btn-warning fa fa-pencil-square-o u' " +

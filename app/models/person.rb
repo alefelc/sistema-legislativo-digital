@@ -11,6 +11,14 @@ class Person < ActiveRecord::Base
   has_many :estado_tramites, as: :ref
 
   def full_name
-    "#{self.nombre} #{self.apellido}"
+    if apellido.present? && nombre.present?
+      "#{apellido}, #{nombre}"
+    elsif apellido.present?
+      apellido
+    elsif nombre.present?
+      nombre
+    else
+      ''
+    end
   end
 end

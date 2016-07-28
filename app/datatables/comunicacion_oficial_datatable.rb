@@ -1,13 +1,15 @@
 class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_com
   def_delegator :@view, :current_user
+  def_delegator :@view, :person_path
+  def_delegator :@view, :link_to
 
   def as_json(options = {})
     {
-      :draw => params[:draw].to_i,
-      :recordsTotal =>  get_raw_records.count(:all),
-      :recordsFiltered => filter_records(get_raw_records).count(:all),
-      :data => data
+      draw: params[:draw].to_i,
+      recordsTotal:  get_raw_records.count(:all),
+      recordsFiltered: filter_records(get_raw_records).count(:all),
+      data: data
     }
   end
 
@@ -35,38 +37,16 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
     end
   end
 
-  def get_iniciadores com
-    resp = ""
-    iniciadores_organos = com.organo_de_gobiernos.map{ |x| {type: "OrganoDeGobierno", denominacion: x.denominacion } }
-    iniciadores_organos.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_areas = com.areas.map{ |x| {type: "Area", denominacion: x.denominacion } }
-    iniciadores_areas.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_bloques = com.bloques.map{ |x| {type: "Bloque", denominacion: x.denominacion } }
-    iniciadores_bloques.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_comisions = com.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
-    iniciadores_comisions.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_persons = com.persons.map{ |x| {type: x.type, apellido: x.apellido, nombre: x.nombre } }
-    iniciadores_persons.each do |b|
-      resp = resp + b[:type] + ": " + b[:apellido].to_s + ", " + b[:nombre].to_s + ";\n"
-    end
-    iniciadores_reparticiones = com.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
-    iniciadores_reparticiones.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-    iniciadores_dependencias = com.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
-    iniciadores_dependencias.each do |b|
-      resp = resp + b[:type] + ": " + b[:denominacion].to_s + ";\n"
-    end
-
-    resp
+  def get_iniciadores(com)
+    result = []
+    com.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
+    com.areas.each { |b| result << "#{b.denominacion}" }
+    com.bloques.each { |b| result << "#{b.denominacion}" }
+    com.comisions.each { |b| result << "#{b.denominacion}" }
+    com.persons.each { |b| result << b.full_name }
+    com.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
+    com.dependencia_municipals.each { |b| result << "#{b.denominacion}" }
+    result.join(' - ')
   end
 
   def to_date(date)
@@ -120,6 +100,4 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     ComunicacionOficial.all
   end
-
-  # ==== Insert 'presenter'-like methods below if necessary
 end

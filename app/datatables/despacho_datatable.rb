@@ -2,6 +2,8 @@ class DespachoDatatable < AjaxDatatablesRails::Base
   def_delegator :@view, :index_desp
   def_delegator :@view, :despacho_expedientes
   def_delegator :@view, :current_user
+  def_delegator :@view, :person_path
+  def_delegator :@view, :link_to
 
   def as_json(options = {})
     {
@@ -52,11 +54,11 @@ class DespachoDatatable < AjaxDatatablesRails::Base
   end
 
   def despacho_concejales(desp)
-    string = ''
+    result = []
     desp.concejals.each do |c|
-      string << "#{c.apellido}, #{c.nombre}; "
+      result << link_to(c.full_name, person_path(c))
     end
-    string[0..-3]
+    result.join(' - ')
   end
 
   def associated_file(desp)
