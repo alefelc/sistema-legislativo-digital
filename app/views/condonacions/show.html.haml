@@ -1,9 +1,6 @@
 - fojas = @condonacion.get_fojas
 - asunto = @condonacion.get_asunto
-- iniciadores_persons = get_iniciadores_persons(@condonacion)
-- iniciadores_reparticiones = get_iniciadores_reparticiones(@condonacion)
-- obs = @condonacion.get_observaciones
-
+- obs = @condonacion.observaciones
 #condonacion-show
 
   #condonacion-header.row
@@ -42,17 +39,17 @@
               - case x.tipo
               - when '1'
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td
                     Iniciado por:
-                    - iniciadores_persons.each do |b|
+                    - @condonacion.persons.each do |b|
                       .double-tab{ style: 'display: flex' }
-                        = "#{ b[:apellido] }, #{ b[:nombre] }"
+                        = link_to b.full_name, person_path(b)
                         %p &nbsp;
                         .subtitle (particular)
-                    - iniciadores_reparticiones.each do |r|
+                    - @condonacion.reparticion_oficials.each do |r|
                       .double-tab{ style: 'display: flex' }
-                        = r[:denominacion].to_s
+                        = r.denominacion
                         %p &nbsp;
                         .subtitle (Repartición Oficial)
 

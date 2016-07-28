@@ -2,7 +2,6 @@
 - asunto = @particular.get_asunto
 - iniciadores_bloques = get_iniciadores_bloques(@particular)
 - iniciadores_comisions = get_iniciadores_comisions(@particular)
-- iniciadores_persons = get_iniciadores_persons(@particular)
 - obs = @particular.get_observaciones
 
 #particular-show
@@ -42,12 +41,12 @@
               - case x.tipo
               - when '1'
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td
                     Iniciado por:
                     %p.single-tab
-                      - iniciadores_persons.each do |b|
-                        .double-tab= "#{ b[:type] }: #{ b[:apellido] }, #{ b[:nombre] }"
+                      - @particular.persons.each do |b|
+                        .double-tab= link_to b.full_name, person_path(b)
 
               - when '2'
                 - text = if x.ref.present?
@@ -56,13 +55,13 @@
                   - elsif x.ref.class.superclass.name != 'Person'
                     - x.ref.denominacion
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo, 'data-idref': x.ref_id, 'data-typeref': x.ref_type }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
                 - if x.ref.present?
                   %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                    %td= to_date x.created_at
+                    %td.center= to_date x.created_at
                     %td
                       %span= 'Finalizado en '
                       %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }", x.ref

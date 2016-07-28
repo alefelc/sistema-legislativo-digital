@@ -6,7 +6,6 @@
 - iniciadores_dependencias = get_iniciadores_dependencias(@proyecto)
 - iniciadores_bloques = get_iniciadores_bloques(@proyecto)
 - iniciadores_comisions = get_iniciadores_comisions(@proyecto)
-- iniciadores_persons = get_iniciadores_persons(@proyecto)
 - obs = @proyecto.get_observaciones
 
 #proyecto-show
@@ -47,9 +46,9 @@
               - case x.tipo
               - when '1'
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td
-                    Iniciado por:
+                    %strong Iniciado por:
                     %p.single-tab
                       - iniciadores_organos.each do |o|
                         .double-tab{ style: 'display: flex' }
@@ -81,9 +80,9 @@
                           = d[:denominacion].to_s
                           %p &nbsp;
                           .subtitle (Dependencia Municipal)
-                      - iniciadores_persons.each do |b|
+                      - @proyecto.persons.each do |b|
                         .double-tab{ style: 'display: flex' }
-                          = type_name_initiator b
+                          = link_to b.full_name, person_path(b)
                           %p &nbsp;
                           .subtitle (Particular)
 
@@ -96,13 +95,13 @@
                 - attrs = { 'data-id': x.id, 'data-tipo': x.tipo,
                             'data-idref': x.ref_id, 'data-typeref': x.ref_type }
                 %tr.derivacion-tr-show{ attrs }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td= "Derivado a #{ x.ref_type }: #{ text }"
 
               - when '3'
                 - if x.ref.present?
                   %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                    %td= to_date x.created_at
+                    %td.center= to_date x.created_at
                     %td
                       %span Finalizado en
                       %span= link_to "#{ x.ref_type } #{ x.ref.nro_exp }", x.ref
@@ -110,7 +109,7 @@
 
               - when '4' #caso para tramites finalizados pero q no terminan en expediente
                 %tr.derivacion-tr-show{ 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.updated_at
+                  %td.center= to_date x.updated_at
                   %td
                     %span Finalizado:
                     %span= x.especificacion.to_s

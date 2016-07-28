@@ -18,10 +18,6 @@ module ComunicacionOficialsHelper
     pro.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
   end
 
-  def get_iniciadores_reparticiones(pro)
-    pro.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
-  end
-
   def get_iniciadores_dependencias(pro)
     pro.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
   end

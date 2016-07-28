@@ -46,7 +46,7 @@
           .titles= 'Concejales Firmantes'
           .double-tab= '-.' if concejales.empty?
           - concejales.each do |c|
-            .double-tab= "#{ c.apellido.titleize }, #{ c.nombre.titleize }"
+            .double-tab= link_to c.full_name, person_path(c)
 
         .single-tab
           %span.titles.simple-tab= 'Tipo de Dictamen'

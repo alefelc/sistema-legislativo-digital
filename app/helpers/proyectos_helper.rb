@@ -16,10 +16,6 @@ module ProyectosHelper
     pro.comisions.map{ |x| {type: "Comision", denominacion: x.denominacion } }
   end
 
-  def get_iniciadores_reparticiones(pro)
-    pro.reparticion_oficials.map{ |x| {type: "ReparticionOficial", denominacion: x.denominacion } }
-  end
-
   def get_iniciadores_dependencias(pro)
     pro.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
   end
@@ -30,9 +26,5 @@ module ProyectosHelper
 
   def get_iniciadores_areas(pro)
     pro.areas.map{ |x| {type: "Area", denominacion: x.denominacion, codigo: x.codigo } }
-  end
-
-  def type_name_initiator(init)
-    "#{ init[:type] }: #{ init[:apellido] }, #{ init[:nombre] }"
   end
 end
