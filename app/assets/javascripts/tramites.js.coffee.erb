@@ -1,11 +1,13 @@
 $(document).on 'ready page:load', ->
   $('#tramite-table').dataTable
     lengthChange: true
-    ajax:
-      url: $('#tramite-table').data('source'),
-      data:(params) ->
-        params.filtering = $('#filter-values').val()
-        return params
+    ajaxSource: $('#tramite-table').data('source')
+    # ajax:
+    #   url: $('#tramite-table').data('source'),
+    #   data:(params) ->
+    #     params.filtering = $('#filter-values').val()
+    #     return params
+    #   method: 'GET'
     fnInitComplete: ->
       $('#tramite div.dataTables_filter input').focus()
       return
@@ -21,6 +23,11 @@ $(document).on 'ready page:load', ->
       { sortable: false, "width": "13%" }
       { sortable: false, "width": "13%" }
     ]
+    fnServerData: (sSource, aoData, fnCallback) ->
+      newData = aoData;
+      newData.push { name: "filtering", value: $('#filter-values').val() }
+      $.getJSON sSource, newData, (json) ->
+        fnCallback json
 
   $('#tramite #btn-print').on 'click', ->
     $('#tramite-table a').each (index, elem) ->
