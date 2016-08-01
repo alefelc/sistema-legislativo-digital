@@ -9,3 +9,11 @@ es:
       address: "Domicilio:"
       phone: "Teléfono:"
       email: "Email:"
+    index:
+      type: Persona
+      name: Nombre
+      surname: Apellido
+      address: Domicilio
+      dni_cuit: 'DNI / CUIT'
+      phone: Teléfono
+      email: Email

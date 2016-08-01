@@ -16,4 +16,5 @@
 //= require alertify
 //= require moment
 //= require daterangepicker
+//= require people
 //= require_tree .

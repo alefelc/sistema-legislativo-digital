@@ -1,5 +1,5 @@
 class PersonsController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!, except: [:show, :index]
 
   respond_to :json, :html
 
@@ -29,6 +29,17 @@ class PersonsController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
+  end
+
+  def index
+    respond_to do |format|
+      format.html
+      format.json { render json: PeopleDatatable.new(view_context) }
+    end
+  end
+
+  def edit
+    @person = Person.find params[:id]
   end
 
   private

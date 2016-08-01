@@ -183,13 +183,27 @@
               %i.fa.fa-angle-left.pull-right
             %ul.treeview-menu
               %li
-                %a{ href: '#Fisicas' }
+                %a{ href: persons_path }
                   %i.fa.fa-circle-o
-                  Fisicas
+                  Físicas y Jurídicas
+          %li.treeview
+            %a{ href: '#' }
+              %i.fa.fa-align-center
+              %span Autoridades
+              %i.fa.fa-angle-left.pull-right
+            %ul.treeview-menu
               %li
-                %a{ href: '#Juridicas' }
+                %a{ href: '#concejal' }
                   %i.fa.fa-circle-o
-                  Juridicas
+                  Concejales
+              %li
+                %a{ href: '#comision' }
+                  %i.fa.fa-circle-o
+                  Comisiones
+              %li
+                %a{ href: '#bloque' }
+                  %i.fa.fa-circle-o
+                  Bloques
           %li.header.center Configuración de sistema
           %li.treeview
             %a{:href => "#"}

@@ -1,0 +1,16 @@
+#people
+  %table.datatable-keyevents.table.table-striped.table-bordered#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
+    %thead
+      %tr
+        %th= t('.type')
+        %th= t('.name')
+        %th= t('.surname')
+        %th= t('.address')
+        %th= t('.dni_cuit')
+        %th= t('.phone')
+        %th= t('.email')
+        %th
+    %tbody
+
+:javascript
+  People.IndexDataTable.init();
