@@ -21,3 +21,7 @@ People.IndexDataTable = do ->
         { orderable: false },
         { orderable: false }
       ]
+      initComplete: () ->
+        $(document).find('.person-edit').on 'ajax:success', (XHR, data, status) ->
+          $('#person-edit').html(data)
+          $('#person-edit .modal').modal('show')

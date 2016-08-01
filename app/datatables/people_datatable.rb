@@ -35,7 +35,7 @@ class PeopleDatatable
   def edit_button(person)
     link_to_if current_user.present?, '',
                edit_person_path(person),
-               class: 'btn btn-warning fa fa-pencil-square-o',
+               class: 'btn btn-warning fa fa-pencil-square-o person-edit',
                title: 'Editar persona',
                remote: true
   end

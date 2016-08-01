@@ -40,6 +40,7 @@ class PersonsController < ApplicationController
 
   def edit
     @person = Person.find params[:id]
+    render layout: false
   end
 
   private

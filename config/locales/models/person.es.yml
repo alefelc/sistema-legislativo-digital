@@ -1,0 +1,13 @@
+es:
+  activerecord:
+    models:
+      person: Persona
+    attributes:
+      person:
+        nombre: Nombre
+        apellido: Apellido
+        type: Tipo de persona
+        email: Email
+        telefono: Teléfono
+        nro_doc: 'DNI / CUIT'
+        domicilio: Domicilio

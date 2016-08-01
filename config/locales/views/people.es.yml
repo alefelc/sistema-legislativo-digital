@@ -17,3 +17,6 @@ es:
       dni_cuit: 'DNI / CUIT'
       phone: Teléfono
       email: Email
+    edit:
+      update_person: Actualizar persona
+      update: Actualizar
