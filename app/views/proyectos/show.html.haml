@@ -84,7 +84,10 @@
                         .double-tab{ style: 'display: flex' }
                           = link_to b.full_name, person_path(b)
                           %p &nbsp;
-                          .subtitle (Particular)
+                          - if b.type == 'Fisica' || b.type == 'Juridica'
+                            .subtitle (Particular)
+                          - else
+                            .subtitle (Concejal)
 
               - when '2'
                 - text = if x.ref.present?

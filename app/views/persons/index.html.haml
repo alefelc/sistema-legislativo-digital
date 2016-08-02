@@ -1,7 +1,7 @@
 #person-edit
 
 #people
-  %table.datatable-keyevents.table.table-striped.table-bordered#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
+  %table.table.table-striped.table-bordered#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
     %thead
       %tr
         %th= t('.type')
