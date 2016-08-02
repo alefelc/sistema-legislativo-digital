@@ -50,7 +50,7 @@
           %tbody
             - @person.tramites.each do |t|
               %tr
-                %td= t.id
+                %td= link_to t.id, t
                 %td= t.type
                 %td= t.nro_fojas
                 %td= t.asunto
