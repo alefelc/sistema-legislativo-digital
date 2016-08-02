@@ -34,74 +34,46 @@
           %strong= t '.email'
           = @person.email || '-.'
 
+    %hr
+
     .row
       .col-xs-12.table-responsive
-        %table.table.table-striped
+        %table.table.table-striped#person-tramites
           %thead
             %tr
-              %th Qty
-              %th Product
-              %th Serial #
-              %th Description
-              %th Subtotal
+              %th Nro
+              %th Tramite
+              %th Fojas
+              %th Asunto / Solicitud
+              %th Observaciones
+              %th Actualizado el
           %tbody
-            %tr
-              %td 1
-              %td Call of Duty
-              %td 455-981-221
-              %td El snort testosterone trophy driving gloves handsome
-              %td $64.50
-            %tr
-              %td 1
-              %td Need for Speed IV
-              %td 247-925-726
-              %td Wes Anderson umami biodiesel
-              %td $50.00
-            %tr
-              %td 1
-              %td Monsters DVD
-              %td 735-845-642
-              %td Terry Richardson helvetica tousled street art master
-              %td $10.70
-            %tr
-              %td 1
-              %td Grown Ups Blue Ray
-              %td 422-568-642
-              %td Tousled lomo letterpress
-              %td $25.99
-
-    .row
-      .col-xs-6
-        %p.lead Payment Methods:
-        %img{:alt => "Visa", :src => "../../dist/img/credit/visa.png"}/
-        %img{:alt => "Mastercard", :src => "../../dist/img/credit/mastercard.png"}/
-        %img{:alt => "American Express", :src => "../../dist/img/credit/american-express.png"}/
-        %img{:alt => "Paypal", :src => "../../dist/img/credit/paypal2.png"}/
-        %p.text-muted.well.well-sm.no-shadow{:style => "margin-top: 10px;"}
-          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-          dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-
-      .col-xs-6
-        %p.lead Amount Due 2/22/2014
-        .table-responsive
-          %table.table
-            %tbody
+            - @person.tramites.each do |t|
               %tr
-                %th{:style => "width:50%"} Subtotal:
-                %td $250.30
-              %tr
-                %th Tax (9.3%)
-                %td $10.34
-              %tr
-                %th Shipping:
-                %td $5.80
-              %tr
-                %th Total:
-                %td $265.24
+                %td= t.id
+                %td= t.type
+                %td= t.nro_fojas
+                %td= t.asunto
+                %td= t.observaciones
+                %td= t.updated_at
+          %tfoot
+            %tr
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td
 
     .row.no-print
       .col-xs-12
-        %a.btn.btn-default{:href => "invoice-print.html", :target => "_blank"}
-        %button.btn.btn-danger.pull-right{:style => "margin-right: 5px;", :type => "button"}
+        %button.btn.btn-danger.pull-left{:style => "margin-right: 5px;", :type => "button"}
           %i.fa.fa-print
           Imprimir
+
+:javascript
+$(document).on('ready', function() {
+  $('#person-tramites').dataTable({
+    bServerSide: false
+  });
+});

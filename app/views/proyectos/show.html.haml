@@ -86,7 +86,7 @@
                           %p &nbsp;
                           - if b.type == 'Fisica' || b.type == 'Juridica'
                             .subtitle (Particular)
-                          - else
+                          - elsif b.type == 'Concejal'
                             .subtitle (Concejal)
 
               - when '2'
