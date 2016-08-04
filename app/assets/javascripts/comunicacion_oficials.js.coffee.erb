@@ -84,3 +84,7 @@ $(document).on 'ready page:load', ->
   $.ctrl 'P', ->
     $('#comunicacion-oficial-show #print-comunicacion-oficial').click()
     return
+
+  $('#comunicacion-oficial-show').on 'ajax:success', '.comunicacion-oficial-edit', (XHR, data, success) ->
+    $('#comunicacion-oficial-edit').html data
+    $('#comunicacion-oficial-edit .modal').modal 'show'

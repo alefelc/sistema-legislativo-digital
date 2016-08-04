@@ -5,6 +5,7 @@
 - obs = @particular.get_observaciones
 
 #particular-show
+  #particular-edit
   #particular-header.row
     .col-md-8
       %h3.main-title= t('particulars.show.info') + " #{@particular.id}"
@@ -12,8 +13,10 @@
       .float-right
         %a#print-particular.btn.btn-lg.btn-danger.fa.fa-download{ title: 'Imprimir Petición Particular' }
           Imprimir
-        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Petición Particular' }
-          Descargar
+        - if current_user.present?
+          = link_to 'Editar', edit_particular_path(@particular),
+                    class: 'btn btn-lg btn-warning fa fa-pencil-square-o particular-edit',
+                    title: 'Editar Petición Particular', remote: true
 
   #particular-body
     .panel.panel-success

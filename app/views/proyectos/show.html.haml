@@ -10,6 +10,7 @@
 
 #proyecto-show
 
+  #proyecto-edit
   #proyecto-header.row
     .col-md-8
       %h3.main-title= t('proyectos.show.info') + " #{ @proyecto.id }"
@@ -17,8 +18,10 @@
       .float-right
         %a.btn.btn-lg.btn-danger.fa.fa-download#print-proyecto{ title: 'Imprimir Proyecto' }
           Imprimir
-        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Proyecto' }
-          Descargar
+        - if current_user.present?
+          = link_to 'Editar', edit_proyecto_path(@proyecto),
+                    class: 'btn btn-lg btn-warning fa fa-pencil-square-o proyecto-edit',
+                    title: 'Editar Despacho', remote: true
 
   #proyecto-body
     .panel.panel-success

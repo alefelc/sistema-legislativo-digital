@@ -10,6 +10,7 @@
 
 #comunicacion-oficial-show
 
+  #comunicacion-oficial-edit
   #comunicacion-oficial-header.row
     .col-md-8
       %h3.main-title= t('comunicacion_oficials.show.info') + " #{@comunicacion_oficial.id}"
@@ -17,8 +18,10 @@
       .float-right
         %a#print-comunicacion-oficial.btn.btn-lg.btn-danger.fa.fa-download{ title: 'Imprimir Comunicación Oficial' }
           Imprimir
-        %a.btn.btn-lg.btn-primary.fa.fa-download{ title: 'Descargar Comunicación Oficial' }
-          Descargar
+        - if current_user.present?
+          = link_to 'Editar', edit_comunicacion_oficial_path(@comunicacion_oficial),
+                    class: 'btn btn-lg btn-warning fa fa-pencil-square-o comunicacion-oficial-edit',
+                    title: 'Editar Comunicacion Oficial', remote: true
 
   #comunicacion-oficial-body
     .panel.panel-success

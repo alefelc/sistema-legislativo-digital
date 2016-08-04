@@ -2,7 +2,7 @@
 - asunto = @condonacion.get_asunto
 - obs = @condonacion.observaciones
 #condonacion-show
-
+  #condonacion-edit
   #condonacion-header.row
     .col-md-8
       %h3.main-title= "#{ t('condonacions.show.info') } #{ @condonacion.id }"
@@ -10,6 +10,10 @@
       .float-right
         %a#print-condonacion.btn.btn-lg.btn-danger.fa.fa-download{ title: 'Imprimir Condonación' }
           Imprimir
+        - if current_user.present?
+          = link_to 'Editar', edit_condonacion_path(@condonacion),
+                    class: 'btn btn-lg btn-warning fa fa-pencil-square-o condonacion-edit',
+                    title: 'Editar Despacho', remote: true
 
   #condonacion-body
     .panel.panel-success

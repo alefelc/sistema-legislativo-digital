@@ -84,3 +84,7 @@ $(document).on 'ready page:load', ->
   $.ctrl 'P', ->
     $('#proyecto-show #print-proyecto').click()
     return
+
+  $('#proyecto-show').on 'ajax:success', '.proyecto-edit', (XHR, data, success) ->
+    $('#proyecto-edit').html data
+    $('#proyecto-edit .modal').modal 'show'

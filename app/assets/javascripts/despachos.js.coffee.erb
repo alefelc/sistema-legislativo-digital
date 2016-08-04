@@ -85,3 +85,8 @@ $(document).on 'ready page:load', ->
   $.ctrl 'P', ->
     $('#despacho-show #print-despacho').click()
     return
+
+  $('#despacho-show').on 'ajax:success', '.despacho-edit', (XHR, data, success) ->
+    console.log('laalalla')
+    $('#despacho-show #despacho-edit').html data
+    $('#despacho-show #despacho-edit .modal').modal('show')

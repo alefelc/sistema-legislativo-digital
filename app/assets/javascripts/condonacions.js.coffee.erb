@@ -84,3 +84,7 @@ $(document).on 'ready page:load', ->
   $.ctrl 'P', ->
     $('#condonacion-show #print-condonacion').click()
     return
+
+  $('#condonacion-show').on 'ajax:success', '.condonacion-edit', (XHR, data, success) ->
+    $('#condonacion-edit').html data
+    $('#condonacion-edit .modal').modal 'show'

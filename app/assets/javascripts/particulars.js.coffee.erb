@@ -81,3 +81,7 @@ $(document).on 'ready page:load', ->
   $.ctrl 'P', ->
     $('#particular-show #print-particular').click()
     return
+
+  $('#particular-show').on 'ajax:success', '.particular-edit', (XHR, data, success) ->
+    $('#particular-edit').html data
+    $('#particular-edit .modal').modal 'show'
