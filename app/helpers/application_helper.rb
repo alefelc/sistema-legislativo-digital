@@ -391,4 +391,13 @@ module ApplicationHelper
   def to_date_time(date)
     date.strftime("%d/%m/%Y - %R") unless date.nil?
   end
+
+  def type_options
+    [
+      ["Condonacion", "Condonacion"],
+      ["Peticion", "Peticion"],
+      ["Proyecto", "Proyecto"],
+      ["ComunicacionOficial", "ComunicacionOficial"]
+    ]
+  end
 end

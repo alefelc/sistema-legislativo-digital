@@ -33,7 +33,7 @@ class ProyectosController < ApplicationController
   end
 
   def create
-    pro = params[:proyecto].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
+    pro = params[:proyecto].select { |key, value| ["type", "nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @proyecto = Proyecto.create pro.to_hash
 
     if params[:proyecto][:upload].present?
@@ -89,7 +89,7 @@ class ProyectosController < ApplicationController
   end
 
   def update
-    pro = params[:proyecto].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
+    pro = params[:proyecto].select { |key, value| ["type", "nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @proyecto = Proyecto.find(params[:id])
     @proyecto.update pro.to_hash
 

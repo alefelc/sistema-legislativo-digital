@@ -33,7 +33,7 @@ class ParticularsController < ApplicationController
   end
 
   def create
-    part = params[:peticion].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
+    part = params[:peticion].select { |key, value| ["type", "nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @particular = Peticion.create part.to_hash
 
     if params[:peticion][:upload].present?
@@ -83,7 +83,7 @@ class ParticularsController < ApplicationController
   end
 
   def update
-    part = params[:peticion].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
+    part = params[:peticion].select { |key, value| ["type", "nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @particular = Peticion.find(params[:id])
     @particular.update part.to_hash
 

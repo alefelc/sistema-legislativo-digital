@@ -33,7 +33,7 @@ class ComunicacionOficialsController < ApplicationController
   end
 
   def create
-    com = params[:comunicacion_oficial].select { |key, value| ["nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
+    com = params[:comunicacion_oficial].select { |key, value| ["type", "nro_fojas", "asunto", "updated_at", "observaciones"].include?(key) }
     @comunicacion_oficial = ComunicacionOficial.create com.to_hash
 
     if params[:comunicacion_oficial][:upload].present?
@@ -89,7 +89,7 @@ class ComunicacionOficialsController < ApplicationController
   end
 
   def update
-    com = params[:comunicacion_oficial].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
+    com = params[:comunicacion_oficial].select { |key, value| ["type", "nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @comunicacion_oficial = ComunicacionOficial.find(params[:id])
     @comunicacion_oficial.update com.to_hash
 

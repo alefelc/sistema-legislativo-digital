@@ -86,7 +86,7 @@ class CondonacionsController < ApplicationController
   end
 
   def update
-    cond = params[:condonacion].select { |key, value| ["nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
+    cond = params[:condonacion].select { |key, value| ["type", "nro_fojas", "updated_at", "asunto","observaciones"].include?(key) }
     @condonacion = Condonacion.find(params[:id])
     @condonacion.update cond.to_hash
 
@@ -240,7 +240,7 @@ class CondonacionsController < ApplicationController
   private
 
   def condonacion_params
-    params.require(:condonacion).permit(:nro_fojas, :asunto, :updated_at,
+    params.require(:condonacion).permit(:type, :nro_fojas, :asunto, :updated_at,
                                         :observaciones, upload: [:file])
   end
 end
