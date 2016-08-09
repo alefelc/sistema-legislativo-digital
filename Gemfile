@@ -44,9 +44,6 @@ gem 'rails-i18n', '4.0.4'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Use Unicorn as the app server
-gem 'unicorn', '~> 4.8.2', group: :production
-
 # Capistrano for deployment
 gem 'capistrano', '~> 3.1'
 gem 'capistrano-bundler', '~> 1.1.2'
@@ -125,3 +122,12 @@ group :development, :test do
   gem 'rails-erd'
 end
 
+group :production do
+  # Use Unicorn as the app server
+  gem 'unicorn', '~> 4.8.2', group: :production
+
+ # Gem for heroku
+  gem 'rails_12factor'
+end
+
+ruby "2.2.2"
