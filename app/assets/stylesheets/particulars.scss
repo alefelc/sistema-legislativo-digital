@@ -74,6 +74,17 @@
 #particular-show {
   color: gray;
 
+  .modal-header {
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #00A65A;
+
+    h4#nuevoLabel {
+      font-weight: bold;
+    }
+  }
+
   #states-table-particular-show {
     margin: 0px;
   }

@@ -88,3 +88,19 @@ $(document).on 'ready page:load', ->
   $('#condonacion-show').on 'ajax:success', '.condonacion-edit', (XHR, data, success) ->
     $('#condonacion-edit').html data
     $('#condonacion-edit .modal').modal 'show'
+
+    ## Preload iniciadores-tokens
+    tokenData = $('#condonacion-show #process_iniciadores').data 'load'
+    iniciadores = [];
+    $.each tokenData, (index, ini) ->
+      if(ini.type == "Fisica" || ini.type == "Juridica" || ini.type == "Concejal")
+        iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
+      else
+        if(ini.type == "ReparticionOficial" || ini.type == "Comision" || ini.type == "Bloque")
+          iniciadores.push({id: ini.id, denominacion: ini.denominacion, type: ini.type})
+        else
+          ## otro caso
+      return
+    $('#condonacion-show #process_iniciadores').select2('data', iniciadores)
+
+    return

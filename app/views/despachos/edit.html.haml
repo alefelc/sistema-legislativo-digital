@@ -20,8 +20,8 @@
 :javascript
   wi = $(window).width()-20;
   margin = 10;
-  $("#despacho .modal-xs").css('width', wi);
-  $("#despacho .modal-xs").css('margin-left', margin);
+  $("#despacho, #despacho-show").find(".modal-xs").css('width', wi);
+  $("#despacho, #despacho-show").find(".modal-xs").css('margin-left', margin);
 
   //var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
@@ -51,7 +51,7 @@
     formatSelection: format_concejals
   });
 
-  $('#despacho #exped_token').tokenInput('/despachos/search_exp', {
+  $('#despacho, #despacho-show').find('#exped_token').tokenInput('/despachos/search_exp', {
     preventDuplicates: true,
     propertyToSearch: 'indice',
     theme: 'bootstrap',
@@ -85,9 +85,9 @@
     //add exp ids and circuitos checked to form
     var circuitos = {}
     var index = 0
-    $("#despacho .exps-token").each(function(key, value) {
+    $("#despacho, #despacho-show").find(".exps-token").each(function(key, value) {
       c = []
-      $("#despacho ." + $(value).data("id")).each(function(key, value) {
+      $("#despacho, #despacho-show").find("." + $(value).data("id")).each(function(key, value) {
         if ($(this).is(':checked')){
           c.push($(value).data("nro"))
         }
@@ -102,7 +102,7 @@
     //add derived states to form
     var states = {};
     var index = 0;
-    $("#despacho .derivacion-tr").each(function(key, value) {
+    $("#despacho, #despacho-show").find(".derivacion-tr").each(function(key, value) {
       states[index] = {
         id: $(value).data("id"),
         tipo: $(value).data("tipo"),
@@ -112,9 +112,9 @@
       index++;
     });
 
-    $("#despacho #states").val(JSON.stringify(states));
-    $("#despacho #circuitos").val(JSON.stringify(circuitos));
-    $("#despacho #new_despacho, [id^='edit_despacho']").submit();
+    $("#despacho, #despacho-show").find("#states").val(JSON.stringify(states));
+    $("#despacho, #despacho-show").find("#circuitos").val(JSON.stringify(circuitos));
+    $("#despacho, #despacho-show").find("#new_despacho, [id^='edit_despacho']").submit();
   });
 
   $('.modal').on('shown.bs.modal', function () {
@@ -195,7 +195,7 @@
     }
   }
 
-  $("#despacho #derived-states").select2({
+  $("#despacho, #despacho-show").find("#derived-states").select2({
     placeholder: "Buscar derivaciones",
     allowClear: true,
     theme: 'bootstrap',
@@ -239,7 +239,7 @@
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
 
-    $('#despacho #states-table tbody').append(tr);
+    $('#despacho, #despacho-show').find('#states-table tbody').append(tr);
   }).on("change", function(e) {
-    $('#despacho #derived-states').select2("val", "");
+    $('#despacho, #despacho-show').find('#derived-states').select2("val", "");
   });

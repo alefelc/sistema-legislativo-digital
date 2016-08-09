@@ -77,8 +77,8 @@
 
   wi = $(window).width()-20;
   margin = 10;
-  $("#particular .modal-xs").css('width', wi);
-  $("#particular .modal-xs").css('margin-left', margin);
+  $("#particular, #particular-show").find(".modal-xs").css('width', wi);
+  $("#particular, #particular-show").find(".modal-xs").css('margin-left', margin);
 
   function format_iniciadores(style) {
     var originalOption = $(style.element);
@@ -134,87 +134,87 @@
     var data = e.object
     if (data.apellido == 'Agregar Nuevo'){
       e.preventDefault();
-      $('#particular #iniciador_nombre').val('');
-      $('#particular #iniciador_apellido').val('');
-      $('#particular #iniciador_doc').val('');
-      $('#particular #iniciador_tel').val('');
-      $('#particular #iniciador_email').val('');
-      $('#particular #iniciador_domicilio').val('');
-      $('#particular #iniciador_cuit').val('');
+      $('#particular, #particular-show').find('#iniciador_nombre').val('');
+      $('#particular, #particular-show').find('#iniciador_apellido').val('');
+      $('#particular, #particular-show').find('#iniciador_doc').val('');
+      $('#particular, #particular-show').find('#iniciador_tel').val('');
+      $('#particular, #particular-show').find('#iniciador_email').val('');
+      $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+      $('#particular, #particular-show').find('#iniciador_cuit').val('');
       $("#process_iniciadores").select2("close");
-      $('#particular #iniciador_nombre').focus();
+      $('#particular, #particular-show').find('#iniciador_nombre').focus();
     }else{
       if(data.type == 'Fisica'){
-        $('#particular #edit_iniciador').data('id',data.id);
-        $('#particular #edit_iniciador').css('display','block');
-        $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val(data.type);
-        $('#particular #nombre-label').text('Nombre');
-        $('#particular #iniciador_nombre').val(data.nombre);
-        $('#particular #iniciador_apellido').val(data.apellido);
-        $('#particular #iniciador_doc').val(data.nro_doc);
-        $('#particular #iniciador_tel').val(data.telefono);
-        $('#particular #iniciador_email').val(data.email);
-        $('#particular #iniciador_domicilio').val(data.domicilio);
-        $('#particular #iniciador_cuit').val(data.cuit);
+        $('#particular, #particular-show').find('#edit_iniciador').data('id',data.id);
+        $('#particular, #particular-show').find('#edit_iniciador').css('display','block');
+        $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+        $('#particular, #particular-show').find('#iniciador_tipo').val(data.type);
+        $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+        $('#particular, #particular-show').find('#iniciador_nombre').val(data.nombre);
+        $('#particular, #particular-show').find('#iniciador_apellido').val(data.apellido);
+        $('#particular, #particular-show').find('#iniciador_doc').val(data.nro_doc);
+        $('#particular, #particular-show').find('#iniciador_tel').val(data.telefono);
+        $('#particular, #particular-show').find('#iniciador_email').val(data.email);
+        $('#particular, #particular-show').find('#iniciador_domicilio').val(data.domicilio);
+        $('#particular, #particular-show').find('#iniciador_cuit').val(data.cuit);
       }else if (data.type == 'Juridica'){
-        $('#particular #edit_iniciador').data('id',data.id);
-        $('#particular #edit_iniciador').css('display','block');
-        $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val(data.type);
-        $('#particular #nombre-label').text('Denominación');
-        $('#particular #iniciador_nombre').val(data.nombre);
-        $('#particular #iniciador_apellido').val('');
-        $('#particular #iniciador_doc').val('');
-        $('#particular #iniciador_tel').val(data.telefono);
-        $('#particular #iniciador_email').val(data.email);
-        $('#particular #iniciador_domicilio').val(data.domicilio);
-        $('#particular #iniciador_cuit').val(data.cuit);
+        $('#particular, #particular-show').find('#edit_iniciador').data('id',data.id);
+        $('#particular, #particular-show').find('#edit_iniciador').css('display','block');
+        $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+        $('#particular, #particular-show').find('#iniciador_tipo').val(data.type);
+        $('#particular, #particular-show').find('#nombre-label').text('Denominación');
+        $('#particular, #particular-show').find('#iniciador_nombre').val(data.nombre);
+        $('#particular, #particular-show').find('#iniciador_apellido').val('');
+        $('#particular, #particular-show').find('#iniciador_doc').val('');
+        $('#particular, #particular-show').find('#iniciador_tel').val(data.telefono);
+        $('#particular, #particular-show').find('#iniciador_email').val(data.email);
+        $('#particular, #particular-show').find('#iniciador_domicilio').val(data.domicilio);
+        $('#particular, #particular-show').find('#iniciador_cuit').val(data.cuit);
       }else{
-        $('#particular #edit_iniciador').css('display','none');
-        $('#particular #add_iniciador').css('display','none');
-        $('#particular #iniciador_tipo').val('');
-        $('#particular #nombre-label').text('Nombre');
-        $('#particular #iniciador_nombre').val('');
-        $('#particular #iniciador_apellido').val('');
-        $('#particular #iniciador_doc').val('');
-        $('#particular #iniciador_tel').val('');
-        $('#particular #iniciador_email').val('');
-        $('#particular #iniciador_domicilio').val('');
-        $('#particular #iniciador_cuit').val('');
+        $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+        $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+        $('#particular, #particular-show').find('#iniciador_tipo').val('');
+        $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+        $('#particular, #particular-show').find('#iniciador_nombre').val('');
+        $('#particular, #particular-show').find('#iniciador_apellido').val('');
+        $('#particular, #particular-show').find('#iniciador_doc').val('');
+        $('#particular, #particular-show').find('#iniciador_tel').val('');
+        $('#particular, #particular-show').find('#iniciador_email').val('');
+        $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+        $('#particular, #particular-show').find('#iniciador_cuit').val('');
       }
     }
   });
 
   // change select type initiator
-  $('#particular #iniciador_tipo').on('change', function (e) {
+  $('#particular, #particular-show').find('#iniciador_tipo').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
     if(valueSelected == "Fisica"){
-      $('#particular #edit_iniciador').css('display','none');
-      $('#particular #add_iniciador').css('display','block');
-      $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val('');
-      $('#particular #iniciador_apellido').val('');
-      $('#particular #iniciador_doc').val('');
-      $('#particular #iniciador_tel').val('');
-      $('#particular #iniciador_email').val('');
-      $('#particular #iniciador_domicilio').val('');
-      $('#particular #iniciador_cuit').val('');
-      $('#particular #iniciador_denominacion').val('');
+      $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#add_iniciador').css('display','block');
+      $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+      $('#particular, #particular-show').find('#iniciador_nombre').val('');
+      $('#particular, #particular-show').find('#iniciador_apellido').val('');
+      $('#particular, #particular-show').find('#iniciador_doc').val('');
+      $('#particular, #particular-show').find('#iniciador_tel').val('');
+      $('#particular, #particular-show').find('#iniciador_email').val('');
+      $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+      $('#particular, #particular-show').find('#iniciador_cuit').val('');
+      $('#particular, #particular-show').find('#iniciador_denominacion').val('');
     }else if( valueSelected == "Juridica" ){
-      $('#particular #edit_iniciador').css('display','none');
-      $('#particular #add_iniciador').css('display','block');
-      $('#particular #nombre-label').text('Denominación');
-      $('#particular #iniciador_nombre').val('');
-      $('#particular #iniciador_apellido').val('');
-      $('#particular #iniciador_doc').val('');
-      $('#particular #iniciador_tel').val('');
-      $('#particular #iniciador_email').val('');
-      $('#particular #iniciador_domicilio').val('');
-      $('#particular #iniciador_cuit').val('');
-      $('#particular #iniciador_denominacion').val('');
-      $('#particular #denominacion-group').css('display','none');
+      $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#add_iniciador').css('display','block');
+      $('#particular, #particular-show').find('#nombre-label').text('Denominación');
+      $('#particular, #particular-show').find('#iniciador_nombre').val('');
+      $('#particular, #particular-show').find('#iniciador_apellido').val('');
+      $('#particular, #particular-show').find('#iniciador_doc').val('');
+      $('#particular, #particular-show').find('#iniciador_tel').val('');
+      $('#particular, #particular-show').find('#iniciador_email').val('');
+      $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+      $('#particular, #particular-show').find('#iniciador_cuit').val('');
+      $('#particular, #particular-show').find('#iniciador_denominacion').val('');
+      $('#particular, #particular-show').find('#denominacion-group').css('display','none');
     }
   });
 
@@ -222,86 +222,86 @@
     // token selected
     var data = $(choice).data('select2-data');
     if(data.type == 'Fisica'){
-      $('#particular #edit_iniciador').data('id',data.id);
-      $('#particular #edit_iniciador').css('display','block');
-      $('#particular #add_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val(data.type);
-      $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val(data.nombre);
-      $('#particular #iniciador_apellido').val(data.apellido);
-      $('#particular #iniciador_doc').val(data.nro_doc);
-      $('#particular #iniciador_tel').val(data.telefono);
-      $('#particular #iniciador_email').val(data.email);
-      $('#particular #iniciador_domicilio').val(data.domicilio);
-      $('#particular #iniciador_cuit').val(data.cuit);
+      $('#particular, #particular-show').find('#edit_iniciador').data('id',data.id);
+      $('#particular, #particular-show').find('#edit_iniciador').css('display','block');
+      $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#iniciador_tipo').val(data.type);
+      $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+      $('#particular, #particular-show').find('#iniciador_nombre').val(data.nombre);
+      $('#particular, #particular-show').find('#iniciador_apellido').val(data.apellido);
+      $('#particular, #particular-show').find('#iniciador_doc').val(data.nro_doc);
+      $('#particular, #particular-show').find('#iniciador_tel').val(data.telefono);
+      $('#particular, #particular-show').find('#iniciador_email').val(data.email);
+      $('#particular, #particular-show').find('#iniciador_domicilio').val(data.domicilio);
+      $('#particular, #particular-show').find('#iniciador_cuit').val(data.cuit);
     }else if (data.type == 'Juridica'){
-      $('#particular #edit_iniciador').data('id',data.id);
-      $('#particular #edit_iniciador').css('display','block');
-      $('#particular #add_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val(data.type);
-      $('#particular #nombre-label').text('Denominación');
-      $('#particular #iniciador_nombre').val(data.nombre);
-      $('#particular #iniciador_apellido').val('');
-      $('#particular #iniciador_doc').val('');
-      $('#particular #iniciador_tel').val(data.telefono);
-      $('#particular #iniciador_email').val(data.email);
-      $('#particular #iniciador_domicilio').val(data.domicilio);
-      $('#particular #iniciador_cuit').val(data.cuit);
+      $('#particular, #particular-show').find('#edit_iniciador').data('id',data.id);
+      $('#particular, #particular-show').find('#edit_iniciador').css('display','block');
+      $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#iniciador_tipo').val(data.type);
+      $('#particular, #particular-show').find('#nombre-label').text('Denominación');
+      $('#particular, #particular-show').find('#iniciador_nombre').val(data.nombre);
+      $('#particular, #particular-show').find('#iniciador_apellido').val('');
+      $('#particular, #particular-show').find('#iniciador_doc').val('');
+      $('#particular, #particular-show').find('#iniciador_tel').val(data.telefono);
+      $('#particular, #particular-show').find('#iniciador_email').val(data.email);
+      $('#particular, #particular-show').find('#iniciador_domicilio').val(data.domicilio);
+      $('#particular, #particular-show').find('#iniciador_cuit').val(data.cuit);
     }else{
-      $('#particular #add_iniciador').css('display','none');
-      $('#particular #edit_iniciador').css('display','none');
-      $('#particular #iniciador_tipo').val('');
-      $('#particular #nombre-label').text('Nombre');
-      $('#particular #iniciador_nombre').val('');
-      $('#particular #iniciador_apellido').val('');
-      $('#particular #iniciador_doc').val('');
-      $('#particular #iniciador_tel').val('');
-      $('#particular #iniciador_email').val('');
-      $('#particular #iniciador_domicilio').val('');
-      $('#particular #iniciador_cuit').val('');
+      $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+      $('#particular, #particular-show').find('#iniciador_tipo').val('');
+      $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+      $('#particular, #particular-show').find('#iniciador_nombre').val('');
+      $('#particular, #particular-show').find('#iniciador_apellido').val('');
+      $('#particular, #particular-show').find('#iniciador_doc').val('');
+      $('#particular, #particular-show').find('#iniciador_tel').val('');
+      $('#particular, #particular-show').find('#iniciador_email').val('');
+      $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+      $('#particular, #particular-show').find('#iniciador_cuit').val('');
     }
   });
 
   $('.select2-input').on("focus", function(e) {
     // token unselected
-    $('#particular #edit_iniciador').css('display','none');
-    $('#particular #add_iniciador').css('display','block');
-    $('#particular #iniciador_tipo').val('Fisica');
-    $('#particular #nombre-label').text('Nombre');
-    $('#particular #iniciador_nombre').val('');
-    $('#particular #iniciador_apellido').val('');
-    $('#particular #iniciador_doc').val('');
-    $('#particular #iniciador_tel').val('');
-    $('#particular #iniciador_email').val('');
-    $('#particular #iniciador_domicilio').val('');
-    $('#particular #iniciador_cuit').val('');
+    $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+    $('#particular, #particular-show').find('#add_iniciador').css('display','block');
+    $('#particular, #particular-show').find('#iniciador_tipo').val('Fisica');
+    $('#particular, #particular-show').find('#nombre-label').text('Nombre');
+    $('#particular, #particular-show').find('#iniciador_nombre').val('');
+    $('#particular, #particular-show').find('#iniciador_apellido').val('');
+    $('#particular, #particular-show').find('#iniciador_doc').val('');
+    $('#particular, #particular-show').find('#iniciador_tel').val('');
+    $('#particular, #particular-show').find('#iniciador_email').val('');
+    $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+    $('#particular, #particular-show').find('#iniciador_cuit').val('');
   });
 
   $('#peticion_nro_fojas, #peticion_asunto, #peticion_observaciones').on("focus", function(e) {
-    $('#particular #edit_iniciador').css('display','none');
-    $('#particular #add_iniciador').css('display','none');
-    $('#particular #iniciador_tipo').val('');
-    $('#particular #iniciador_nombre').val('');
-    $('#particular #iniciador_apellido').val('');
-    $('#particular #iniciador_doc').val('');
-    $('#particular #iniciador_tel').val('');
-    $('#particular #iniciador_email').val('');
-    $('#particular #iniciador_domicilio').val('');
-    $('#particular #iniciador_cuit').val('');
+    $('#particular, #particular-show').find('#edit_iniciador').css('display','none');
+    $('#particular, #particular-show').find('#add_iniciador').css('display','none');
+    $('#particular, #particular-show').find('#iniciador_tipo').val('');
+    $('#particular, #particular-show').find('#iniciador_nombre').val('');
+    $('#particular, #particular-show').find('#iniciador_apellido').val('');
+    $('#particular, #particular-show').find('#iniciador_doc').val('');
+    $('#particular, #particular-show').find('#iniciador_tel').val('');
+    $('#particular, #particular-show').find('#iniciador_email').val('');
+    $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+    $('#particular, #particular-show').find('#iniciador_cuit').val('');
     $('#btn_add_iniciador');
   });
 
-  $('#particular #edit_iniciador').on('click', function(event) {
+  $('#particular, #particular-show').find('#edit_iniciador').on('click', function(event) {
     //update inicador Fisico o Juridico
     if (confirm("Desea editar el iniciador seleccionado")) {
       var id = $(this).data('id');
-      var iniciador = { person: { nombre: $('#particular #iniciador_nombre').val(),
-                apellido: $('#particular #iniciador_apellido').val(),
-                nro_doc: $('#particular #iniciador_doc').val(),
-                telefono: $('#particular #iniciador_tel').val(),
-                email: $('#particular #iniciador_email').val(),
-                domicilio: $('#particular #iniciador_domicilio').val(),
-                cuit: $('#particular #iniciador_cuit').val() }};
+      var iniciador = { person: { nombre: $('#particular, #particular-show').find('#iniciador_nombre').val(),
+                apellido: $('#particular, #particular-show').find('#iniciador_apellido').val(),
+                nro_doc: $('#particular, #particular-show').find('#iniciador_doc').val(),
+                telefono: $('#particular, #particular-show').find('#iniciador_tel').val(),
+                email: $('#particular, #particular-show').find('#iniciador_email').val(),
+                domicilio: $('#particular, #particular-show').find('#iniciador_domicilio').val(),
+                cuit: $('#particular, #particular-show').find('#iniciador_cuit').val() }};
       $.ajax({
         url: "/persons/" + id,
         type: 'PATCH',
@@ -310,18 +310,18 @@
         success: function(result) {
           var iniciador = result.iniciador
           var ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
-          var iniciadores = $('#particular #process_iniciadores').select2('data');
+          var iniciadores = $('#particular, #particular-show').find('#process_iniciadores').select2('data');
           iniciadores.unshift(ini);
-          $('#particular #process_iniciadores').select2('data', iniciadores);
+          $('#particular, #particular-show').find('#process_iniciadores').select2('data', iniciadores);
           // Clear fields
-          $('#particular #iniciador_nombre').val('');
-          $('#particular #iniciador_apellido').val('');
-          $('#particular #iniciador_doc').val('');
-          $('#particular #iniciador_tel').val('');
-          $('#particular #iniciador_email').val('');
-          $('#particular #iniciador_domicilio').val('');
-          $('#particular #iniciador_cuit').val('');
-          $('#particular #peticion_nro_fojas').focus();
+          $('#particular, #particular-show').find('#iniciador_nombre').val('');
+          $('#particular, #particular-show').find('#iniciador_apellido').val('');
+          $('#particular, #particular-show').find('#iniciador_doc').val('');
+          $('#particular, #particular-show').find('#iniciador_tel').val('');
+          $('#particular, #particular-show').find('#iniciador_email').val('');
+          $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+          $('#particular, #particular-show').find('#iniciador_cuit').val('');
+          $('#particular, #particular-show').find('#peticion_nro_fojas').focus();
         },
         error: function () {
             alert("No se pudo actualizar el iniciador");
@@ -330,17 +330,17 @@
     }
   });
 
-  $('#particular #add_iniciador').on('click', function(event) {
+  $('#particular, #particular-show').find('#add_iniciador').on('click', function(event) {
     //create iniciador
     if (confirm("Desea crear el iniciador")) {
-      var iniciador = { person: {  type: $('#particular #iniciador_tipo').val(),
-                nombre: $('#particular #iniciador_nombre').val(),
-                apellido: $('#particular #iniciador_apellido').val(),
-                nro_doc: $('#particular #iniciador_doc').val(),
-                telefono: $('#particular #iniciador_tel').val(),
-                email: $('#particular #iniciador_email').val(),
-                domicilio: $('#particular #iniciador_domicilio').val(),
-                cuit: $('#particular #iniciador_cuit').val() }};
+      var iniciador = { person: {  type: $('#particular, #particular-show').find('#iniciador_tipo').val(),
+                nombre: $('#particular, #particular-show').find('#iniciador_nombre').val(),
+                apellido: $('#particular, #particular-show').find('#iniciador_apellido').val(),
+                nro_doc: $('#particular, #particular-show').find('#iniciador_doc').val(),
+                telefono: $('#particular, #particular-show').find('#iniciador_tel').val(),
+                email: $('#particular, #particular-show').find('#iniciador_email').val(),
+                domicilio: $('#particular, #particular-show').find('#iniciador_domicilio').val(),
+                cuit: $('#particular, #particular-show').find('#iniciador_cuit').val() }};
       $.ajax({
         url: "/persons",
         type: 'POST',
@@ -349,18 +349,18 @@
         success: function(result) {
           var iniciador = result.iniciador
           var ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
-          var iniciadores = $('#particular #process_iniciadores').select2('data');
+          var iniciadores = $('#particular, #particular-show').find('#process_iniciadores').select2('data');
           iniciadores.push(ini);
-          $('#particular #process_iniciadores').select2('data', iniciadores);
+          $('#particular, #particular-show').find('#process_iniciadores').select2('data', iniciadores);
           // Clear fields
-          $('#particular #iniciador_nombre').val('');
-          $('#particular #iniciador_apellido').val('');
-          $('#particular #iniciador_doc').val('');
-          $('#particular #iniciador_tel').val('');
-          $('#particular #iniciador_email').val('');
-          $('#particular #iniciador_domicilio').val('');
-          $('#particular #iniciador_cuit').val('');
-          $('#particular #peticion_nro_fojas').focus();
+          $('#particular, #particular-show').find('#iniciador_nombre').val('');
+          $('#particular, #particular-show').find('#iniciador_apellido').val('');
+          $('#particular, #particular-show').find('#iniciador_doc').val('');
+          $('#particular, #particular-show').find('#iniciador_tel').val('');
+          $('#particular, #particular-show').find('#iniciador_email').val('');
+          $('#particular, #particular-show').find('#iniciador_domicilio').val('');
+          $('#particular, #particular-show').find('#iniciador_cuit').val('');
+          $('#particular, #particular-show').find('#peticion_nro_fojas').focus();
         },
         error: function () {
             alert("No se pudo crear el iniciador");
@@ -369,12 +369,12 @@
     }
   });
 
-  $('#particular .modal-submit').on('click', function(event) {
+  $('#particular, #particular-show').find('.modal-submit').on('click', function(event) {
     event.preventDefault();
 
     var iniciadores = {};
     var index = 0;
-    $("#particular .iniciador-token").each(function(key, value) {
+    $("#particular, #particular-show").find(".iniciador-token").each(function(key, value) {
       iniciadores[index] = {
         id: $(value).data("id"),
         type: $(value).data("type")
@@ -385,7 +385,7 @@
     //add derived states to form
     var states = {};
     var index = 0;
-    $("#particular .derivacion-tr").each(function(key, value) {
+    $("#particular, #particular-show").find(".derivacion-tr").each(function(key, value) {
       states[index] = {
         id: $(value).data("id"),
         tipo: $(value).data("tipo"),
@@ -395,9 +395,9 @@
       index++;
     });
 
-    $("#particular #states").val(JSON.stringify(states));
-    $("#particular #iniciadores").val(JSON.stringify(iniciadores));
-    $("#particular #new_peticion, [id^='edit_peticion']").submit();
+    $("#particular, #particular-show").find("#states").val(JSON.stringify(states));
+    $("#particular, #particular-show").find("#iniciadores").val(JSON.stringify(iniciadores));
+    $("#particular, #particular-show").find("#new_peticion, [id^='edit_peticion']").submit();
   });
 
   $('.modal').on('shown.bs.modal', function () {
@@ -481,7 +481,7 @@
     }
   }
 
-  $("#particular #derived-states").select2({
+  $("#particular, #particular-show").find("#derived-states").select2({
     placeholder: "Buscar derivaciones",
     allowClear: true,
     theme: 'bootstrap',
@@ -524,7 +524,7 @@
       "<td> Derivado a " + typeref + ": " + text + "</td>" +
       "<td> - </td>" + "<td> <i class='fa fa-times fa-1x remove-table-row btn btn-xs'> </i></td>" + "</tr>";
 
-    $('#particular #states-table tbody').append(tr);
+    $('#particular, #particular-show').find('#states-table tbody').append(tr);
   }).on("change", function(e) {
-    $('#particular #derived-states').select2("val", "");
+    $('#particular, #particular-show').find('#derived-states').select2("val", "");
   });
