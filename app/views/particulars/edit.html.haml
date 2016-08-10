@@ -397,6 +397,7 @@
 
     $("#particular, #particular-show").find("#states").val(JSON.stringify(states));
     $("#particular, #particular-show").find("#iniciadores").val(JSON.stringify(iniciadores));
+    $('.edit_peticion').append($('#iniciadores'));
     $("#particular, #particular-show").find("#new_peticion, [id^='edit_peticion']").submit();
   });
 
