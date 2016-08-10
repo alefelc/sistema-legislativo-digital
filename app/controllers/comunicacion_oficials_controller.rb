@@ -240,8 +240,8 @@ class ComunicacionOficialsController < ApplicationController
                                    "%#{params[:q]}%").first(7)
     conc = Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
-    ##per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
-    ##                               "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
+    per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+                                   "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     organos = organos.as_json(methods: 'type')
     areas = areas.as_json(methods: 'type')
     com = com.as_json(methods: 'type')
@@ -249,8 +249,8 @@ class ComunicacionOficialsController < ApplicationController
     repart = repart.as_json(methods: 'type')
     depend = depend.as_json(methods: 'type')
     conc = conc.as_json(methods: 'type' )
-    ##per = per.as_json(methods: 'type' )
-    q = organos + areas + bloques + com + repart + depend + conc ##+ per
+    per = per.as_json(methods: 'type' )
+    q = organos + areas + bloques + com + repart + depend + conc + per
     agregar_nuevo = {"id"=>nil, "nombre"=>"", "apellido"=>"Agregar Nuevo", "tipo_doc"=>nil, "nro_doc"=>"", "telefono"=>"", "email"=>"", "domicilio"=>"", "cargo"=>nil, "bloque_id"=>nil, "created_at"=>nil, "updated_at"=>nil, "cuit"=>0, "type"=>""}
     iniciadores = q.push(agregar_nuevo);
     render json: iniciadores
