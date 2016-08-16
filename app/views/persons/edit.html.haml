@@ -11,7 +11,7 @@
         .modal-body
           .form-group
             = f.label :type
-            = f.text_field :type, class: 'form-control', disabled: true
+            = f.select :type, options_for_select(initiator_options, @person.type), {}, class: 'form-control'
           .form-group
             = f.label :nombre
             = f.text_field :nombre, class: 'form-control'
@@ -33,9 +33,3 @@
 
         .modal-footer
           = f.submit t('.update'), class: 'btn btn-primary', type: :submit
-
-:javascript
-$('#edit_person').submit(function() {
-  $('#edit-person .modal').modal('hide');
-  $('#people-table').dataTable().fnDraw();
-});

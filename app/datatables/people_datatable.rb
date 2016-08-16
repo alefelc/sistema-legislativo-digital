@@ -41,7 +41,7 @@ class PeopleDatatable
   end
 
   def persons
-    Person.where(filter).where.not(type: "Concejal")
+    Person.where(filter).where.not(type: "Concejal").order(:id)
   end
 
   def columns

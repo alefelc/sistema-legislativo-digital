@@ -64,10 +64,12 @@
                           = text_field_tag 'user[email]', nil, class: 'form-control', type: :email, placeholder: 'Ingrese email'
                           = label_tag 'Contraseña'
                           = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Ingrese contraseña'
-                          //= check_box_tag 'user[remember_me]'
                           //= label_tag 'user[remember_me]', 'Remember me'
                           %span.pull-right{ style: 'padding-top: 10px' }
                             %button.btn.btn-success#log-in{ type: 'submit' } Entrar
+                          %span.pull-left
+                            = check_box_tag 'user[remember_me]'
+                            = label_tag 'user_remember_me', 'Recordar ingreso'
                           //= link_to "Olvidaste la contraseña?", new_password_path(:usuario)
 
     / ===============================================
