@@ -112,4 +112,6 @@ Rails.application.routes.draw do
   resources :administrative_files, only: [:create, :index]
 
   resources :persons
+
+  resources :government_offices
 end

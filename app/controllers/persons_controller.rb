@@ -18,7 +18,7 @@ class PersonsController < ApplicationController
     pers = params[:person]
 
     @person = Person.find(params[:id])
-    @person.update pers.to_hash
+    @person.update persons_params
 
     render json: {
       status: :ok,

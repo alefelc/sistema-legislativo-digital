@@ -19,7 +19,7 @@ People.IndexDataTable = do ->
         { orderable: false },
         { orderable: false },
         { orderable: false },
-        { orderable: false }
+        { orderable: false, width: '6%' }
       ]
       initComplete: () ->
         $('#people-table').on 'ajax:success', '.person-edit', (XHR, data, status) ->

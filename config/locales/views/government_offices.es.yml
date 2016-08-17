@@ -1,0 +1,9 @@
+es:
+  government_offices:
+    show:
+      created_at: Creado el
+      data: Datos repartición oficial
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar repartición oficial
+      update: Actualizar

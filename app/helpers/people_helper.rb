@@ -3,7 +3,6 @@ module PeopleHelper
     [
       ['Persona Física', 'Fisica'],
       ['Persona Jurídica', 'Juridica'],
-      ['Repartición Oficial', 'ReparticionOficial']
     ]
   end
 end

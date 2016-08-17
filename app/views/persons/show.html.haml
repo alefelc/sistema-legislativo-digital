@@ -1,3 +1,5 @@
+#person-edit
+
 #person-show
   %section.invoice
     / title row
@@ -24,6 +26,10 @@
           = @person.nro_doc || '-.'
       / /.col
       .col-sm-6.invoice-col
+        %span.pull-right
+          = link_to 'Editar', edit_person_path(@person),
+                    class: 'btn btn-warning fa fa-edit person-edit',
+                    remote: true, title: 'Editar persona'
         %address
           %strong= t '.address'
           = @person.domicilio || '-.'
@@ -76,5 +82,15 @@ $(document).on('ready', function() {
   $('#person-tramites').dataTable({
     bServerSide: false,
     pagingType: 'simple'
+  });
+
+  $('.person-edit').on('ajax:success', function(XHR, data, status) {
+    $('#person-edit').html(data);
+    $('#person-edit .modal').modal('show');
+
+    $('#person-edit form').on('ajax:success', function(){
+      $('#person-edit .modal').modal('hide');
+      location.reload();
+    })
   });
 });
