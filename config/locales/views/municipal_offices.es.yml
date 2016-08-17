@@ -1,0 +1,11 @@
+es:
+  municipal_offices:
+    show:
+      created_at: Creado el
+      data: Datos dependencia municipal
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar dependencia municipal
+      update: Actualizar
+    index:
+      denomination: Denominación
