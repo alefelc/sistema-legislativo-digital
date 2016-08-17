@@ -114,4 +114,8 @@ Rails.application.routes.draw do
   resources :persons
 
   resources :government_offices
+
+  resources :councilors
+
+  resources :municipal_offices
 end
