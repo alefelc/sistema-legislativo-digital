@@ -29,7 +29,7 @@ class ParticularsController < ApplicationController
 
   def destroy
     Peticion.find(params[:id]).delete
-    render json: {url: "/particulars"}
+    render json: { url: '/particulars' }
   end
 
   def create
@@ -185,7 +185,7 @@ class ParticularsController < ApplicationController
     ##bloques = Bloque.where("denominacion ilike ?",
     ##                               "%#{params[:q]}%").first(7)
     per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
-                                   "%#{params[:q]}%").order(apellido: :asc).where.not(type: "Concejal").first(7)
+                                   "%#{params[:q]}%").order(apellido: :asc).first(12)
     ##com = com.as_json(methods: 'type')
     ##bloques = bloques.as_json(methods: 'type')
     per = per.as_json(methods: 'type' )
