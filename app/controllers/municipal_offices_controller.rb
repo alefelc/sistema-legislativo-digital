@@ -1,0 +1,2 @@
+class MunicipalOfficesController < ApplicationController
+end
