@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722144400) do
+ActiveRecord::Schema.define(version: 20160817154316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,18 +236,12 @@ ActiveRecord::Schema.define(version: 20160722144400) do
   add_index "comisions_tramites", ["comision_id"], name: "index_comisions_tramites_on_comision_id", using: :btree
   add_index "comisions_tramites", ["tramite_id"], name: "index_comisions_tramites_on_tramite_id", using: :btree
 
-  create_table "dependencia_municipals", force: :cascade do |t|
-    t.string   "denominacion"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "dependencias_tramites", id: false, force: :cascade do |t|
-    t.integer "dependencia_municipal_id"
+    t.integer "municipal_office_id"
     t.integer "tramite_id"
   end
 
-  add_index "dependencias_tramites", ["dependencia_municipal_id"], name: "index_dependencias_tramites_on_dependencia_municipal_id", using: :btree
+  add_index "dependencias_tramites", ["municipal_office_id"], name: "index_dependencias_tramites_on_municipal_office_id", using: :btree
   add_index "dependencias_tramites", ["tramite_id"], name: "index_dependencias_tramites_on_tramite_id", using: :btree
 
   create_table "despachos_concejals", id: false, force: :cascade do |t|
@@ -390,6 +384,19 @@ ActiveRecord::Schema.define(version: 20160722144400) do
 
   add_index "modifica_relationships", ["me_modifica_id"], name: "index_modifica_relationships_on_me_modifica_id", using: :btree
   add_index "modifica_relationships", ["modifica_id"], name: "index_modifica_relationships_on_modifica_id", using: :btree
+
+  create_table "municipal_offices", force: :cascade do |t|
+    t.string   "denominacion"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "municipal_offices_tramites", force: :cascade do |t|
+    t.integer  "municipal_office_id"
+    t.integer  "tramite_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
 
   create_table "normas", force: :cascade do |t|
     t.string   "letra"
@@ -727,4 +734,6 @@ ActiveRecord::Schema.define(version: 20160722144400) do
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "municipal_offices_tramites", "municipal_offices"
+  add_foreign_key "municipal_offices_tramites", "tramites"
 end
