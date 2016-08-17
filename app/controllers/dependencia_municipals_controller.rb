@@ -3,10 +3,10 @@ class DependenciaMunicipalsController < ApplicationController
 
   def create
     depend = params[:dependencia]
-    @dependencia = DependenciaMunicipal.create depend.to_hash
+    @dependencia = MunicipalOffice.create depend.to_hash
 
-    render :json => { 
-      :status => :ok, 
+    render :json => {
+      :status => :ok,
       :message => "Success!",
       :iniciador => @dependencia.as_json(methods: 'type' )
     }.to_json
@@ -15,15 +15,15 @@ class DependenciaMunicipalsController < ApplicationController
   def update
     depend = params[:dependencia]
 
-    @dependencia = DependenciaMunicipal.find(params[:id])
+    @dependencia = MunicipalOffice.find(params[:id])
     @dependencia.update depend.to_hash
 
-    render :json => { 
-      :status => :ok, 
+    render :json => {
+      :status => :ok,
       :message => "Success!",
       :iniciador => @dependencia.as_json(methods: 'type' )
     }.to_json
-  end 
+  end
 
   private
 

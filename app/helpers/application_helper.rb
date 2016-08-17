@@ -299,7 +299,7 @@ module ApplicationHelper
 
   def build_json_dependencias_select2(dependencias)
     json_array = []
-    dependencias.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "DependenciaMunicipal" } }
+    dependencias.each { |x| json_array << { id: x.id, denominacion: x.denominacion, type: "MunicipalOffice" } }
     json_array.as_json
   end
 

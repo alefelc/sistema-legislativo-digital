@@ -7,16 +7,16 @@ class MunicipalOfficesController < ApplicationController
   end
 
   def show
-    @municipal_office = DependenciaMunicipal.find params[:id]
+    @municipal_office = MunicipalOffice.find params[:id]
   end
 
   def edit
-    @municipal_office = DependenciaMunicipal.find params[:id]
+    @municipal_office = MunicipalOffice.find params[:id]
     render layout: false
   end
 
   def update
-    municipal_office = DependenciaMunicipal.find params[:id]
+    municipal_office = MunicipalOffice.find params[:id]
     municipal_office.update municipal_offices_params
     render json: municipal_office
   end

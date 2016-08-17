@@ -35,7 +35,7 @@ class MunicipalOfficesDatatable
   end
 
   def municipal_offices
-    DependenciaMunicipal.where(filter).order(:id)
+    MunicipalOffice.where(filter).order(:id)
   end
 
   def columns

@@ -49,7 +49,7 @@ class ProyectosController < ApplicationController
       JSON.parse(params['iniciadores']).each do |key, value|
         @proyecto.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         @proyecto.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
-        @proyecto.dependencia_municipals << DependenciaMunicipal.where(id: value["id"]) if ((value["type"] == "DependenciaMunicipal"))
+        @proyecto.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         @proyecto.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         @proyecto.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
         @proyecto.organo_de_gobiernos << OrganoDeGobierno.where(id: value["id"]) if ((value["type"] == "OrganoDeGobierno"))
@@ -161,7 +161,7 @@ class ProyectosController < ApplicationController
       old_iniciadores_dependencias = @proyecto.dependencia_municipals.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_dependencias.include?(value["id"])
-          @proyecto.dependencia_municipals << DependenciaMunicipal.where(id: value["id"]) if ((value["type"] == "DependenciaMunicipal"))
+          @proyecto.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         end
         current_iniciadores_dependencias << value["id"]
       end
@@ -236,7 +236,7 @@ class ProyectosController < ApplicationController
                                    "%#{params[:q]}%").first(3)
     repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    depend = DependenciaMunicipal.where("denominacion ilike ?",
+    depend = MunicipalOffice.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     conc = Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)

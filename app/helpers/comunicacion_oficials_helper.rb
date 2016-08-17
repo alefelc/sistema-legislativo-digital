@@ -2,7 +2,7 @@ module ComunicacionOficialsHelper
   def tipo_iniciador_comunicacion
     [
       ["Reparticion Oficial", "ReparticionOficial"],
-      ["Dependencia Municipal", "DependenciaMunicipal"]
+      ["Dependencia Municipal", "MunicipalOffice"]
     ]
   end
 
@@ -19,7 +19,7 @@ module ComunicacionOficialsHelper
   end
 
   def get_iniciadores_dependencias(pro)
-    pro.dependencia_municipals.map{ |x| {type: "DependenciaMunicipal", denominacion: x.denominacion } }
+    pro.dependencia_municipals.map{ |x| {type: "MunicipalOffice", denominacion: x.denominacion } }
   end
 
   def get_iniciadores_organos(pro)

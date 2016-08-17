@@ -54,7 +54,7 @@ class ExpedienteDatatable < AjaxDatatablesRails::Base
             iniciador += i[:denominacion].to_s + " / \n"
           when "ReparticionOficial"
             iniciador += i[:denominacion].to_s + " / \n"
-          when "DependenciaMunicipal"
+          when "MunicipalOffice"
             iniciador += i[:denominacion].to_s + " / \n"
           when "Concejal"
             iniciador += i[:apellido].to_s + ", " + i[:nombre].to_s + " - #{i[:bloque]}" + " / \n"
