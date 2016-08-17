@@ -1,11 +1,11 @@
 es:
-  government_offices:
+  government_organs:
     show:
       created_at: Creado el
-      data: Datos repartición oficial
+      data: Datos órgano de gobierno
       denomination: 'Denominación:'
     edit:
-      update_gov_office: Actualizar repartición oficial
+      update_government_organ: Actualizar órgano de gobierno
       update: Actualizar
     index:
       denomination: Denominación

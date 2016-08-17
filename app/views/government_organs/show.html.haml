@@ -1,0 +1,77 @@
+#government-organ-edit
+
+#government-organ-show
+  %section.invoice
+    / title row
+    .row
+      .col-xs-12
+        %h2.page-header
+          %i.fa.fa-user
+          = t '.data'
+          %small.pull-right= t '.created_at', date: @government_organ.created_at
+      / /.col
+    / info row
+    .row.invoice-info
+      .col-sm-12.invoice-col
+        %span.pull-right
+          = link_to 'Editar', edit_government_organ_path(@government_organ),
+                    class: 'btn btn-warning fa fa-edit government-organ-edit',
+                    remote: true, title: 'Editar órgano de gobierno'
+        %address
+          %strong= t '.denomination'
+          = @government_organ.denominacion || '-.'
+
+    %hr
+
+    .row
+      .col-xs-12.table-responsive
+        %table.table.table-striped#government-organ-tramites
+          %thead
+            %tr
+              %th Nro
+              %th Tramite
+              %th Fojas
+              %th Asunto / Solicitud
+              %th Observaciones
+              %th Actualizado el
+          %tbody
+            - @government_organ.tramites.each do |t|
+              %tr
+                %td= link_to t.id, t
+                %td= t.type
+                %td= t.nro_fojas
+                %td= t.asunto
+                %td= t.observaciones
+                %td= t.updated_at
+          %tfoot
+            %tr
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td
+
+    .row.no-print
+      .col-xs-12
+        %button.btn.btn-danger.pull-left{:style => "margin-right: 5px;", :type => "button"}
+          %i.fa.fa-print
+          Imprimir
+
+:javascript
+$(document).on('ready', function() {
+  $('#government-organ-tramites').dataTable({
+    bServerSide: false,
+    pagingType: 'simple'
+  });
+
+  $('.government-organ-edit').on('ajax:success', function(XHR, data, status) {
+    $('#government-organ-edit').html(data);
+    $('#government-organ-edit .modal').modal('show');
+
+    $('#government-organ-edit form').on('ajax:success', function(){
+      $('#government-organ-edit .modal').modal('hide');
+      location.reload();
+    })
+  });
+});

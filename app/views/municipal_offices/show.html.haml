@@ -1,0 +1,77 @@
+#municipal-office-edit
+
+#municipal-office-show
+  %section.invoice
+    / title row
+    .row
+      .col-xs-12
+        %h2.page-header
+          %i.fa.fa-user
+          = t '.data'
+          %small.pull-right= t '.created_at', date: @municipal_office.created_at
+      / /.col
+    / info row
+    .row.invoice-info
+      .col-sm-12.invoice-col
+        %span.pull-right
+          = link_to 'Editar', edit_municipal_office_path(@municipal_office),
+                    class: 'btn btn-warning fa fa-edit municipal-office-edit',
+                    remote: true, title: 'Editar dependencia municipal'
+        %address
+          %strong= t '.denomination'
+          = @municipal_office.denominacion || '-.'
+
+    %hr
+
+    .row
+      .col-xs-12.table-responsive
+        %table.table.table-striped#municipal-office-tramites
+          %thead
+            %tr
+              %th Nro
+              %th Tramite
+              %th Fojas
+              %th Asunto / Solicitud
+              %th Observaciones
+              %th Actualizado el
+          %tbody
+            - @municipal_office.tramites.each do |t|
+              %tr
+                %td= link_to t.id, t
+                %td= t.type
+                %td= t.nro_fojas
+                %td= t.asunto
+                %td= t.observaciones
+                %td= t.updated_at
+          %tfoot
+            %tr
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td
+
+    .row.no-print
+      .col-xs-12
+        %button.btn.btn-danger.pull-left{:style => "margin-right: 5px;", :type => "button"}
+          %i.fa.fa-print
+          Imprimir
+
+:javascript
+$(document).on('ready', function() {
+  $('#municipal-office-tramites').dataTable({
+    bServerSide: false,
+    pagingType: 'simple'
+  });
+
+  $('.municipal-office-edit').on('ajax:success', function(XHR, data, status) {
+    $('#municipal-office-edit').html(data);
+    $('#municipal-office-edit .modal').modal('show');
+
+    $('#municipal-office-edit form').on('ajax:success', function(){
+      $('#municipal-office-edit .modal').modal('hide');
+      location.reload();
+    })
+  });
+});

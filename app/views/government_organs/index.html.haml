@@ -1,0 +1,12 @@
+#government-organ-edit
+
+#government-organs
+  %table.table.table-striped.table-bordered#government-organs-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': government_organs_path(format: :json) }
+    %thead
+      %tr
+        %th= t('.denomination')
+        %th
+    %tbody
+
+:javascript
+  GovernmentOrgans.IndexDataTable.init();

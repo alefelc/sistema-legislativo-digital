@@ -118,4 +118,6 @@ Rails.application.routes.draw do
   resources :councilors
 
   resources :municipal_offices
+
+  resources :government_organs
 end

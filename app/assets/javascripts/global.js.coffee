@@ -176,7 +176,7 @@ $(document).on 'ready', ->
       when 'pendientes'
         $('a[href="/pendientes"]').css('color', 'white')
 
-  if controller in [ 'persons', 'government_offices' ]
+  if controller in [ 'persons', 'government_offices', 'municipal_offices', 'concilors' ]
     $(document).find('.sidebar-menu .treeview:eq(3)').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(3)').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:eq(3)').addClass('menu-open')
@@ -185,5 +185,8 @@ $(document).on 'ready', ->
         $('a[href="/persons"]').css('color', 'white')
       when 'government_offices'
         $('a[href="/government_offices"]').css('color', 'white')
-
+      when 'government_offices'
+        $('a[href="/municipal_offices"]').css('color', 'white')
+      when 'concilors'
+        $('a[href="/concilors"]').css('color', 'white')
   return
