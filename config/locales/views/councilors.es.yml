@@ -18,3 +18,4 @@ es:
       phone: 'Teléfono:'
       email: 'Email:'
       address: 'Domicilio'
+      created_at: Creado el
