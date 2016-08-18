@@ -11,4 +11,8 @@ class Periodo < ActiveRecord::Base
     self.where('extract(year from desde) = ? AND
                   extract(year from hasta) = ?', desde, hasta)
   end
+
+  def format
+    "#{desde} - #{hasta}"
+  end
 end

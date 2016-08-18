@@ -1,0 +1,20 @@
+es:
+  councilors:
+    index:
+      fullname: Concejal
+      cuit: 'DNI / CUIT'
+      address: 'Domicilio'
+      phone: 'Teléfono'
+      email: Email
+      period: Periodos
+    edit:
+      update_councilor: Actualizar concejal
+      update: Actualizar
+    show:
+      data: Datos concejal
+      surname: 'Apellido:'
+      name: 'Nombre:'
+      dni_cuit: 'DNI / CUIT:'
+      phone: 'Teléfono:'
+      email: 'Email:'
+      address: 'Domicilio'

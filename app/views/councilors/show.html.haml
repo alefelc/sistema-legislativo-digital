@@ -1,0 +1,93 @@
+#councilor-edit
+
+#councilor-show
+  %section.invoice
+    / title row
+    .row
+      .col-xs-12
+        %h2.page-header
+          %i.fa.fa-user
+          = t '.data'
+          %small.pull-right= t '.created_at', date: @councilor.created_at
+      / /.col
+    / info row
+    .row.invoice-info
+      .col-sm-6.invoice-col
+        %address
+          %strong= t '.surname'
+          = @councilor.apellido || '-.'
+          %br/
+          %strong= t '.name'
+          = @councilor.nombre || '-.'
+          %br/
+          %strong= t '.dni_cuit'
+          = @councilor.cuit || '-.'
+      .col-sm-6.invoice-col
+        %span.pull-right
+          = link_to 'Editar', edit_councilor_path(@councilor),
+                    class: 'btn btn-warning fa fa-edit councilor-edit',
+                    remote: true, title: 'Editar concejal'
+        %address
+          %strong= t '.address'
+          = @councilor.domicilio || '-.'
+          %br/
+          %strong= t '.phone'
+          = @councilor.telefono || '-.'
+          %br/
+          %strong= t '.email'
+          = @councilor.email || '-.'
+
+    %hr
+
+    .row
+      .col-xs-12.table-responsive
+        %table.table.table-striped#councilor-tramites
+          %thead
+            %tr
+              %th Nro
+              %th Tramite
+              %th Fojas
+              %th Asunto / Solicitud
+              %th Observaciones
+              %th Actualizado el
+          %tbody
+            - @councilor.tramites.each do |t|
+              %tr
+                %td= link_to t.id, t
+                %td= t.type
+                %td= t.nro_fojas
+                %td= t.asunto
+                %td= t.observaciones
+                %td= t.updated_at
+          %tfoot
+            %tr
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td
+
+    .row.no-print
+      .col-xs-12
+        %button.btn.btn-danger.pull-left{:style => "margin-right: 5px;", :type => "button"}
+          %i.fa.fa-print
+          Imprimir
+
+:javascript
+$(document).on('ready', function() {
+  $('#councilor-tramites').dataTable({
+    bServerSide: false,
+    pagingType: 'simple'
+  });
+
+  $('.councilor-edit').on('ajax:success', function(XHR, data, status) {
+    $('#councilor-edit').html(data);
+    $('#councilor-edit .modal').modal('show');
+
+    $('#councilor-edit form').on('ajax:success', function(){
+      $('#councilor-edit .modal').modal('hide');
+      location.reload();
+    })
+  });
+});

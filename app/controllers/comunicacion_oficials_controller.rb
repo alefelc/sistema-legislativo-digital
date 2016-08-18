@@ -49,7 +49,7 @@ class ComunicacionOficialsController < ApplicationController
       JSON.parse(params['iniciadores']).each do |key, value|
         @comunicacion_oficial.persons << Person.where(id: value["id"]) if ((value["type"] == "Concejal"))
         @comunicacion_oficial.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
-        @comunicacion_oficial.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+        @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         @comunicacion_oficial.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         @comunicacion_oficial.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
         @comunicacion_oficial.organo_de_gobiernos << OrganoDeGobierno.where(id: value["id"]) if ((value["type"] == "OrganoDeGobierno"))
@@ -158,10 +158,10 @@ class ComunicacionOficialsController < ApplicationController
         current_iniciadores_reparticiones << value["id"]
       end
 
-      old_iniciadores_dependencias = @comunicacion_oficial.dependencia_municipals.map{ |x| x.id }
+      old_iniciadores_dependencias = @comunicacion_oficial.municipal_offices.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_dependencias.include?(value["id"])
-          @comunicacion_oficial.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+          @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         end
         current_iniciadores_dependencias << value["id"]
       end
@@ -173,7 +173,7 @@ class ComunicacionOficialsController < ApplicationController
       (old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @comunicacion_oficial.bloques.delete(id) }
       (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @comunicacion_oficial.comisions.delete(id) }
       (old_iniciadores_reparticiones - current_iniciadores_reparticiones).each { |id| @comunicacion_oficial.reparticion_oficials.delete(id) }
-      (old_iniciadores_dependencias - current_iniciadores_dependencias).each { |id| @comunicacion_oficial.dependencia_municipals.delete(id) }
+      (old_iniciadores_dependencias - current_iniciadores_dependencias).each { |id| @comunicacion_oficial.municipal_offices.delete(id) }
     end
 
     ## update params states the PATCH

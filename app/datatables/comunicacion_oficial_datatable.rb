@@ -45,7 +45,7 @@ class ComunicacionOficialDatatable < AjaxDatatablesRails::Base
     com.comisions.each { |b| result << "#{b.denominacion}" }
     com.persons.each { |b| result << b.full_name }
     com.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
-    com.dependencia_municipals.each { |b| result << "#{b.denominacion}" }
+    com.municipal_offices.each { |b| result << "#{b.denominacion}" }
     result.join(' - ')
   end
 

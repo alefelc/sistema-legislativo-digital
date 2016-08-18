@@ -1,0 +1,82 @@
+class CouncilorsDatatable
+  include Rails.application.routes.url_helpers
+  delegate :params, :link_to_if, :current_user, to: :@view
+
+  def initialize(view)
+    @view = view
+  end
+
+  def as_json(_options = {})
+    {
+      sEcho: params[:sEcho].to_i,
+      iTotalRecords: councilors.count,
+      iTotalDisplayRecords: councilors.count,
+      data: data
+    }
+  end
+
+  private
+
+  def data
+    paginated_councilors.map do |p|
+      [
+        link_to_if(p.full_name.present?, p.full_name, councilor_path(p)),
+        p.cuit,
+        p.domicilio,
+        p.telefono,
+        p.email,
+        format_periods(p.periodos),
+        edit_button(p)
+      ]
+    end
+  end
+
+  def edit_button(councilor)
+    link_to_if current_user.present?, '',
+               edit_councilor_path(councilor),
+               class: 'btn btn-warning fa fa-pencil-square-o councilor-edit',
+               title: 'Editar Concejal',
+               remote: true
+  end
+
+  def councilors
+    Concejal.where(filter).order(:id)
+  end
+
+  def columns
+    %w(fullname cuit domicilio telefono email periods false)
+  end
+
+  def sort_column(column)
+    columns[column.to_i]
+  end
+
+  def filter
+    query = []
+    binds = []
+
+    if params[:search][:value].present?
+      search = "%#{params[:search][:value]}%"
+      query += ["(denominacion ILIKE ?)"]
+      binds += [search] * 1
+    end
+    [query.join(' OR ')] + binds
+  end
+
+  def paginated_councilors
+    councilors.page(page).per(per_page)
+  end
+
+  def per_page
+    params[:length].to_i > 0 ? params[:length].to_i : 25
+  end
+
+  def page
+    params[:start].to_i / per_page + 1
+  end
+
+  def format_periods(periods)
+    ## link_to coming soon...
+    periods.collect(&:format).join('\n')
+  end
+end

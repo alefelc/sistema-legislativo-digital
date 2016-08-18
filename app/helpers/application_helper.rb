@@ -220,7 +220,7 @@ module ApplicationHelper
       areas = tramite.areas.present? ? build_json_areas_select2(tramite.areas) : []
       org_gobiernos = tramite.organo_de_gobiernos.present? ? build_json_organo_de_gobiernos_select2(tramite.organo_de_gobiernos) : []
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
-      dependencias = tramite.dependencia_municipals.present? ? build_json_dependencias_select2(tramite.dependencia_municipals) : []
+      dependencias = tramite.municipal_offices.present? ? build_json_dependencias_select2(tramite.municipal_offices) : []
       persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
       iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + persons
     when "ComunicacionOficial"
@@ -229,7 +229,7 @@ module ApplicationHelper
       areas = tramite.areas.present? ? build_json_areas_select2(tramite.areas) : []
       org_gobiernos = tramite.organo_de_gobiernos.present? ? build_json_organo_de_gobiernos_select2(tramite.organo_de_gobiernos) : []
       reparticiones = tramite.reparticion_oficials.present? ? build_json_reparticiones_select2(tramite.reparticion_oficials) : []
-      dependencias = tramite.dependencia_municipals.present? ? build_json_dependencias_select2(tramite.dependencia_municipals) : []
+      dependencias = tramite.municipal_offices.present? ? build_json_dependencias_select2(tramite.municipal_offices) : []
       persons = tramite.persons.present? ? build_json_iniciadores(tramite.persons) : []
       iniciadores = bloques + comisiones + areas + org_gobiernos + reparticiones + dependencias + persons
     else

@@ -49,7 +49,7 @@ class ProyectosController < ApplicationController
       JSON.parse(params['iniciadores']).each do |key, value|
         @proyecto.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         @proyecto.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
-        @proyecto.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+        @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         @proyecto.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         @proyecto.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
         @proyecto.organo_de_gobiernos << OrganoDeGobierno.where(id: value["id"]) if ((value["type"] == "OrganoDeGobierno"))
@@ -158,10 +158,10 @@ class ProyectosController < ApplicationController
         current_iniciadores_reparticiones << value["id"]
       end
 
-      old_iniciadores_dependencias = @proyecto.dependencia_municipals.map{ |x| x.id }
+      old_iniciadores_dependencias = @proyecto.municipal_offices.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_dependencias.include?(value["id"])
-          @proyecto.dependencia_municipals << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+          @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
         end
         current_iniciadores_dependencias << value["id"]
       end
@@ -173,7 +173,7 @@ class ProyectosController < ApplicationController
       (old_iniciadores_bloques - current_iniciadores_bloques).each { |id| @proyecto.bloques.delete(id) }
       (old_iniciadores_comisions - current_iniciadores_comisions).each { |id| @proyecto.comisions.delete(id) }
       (old_iniciadores_reparticiones - current_iniciadores_reparticiones).each { |id| @proyecto.reparticion_oficials.delete(id) }
-      (old_iniciadores_dependencias - current_iniciadores_dependencias).each { |id| @proyecto.dependencia_municipals.delete(id) }
+      (old_iniciadores_dependencias - current_iniciadores_dependencias).each { |id| @proyecto.municipal_offices.delete(id) }
     end
 
     ## update params states the PATCH

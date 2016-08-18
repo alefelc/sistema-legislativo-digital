@@ -45,7 +45,7 @@ class ProyectoDatatable < AjaxDatatablesRails::Base
     pro.comisions.each { |b| result << "#{b.denominacion}" }
     pro.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
     pro.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
-    pro.dependencia_municipals.each { |b| result << "#{b.denominacion}" }
+    pro.municipal_offices.each { |b| result << "#{b.denominacion}" }
     result.join(' - ')
   end
 

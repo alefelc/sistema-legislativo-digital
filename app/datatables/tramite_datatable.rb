@@ -44,7 +44,7 @@ class TramiteDatatable < AjaxDatatablesRails::Base
     tra.comisions.each { |b| result << "#{b.denominacion}" }
     tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
     tra.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
-    tra.dependencia_municipals.each { |b| result << "#{b.denominacion}" }
+    tra.municipal_offices.each { |b| result << "#{b.denominacion}" }
     result.join ' - '
   end
 
@@ -90,7 +90,7 @@ class TramiteDatatable < AjaxDatatablesRails::Base
            .includes(:comisions)
            .includes(:areas)
            .includes(:organo_de_gobiernos)
-           .includes(:dependencia_municipals)
+           .includes(:municipal_offices)
            .includes(:reparticion_oficials)
            .includes(:persons)
   end
