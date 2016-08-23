@@ -49,7 +49,7 @@ class ComunicacionOficialsController < ApplicationController
       JSON.parse(params['iniciadores']).each do |key, value|
         @comunicacion_oficial.persons << Person.where(id: value["id"]) if ((value["type"] == "Concejal"))
         @comunicacion_oficial.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
-        @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+        @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "Dependencia Municipal"))
         @comunicacion_oficial.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         @comunicacion_oficial.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
         @comunicacion_oficial.organo_de_gobiernos << OrganoDeGobierno.where(id: value["id"]) if ((value["type"] == "OrganoDeGobierno"))
@@ -161,7 +161,7 @@ class ComunicacionOficialsController < ApplicationController
       old_iniciadores_dependencias = @comunicacion_oficial.municipal_offices.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_dependencias.include?(value["id"])
-          @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+          @comunicacion_oficial.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "Dependencia Municipal"))
         end
         current_iniciadores_dependencias << value["id"]
       end

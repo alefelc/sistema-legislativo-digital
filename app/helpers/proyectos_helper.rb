@@ -4,7 +4,7 @@ module ProyectosHelper
       ["Física", "Fisica"],
       ["Jurídica", "Juridica"],
       ["Reparticion Oficial", "ReparticionOficial"],
-      ["Dependencia Municipal", "MunicipalOffice"]
+      ["Dependencia Municipal", "Dependencia Municipal"]
     ]
   end
 
@@ -17,7 +17,7 @@ module ProyectosHelper
   end
 
   def get_iniciadores_dependencias(pro)
-    pro.municipal_offices.map{ |x| {type: "MunicipalOffice", denominacion: x.denominacion } }
+    pro.municipal_offices.map{ |x| {type: "Dependencia Municipal", denominacion: x.denominacion } }
   end
 
   def get_iniciadores_organos(pro)

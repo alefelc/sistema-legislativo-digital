@@ -49,7 +49,7 @@
               - case x.tipo
               - when '1'
                 %tr{ class: 'derivacion-tr-show', 'data-id': x.id, 'data-tipo': x.tipo }
-                  %td= to_date x.created_at
+                  %td.center= to_date x.created_at
                   %td
                     Iniciado por:
                     %p.single-tab

@@ -49,7 +49,7 @@ class ProyectosController < ApplicationController
       JSON.parse(params['iniciadores']).each do |key, value|
         @proyecto.persons << Person.where(id: value["id"]) if ((value["type"] == "Fisica") || (value["type"] == "Juridica") || (value["type"] == "Concejal"))
         @proyecto.reparticion_oficials << ReparticionOficial.where(id: value["id"]) if ((value["type"] == "ReparticionOficial"))
-        @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+        @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "Dependencia Municipal"))
         @proyecto.bloques << Bloque.where(id: value["id"]) if ((value["type"] == "Bloque"))
         @proyecto.comisions << Comision.where(id: value["id"]) if ((value["type"] == "Comision"))
         @proyecto.organo_de_gobiernos << OrganoDeGobierno.where(id: value["id"]) if ((value["type"] == "OrganoDeGobierno"))
@@ -161,7 +161,7 @@ class ProyectosController < ApplicationController
       old_iniciadores_dependencias = @proyecto.municipal_offices.map{ |x| x.id }
       JSON.parse(params['iniciadores']).each do |key, value|
         unless old_iniciadores_dependencias.include?(value["id"])
-          @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "MunicipalOffice"))
+          @proyecto.municipal_offices << MunicipalOffice.where(id: value["id"]) if ((value["type"] == "Dependencia Municipal"))
         end
         current_iniciadores_dependencias << value["id"]
       end
@@ -230,16 +230,28 @@ class ProyectosController < ApplicationController
                                    "%#{params[:q]}%").first(2)
     areas = Area.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    com = Periodo.last.comisions.where("denominacion ilike ?",
+    com = if Periodo.last.present?
+            Periodo.last.comisions.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    bloques = Periodo.last.bloques.where("denominacion ilike ?",
+          else
+            []
+          end
+    bloques = if Periodo.last.present?
+                Periodo.last.bloques.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(3)
+              else
+                []
+              end
     repart = ReparticionOficial.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
     depend = MunicipalOffice.where("denominacion ilike ?",
                                    "%#{params[:q]}%").first(7)
-    conc = Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
+    conc =  if Periodo.last.present?
+              Periodo.last.concejals.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").order(apellido: :asc).first(7)
+            else
+              []
+            end
     per = Person.where("CONCAT(apellido, ' ' , nombre, nro_doc) ilike ?",
                                    "%#{params[:q]}%").where.not(type: "Concejal").order(apellido: :asc).first(7)
     organos = organos.as_json(methods: 'type')

@@ -184,7 +184,7 @@
         $('#condonacion').find('#iniciador_denominacion').val('');
         $('#condonacion').find('#denominacion-group').css('display','none');
       }else{
-        if (data.type == 'ReparticionOficial' || data.type == 'MunicipalOffice'){
+        if (data.type == 'ReparticionOficial' || data.type == 'Dependencia Municipal'){
           $('#condonacion').find('#edit_iniciador').data('id',data.id);
           $('#condonacion').find('#edit_iniciador').css('display','none');
           $('#condonacion').find('#add_iniciador').css('display','none');
@@ -298,7 +298,7 @@
       $('#condonacion').find('#iniciador_denominacion').val('');
       $('#condonacion').find('#denominacion-group').css('display','none');
     }else{
-      if (data.type == 'ReparticionOficial' || data.type == 'MunicipalOffice'){
+      if (data.type == 'ReparticionOficial' || data.type == 'Dependencia Municipal'){
         $('#condonacion').find('#edit_iniciador').data('id',data.id);
         $('#condonacion').find('#edit_iniciador').css('display','none');
         $('#condonacion').find('#add_iniciador').css('display','none');

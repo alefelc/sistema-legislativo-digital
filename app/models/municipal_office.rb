@@ -3,6 +3,6 @@ class MunicipalOffice < ActiveRecord::Base
   has_many :tramites, through: :municipal_offices_tramites
 
   def type
-    'MunicipalOffice'
+    'Dependencia Municipal'
   end
 end

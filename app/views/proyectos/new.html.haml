@@ -68,7 +68,7 @@
       return "<div class='iniciador-token' data-id='" + style.id + "' data-nombre='"+ style.nombre + "' data-apellido='"+ style.apellido +  "' data-doc='"+ style.nro_doc +  "' data-telefono='"+ style.telefono +  "' data-email='"+ style.email + "' data-domicilio='"+ style.domicilio + "' data-cuit='"+ style.cuit + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
     }else{
       //Casos para comisiones y bloques, etc
-      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "MunicipalOffice"){
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "Dependencia Municipal"){
         iniciador = style.denominacion;
         return "<div class='iniciador-token' data-id='" + style.id + "' data-type='"+ style.type + "'>" + iniciador + "</div>";
       }else{
@@ -88,7 +88,7 @@
       return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.apellido + ', ' + style.nombre + "</div>";
     }else{
       //caso de comisiones y bloques
-      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "MunicipalOffice" || style.type == "Area" || style.type == "OrganoDeGobierno" ){
+      if (style.type == "Comision" || style.type == "Bloque" || style.type == "ReparticionOficial" || style.type == "Dependencia Municipal" || style.type == "Area" || style.type == "OrganoDeGobierno" ){
         return "<div>" + "<b><i><small>" + "[" + style.type + "]" + "</small></i></b>" + " " + style.denominacion + "</div>";
       }else{
         //caso de cualquier otro type
@@ -171,7 +171,7 @@
         $('#proyecto #iniciador_denominacion').val('');
         $('#proyecto #denominacion-group').css('display','none');
       }else{
-        if (data.type == 'ReparticionOficial' || data.type == 'MunicipalOffice'){
+        if (data.type == 'ReparticionOficial' || data.type == 'Dependencia Municipal'){
           $('#proyecto #edit_iniciador').data('id',data.id);
           $('#proyecto #edit_iniciador').css('display','none');
           $('#proyecto #add_iniciador').css('display','none');
@@ -235,7 +235,7 @@
       $('#proyecto #iniciador_denominacion').val('');
       $('#proyecto #denominacion-group').css('display','none');
     }else{
-      if(valueSelected == "ReparticionOficial" || valueSelected == "MunicipalOffice"){
+      if(valueSelected == "ReparticionOficial" || valueSelected == "Dependencia Municipal"){
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','block');
         $('#proyecto #nombre-label').text('Nombre');
@@ -285,7 +285,7 @@
       $('#proyecto #iniciador_denominacion').val('');
       $('#proyecto #denominacion-group').css('display','none');
     }else{
-      if (data.type == 'ReparticionOficial' || data.type == 'MunicipalOffice'){
+      if (data.type == 'ReparticionOficial' || data.type == 'Dependencia Municipal'){
         $('#proyecto #edit_iniciador').data('id',data.id);
         $('#proyecto #edit_iniciador').css('display','none');
         $('#proyecto #add_iniciador').css('display','none');
@@ -410,7 +410,7 @@
           url_iniciador = "/reparticion_oficials"
           iniciador = {reparticion: { denominacion: $('#proyecto #iniciador_denominacion').val()}}
         }else{
-          if (tipo == "MunicipalOffice"){
+          if (tipo == "Dependencia Municipal"){
             url_iniciador = "/dependencia_municipals"
             iniciador = {dependencia: { denominacion: $('#comunicacion-oficial #iniciador_denominacion').val()}}
           }
@@ -427,7 +427,7 @@
           if (iniciador.type == "Fisica" || iniciador.type == "Juridica"){
             ini = {id: iniciador.id, nombre: iniciador.nombre, apellido: iniciador.apellido, nro_doc: iniciador.nro_doc, telefono: iniciador.telefono, email: iniciador.email, domicilio: iniciador.domicilio, cuit: iniciador.cuit, type: iniciador.type}
           }else{
-            if (iniciador.type == "ReparticionOficial" || iniciador.type == "MunicipalOffice"){
+            if (iniciador.type == "ReparticionOficial" || iniciador.type == "Dependencia Municipal"){
               ini = {id: iniciador.id, denominacion: iniciador.denominacion, type: iniciador.type}
             }
           }
