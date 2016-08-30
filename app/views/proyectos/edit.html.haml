@@ -6,8 +6,7 @@
           %span{"aria-hidden" => "true"} &times;
         %h4#nuevoLabel.modal-title= "Editando proyecto #{@process.id}"
       = form_for @process do |f|
-        = hidden_field_tag :iniciadores
-        = hidden_field_tag :states
+
         .modal-body
           .row
             .col-md-6#first-column
@@ -474,7 +473,6 @@
 
   $('#proyecto, #proyecto-show').find('.modal-submit').on('click', function(event) {
     event.preventDefault();
-
     var iniciadores = {};
     var index = 0;
     $('#proyecto, #proyecto-show').find('.iniciador-token').each(function(key, value) {

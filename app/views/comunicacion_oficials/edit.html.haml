@@ -6,8 +6,6 @@
           %span{"aria-hidden" => "true"} &times;
         %h4#nuevoLabel.modal-title= "Editando comunicación oficial #{@process.id}"
       = form_for @process do |f|
-        = hidden_field_tag :iniciadores
-        = hidden_field_tag :states
         .modal-body
           .row
             .col-md-6#first-column
