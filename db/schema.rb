@@ -36,24 +36,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
   create_table "areas", force: :cascade do |t|
     t.string   "denominacion"
     t.string   "codigo"
@@ -220,14 +202,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
   add_index "comisions_periodos", ["comision_id"], name: "index_comisions_periodos_on_comision_id", using: :btree
   add_index "comisions_periodos", ["periodo_id"], name: "index_comisions_periodos_on_periodo_id", using: :btree
 
-  create_table "comisions_personas", id: false, force: :cascade do |t|
-    t.integer "comision_id"
-    t.integer "concejal_id"
-  end
-
-  add_index "comisions_personas", ["comision_id"], name: "index_comisions_personas_on_comision_id", using: :btree
-  add_index "comisions_personas", ["concejal_id"], name: "index_comisions_personas_on_concejal_id", using: :btree
-
   create_table "comisions_tramites", id: false, force: :cascade do |t|
     t.integer "comision_id"
     t.integer "tramite_id"
@@ -340,14 +314,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
     t.datetime "updated_at",  null: false
     t.date     "anio"
   end
-
-  create_table "expedientes_despachos", force: :cascade do |t|
-    t.integer "expediente_id"
-    t.integer "despacho_id"
-  end
-
-  add_index "expedientes_despachos", ["despacho_id"], name: "index_expedientes_despachos_on_despacho_id", using: :btree
-  add_index "expedientes_despachos", ["expediente_id"], name: "index_expedientes_despachos_on_expediente_id", using: :btree
 
   create_table "expedientes_tags", id: false, force: :cascade do |t|
     t.integer "expediente_id"
@@ -522,14 +488,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "periodos_personas", id: false, force: :cascade do |t|
-    t.integer "concejal_id"
-    t.integer "periodo_id"
-  end
-
-  add_index "periodos_personas", ["concejal_id"], name: "index_periodos_personas_on_concejal_id", using: :btree
-  add_index "periodos_personas", ["periodo_id"], name: "index_periodos_personas_on_periodo_id", using: :btree
-
   create_table "personals", force: :cascade do |t|
     t.string   "nombre"
     t.string   "apellido"
@@ -540,32 +498,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "personas", force: :cascade do |t|
-    t.string   "nombre"
-    t.string   "apellido"
-    t.integer  "tipo_doc"
-    t.string   "nro_doc"
-    t.string   "telefono"
-    t.string   "email"
-    t.string   "domicilio"
-    t.integer  "cargo"
-    t.integer  "bloque_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "type"
-    t.integer  "cuit"
-  end
-
-  add_index "personas", ["bloque_id"], name: "index_personas_on_bloque_id", using: :btree
-
-  create_table "personas_tramites", id: false, force: :cascade do |t|
-    t.integer "persona_id"
-    t.integer "tramite_id"
-  end
-
-  add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
-  add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
 
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"
@@ -604,20 +536,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
 
   add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
-
-  create_table "rols", force: :cascade do |t|
-    t.string   "tipo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rols_usuarios", id: false, force: :cascade do |t|
-    t.integer "usuario_id"
-    t.integer "rol_id"
-  end
-
-  add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
-  add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
 
   create_table "seccions", force: :cascade do |t|
     t.string   "nombre"
@@ -713,26 +631,6 @@ ActiveRecord::Schema.define(version: 20160817154316) do
   add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
   add_index "users", ["personal_id"], name: "index_users_on_personal_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "usuarios", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "persona_id"
-  end
-
-  add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
-  add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
-  add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "municipal_offices_tramites", "municipal_offices"
   add_foreign_key "municipal_offices_tramites", "tramites"

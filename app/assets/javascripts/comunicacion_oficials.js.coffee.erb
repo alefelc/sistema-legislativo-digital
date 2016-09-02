@@ -46,7 +46,7 @@ $(document).on 'ready page:load', ->
       tokenData = $('#comunicacion-oficial #process_iniciadores').data 'load'
       iniciadores = [];
       $.each tokenData, (index, ini) ->
-        if(ini.type == "Concejal")
+        if(ini.type == "Concejal" || ini.type == "Fisica" || ini.type == "Juridica")
           iniciadores.push({id: ini.id, nombre: ini.nombre, apellido: ini.apellido, nro_doc: ini.nro_doc, telefono: ini.telefono, email: ini.email, domicilio: ini.domicilio, cuit: ini.cuit, type: ini.type})
         else
           if(ini.type == "ReparticionOficial" || ini.type == "Dependencia Municipal" || ini.type == "OrganoDeGobierno" || ini.type == "Area" || ini.type == "Comision" || ini.type == "Bloque")
