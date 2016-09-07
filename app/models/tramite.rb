@@ -12,6 +12,13 @@ class Tramite < ActiveRecord::Base
   has_many :expediente_administrativos
   belongs_to :circuito # I think this is deprecated!!!
   has_many :uploads
+  has_many :processes_signatories,
+           foreign_key: :process_id,
+           class_name: 'ProcessesSignatory'
+  has_many :signatories,
+           through: :processes_signatories,
+           class_name: 'Person',
+           source: :person
 
   #== Nested attributes
   accepts_nested_attributes_for :uploads
