@@ -336,7 +336,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
-  ajax-datatables-rails (= 0.3.1)
+  ajax-datatables-rails
   alertify-rails
   awesome_print (= 1.6.1)
   bcrypt (~> 3.1.7)
@@ -356,10 +356,10 @@ DEPENDENCIES
   haml (= 4.0.7)
   haml-rails (~> 0.9)
   jbuilder (~> 2.0)
-  jquery-datatables-rails (= 3.3.0)
+  jquery-datatables-rails
   jquery-fileupload-rails
   jquery-rails (= 4.0.4)
-  kaminari (= 0.16.3)
+  kaminari
   meta_request (= 0.3.4)
   momentjs-rails
   paperclip

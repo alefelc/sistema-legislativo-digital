@@ -71,9 +71,9 @@ gem 'sprockets', '3.3.0'
 gem 'font-awesome-sass'
 
 # Ajax synchronizate datatables
-gem 'jquery-datatables-rails', '3.3.0'
-gem 'ajax-datatables-rails', '0.3.1'
-gem 'kaminari', '0.16.3'
+gem 'jquery-datatables-rails'
+gem 'ajax-datatables-rails'
+gem 'kaminari'
 
 # Bootstrap Multiselect v0.9.13
 gem 'bootstrap-multiselect-rails', '0.9.9'
