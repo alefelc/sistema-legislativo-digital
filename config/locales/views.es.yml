@@ -1,0 +1,100 @@
+es:
+  councilors:
+    index:
+      fullname: Concejal
+      cuit: 'DNI / CUIT'
+      address: 'Domicilio'
+      phone: 'Teléfono'
+      email: Email
+      period: Periodos
+    edit:
+      update_councilor: Actualizar concejal
+      update: Actualizar
+    show:
+      data: Datos concejal
+      surname: 'Apellido:'
+      name: 'Nombre:'
+      dni_cuit: 'DNI / CUIT:'
+      phone: 'Teléfono:'
+      email: 'Email:'
+      address: 'Domicilio'
+      created_at: Creado el
+
+  dashboard:
+    index:
+      home: Inicio
+
+  government_offices:
+    show:
+      created_at: Creado el
+      data: Datos repartición oficial
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar repartición oficial
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  government_organs:
+    show:
+      created_at: Creado el
+      data: Datos órgano de gobierno
+      denomination: 'Denominación:'
+    edit:
+      update_government_organ: Actualizar órgano de gobierno
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  municipal_offices:
+    show:
+      created_at: Creado el
+      data: Datos dependencia municipal
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar dependencia municipal
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  persons:
+    show:
+      personal_data: Información personal
+      created_at: Creado el %{date}
+      name: "Nombre:"
+      surname: "Apellido:"
+      dni_cuit: "DNI / CUIT:"
+      address: "Domicilio:"
+      phone: "Teléfono:"
+      email: "Email:"
+    index:
+      type: Persona
+      name: Nombre
+      surname: Apellido
+      address: Domicilio
+      dni_cuit: 'DNI / CUIT'
+      phone: Teléfono
+      email: Email
+    edit:
+      update_person: Actualizar persona
+      update: Actualizar
+
+  layouts:
+    sidebar:
+      main_navigation: Navegación Principal
+      reception: Mesa de entradas
+      dispatch: Despachos de comisión
+      process: Trámites
+      reports: Reportes
+      statistics: Estadísticas
+
+  processes:
+    index:
+      new: Trámite
+      new_commission_dispatch: Despacho de comisión
+      processes: Nro.
+      type: Tipo
+      sheets: Fojas
+      initiators: Iniciadores
+      topic: Sumario
+      created_at: Creado el

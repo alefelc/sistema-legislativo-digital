@@ -52,21 +52,11 @@ Rails.application.routes.draw do
     post 'destroy_uploads', on: :member
   end
 
-  resources :condonacions do
-    get 'get_iniciador', on: :collection
-    get 'get_derivacion', on: :collection
-    post 'destroy_uploads', on: :member
+  resources :procedures do
+    get 'new_commission_dispatch', on: :collection
   end
 
-  resources :particulars do
-    get 'get_iniciador', on: :collection
-    get 'get_derivacion', on: :collection
-    post 'destroy_uploads', on: :member
-  end
-
-  resources :peticions, path: "particulars"
-
-  resources :persons, only: [:create, :update]
+  resources :persons, only: [:create, :update], as: :people
 
   resources :reparticion_oficials
 

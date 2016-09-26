@@ -1,0 +1,27 @@
+es:
+  activerecord:
+    models:
+      person: Persona
+      process: Trámite
+
+    attributes:
+      person:
+        nombre: Nombre
+        apellido: Apellido
+        type: Tipo de persona
+        email: Email
+        telefono: Teléfono
+        nro_doc: 'DNI / CUIT'
+        domicilio: Domicilio
+
+      process:
+        sheets: Fojas
+        observation: Observación
+        type: Tipo
+        types:
+          Proyecto: Proy.
+          ComunicacionOficial: C.O.
+          Despacho: Desp.
+          topic: Sumario
+          created_at: Creado el
+          update_at: Actualizado el
