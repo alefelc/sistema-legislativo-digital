@@ -58,14 +58,14 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'haml', '4.0.7'
 
 # Bootstrap for Sass
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass'
 
 # Sprockets Rails integration
 gem 'sprockets-rails', '2.3.2', require: 'sprockets/railtie'
 gem 'sprockets', '3.3.0'
 
 # Icons
-gem 'font-awesome-sass', '~> 4.4.0'
+gem 'font-awesome-sass'
 
 # Ajax synchronizate datatables
 gem 'jquery-datatables-rails', '3.3.0'
@@ -74,6 +74,9 @@ gem 'kaminari', '0.16.3'
 
 # Bootstrap Multiselect v0.9.13
 gem 'bootstrap-multiselect-rails', '0.9.9'
+
+# Select2 for rails asset pipeline
+gem 'select2-rails'
 
 # A beautiful replacement for Javascript's "Alert".
 gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'

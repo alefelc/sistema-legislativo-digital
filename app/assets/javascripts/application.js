@@ -3,8 +3,8 @@
 //= require bootstrap-sprockets
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-//= require jquery.tokeninput.min
-//= require select2.min
+//= require select2
+//= require select2_locale_es
 //= require jquery.elastic.min
 //= require Chart.min
 //= require bootstrap-multiselect
