@@ -1,0 +1,89 @@
+%h2
+  = t '.new_procedure'
+= form_for @procedure do |f|
+  .box.box-primary
+    .box-body
+      .row
+        .col-xs-3
+          %ul.nav.nav-pills.nav-stacked
+            %li.active
+              %a{ 'aria-expanded': 'true', 'data-toggle': 'tab', href: '#home' }
+                = t '.information'
+            %li
+              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#settings' }
+                = t '.derivations'
+            %li
+              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#messages' }
+                = t '.adminitrative_files'
+            %li
+              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#profile' }
+                = t '.attached_files'
+
+        .col-xs-9
+          .tab-content
+            #home.tab-pane.active
+              .lead.box-header.with-border
+                = t '.load_new_info'
+              .form-group
+                = f.label :type
+                = f.select :type, procedure_types, { include_blank: t('.blank_type') }, { class: 'form-control', type: :number, min: 1, step: 1 }
+              = f.label :persons
+              .row
+                .col-md-10
+                  .form-group
+                    = f.select :persons, {}, {}, { multiple: true, class: 'form-control' }
+                .col-md-2
+                  .btn.btn-success
+                    .fa.fa-user-plus
+                    = t '.add'
+              .form-group
+                .row
+                  .col-md-2
+                    = f.label :nro_fojas
+                    = f.text_field :nro_fojas, { class: 'form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 }
+              .form-group
+                = f.label :asunto
+                = f.text_area :asunto, { class: 'form-control', placeholder: t('.topic_placeholder') }
+              .form-group
+                = f.label :observaciones
+                = f.text_field :observaciones, { class: 'form-control', placeholder: t('.observations_placeholder') }
+              .form-group{ title: 'Work In Progress' }
+                .checkbox
+                  %label
+                    .finished= check_box_tag :process_completed
+                    = label_tag :process_completed, t('.process_completed')
+                .finished-field{ style: 'display: none' }
+                  = label_tag :finalizado_en
+                  = text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true }
+
+            #profile.tab-pane
+              %p.lead.box-header.with-border Profile Tab.
+              .form-group
+                %label{:for => "exampleInputFile"} File input
+                %input#exampleInputFile{:type => "file"}
+                %p.help-block Example block-level help text here.
+            #messages.tab-pane
+              %p.lead.box-header.with-border Messages Tab.
+            #settings.tab-pane
+              %p.lead.box-header.with-border Settings Tab.
+              .class
+        .clearfix
+    .box-footer
+      .pull-right
+        %button.btn.btn-large.btn-default Cancelar
+        %button.btn.btn-large.btn-primary.btn-lg Crear
+
+
+:javascript
+$(document).on('ready', function() {
+  $('.finished').on('click', function() {
+    if ($('.finished').attr('checked')) {
+      $('.finished').attr('checked', false);
+      $('.finished-field').css('display', 'none');
+    }
+    else {
+      $('.finished').attr('checked', true);
+      $('.finished-field').css('display', 'block');
+    }
+  })
+});

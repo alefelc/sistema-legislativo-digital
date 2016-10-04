@@ -1,0 +1,23 @@
+#procedures
+  - if current_user.present?
+    .row
+      .col-md-5.col-xs-12
+        = link_to t('.new'),
+                  new_procedure_path,
+                  class: 'btn btn-primary btn-lg fa fa-plus'
+
+  %table.table.table-striped.table-bordered#procedures-table{ 'data-source': procedures_path(format: :json) }
+    %thead
+      %tr
+        %th= t('.procedures')
+        %th= t('.type')
+        %th= t('.initiators')
+        %th= t('.topic')
+        %th= t('.created_at')
+        %th= t('.sheets')
+    %tbody
+
+:javascript
+$(document).ready(function() {
+  Procedures.indexDataTable();
+});
