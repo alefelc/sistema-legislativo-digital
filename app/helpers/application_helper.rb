@@ -101,8 +101,8 @@ module ApplicationHelper
     link_to pro.id.to_s, proyecto_path(pro)
   end
 
-  def index_tramite(tramite)
-    link_to tramite.id.to_s, tramite
+  def index_procedure(proc)
+    link_to proc.id.to_s, procedure_path(proc), class: 'btn btn-xs btn-default'
   end
 
   def index_tramites(tramites)

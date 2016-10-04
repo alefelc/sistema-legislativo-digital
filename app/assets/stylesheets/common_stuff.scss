@@ -55,3 +55,15 @@ div.dataTables_filter label::before {
   border: 1px solid #ccc;
   width: 100%
 }
+
+.box .nav-stacked > li {
+  border-bottom: 2px solid #f4f4f4;
+}
+
+.box-footer {
+  border-top: 2px solid #f4f4f4;
+}
+
+.box-header.with-border {
+    border-bottom: 2px solid #f4f4f4;
+}

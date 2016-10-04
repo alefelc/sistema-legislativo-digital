@@ -1,13 +1,9 @@
-##val = $(window).height()-280
+## Global javascript settings
+
+## Select2 default settings
+$.fn.select2.defaults.set 'theme', 'bootstrap'
 
 $.extend $.fn.dataTable.defaults,
-  pagingType: 'full_numbers'
-  ##'scrollCollapse': true
-  ##'scrollY': val
-  lengthChange: false
-  pageLength: 10
-  bServerSide: true
-  processing: true
   language:
     "sProcessing":     "Procesando..."
     "sLengthMenu":     "Mostrar _MENU_ registros"
@@ -84,10 +80,6 @@ $(document).on 'click', '.remove-table-row', ->
   $(this).parents('tr').remove()
   return
 
-$(document).on 'focus', 'textarea', ->
-  $(this).elastic()
-  return
-
 $(document).on 'focusout', 'textarea', ->
   $(this).animate({ height: "#{40}" }, 200)
   return
@@ -96,21 +88,15 @@ $(document).on 'ready', ->
 
   controller = window.location.pathname.split("/")[1]
   action = window.location.pathname.split("/")[2]
-  if controller in ['despachos', 'comunicacion_oficials', 'proyectos', 'particulars', 'condonacions']
+  if controller in ['despachos', 'processes']
     $(document).find('.sidebar-menu .treeview:first').addClass('active')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').css('display', 'block')
     $(document).find('.sidebar-menu .treeview .treeview-menu:first').addClass('menu-open')
     switch controller
       when 'despachos'
         $('a[href="/despachos"]').css('color', 'white')
-      when 'comunicacion_oficials'
-        $('a[href="/comunicacion_oficials"]').css('color', 'white')
-      when 'proyectos'
-        $('a[href="/proyectos"]').css('color', 'white')
-      when 'particulars'
-        $('a[href="/particulars"]').css('color', 'white')
-      when 'condonacions'
-        $('a[href="/condonacions"]').css('color', 'white')
+      when 'processes'
+        $('a[href="/processes"]').css('color', 'white')
 
   if controller in ['reports']
     switch action
