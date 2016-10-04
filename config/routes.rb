@@ -52,9 +52,7 @@ Rails.application.routes.draw do
     post 'destroy_uploads', on: :member
   end
 
-  resources :procedures do
-    get 'new_commission_dispatch', on: :collection
-  end
+  resources :procedures
 
   resources :persons, only: [:create, :update], as: :people
 

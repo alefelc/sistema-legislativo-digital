@@ -88,7 +88,7 @@ es:
       reports: Reportes
       statistics: Estadísticas
 
-  processes:
+  procedures:
     index:
       new: Trámite
       new_commission_dispatch: Despacho de comisión
@@ -98,3 +98,30 @@ es:
       initiators: Iniciadores
       topic: Sumario
       created_at: Creado el
+    new:
+      new_procedure: Nuevo Trámite
+      information: Información
+      derivations: Derivaciones
+      administrative_files: Expedientes Administrativos
+      attached_files: Archivos Adjuntos
+      load_new_info: Cargue la información del nuevo trámite
+      type: Tipo de trámite
+      initiators: Iniciadores
+      add: Agregar
+      sheets_number: Nro. fojas
+      sheets: Hojas
+      topic: Asunto
+      topic_placeholder: Sumario del trámite
+      observations: Observaciones
+      observations_placeholder: Detalles respecto al trámite
+      process_completed: ¿Trámite finalizado?
+      finished_at: Finalizado en
+      finished_placeholder: Indique la culminación del trámite
+      blank_type: Seleccione tipo de trámite
+      placeholder_initiators: Busque iniciadores...
+    types:
+      condonation: Condonación
+      particular_request: Petición Particular
+      project: Proyecto
+      official_communication: Comunicación Oficial
+      commission_dispatch: Despacho de Comisión

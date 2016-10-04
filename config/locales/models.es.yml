@@ -2,7 +2,7 @@ es:
   activerecord:
     models:
       person: Persona
-      process: Trámite
+      procedure: Trámite
 
     attributes:
       person:
@@ -14,7 +14,7 @@ es:
         nro_doc: 'DNI / CUIT'
         domicilio: Domicilio
 
-      process:
+      procedure:
         sheets: Fojas
         observation: Observación
         type: Tipo
