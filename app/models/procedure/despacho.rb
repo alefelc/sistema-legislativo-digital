@@ -1,4 +1,4 @@
-class Despacho < Tramite
+class Despacho < Procedure
 
   #== Associations
 	has_and_belongs_to_many :comisions, join_table: 'comisions_despachos'

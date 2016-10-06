@@ -1,4 +1,4 @@
-class Tramite < ActiveRecord::Base
+class Procedure < ActiveRecord::Base
 	#== Associations
 	has_and_belongs_to_many :persons
 	has_and_belongs_to_many :bloques

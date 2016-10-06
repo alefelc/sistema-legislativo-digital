@@ -1,0 +1,3 @@
+class ComunicacionOficial < Procedure
+
+end

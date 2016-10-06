@@ -55,7 +55,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    alertify-rails (0.2.0)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.3)
@@ -332,12 +331,11 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
-  alertify-rails
   awesome_print (= 1.6.1)
   bcrypt (~> 3.1.7)
   better_errors (= 2.1.1)
   bootstrap-daterangepicker-rails
-  bootstrap-multiselect-rails (= 0.9.9)
+  bootstrap-multiselect-rails
   bootstrap-sass
   capistrano (~> 3.1)
   capistrano-bundler (~> 1.1.2)

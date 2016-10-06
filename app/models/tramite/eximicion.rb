@@ -1,2 +1,0 @@
-class Eximicion < Tramite
-end

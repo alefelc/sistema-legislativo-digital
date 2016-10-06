@@ -75,15 +75,13 @@ gem 'rails-assets-datatables', source: 'https://rails-assets.org'
 gem 'kaminari'
 
 # Bootstrap Multiselect v0.9.13
-gem 'bootstrap-multiselect-rails', '0.9.9'
+gem 'bootstrap-multiselect-rails'
 
 # Select2 for rails asset pipeline
 gem 'select2-rails'
 
 # A beautiful replacement for Javascript's "Alert".
 gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
-
-gem 'alertify-rails'
 
 # Easy file attachment management for ActiveRecord.
 gem 'paperclip'

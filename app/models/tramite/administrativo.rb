@@ -1,2 +1,0 @@
-class Administrativo < Tramite
-end
