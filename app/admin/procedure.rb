@@ -1,4 +1,4 @@
-ActiveAdmin.register Peticion do
+ActiveAdmin.register Procedure do
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -13,7 +13,5 @@ ActiveAdmin.register Peticion do
 #   permitted
 # end
 
-# parent
-menu parent: "Tramites", label: "Peticiones"
 
 end
