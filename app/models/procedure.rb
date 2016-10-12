@@ -6,9 +6,9 @@ class Procedure < ActiveRecord::Base
   has_and_belongs_to_many :organo_de_gobiernos
   has_and_belongs_to_many :reparticion_oficials
   has_and_belongs_to_many :areas
-  has_many :municipal_offices_tramites
-  has_many :municipal_offices, through: :municipal_offices_tramites
-  has_many :estado_tramites
+  has_many :procedures_municipal_offices
+  has_many :municipal_offices, through: :municipal_offices_procedures
+  has_many :estado_procedures
   has_many :expediente_administrativos
   belongs_to :circuito # I think this is deprecated!!!
   has_many :uploads
@@ -57,6 +57,6 @@ class Procedure < ActiveRecord::Base
   private
 
   def initial_state
-    self.estado_tramites.create nombre: 'Iniciado', tipo: 1
+    self.estado_procedures.create nombre: 'Iniciado', tipo: 1
   end
 end

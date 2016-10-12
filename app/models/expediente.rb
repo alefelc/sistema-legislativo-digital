@@ -7,7 +7,7 @@ class Expediente < ActiveRecord::Base
   has_many :normas
 
   #== polymorfic association
-  has_many :estado_tramites, as: :ref
+  has_many :estado_procedures, as: :ref
 
   #== Shortcut association
   has_many :estado_expedientes, through: :circuitos

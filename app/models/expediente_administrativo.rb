@@ -1,7 +1,7 @@
 class ExpedienteAdministrativo < ActiveRecord::Base
   #== Associations
 	belongs_to :expediente
-  belongs_to :tramite
+  belongs_to :procedure
 
   #== Validations
   validates :nro_exp, presence: true

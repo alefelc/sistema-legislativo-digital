@@ -2,11 +2,11 @@ class Circuito < ActiveRecord::Base
   # == Associations
   belongs_to :expediente
   has_many :estado_expedientes
-  has_many :tramites
+  has_many :procedures
   has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
 
   #== Polymorfic association
-  has_many :estado_tramites, as: :ref
+  has_many :estado_procedures, as: :ref
 
   #== Asociacion con orden del dia
   has_many :circuito_ordens
@@ -35,8 +35,8 @@ class Circuito < ActiveRecord::Base
     tr_html
   end
 
-  def get_tramites
-    self.tramites.as_json(methods: 'type')
+  def get_procedures
+    self.procedures.as_json(methods: 'type')
   end
 
   private

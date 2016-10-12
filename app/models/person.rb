@@ -5,8 +5,8 @@ class Person < ActiveRecord::Base
   # belongs_to :bloque
 
   #== Associations
-  has_and_belongs_to_many :tramites
-  has_many :estado_tramites, as: :ref
+  has_and_belongs_to_many :procedure
+  has_many :estado_procedure, as: :ref
   has_many :processes_signatories
   has_many :signed_paperwork,
            through: :processes_signatories,
