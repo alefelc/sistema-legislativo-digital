@@ -2,15 +2,13 @@
 %html
   %head
     %title Sistema Legislativo Digital
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': true
+    = javascript_include_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
-
     = favicon_link_tag 'favicon.ico'
 
-    %meta{:charset => "UTF-8"}
-    / Tell the browser to be responsive to screen width
-    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name: 'viewport' }
 
     / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     / WARNING: Respond.js doesn't work if you view the page via file://
@@ -21,65 +19,7 @@
 
   %body.skin-green.fixed.sidebar-mini
     .wrapper
-      %header.main-header
-        %a.logo{ href: root_path }
-          %span.logo-mini
-            %b> S
-            L
-          %span.logo-lg
-            %b=t('.sld')
-        %nav.navbar.navbar-static-top{ role: 'navigation' }
-
-          %a.sidebar-toggle{ 'data-toggle' => 'offcanvas', href: '#', role: 'button' }
-            %span.sr-only
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          .row.navbar-title
-            .col-md-10.takeoff-padding
-              .center#path-name= yield(:title)
-            .col-md-2.takeoff-padding
-              .navbar-custom-menu
-                %ul.nav.navbar-nav
-
-                  - if current_user.present?
-                    %li.dropdown.user.user-menu
-                      %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#' }
-                        %img.user-image{ src: asset_path('logo.jpg') }
-                          %span.hidden-xs= current_user.email
-                      %ul.dropdown-menu
-
-                        %li.user-header
-                          %h4= current_user.person.full_name if current_user.person.present?
-                        / Before this check if the current user is an administrator
-                        %li.user-body
-                          .col-xs-12.text-center
-                            %a.btn.btn-warning.fa.fa-gears{ href: '/admin',
-                              title: 'Opciones de Administrador' } Administrador
-
-                        %li.user-footer
-
-                          #log-out.pull-right
-                            %a.btn.btn-danger.fa.fa-sign-out{ href: '#', title: 'Salir del Sistema' } Salir
-                  - else
-                    %li.dropdown.user.user-menu
-                      %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle' => 'dropdown', href: '#'}
-                        %img.user-image{ src: image_path('sign_in.png') }
-                          %span.hidden-xs Ingreso al Sistema
-                      %ul.dropdown-menu
-
-                        %li.user-footer
-                          = form_tag user_session_path, remote: true, id: 'user-form' do
-                            = label_tag 'Usuario'
-                            = text_field_tag 'user[email]', nil, class: 'form-control', type: :email, placeholder: 'Ingrese email'
-                            = label_tag 'Contraseña'
-                            = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Ingrese contraseña'
-
-                            %span.pull-right{ style: 'padding-top: 10px' }
-                              %button.btn.btn-success#log-in{ type: 'submit' } Entrar
-                            %span.pull-left
-                              = check_box_tag 'user[remember_me]'
-                              = label_tag 'user_remember_me', 'Recordar ingreso'
+      = render 'layouts/header'
 
       = render 'layouts/sidebar'
 

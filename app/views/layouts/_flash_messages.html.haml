@@ -1,0 +1,10 @@
+- if flash.any?
+  - flash.each do |message_type, message|
+    %div{ class: "alert-#{ message_type } alert alert-dismissable" }
+      %button.close{ 'data-dismiss': :alert, 'aria-hidden': :true }
+        %i.fa.fa-times
+      - if message.is_a? Array
+        - message.each do |msg|
+          %p= msg
+      - else
+        %p= message

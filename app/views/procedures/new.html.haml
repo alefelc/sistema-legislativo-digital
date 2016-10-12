@@ -1,81 +1,114 @@
-%h2
-  = t '.new_procedure'
-= form_for @procedure do |f|
-  .box.box-primary
-    .box-body
-      .row
-        .col-xs-3
-          %ul.nav.nav-pills.nav-stacked
-            %li.active
-              %a{ 'aria-expanded': 'true', 'data-toggle': 'tab', href: '#home' }
-                = t '.information'
-            %li
-              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#settings' }
-                = t '.derivations'
-            %li
-              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#messages' }
-                = t '.adminitrative_files'
-            %li
-              %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#profile' }
-                = t '.attached_files'
+#initiators-modal
+#procedure-new
+  %h2
+    = t '.new_procedure'
+  = form_for @procedure do |f|
+    .box.box-primary
+      .box-body
+        .row
+          .col-xs-3
+            %ul.nav.nav-pills.nav-stacked
+              %li.active
+                %a{ 'aria-expanded': 'true', 'data-toggle': 'tab', href: '#home' }
+                  = t '.information'
+              %li
+                %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#settings' }
+                  = t '.derivations'
+              %li
+                %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#messages' }
+                  = t '.administrative_files'
+              %li
+                %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#profile' }
+                  = t '.attached_files'
 
-        .col-xs-9
-          .tab-content
-            #home.tab-pane.active
-              .lead.box-header.with-border
-                = t '.load_new_info'
-              .form-group
-                = f.label :type
-                = f.select :type, procedure_types, { include_blank: t('.blank_type') }, { class: 'form-control', type: :number, min: 1, step: 1 }
-              = f.label :persons
-              .row
-                .col-md-10
-                  .form-group
-                    = f.select :persons, {}, {}, { multiple: true, class: 'form-control' }
-                .col-md-2
-                  .btn.btn-success
-                    .fa.fa-user-plus
-                    = t '.add'
-              .form-group
+          .col-xs-9
+            .tab-content
+              #home.tab-pane.active
+                .lead.box-header.with-border
+                  = t '.load_new_info'
+                .form-group
+                  %label{ for: :procedure_type }= t('.type')
+                  = f.select :type, procedure_types, { include_blank: t('.blank_type') }, { class: 'form-control', type: :number, min: 1, step: 1 }
+                %label{ for: :procedure_persons }= t('.persons')
                 .row
+                  .col-md-10
+                    .form-group
+                      = f.select :persons, {}, {}, { multiple: true, class: 'form-control' }
                   .col-md-2
-                    = f.label :nro_fojas
-                    = f.text_field :nro_fojas, { class: 'form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 }
-              .form-group
-                = f.label :asunto
-                = f.text_area :asunto, { class: 'form-control', placeholder: t('.topic_placeholder') }
-              .form-group
-                = f.label :observaciones
-                = f.text_field :observaciones, { class: 'form-control', placeholder: t('.observations_placeholder') }
-              .form-group{ title: 'Work In Progress' }
-                .checkbox
-                  %label
-                    .finished= check_box_tag :process_completed
-                    = label_tag :process_completed, t('.process_completed')
-                .finished-field{ style: 'display: none' }
-                  = label_tag :finalizado_en
-                  = text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true }
-
-            #profile.tab-pane
-              %p.lead.box-header.with-border Profile Tab.
-              .form-group
-                %label{:for => "exampleInputFile"} File input
-                %input#exampleInputFile{:type => "file"}
-                %p.help-block Example block-level help text here.
-            #messages.tab-pane
-              %p.lead.box-header.with-border Messages Tab.
-            #settings.tab-pane
-              %p.lead.box-header.with-border Settings Tab.
-              .class
-        .clearfix
-    .box-footer
-      .pull-right
-        %button.btn.btn-large.btn-default Cancelar
-        %button.btn.btn-large.btn-primary.btn-lg Crear
-
+                    = link_to new_initiator_path, class: 'initiator-btn btn btn-success', remote: true do
+                      .fa.fa-user-plus
+                      = t '.add'
+                .form-group
+                  .row
+                    .col-md-2
+                      %label{ for: :procedure_sheets }= t('.sheets')
+                      = f.text_field :sheets, { class: 'form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 }
+                .form-group
+                  %label{ for: :procedure_topic }= t('.topic')
+                  = f.text_area :topic, { class: 'form-control', placeholder: t('.topic_placeholder') }
+                .form-group
+                  %label{ for: :procedure_observations }= t('.observations')
+                  = f.text_field :observations, { class: 'form-control', placeholder: t('.observations_placeholder') }
+                .form-group{ title: 'Work In Progress' }
+                  .checkbox
+                    %label
+                      .finished= check_box_tag :process_completed
+                      = label_tag :process_completed, t('.process_completed')
+                  .finished-field{ style: 'display: none' }
+                    = label_tag :finalizado_en
+                    = text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true }
+                .box.box-danger.collapsed-box
+                  .box-header.with-border
+                    %h3.box-title
+                      Plan de contingencia
+                    .box-tools.pull-right
+                      %button.btn.btn-box-tool{ type: :button, 'data-widget': :collapse }
+                        .fa.fa-plus
+                  .row.box-body{ style: 'display: none' }
+                    .form-group.col-md-12
+                      = label_tag :causa
+                      = text_area_tag :causa, '', class: 'form-control', placeholder: 'Indique el motivo de la contingencia'
+                    .form-group.col-md-6
+                      = label_tag :nro_contingencia
+                      = text_field_tag :nro_contingencia, '', class: 'form-control', placeholder: 'Código de la contingencia'
+                    .form-group.col-md-6
+                      = label_tag :fecha_y_hora
+                      .input-group
+                        .input-group-addon
+                          %i.fa.fa-clock-o
+                        = text_field_tag :fecha_y_hora, '', class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia'
+              #profile.tab-pane
+                %p.lead.box-header.with-border Puede adjuntar todo tipo de archivos
+                .form-group
+                  %label{ for: 'exampleInputFile' } Busque y seleccione archivos
+                  %input#exampleInputFile{ type: :file }
+              #messages.tab-pane
+                %p.lead.box-header.with-border Cargue expedientes adminitrativos
+              #settings.tab-pane
+                %p.lead.box-header.with-border Área a la que se deriva actualmente el trámite
+                .class
+          .clearfix
+      .box-footer
+        .pull-right
+          = link_to procedures_path, class: 'btn btn-default' do
+            .fa.fa-times-circle
+            Cancelar
+          %button.btn.btn-primary.btn-lg{ type: :submit }
+            .fa.fa-save.fa-lg
+            = t('.submit')
 
 :javascript
 $(document).on('ready', function() {
+  $('#procedure-new').on('ajax:success', '.initiator-btn', function(XHR, data, success) {
+    $('#initiators-modal').html(data);
+    $('#initiators-modal .modal').modal('show');
+  })
+  $('#procedure_persons').select2({
+    multiple: true,
+    placeholder: 'Busque personas y/o instituciones',
+    theme: 'bootstrap',
+    language: 'es'
+  })
   $('.finished').on('click', function() {
     if ($('.finished').attr('checked')) {
       $('.finished').attr('checked', false);
@@ -86,4 +119,5 @@ $(document).on('ready', function() {
       $('.finished-field').css('display', 'block');
     }
   })
+  $('#fecha_y_hora').datetimepicker()
 });

@@ -1,21 +1,33 @@
-#procedures
-  - if current_user.present?
+#filters
+  = render 'filters'
+.box.box-primary#procedures
+  .box-header
     .row
       .col-md-5.col-xs-12
-        = link_to t('.new'),
-                  new_procedure_path,
-                  class: 'btn btn-primary btn-lg fa fa-plus'
+        - if current_user.present?
+          = link_to new_procedure_path, 'data-target': '#myModal', class: 'btn btn-primary btn-lg' do
+            %i.fa.fa-plus-circle.fa-lg
+            Nuevo trámite
+      .col-md-2.col-xs-12
+        = link_to '#', class: 'btn btn-info btn-lg' do
+          %i.fa.fa-filter.fa-lg
+          Filtrar datos
+      .col-md-5.col-xs-12
+        = link_to new_procedure_path, class: 'btn btn-danger btn-lg pull-right' do
+          %i.fa.fa-print.fa-lg
+          Imprimir
 
-  %table.table.table-striped.table-bordered#procedures-table{ 'data-source': procedures_path(format: :json) }
-    %thead
-      %tr
-        %th= t('.procedures')
-        %th= t('.type')
-        %th= t('.initiators')
-        %th= t('.topic')
-        %th= t('.created_at')
-        %th= t('.sheets')
-    %tbody
+  .box-body
+    %table.table.table-bordered.table-striped.dataTable#procedures-table{ 'data-source': procedures_path(format: :json) }
+      %thead
+        %tr
+          %th= t('.procedures')
+          %th= t('.type')
+          %th= t('.initiators')
+          %th= t('.topic')
+          %th= t('.created_at')
+          %th= t('.sheets')
+      %tbody
 
 :javascript
 $(document).ready(function() {
