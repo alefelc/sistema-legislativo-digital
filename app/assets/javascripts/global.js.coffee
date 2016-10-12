@@ -5,6 +5,7 @@ $.fn.select2.defaults.set 'theme', 'bootstrap'
 
 $.extend $.fn.dataTable.defaults,
   language:
+    "sPaginationType": "bootstrap"
     "sProcessing":     "Procesando..."
     "sLengthMenu":     "Mostrar _MENU_ registros"
     "sZeroRecords":    "No se encontraron resultados"
@@ -78,10 +79,6 @@ $(document).keydown (event) ->
 
 $(document).on 'click', '.remove-table-row', ->
   $(this).parents('tr').remove()
-  return
-
-$(document).on 'focusout', 'textarea', ->
-  $(this).animate({ height: "#{40}" }, 200)
   return
 
 $(document).on 'ready', ->

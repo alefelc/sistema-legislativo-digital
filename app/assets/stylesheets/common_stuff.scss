@@ -38,14 +38,24 @@ $shadow_color: #000000;
   margin-top: 10px;
 }
 
-div.dataTables_filter label::before {
-  content: "\f002";
-  color: #3c4444 !important;
-  font-size: 16px;
-  font-family: FontAwesome;
-  color: #585858;
-  margin-right: 5px;
-  margin-left: 1px;
+.dataTables_filter  {
+  @extend .pull-right;
+  label::before {
+    content: "\f002";
+    color: #3c4444 !important;
+    font-size: 16px;
+    font-family: FontAwesome;
+    color: #585858;
+    margin-right: 5px;
+    margin-left: 1px;
+  }
+}
+
+.dataTables_paginate {
+  @extend .pull-right;
+  .pagination {
+    margin: 0px;
+  }
 }
 
 .report-range {

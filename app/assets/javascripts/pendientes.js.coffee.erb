@@ -1,42 +1,42 @@
-$(document).on 'ready page:load', ->
-  $('#pendiente-table').dataTable
-    ajaxSource: $('#pendiente-table').data 'source'
-    fnInitComplete: ->
-      $('#pendiente div.dataTables_filter input').focus()
-      return
-    fnDrawCallback: ->
-      $('#pendiente-table tbody tr:eq(0)').addClass 'info'
-      return
-    aoColumns: [
-      { sortable: false, "width": "10%" , sClass: "center" }
-      { sortable: false, "width": "15%" }
-      { sortable: false }
-      { sortable: false, "width": "4%" }
-    ]
+# $(document).on 'ready page:load', ->
+#   $('#pendiente-table').dataTable
+#     ajaxSource: $('#pendiente-table').data 'source'
+#     fnInitComplete: ->
+#       $('#pendiente div.dataTables_filter input').focus()
+#       return
+#     fnDrawCallback: ->
+#       $('#pendiente-table tbody tr:eq(0)').addClass 'info'
+#       return
+#     aoColumns: [
+#       { sortable: false, "width": "10%" , sClass: "center" }
+#       { sortable: false, "width": "15%" }
+#       { sortable: false }
+#       { sortable: false, "width": "4%" }
+#     ]
 
-  $(document).on 'click', '#pendiente .linktocreate', ->
-    $(document).off 'keydown'
-    id_tra = $(this).data 'id'
-    type_tra = $(this).data 'type'
-    nro_fojas = $(this).data 'nro_fojas'
-    tema = $(this).data 'asunto'
-    anio = $(this).data 'fecha'
-    $('#expediente-create').empty()
-    $.get "/expedientes/new", (data) ->
-      $('#expediente-create').append data
-      $('#expediente-create .modal').modal 'show'
+#   $(document).on 'click', '#pendiente .linktocreate', ->
+#     $(document).off 'keydown'
+#     id_tra = $(this).data 'id'
+#     type_tra = $(this).data 'type'
+#     nro_fojas = $(this).data 'nro_fojas'
+#     tema = $(this).data 'asunto'
+#     anio = $(this).data 'fecha'
+#     $('#expediente-create').empty()
+#     $.get "/expedientes/new", (data) ->
+#       $('#expediente-create').append data
+#       $('#expediente-create .modal').modal 'show'
 
-      ## Preload inputs fields expediente
-      $('#modal-expediente #expediente_nro_fojas').val(nro_fojas)
-      $('#modal-expediente #expediente_anio').val(anio)
-      $('#modal-expediente #expediente_tema').val(tema)
+#       ## Preload inputs fields expediente
+#       $('#modal-expediente #expediente_nro_fojas').val(nro_fojas)
+#       $('#modal-expediente #expediente_anio').val(anio)
+#       $('#modal-expediente #expediente_tema').val(tema)
 
-      ## Preload select2 input tramites pendientes
-      tramites = []
-      tramites.push { id: id_tra, type: type_tra }
-      $('#modal-expediente #tramites').select2('data', tramites)
-      $('#modal-expediente #group-tramites').css('visibility', 'hidden')
-      return
+#       ## Preload select2 input tramites pendientes
+#       tramites = []
+#       tramites.push { id: id_tra, type: type_tra }
+#       $('#modal-expediente #tramites').select2('data', tramites)
+#       $('#modal-expediente #group-tramites').css('visibility', 'hidden')
+#       return
 
-  $.ctrl 'C', ->
-    $('table.datatable-keyevents tbody').find('.info').find('.linktocreate').click()
+#   $.ctrl 'C', ->
+#     $('table.datatable-keyevents tbody').find('.info').find('.linktocreate').click()
