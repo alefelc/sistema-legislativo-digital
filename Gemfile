@@ -29,8 +29,13 @@ gem 'react-rails', '1.7.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '4.0.4'
+
+# Parse, validate, manipulate, and display dates in JavaScript.
 gem 'momentjs-rails'
+
+# Datetime and Daterange pickers
 gem 'bootstrap-daterangepicker-rails'
+gem 'bootstrap3-datetimepicker-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

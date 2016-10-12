@@ -12,8 +12,8 @@
 //= require react_ujs
 //= require components
 //= require sweetalert
-//= require alertify
 //= require moment
 //= require daterangepicker
+//= require bootstrap-datetimepicker
 //= require people
 //= require_tree .

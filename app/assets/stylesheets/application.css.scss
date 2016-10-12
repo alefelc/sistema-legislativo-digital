@@ -1,19 +1,16 @@
 /* Libraries */
 @import 'bootstrap-sprockets';
-@import 'font-awesome-sprockets';
-@import 'layout';
-@import 'skin';
 @import 'bootstrap';
+@import 'font-awesome-sprockets';
 @import 'font-awesome';
-@import 'datatables';
 @import 'select2';
 @import 'select2-bootstrap';
 @import 'bootstrap-multiselect';
 @import 'sweetalert';
-@import 'alertify.core';
-@import 'alertify.default';
-@import 'bootstrap';
 @import 'daterangepicker-bs3';
+@import 'bootstrap-datetimepicker';
+@import 'layout';
+@import 'skin';
 
 /* Custom Stylesheets */
 @import 'common_stuff';
@@ -24,14 +21,9 @@
 @import 'resolucions';
 @import 'especials';
 @import 'otra_normas';
-@import 'despachos';
-@import 'condonacions';
-@import 'particulars';
-@import 'proyectos';
-@import 'comunicacion_oficials';
 @import 'expedientes';
 @import 'pendientes';
-@import 'reports';
 @import 'print';
 @import 'persons';
 @import 'government_offices';
+@import 'procedures';
