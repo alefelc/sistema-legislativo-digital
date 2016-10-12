@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
   resources :procedures
 
+  resources :initiators
+
   resources :persons, only: [:create, :update], as: :people
 
   resources :reparticion_oficials

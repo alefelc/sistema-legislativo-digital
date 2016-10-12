@@ -16,12 +16,13 @@ es:
 
       procedure:
         sheets: Fojas
-        observation: Observación
+        observations: Observación
         type: Tipo
-        types:
-          Proyecto: Proy.
-          ComunicacionOficial: C.O.
-          Despacho: Desp.
-          topic: Sumario
-          created_at: Creado el
-          update_at: Actualizado el
+        Proyecto: Proy.
+        ComunicacionOficial: C.O.
+        Despacho: Desp.
+        Condonacion: Cond.
+        Peticion: Pet. Part.
+        topic: Sumario
+        created_at: Creado el
+        update_at: Actualizado el

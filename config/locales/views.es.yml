@@ -1,4 +1,27 @@
 es:
+  layouts:
+    header:
+      sld: Sistema Legislativo
+    application:
+      normas: Normas
+      norma:
+        decreto: Decretos
+        resolucion: Resoluciones
+        declaracion: Declaraciones
+        ordenanza: Ordenanzas
+        especiales: Normas Especiales
+        otras: Otras Normas
+      expedientes: Expedientes
+      expediente:
+        legislativo: Expedientes Legislativos
+        pendientes: Trámites Pendientes
+    sidebar:
+      main_navigation: Navegación Principal
+      reception: Mesa de entradas
+      dispatch: Despachos de comisión
+      process: Trámites
+      reports: Reportes
+      statistics: Estadísticas
   councilors:
     index:
       fullname: Concejal
@@ -79,17 +102,9 @@ es:
       update_person: Actualizar persona
       update: Actualizar
 
-  layouts:
-    sidebar:
-      main_navigation: Navegación Principal
-      reception: Mesa de entradas
-      dispatch: Despachos de comisión
-      process: Trámites
-      reports: Reportes
-      statistics: Estadísticas
-
   procedures:
     index:
+      procedures: Nro.
       new: Trámite
       new_commission_dispatch: Despacho de comisión
       processes: Nro.
@@ -99,6 +114,7 @@ es:
       topic: Sumario
       created_at: Creado el
     new:
+      procedures: Trámites
       new_procedure: Nuevo Trámite
       information: Información
       derivations: Derivaciones
@@ -111,6 +127,7 @@ es:
       sheets_number: Nro. fojas
       sheets: Hojas
       topic: Asunto
+      persons: Iniciadores
       topic_placeholder: Sumario del trámite
       observations: Observaciones
       observations_placeholder: Detalles respecto al trámite
@@ -119,6 +136,7 @@ es:
       finished_placeholder: Indique la culminación del trámite
       blank_type: Seleccione tipo de trámite
       placeholder_initiators: Busque iniciadores...
+      submit: Guardar
     types:
       condonation: Condonación
       particular_request: Petición Particular

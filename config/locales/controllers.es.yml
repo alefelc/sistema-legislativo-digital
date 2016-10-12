@@ -1,0 +1,6 @@
+es:
+  procedures:
+    create:
+      success: Trámite creado correctamente
+    update:
+      success: Trámite actualizado correctamente
