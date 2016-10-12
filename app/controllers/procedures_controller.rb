@@ -1,4 +1,6 @@
 class ProceduresController < ApplicationController
+  before_action :authenticate_user!, only: [:new]
+
   def index
     respond_to do |format|
       format.html
@@ -7,10 +9,18 @@ class ProceduresController < ApplicationController
   end
 
   def new
-    @procedure = Tramite.new
+    @procedure = ProcedureForm.new
   end
 
   def create
+    @procedure = ProcedureForm.new procedure_params
+    if @procedure.save
+      flash[:success] = t '.success'
+      redirect_to procedure_path(@procedure.id)
+    else
+      flash.now[:error] = @procedure.errors.full_messages
+      render :new
+    end
   end
 
   def update
