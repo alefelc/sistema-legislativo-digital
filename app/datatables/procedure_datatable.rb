@@ -1,6 +1,6 @@
 class ProcedureDatatable
   delegate :index_procedure, :person_path, :link_to, :peticion_path,
-           :human_attribute_name, :params, to: :@view
+           :human_attribute_name, :params, :content_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -22,19 +22,17 @@ class ProcedureDatatable
         #index_procedure(proc),
         proc.id,
         Procedure.human_attribute_name(proc.type),
-        proc.asunto.to_s,
-        #get_iniciadores(proc),
         "iniciadores",
-        proc.observaciones.to_s,
-        #to_date_time(proc.updated_at),
-        "to date time",
-        proc.nro_fojas.to_s
+        proc.topic,
+        #get_iniciadores(proc),
+        to_date_time(proc.created_at),
+        proc.sheets
       ]
     end
   end
 
   def procedures
-    Tramite.order(id: :asc).where(filter)
+    Procedure.order(id: :asc).where(filter)
   end
 
   def columns
@@ -84,9 +82,13 @@ class ProcedureDatatable
   #   date.strftime("%d/%m/%Y") unless date.nil?
   # end
 
-  # def to_date_time(date)
-  #   date.strftime("%d/%m/%Y - %R") unless date.nil?
-  # end
+  def to_date_time(date)
+    date_only = date.strftime("%d/%m/%Y")
+    time_only = date.strftime("%R")
+    datetime = content_tag :div, date_only, class: 'text-center'
+    datetime += content_tag :div, time_only, class: 'text-center'
+    datetime
+  end
 
   # def tramites
   #   fetch_records
