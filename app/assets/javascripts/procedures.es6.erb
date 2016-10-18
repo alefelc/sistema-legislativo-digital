@@ -1,0 +1,74 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class Procedures {
+  static indexDataTable() {
+    $('#procedures-table').dataTable({
+      processing: true,
+      serverSide: true,
+      // columns: [
+      //   { name: 'attendance_type', orderable: true, searchable: false }
+      //   { name: 'title', orderable: true, searchable: false }
+      //   { name: 'abbreviation', orderable: true, searchable: false }
+      //   { name: 'status', orderable: true, searchable: false }
+      //   { name: 'default', orderable: true, searchable: false }
+      // ]
+      ajax: {
+        url: $('#procedures-table').data('url'),
+        method: 'GET',
+        dataType: 'json'
+        // Needed for the filters
+        // data: function(params) {
+        //   params.status_filter = $('select.status-filter').val()
+        //   return params
+      }
+    })
+  }
+  static initiatorModal() {
+    $('#procedure-new').on('ajax:success', '.initiator-btn', function(XHR, data, success) {
+      $('#initiators-modal').html(data);
+      $('#initiators-modal .modal').modal('show');
+    })
+  }
+  static initiatorsSelect2() {
+    $('#procedure_persons').select2({
+      multiple: true,
+      placeholder: 'Busque personas y/o instituciones',
+      theme: 'bootstrap',
+      language: 'es',
+      ajax: {
+        url: "<%= url_helpers.initiators_path(format: :json) %>",
+        dataType: 'json',
+        delay: 200,
+        cache: true,
+        data: (params) => {
+          return {
+            select_q: params.term
+          };
+        },
+        processResults: (data, params) => {
+          let processed;
+          processed = [];
+          $.each(data, (i, p) => {
+            return processed.push({
+              id: p.id,
+              text: p.name
+            });
+          });
+          return {
+            results: processed
+          };
+        }
+      }
+    })
+    $('.finished').on('click', () => {
+      if ($('.finished').attr('checked')) {
+        $('.finished').attr('checked', false);
+        $('.finished-field').css('display', 'none');
+      }
+      else {
+        $('.finished').attr('checked', true);
+        $('.finished-field').css('display', 'block');
+      }
+    })
+  };
+}

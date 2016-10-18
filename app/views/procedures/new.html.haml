@@ -23,7 +23,7 @@
 
           .col-xs-9
             .tab-content
-              #home.tab-pane.active
+              #home.tab-pane.fade.in.active
                 .lead.box-header.with-border
                   = t '.load_new_info'
                 .form-group
@@ -77,14 +77,14 @@
                         .input-group-addon
                           %i.fa.fa-clock-o
                         = text_field_tag :fecha_y_hora, '', class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia'
-              #profile.tab-pane
+              #profile.tab-pane.fade
                 %p.lead.box-header.with-border Puede adjuntar todo tipo de archivos
                 .form-group
                   %label{ for: 'exampleInputFile' } Busque y seleccione archivos
                   %input#exampleInputFile{ type: :file }
-              #messages.tab-pane
+              #messages.tab-pane.fade
                 %p.lead.box-header.with-border Cargue expedientes adminitrativos
-              #settings.tab-pane
+              #settings.tab-pane.fade
                 %p.lead.box-header.with-border Área a la que se deriva actualmente el trámite
                 .class
           .clearfix
@@ -99,25 +99,9 @@
 
 :javascript
 $(document).on('ready', function() {
-  $('#procedure-new').on('ajax:success', '.initiator-btn', function(XHR, data, success) {
-    $('#initiators-modal').html(data);
-    $('#initiators-modal .modal').modal('show');
-  })
-  $('#procedure_persons').select2({
-    multiple: true,
-    placeholder: 'Busque personas y/o instituciones',
-    theme: 'bootstrap',
-    language: 'es'
-  })
-  $('.finished').on('click', function() {
-    if ($('.finished').attr('checked')) {
-      $('.finished').attr('checked', false);
-      $('.finished-field').css('display', 'none');
-    }
-    else {
-      $('.finished').attr('checked', true);
-      $('.finished-field').css('display', 'block');
-    }
-  })
-  $('#fecha_y_hora').datetimepicker()
-});
+  if ($('#procedure-new').length) {
+    Procedures.initiatorModal();
+    $('#fecha_y_hora').datetimepicker();
+    Procedures.initiatorsSelect2();
+  }
+})

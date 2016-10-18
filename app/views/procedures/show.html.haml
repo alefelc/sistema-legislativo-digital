@@ -1,1 +1,19 @@
-test
+#procedure-show
+  %h2
+    = "Trámite nro: "
+    %b= "#{@procedure.id}"
+
+  .box.box-primary
+    .lead.box-header.with-border
+      Tipo de trámite:
+      %b= I18n.t("procedures.types.#{@procedure.type}")
+    .box-body
+      .col-md-6.form-group
+        %label Asunto
+        %span.form-control= @procedure.topic
+      .col-md-6.form-group
+        %label Hojas
+        %span.form-control= @procedure.sheets
+      .col-md-6.form-group
+        %label Observaciones
+        %span.form-control= @procedure.observations

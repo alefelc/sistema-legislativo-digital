@@ -138,8 +138,13 @@ es:
       placeholder_initiators: Busque iniciadores...
       submit: Guardar
     types:
-      condonation: Condonación
-      particular_request: Petición Particular
-      project: Proyecto
-      official_communication: Comunicación Oficial
-      commission_dispatch: Despacho de Comisión
+      # condonation: Condonación
+      # particular_request: Petición Particular
+      # project: Proyecto
+      # official_communication: Comunicación Oficial
+      # commission_dispatch: Despacho de Comisión
+      Condonacion: Condonación
+      Peticion: Petición Particular
+      Despacho: Despacho de Comisión
+      ComunicacionOficial: Comunicación Oficial
+      Proyecto: Proyecto

@@ -27,10 +27,11 @@ class ProceduresController < ApplicationController
   end
 
   def show
+    @procedure = Procedure.find(params[:id])
   end
 
   private
   def procedure_params
-    params.require(:procedure).permit()
+    params.require(:procedure).permit(:type, :sheets, :topic, :observations)
   end
 end
