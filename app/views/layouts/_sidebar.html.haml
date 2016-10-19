@@ -126,17 +126,17 @@
       -#       %a{ href: '#bloque' }
       -#         %i.fa.fa-circle-o
       -#         Bloques
-      -# %li.header.center Configuración de sistema
-      -# %li.treeview
-      -#   %a{:href => "#"}
-      -#     %i.fa.fa-users
-      -#     %span Usuarios
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: '#users' }
-      -#         %i.fa.fa-circle-o
-      -#         Ver Usuarios
+      %li.header.text-center Configuración de sistema
+      %li.treeview
+        %a{:href => "#"}
+          %i.fa.fa-users
+          %span Usuarios
+          %i.fa.fa-angle-left.pull-right
+        %ul.treeview-menu
+          %li
+            %a{ href: users_path }
+              %i.fa.fa-circle-o
+              Ver Usuarios
       -# %li.treeview
       -#   %a{:href => "#"}
       -#     %i.fa.fa-calendar
@@ -148,13 +148,13 @@
       -#         %i.fa.fa-circle-o
       -#         Ver Periodos
 
-      -# %li.treeview
-      -#   %a{ href: "#"}
-      -#     %i.fa.fa-user
-      -#     %span Roles
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: '#' }
-      -#         %i.fa.fa-circle-o
-      -#         Ver Roles
+      %li.treeview
+        %a{ href: "#"}
+          %i.fa.fa-user
+          %span Roles
+          %i.fa.fa-angle-left.pull-right
+        %ul.treeview-menu
+          %li
+            %a{ href: roles_path }
+              %i.fa.fa-circle-o
+              Ver Roles
