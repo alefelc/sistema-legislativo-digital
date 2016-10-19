@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019043602) do
+ActiveRecord::Schema.define(version: 20161019114121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -612,9 +612,10 @@ ActiveRecord::Schema.define(version: 20161019043602) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "rol_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "activities", default: [],              array: true
   end
 
   create_table "roles_users", id: false, force: :cascade do |t|
@@ -624,20 +625,6 @@ ActiveRecord::Schema.define(version: 20161019043602) do
 
   add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
-
-  create_table "rols", force: :cascade do |t|
-    t.string   "tipo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rols_usuarios", id: false, force: :cascade do |t|
-    t.integer "usuario_id"
-    t.integer "rol_id"
-  end
-
-  add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
-  add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
 
   create_table "seccions", force: :cascade do |t|
     t.string   "nombre"
