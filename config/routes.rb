@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :users
 
+  resources :roles
+
   resources :declaracions do
     get 'search_exp', on: :collection
     get 'search_norma', on: :collection
