@@ -1,3 +1,11 @@
+source 'https://rails-assets.org' do
+  # A beautiful replacement for Javascript's "Alert".
+  gem 'rails-assets-sweetalert'
+
+  # Ajax synchronizate datatables
+  gem 'rails-assets-datatables'
+end
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -6,10 +14,10 @@ gem 'rails', '4.2.1'
 # A very fast & simple Ruby web server.
 gem 'thin', '1.6.4'
 
-# Use postgresql as the database for Active Record
+# Is the Ruby interface to the PostgreSQL RDBMS.
 gem 'pg', '0.18.2'
 
-# Use SCSS for stylesheets
+# Ruby on Rails stylesheet engine for Sass
 gem 'sass-rails', '~> 5.0'
 
 # Use Uglifier as compressor for JavaScript assets
@@ -27,7 +35,7 @@ gem 'therubyracer', '0.12.2'
 # React gem for interpreting jsx code.
 gem 'react-rails', '1.7.0'
 
-# Use jquery as the JavaScript library
+# A gem to automate using jQuery with Rails
 gem 'jquery-rails', '4.0.4'
 
 # Parse, validate, manipulate, and display dates in JavaScript.
@@ -70,13 +78,14 @@ gem 'bootstrap-sass'
 
 # Sprockets Rails integration
 gem 'sprockets-rails', '2.3.2', require: 'sprockets/railtie'
+
+# Rack-based asset packaging system
 gem 'sprockets', '3.3.0'
 
 # Icons
 gem 'font-awesome-sass'
 
-# Ajax synchronizate datatables
-gem 'rails-assets-datatables', source: 'https://rails-assets.org'
+# A sophisticated paginator for Ruby webapps
 gem 'kaminari'
 
 # Bootstrap Multiselect v0.9.13
@@ -85,9 +94,6 @@ gem 'bootstrap-multiselect-rails'
 # Select2 for rails asset pipeline
 gem 'select2-rails'
 
-# A beautiful replacement for Javascript's "Alert".
-gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
-
 # Easy file attachment management for ActiveRecord.
 gem 'paperclip'
 
@@ -95,7 +101,10 @@ gem 'paperclip'
 gem 'cocoon'
 
 # jQuery File Upload integrated for Rails.
-gem "jquery-fileupload-rails"
+#gem "jquery-fileupload-rails"
+
+# Track changes to your models' data. Good for auditing or versioning.
+gem 'paper_trail'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
