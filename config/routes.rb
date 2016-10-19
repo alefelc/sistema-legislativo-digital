@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
 
+  resources :users
+
   resources :declaracions do
     get 'search_exp', on: :collection
     get 'search_norma', on: :collection
