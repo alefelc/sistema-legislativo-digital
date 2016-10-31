@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019114121) do
+ActiveRecord::Schema.define(version: 20161024132227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,23 @@ ActiveRecord::Schema.define(version: 20161019114121) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "administrative_files", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "sheets"
+    t.integer  "bis"
+    t.text     "topic"
+    t.integer  "file_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "sub_indice"
+    t.string   "letter"
+    t.integer  "procedure_id"
+    t.integer  "year"
+  end
+
+  add_index "administrative_files", ["file_id"], name: "index_administrative_files_on_file_id", using: :btree
+  add_index "administrative_files", ["procedure_id"], name: "index_administrative_files_on_procedure_id", using: :btree
 
   create_table "areas", force: :cascade do |t|
     t.string   "denominacion"
@@ -311,24 +328,6 @@ ActiveRecord::Schema.define(version: 20161019114121) do
 
   add_index "estado_procedures", ["procedure_id"], name: "index_estado_procedures_on_procedure_id", using: :btree
   add_index "estado_procedures", ["ref_id"], name: "index_estado_procedures_on_ref_id", using: :btree
-
-  create_table "expediente_administrativos", force: :cascade do |t|
-    t.string   "nro_exp"
-    t.integer  "nro_fojas"
-    t.integer  "bis"
-    t.text     "tema"
-    t.text     "observacion"
-    t.integer  "expediente_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "sub_indice"
-    t.string   "letra"
-    t.integer  "procedure_id"
-    t.integer  "year"
-  end
-
-  add_index "expediente_administrativos", ["expediente_id"], name: "index_expediente_administrativos_on_expediente_id", using: :btree
-  add_index "expediente_administrativos", ["procedure_id"], name: "index_expediente_administrativos_on_procedure_id", using: :btree
 
   create_table "expedientes", force: :cascade do |t|
     t.string   "nro_exp"
