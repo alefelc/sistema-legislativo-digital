@@ -1,0 +1,25 @@
+.nested-fields.row
+  .col-md-10
+    .field
+      = f.label :number
+      %br
+      = f.text_field :number
+    .field
+      = f.label :letter
+      %br
+      = f.text_field :letter
+    .field
+      = f.label :year
+      %br
+      = f.text_field :year
+    .field
+      = f.label :sheets
+      %br
+      = f.text_field :sheets
+    .field
+      = f.label :topic
+      %br
+      = f.text_field :topic
+  .col-md-2
+    = link_to_remove_association '', f, class: 'btn btn-danger btn-lg fa fa-times'
+

@@ -1,6 +1,7 @@
 class ProcedureDatatable
   delegate :index_procedure, :person_path, :link_to, :peticion_path,
-           :human_attribute_name, :params, :content_tag, to: :@view
+           :human_attribute_name, :params, :content_tag, :procedure_path,
+           to: :@view
 
   def initialize(view)
     @view = view
@@ -20,7 +21,7 @@ class ProcedureDatatable
     paginated_procedures.map do |proc|
       [
         #index_procedure(proc),
-        proc.id,
+        link_to(proc.id, procedure_path(proc), class: 'btn'),
         Procedure.human_attribute_name(proc.type),
         "iniciadores",
         proc.topic,

@@ -1,16 +1,46 @@
-.modal.fade{ 'data-backdrop': :static, role: :dialog, tabindex: '-1' }
+#initiator-new.modal.fade{ 'data-backdrop': :static, role: :dialog, tabindex: '-1' }
   .modal-dialog{ role: :document }
     .modal-content
-      .modal-header.bg-primary
-        %button.close{ 'aria-label': 'Close', 'data-dismiss': :modal, type: :button }
-          %span{ 'aria-hidden': :true } ×
-        %h4#myModalLabel.modal-title Crear nuevo iniciador
-      .modal-body
-        \...
-      .modal-footer
-        %button.btn.btn-default{ 'data-dismiss': :modal, type: :button }
-          .fa.fa-times-circle
-          Cancelar
-        %button.btn.btn-primary.btn-lg{ type: :button }
-          .fa.fa-save.fa-lg
-          Guardar
+      = form_for @initiator do |f|
+        .modal-header.bg-primary
+          %button.close{ 'aria-label': 'Close', 'data-dismiss': :modal, type: :button }
+            %span{ 'aria-hidden': :true } ×
+          %h4#myModalLabel.modal-title Crear nuevo iniciador
+        .modal-body.row
+          .col-md-12.form-group
+            = f.label :type
+            = f.select :type, initiator_options, {}, class: 'input-lg form-control'
+          .col-md-6.form-group
+            .person= f.label :name
+            %label.legal-person{for: :person_name }= t('.denomination')
+            = f.text_field :name, class: 'input-lg form-control'
+          .col-md-6.form-group.person
+            = f.label :surname
+            = f.text_field :surname, class: 'input-lg form-control'
+          .col-md-6.form-group
+            = f.label :cuit_or_dni
+            = f.text_field :cuit_or_dni, class: 'input-lg form-control'
+          .col-md-6.form-group
+            = f.label :phone
+            = f.text_field :phone, class: 'input-lg form-control'
+          .col-md-6.form-group
+            = f.label :address
+            = f.text_field :address, class: 'input-lg form-control'
+          .col-md-6.form-group
+            = f.label :email
+            = f.text_field :email, class: 'input-lg form-control'
+          .col-md-6.form-group.person
+            = f.label :position
+            = f.text_field :position, class: 'input-lg form-control'
+        .modal-footer
+          %button.btn.btn-default{ 'data-dismiss': :modal, type: :button }
+            .fa.fa-times-circle
+            Cancelar
+          %button.btn.btn-primary.btn-lg{ type: :submit }
+            .fa.fa-save.fa-lg
+            Guardar
+
+:javascript
+$(document).on('ready', function() {
+  Initiator.updateType()
+})

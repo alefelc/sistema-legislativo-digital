@@ -10,6 +10,9 @@ class ProceduresController < ApplicationController
 
   def new
     @procedure = ProcedureForm.new
+    #@procedure = Procedure.new
+    #@procedure.estado_procedures.build
+    #2.times {@procedure.administrative_files.build}
   end
 
   def create
@@ -23,15 +26,19 @@ class ProceduresController < ApplicationController
     end
   end
 
+  def edit
+    @procedure = ProcedureForm.new procedure_params
+  end
+
   def update
   end
 
   def show
-    @procedure = Procedure.find(params[:id])
+    @procedure = Procedure.find params[:id]
   end
 
   private
   def procedure_params
-    params.require(:procedure).permit(:type, :sheets, :topic, :observations)
+    params.require(:procedure).permit :type, :sheets, :topic, :observations
   end
 end

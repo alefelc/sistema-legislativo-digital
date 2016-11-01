@@ -1,0 +1,18 @@
+.box.box-danger.collapsed-box
+  .box-header.with-border
+    %h3.box-title
+      Plan de contingencia
+    .box-tools.pull-right
+      %button.btn.btn-box-tool{ type: :button, 'data-widget': :collapse }
+        .fa.fa-plus
+  .row.box-body{ style: 'display: none' }
+    .form-group.col-md-6
+      = label_tag :fecha_y_hora
+      .input-group
+        .input-group-addon
+          %i.fa.fa-clock-o
+        = text_field_tag :fecha_y_hora, '', class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia'
+    .form-group.col-md-12
+      = label_tag :causa
+      = text_area_tag :causa, '', class: 'form-control', placeholder: 'Indique el motivo de la contingencia'
+

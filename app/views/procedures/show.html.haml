@@ -6,13 +6,16 @@
   .box.box-primary
     .lead.box-header.with-border
       Tipo de trámite:
-      %b= I18n.t("procedures.types.#{@procedure.type}")
+      - if @procedure.type.present?
+        %b= I18n.t("procedures.types.#{@procedure.type}")
+      - else
+        %i.small= t('.not_specified')
     .box-body
       .col-md-6.form-group
         %label Asunto
         %span.form-control= @procedure.topic
       .col-md-6.form-group
-        %label Hojas
+        %label Fojas
         %span.form-control= @procedure.sheets
       .col-md-6.form-group
         %label Observaciones

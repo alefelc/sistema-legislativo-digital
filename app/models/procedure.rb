@@ -9,7 +9,7 @@ class Procedure < ActiveRecord::Base
   has_many :procedures_municipal_offices
   has_many :municipal_offices, through: :municipal_offices_procedures
   has_many :estado_procedures
-  has_many :expediente_administrativos
+  has_many :administrative_files
   belongs_to :circuito # I think this is deprecated!!!
   has_many :uploads
   has_many :processes_signatories,
@@ -22,6 +22,8 @@ class Procedure < ActiveRecord::Base
 
   #== Nested attributes
   accepts_nested_attributes_for :uploads
+  accepts_nested_attributes_for :estado_procedures, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :administrative_files, reject_if: :all_blank, allow_destroy: true
 
   # == Callbacks
   after_create :initial_state

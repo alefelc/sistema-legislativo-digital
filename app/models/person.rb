@@ -13,12 +13,12 @@ class Person < ActiveRecord::Base
            source: :process
 
   def full_name
-    if apellido.present? && nombre.present?
-      "#{apellido}, #{nombre}"
-    elsif apellido.present?
-      apellido
-    elsif nombre.present?
-      nombre
+    if surname.present? && name.present?
+      "#{surname}, #{name}"
+    elsif surname.present?
+      surname
+    elsif name.present?
+      name
     else
       ''
     end

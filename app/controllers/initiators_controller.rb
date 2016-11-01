@@ -1,5 +1,6 @@
 class InitiatorsController < ApplicationController
   def new
+    @initiator = Person.new
     render layout: false
   end
 
@@ -21,7 +22,7 @@ class InitiatorsController < ApplicationController
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "name ilike ?"
-      Person.where(w, q)
+      Person.where(w, q).limit(20).as_json
     else
       #InitiatorsDatatable.new(view_context)
     end

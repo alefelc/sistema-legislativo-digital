@@ -30,15 +30,16 @@ class Procedures {
     })
   }
   static initiatorsSelect2() {
-    $('#procedure_persons').select2({
+    let options = {
       multiple: true,
       placeholder: 'Busque personas y/o instituciones',
       theme: 'bootstrap',
       language: 'es',
+      minimumInputLength: 2,
       ajax: {
         url: "<%= url_helpers.initiators_path(format: :json) %>",
         dataType: 'json',
-        delay: 200,
+        delay: 250,
         cache: true,
         data: (params) => {
           return {
@@ -59,7 +60,14 @@ class Procedures {
           };
         }
       }
-    })
+    }
+    $('#procedure_persons').select2(options)
+    options.placeholder = 'Busque expedientes ...'
+    $('#procedure_legislative_files').select2(options)
+    options.placeholder = 'Busque concejales por nombre y/o apellido ...'
+    $('#procedure_councilors').select2(options)
+    options.placeholder = 'Busque por nombre de comisión ...'
+    $('#procedure_commissions').select2(options)
     $('.finished').on('click', () => {
       if ($('.finished').attr('checked')) {
         $('.finished').attr('checked', false);
@@ -70,5 +78,19 @@ class Procedures {
         $('.finished-field').css('display', 'block');
       }
     })
-  };
+    $('#procedure-new .initiator-btn').css('margin-left', '-28px');
+  }
+  static updateProcedureType() {
+    $('.dispatch-procedure').hide()
+    $(document).on('change', '#procedure_type', () => {
+      if ($('#procedure_type').val() == 'Despacho') {
+        $('.dispatch-procedure').show(1000)
+        $('.common-procedure').hide(1000)
+      }
+      else {
+        $('.dispatch-procedure').hide(1000)
+        $('.common-procedure').show(1000)
+      }
+    })
+  }
 }

@@ -4,14 +4,18 @@
       %li.header.text-center= t '.main_navigation'
       %li.treeview
         %a{:href => "#"}
-          %i.fa.fa-tags
+          %i.fa.fa-tags.fa-lg
           %span= t '.reception'
           %i.fa.fa-angle-left.pull-right
         %ul.treeview-menu
           %li
             %a{ href: procedures_path }
               %i.fa.fa-circle-o
-              = t '.process'
+              = t '.all_processes'
+          %li
+            %a{ href: new_procedure_path }
+              %i.fa.fa-circle-o
+              = t '.new_process'
       -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
       -#     %li
       -#       %a{ href: statitics_mesa_de_entradas_path }
@@ -129,7 +133,7 @@
       %li.header.text-center Configuración de sistema
       %li.treeview
         %a{:href => "#"}
-          %i.fa.fa-users
+          %i.fa.fa-users.fa-lg
           %span Usuarios
           %i.fa.fa-angle-left.pull-right
         %ul.treeview-menu
@@ -137,6 +141,10 @@
             %a{ href: users_path }
               %i.fa.fa-circle-o
               Ver Usuarios
+          %li
+            %a{ href: new_user_path }
+              %i.fa.fa-circle-o
+              Nuevo usuario
       -# %li.treeview
       -#   %a{:href => "#"}
       -#     %i.fa.fa-calendar
@@ -150,11 +158,15 @@
 
       %li.treeview
         %a{ href: "#"}
-          %i.fa.fa-user
+          %i.fa.fa-gear.fa-lg
           %span Roles
           %i.fa.fa-angle-left.pull-right
         %ul.treeview-menu
           %li
             %a{ href: roles_path }
               %i.fa.fa-circle-o
-              Ver Roles
+              Ver roles
+          %li
+            %a{ href: new_role_path }
+              %i.fa.fa-circle-o
+              Nuevo rol

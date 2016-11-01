@@ -5,7 +5,7 @@
     .row
       .col-md-5.col-xs-12
         - if current_user.present?
-          = link_to new_procedure_path, 'data-target': '#myModal', class: 'btn btn-primary btn-lg' do
+          = link_to new_procedure_path, class: 'btn btn-primary btn-lg' do
             %i.fa.fa-plus-circle.fa-lg
             Nuevo trámite
       .col-md-2.col-xs-12

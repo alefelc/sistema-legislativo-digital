@@ -1,4 +1,4 @@
-class ExpedienteAdministrativo < ActiveRecord::Base
+class AdministrativeFile < ActiveRecord::Base
   #== Associations
 	belongs_to :expediente
   belongs_to :procedure

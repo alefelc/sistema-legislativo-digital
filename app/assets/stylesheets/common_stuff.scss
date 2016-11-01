@@ -77,3 +77,11 @@ $shadow_color: #000000;
 .box-header.with-border {
     border-bottom: 2px solid #f4f4f4;
 }
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+textarea {
+  max-width: 100%;
+}
