@@ -14,8 +14,10 @@
             = message
 
 :javascript
-$(document).ready () ->
-  if $('.alert.alert-dismissable').length
-    hideFlash = ->
+$(document).ready(function() {
+  if ($('.alert.alert-dismissable').length) {
+    setTimeout(function() {
       $('.alert.alert-dismissable').hide(3000)
-    setTimeout hideFlash, 10000
+    }, 10000);
+  };
+};

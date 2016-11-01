@@ -81,7 +81,7 @@ $(document).on 'click', '.remove-table-row', ->
   $(this).parents('tr').remove()
   return
 
-icheck = ->
+$ ->
   if $('.icheck-me').length > 0
     $('.icheck-me').each ->
       $el = $(this)
@@ -94,6 +94,6 @@ icheck = ->
       return
   return
 
-$ ->
-  icheck()
-  return
+# $ ->
+#   icheck()
+#   return
