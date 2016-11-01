@@ -106,6 +106,9 @@ gem 'cocoon'
 # Track changes to your models' data. Good for auditing or versioning.
 gem 'paper_trail'
 
+# icheck packaged for Rails asset pipeline.
+gem 'icheck-rails'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -127,6 +130,9 @@ group :development do
 
   # Haml generators for Rails 4
   gem 'haml-rails', '~> 0.9'
+
+  # Minimal authorization through OO design and pure Ruby classes
+  gem "pundit"
 
   # Profiler for your development and production Ruby rack apps.
   # gem 'rack-mini-profiler', '0.9.7'

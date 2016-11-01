@@ -15,5 +15,6 @@
 //= require moment
 //= require daterangepicker
 //= require bootstrap-datetimepicker
-//= require people
+//= require icheck
+//= require cocoon
 //= require_tree .
