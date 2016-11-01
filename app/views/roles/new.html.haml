@@ -1,0 +1,14 @@
+%h2.text-center
+  = t '.new'
+= form_for @role, html: { class: 'form-horizontal form-label-left input_mask' } do |f|
+  .box.box-primary
+    .box-header.with-border
+      %h3.box-title
+        = t '.title'
+    .box-body
+      .form-group
+        = f.label :name, class: 'control-label col-md-1 col-sm-1 col-xs-12'
+        .col-md-11.col-sm-11.col-xs-12
+          = f.text_field :name, class: 'form-control input-lg', placeholder: t('.name_placeholder')
+
+  = render 'activities', f: f
