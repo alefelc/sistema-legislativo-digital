@@ -175,3 +175,27 @@ $(document).on 'ready', ->
       when 'government_organs'
         $('a[href="/government_organs"]').css('color', 'white')
   return
+
+icheck = ->
+  if $('.icheck-me').length > 0
+    $('.icheck-me').each ->
+      $el = $(this)
+      skin = if $el.attr('data-skin') != undefined then '_' + $el.attr('data-skin') else ''
+      color = if $el.attr('data-color') != undefined then '-' + $el.attr('data-color') else ''
+      opt =
+        checkboxClass: 'icheckbox' + skin + color
+        radioClass: 'iradio' + skin + color
+      $el.iCheck opt
+      return
+  return
+
+$ ->
+  icheck()
+  return
+
+$(document).ready () ->
+  if $('.alert.alert-dismissable').length
+    hideFlash = ->
+      $('.alert.alert-dismissable').hide(3000)
+    setTimeout hideFlash, 10000
+

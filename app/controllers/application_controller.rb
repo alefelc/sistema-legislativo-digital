@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
+  # Track who is responsible for changes
+  before_action :set_paper_trail_whodunnit
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception,
@@ -21,6 +26,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user!
-    user_signed_in? ? super : redirect_to(root_path)
+    if user_signed_in?
+      super
+    else
+      if params[:format] == 'json'
+        render json: { error: 'Usted no ha ingresado al sistema' }, status: 403
+      else
+        flash[:error] = 'Usted no ha ingresado al sistema'
+        redirect_to(root_path)
+      end
+    end
   end
 end
