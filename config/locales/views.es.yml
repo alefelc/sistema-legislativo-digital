@@ -19,9 +19,12 @@ es:
       main_navigation: Navegación Principal
       reception: Mesa de entradas
       dispatch: Despachos de comisión
-      process: Trámites
+      all_processes: Ver trámites
+      new_process: Nuevo trámite
       reports: Reportes
       statistics: Estadísticas
+    flash_messages:
+      success: Generado correctamente
   councilors:
     index:
       fullname: Concejal
@@ -103,6 +106,8 @@ es:
       update: Actualizar
 
   procedures:
+    show:
+      not_specified: no especificado
     index:
       procedures: Nro.
       new: Trámite
@@ -125,9 +130,13 @@ es:
       initiators: Iniciadores
       add: Agregar
       sheets_number: Nro. fojas
-      sheets: Hojas
+      sheets: Fojas
       topic: Asunto
       persons: Iniciadores
+      councilors: Concejales
+      commissions: Comisiones
+      dispatch_date: Fecha del despacho
+      legislative_files: Expedientes legislativos
       topic_placeholder: Sumario del trámite
       observations: Observaciones
       observations_placeholder: Detalles respecto al trámite
@@ -148,3 +157,31 @@ es:
       Despacho: Despacho de Comisión
       ComunicacionOficial: Comunicación Oficial
       Proyecto: Proyecto
+
+  roles:
+    procedure: Trámites
+    admin: Administrador
+    activities:
+      cancel: Cancelar
+      submit: Guardar
+    new:
+      new: Creando nuevo rol
+      title: Información del rol
+      name_placeholder: Ingrese nombre del rol...
+    edit:
+      edit: Editando rol
+      title: Información del rol
+      name_placeholder: Ingrese nombre del rol...
+    index:
+      new: Nuevo rol
+      name: Nombre del rol
+      created_at: Creado el
+      activities: Permisos
+      roles_amount: Roles asignados
+
+  initiators:
+    types:
+      Fisica: Persona física
+      Juridica: Persona jurídica
+    new:
+      denomination: Denominación

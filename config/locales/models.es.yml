@@ -3,16 +3,18 @@ es:
     models:
       person: Persona
       procedure: Trámite
+      role: Rol
+      user: Usuario
 
     attributes:
       person:
-        nombre: Nombre
-        apellido: Apellido
         type: Tipo de persona
-        email: Email
-        telefono: Teléfono
-        nro_doc: 'DNI / CUIT'
-        domicilio: Domicilio
+        name: Nombre
+        surname: Apellido
+        cuit_or_dni: CUIT / DNI
+        phone: Teléfono
+        address: Dirección
+        position: Cargo
 
       procedure:
         sheets: Fojas
@@ -26,3 +28,7 @@ es:
         topic: Sumario
         created_at: Creado el
         update_at: Actualizado el
+
+      role:
+        name: Nombre
+        activities: Roles
