@@ -16,6 +16,11 @@
             %a{ href: new_procedure_path }
               %i.fa.fa-circle-o
               = t '.new_process'
+          %li
+            %a{ href: '#' }
+              %i.fa.fa-circle-o
+              = t '.edit_process'
+
       -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
       -#     %li
       -#       %a{ href: statitics_mesa_de_entradas_path }
@@ -134,17 +139,21 @@
       %li.treeview
         %a{:href => "#"}
           %i.fa.fa-users.fa-lg
-          %span Usuarios
+          %span= t '.users'
           %i.fa.fa-angle-left.pull-right
         %ul.treeview-menu
           %li
             %a{ href: users_path }
               %i.fa.fa-circle-o
-              Ver Usuarios
+              = t '.all_users'
           %li
             %a{ href: new_user_path }
               %i.fa.fa-circle-o
-              Nuevo usuario
+              = t '.new_user'
+          %li
+            %a{ href: '#' }
+              %i.fa.fa-circle-o
+              = t '.edit_user'
       -# %li.treeview
       -#   %a{:href => "#"}
       -#     %i.fa.fa-calendar
@@ -159,14 +168,18 @@
       %li.treeview
         %a{ href: "#"}
           %i.fa.fa-gear.fa-lg
-          %span Roles
+          %span= t '.roles'
           %i.fa.fa-angle-left.pull-right
         %ul.treeview-menu
           %li
             %a{ href: roles_path }
               %i.fa.fa-circle-o
-              Ver roles
+              = t '.all_roles'
           %li
             %a{ href: new_role_path }
               %i.fa.fa-circle-o
-              Nuevo rol
+              = t '.new_rol'
+          %li
+            %a{ href: '#' }
+              %i.fa.fa-circle-o
+              = t '.edit_rol'

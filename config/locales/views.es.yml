@@ -18,11 +18,20 @@ es:
     sidebar:
       main_navigation: Navegación Principal
       reception: Mesa de entradas
-      dispatch: Despachos de comisión
       all_processes: Ver trámites
       new_process: Nuevo trámite
+      edit_process: Editar trámite
       reports: Reportes
       statistics: Estadísticas
+      users: Usuarios
+      all_users: Ver usuarios
+      new_user: Nuevo usuario
+      edit_user: Editar usuario
+      roles: Roles
+      all_roles: Ver roles
+      new_rol: Nuevo rol
+      edit_rol: Editar rol
+
     flash_messages:
       success: Generado correctamente
   councilors:
@@ -173,6 +182,7 @@ es:
       title: Información del rol
       name_placeholder: Ingrese nombre del rol...
     index:
+      rols: Roles del sistema
       new: Nuevo rol
       name: Nombre del rol
       created_at: Creado el
@@ -185,3 +195,9 @@ es:
       Juridica: Persona jurídica
     new:
       denomination: Denominación
+
+  users:
+    new:
+      new_user: Creando usuario
+      submit: Guardar
+      add: Crear persona
