@@ -132,7 +132,10 @@ group :development do
   gem 'haml-rails', '~> 0.9'
 
   # Minimal authorization through OO design and pure Ruby classes
-  gem "pundit"
+  gem 'pundit'
+
+  # A plugin to enable automatic height for textarea elements.
+  gem 'autosize-rails'
 
   # Profiler for your development and production Ruby rack apps.
   # gem 'rack-mini-profiler', '0.9.7'

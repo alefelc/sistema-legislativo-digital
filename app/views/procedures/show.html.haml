@@ -11,12 +11,18 @@
       - else
         %i.small= t('.not_specified')
     .box-body
-      .col-md-6.form-group
+      .col-md-12.form-group
         %label Asunto
-        %span.form-control= @procedure.topic
+        %textarea.input-lg.form-control.topic-area{ readonly: :true }
+          = @procedure.topic
       .col-md-6.form-group
         %label Fojas
-        %span.form-control= @procedure.sheets
+        %span.form-control.input-lg{ readonly: :true }= @procedure.sheets
       .col-md-6.form-group
         %label Observaciones
-        %span.form-control= @procedure.observations
+        %span.form-control.input-lg{ readonly: :true }= @procedure.observations
+
+:javascript
+$(document).ready(function() {
+  $('textarea').autosize();
+})

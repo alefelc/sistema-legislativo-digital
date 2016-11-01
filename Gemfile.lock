@@ -61,6 +61,8 @@ GEM
     autoprefixer-rails (5.2.1.1)
       execjs
       json
+    autosize-rails (1.18.17)
+      rails (>= 3.1)
     awesome_print (1.6.1)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
@@ -339,6 +341,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  autosize-rails
   awesome_print (= 1.6.1)
   bcrypt (~> 3.1.7)
   better_errors (= 2.1.1)

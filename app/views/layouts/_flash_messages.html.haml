@@ -12,3 +12,10 @@
           %li
             %i{ class: "fa-li #{flash_icon(message_type)}" }
             = message
+
+:javascript
+$(document).ready () ->
+  if $('.alert.alert-dismissable').length
+    hideFlash = ->
+      $('.alert.alert-dismissable').hide(3000)
+    setTimeout hideFlash, 10000

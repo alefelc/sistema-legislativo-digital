@@ -17,4 +17,5 @@
 //= require bootstrap-datetimepicker
 //= require icheck
 //= require cocoon
+//= require jquery.autosize
 //= require_tree .
