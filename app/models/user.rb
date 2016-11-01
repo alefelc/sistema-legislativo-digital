@@ -10,5 +10,8 @@ class User < ActiveRecord::Base
 
   #== Validations
   # validates :roles, presence: true
-  # validates :person, presence: true
+   validates :person, presence: true
+
+  #== PaperTrail changes tracker
+  has_paper_trail
 end
