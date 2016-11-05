@@ -109,6 +109,12 @@ gem 'paper_trail'
 # icheck packaged for Rails asset pipeline.
 gem 'icheck-rails'
 
+# Minimal authorization through OO design and pure Ruby classes
+gem 'pundit'
+
+# A plugin to enable automatic height for textarea elements.
+gem 'autosize-rails'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -131,21 +137,13 @@ group :development do
   # Haml generators for Rails 4
   gem 'haml-rails', '~> 0.9'
 
-  # Minimal authorization through OO design and pure Ruby classes
-  gem 'pundit'
-
-  # A plugin to enable automatic height for textarea elements.
-  gem 'autosize-rails'
+  gem 'rails-erd'
 
   # Profiler for your development and production Ruby rack apps.
   # gem 'rack-mini-profiler', '0.9.7'
 
   # Use MySql legacy database
   #gem 'mysql2', '0.4.1'
-end
-
-group :development, :test do
-  gem 'rails-erd'
 end
 
 group :production do
