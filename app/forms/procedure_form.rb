@@ -2,7 +2,7 @@ class ProcedureForm
   include ActiveModel::Model
 
   attr_accessor :id
-  attr_accessor :sheets, :type, :topic, :observations, :persons,
+  attr_accessor :sheets, :type, :topic, :observations, :person_ids,
                 :estado_procedures, :councilors, :legislative_files,
                 :commissions, :day, :month, :year
 
@@ -11,7 +11,7 @@ class ProcedureForm
   end
 
   def initialize(params={})
-    @procedure = Procedure.new params.slice(:type, :sheets, :topic, :observations)
+    @procedure = Procedure.new params.dup.slice(:type, :sheets, :topic, :observations, :person_ids)
     @procedure.estado_procedures.build
   end
 

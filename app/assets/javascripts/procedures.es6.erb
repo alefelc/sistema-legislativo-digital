@@ -47,27 +47,24 @@ class Procedures {
           };
         },
         processResults: (data, params) => {
-          let processed;
-          processed = [];
-          $.each(data, (i, p) => {
-            return processed.push({
-              id: p.id,
-              text: p.name
-            });
-          });
-          return {
-            results: processed
-          };
+          return { results: data }
         }
       }
     }
-    $('#procedure_persons').select2(options)
+    $('#procedure_person_ids').select2(options)
+
+    options.ajax.url = "<%= url_helpers.expedientes_path format: :json %>"
     options.placeholder = 'Busque expedientes ...'
     $('#procedure_legislative_files').select2(options)
+
+    options.ajax.url = "<%= url_helpers.initiators_path(only: :councilors, format: :json) %>"
     options.placeholder = 'Busque concejales por nombre y/o apellido ...'
     $('#procedure_councilors').select2(options)
+
+    options.ajax.url = "<%= url_helpers.initiators_path(only: :commissions, format: :json) %>"
     options.placeholder = 'Busque por nombre de comisión ...'
     $('#procedure_commissions').select2(options)
+
     $('.finished').on('click', () => {
       if ($('.finished').attr('checked')) {
         $('.finished').attr('checked', false);

@@ -38,7 +38,9 @@ class ProceduresController < ApplicationController
   end
 
   private
+
   def procedure_params
-    params.require(:procedure).permit :type, :sheets, :topic, :observations
+    params.require(:procedure).permit :type, :sheets, :topic, :observations,
+                                      :day, :month, :year, person_ids: [] #legislative_files: [], councilors: [], commissions: [],
   end
 end

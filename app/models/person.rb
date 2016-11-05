@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   # belongs_to :bloque
 
   #== Associations
-  has_and_belongs_to_many :procedure
+  has_and_belongs_to_many :procedures
   has_many :estado_procedure, as: :ref
   has_many :processes_signatories
   has_many :signed_paperwork,
@@ -22,5 +22,9 @@ class Person < ActiveRecord::Base
     else
       ''
     end
+  end
+
+  def text
+    full_name
   end
 end

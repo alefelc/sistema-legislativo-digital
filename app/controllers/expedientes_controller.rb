@@ -6,7 +6,7 @@ class ExpedientesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: ExpedienteDatatable.new(view_context) }
+      format.json { render json: build_json_response }
     end
   end
 
@@ -229,6 +229,16 @@ class ExpedientesController < ApplicationController
 
   def expediente_params
     params.require(:expediente).permit("nro_fojas", "tema", "anio", "observacion", "circuitos_attributes": [ :id, :fojas, :anio, :tema, :tramites, :estados_circuito, :nro ])
+  end
+
+  def build_json_response
+    if params[:select_q].present?
+      q = "%#{params[:select_q]}%"
+      w = "nro_exp ilike ?"
+      Expediente.where(w, q).as_json only: :id, methods: :text
+    else
+      ExpedienteDatatable.new(view_context)
+    end
   end
 
   def any_value?(hash)

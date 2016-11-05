@@ -21,16 +21,19 @@ es:
       all_processes: Ver trámites
       new_process: Nuevo trámite
       edit_process: Editar trámite
+      show_process: Mostrando trámite
       reports: Reportes
       statistics: Estadísticas
       users: Usuarios
       all_users: Ver usuarios
       new_user: Nuevo usuario
       edit_user: Editar usuario
+      show_user: Mostrando usuario
       roles: Roles
       all_roles: Ver roles
       new_rol: Nuevo rol
       edit_rol: Editar rol
+      show_rol: Mostrando rol
 
     flash_messages:
       success: Generado correctamente

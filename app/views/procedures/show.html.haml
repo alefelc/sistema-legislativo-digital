@@ -21,6 +21,13 @@
       .col-md-6.form-group
         %label Observaciones
         %span.form-control.input-lg{ readonly: :true }= @procedure.observations
+      .col-md-12
+        .panel.panel-default
+          .panel-heading Iniciador/es
+          .panel-body
+            .list-group
+              - @procedure.persons.each do |p|
+                = link_to p.full_name, person_path(p), class: 'list-group-item btn'
 
 :javascript
 $(document).ready(function() {

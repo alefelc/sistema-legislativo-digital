@@ -18,13 +18,13 @@
       .col-sm-6.invoice-col
         %address
           %strong= t '.name'
-          = @person.nombre || '-.'
+          = @person.name || '-.'
           %br/
           %strong= t '.surname'
-          = @person.apellido || '-.'
+          = @person.surname || '-.'
           %br/
           %strong= t '.dni_cuit'
-          = @person.nro_doc || '-.'
+          = @person.cuit_or_dni || '-.'
       / /.col
       .col-sm-6.invoice-col
         %span.pull-right
@@ -33,10 +33,10 @@
                     remote: true, title: 'Editar persona'
         %address
           %strong= t '.address'
-          = @person.domicilio || '-.'
+          = @person.address || '-.'
           %br/
           %strong= t '.phone'
-          = @person.telefono || '-.'
+          = @person.phone || '-.'
           %br/
           %strong= t '.email'
           = @person.email || '-.'
@@ -55,13 +55,13 @@
               %th Observaciones
               %th Actualizado el
           %tbody
-            - @person.tramites.each do |t|
+            - @person.procedures.each do |t|
               %tr
-                %td= link_to t.id, t
+                %td= link_to t.id, person_path(t)
                 %td= t.type
-                %td= t.nro_fojas
-                %td= t.asunto
-                %td= t.observaciones
+                %td= t.sheets
+                %td= t.topic
+                %td= t.observations
                 %td= t.updated_at
           %tfoot
             %tr

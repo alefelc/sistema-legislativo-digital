@@ -86,4 +86,10 @@ class Expediente < ActiveRecord::Base
     "Expediente"
   end
 
+  def text
+    result = nro_exp
+    result += "- #{bis}" if bis.present?
+    result += "[año: #{anio}]" if anio.present?
+    result
+  end
 end

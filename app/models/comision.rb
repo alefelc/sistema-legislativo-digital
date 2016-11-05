@@ -11,4 +11,8 @@ class Comision < ActiveRecord::Base
   def type
     'Comision'
   end
+
+  def text
+    "#{denominacion} [cód:#{codigo}]"
+  end
 end
