@@ -1,7 +1,7 @@
 class ExpedienteDatatable
-  def_delegator :@view, :index_exp
-  def_delegator :@view, :to_date
-  def_delegator :@view, :current_user
+  # def_delegator :@view, :index_exp
+  # def_delegator :@view, :to_date
+  # def_delegator :@view, :current_user
 
   def as_json(options = {})
     {
