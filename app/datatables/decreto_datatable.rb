@@ -1,4 +1,4 @@
-class DecretoDatatable < AjaxDatatablesRails::Base
+class DecretoDatatable
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma

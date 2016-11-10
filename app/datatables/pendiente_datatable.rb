@@ -1,4 +1,4 @@
-class PendienteDatatable < AjaxDatatablesRails::Base
+class PendienteDatatable
   def_delegator :@view, :index_tra
   def as_json(options = {})
     {

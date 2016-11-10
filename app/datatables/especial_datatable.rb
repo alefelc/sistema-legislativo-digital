@@ -1,4 +1,4 @@
-class EspecialDatatable < AjaxDatatablesRails::Base
+class EspecialDatatable
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma

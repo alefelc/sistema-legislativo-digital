@@ -1,4 +1,4 @@
-class ResolucionDatatable < AjaxDatatablesRails::Base
+class ResolucionDatatable
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma

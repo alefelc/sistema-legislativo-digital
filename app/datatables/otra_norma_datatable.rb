@@ -1,4 +1,4 @@
-class OtraNormaDatatable < AjaxDatatablesRails::Base
+class OtraNormaDatatable
   def_delegator :@view, :norma_expediente
   def_delegator :@view, :fechas
   def_delegator :@view, :index_norma

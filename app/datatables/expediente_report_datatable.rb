@@ -1,4 +1,4 @@
-class ExpedienteReportDatatable < AjaxDatatablesRails::Base
+class ExpedienteReportDatatable
   def_delegator :@view, :index_exp
   def_delegator :@view, :index_tramites
   def_delegator :@view, :to_date
