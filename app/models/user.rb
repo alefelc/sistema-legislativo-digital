@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   #== Devise settings
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
   #== Associations
@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   belongs_to :personal
 
   #== Validations
-  # validates :roles, presence: true
-   validates :person, presence: true
+  validates :roles, presence: true
+  validates :person, presence: true
 
   #== PaperTrail changes tracker
   has_paper_trail

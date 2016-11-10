@@ -9,9 +9,10 @@ class ProceduresController < ApplicationController
   end
 
   def new
-    @procedure = ProcedureForm.new
-    #@procedure = Procedure.new
-    #@procedure.estado_procedures.build
+    #@procedure = ProcedureForm.new
+    @procedure = Procedure.new
+    @procedure.estado_procedures.build
+    @procedure.administrative_files.build
     #2.times {@procedure.administrative_files.build}
   end
 
@@ -41,6 +42,8 @@ class ProceduresController < ApplicationController
 
   def procedure_params
     params.require(:procedure).permit :type, :sheets, :topic, :observations,
-                                      :day, :month, :year, person_ids: [] #legislative_files: [], councilors: [], commissions: [],
+                                      :day, :month, :year, person_ids: [],
+                                      administrative_files_attributes: [:id,
+                                        :number, :sheets, :bis, :topic] #legislative_files: [], councilors: [], commissions: [],
   end
 end

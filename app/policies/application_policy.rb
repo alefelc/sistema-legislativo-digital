@@ -7,6 +7,7 @@ class ApplicationPolicy
   end
 
   def user_activities
+    return [] if @user.blank?
     @user.roles.select(:activities).distinct.map(&:activities).flatten
   end
 

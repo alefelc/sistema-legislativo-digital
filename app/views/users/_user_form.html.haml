@@ -1,0 +1,23 @@
+= f.label :person
+.row
+  .form-group.col-md-6
+    = f.select :person_id, {}, {}, class: 'form-control input-lg', placeholder: 'Busque personas existentes en el sistema', type: :text
+  .col-md-2
+    = link_to new_initiator_path, class: 'initiator-btn btn btn-primary btn-lg', remote: true do
+      .fa.fa-user-plus
+      = t '.add'
+.row
+  .form-group.col-md-6
+    = f.label :email
+    = f.text_field :email, type: :email, class: 'form-control input-lg', placeholder: 'Email personal'
+  .form-group.col-md-6
+    = f.label :roles
+    = f.select :role_ids, {}, {}, multiple: true, class: 'form-control input-lg', placeholder: 'Administre permisos/roles para el usuario'
+.row
+  .form-group.col-md-6
+    = f.label :password
+    = f.text_field :password, type: :password, class: 'form-control input-lg', placeholder: 'Contraseña'
+.row
+  .form-group.col-md-6
+    = f.label :password_confirmation
+    = f.text_field :password_confirmation, type: :password, class: 'form-control input-lg', placeholder: 'Confirme contraseña'

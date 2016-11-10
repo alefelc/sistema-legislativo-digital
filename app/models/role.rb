@@ -15,4 +15,8 @@ class Role < ActiveRecord::Base
   def to_s
     name
   end
+
+  def text
+    name
+  end
 end

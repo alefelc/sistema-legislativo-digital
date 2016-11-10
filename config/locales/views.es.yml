@@ -203,4 +203,5 @@ es:
     new:
       new_user: Creando usuario
       submit: Guardar
-      add: Crear persona
+    user_form:
+      add: Crear persona no existente

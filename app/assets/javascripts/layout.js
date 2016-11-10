@@ -704,9 +704,6 @@ function _init() {
 $(function () {
   var url = window.location.pathname;
   var $current = $('.sidebar-menu a[href="' + url + '"]');
-  console.log('lalal');
-  console.log(url);
-  console.log($current);
   $current.closest('.treeview').addClass('active');
   $current.closest('.treeview-menu').addClass('menu-open').css('display', 'block');
   $current.parent('li').addClass('active');

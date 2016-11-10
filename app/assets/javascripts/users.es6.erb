@@ -1,0 +1,33 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class Users {
+  static searchRoles() {
+    let options = {
+      multiple: false,
+      placeholder: 'Busque una persona para asignarle un usuario',
+      theme: 'bootstrap',
+      language: 'es',
+      minimumInputLength: 2,
+      ajax: {
+        url: "<%= url_helpers.initiators_path(format: :json) %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return {
+            select_q: params.term
+          };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    }
+    $('#user_person_id').select2(options);
+
+    options.multiple = true;
+    options.placeholder = 'Seleccione roles y/o permisos';
+    options.ajax.url = "<%= url_helpers.roles_path(format: :json) %>";
+    $('#user_role_ids').select2(options);
+  }
+}

@@ -32,3 +32,10 @@ es:
       role:
         name: Nombre
         activities: Roles
+
+      user:
+        person: Persona
+        email: Email
+        roles: Permisos y roles
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña

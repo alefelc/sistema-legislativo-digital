@@ -38,7 +38,7 @@
                     .row
                       .col-md-12
                         .form-group
-                          = f.select :legislative_files, {}, {}, { multiple: true, class: 'input-lg form-control' }
+                          =# f.select :legislative_files, {}, {}, { multiple: true, class: 'input-lg form-control' }
                 .dispatch-procedure
                   .row
                     .col-md-12= label_tag t('.dispatch_date')
@@ -52,12 +52,12 @@
                   .row
                     .col-md-12
                       .form-group
-                        = f.select :councilors, {}, {}, { multiple: true, class: 'input-lg form-control' }
+                        = #f.select :councilors, {}, {}, { multiple: true, class: 'input-lg form-control' }
                   %label{ for: :procedure_commission }= t('.commissions')
                   .row
                     .col-md-12
                       .form-group
-                        = f.select :commissions, {}, {}, { multiple: true, class: 'input-lg form-control' }
+                        = #f.select :commissions, {}, {}, { multiple: true, class: 'input-lg form-control' }
                 .form-group.common-procedure
                   %label{ for: :procedure_topic }= t('.topic')
                   = f.text_area :topic, { class: 'input-lg form-control', placeholder: t('.topic_placeholder') }
@@ -91,17 +91,17 @@
               #messages.tab-pane.fade
                 %p.lead.box-header.with-border Cargue expedientes administrativos
                 #administrative_files
-                  //= f.fields_for :administrative_files do |file|
-                  //  = render 'administrative_file_fields', f: file
-                  //.links
-                  //  = link_to_add_association '', f, :administrative_files, class: 'btn btn-success btn-lg fa fa-plus'
+                  = f.fields_for :administrative_files do |file|
+                    = render 'administrative_file_fields', f: file
+                    .links
+                      = link_to_add_association '', f, :administrative_files, class: 'btn btn-success btn-lg fa fa-plus'
               #settings.tab-pane.fade
                 %p.lead.box-header.with-border Área a la que se deriva actualmente el trámite
                 #estado_procedures
-                  //= f.fields_for :estado_procedures do |estado|
-                  //  = render 'estado_procedure_fields', f: estado
-                  //.links
-                  //  = link_to_add_association '', f, :estado_procedures, class: 'btn btn-success btn-lg fa fa-plus'
+                  = f.fields_for :estado_procedures do |estado|
+                    = render 'estado_procedure_fields', f: estado
+                    .links
+                      = link_to_add_association '', f, :estado_procedures, class: 'btn btn-success btn-lg fa fa-plus'
           .clearfix
       .box-footer
         .pull-right

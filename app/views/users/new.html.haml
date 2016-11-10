@@ -4,26 +4,11 @@
     = t '.new_user'
 
   .box.box-primary
-    = form_for @user do |f|
+    = form_for @user, url: users_path do |f|
       .lead.box-header.with-border
         Cree un usuario nuevo
       .box-body
-        = f.label :person
-        .row
-          .form-group.col-md-6
-            = f.text_field :person, class: 'form-control', placeholder: 'Busque personas existentes en el sistema'
-          .col-md-2
-            = link_to new_initiator_path, class: 'initiator-btn btn btn-primary', remote: true do
-              .fa.fa-user-plus
-              = t '.add'
-        .row
-          .form-group.col-md-6
-            = f.label :email
-            = f.text_field :email, type: :email, class: 'form-control', placeholder: 'Email personal'
-        .row
-          .form-group.col-md-6
-            = f.label :roles
-            = f.text_field :roles, class: 'form-control', placeholder: 'Administre permisos/roles para el usuario'
+        = render 'user_form', f: f
       .box-footer
         .pull-right
           = link_to users_path, class: 'btn btn-default' do
@@ -32,3 +17,10 @@
           %button.btn.btn-success.btn-lg{ type: :submit }
             .fa.fa-save.fa-lg
             = t('.submit')
+
+:javascript
+$(document).on('ready', function() {
+  if($('#user-new').length) {
+    Users.searchRoles();
+  }
+})

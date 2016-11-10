@@ -1,6 +1,10 @@
 class RolesController < ApplicationController
   def index
     @roles = Role.all
+    respond_to do |format|
+      format.html
+      format.json { render json: build_json_response }
+    end
   end
 
   def new
@@ -33,6 +37,14 @@ class RolesController < ApplicationController
   end
 
   private
+  def build_json_response
+    if params[:select_q].present?
+      q = "%#{params[:select_q]}%"
+      w = "name ilike ?"
+      Role.where(w, q).to_json(only: [:id], methods: :text)
+    end
+  end
+
   def roles_params
     params.require(:role).permit :name, activities: []
   end

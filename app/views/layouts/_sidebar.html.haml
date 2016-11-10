@@ -139,60 +139,61 @@
       -#       %a{ href: '#bloque' }
       -#         %i.fa.fa-circle-o
       -#         Bloques
-      %li.header.text-center Configuración de sistema
-      %li.treeview
-        %a{:href => "#"}
-          %i.fa.fa-users.fa-lg
-          %span= t '.users'
-          %i.fa.fa-angle-left.pull-right
-        %ul.treeview-menu
-          %li
-            %a{ href: users_path }
-              %i.fa.fa-circle-o
-              = t '.all_users'
-          %li
-            %a{ href: new_user_path }
-              %i.fa.fa-circle-o
-              = t '.new_user'
-          %li
-            %a{ href: '#' }
-              %i.fa.fa-circle-o
-              = t '.edit_user'
-          %li
-            %a{ href: '#' }
-              %i.fa.fa-circle-o
-              = t '.show_user'
+      - if policy(:configurations).all?
+        %li.header.text-center Configuración de sistema
+        %li.treeview
+          %a{:href => "#"}
+            %i.fa.fa-users.fa-lg
+            %span= t '.users'
+            %i.fa.fa-angle-left.pull-right
+          %ul.treeview-menu
+            %li
+              %a{ href: users_path }
+                %i.fa.fa-circle-o
+                = t '.all_users'
+            %li
+              %a{ href: new_user_path }
+                %i.fa.fa-circle-o
+                = t '.new_user'
+            %li
+              %a{ href: '#' }
+                %i.fa.fa-circle-o
+                = t '.edit_user'
+            %li
+              %a{ href: '#' }
+                %i.fa.fa-circle-o
+                = t '.show_user'
 
-      -# %li.treeview
-      -#   %a{:href => "#"}
-      -#     %i.fa.fa-calendar
-      -#     %span Periodos
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: '#' }
-      -#         %i.fa.fa-circle-o
-      -#         Ver Periodos
+        -# %li.treeview
+        -#   %a{:href => "#"}
+        -#     %i.fa.fa-calendar
+        -#     %span Periodos
+        -#     %i.fa.fa-angle-left.pull-right
+        -#   %ul.treeview-menu
+        -#     %li
+        -#       %a{ href: '#' }
+        -#         %i.fa.fa-circle-o
+        -#         Ver Periodos
 
-      %li.treeview
-        %a{ href: "#"}
-          %i.fa.fa-gear.fa-lg
-          %span= t '.roles'
-          %i.fa.fa-angle-left.pull-right
-        %ul.treeview-menu
-          %li
-            %a{ href: roles_path }
-              %i.fa.fa-circle-o
-              = t '.all_roles'
-          %li
-            %a{ href: new_role_path }
-              %i.fa.fa-circle-o
-              = t '.new_rol'
-          %li
-            %a{ href: '#' }
-              %i.fa.fa-circle-o
-              = t '.edit_rol'
-          %li
-            %a{ href: '#' }
-              %i.fa.fa-circle-o
-              = t '.show_rol'
+        %li.treeview
+          %a{ href: "#"}
+            %i.fa.fa-gear.fa-lg
+            %span= t '.roles'
+            %i.fa.fa-angle-left.pull-right
+          %ul.treeview-menu
+            %li
+              %a{ href: roles_path }
+                %i.fa.fa-circle-o
+                = t '.all_roles'
+            %li
+              %a{ href: new_role_path }
+                %i.fa.fa-circle-o
+                = t '.new_rol'
+            %li
+              %a{ href: '#' }
+                %i.fa.fa-circle-o
+                = t '.edit_rol'
+            %li
+              %a{ href: '#' }
+                %i.fa.fa-circle-o
+                = t '.show_rol'
