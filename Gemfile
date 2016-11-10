@@ -151,8 +151,8 @@ group :production do
   gem 'unicorn', '~> 4.8.2', group: :production
 
  # heroku settings
- # gem 'rails_12factor'
+ gem 'rails_12factor'
 end
 
-# heroku settings
+# Ruby version
 # ruby 2.2.1
