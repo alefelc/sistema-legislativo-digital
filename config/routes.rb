@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
 
+  resources :procedures
+
   resources :users
 
   resources :roles
@@ -56,8 +58,6 @@ Rails.application.routes.draw do
     post 'destroy_uploads', on: :member
   end
 
-  resources :procedures
-
   resources :initiators
 
   resources :persons, only: [:create, :update], as: :people
@@ -100,7 +100,6 @@ Rails.application.routes.draw do
     get 'expedientes'
     get 'normas'
   end
-  resources :tramites
 
   resources :expediente_reports
 
