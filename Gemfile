@@ -155,4 +155,4 @@ group :production do
 end
 
 # Ruby version
-ruby '2.2.1'
+# ruby '2.2.1'
