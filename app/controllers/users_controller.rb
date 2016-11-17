@@ -2,14 +2,17 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    authorize :configurations, :all?
     @users = User.all
   end
 
   def new
+    authorize :configurations, :all?
     @user = User.new
   end
 
   def create
+    authorize :configurations, :all?
     @user = User.new users_params
     if @user.save
       flash.now[:success] = t '.success'
@@ -21,9 +24,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+    authorize :configurations, :all?
   end
 
   def update
+    authorize :configurations, :all?
   end
 
   private

@@ -1,3 +1,9 @@
 .remove-bullet {
   list-style-type: none;
 }
+
+
+#roles tbody tr:hover {
+  @extend .info;
+  cursor: pointer;
+}

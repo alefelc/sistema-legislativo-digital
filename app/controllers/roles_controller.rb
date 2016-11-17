@@ -1,5 +1,6 @@
 class RolesController < ApplicationController
   def index
+    authorize :configurations, :all?
     @roles = Role.all
     respond_to do |format|
       format.html
@@ -8,14 +9,16 @@ class RolesController < ApplicationController
   end
 
   def new
+    authorize :configurations, :all?
     @role = Role.new
   end
 
   def create
+    authorize :configurations, :all?
     @role = Role.new roles_params
     if @role.save
       flash.now[:success] = t('.success')
-      render :edit
+      render :index
     else
       flash.now[:error] = @role.errors.full_messages
       render :new
@@ -23,10 +26,12 @@ class RolesController < ApplicationController
   end
 
   def edit
+    authorize :configurations, :all?
     @role = Role.find params[:id]
   end
 
   def update
+    authorize :configurations, :all?
     @role = Role.find params.dup[:id]
     if @role.update(roles_params)
       flash.now[:success] = t('.success')
@@ -37,6 +42,7 @@ class RolesController < ApplicationController
   end
 
   private
+
   def build_json_response
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"

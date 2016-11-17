@@ -173,10 +173,11 @@ es:
   roles:
     procedure: Trámites
     admin: Administrador
-    activities:
+    contingency: Contingencia
+    administrative_file: Expedientes administrativos
+    new:
       cancel: Cancelar
       submit: Guardar
-    new:
       new: Creando nuevo rol
       title: Información del rol
       name_placeholder: Ingrese nombre del rol...

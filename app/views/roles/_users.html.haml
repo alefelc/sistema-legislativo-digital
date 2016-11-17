@@ -1,0 +1,20 @@
+.col-md-12.col-sm-12.col-xs-12.table-responsive
+  .box.box-success.box-border
+    .box-header.with-border.text-center
+      %h2.box-title Usuarios con este rol
+    .box-body
+      .col-xs-12
+        %table.table.table-striped#person-tramites
+          %thead
+            %tr
+              %th Usuario
+              %th Nombre y apellido
+          %tbody
+            - role.users.each do |u|
+              %tr
+                %td= u.email
+                %td= u.person.try(:full_name)
+
+        - if role.users.empty?
+          .text-center
+            Este rol no tiene usuarios

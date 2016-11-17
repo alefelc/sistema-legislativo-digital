@@ -9,6 +9,8 @@ class ProceduresController < ApplicationController
   end
 
   def new
+    authorize Procedure, :create?
+
     #@procedure = ProcedureForm.new
     @procedure = Procedure.new
     @procedure.estado_procedures.build
@@ -17,6 +19,8 @@ class ProceduresController < ApplicationController
   end
 
   def create
+    authorize Procedure, :create?
+
     @procedure = ProcedureForm.new procedure_params
     if @procedure.save
       flash[:success] = t '.success'
@@ -28,10 +32,13 @@ class ProceduresController < ApplicationController
   end
 
   def edit
+    authorize Procedure, :edit?
+
     @procedure = ProcedureForm.new procedure_params
   end
 
   def update
+    authorize Procedure, :edit?
   end
 
   def show

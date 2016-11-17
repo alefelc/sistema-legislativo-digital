@@ -10,5 +10,17 @@
         = f.label :name, class: 'control-label col-md-1 col-sm-1 col-xs-12'
         .col-md-11.col-sm-11.col-xs-12
           = f.text_field :name, class: 'form-control input-lg', placeholder: t('.name_placeholder')
+      = render 'activities', f: f
 
-  = render 'activities', f: f
+      .users-with-this
+        = render 'users', role: @role
+    .box-footer
+      .col-md-12.col-sm-12.col-xs-12
+        .pull-right
+          = link_to roles_path, class: 'btn btn-default' do
+            .fa.fa-times-circle
+            = t('.cancel')
+          %button.btn.btn-success.btn-lg{ type: :submit }
+            .fa.fa-save.fa-lg
+            = t('.submit')
+

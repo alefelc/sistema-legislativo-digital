@@ -39,3 +39,10 @@ es:
         roles: Permisos y roles
         password: Contraseña
         password_confirmation: Confirmación de contraseña
+
+      administrative_file:
+        number: Número
+        letter: Letra
+        year: Año
+        sheets: Hojas
+        topic: Sumario

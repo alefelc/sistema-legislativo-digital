@@ -16,11 +16,22 @@ class ApplicationController < ActionController::Base
     session[:previous_url] = request.fullpath if !request.xhr? # don't store ajax calls
   end
 
+  rescue_from Pundit::NotAuthorizedError, with: :permission_denied
+
   private
 
   # Overwriting the sign_in redirect path method
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
+  end
+
+  def permission_denied
+    if params[:format] == 'json'
+      render json: { error: "Usted no esta autorizado para realizar esta acción" }, status: 403
+    else
+      flash[:error] = "Usted no esta autorizado para realizar esta acción"
+      redirect_to dashboard_index_path, format: :html, turbolinks: false
+    end
   end
 
   protected

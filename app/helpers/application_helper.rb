@@ -1,4 +1,16 @@
 module ApplicationHelper
+  def edit_link?(controller)
+    params[:id].present? &&
+    params[:controller] == controller &&
+    params[:action] == 'edit'
+  end
+
+  def show_link?(controller)
+    params[:id].present? &&
+    params[:controller] == controller &&
+    params[:action] == 'show'
+  end
+
   def flash_icon(status)
     status = status.to_sym
     icons = { success: 'icon fa fa-check', warning: 'icon fa fa-warning',
