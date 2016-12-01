@@ -1,10 +1,8 @@
-ActiveAdmin.register_page "Dashboard" do
+ActiveAdmin.register_page "Upload" do
 
-  menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
-
-  content title: "Registro de todos los cambios ocurridos en el sistema" do
-    section "Contenido creado/actualizado recientemente" do
-      table_for PaperTrail::Version.order('id desc').limit(20) do # Use PaperTrail::Version if this throws an error
+  content title: proc{ I18n.t("active_admin.dashboard") } do
+    section "Recently updated content" do
+      table_for PaperTrail::Version.where(item_type: "Upload").order('id desc').limit(20) do # Use PaperTrail::Version if this throws an error
         column ("Item") { |v| v.item }
         # column ("Item") { |v| link_to v.item, [:admin, v.item] } # Uncomment to display as link
         column ("Type") { |v| v.item_type.underscore.humanize }
@@ -13,4 +11,5 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
   end
+
 end
