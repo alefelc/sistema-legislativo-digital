@@ -35,10 +35,11 @@ class RolesController < ApplicationController
     @role = Role.find params.dup[:id]
     if @role.update(roles_params)
       flash.now[:success] = t('.success')
+      redirect_to roles_path
     else
       flash.now[:error] = @role.errors.full_messages
+      render :edit
     end
-    render :edit
   end
 
   private

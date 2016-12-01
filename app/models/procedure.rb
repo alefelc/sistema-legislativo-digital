@@ -29,6 +29,9 @@ class Procedure < ActiveRecord::Base
   # == Callbacks
   after_create :initial_state
 
+  # == PaperTrail changes tracker
+  has_paper_trail
+
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?
   end

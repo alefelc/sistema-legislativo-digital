@@ -4,7 +4,7 @@
   .box-header
     .row
       .col-md-5.col-xs-12
-        - if current_user.present?
+        - if current_user.present? && policy(Procedure).create?
           = link_to new_procedure_path, class: 'btn btn-primary btn-lg' do
             %i.fa.fa-plus-circle.fa-lg
             Nuevo trámite

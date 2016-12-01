@@ -11,4 +11,12 @@ class Initiator {
       }
     })
   }
+  static submitModal() {
+    $('form.new_person').on('ajax:success', () => {
+      $('#initiator-new.modal').modal('hide');
+    });
+    $('#initiator-new').on('ajax:error', () => {
+      alert('Something went wrong!');
+    });
+  }
 }

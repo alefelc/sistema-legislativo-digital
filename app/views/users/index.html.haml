@@ -15,6 +15,7 @@
       %table.table.table-bordered.table-striped.dataTable#users-table{ 'data-source': users_path(format: :json) }
         %thead
           %tr
+            %th #
             %th= t('.user')
             %th= t('.email')
             %th= t('.current_sign_in_at')
@@ -26,6 +27,7 @@
         %tbody
           - @users.each do |user|
             %tr
+              %td= user.id
               %td= link_to_if user.person.present?, user.person.try(:full_name), edit_user_path(user), class: 'btn'
               %td= link_to user.email, edit_user_path(user), class: 'btn'
               %td= user.current_sign_in_at

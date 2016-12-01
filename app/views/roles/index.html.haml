@@ -15,6 +15,7 @@
       %table.table.table-bordered.table-striped.dataTable#roles-table{ 'data-source': roles_path(format: :json) }
         %thead
           %tr
+            %th #
             %th= t('.name')
             %th= t('.created_at')
             %th= t('.activities')
@@ -22,6 +23,7 @@
         %tbody
           - @roles.each do |role|
             %tr{ 'data-id': role.id }
+              %td= role.id
               %td= role.name
               %td= role.created_at
               %td= role.activities.to_s
