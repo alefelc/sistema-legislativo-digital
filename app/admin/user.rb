@@ -1,4 +1,4 @@
-ActiveAdmin.register_page "User" do
+ActiveAdmin.register_page "Usuarios" do
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     section "Recently updated content" do
