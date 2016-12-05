@@ -18,12 +18,12 @@
                 %i.fa.fa-circle-o
                 = t '.new_process'
           - if edit_link? 'procedures'
-            %li
+            %li.active
               %a{ href: '#' }
                 %i.fa.fa-circle-o
                 = t '.edit_process'
           - if show_link? 'procedures'
-            %li
+            %li.active
               %a{ href: '#' }
                 %i.fa.fa-circle-o
                 = t '.show_process'
@@ -159,12 +159,12 @@
                 %i.fa.fa-circle-o
                 = t '.new_user'
             - if edit_link? 'users'
-              %li
+              %li.active
                 %a{ href: '#' }
                   %i.fa.fa-circle-o
                   = t '.edit_user'
             - if show_link? 'users'
-              %li
+              %li.active
                 %a{ href: '#' }
                   %i.fa.fa-circle-o
                   = t '.show_user'
@@ -195,12 +195,12 @@
                 %i.fa.fa-circle-o
                 = t '.new_rol'
             - if edit_link? 'roles'
-              %li
+              %li.active
                 %a{ href: '#' }
                   %i.fa.fa-circle-o
                   = t '.edit_rol'
             - if show_link? 'roles'
-              %li
+              %li.active
                 %a{ href: '#' }
                   %i.fa.fa-circle-o
                   = t '.show_rol'
