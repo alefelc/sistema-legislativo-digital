@@ -704,6 +704,11 @@ function _init() {
 $(function () {
   var url = window.location.pathname;
   var $current = $('.sidebar-menu a[href="' + url + '"]');
+  var $active = $('.sidebar-menu').find('.treeview .active');
+  if ($active.length) {
+    $active.closest('.treeview').addClass('active');
+    $active.closest('.treeview-menu').addClass('menu-open').css('display', 'block');
+  }
   $current.closest('.treeview').addClass('active');
   $current.closest('.treeview-menu').addClass('menu-open').css('display', 'block');
   $current.parent('li').addClass('active');
