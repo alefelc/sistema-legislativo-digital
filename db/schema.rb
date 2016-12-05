@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109155608) do
+ActiveRecord::Schema.define(version: 20161205122210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,24 +35,6 @@ ActiveRecord::Schema.define(version: 20161109155608) do
 
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
-
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "administrative_files", force: :cascade do |t|
     t.string   "number"
@@ -252,6 +234,13 @@ ActiveRecord::Schema.define(version: 20161109155608) do
 
   add_index "comisions_procedures", ["comision_id"], name: "index_comisions_procedures_on_comision_id", using: :btree
   add_index "comisions_procedures", ["procedure_id"], name: "index_comisions_procedures_on_procedure_id", using: :btree
+
+  create_table "contingency_plans", force: :cascade do |t|
+    t.text     "reason"
+    t.date     "date_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "dependencias_procedures", id: false, force: :cascade do |t|
     t.integer "municipal_office_id"
@@ -572,9 +561,11 @@ ActiveRecord::Schema.define(version: 20161109155608) do
     t.integer  "day"
     t.integer  "month"
     t.integer  "year"
+    t.integer  "contingency_plan_id"
   end
 
   add_index "procedures", ["circuito_id"], name: "index_procedures_on_circuito_id", using: :btree
+  add_index "procedures", ["contingency_plan_id"], name: "index_procedures_on_contingency_plan_id", using: :btree
 
   create_table "procedures_reparticion_oficials", id: false, force: :cascade do |t|
     t.integer "reparticion_oficial_id"
@@ -734,4 +725,5 @@ ActiveRecord::Schema.define(version: 20161109155608) do
 
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
+  add_foreign_key "procedures", "contingency_plans"
 end
