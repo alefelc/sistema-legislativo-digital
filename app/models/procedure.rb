@@ -19,6 +19,7 @@ class Procedure < ActiveRecord::Base
            through: :processes_signatories,
            class_name: 'Person',
            source: :person
+  belongs_to :contingency_plan
 
   #== Nested attributes
   # accepts_nested_attributes_for :uploads
