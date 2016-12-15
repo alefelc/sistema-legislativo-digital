@@ -115,6 +115,9 @@ gem 'pundit'
 # A plugin to enable automatic height for textarea elements.
 gem 'autosize-rails'
 
+# Fast, Nimble PDF Writer for Ruby
+gem 'prawn'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
