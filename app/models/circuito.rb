@@ -1,7 +1,7 @@
 class Circuito < ActiveRecord::Base
   # == Associations
-  belongs_to :expediente
-  has_many :estado_expedientes
+  belongs_to :legislative_file
+  has_many :estado_legislative_files
   has_many :procedures
   has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
 
@@ -22,7 +22,7 @@ class Circuito < ActiveRecord::Base
 
   def estados
     tr_html = ""
-    estados = self.estado_expedientes.order(id: :asc)
+    estados = self.estado_legislative_files.order(id: :asc)
     estados.each do |e|
       tr_html += "<tr class='states-tr' data-id='#{e.id}'" +
                   " data-fecha='#{e.fecha}' data-estado='#{e.tipo}' data-esp1='#{e.especificacion1}'" +
@@ -43,8 +43,8 @@ class Circuito < ActiveRecord::Base
 
   def set_circuit_number
     if self.nro.nil?
-      if expediente.present?
-        self.nro = expediente.last_circuit.nro + 1
+      if legislative_file.present?
+        self.nro = legislative_file.last_circuit.nro + 1
       else
         self.nro = nil
       end

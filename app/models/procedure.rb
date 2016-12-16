@@ -24,7 +24,7 @@ class Procedure < ActiveRecord::Base
   #== Nested attributes
   # accepts_nested_attributes_for :uploads
   # accepts_nested_attributes_for :estado_procedures, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :administrative_files
+  accepts_nested_attributes_for :administrative_files, reject_if: :all_blank
   accepts_nested_attributes_for :estado_procedures
 
   # == Callbacks

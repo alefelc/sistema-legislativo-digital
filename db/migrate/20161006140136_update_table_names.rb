@@ -1,6 +1,6 @@
 class UpdateTableNames < ActiveRecord::Migration
   def change
-    drop_table :personas_tramites
+    #drop_table :personas_tramites
 
     rename_table :areas_tramites, :areas_procedures
     rename_table :bloques_tramites, :bloques_procedures

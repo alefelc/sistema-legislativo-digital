@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # == Devise settings
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable,
-         :validatable
+  devise :database_authenticatable, :recoverable, :rememberable,
+    :trackable, :validatable#, :registerable
 
   # == Associations
   has_and_belongs_to_many :roles

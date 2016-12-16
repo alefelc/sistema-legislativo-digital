@@ -8,7 +8,7 @@ class ChangeProceduresColumnName < ActiveRecord::Migration
     remove_column :procedures, :responsable
     # remove_column :procedures, :fecha
     remove_column :procedures, :tipo_contribucion
-    remove_column :procedures, :condicion_contribuyenye
+    remove_column :procedures, :condicion_contribuyente
     remove_column :procedures, :pendiente
   end
 end

@@ -1,7 +1,7 @@
-class Expediente < ActiveRecord::Base
+class LegislativeFile < ActiveRecord::Base
 
   #= Associations
-  has_many :expediente_administrativos
+  has_many :administrative_files
   has_many :circuitos
   has_and_belongs_to_many :tags
   has_many :normas
@@ -10,7 +10,7 @@ class Expediente < ActiveRecord::Base
   has_many :estado_procedures, as: :ref
 
   #== Shortcut association
-  has_many :estado_expedientes, through: :circuitos
+  has_many :legislative_file_states, through: :circuitos
 
   #== Association recursive expediente acumula
   has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumula_id"
@@ -41,13 +41,13 @@ class Expediente < ActiveRecord::Base
   end
 
   def put_expediente_number
-    last = Expediente.last
+    last = LegislativeFile.last
     self.nro_exp = (last.nro_exp.to_i + 1).to_s if last.present?
   end
 
   def zero_circuit_by_default
-    circuit = Circuito.create nro: 0, expediente: self
-    circuit.estado_expedientes.create nombre: "Iniciado", tipo: 1, fecha: self.anio
+    circuit = Circuito.create nro: 0, legislative_file: self
+    circuit.legislative_file_states.create nombre: "Iniciado", tipo: 1, fecha: self.anio
   end
 
   def get_anio_expediente
@@ -59,7 +59,7 @@ class Expediente < ActiveRecord::Base
   end
 
   def get_exps_adm
-    self.expediente_administrativos
+    self.administrative_files
   end
 
   def get_circuitos
@@ -83,7 +83,7 @@ class Expediente < ActiveRecord::Base
   end
 
   def type
-    "Expediente"
+    "LegislativeFile"
   end
 
   def text

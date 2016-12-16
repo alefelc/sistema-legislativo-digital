@@ -1,10 +1,10 @@
 class AdministrativeFile < ActiveRecord::Base
   #== Associations
-	belongs_to :expediente
+	belongs_to :legislative_file
   belongs_to :procedure
 
   #== Validations
-  validates :nro_exp, presence: true
+  # validates :nro_exp, presence: true
 
   def get_anio_expediente_adm
     if self.anio.present?
@@ -12,5 +12,12 @@ class AdministrativeFile < ActiveRecord::Base
     else
       " - Año no asignado"
     end
+  end
+
+  def to_s
+    output = ''
+    output += "Nro #{number} " if number.present?
+    output += "Letra #{letter} " if letter.present?
+    output += "Hojas #{sheets} " if sheets.present?
   end
 end
