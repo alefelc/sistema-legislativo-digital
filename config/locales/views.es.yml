@@ -34,6 +34,9 @@ es:
       new_rol: Nuevo rol
       edit_rol: Editando rol
       show_rol: Mostrando rol
+      files: Expedientes
+      administrative_files: Ver exped. administrativos
+      legislative_files: Ver expedientes legislativos
 
     flash_messages:
       success: Generado correctamente
@@ -173,8 +176,9 @@ es:
   roles:
     procedure: Trámites
     admin: Administrador
-    contingency: Contingencia
-    administrative_file: Expedientes administrativos
+    contingency_plan: Contingencia
+    administrative_file: Expediente administrativo
+    legislative_file: Expediente legislativo
     new:
       cancel: Cancelar
       submit: Guardar
@@ -202,7 +206,9 @@ es:
 
   users:
     new:
-      new_user: Creando usuario
+      user_title: Creando usuario
       submit: Guardar
     user_form:
       add: Crear persona no existente
+    edit:
+      user_title: Editando usuario

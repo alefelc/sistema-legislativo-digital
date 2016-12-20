@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, skip: [:password],
+    controllers: { sessions: 'users/sessions' }
 
   root to: 'dashboard#index'
 
-  resources :procedures
-
   resources :users
+
+  resources :procedures do
+    get 'print', on: :collection
+  end
 
   resources :roles
 
@@ -105,7 +108,7 @@ Rails.application.routes.draw do
 
   resources :normas
 
-  resources :administrative_files, only: [:create, :index]
+  resources :administrative_files, only: [:index, :show]
 
   resources :persons
 
@@ -116,4 +119,6 @@ Rails.application.routes.draw do
   resources :municipal_offices
 
   resources :government_organs
+
+  resources :legislative_files
 end

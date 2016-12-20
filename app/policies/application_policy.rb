@@ -8,7 +8,11 @@ class ApplicationPolicy
 
   def user_activities
     return [] if @user.blank?
-    @user.roles.select(:activities).distinct.map(&:activities).flatten
+    if @user.admin?
+      Role.select(:activities).distinct.map(&:activities).flatten
+    else
+      @user.roles.select(:activities).distinct.map(&:activities).flatten
+    end
   end
 
   def inferred_activity(method)

@@ -11,3 +11,6 @@ es:
       success: Rol creado correctamente
     update:
       success: Rol actualizado correctamente
+  users:
+    update:
+      success: Usuario actualizado correctamente

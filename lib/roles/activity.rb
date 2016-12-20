@@ -3,9 +3,9 @@ module Roles::Activity
     { name: "Configuraciones del sistema", activity: 'configurations:all' }
   ].freeze
 
-  CONTINGENCY = [
-    { name: "Crear contigencia", activity: 'contingency:create' },
-    { name: "Editar contigencia", activity: 'contingency:update' }
+  CONTINGENCY_PLAN = [
+    { name: "Crear contigencia", activity: 'contingency_plan:create' },
+    { name: "Editar contigencia", activity: 'contingency_plan:update' }
   ].freeze
 
   PROCEDURE = [
@@ -35,6 +35,11 @@ module Roles::Activity
     { name: "Editar exped. administrativos", activity: 'administrative_file:update' }
   ].freeze
 
+  LEGISLATIVE_FILE = [
+    { name: "Crear exped. legislativos", activity: 'legislative_file:create' },
+    { name: "Editar exped. legislativos", activity: 'legislative_file:update' }
+  ].freeze
+
   def self.admin_role()
     Role.create_with(activities: ADMIN + only_activities).
       find_or_create_by(name: 'admin', admin: true)
@@ -42,12 +47,12 @@ module Roles::Activity
 
   def self.activities()
     [
-      PROCEDURE, ADMIN, ADMINISTRATIVE_FILE, CONTINGENCY
+      PROCEDURE, ADMIN, ADMINISTRATIVE_FILE, CONTINGENCY_PLAN, LEGISLATIVE_FILE
     ]
   end
 
   def self.activities_with_name()
-    names = %w(procedure admin administrative_file contingency)
+    names = %w(procedure admin administrative_file contingency_plan legislative_file)
     activities.map.with_index do |act, index|
       { activities: act, title: I18n.t("roles.#{names[index]}") }
     end.flatten
