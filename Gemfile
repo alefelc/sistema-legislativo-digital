@@ -101,7 +101,7 @@ gem 'paperclip'
 gem 'cocoon'
 
 # jQuery File Upload integrated for Rails.
-#gem "jquery-fileupload-rails"
+gem "jquery-fileupload-rails"
 
 # Track changes to your models' data. Good for auditing or versioning.
 gem 'paper_trail'

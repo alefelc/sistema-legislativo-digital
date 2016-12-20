@@ -18,4 +18,5 @@
 //= require icheck
 //= require cocoon
 //= require jquery.autosize
+//= require jquery-fileupload
 //= require_tree .

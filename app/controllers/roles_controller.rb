@@ -17,8 +17,8 @@ class RolesController < ApplicationController
     authorize :configurations, :all?
     @role = Role.new roles_params
     if @role.save
-      flash.now[:success] = t('.success')
-      render :index
+      flash[:success] = t('.success')
+      redirect_to roles_path
     else
       flash.now[:error] = @role.errors.full_messages
       render :new

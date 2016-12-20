@@ -168,6 +168,10 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-fileupload-rails (0.4.7)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      sass (>= 3.2)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -372,6 +376,7 @@ DEPENDENCIES
   haml-rails (~> 0.9)
   icheck-rails
   jbuilder (~> 2.0)
+  jquery-fileupload-rails
   jquery-rails (= 4.0.4)
   kaminari
   meta_request (= 0.3.4)
