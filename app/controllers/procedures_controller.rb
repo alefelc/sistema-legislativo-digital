@@ -13,8 +13,9 @@ class ProceduresController < ApplicationController
 
     #@procedure = ProcedureForm.new
     @procedure = Procedure.new
-    @procedure.estado_procedures.build
+    @procedure.procedure_states.build
     @procedure.administrative_files.build
+    @procedure.uploads.build
     #2.times {@procedure.administrative_files.build}
   end
 
@@ -45,12 +46,18 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.find params[:id]
   end
 
+  def print
+    pdf = Prawn::Procedures.new()
+    send_data pdf.render, filename: 'tramites.pdf',
+              type: 'application/pdf', disposition: 'inline'
+  end
+
   private
 
   def procedure_params
     params.require(:procedure).permit :type, :sheets, :topic, :observations,
-                                      :day, :month, :year, person_ids: [],
+                                      :day, :month, :year, :uploads, person_ids: [],
                                       administrative_files_attributes: [:id,
-                                        :number, :sheets, :bis, :topic] #legislative_files: [], councilors: [], commissions: [],
+                                        :number, :sheets, :letter, :year] #legislative_files: [], councilors: [], commissions: [],
   end
 end

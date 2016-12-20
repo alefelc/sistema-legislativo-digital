@@ -8,7 +8,7 @@ class Procedure < ActiveRecord::Base
   has_and_belongs_to_many :areas
   has_many :procedures_municipal_offices
   has_many :municipal_offices, through: :municipal_offices_procedures
-  has_many :estado_procedures
+  has_many :procedure_states
   has_many :administrative_files
   belongs_to :circuito # I think this is deprecated!!!
   has_many :uploads
@@ -22,10 +22,9 @@ class Procedure < ActiveRecord::Base
   belongs_to :contingency_plan
 
   #== Nested attributes
-  # accepts_nested_attributes_for :uploads
-  # accepts_nested_attributes_for :estado_procedures, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :uploads, reject_if: :all_blank
   accepts_nested_attributes_for :administrative_files, reject_if: :all_blank
-  accepts_nested_attributes_for :estado_procedures
+  accepts_nested_attributes_for :procedure_states, reject_if: :all_blank
 
   # == Callbacks
   after_create :initial_state
@@ -64,6 +63,6 @@ class Procedure < ActiveRecord::Base
   private
 
   def initial_state
-    self.estado_procedures.create nombre: 'Iniciado', tipo: 1
+    self.procedure_states.create nombre: 'Iniciado', tipo: 1
   end
 end

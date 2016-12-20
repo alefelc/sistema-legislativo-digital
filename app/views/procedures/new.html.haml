@@ -2,7 +2,7 @@
 #procedure-new
   %h2.text-center
     = t '.new_procedure'
-  = form_for @procedure do |f|
+  = form_for @procedure, { multipart: true } do |f|
     .box.box-primary
       .box-body
         .row
@@ -14,9 +14,7 @@
               %li
                 %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#settings' }
                   = t '.derivations'
-              - puts current_user.roles.map(&:activities)
-              - puts "lalallal"
-              - if policy(AdministrativeFile).create?
+              - if policy(:administrative_file).create?
                 %li.common-procedure
                   %a{ 'aria-expanded': 'false', 'data-toggle': 'tab', href: '#administrative-files' }
                     = t '.administrative_files'
@@ -93,13 +91,14 @@
                     .finished-field{ style: 'display: none' }
                       = label_tag :finalizado_en
                       = text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true }
-                - if true #contingency role
+                - if policy(:contingency_plan).create?
                   = render 'contingency_plan'
               #profile.tab-pane.fade
                 %p.lead.box-header.with-border Puede adjuntar todo tipo de archivos
-                .form-group
-                  %label{ for: 'exampleInputFile' } Busque y seleccione archivos
-                  %input#exampleInputFile{ type: :file }
+                = f.fields_for :uploads do |upload|
+                  .form-group.uploads
+                    = f.label :upload, 'Busque y seleccione archivos'
+                    = f.file_field :upload, type: :file, multiple: true
 
               #administrative-files.tab-pane.fade
                 %p.lead.box-header.with-border Cargue expedientes administrativos
@@ -110,11 +109,11 @@
                       = link_to_add_association '', f, :administrative_files, class: 'btn btn-success btn-lg fa fa-plus', title: 'Agregar nuevo expediente administrativo'
               #settings.tab-pane.fade
                 %p.lead.box-header.with-border Área a la que se deriva actualmente el trámite
-                #estado_procedures
-                  = f.fields_for :estado_procedures do |estado|
-                    = render 'estado_procedure_fields', f: estado
+                #procedure_states
+                  = f.fields_for :procedure_states do |state|
+                    = render 'procedure_state_fields', f: state
                     .links
-                      = link_to_add_association '', f, :estado_procedures, class: 'btn btn-success btn-lg fa fa-plus'
+                      = link_to_add_association '', f, :procedure_states, class: 'btn btn-success btn-lg fa fa-plus'
           .clearfix
       .box-footer
         .pull-right
@@ -132,5 +131,12 @@ $(document).on('ready', function() {
     $('#fecha_y_hora').datetimepicker();
     Procedures.initiatorsSelect2();
     Procedures.updateProcedureType();
+    $('.derivation').select2();
+
+    $('.add_fields').on('click', function() {
+      $('.derivation:last').select2();
+    });
+
+    $('#new_procedure').fileupload();
   }
 })

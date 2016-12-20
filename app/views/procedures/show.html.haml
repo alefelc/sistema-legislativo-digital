@@ -4,12 +4,18 @@
     %b= "#{@procedure.id}"
 
   .box.box-primary
-    .lead.box-header.with-border
-      Tipo de trámite:
-      - if @procedure.type.present?
-        %b= I18n.t("procedures.types.#{@procedure.type}")
-      - else
-        %i.small= t('.not_specified')
+    .lead.box-header.with-border.row
+      .procedure-type.col-md-6
+        Tipo de trámite:
+        - if @procedure.type.present?
+          %b= I18n.t("procedures.types.#{@procedure.type}")
+        - else
+          %i.small= t('.not_specified')
+      .col-md-6
+        = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
+          %i.fa.fa-pencil-square-o{ 'aria-hidden': :true }
+          Editar trámite
+
     .box-body
       .col-md-12.form-group
         %label Asunto
@@ -21,13 +27,22 @@
       .col-md-6.form-group
         %label Observaciones
         %span.form-control.input-lg{ readonly: :true }= @procedure.observations
-      .col-md-12
+      .col-md-6
         .panel.panel-default
-          .panel-heading Iniciador/es
+          .panel-heading
+            %strong Iniciador/es
           .panel-body
             .list-group
               - @procedure.persons.each do |p|
                 = link_to p.full_name, person_path(p), class: 'list-group-item btn'
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            %strong Expedientes Administrativos
+          .panel-body
+            .list-group
+              - @procedure.administrative_files.each do |p|
+                = link_to p.to_s, administrative_file_path(p), class: 'list-group-item btn'
 
 :javascript
 $(document).ready(function() {

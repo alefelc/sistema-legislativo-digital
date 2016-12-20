@@ -28,12 +28,11 @@
 
                   %li.user-header
                     %h4= current_user.person.full_name if current_user.person.present?
-                  / Before this check if the current user is an administrator
-                  %li.user-body
-                    .col-xs-12.text-center
-                      %a.btn.btn-warning.fa.fa-gears{ href: '/admin',
-                        title: 'Opciones de Administrador' } Administrador
-
+                  - if current_user.present? && current_user.admin?
+                    %li.user-body
+                      .col-xs-12.text-center
+                        %a.btn.btn-warning.fa.fa-gears{ href: '/admin',
+                          title: 'Opciones de Administrador' } Administrador
                   %li.user-footer
 
                     #log-out.pull-right

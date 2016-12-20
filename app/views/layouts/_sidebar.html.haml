@@ -34,22 +34,26 @@
       -#         %i.fa.fa-bar-chart
       -#         = t '.statistics'
 
-      -# %li.treeview
-      -#   %a{ href: '#' }
-      -#     %i.fa.fa-file-text-o
-      -#     %span= t '.expedientes'
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: expedientes_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.expediente.legislativo'
-      -#     - if current_user.present?
-      -#       %li
-      -#         %a{ href: pendientes_path }
-      -#           %i.fa.fa-circle-o
-      -#           = t '.expediente.pendientes'
-      -#     %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
+      %li.treeview
+        %a{ href: '#' }
+          %i.fa.fa-file-text-o
+          %span= t '.files'
+          %i.fa.fa-angle-left.pull-right
+        %ul.treeview-menu
+          %li
+            %a{ href: legislative_files_path }
+              %i.fa.fa-circle-o
+              = t '.legislative_files'
+          - if policy(LegislativeFile).create?
+            %li
+              %a{ href: new_legislative_file_path }
+                %i.fa.fa-circle-o
+                = t '.new_legislative_file'
+          %hr{ style: "border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px" }
+          %li
+            %a{ href: administrative_files_path }
+              %i.fa.fa-circle-o
+              = t '.administrative_files'
       -#     %li
       -#       %a{ href: reports_expedientes_path }
       -#         %i.fa.fa-th-list

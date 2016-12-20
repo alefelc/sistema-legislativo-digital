@@ -1,1 +1,27 @@
-%h3
+#initiators-modal
+#user-new
+  %h2.text-center
+    = t '.user_title'
+
+  .box.box-primary
+    = form_for @user, url: user_path(@user) do |f|
+      .lead.box-header.with-border
+        Edite accesos del usuario
+      .box-body
+        = render 'user_form', f: f, user: @user
+      .box-footer
+        .pull-right
+          = link_to users_path, class: 'btn btn-default' do
+            .fa.fa-times-circle
+            Cancelar
+          %button.btn.btn-success.btn-lg{ type: :submit }
+            .fa.fa-save.fa-lg
+            = t('.submit')
+
+:javascript
+$(document).on('ready', function() {
+  if($('#user-new').length) {
+    Users.searchRoles();
+  }
+})
+

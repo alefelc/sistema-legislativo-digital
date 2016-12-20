@@ -1,0 +1,20 @@
+.nested-fields
+  .row
+    .col-md-11
+      .field
+        = label_tag :derivation, 'Derivado a'
+        = select_tag :derivation, options_for_select(["Secretaría legislativa"]), class: 'derivation'
+      -# .field
+      -#   = f.label :nombre
+      -#   %br
+      -#   = f.text_field :nombre
+      -# .field
+      -#   = f.label :especificacion
+      -#   %br
+      -#   = f.text_field :especificacion
+      -# .field
+      -#   = f.label :tipo
+      -#   %br
+      -#   = f.text_field :tipo
+    .col-md-1
+      = link_to_remove_association '', f, class: 'btn btn-danger btn-lg fa fa-times'

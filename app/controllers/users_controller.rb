@@ -25,10 +25,19 @@ class UsersController < ApplicationController
 
   def edit
     authorize :configurations, :all?
+    @user = User.find params[:id]
   end
 
   def update
     authorize :configurations, :all?
+    @user = User.find params[:id]
+    if @user.update user_update_params
+      flash[:success] = t '.success'
+      redirect_to users_path
+    else
+      flash[:error] = @user.errors.full_messages
+      redirect_to edit_user_path(@user)
+    end
   end
 
   private
@@ -36,5 +45,17 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit :person_id, :email, :password,
                                  :password_confirmation, role_ids: []
+  end
+
+  def users_params_no_pass
+    params.require(:user).permit :person_id, :email, role_ids: []
+  end
+
+  def user_update_params
+    if params[:user][:password].empty?
+      users_params_no_pass
+    else
+      users_params
+    end
   end
 end

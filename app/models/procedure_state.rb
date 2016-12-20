@@ -1,5 +1,4 @@
 class ProcedureState < ActiveRecord::Base
-
   #== Associations
   belongs_to :procedure
 
