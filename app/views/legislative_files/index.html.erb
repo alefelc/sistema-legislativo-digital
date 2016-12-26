@@ -1,0 +1,28 @@
+<div id="index-legislative-files">
+  <div class="box box-primary" id="procedures">
+    <div class="box-header">
+      <h3 class="box-title"> Expedientes </h3>
+    </div>
+    <div class="box-body">
+      <table class="table table-bordered table-striped dataTable" id="legislative-files-table" data-source="<%= legislative_files_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>Expediente nro</th>
+            <th>Sumario</th>
+            <th>Fecha</th>
+            <th>Circuitos</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).on('ready', function() {
+  if ($('#index-legislative-files').length) {
+    $('#legislative-files-table').dataTable();
+  }
+});
+</script>
