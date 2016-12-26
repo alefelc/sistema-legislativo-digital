@@ -4,6 +4,6 @@ class CreateCircuitosAndDespachos < ActiveRecord::Migration
       t.belongs_to :circuito, index: true
       t.belongs_to :despacho, index: true
     end
-    drop_table :expedientes_despachos
+    drop_table :expedientes_despachos if ActiveRecord::Base.connection.table_exists? 'expedientes_despachos'
   end
 end
