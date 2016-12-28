@@ -10,7 +10,7 @@ class Procedure < ActiveRecord::Base
   has_many :municipal_offices, through: :municipal_offices_procedures
   has_many :procedure_states
   has_many :administrative_files
-  belongs_to :circuito # I think this is deprecated!!!
+  belongs_to :circuito ## Rename it! ## Maybe has_many!?!?!?!!?!?
   has_many :uploads
   has_many :processes_signatories,
            foreign_key: :process_id,
@@ -31,6 +31,13 @@ class Procedure < ActiveRecord::Base
 
   # == PaperTrail changes tracker
   has_paper_trail
+
+  def legislative_file_ids=(file_ids)
+    ## What happened with circuito? why belongs_to relationship?
+    file_ids.each do |f|
+      circuitos << LegislativeFile.find(f)
+    end
+  end
 
   def to_date date
     date.strftime("%d/%m/%Y") unless date.nil?

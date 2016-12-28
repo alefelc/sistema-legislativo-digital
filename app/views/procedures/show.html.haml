@@ -17,10 +17,11 @@
           Editar trámite
 
     .box-body
-      .col-md-12.form-group
-        %label Asunto
-        %textarea.input-lg.form-control.topic-area{ readonly: :true }
-          = @procedure.topic
+      - if @procedure.type != 'Despacho'
+        .col-md-12.form-group
+          %label Asunto
+          %textarea.input-lg.form-control.topic-area{ readonly: :true }
+            = @procedure.topic
       .col-md-6.form-group
         %label Fojas
         %span.form-control.input-lg{ readonly: :true }= @procedure.sheets

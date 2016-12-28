@@ -6,7 +6,7 @@ class ProcedureForm
   end
 
   def initialize(params={})
-    @procedure = Procedure.new params.dup.slice(:type, :sheets, :topic, :observations, :person_ids, :administrative_files_attributes)
+    @procedure = Procedure.new params#.dup.slice(:type, :sheets, :topic, :observations, :person_ids, :administrative_files_attributes)
   end
 
   def id

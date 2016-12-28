@@ -53,17 +53,17 @@ class Procedures {
     }
     $('#procedure_person_ids').select2(options)
 
-    options.ajax.url = "<%= url_helpers.expedientes_path format: :json %>"
+    options.ajax.url = "<%= url_helpers.legislative_files_path  %>"
     options.placeholder = 'Busque expedientes ...'
-    $('#procedure_legislative_files').select2(options)
+    $('#legislative_file_ids').select2(options)
 
     options.ajax.url = "<%= url_helpers.initiators_path(only: :councilors, format: :json) %>"
     options.placeholder = 'Busque concejales por nombre y/o apellido ...'
-    $('#procedure_councilors').select2(options)
+    $('#councilor_ids').select2(options)
 
     options.ajax.url = "<%= url_helpers.initiators_path(only: :commissions, format: :json) %>"
     options.placeholder = 'Busque por nombre de comisión ...'
-    $('#procedure_commissions').select2(options)
+    $('#comision_ids').select2(options)
 
     $('.finished').on('click', () => {
       if ($('.finished').attr('checked')) {

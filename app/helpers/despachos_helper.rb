@@ -31,7 +31,7 @@ module DespachosHelper
   end
 
   def month_options
-    [
+    options_for_select([
       ["Enero", 1],
       ["Febrero", 2],
       ["Marzo", 3],
@@ -44,7 +44,7 @@ module DespachosHelper
       ["Octubre", 10],
       ["Noviembre", 11],
       ["Diciembre", 12]
-    ]
+    ])
   end
 
   def year_options

@@ -1,7 +1,7 @@
 class Circuito < ActiveRecord::Base
   # == Associations
   belongs_to :legislative_file
-  has_many :estado_legislative_files
+  has_many :legislative_file_states
   has_many :procedures
   has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
 
