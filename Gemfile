@@ -4,6 +4,9 @@ source 'https://rails-assets.org' do
 
   # Ajax synchronizate datatables
   gem 'rails-assets-datatables'
+
+  # Open source JavaScript jQuery plugin for a full-sized, drag & drop event calendar.
+  gem 'rails-assets-fullcalendar'
 end
 
 source 'https://rubygems.org'
@@ -117,6 +120,7 @@ gem 'autosize-rails'
 
 # Fast, Nimble PDF Writer for Ruby
 gem 'prawn'
+gem 'prawn-table'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

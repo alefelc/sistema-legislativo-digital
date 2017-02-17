@@ -1,0 +1,12 @@
+        <div class="box-footer">
+          <div class="pull-right">
+            <%= link_to procedures_path, class: 'btn btn-default' do %>
+              <div class="fa fa-times-circle"></div>
+              Cancelar
+            <% end %>
+            <button class="btn btn-success btn-lg" type="<%= :submit %>">
+              <div class="fa fa-save fa-lg"></div>
+              <%= t('.submit') %>
+            </button>
+          </div>
+        </div>

@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 
   resources :initiators
 
-  resources :persons, only: [:create, :update], as: :people
+  resources :persons, only: [:create, :update, :new], as: :people
 
   resources :reparticion_oficials
 
@@ -121,4 +121,8 @@ Rails.application.routes.draw do
   resources :government_organs
 
   resources :legislative_files
+
+  get 'calendar', to: 'calendar#index'
+
+  resources :sessions
 end

@@ -25,8 +25,8 @@ class Procedures {
   }
   static initiatorModal() {
     $('#procedure-new').on('ajax:success', '.initiator-btn', function(XHR, data, success) {
-      $('#initiators-modal').html(data);
-      $('#initiators-modal .modal').modal('show');
+      $('.initiators-modal').html(data);
+      $('.initiators-modal .modal').modal('show');
     })
   }
   static initiatorsSelect2() {
@@ -91,3 +91,22 @@ class Procedures {
     })
   }
 }
+
+$(document).on('ready', function() {
+  if ($('#procedure-new').length) {
+    Procedures.initiatorModal();
+    $('#fecha_y_hora').datetimepicker({
+      locale: 'es',
+      format:'DD/MM/YYYY HH:mm'
+    });
+    Procedures.initiatorsSelect2();
+    Procedures.updateProcedureType();
+    $('.derivation').select2();
+
+    $('.add_fields').on('click', function() {
+      $('.derivation:last').select2();
+    });
+
+    $('#new_procedure').fileupload();
+  }
+})

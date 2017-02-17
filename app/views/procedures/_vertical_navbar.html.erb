@@ -1,0 +1,24 @@
+<ul class="nav nav-pills nav-stacked">
+  <li class="active">
+    <a aria-expanded="true" data-toggle="tab" href="#home">
+      <%= t '.information' %>
+    </a>
+  </li>
+  <li>
+    <a aria-expanded="false" data-toggle="tab" href="#settings">
+      <%= t '.derivations' %>
+    </a>
+  </li>
+  <% if policy(:administrative_file).create? %>
+    <li class="common-procedure">
+      <a aria-expanded="false" data-toggle="tab" href="#administrative-files">
+        <%= t '.administrative_files' %>
+      </a>
+    </li>
+  <% end %>
+  <li>
+    <a aria-expanded="false" data-toggle="tab" href="#profile">
+      <%= t '.attached_files' %>
+    </a>
+  </li>
+</ul>

@@ -1,5 +1,5 @@
 class ProceduresController < ApplicationController
-  before_action :authenticate_user!, only: [:new]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     respond_to do |format|
@@ -35,7 +35,7 @@ class ProceduresController < ApplicationController
   def edit
     authorize Procedure, :edit?
 
-    @procedure = ProcedureForm.new procedure_params
+    @procedure = Procedure.find params[:id]
   end
 
   def update

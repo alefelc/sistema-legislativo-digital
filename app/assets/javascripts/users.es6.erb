@@ -31,3 +31,54 @@ class Users {
     $('#user_role_ids').select2(options);
   }
 }
+
+class CreatePerson {
+  constructor() {
+    this.button = 'a.initiator-btn';
+    this.modal = '.initiators-modal';
+    this.addClickEvent();
+    this.modalEvents();
+  }
+
+  addClickEvent() {
+    $(this.button).on('click', () => {
+      console.log("clicked!");
+      $.get("<%= url_helpers.new_person_path %>",
+        (response) => {
+          $(this.modal).html(response);
+          $(this.modal).find('.modal').modal('show');
+        }
+      )
+    });
+  }
+
+  modalEvents() {
+    let events = {
+      'ajax:success': (event) => {
+        $(this.modal).find('.modal').modal('hide');
+      },
+      'ajax:error': (event) => {
+        console.log('Imprementation missing: Error handler was necessary! file: app/assets/javascripts/users.es6.erb');
+      }
+    };
+
+    // modal events handler
+    $(this.modal).on(events);
+  }
+}
+
+// Script start
+$(document).on('ready', function(){
+  if ($('#users').length)
+    $('#users-table').dataTable();
+
+  if ($('#user-new').length) {
+    Users.searchRoles();
+    new CreatePerson();
+  }
+
+  if ($('#user-edit').length) {
+    Users.searchRoles();
+    new CreatePerson();
+  }
+});

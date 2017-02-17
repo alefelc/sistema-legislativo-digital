@@ -1,4 +1,5 @@
-ActiveAdmin.register_page "AdministrativeFile" do
+ActiveAdmin.register_page "administrative_file" do
+  menu label: "Expedientes administrativos"
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     section "Recently updated content" do

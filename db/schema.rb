@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216154509) do
+ActiveRecord::Schema.define(version: 20170214144729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,47 +129,6 @@ ActiveRecord::Schema.define(version: 20161216154509) do
 
   add_index "capitulos_normas", ["capitulo_id"], name: "index_capitulos_normas_on_capitulo_id", using: :btree
   add_index "capitulos_normas", ["norma_id"], name: "index_capitulos_normas_on_norma_id", using: :btree
-
-  create_table "circuito_ordens", force: :cascade do |t|
-    t.integer  "seccion_id"
-    t.integer  "sub_seccion_id"
-    t.string   "destino"
-    t.integer  "circuito_id"
-    t.integer  "orden_del_dia_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "circuito_ordens", ["circuito_id"], name: "index_circuito_ordens_on_circuito_id", using: :btree
-  add_index "circuito_ordens", ["orden_del_dia_id"], name: "index_circuito_ordens_on_orden_del_dia_id", using: :btree
-
-  create_table "circuitos", force: :cascade do |t|
-    t.integer  "legislative_file_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "nro"
-    t.string   "tema"
-    t.date     "anio"
-    t.integer  "fojas"
-  end
-
-  add_index "circuitos", ["legislative_file_id"], name: "index_circuitos_on_legislative_file_id", using: :btree
-
-  create_table "circuitos_despachos", force: :cascade do |t|
-    t.integer "circuito_id"
-    t.integer "despacho_id"
-  end
-
-  add_index "circuitos_despachos", ["circuito_id"], name: "index_circuitos_despachos_on_circuito_id", using: :btree
-  add_index "circuitos_despachos", ["despacho_id"], name: "index_circuitos_despachos_on_despacho_id", using: :btree
-
-  create_table "circuitos_normas", id: false, force: :cascade do |t|
-    t.integer "circuito_id"
-    t.integer "norma_id"
-  end
-
-  add_index "circuitos_normas", ["circuito_id"], name: "index_circuitos_normas_on_circuito_id", using: :btree
-  add_index "circuitos_normas", ["norma_id"], name: "index_circuitos_normas_on_norma_id", using: :btree
 
   create_table "clasificacions", force: :cascade do |t|
     t.string   "nombre"
@@ -293,7 +252,7 @@ ActiveRecord::Schema.define(version: 20161216154509) do
     t.text     "especificacion1"
     t.text     "especificacion2"
     t.string   "tipo"
-    t.integer  "circuito_id"
+    t.integer  "loop_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "ref_id"
@@ -301,7 +260,7 @@ ActiveRecord::Schema.define(version: 20161216154509) do
     t.date     "fecha"
   end
 
-  add_index "legislative_file_states", ["circuito_id"], name: "index_legislative_file_states_on_circuito_id", using: :btree
+  add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
   add_index "legislative_file_states", ["ref_type", "ref_id"], name: "index_legislative_file_states_on_ref_type_and_ref_id", using: :btree
 
   create_table "legislative_files", force: :cascade do |t|
@@ -338,6 +297,47 @@ ActiveRecord::Schema.define(version: 20161216154509) do
     t.datetime "updated_at", null: false
     t.integer  "orden"
   end
+
+  create_table "loop_ordens", force: :cascade do |t|
+    t.integer  "seccion_id"
+    t.integer  "sub_seccion_id"
+    t.string   "destino"
+    t.integer  "loop_id"
+    t.integer  "orden_del_dia_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "loop_ordens", ["loop_id"], name: "index_loop_ordens_on_loop_id", using: :btree
+  add_index "loop_ordens", ["orden_del_dia_id"], name: "index_loop_ordens_on_orden_del_dia_id", using: :btree
+
+  create_table "loops", force: :cascade do |t|
+    t.integer  "legislative_file_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "nro"
+    t.string   "tema"
+    t.date     "anio"
+    t.integer  "fojas"
+  end
+
+  add_index "loops", ["legislative_file_id"], name: "index_loops_on_legislative_file_id", using: :btree
+
+  create_table "loops_despachos", force: :cascade do |t|
+    t.integer "loop_id"
+    t.integer "despacho_id"
+  end
+
+  add_index "loops_despachos", ["despacho_id"], name: "index_loops_despachos_on_despacho_id", using: :btree
+  add_index "loops_despachos", ["loop_id"], name: "index_loops_despachos_on_loop_id", using: :btree
+
+  create_table "loops_normas", id: false, force: :cascade do |t|
+    t.integer "loop_id"
+    t.integer "norma_id"
+  end
+
+  add_index "loops_normas", ["loop_id"], name: "index_loops_normas_on_loop_id", using: :btree
+  add_index "loops_normas", ["norma_id"], name: "index_loops_normas_on_norma_id", using: :btree
 
   create_table "modifica_relationships", force: :cascade do |t|
     t.integer  "modifica_id"
@@ -561,15 +561,15 @@ ActiveRecord::Schema.define(version: 20161216154509) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.date     "fecha"
-    t.integer  "circuito_id"
+    t.integer  "loop_id"
     t.integer  "day"
     t.integer  "month"
     t.integer  "year"
     t.integer  "contingency_plan_id"
   end
 
-  add_index "procedures", ["circuito_id"], name: "index_procedures_on_circuito_id", using: :btree
   add_index "procedures", ["contingency_plan_id"], name: "index_procedures_on_contingency_plan_id", using: :btree
+  add_index "procedures", ["loop_id"], name: "index_procedures_on_loop_id", using: :btree
 
   create_table "procedures_reparticion_oficials", id: false, force: :cascade do |t|
     t.integer "reparticion_oficial_id"
@@ -578,6 +578,16 @@ ActiveRecord::Schema.define(version: 20161216154509) do
 
   add_index "procedures_reparticion_oficials", ["procedure_id"], name: "index_procedures_reparticion_oficials_on_procedure_id", using: :btree
   add_index "procedures_reparticion_oficials", ["reparticion_oficial_id"], name: "index_procedures_reparticion_oficials_on_reparticion_oficial_id", using: :btree
+
+  create_table "processes_signatories", force: :cascade do |t|
+    t.integer  "process_id"
+    t.integer  "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "processes_signatories", ["person_id"], name: "index_processes_signatories_on_person_id", using: :btree
+  add_index "processes_signatories", ["process_id"], name: "index_processes_signatories_on_process_id", using: :btree
 
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"
@@ -616,17 +626,20 @@ ActiveRecord::Schema.define(version: 20161216154509) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sesions", force: :cascade do |t|
-    t.integer  "nro"
-    t.text     "observacion"
-    t.string   "tipo1"
-    t.string   "tipo2"
+  create_table "sessions", force: :cascade do |t|
+    t.integer  "number"
+    t.text     "observation"
     t.integer  "diario_de_sesion_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "session_type"
+    t.string   "place"
+    t.boolean  "secret"
+    t.datetime "started_at"
+    t.datetime "finished_at"
   end
 
-  add_index "sesions", ["diario_de_sesion_id"], name: "index_sesions_on_diario_de_sesion_id", using: :btree
+  add_index "sessions", ["diario_de_sesion_id"], name: "index_sessions_on_diario_de_sesion_id", using: :btree
 
   create_table "sub_seccions", force: :cascade do |t|
     t.string   "nombre"

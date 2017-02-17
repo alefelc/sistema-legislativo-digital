@@ -2,7 +2,7 @@ class LegislativeFile < ActiveRecord::Base
 
   #= Associations
   has_many :administrative_files
-  has_many :circuitos
+  has_many :loops
   has_and_belongs_to_many :tags
   has_many :normas
 
@@ -10,7 +10,7 @@ class LegislativeFile < ActiveRecord::Base
   has_many :estado_procedures, as: :ref
 
   #== Shortcut association
-  has_many :legislative_file_states, through: :circuitos
+  has_many :legislative_file_states, through: :loops
 
   #== Association recursive expediente acumula
   has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumula_id"
@@ -26,18 +26,18 @@ class LegislativeFile < ActiveRecord::Base
 
   #== Callbacks
   before_create :put_expediente_number
-  after_create :zero_circuit_by_default
+  after_create :zero_loop_by_default
   before_create :set_bis
 
   #== Nested attributes
-  accepts_nested_attributes_for :circuitos
+  accepts_nested_attributes_for :loops
 
-  def last_circuit
-    self.circuitos.order(:nro).last
+  def last_loop
+    loops.order(:nro).last
   end
 
   def set_bis
-    self.bis = 0
+    bis = 0
   end
 
   def put_expediente_number
@@ -45,9 +45,9 @@ class LegislativeFile < ActiveRecord::Base
     self.nro_exp = (last.nro_exp.to_i + 1).to_s if last.present?
   end
 
-  def zero_circuit_by_default
-    circuit = Circuito.create nro: 0, legislative_file: self
-    circuit.legislative_file_states.create nombre: "Iniciado", tipo: 1, fecha: self.anio
+  def zero_loop_by_default
+    loop = Loop.create nro: 0, legislative_file: self
+    loop.legislative_file_states.create nombre: "Iniciado", tipo: 1, fecha: self.anio
   end
 
   def get_anio_expediente
@@ -60,10 +60,6 @@ class LegislativeFile < ActiveRecord::Base
 
   def get_exps_adm
     self.administrative_files
-  end
-
-  def get_circuitos
-    self.circuitos.where.not(nro: 0).order(nro: :asc)
   end
 
   def get_despachos

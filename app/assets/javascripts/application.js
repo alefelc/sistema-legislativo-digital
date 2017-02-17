@@ -1,3 +1,4 @@
+/*  External libraries */
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -8,15 +9,17 @@
 //= require Chart.min
 //= require bootstrap-multiselect
 //= require reception
-//= require react
-//= require react_ujs
 //= require components
 //= require sweetalert
 //= require moment
 //= require daterangepicker
 //= require bootstrap-datetimepicker
+//= require moment/es
 //= require icheck
 //= require cocoon
 //= require jquery.autosize
 //= require jquery-fileupload
+//= require fullcalendar
+
+/* System libraries */
 //= require_tree .

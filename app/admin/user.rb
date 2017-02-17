@@ -1,5 +1,5 @@
-ActiveAdmin.register_page "Registro de usuarios" do
-  menu :parent => "Usuarios"
+ActiveAdmin.register_page "users_list" do
+  menu parent: "Usuarios", label: "Registro de usuarios"
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     section "Recently updated content" do

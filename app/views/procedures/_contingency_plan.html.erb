@@ -1,0 +1,27 @@
+<div class="box box-danger collapsed-box">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      Plan de contingencia
+    </h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="<%= :collapse %>" type="<%= :button %>">
+        <div class="fa fa-plus"></div>
+      </button>
+    </div>
+  </div>
+  <div class="row box-body" style="display: none">
+    <div class="form-group col-md-6">
+      <%= label_tag :fecha_y_hora %>
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-clock-o"></i>
+        </div>
+        <%= text_field_tag :fecha_y_hora, '', class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia' %>
+      </div>
+    </div>
+    <div class="form-group col-md-12">
+      <%= label_tag :causa %>
+      <%= text_area_tag :causa, '', class: 'form-control', placeholder: 'Indique el motivo de la contingencia' %>
+    </div>
+  </div>
+</div>

@@ -136,31 +136,33 @@ es:
     new:
       procedures: Trámites
       new_procedure: Nuevo Trámite
+      initiators: Iniciadores
+      finished_at: Finalizado en
+      finished_placeholder: Indique la culminación del trámite
+      placeholder_initiators: Busque iniciadores...
+      submit: Guardar
+    info:
+      commissions: Comisiones
+      dispatch_date: Fecha del despacho
+      councilors: Concejales
+      legislative_files: Expedientes legislativos
+      topic_placeholder: Sumario del trámite
+      blank_type: Seleccione tipo de trámite
+      topic: Asunto
+      persons: Iniciadores
+      load_new_info: Cargue la información del nuevo trámite
+      type: Tipo de trámite
+      add: Agregar
+      sheets_number: Nro. fojas
+      sheets: Fojas
+      observations: Observaciones
+      observations_placeholder: Detalles respecto al trámite
+      process_completed: ¿Trámite finalizado?
+    vertical_navbar:
       information: Información
       derivations: Derivaciones
       administrative_files: Expedientes Administrativos
       attached_files: Archivos Adjuntos
-      load_new_info: Cargue la información del nuevo trámite
-      type: Tipo de trámite
-      initiators: Iniciadores
-      add: Agregar
-      sheets_number: Nro. fojas
-      sheets: Fojas
-      topic: Asunto
-      persons: Iniciadores
-      councilors: Concejales
-      commissions: Comisiones
-      dispatch_date: Fecha del despacho
-      legislative_files: Expedientes legislativos
-      topic_placeholder: Sumario del trámite
-      observations: Observaciones
-      observations_placeholder: Detalles respecto al trámite
-      process_completed: ¿Trámite finalizado?
-      finished_at: Finalizado en
-      finished_placeholder: Indique la culminación del trámite
-      blank_type: Seleccione tipo de trámite
-      placeholder_initiators: Busque iniciadores...
-      submit: Guardar
     types:
       # condonation: Condonación
       # particular_request: Petición Particular
@@ -196,6 +198,43 @@ es:
       created_at: Creado el
       activities: Permisos
       roles_amount: Roles asignados
+    activities:
+      procedure: "Trámites:"
+      configurations: "Administrador:"
+      administrative_file: "Expediente administrativo:"
+      contingency_plan: "Plan de Contingencia:"
+      legislative_file: "Expediente legislativo:"
+    actions:
+      configurations:
+        all: "Configuraciones del sistema"
+      procedure:
+        create: Crear trámites
+        type_create: Tipos de trámites (en nuevo)
+        sheets_create: Hojas (en nuevo)
+        topic_create: Asunto (en nuevo)
+        initiators_create: Iniciadores (en nuevo)
+        observations_create: Observaciones (en nuevo)
+        finalized_create: Trámite finalizado? (en nuevo)
+        upload_create: Archivos adjuntos (en nuevo)
+        derivations_create: Cargar derivaciones (en nuevo)
+        edit: Editar trámites
+        type_update: Tipos de trámites (en editar)
+        sheets_update: Hojas (en editar)
+        topic_update: Asunto (en editar)
+        initiators_update: Iniciadores (en editar)
+        observations_update: Observaciones (en editar)
+        finalized_update: Trámite finalizado? (en editar)
+        upload_update: Archivos adjuntos (en editar)
+        derivations_update: Cargar derivaciones (en editar)
+      legislative_file:
+        create: Crear expediente legislativo
+        update: Actualizar expediente legislativo
+      administrative_file:
+        create: Crear expediente administrativo
+        update: Actualizar expediente administrativo
+      contingency_plan:
+        create: Crear plan de contingencia
+        update: Actualizar plan de contingencia
 
   initiators:
     types:
@@ -212,3 +251,25 @@ es:
       add: Crear persona no existente
     edit:
       user_title: Editando usuario
+      submit: Actualizar
+    index:
+      user: Usuario
+      email: e-mail
+      current_sign_in_at: Inicio de sesión actual
+      last_sign_in_at: Último inicio de sesión
+      current_sign_in_ip: IP sesión actual
+      last_sign_in_ip: IP último inicio de sesión
+      created_at: Creado el
+      updated_at: Actualizado el
+
+  sessions:
+    types:
+      ordinary: Ordinaria
+      extraordinary: Extraordinaria
+      intermediate_room: Cuarto intermedio
+      special: Especial
+
+  activeadmin:
+    dashboard:
+      user: Usuario
+      procedure: Trámite

@@ -1,5 +1,5 @@
 #users
-  %h2.text-center
+  %h2
     Usuarios del sistema
 
   .box.box-primary
@@ -12,7 +12,7 @@
               Nuevo usuario
 
     .box-body
-      %table.table.table-bordered.table-striped.dataTable#users-table{ 'data-source': users_path(format: :json) }
+      %table.table.table-hover.table-striped.dataTable#users-table{ 'data-source': users_path(format: :json) }
         %thead
           %tr
             %th #
@@ -24,6 +24,7 @@
             %th= t('.last_sign_in_ip')
             %th= t('.created_at')
             %th= t('.updated_at')
+            %th
         %tbody
           - @users.each do |user|
             %tr
@@ -36,9 +37,4 @@
               %td= user.last_sign_in_ip
               %td= user.created_at
               %td= user.updated_at
-
-:javascript
-$(document).on('ready', function(){
-  if ($('#users').length)
-    $('#users-table').dataTable();
-})
+              %td= link_to content_tag(:i, nil, class: 'fa fa-pencil'), edit_user_path(user), class: 'btn btn-warning'

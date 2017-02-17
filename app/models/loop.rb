@@ -1,23 +1,24 @@
-class Circuito < ActiveRecord::Base
+class Loop < ActiveRecord::Base
   # == Associations
   belongs_to :legislative_file
   has_many :legislative_file_states
+  accepts_nested_attributes_for :legislative_file_states, :reject_if => :all_blank, :allow_destroy => true
   has_many :procedures
-  has_and_belongs_to_many :despachos, join_table: 'circuitos_despachos'
+  has_and_belongs_to_many :despachos, join_table: 'loops_despachos'
 
   #== Polymorfic association
   has_many :estado_procedures, as: :ref
 
   #== Asociacion con orden del dia
-  has_many :circuito_ordens
-  has_many :orden_del_dias, :through => :circuito_ordens
+  has_many :loop_ordens
+  has_many :orden_del_dias, :through => :loop_ordens
 
   has_and_belongs_to_many :normas
 
-  before_create :set_circuit_number
+  before_create :set_loop_number
 
   def type
-    "Circuito"
+    "Loop"
   end
 
   def estados
@@ -41,10 +42,10 @@ class Circuito < ActiveRecord::Base
 
   private
 
-  def set_circuit_number
+  def set_loop_number
     if self.nro.nil?
       if legislative_file.present?
-        self.nro = legislative_file.last_circuit.nro + 1
+        self.nro = legislative_file.last_loop.nro + 1
       else
         self.nro = nil
       end

@@ -21,15 +21,20 @@ class ProcedureDatatable
     paginated_procedures.map do |proc|
       [
         #index_procedure(proc),
-        link_to(proc.id, procedure_path(proc), class: 'btn'),
+        proc.id,
         Procedure.human_attribute_name(proc.type),
         "iniciadores",
         proc.topic,
         #get_iniciadores(proc),
         to_date_time(proc.created_at),
-        proc.sheets
+        proc.sheets,
+        actions(proc)
       ]
     end
+  end
+
+  def actions(proc)
+    link_to '', procedure_path(proc), class: 'btn btn-info fa fa-eye'
   end
 
   def procedures

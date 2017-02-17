@@ -1,0 +1,129 @@
+<div class="initiators-modal"></div>
+<div id="legislative-file-new">
+  <h2> Nuevo expediente legislativo </h2>
+  <%= form_for @loop, url: legislative_files_path, multipart: true do |f| %>
+
+    <div class="box box-primary">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-xs-3">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="active">
+                <a aria-expanded="true" data-toggle="tab" href="#info">
+                  Información
+                </a>
+              </li>
+              <li>
+                <a aria-expanded="true" data-toggle="tab" href="#states">
+                  Estados
+                </a>
+              </li>
+              <li>
+                <a aria-expanded="true" data-toggle="tab" href="#attached">
+                  Archivos adjuntos
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-xs-9">
+            <div class="tab-content">
+
+              <div id="info" class="tab-pane fade in active">
+                <div class="lead box-header with-border">
+                  Cargue la información del nuevo expediente
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-10">
+                    <%= label_tag :procedures, "Trámites" %>
+                    <%= select_tag :procedures, options_for_select(["Busque trámites"]), class: 'form-control input-lg' %>
+                  </div>
+
+                  <div class="form-group col-md-2">
+                    <%= label_tag :sheets, 'Fojas' %>
+                    <%= text_field_tag :sheets, nil, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <%= label_tag :date, 'Fecha' %>
+                    <%= text_field_tag :date, nil, { class: 'input-lg form-control', type: 'date' } %>
+                  </div>
+
+
+                  <div class="form-group col-md-12">
+                    <%= label_tag :topic, 'Sumario' %>
+                    <%= text_area_tag :topic, '', class: 'input-lg form-control', placeholder: 'Ingrese sumario' %>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <%= label_tag :accumulated_in, 'Acumulado en' %>
+                    <%= text_field_tag :accumulated_in, nil, { class: 'input-lg form-control', placeholder: 'Busque expediente', type: 'number', min: '1', step: '1' } %>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <%= label_tag :physically_attached, 'Adjuntado físicamente' %>
+                    <%= text_field_tag :physically_attached, nil, { class: 'input-lg form-control', placeholder: 'Busque expediente', type: 'number', min: '1', step: '1' } %>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <%= label_tag :observation, 'Observaciones' %>
+                    <%= text_area_tag :observation, '', class: 'input-lg form-control', placeholder: 'Ingrese observaciones' %>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <%= label_tag :tags, 'Voces claves' %>
+                    <%= text_field_tag :tags, '', class: 'input-lg form-control', placeholder: 'Busque voces claves/etiquetas' %>
+                  </div>
+                </div>
+              </div>
+
+              <div id="states" class="tab-pane fade">
+                <div class="lead box-header with-border">
+                  Cargue estados del expediente
+                </div>
+                <div class="row">
+                  <div id="legislative_file_states">
+                    <%= f.fields_for :legislative_file_states do |file| %>
+                      <%= render 'legislative_file_state_fields', f: file %>
+                      <div class="links">
+                        <%= link_to_add_association '', f, :legislative_file_states, class: 'btn btn-success btn-lg fa fa-plus', title: 'Agregar nuevo estado' %>
+                      </div>
+                    <% end -%>
+                  </div>
+                </div>
+              </div>
+
+              <div id="attached" class="tab-pane fade">
+                <div class="lead box-header with-border">
+                  Puede adjuntar todo tipo de archivos
+                </div>
+                <%= f.fields_for :uploads do |upload| %>
+                  <div class="form-group uploads">
+                    <%= f.label :upload, 'Busque y seleccione archivos' %>
+                    <%= f.file_field :upload, type: :file, multiple: true %>
+                  </div>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <div class="pull-right">
+          <%= link_to legislative_files_path, class: 'btn btn-default' do %>
+            <i class="fa fa-times-circle"></i>
+            Cancelar
+          <% end -%>
+          <%= button_tag type: 'submit', class: 'btn btn-success btn-lg' do  %>
+            <i class="fa fa-save fa-lg"></i>
+            Guardar
+          <% end -%>
+        </div>
+      </div>
+
+    </div>
+  <% end -%>
+</div>

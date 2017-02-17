@@ -5,6 +5,7 @@ es:
       procedure: Trámite
       role: Rol
       user: Usuario
+      session: Sesión
 
     attributes:
       person:
@@ -14,7 +15,7 @@ es:
         cuit_or_dni: CUIT / DNI
         phone: Teléfono
         address: Dirección
-        position: Cargo
+        position: Cargo / Ocupación
 
       procedure:
         sheets: Fojas
@@ -46,3 +47,12 @@ es:
         year: Año
         sheets: Hojas
         topic: Sumario
+
+      session:
+        number: Número de sesión
+        place: Lugar
+        session_type: Tipo de sesión
+        secret: ¿Secreta?
+        started_at: Comienza el
+        finished_at: Finaliza el
+        observation: Observaciones

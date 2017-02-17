@@ -1,0 +1,33 @@
+// Manage session table
+class Session {
+  constructor() {
+    this.table = '#sessions table#session-table';
+    this.startDataTable();
+  }
+
+  startDataTable() {
+    $(this.table).dataTable({
+      processing: true,
+      serverSide: true,
+      lengthChange: true,
+      ajax: {
+        url: $(this.table).data('source'),
+        method: 'GET'
+      }
+    });
+  }
+}
+
+// Script started
+$(document).on('ready', () => {
+  if ($('#sessions').length) {
+    const session = new Session();
+  }
+
+  if ($('.session-new').length) {
+    $('#session_started_at, #session_finished_at').datetimepicker({
+      locale: 'es',
+      format:'DD/MM/YYYY HH:mm'
+    });
+  }
+});

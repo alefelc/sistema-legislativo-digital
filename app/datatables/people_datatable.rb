@@ -1,6 +1,6 @@
 class PeopleDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to_if, :current_user, to: :@view
+  delegate :params, :link_to, :current_user, to: :@view
 
   def initialize(view)
     @view = view
@@ -16,28 +16,24 @@ class PeopleDatatable
   end
 
   private
-
   def data
     paginated_persons.map do |p|
       [
+        p.id,
         p.type,
-        link_to_if(p.nombre.present?, p.nombre, person_path(p)),
-        link_to_if(p.apellido.present?, p.apellido, person_path(p)),
-        p.domicilio,
-        p.nro_doc,
-        p.telefono,
+        p.name,
+        p.surname,
+        p.address,
+        p.cuit_or_dni,
+        p.phone,
         p.email,
-        edit_button(p)
+        actions(p)
       ]
     end
   end
 
-  def edit_button(person)
-    link_to_if current_user.present?, '',
-               edit_person_path(person),
-               class: 'btn btn-warning fa fa-pencil-square-o person-edit',
-               title: 'Editar persona',
-               remote: true
+  def actions(p)
+    link_to '', person_path(p), class: 'btn btn-info fa fa-eye'
   end
 
   def persons

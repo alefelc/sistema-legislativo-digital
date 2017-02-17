@@ -1,0 +1,280 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="header text-center"> <%= t '.main_navigation' %> </li>
+      <li class="treeview">
+        <%= link_to '#' do %>
+          <i class="fa fa-tags fa-lg"></i>
+          <span> <%= t '.reception' %> </span>
+          <i class="fa fa-angle-left pull-right"></i>
+        <% end -%>
+        <ul class="treeview-menu">
+          <li>
+            <%= link_to procedures_path do %>
+              <i class="fa fa-circle-o"></i>
+              <%= t '.all_processes' %>
+            <% end -%>
+          </li>
+          <% if policy(Procedure).create? %>
+            <li>
+              <%= link_to new_procedure_path do %>
+                <i class="fa fa-circle-o"></i>
+                <%= t '.new_process' %>
+              <% end -%>
+            </li>
+          <% end %>
+          <% if edit_link? 'procedures' %>
+            <li class="active">
+              <%= link_to '#' do %>
+                <i class="fa fa-circle-o"></i>
+                <%= t '.edit_process' %>
+              <% end -%>
+            </li>
+          <% end %>
+          <% if show_link? 'procedures' %>
+            <li class="active">
+              <a href="#">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.show_process' %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-file-text-o fa-lg"></i>
+          <span>
+            <%= t '.files' %>
+          </span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a href="<%= legislative_files_path %>">
+              <i class="fa fa-circle-o"></i>
+              <%= t '.legislative_files' %>
+            </a>
+          </li>
+          <% # if policy(LegislativeFile).create? %>
+          <li>
+            <a href="<%= new_legislative_file_path %>">
+              <i class="fa fa-circle-o"></i>
+              Nuevo expediente legislativo
+            </a>
+          </li>
+          <hr style="border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px"/>
+          <li>
+            <a href="<%= administrative_files_path %>">
+              <i class="fa fa-circle-o"></i>
+              <%= t '.administrative_files' %>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="<%= persons_path %>">
+          <i class="fa fa-users fa-lg"></i>
+          <span>Personas</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a href="<%= calendar_path %>">
+          <i class="fa fa-calendar fa-lg"></i>
+          <span>Calendario legislativo</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a href="<%= sessions_path %>">
+          <i class="fa fa-bank fa-lg"></i>
+          <span>Sesiones</span>
+        </a>
+      </li>
+      <% if policy(:configurations).all? %>
+        <li class="header text-center">
+          Configuración de sistema
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user fa-lg"></i>
+            <span>
+              <%= t '.users' %>
+            </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= users_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.all_users' %>
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_user_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.new_user' %>
+              </a>
+            </li>
+            <% if edit_link? 'users' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.edit_user' %>
+                </a>
+              </li>
+            <% end %>
+            <% if show_link? 'users' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.show_user' %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear fa-lg"></i>
+            <span>
+              <%= t '.roles' %>
+            </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= roles_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.all_roles' %>
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_role_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.new_rol' %>
+              </a>
+            </li>
+            <% if edit_link? 'roles' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.edit_rol' %>
+                </a>
+              </li>
+            <% end %>
+            <% if show_link? 'roles' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.show_rol' %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+
+    </ul>
+  </section>
+</aside>
+
+
+      <!-- -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
+      -#     %li
+      -#       %a{ href: statitics_mesa_de_entradas_path }
+      -#         %i.fa.fa-bar-chart
+      -#         = t '.statistics'
+
+
+      -#     %li
+      -#       %a{ href: reports_expedientes_path }
+      -#         %i.fa.fa-th-list
+      -#         = t '.reports'
+      -#     %li
+      -#       %a{ href: statitics_expedientes_path }
+      -#         %i.fa.fa-bar-chart
+      -#         = t '.statistics'
+      -# %li.treeview
+      -#   %a{ href: '#' }
+      -#     %i.fa.fa-bank
+      -#     %span= t '.normas'
+      -#     %i.fa.fa-angle-left.pull-right
+      -#   %ul.treeview-menu
+      -#     %li
+      -#       %a{ href: declaracions_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.declaracion'
+      -#     %li
+      -#       %a{ href: decretos_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.decreto'
+      -#     %li
+      -#       %a{ href: especials_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.especiales'
+      -#     %li
+      -#       %a{ href: ordenanzas_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.ordenanza'
+      -#     %li
+      -#       %a{ href: otra_normas_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.otras'
+      -#     %li
+      -#       %a{ href: resolucions_path }
+      -#         %i.fa.fa-circle-o
+      -#         = t '.norma.resolucion'
+      -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
+      -#     %li
+      -#       %a{ href: reports_normas_path }
+      -#         %i.fa.fa-th-list
+      -#         Reportes
+      -#     %li
+      -#       %a{ href: statitics_normas_path }
+      -#         %i.fa.fa-bar-chart
+      -#         Estadísticas
+      -# %li.treeview
+      -#   %a{ href: '#' }
+      -#     %i.fa.fa-user
+      -#     %span Iniciadores
+      -#     %i.fa.fa-angle-left.pull-right
+      -#   %ul.treeview-menu
+      -#     %li
+      -#       %a{ href: persons_path }
+      -#         %i.fa.fa-circle-o
+      -#         Personas Físicas y Jurídicas
+      -#     %li
+      -#       %a{ href: government_offices_path }
+      -#         %i.fa.fa-circle-o
+      -#         Reparticiones oficiales
+      -#     %li
+      -#       %a{ href: municipal_offices_path }
+      -#         %i.fa.fa-circle-o
+      -#         Dependencias municipales
+      -#     %li
+      -#       %a{ href: councilors_path }
+      -#         %i.fa.fa-circle-o
+      -#         Concejales
+      -#     %li
+      -#       %a{ href: government_organs_path }
+      -#         %i.fa.fa-circle-o
+      -#         Órganos de gobierno
+
+      -# %li.treeview
+      -#   %a{ href: '#' }
+      -#     %i.fa.fa-align-center
+      -#     %span Autoridades
+      -#     %i.fa.fa-angle-left.pull-right
+      -#   %ul.treeview-menu
+      -#     %li
+      -#       %a{ href: '#concejal' }
+      -#         %i.fa.fa-circle-o
+      -#         Concejales
+      -#     %li
+      -#       %a{ href: '#comision' }
+      -#         %i.fa.fa-circle-o
+      -#         Comisiones
+      -#     %li
+      -#       %a{ href: '#bloque' }
+      -#         %i.fa.fa-circle-o
+      -#         Bloques -->

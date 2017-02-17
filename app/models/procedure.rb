@@ -32,6 +32,16 @@ class Procedure < ActiveRecord::Base
   # == PaperTrail changes tracker
   has_paper_trail
 
+  def initiators
+    result = persons.collect(&:full_name)
+    result += bloques.collect(&:name)
+    result += comisions.collect(&:denominacion)
+    result += organo_de_gobiernos.collect(&:name)
+    result += reparticion_oficials.collect(&:name)
+    result += areas.collect(&:name)
+    result.flatten.join("; ")
+  end
+
   def legislative_file_ids=(file_ids)
     ## What happened with circuito? why belongs_to relationship?
     file_ids.each do |f|

@@ -1,4 +1,5 @@
 ActiveAdmin.register_page "Contingency" do
+  menu label: "Contingencias"
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     section "Recently updated content" do

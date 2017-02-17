@@ -1,5 +1,5 @@
 #roles
-  %h2.text-center
+  %h2
     = t '.rols'
 
   .box.box-primary
@@ -12,7 +12,7 @@
               = t('.new')
 
     .box-body
-      %table.table.table-bordered.table-striped.dataTable#roles-table{ 'data-source': roles_path(format: :json) }
+      %table.table.table-hover.table-striped.dataTable#roles-table{ 'data-source': roles_path(format: :json) }
         %thead
           %tr
             %th #
@@ -20,27 +20,13 @@
             %th= t('.created_at')
             %th= t('.activities')
             %th= t('.roles_amount')
+            %th
         %tbody
           - @roles.each do |role|
             %tr{ 'data-id': role.id }
               %td= role.id
               %td= role.name
               %td= role.created_at
-              %td= role.activities.to_s
+              %td= show_activities(role.activities)
               %td= role.users.count
-
-:javascript
-$(document).on('ready', function(){
-  if ($('#roles').length)
-    $('#roles-table').dataTable();
-
-    $('#roles-table').on('click', 'tr', function(ev) {
-      var id = $(ev.currentTarget).data('id');
-      var url = "#{roles_path}/" + id + "/edit";
-      // similar behavior as clicking on a link
-      if(id != undefined)
-        window.location.href = url;
-    });
-})
-
-
+              %td= link_to content_tag(:i, nil, class: 'fa fa-pencil'), edit_role_path(role), class: 'btn btn-warning'

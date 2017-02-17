@@ -1,0 +1,119 @@
+<% if policy(Procedure).type_create? %>
+  <div class="form-group col-md-5">
+    <label for="<%= :procedure_type %>">
+      <%= t('.type') %>
+    </label>
+    <%= f.select :type, procedure_types, { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
+  </div>
+<% end %>
+<% if policy(Procedure).sheets_create? %>
+  <div class="form-group col-md-2">
+    <label for="<%= :procedure_sheets %>">
+      <%= t('.sheets') %>
+    </label>
+    <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 } %>
+  </div>
+<% end %>
+<% if true #dispatch role %>
+  <div class="dispatch-procedure col-md-5">
+    <label for="<%= :procedure_councilor %>">
+      <%= t('.legislative_files') %>
+    </label>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= select_tag :legislative_file_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="dispatch-procedure">
+  <div class="col-md-12">
+    <%= label_tag t('.dispatch_date') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:day, day_options(), { include_blank: true, prompt: 'Día' }, title: 'Día', class: 'input-lg form-control') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:month, month_options(), { include_blank: true, prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:year, year_options(), { include_blank: true, prompt: 'Año' }, title: 'Año', class: 'input-lg form-control') %>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
+      <%= select_tag :councilor_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="<%= :procedure_comision %>">
+        <%= t('.commissions') %>
+      </label>
+      <%= select_tag :comision_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+    </div>
+  </div>
+</div>
+
+<% if policy(Procedure).topic_create? %>
+  <div class="form-group common-procedure col-md-12">
+    <label for="<%= :procedure_topic %>">
+      <%= t('.topic') %>
+    </label>
+    <%= f.text_area :topic, { class: 'input-lg form-control', placeholder: t('.topic_placeholder') } %>
+  </div>
+<% end %>
+<% if policy(Procedure).initiators_create? %>
+  <div class="common-procedure col-md-12">
+    <label for="<%= :procedure_persons %>">
+      <%= t('.persons') %>
+    </label>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="form-group">
+          <%= f.select :person_ids, {}, {}, { multiple: true, class: 'input-lg form-control' } %>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <%= link_to new_initiator_path, class: 'btn-lg initiator-btn btn btn-primary', remote: true do %>
+          <div class="fa fa-user-plus"></div>
+          <%= t '.add' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if policy(Procedure).observations_create? %>
+  <div class="form-group col-md-12">
+    <label for="<%= :procedure_observations %>">
+      <%= t('.observations') %>
+    </label>
+    <%= f.text_field :observations, { class: 'input-lg form-control', placeholder: t('.observations_placeholder') } %>
+  </div>
+<% end %>
+<% if policy(Procedure).finalized_create? %>
+  <div class="common-procedure form-group col-md-12" title="Work In Progress">
+    <div class="checkbox">
+      <label>
+        <div class="finished">
+          <%= check_box_tag :process_completed %>
+        </div>
+        <%= label_tag :process_completed, t('.process_completed') %>
+      </label>
+    </div>
+    <div class="finished-field" style="display: none">
+      <%= label_tag :finalizado_en %>
+      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true } %>
+    </div>
+  </div>
+<% end %>
+<% if policy(:contingency_plan).create? %>
+  <div class="col-md-12">
+    <%= render 'contingency_plan' %>
+  </div>
+<% end %>

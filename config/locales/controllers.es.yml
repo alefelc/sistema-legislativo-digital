@@ -14,3 +14,9 @@ es:
   users:
     update:
       success: Usuario actualizado correctamente
+
+  sessions:
+    create:
+      success: Sesión creada correctamente
+    update:
+      success: Sesión actualizada correctamente

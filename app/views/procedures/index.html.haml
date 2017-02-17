@@ -1,5 +1,7 @@
 #filters
   = render 'filters'
+%h2
+  Trámites ingresados
 .box.box-primary#procedures
   .box-header
     .row
@@ -18,7 +20,7 @@
           Imprimir
 
   .box-body
-    %table.table.table-bordered.table-striped.dataTable#procedures-table{ 'data-source': procedures_path(format: :json) }
+    %table.table.table-striped.dataTable#procedures-table{ 'data-source': procedures_path(format: :json) }
       %thead
         %tr
           %th= t('.procedures')
@@ -27,6 +29,7 @@
           %th= t('.topic')
           %th= t('.created_at')
           %th= t('.sheets')
+          %th
       %tbody
 
 :javascript

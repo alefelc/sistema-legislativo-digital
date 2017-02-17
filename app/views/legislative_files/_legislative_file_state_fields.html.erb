@@ -1,0 +1,40 @@
+<div class="nested-fields row">
+  <div class="col-md-10">
+    <div class="row">
+
+      <div class="col-md-4 field">
+        <%= label_tag :session, 'Nro. sesión' %>
+        <%= text_field_tag :session, nil, class: 'form-control' %>
+      </div>
+
+      <div class="col-md-4 field">
+        <%= label_tag :date, 'Fecha' %>
+        <%= text_field_tag :date, nil, class: 'form-control' %>
+      </div>
+
+      <div class="col-md-4 field">
+        <%= label_tag :state, 'Estado' %>
+        <%= select_tag :state, options_for_select(["Seleccione estado"]), class: 'form-control' %>
+      </div>
+
+      <div class="col-md-4 field"></div>
+
+      <div class="col-md-4 field">
+        <%= label_tag :type1, 'Opción 1' %>
+        <%= text_field_tag :type1, nil, class: 'form-control' %>
+      </div>
+
+      <div class="col-md-4 field">
+        <%= label_tag :type2, 'Opción 2' %>
+        <%= text_field_tag :type2, nil, class: 'form-control' %>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-2" style="padding-top: 23px;">
+    <%= link_to_remove_association '', f, class: 'btn btn-danger btn-lg fa fa-times', title: 'Quitar estado' %>
+  </div>
+  <hr class="col-md-11"/>
+
+</div>

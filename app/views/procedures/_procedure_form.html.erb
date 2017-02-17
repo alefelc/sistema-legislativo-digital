@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-3">
+    <%= render 'vertical_navbar' %>
+  </div>
+
+  <div class="col-xs-9">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" id="home">
+        <div class="lead box-header with-border">
+          <%= t '.load_new_info' %>
+        </div>
+        <div class="row">
+          <%= render 'info', f: f %>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="settings">
+        <p class="lead box-header with-border">Area a la que se deriva actualmente el tramite</p>
+        <%= render 'states', f: f %>
+      </div>
+
+      <div class="tab-pane fade" id="administrative-files">
+        <p class="lead box-header with-border">Cargue expedientes administrativos</p>
+        <%= render 'administrative_files', f: f %>
+      </div>
+
+      <div class="tab-pane fade" id="profile">
+        <p class="lead box-header with-border">Puede adjuntar todo tipo de archivos</p>
+        <%= render 'uploads', f: f %>
+      </div>
+  </div>
+</div>

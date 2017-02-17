@@ -1,4 +1,5 @@
 ActiveAdmin.register_page "Procedure" do
+  menu label: "Trámites"
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     section "Recently updated content" do

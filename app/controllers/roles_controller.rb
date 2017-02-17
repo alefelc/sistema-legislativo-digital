@@ -1,4 +1,6 @@
 class RolesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     authorize :configurations, :all?
     @roles = Role.all

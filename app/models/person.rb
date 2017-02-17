@@ -24,6 +24,10 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def full_name_with_dni
+    cuit_or_dni.present? ? full_name + " (#{cuit_or_dni})" : full_name
+  end
+
   def text
     if cuit_or_dni.present?
      "#{full_name} [dni/cuit: #{cuit_or_dni}]"

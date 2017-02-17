@@ -4,14 +4,15 @@ class PersonsController < ApplicationController
   respond_to :json, :html
 
   def create
-    pers = params[:person]
-    @person = Person.create pers.to_hash
+    person = Person.new persons_params
 
-    render json: {
-      status: :ok,
-      message: "Success!",
-      iniciador: @person.as_json(methods: 'type' )
-    }.to_json
+    if person.save!
+      response = { message: "Success!", iniciador: person.as_json(methods: 'type') }
+      render json: response, status: :ok
+    else
+      response = { message: person.errors }
+      render json: response, status: :bad_request
+    end
   end
 
   def update
@@ -43,10 +44,15 @@ class PersonsController < ApplicationController
     render layout: false
   end
 
+  def new
+    @person = Person.new
+    render layout: false
+  end
+
   private
 
   def persons_params
-    params.require(:person).permit :type, :nombre, :apellido, :email, :nro_doc,
-                                   :telefono, :domicilio, :cuit
+    params.require(:person).permit :type, :name, :surname, :cuit_or_dni, :phone,
+      :cuit_or_dni, :address, :position, :email, :bloque_id
   end
 end
