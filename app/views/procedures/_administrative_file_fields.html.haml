@@ -3,16 +3,16 @@
     .row
       .col-md-3.field
         = f.label :number
-        = f.text_field :number, class: 'form-control'
+        = f.text_field :number, class: 'form-control', type: :number
       .col-md-3.field
         = f.label :letter
         = f.text_field :letter, class: 'form-control'
       .col-md-3.field
         = f.label :year
-        = f.text_field :year, class: 'form-control'
+        = f.text_field :year, class: 'form-control', type: :number
       .col-md-3.field
         = f.label :sheets
-        = f.text_field :sheets, class: 'form-control'
+        = f.text_field :sheets, class: 'form-control', type: :number
       -# .col-md-3.field
       -#   = f.label :topic
       -#   = f.text_field :topic, class: 'form-control'

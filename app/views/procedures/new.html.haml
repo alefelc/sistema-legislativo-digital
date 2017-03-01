@@ -5,7 +5,7 @@
   = form_for @procedure, { multipart: true } do |form|
     .box.box-primary
       .box-body
-        = render 'procedure_form', f: form
+        = render 'form', f: form
       .box-footer
         .pull-right
           = link_to procedures_path, class: 'btn btn-default' do
@@ -14,20 +14,3 @@
           %button.btn.btn-success.btn-lg{ type: :submit }
             .fa.fa-save.fa-lg
             = t('.submit')
-
-:javascript
-$(document).on('ready', function() {
-  if ($('#procedure-new').length) {
-    Procedures.initiatorModal();
-    $('#fecha_y_hora').datetimepicker();
-    Procedures.initiatorsSelect2();
-    Procedures.updateProcedureType();
-    $('.derivation').select2();
-
-    $('.add_fields').on('click', function() {
-      $('.derivation:last').select2();
-    });
-
-    $('#new_procedure').fileupload();
-  }
-})

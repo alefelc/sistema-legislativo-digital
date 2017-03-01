@@ -23,12 +23,7 @@ class Procedures {
       }
     })
   }
-  static initiatorModal() {
-    $('#procedure-new').on('ajax:success', '.initiator-btn', function(XHR, data, success) {
-      $('.initiators-modal').html(data);
-      $('.initiators-modal .modal').modal('show');
-    })
-  }
+
   static initiatorsSelect2() {
     let options = {
       multiple: true,
@@ -92,9 +87,32 @@ class Procedures {
   }
 }
 
+class ProcedureForm {
+  constructor() {
+    this.requestInProcess = false;
+  }
+
+  initiatorsModal() {
+    $('#procedure-new').on('click', '.initiator-btn', (ev) => {
+      if (!this.requestInProcess) {
+        this.requestInProcess = true;
+        $.get(
+          $(ev.currentTarget).data('url'),
+          (response) => {
+            $('.initiators-modal').html(response);
+            $('.initiators-modal .modal').modal('show');
+            this.requestInProcess = false;
+          }
+        );
+      }
+    });
+  }
+}
+
 $(document).on('ready', function() {
   if ($('#procedure-new').length) {
-    Procedures.initiatorModal();
+    let form = new ProcedureForm();
+    form.initiatorsModal();
     $('#fecha_y_hora').datetimepicker({
       locale: 'es',
       format:'DD/MM/YYYY HH:mm'

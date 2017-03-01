@@ -1,9 +1,10 @@
 .nested-fields
   .row
     .col-md-11
+      %label No está habilitado para cargar derivaciones
       .field
-        = label_tag :derivation, 'Derivado a'
-        = select_tag :derivation, options_for_select(["Secretaría legislativa"]), class: 'derivation'
+        = label_tag :derivation, 'Derivado a', disabled: :disabled
+        = select_tag :derivation, options_for_select(["Secretaría legislativa"]), class: 'derivation', disabled: :disabled
       -# .field
       -#   = f.label :nombre
       -#   %br
@@ -17,4 +18,4 @@
       -#   %br
       -#   = f.text_field :tipo
     .col-md-1
-      = link_to_remove_association '', f, class: 'btn btn-danger btn-lg fa fa-times'
+      = link_to_remove_association '', f, { class: 'btn btn-danger btn-lg fa fa-times', disabled: :disabled }
