@@ -158,6 +158,7 @@ es:
       observations: Observaciones
       observations_placeholder: Detalles respecto al trámite
       process_completed: ¿Trámite finalizado?
+      finished_placeholder: Indique motivos de la finalización del trámite
     vertical_navbar:
       information: Información
       derivations: Derivaciones

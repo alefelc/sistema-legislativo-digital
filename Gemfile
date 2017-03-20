@@ -35,9 +35,6 @@ gem 'sprockets-es6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', '0.12.2'
 
-# React gem for interpreting jsx code.
-gem 'react-rails', '1.7.0'
-
 # A gem to automate using jQuery with Rails
 gem 'jquery-rails', '4.0.4'
 

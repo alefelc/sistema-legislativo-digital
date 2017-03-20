@@ -10,7 +10,7 @@ ActiveAdmin.register_page "Dashboard" do
         column ("Tipo") { |v| I18n.t("activeadmin.dashboard.#{v.item_type.underscore}") }
         column ("Modificado el") { |v| v.created_at.to_s :long }
         column ("Email usuario") { |v| User.find(v.whodunnit).email }
-        column ("Responsable") { |v| User.find(v.whodunnit).person.full_name_with_dni }
+        column ("Responsable") { |v| User.find(v.whodunnit).person.fullname_with_dni }
       end
     end
   end

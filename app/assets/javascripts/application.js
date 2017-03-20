@@ -9,7 +9,6 @@
 //= require Chart.min
 //= require bootstrap-multiselect
 //= require reception
-//= require components
 //= require sweetalert
 //= require moment
 //= require daterangepicker

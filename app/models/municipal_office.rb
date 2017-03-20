@@ -5,4 +5,8 @@ class MunicipalOffice < ActiveRecord::Base
   def type
     'Dependencia Municipal'
   end
+
+  def text
+  	denominacion
+  end
 end

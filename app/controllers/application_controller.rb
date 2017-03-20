@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  # Get available current period to all helper views.
+  helper_method :current_period
 
-  # Track who is responsible for changes
+  # Track who is responsible for changes.
   before_action :set_paper_trail_whodunnit
 
   # Prevent CSRF attacks by raising an exception.
@@ -47,5 +49,9 @@ class ApplicationController < ActionController::Base
         redirect_to(root_path)
       end
     end
+  end
+
+  def current_period
+    Periodo.current_period
   end
 end

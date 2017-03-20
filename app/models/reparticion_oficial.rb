@@ -8,4 +8,8 @@ class ReparticionOficial < ActiveRecord::Base
   def type
     'ReparticionOficial'
   end
+
+  def text
+  	denominacion
+  end
 end

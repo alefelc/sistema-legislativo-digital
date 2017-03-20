@@ -69,7 +69,28 @@
   </div>
 <% end %>
 <% if policy(Procedure).initiators_create? %>
-  <div class="common-procedure col-md-12">
+  <div class="col-md-12">
+    <table class="initiators-table table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center"> Iniciadores </th>
+          <th style="width: 1%"> </th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+      <tfoot>
+        <td colspan="2" class="text-center"> Para agregar iniciadores haga click en el botón "Agregar"
+          <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
+            <div class="fa fa-user-plus"></div>
+            <%= t '.add' %>
+          <% end -%>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+<!--   <div class="common-procedure col-md-12">
     <label for="<%= :procedure_persons %>">
       <%= t('.persons') %>
     </label>
@@ -86,7 +107,7 @@
         <% end %>
       </div>
     </div>
-  </div>
+  </div> -->
 <% end %>
 <% if policy(Procedure).observations_create? %>
   <div class="form-group col-md-12">
@@ -108,7 +129,7 @@
     </div>
     <div class="finished-field" style="display: none">
       <%= label_tag :finalizado_en %>
-      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: true } %>
+      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: "disabled" } %>
     </div>
   </div>
 <% end %>

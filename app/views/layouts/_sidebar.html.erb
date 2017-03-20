@@ -75,13 +75,7 @@
       <li class="treeview">
         <a href="<%= persons_path %>">
           <i class="fa fa-users fa-lg"></i>
-          <span>Personas</span>
-        </a>
-      </li>
-      <li class="treeview">
-        <a href="<%= calendar_path %>">
-          <i class="fa fa-calendar fa-lg"></i>
-          <span>Calendario legislativo</span>
+          <span>Autoridades</span>
         </a>
       </li>
       <li class="treeview">
@@ -90,9 +84,21 @@
           <span>Sesiones</span>
         </a>
       </li>
+      <li class="treeview">
+        <a href="<%= calendar_path %>">
+          <i class="fa fa-calendar fa-lg"></i>
+          <span>Calendario legislativo</span>
+        </a>
+      </li>
       <% if policy(:configurations).all? %>
         <li class="header text-center">
           Configuración de sistema
+        </li>
+        <li class="treeview">
+          <a href="<%= calendar_path %>">
+            <i class="fa fa-book fa-lg"></i>
+            <span>Registro de iniciadores</span>
+          </a>
         </li>
         <li class="treeview">
           <a href="#">

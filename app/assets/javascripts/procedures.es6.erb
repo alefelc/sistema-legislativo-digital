@@ -1,5 +1,226 @@
 "<% url_helpers = Rails.application.routes.url_helpers %>"
 
+// Modal initiators
+class ModalInitiator {
+  constructor(table) {
+    this.table = table;
+    this.el = '.initiators-modal';
+    this.hideContent();
+    this.listenRadios();
+    this.listenForm();
+    // this.listenInitiatorSubmit();
+  }
+
+  listenInitiatorSubmit() {
+    let that = this;
+    let events = {
+      'ajax:success': function (ev, response) {
+        $(`${that.el} .modal`).modal('hide');
+        table.insert(response)
+      },
+      'ajax:error': function (ev) {
+        alert('Ha ocurrido un error en el servidor!');
+      }
+    }
+    $(`${this.el} form`).on(events);
+  }
+
+  // Listen when form fields changes
+  listenForm() {
+    let that = this;
+    $('.forms select').on('change', function(ev) {
+      if ($(this).val() != '')
+        $(that.el).find('.modal-footer').show('slow');
+      else
+        $(that.el).find('.modal-footer').hide('slow');
+    });
+    // IMPROVE THIS!
+    // TO PREVENT SOME ERRORS
+    // $('.forms select').on('select2:unselecting', function(ev) {
+    //   $(that.el).find('.modal-footer').hide('slow');
+    //   console.log('select2', that.currentSelect2);
+    //   $(this).select2("val", "");
+    //   ev.preventDefault();
+    // });
+    let selectors = ['.official_distribution', '.municipal_office',
+      '.particular_pyshic', '.particular_legal'];
+
+    selectors.forEach(function(element, index) {
+      $(element).on('click', '.btn-info', function() {
+        $(`${element}_new`).show('fast');
+        $(this).hide();
+        $(`${element} .btn-danger`).show('fast');
+        $(that.currentSelect2).select2('enable', false);
+      });
+
+      $(`${element}`).on('click', '.btn-danger', function() {
+        $(`${element}_new`).hide('fast');
+        $(that.currentSelect2).select2('enable', '');
+        $(`${element} .btn-danger`).hide();
+        $(`${element} .btn-info`).show('fast');
+      });
+
+      // Submit...
+      $(`${element}_new`).on('click', '.btn-success', function() {
+        $(`${element}_new`).hide('fast');
+        $(that.currentSelect2).select2('enable', '');
+        $(`${element} .btn-danger`).hide();
+        $(`${element} .btn-info`).show('fast');
+        $(`${element}_new input`).serialize();
+
+        let result = {};
+        $.each($(`#initiator_form ${element}_new input`).serializeArray(), function() {
+          console.log('lalal   ', this.name, this.value)
+          result[this.name] = this.value;
+        });
+
+        $.ajax({
+          url: "<%= url_helpers.initiators_path %>",
+          data: {
+            type: element.slice(1),
+            fields: result
+          },
+          method: 'POST'
+        });
+      });
+    });
+  }
+
+  // Listen when radio buttons will be click!
+  listenRadios() {
+    let that = this;
+    $('.radio-group').on('change', '.radio input', function(ev) {
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      that.showForms(this);
+      that.hideRadios();
+      that.toggleLeftBtn();
+      $(`.${value} .btn-danger`).hide();
+    });
+    // Listen back button
+    $('.radio-group').on('click', '.back-button button', function() {
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      that.showRadios();
+      that.hideContent('slow');
+      that.clearSelect2();
+      $('.radio-group input[type="radio"]:checked').prop('checked', false);
+    });
+  }
+
+  showForms(radio) {
+    let select_val = $(radio).val();
+    switch (select_val) {
+      case 'dem':
+        this.toggleFooter();
+        break;
+      case 'legislative_secretary':
+        this.toggleFooter();
+        break;
+      default:
+        this.showByValue(select_val);
+    }
+  }
+
+  showByValue(value) {
+    console.log("value???  ", value);
+    $(`.forms .${value}`).show('fast', () => {
+      let selector = `select#initiator_form_${value}_id, select#${value}_id`
+      this.startSelect2(selector, value);
+    });
+  }
+
+  startSelect2(select, value) {
+    let selects = ['official_distribution', 'municipal_office',
+      'particular_pyshic', 'particular_legal'];
+    let text = $(select).data('text');
+
+    let options = {
+      allowClear: true,
+      placeholder: text,
+      language: 'es'
+    };
+
+    this.clearSelect2();
+
+    if (selects.includes(value)) {
+      options.ajax = {
+        url: "<%= url_helpers.initiators_path %>" + `?value=${value}`,
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return {
+            select_q: params.term || '%%'
+          };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    } else {
+      options
+    }
+    this.currentSelect2 = select;
+    $(select).select2(options);
+  }
+
+  clearSelect2() {
+    if (this.currentSelect2) {
+      $(this.currentSelect2).select2('destroy');
+      this.currentSelect2 = undefined;
+    }
+  }
+
+  hideContent(param) {
+    $(this.el).find('.modal-footer').hide(param);
+    $('.radio-group .back-button').hide(param);
+    $('.commission, .partisan_block, .councilor, .municipal_office').hide(param);
+    $('.official_distribution, .particular_pyshic, .particular_legal').hide(param);
+    $('.official_distribution_new, .municipal_office_new').hide(param);
+    $('.particular_pyshic_new, .particular_legal_new').hide(param);
+  }
+
+  // Hide modal footer
+  toggleFooter() {
+    $(this.el).find('.modal-footer').toggle('slow');
+  }
+
+  // Hide back initiators button
+  toggleLeftBtn() {
+    $('.radio-group .back-button').toggle('slow');
+  }
+
+  showRadios() {
+    $('input[type="radio"]').closest('label').show('slow');
+  }
+
+  hideRadios() {
+    $('input[type="radio"]:not(:checked)').closest('label').hide('slow');
+  }
+
+  static updateType() {
+    $('#initiator-new .legal-person').hide()
+    $('#initiator-new').on('change', '#person_type', () => {
+      if ($('#person_type').val() == 'Fisica') {
+        $('#initiator-new .legal-person').hide(1000)
+        $('#initiator-new .person').show(1000)
+      } else {
+        $('#initiator-new .legal-person').show(1000)
+        $('#initiator-new .person').hide(1000)
+      }
+    })
+  }
+
+  static submitModal() {
+    $('form.new_person').on('ajax:success', () => {
+      $('#initiator-new.modal').modal('hide');
+    });
+    $('#initiator-new').on('ajax:error', () => {
+      alert('Something went wrong!');
+    });
+  }
+}
+
+// Procedures index, new and edit.
 class Procedures {
   static indexDataTable() {
     $('#procedures-table').dataTable({
@@ -69,9 +290,9 @@ class Procedures {
         $('.finished').attr('checked', true);
         $('.finished-field').css('display', 'block');
       }
-    })
-    $('#procedure-new .initiator-btn').css('margin-left', '-28px');
+    });
   }
+
   static updateProcedureType() {
     $('.dispatch-procedure').hide()
     $(document).on('change', '#procedure_type', () => {
@@ -92,7 +313,7 @@ class ProcedureForm {
     this.requestInProcess = false;
   }
 
-  initiatorsModal() {
+  initiatorsModal(table) {
     $('#procedure-new').on('click', '.initiator-btn', (ev) => {
       if (!this.requestInProcess) {
         this.requestInProcess = true;
@@ -101,10 +322,54 @@ class ProcedureForm {
           (response) => {
             $('.initiators-modal').html(response);
             $('.initiators-modal .modal').modal('show');
-            this.requestInProcess = false;
+            new ModalInitiator(table);
           }
-        );
+        ).always(() => { this.requestInProcess = false });
       }
+    });
+  }
+}
+
+class InitiatorsTable {
+  constructor() {
+    this.el = '.initiators-table';
+    this.initiators = [];
+    this.listenModalSubmit();
+    this.listenDeleteBtn();
+  }
+
+  listenDeleteBtn() {
+    $(this.el).on('click', '.btn-remove', function(ev) {
+      console.log('click????');
+      $(this).closest('tr').remove();
+    })
+  }
+
+  _tr(data) {
+    return `<tr class='success'>
+      <td>${data.text}</td>
+      <td> <div class="btn btn-xs btn-danger btn-remove">
+        <i class="fa fa-lg fa-times"></i>
+      </div></td>
+    </tr>`
+  }
+
+  insert(someData) {
+    let $new = $(this._tr(someData)).hide();
+    $(this.el + ' tbody').append($new);
+    $new.show('slow');
+    setTimeout(() => { $new.removeClass("success") }, 4000);
+  }
+
+  remove() {
+
+  }
+
+  listenModalSubmit() {
+    let that = this;
+    $('.initiators-modal').on('ajax:success', 'form', function(ev, result) {
+      that.insert(result);
+      $('.initiators-modal .modal').modal('hide');
     });
   }
 }
@@ -112,7 +377,7 @@ class ProcedureForm {
 $(document).on('ready', function() {
   if ($('#procedure-new').length) {
     let form = new ProcedureForm();
-    form.initiatorsModal();
+    form.initiatorsModal(new InitiatorsTable());
     $('#fecha_y_hora').datetimepicker({
       locale: 'es',
       format:'DD/MM/YYYY HH:mm'

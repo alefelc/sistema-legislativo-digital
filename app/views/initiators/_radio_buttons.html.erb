@@ -1,0 +1,69 @@
+<div class="panel panel-default">
+
+  <div class="panel-body">
+    <div class="row radio-group">
+      <div class="col-md-10">
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :dem %>
+            DEM (Departamento Ejecutivo Municipal)
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :legislative_secretary %>
+            Secretaria Legislativa
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :partisan_block %>
+            Bloque Partidario
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :commission %>
+            Comisión
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :councilor %>
+            Concejal
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :official_distribution %>
+            Repartición oficial
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :municipal_office %>
+            Dependencia Municipal
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :particular_pyshic %>
+            Particular Físico
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= radio_button_tag :type, :particular_legal %>
+            Particular Jurídico
+          </label>
+        </div>
+      </div>
+      <div class="col-md-2 back-button">
+        <%= button_tag type: 'button', class: 'btn btn-default btn-xs' do %>
+          <i class="fa fa-chevron-left"></i>
+          Volver
+        <% end -%>
+      </div>
+    </div>
+  </div>
+</div>
