@@ -30,7 +30,7 @@ class Person < ActiveRecord::Base
 
   def text
     if cuit_or_dni.present?
-     "#{full_name} [dni/cuit: #{cuit_or_dni}]"
+     "#{full_name} [#{cuit_or_dni}]"
     else
       full_name
     end

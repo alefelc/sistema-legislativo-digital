@@ -68,19 +68,19 @@ class ModalInitiator {
         $(`${element} .btn-info`).show('fast');
         $(`${element}_new input`).serialize();
 
-        let result = {};
-        $.each($(`#initiator_form ${element}_new input`).serializeArray(), function() {
-          console.log('lalal   ', this.name, this.value)
-          result[this.name] = this.value;
+        let dataRequest = {};
+        $.each($(`#new_initiator_form ${element}_new input`).serializeArray(), function() {
+          dataRequest[this.name] = this.value;
         });
+        dataRequest.initiator_form = { type: element.slice(1) };
 
         $.ajax({
           url: "<%= url_helpers.initiators_path %>",
-          data: {
-            type: element.slice(1),
-            fields: result
-          },
-          method: 'POST'
+          data: dataRequest,
+          method: 'POST',
+          success: (response) => {
+            $(that.currentSelect2).select2('trigger', 'select', { data: response });
+          }
         });
       });
     });
@@ -121,7 +121,6 @@ class ModalInitiator {
   }
 
   showByValue(value) {
-    console.log("value???  ", value);
     $(`.forms .${value}`).show('fast', () => {
       let selector = `select#initiator_form_${value}_id, select#${value}_id`
       this.startSelect2(selector, value);
@@ -340,7 +339,6 @@ class InitiatorsTable {
 
   listenDeleteBtn() {
     $(this.el).on('click', '.btn-remove', function(ev) {
-      console.log('click????');
       $(this).closest('tr').remove();
     })
   }

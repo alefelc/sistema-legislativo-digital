@@ -3,7 +3,7 @@ class InitiatorForm
 
   attr_accessor :type, :councilor_id, :partisan_block_id, :commission_id,
   							:municipal_office_id, :particular_pyshic_id, :particular_legal_id,
-  							:official_distribution_id, :denomination
+  							:official_distribution_id, :denomination, :name, :surname
 
   def initialize(params=nil)
   end

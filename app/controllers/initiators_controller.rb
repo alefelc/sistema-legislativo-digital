@@ -12,7 +12,8 @@ class InitiatorsController < ApplicationController
   end
 
   def create
-    render json: build_response
+    build_initiator
+    render json: @initiator.to_json(only: :id, methods: :text)
   end
 
   def update
@@ -30,8 +31,10 @@ class InitiatorsController < ApplicationController
         w = "denominacion ilike ?"
         MunicipalOffice.where(w, q).to_json only: :id, methods: :text
       when 'particular_pyshic'
-        w = "name ilike ? or surname ilike ?"
-        Fisica.where(w, q, q).to_json only: :id, methods: :text
+        w = "concat(surname, ' ', name) ilike ? or "
+        w += "concat(name, ' ', surname) ilike ? or "
+        w += "cuit_or_dni ilike ?"
+        Fisica.where(w, q, q, q).to_json only: :id, methods: :text
       when 'particular_legal'
         w = "name ilike ?"
         Juridica.where(w, q).to_json only: :id, methods: :text
@@ -41,20 +44,22 @@ class InitiatorsController < ApplicationController
     end
   end
 
-  def build_response
-    case params[:type]
-    when 'official_distribution'
-      text = Concejal.find(params[:councilor_id]).fullname_with_dni
-      { text: "Repartición Oficial: #{text}" }
+  def build_initiator
+    fields = params[:initiator_form]
+    @initiator = case fields[:type]
     when 'municipal_office'
-      text = Concejal.find(params[:councilor_id]).fullname_with_dni
-      { text: "Dependencia Municipal: #{text}" }
+      MunicipalOffice.create denominacion: fields[:denomination]
+    when 'official_distribution'
+      ReparticionOficial.create denominacion: fields[:denomination]
     when 'particular_pyshic'
-      text = Concejal.find(params[:councilor_id]).fullname_with_dni
-      { text: "Particular Físico: #{text}" }
+      Fisica.create name: fields[:name], surname: fields[:surname]
     when 'particular_legal'
-      text = Concejal.find(params[:councilor_id]).fullname_with_dni
-      { text: "Particular Jurídico: #{text}" }
+      Juridica.create name: fields[:denomination]
     end
+  end
+
+  ## Missing STRONG PARAMETERS HERE!!!
+  def initiators_params
+    params.require(:initiator_form).permit(:denomination, :name, :surname, :type)
   end
 end
