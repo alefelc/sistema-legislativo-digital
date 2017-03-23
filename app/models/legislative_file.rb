@@ -84,7 +84,7 @@ class LegislativeFile < ActiveRecord::Base
 
   def text
     result = nro_exp
-    result += "- #{bis}" if bis.present?
+    result += " - #{bis}" if bis.present? && !bis.zero?
     result += "[año: #{anio}]" if anio.present?
     result
   end

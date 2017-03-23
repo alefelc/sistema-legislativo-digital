@@ -195,28 +195,6 @@ class ModalInitiator {
   hideRadios() {
     $('input[type="radio"]:not(:checked)').closest('label').hide('slow');
   }
-
-  static updateType() {
-    $('#initiator-new .legal-person').hide()
-    $('#initiator-new').on('change', '#person_type', () => {
-      if ($('#person_type').val() == 'Fisica') {
-        $('#initiator-new .legal-person').hide(1000)
-        $('#initiator-new .person').show(1000)
-      } else {
-        $('#initiator-new .legal-person').show(1000)
-        $('#initiator-new .person').hide(1000)
-      }
-    })
-  }
-
-  static submitModal() {
-    $('form.new_person').on('ajax:success', () => {
-      $('#initiator-new.modal').modal('hide');
-    });
-    $('#initiator-new').on('ajax:error', () => {
-      alert('Something went wrong!');
-    });
-  }
 }
 
 // Procedures index, new and edit.
@@ -250,7 +228,6 @@ class Procedures {
       placeholder: 'Busque personas y/o instituciones',
       theme: 'bootstrap',
       language: 'es',
-      minimumInputLength: 2,
       ajax: {
         url: "<%= url_helpers.initiators_path(format: :json) %>",
         dataType: 'json',
@@ -258,7 +235,7 @@ class Procedures {
         cache: true,
         data: (params) => {
           return {
-            select_q: params.term
+            select_q: params.term || '%%'
           };
         },
         processResults: (data, params) => {
@@ -272,11 +249,11 @@ class Procedures {
     options.placeholder = 'Busque expedientes ...'
     $('#legislative_file_ids').select2(options)
 
-    options.ajax.url = "<%= url_helpers.initiators_path(only: :councilors, format: :json) %>"
+    options.ajax.url = "<%= url_helpers.initiators_path(value: :councilors, format: :json) %>"
     options.placeholder = 'Busque concejales por nombre y/o apellido ...'
     $('#councilor_ids').select2(options)
 
-    options.ajax.url = "<%= url_helpers.initiators_path(only: :commissions, format: :json) %>"
+    options.ajax.url = "<%= url_helpers.initiators_path(value: :commissions, format: :json) %>"
     options.placeholder = 'Busque por nombre de comisión ...'
     $('#comision_ids').select2(options)
 
@@ -360,13 +337,28 @@ class InitiatorsTable {
   }
 
   remove() {
-
+    
   }
 
   listenModalSubmit() {
     let that = this;
-    $('.initiators-modal').on('ajax:success', 'form', function(ev, result) {
-      that.insert(result);
+    $('.initiators-modal').on('submit', 'form', function(ev) {
+      ev.preventDefault();
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      let data = {};
+      switch (value) {
+        case 'dem':
+          data = { id: "1", text: "DEM", type: "government" };
+          break;
+        case 'legislative_secretary':
+          data = { id: "1", text: "Secretaria legislativa", type: "lalal" }
+          break;
+        default:
+          let selectedInfo = $(`#initiator_form_${value}_id`).select2('data')[0];
+          data = { id: selectedInfo.id, text: selectedInfo.text, type: value };
+          break;
+      }
+      that.insert(data);
       $('.initiators-modal .modal').modal('hide');
     });
   }

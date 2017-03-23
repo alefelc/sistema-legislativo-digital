@@ -141,7 +141,7 @@ es:
       finished_at: Finalizado en
       finished_placeholder: Indique la culminación del trámite
       placeholder_initiators: Busque iniciadores...
-      submit: Guardar
+      submit: Guardar trámite nuevo
     info:
       commissions: Comisiones
       dispatch_date: Fecha del despacho

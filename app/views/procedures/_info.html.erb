@@ -34,13 +34,13 @@
     <%= label_tag t('.dispatch_date') %>
   </div>
   <div class="col-md-4">
-    <%= f.select(:day, day_options(), { include_blank: true, prompt: 'Día' }, title: 'Día', class: 'input-lg form-control') %>
+    <%= f.select(:day, day_options(), { include_blank: 'No especificado', prompt: 'Día' }, title: 'Día', class: 'input-lg form-control') %>
   </div>
   <div class="col-md-4">
-    <%= f.select(:month, month_options(), { include_blank: true, prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
+    <%= f.select(:month, month_options(), { include_blank: 'No especificado', prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
   </div>
   <div class="col-md-4">
-    <%= f.select(:year, year_options(), { include_blank: true, prompt: 'Año' }, title: 'Año', class: 'input-lg form-control') %>
+    <%= f.select(:year, year_options(), { include_blank: 'No especificado', prompt: 'Año' }, title: 'Año', class: 'input-lg form-control') %>
   </div>
 
   <div class="col-md-12">
@@ -69,7 +69,7 @@
   </div>
 <% end %>
 <% if policy(Procedure).initiators_create? %>
-  <div class="col-md-12">
+  <div class="common-procedure col-md-12">
     <table class="initiators-table table table-bordered">
       <thead>
         <tr>
@@ -81,7 +81,7 @@
 
       </tbody>
       <tfoot>
-        <td colspan="2" class="text-center"> Para agregar iniciadores haga click en el botón "Agregar"
+        <td colspan="2" class="text-center"> <i>Para cargar iniciadores haga click en el botón "Agregar"</i>
           <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
             <div class="fa fa-user-plus"></div>
             <%= t '.add' %>
@@ -118,7 +118,7 @@
   </div>
 <% end %>
 <% if policy(Procedure).finalized_create? %>
-  <div class="common-procedure form-group col-md-12" title="Work In Progress">
+  <div class="common-procedure form-group col-md-12" title="Si se finaliza el trámite por favor indique el motivo">
     <div class="checkbox">
       <label>
         <div class="finished">
@@ -129,7 +129,7 @@
     </div>
     <div class="finished-field" style="display: none">
       <%= label_tag :finalizado_en %>
-      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder'), disabled: "disabled" } %>
+      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder') } %>
     </div>
   </div>
 <% end %>

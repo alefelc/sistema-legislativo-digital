@@ -38,6 +38,15 @@ class InitiatorsController < ApplicationController
       when 'particular_legal'
         w = "name ilike ?"
         Juridica.where(w, q).to_json only: :id, methods: :text
+      # dispatch
+      when 'councilors'
+        w = "concat(surname, ' ', name) ilike ? or "
+        w += "concat(name, ' ', surname) ilike ? or "
+        w += "cuit_or_dni ilike ?"
+        Concejal.where(w, q, q, q).to_json only: :id, methods: :text
+      when 'commissions'
+        w = "denominacion ilike ?"
+        Comision.where(w, q).to_json only: :id, methods: :text
       end
     else
       #InitiatorsDatatable.new(view_context)

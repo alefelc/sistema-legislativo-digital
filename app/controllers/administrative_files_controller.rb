@@ -18,7 +18,7 @@ class AdministrativeFilesController < ApplicationController
     case params[:type]
     when 'process'
       process = Procedure.find params[:id]
-      render json: process.expediente_administrativos.as_json
+      render json: process.expediente_administrativos.as_json(only: :id, methods: :text)
     else
       render json: []
     end

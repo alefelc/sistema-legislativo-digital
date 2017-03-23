@@ -1,4 +1,29 @@
-        <div class="box-footer">
+<div class="initiators-modal"></div>
+<div id="procedure-new">
+  <h2> <%= t '.new_procedure' %> </h2>
+
+  <%= form_for @procedure, { url: procedures_path(@procedure), multipart: true } do |form| %>
+    <div class="box box-primary">
+      <div class="box-body">
+        <%= render 'form', f: form %>
+      </div>
+      <div class="box-footer">
+        <div class="pull-right">
+          <%= link_to procedures_path, class: 'btn btn-default' do %>
+            <div class="fa fa-times-circle"></div>
+            Cancelar
+          <% end %>
+          <button class="btn btn-success btn-lg" type="submit">
+            <span class="fa fa-save fa-lg"></span>
+            <%= t('.submit') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!--         <div class="box-footer">
           <div class="pull-right">
             <%= link_to procedures_path, class: 'btn btn-default' do %>
               <div class="fa fa-times-circle"></div>
@@ -10,3 +35,4 @@
             </button>
           </div>
         </div>
+ -->
