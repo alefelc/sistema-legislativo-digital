@@ -2,6 +2,7 @@ class LegislativeFilesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
+    @loops = LegislativeFile.all
     respond_to do |format|
       format.html
       format.json { render json: build_json }
@@ -14,6 +15,9 @@ class LegislativeFilesController < ApplicationController
   end
 
   def create
+    @loop = LegislativeFile.create loop_params
+    @loop.legislative_file_states.build
+    redirect_to @loop
   end
 
   def edit
@@ -22,7 +26,15 @@ class LegislativeFilesController < ApplicationController
   def update
   end
 
+  def show
+    @loop = LegislativeFile.find(params[:id])
+  end
+
   private
+
+  def loop_params
+    params.require(:loop).permit :nro_exp, :nro_fojas, :bis, :tema, :observacion, :anio
+  end
 
   def build_json
     if params[:select_q].present?

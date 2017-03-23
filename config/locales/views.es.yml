@@ -36,8 +36,9 @@ es:
       edit_rol: Editando rol
       show_rol: Mostrando rol
       files: Expedientes
-      administrative_files: Ver exped. administrativos
-      legislative_files: Ver expedientes legislativos
+      all_administrative_files: Ver exped. administrativos
+      all_legislative_files: Ver expedientes legislativos
+      legislative_files: Expedientes legislativos
 
     flash_messages:
       success: Generado correctamente

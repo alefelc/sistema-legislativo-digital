@@ -57,7 +57,7 @@
           %tbody
             - @person.procedures.each do |t|
               %tr
-                %td= link_to t.id, person_path(t)
+                %td= link_to t.id, procedure_path(t)
                 %td= t.type
                 %td= t.sheets
                 %td= t.topic

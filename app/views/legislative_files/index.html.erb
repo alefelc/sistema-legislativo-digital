@@ -27,6 +27,15 @@
           </tr>
         </thead>
         <tbody>
+          <% @loops.each do |l| %>
+            <tr>
+              <td> <%= l.nro_exp %></td>
+              <td> <%= l.tema %></td>
+              <td> <%= l.created_at.to_date %></td>
+              <td> <%= l.loops.count - 1 %></td>
+
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

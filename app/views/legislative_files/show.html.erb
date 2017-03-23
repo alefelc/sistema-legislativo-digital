@@ -1,0 +1,66 @@
+<div class="initiators-modal"></div>
+<div id="legislative-file-show">
+  <h2> Información del expediente legislativo </h2>
+  <%= form_for @loop, url: legislative_files_path, multipart: true, disabled: 'disabled' do |f| %>
+
+    <div class="box box-primary">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-xs-12">
+
+            <div id="info" class="tab-pane fade in active">
+              <div class="lead box-header with-border">
+                Expediente Legislativo nro: <strong> <%= @loop.nro_exp %> </strong>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-10">
+                  <%= label_tag :procedures, "Trámites" %>
+                  <%= select_tag :procedures, options_for_select(["No existen trámites"]), class: 'form-control input-lg' %>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <%= label_tag :sheets, 'Fojas' %>
+                  <%= text_field_tag :sheets, nil, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <%= label_tag :date, 'Fecha' %>
+                  <%= text_field_tag :date, nil, { class: 'input-lg form-control', type: 'date' } %>
+                </div>
+
+
+                <div class="form-group col-md-12">
+                  <%= label_tag :topic, 'Sumario' %>
+                  <%= text_area_tag :topic, '', class: 'input-lg form-control', placeholder: 'No hay sumario' %>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <%= label_tag :accumulated_in, 'Acumulado en' %>
+                  <%= text_field_tag :accumulated_in, nil, { class: 'input-lg form-control', placeholder: 'No hay expedientes', type: 'number', min: '1', step: '1' } %>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <%= label_tag :physically_attached, 'Adjuntado físicamente' %>
+                  <%= text_field_tag :physically_attached, nil, { class: 'input-lg form-control', placeholder: 'No hay expedientes', type: 'number', min: '1', step: '1' } %>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <%= label_tag :observation, 'Observaciones' %>
+                  <%= text_area_tag :observation, '', class: 'input-lg form-control', placeholder: 'No hay observaciones' %>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <%= label_tag :tags, 'Voces claves' %>
+                  <%= text_field_tag :tags, '', class: 'input-lg form-control', placeholder: 'No hay voces claves/etiquetas' %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <% end -%>
+</div>
