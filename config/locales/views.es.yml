@@ -178,6 +178,9 @@ es:
       Proyecto: Proyecto
     form:
       load_info: Cargue información del trámite
+    edit:
+      edit_procedure: Editar trámite
+      submit: Actualizar trámite
 
   roles:
     procedure: Trámites
