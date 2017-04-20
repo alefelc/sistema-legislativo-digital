@@ -1,0 +1,41 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class ListenProceduresFinder {
+	constructor(args) {
+		this.select = '#legislative-file-new #procedures';
+		this.listen();
+	}
+
+	listen() {
+		let options = {
+		  allowClear: true,
+		  placeholder: 'Busque trámites',
+		  language: 'es'
+		};
+		options.ajax = {
+		  url: "<%= url_helpers.procedures_path %>",
+		  dataType: 'json',
+		  delay: 250,
+		  cache: true,
+		  data: (params) => {
+		    return {
+		      select_q: params.term || '%%'
+		    };
+		  },
+		  processResults: (data, params) => {
+		    return { results: data }
+		  }
+		};
+		$(this.select).select2(options);
+	}
+}
+
+$(document).on('ready', function() {
+	if ($('#legislative-file-show').length) {
+		$('input, textarea, select').prop('disabled', true);
+	}
+
+	if ($('#legislative-file-new').length) {
+		const listener = new ListenProceduresFinder()
+	}
+});
