@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214144729) do
+ActiveRecord::Schema.define(version: 20170418143946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,11 +276,11 @@ ActiveRecord::Schema.define(version: 20170214144729) do
 
   create_table "legislative_files_procedures", force: :cascade do |t|
     t.integer "legislative_file_id"
-    t.integer "despacho_id"
+    t.integer "procedure_id"
   end
 
-  add_index "legislative_files_procedures", ["despacho_id"], name: "index_legislative_files_procedures_on_despacho_id", using: :btree
   add_index "legislative_files_procedures", ["legislative_file_id"], name: "index_legislative_files_procedures_on_legislative_file_id", using: :btree
+  add_index "legislative_files_procedures", ["procedure_id"], name: "index_legislative_files_procedures_on_procedure_id", using: :btree
 
   create_table "legislative_files_tags", id: false, force: :cascade do |t|
     t.integer "legislative_file_id"
