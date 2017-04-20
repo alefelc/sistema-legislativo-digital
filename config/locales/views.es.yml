@@ -126,7 +126,7 @@ es:
     show:
       not_specified: no especificado
     index:
-      procedures: Nro.
+      procedures_type: Nro / tipo
       new: Trámite
       new_commission_dispatch: Despacho de comisión
       processes: Nro.
@@ -146,7 +146,7 @@ es:
     info:
       commissions: Comisiones
       dispatch_date: Fecha del despacho
-      councilors: Concejales
+      councilors: Concejales firmantes
       legislative_files: Expedientes legislativos
       topic_placeholder: Sumario del trámite
       blank_type: Seleccione tipo de trámite
@@ -171,11 +171,13 @@ es:
       # project: Proyecto
       # official_communication: Comunicación Oficial
       # commission_dispatch: Despacho de Comisión
-      Condonacion: Condonación
+      # others: Otros Ingresos
+      Condonacion: Condonación / Eximición
       Peticion: Petición Particular
       Despacho: Despacho de Comisión
       ComunicacionOficial: Comunicación Oficial
       Proyecto: Proyecto
+      OtrosIngresos: Otros Ingresos
     form:
       load_info: Cargue información del trámite
     edit:
@@ -198,6 +200,8 @@ es:
       edit: Editando rol
       title: Información del rol
       name_placeholder: Ingrese nombre del rol...
+      cancel: Cancelar
+      submit: Guardar
     index:
       rols: Roles del sistema
       new: Nuevo rol

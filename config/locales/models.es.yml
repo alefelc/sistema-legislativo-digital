@@ -29,6 +29,10 @@ es:
         topic: Sumario
         created_at: Creado el
         update_at: Actualizado el
+        comisions: Comisiones
+        legislative_files: Expedientes legislativos
+        persons: Concejales
+        initiators: Iniciadores
 
       role:
         name: Nombre
