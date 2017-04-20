@@ -13,6 +13,6 @@ class Comision < ActiveRecord::Base
   end
 
   def text
-    "#{denominacion} [cód:#{codigo}]"
+    "#{denominacion}"
   end
 end

@@ -31,6 +31,7 @@ class LegislativeFile < ActiveRecord::Base
 
   #== Nested attributes
   accepts_nested_attributes_for :loops
+  accepts_nested_attributes_for :legislative_file_states, :reject_if => :all_blank, :allow_destroy => true
 
   def last_loop
     loops.order(:nro).last
@@ -87,5 +88,9 @@ class LegislativeFile < ActiveRecord::Base
     result += " - #{bis}" if bis.present? && !bis.zero?
     result += "[año: #{anio}]" if anio.present?
     result
+  end
+
+  def to_s
+    text
   end
 end
