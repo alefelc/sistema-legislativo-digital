@@ -134,6 +134,7 @@ group :development do
 
   # Better error page for Rack apps
   gem 'better_errors', '2.1.1'
+  gem 'binding_of_caller'
 
   # Take off assets in rails console
   gem 'quiet_assets', '1.1.0'
@@ -143,6 +144,7 @@ group :development do
 
   gem 'rails-erd'
 
+  gem 'pry'
   # Profiler for your development and production Ruby rack apps.
   # gem 'rack-mini-profiler', '0.9.7'
 
