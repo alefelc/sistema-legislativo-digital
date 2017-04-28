@@ -1,5 +1,5 @@
 class PersonsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!
 
   respond_to :json, :html
 
@@ -35,7 +35,7 @@ class PersonsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: PeopleDatatable.new(view_context) }
+      format.json { render json: build_json }
     end
   end
 
@@ -50,6 +50,18 @@ class PersonsController < ApplicationController
   end
 
   private
+
+  def build_json
+    if params[:select_q]
+      q = "%#{params[:select_q]}%"
+      w = "concat(surname, ' ', name) ilike ? or "
+      w += "concat(name, ' ', surname) ilike ? or "
+      w += "cuit_or_dni ilike ?"
+      Person.where(w, q, q, q).to_json only: :id, methods: :text
+    else
+      PeopleDatatable.new(view_context)
+    end
+  end
 
   def persons_params
     params.require(:person).permit :type, :name, :surname, :cuit_or_dni, :phone,

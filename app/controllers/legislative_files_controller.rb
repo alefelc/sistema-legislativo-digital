@@ -1,5 +1,5 @@
 class LegislativeFilesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!
 
   def index
     @loops = LegislativeFile.all
@@ -10,24 +10,27 @@ class LegislativeFilesController < ApplicationController
   end
 
   def new
-    @loop = Loop.new
+    @loop = LegislativeFile.new
     @loop.legislative_file_states.build
   end
 
   def create
     @loop = LegislativeFile.create loop_params
-    @loop.legislative_file_states.build
     redirect_to @loop
   end
 
   def edit
+    @loop = LegislativeFile.find params[:id]
+    @loop.legislative_file_states.build
   end
 
   def update
+    @loop = LegislativeFile.find params[:id]
+    @loop.legislative_file_states.build
   end
 
   def show
-    @loop = LegislativeFile.find(params[:id])
+    @loop = LegislativeFile.find params[:id]
   end
 
   private
