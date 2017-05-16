@@ -43,7 +43,15 @@ class InitiatorsController < ApplicationController
         w = "concat(surname, ' ', name) ilike ? or "
         w += "concat(name, ' ', surname) ilike ? or "
         w += "cuit_or_dni ilike ?"
-        Periodo.last.concejals.where(w, q, q, q).to_json only: :id, methods: :text
+        councilors = Periodo.last.concejals.where(w, q, q, q)#.to_json only: :id, methods: :text
+        [{
+          text: 'Integrantes de las comisiones seleccionadas',
+          children: councilors.select{ |x| x.comisions.exists?(id: params[:commissions]) }.as_json(only: :id, methods: :text)
+        },
+        {
+          text: 'Otros integrantes',
+          children: councilors.select{ |x| !x.comisions.exists?(id: params[:commissions]) }.as_json(only: :id, methods: :text)
+        }]
       when 'commissions'
         w = "denominacion ilike ?"
         Periodo.last.comisions.where(w, q).to_json only: :id, methods: :text

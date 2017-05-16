@@ -62,32 +62,70 @@
               </div>
               <div class="form-group particular_pyshic_new">
                 <hr/>
-                <%= f.label :name, 'Nuevo Particular Físico' %>
-                <div class="form-group">
+                <h4>
+                  <%= f.label :name, 'Nuevo Particular Físico', class: 'col-xs-12 col-md-12' %>
+                </h4>
+                <div class="form-group col-xs-6 col-md-6">
                   <%= f.label :name, 'Nombre' %>
                   <%= f.text_field :name, class: 'form-control', placeholder: 'Nombre del particular' %>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-xs-6 col-md-6">
                   <%= f.label :surname, 'Apellido' %>
                   <%= f.text_field :surname, class: 'form-control', placeholder: 'Apellido del particular' %>
                 </div>
-                  <div class="btn btn-success pull-right"> <i class="fa fa-check"></i> Guardar </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :cuit_or_dni, 'DNI / CUIT' %>
+                  <%= f.text_field :cuit_or_dni, class: 'form-control', placeholder: 'Ingrese DNI o CUIT' %>
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :phone, 'Teléfono/s' %>
+                  <%= f.text_field :phone, class: 'form-control', placeholder: 'Teléfono o teléfonos' %>
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :address, 'Dirección' %>
+                  <%= f.text_field :address, class: 'form-control', placeholder: 'Dirección del particular' %>
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :email, 'Email' %>
+                  <%= f.text_field :email, type: 'email', class: 'form-control', placeholder: 'Email del particular' %>
+                </div>
+                <div class="form-group col-xs-12 col-md-12">
+                  <%= f.label :position, 'Cargo' %>
+                  <%= f.text_field :position, class: 'form-control', placeholder: 'Cargo político y/o administrativo' %>
+                </div>
+                <div class="btn btn-success pull-right"> <i class="fa fa-check"></i> Guardar </div>
               </div>
 
               <!-- Particular legal -->
               <div class="particular_legal form-inline">
-                <%= f.select :particular_legal_id, {}, {}, class: 'form-control', style: 'width: 82%', data: { text: "Busque un particular físico por denominación" } %>
+                <%= f.select :particular_legal_id, {}, {}, class: 'form-control', style: 'width: 82%', data: { text: "Busque un particular jurídico por denominación" } %>
                 <div class="btn btn-info"> <i class="fa fa-plus"></i> Nuevo </div>
                 <div class="btn btn-danger"> <i class="fa fa-times"></i> Cancelar </div>
               </div>
               <div class="form-group particular_legal_new">
-                <hr/>
-                <%= f.label :denomination, 'Nuevo Particular Físico' %>
-                <div class="form-group">
+              <hr/>
+              <h4> <%= f.label :denomination, 'Nuevo Particular Jurídico', class: 'col-xs-12 col-md-12' %> </h4>
+                <div class="form-group col-xs-6 col-md-6">
                   <%= f.label :denomination, 'Denominación' %>
                   <%= f.text_field :denomination, class: 'form-control', placeholder: 'Nombre de la instutición o persona jurídica' %>
                 </div>
-                  <div class="btn btn-success pull-right"> <i class="fa fa-check"></i> Guardar </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :cuit_or_dni, 'CUIT' %>
+                  <%= f.text_field :cuit_or_dni, class: 'form-control', placeholder: 'Ingrese DNI o CUIT' %>
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :phone, 'Teléfono/s' %>
+                  <%= f.text_field :phone, class: 'form-control', placeholder: 'Teléfono o teléfonos' %>
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <%= f.label :address, 'Dirección' %>
+                  <%= f.text_field :address, class: 'form-control', placeholder: 'Ingrese Dirección' %>
+                </div>
+                <div class="form-group col-xs-12 col-md-12">
+                  <%= f.label :email, 'Email' %>
+                  <%= f.text_field :email, type: 'email', class: 'form-control', placeholder: 'Ingrese Email' %>
+                </div>
+                <div class="btn btn-success pull-right"> <i class="fa fa-check"></i> Guardar </div>
               </div>
 
             </div>

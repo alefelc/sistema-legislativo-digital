@@ -20,17 +20,18 @@ class ProcedureDatatable
   def data
     paginated_procedures.map do |proc|
       [
-        #index_procedure(proc),
-        proc.id,
-        Procedure.human_attribute_name(proc.type),
-        "iniciadores",
+        show_id(proc.id, Procedure.human_attribute_name(proc.type)),
+        get_iniciadores(proc),
         proc.topic,
-        #get_iniciadores(proc),
         to_date_time(proc.created_at),
         proc.sheets,
         actions(proc)
       ]
     end
+  end
+
+  def show_id(id, type)
+    "#{content_tag :b, id} #{content_tag :i, type}"
   end
 
   def actions(proc)
@@ -72,17 +73,17 @@ class ProcedureDatatable
     params[:start].to_i / per_page + 1
   end
 
-  # def get_iniciadores(tra)
-  #   result = []
-  #   tra.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
-  #   tra.areas.each { |b| result << "#{b.denominacion}" }
-  #   tra.bloques.each { |b| result << "#{b.denominacion}" }
-  #   tra.comisions.each { |b| result << "#{b.denominacion}" }
-  #   tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
-  #   tra.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
-  #   tra.municipal_offices.each { |b| result << "#{b.denominacion}" }
-  #   result.join ' - '
-  # end
+  def get_iniciadores(tra)
+    result = []
+    tra.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
+    tra.areas.each { |b| result << "#{b.denominacion}" }
+    tra.bloques.each { |b| result << "#{b.denominacion}" }
+    tra.comisions.each { |b| result << "#{b.denominacion}" }
+    tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
+    tra.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
+    tra.municipal_offices.each { |b| result << "#{b.denominacion}" }
+    result.join ' - '
+  end
 
   # def to_date(date)
   #   date.strftime("%d/%m/%Y") unless date.nil?

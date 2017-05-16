@@ -15,6 +15,7 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.new
     @procedure.procedure_states.build
     @procedure.administrative_files.build
+    @procedure.procedure_signatories.build
     @procedure.contingency_plan = ContingencyPlan.new
     @procedure.uploads.build
     #2.times {@procedure.administrative_files.build}
@@ -24,11 +25,13 @@ class ProceduresController < ApplicationController
     authorize Procedure, :create?
 
     @procedure = Procedure.new procedure_params
-    if @procedure.save
+
+    form = ProcedureForm.new procedure_params, params[:action], current_user
+    if form.valid? && @procedure.save
       flash[:success] = t '.success'
       redirect_to @procedure
     else
-      flash.now[:error] = @procedure.errors.full_messages
+      flash.now[:error] = form.errors.full_messages
       render :new
     end
   end
@@ -58,12 +61,13 @@ class ProceduresController < ApplicationController
 
   def procedure_params
     params.require(:procedure).permit :type, :sheets, :topic, :observations,
-                                      :day, :month, :year, :uploads, :legislative_files,
-                                      person_ids: [], comision_ids: [], contingency_plan_attributes: [:date_at, :reason],
-                                      procedure_states_attributes: [],
-                                      councilors: [], legislative_file_ids: [], administrative_file_ids: [],
-                                      administrative_files_attributes: [:id, :number, :sheets, :letter, :year],
-                                      procedure_states_attributes: []
+      :day, :month, :year, :uploads, :legislative_files,
+      person_ids: [], comision_ids: [], contingency_plan_attributes: [:date_at, :reason, :generator, :signatory],
+      procedure_states_attributes: [],
+      councilors: [], legislative_file_ids: [], administrative_file_ids: [],
+      administrative_files_attributes: [:id, :number, :sheets, :letter, :year],
+      procedure_signatory_attributes: [],
+      procedure_states_attributes: []
   end
 
   def build_json_response

@@ -1,4 +1,9 @@
 class Procedure < ActiveRecord::Base
+
+  ####### Remove it after rename "type" column to "procedure_type" #######
+  # disable STI to allow columns named "type"
+  self.inheritance_column = :_type_disabled
+
 	#== Associations
 	has_and_belongs_to_many :persons
 	has_and_belongs_to_many :bloques
@@ -20,23 +25,20 @@ class Procedure < ActiveRecord::Base
            class_name: 'Person',
            source: :person
   belongs_to :contingency_plan
+  has_many :procedure_signatories
 
   #== Nested attributes
   accepts_nested_attributes_for :uploads, reject_if: :all_blank
   accepts_nested_attributes_for :administrative_files, reject_if: :all_blank
   accepts_nested_attributes_for :procedure_states, reject_if: :all_blank
   accepts_nested_attributes_for :contingency_plan, reject_if: :all_blank
+  accepts_nested_attributes_for :procedure_signatories, reject_if: :all_blank
 
   #== Callbacks
   after_create :initial_state
 
   #== PaperTrail changes tracker
   has_paper_trail
-
-  #== Validations
-  validates :sheets, presence: true
-  validates :comisions, :persons, :legislative_files, presence: true, if: :is_dispatch?
-  validates :initiators, presence: true, if: :isnt_dispatch?
 
   def initiators
     result = persons.collect(&:full_name)
@@ -48,7 +50,7 @@ class Procedure < ActiveRecord::Base
     result.flatten.join("; ")
   end
 
-  def to_date date
+  def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
   end
 

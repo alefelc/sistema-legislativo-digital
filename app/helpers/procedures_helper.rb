@@ -1,11 +1,11 @@
 module ProceduresHelper
-  def procedure_types
+  def procedure_types(procedure=nil)
     types = %w(Despacho Condonacion Peticion)
-    types += %w(Proyecto ComunicacionOficial)
+    types += %w(Proyecto ComunicacionOficial OtrosIngresos)
     result = [[]]
     types.each do |t|
       result << [I18n.t("procedures.types.#{t}"), t]
     end
-    options_for_select(result)
+    options_for_select(result, procedure)
   end
 end

@@ -582,3 +582,13 @@ es:
   time:
     formats:
       default: '%d/%m/%Y - %H:%M'
+
+
+  activemodel:
+    attributes:
+      procedure_form:
+        sheets: Fojas
+        comisions: Comisiones
+        persons: Concejales
+        legislative_files: Expedientes Legislativos
+        initiators: Iniciadores

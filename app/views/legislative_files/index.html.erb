@@ -24,6 +24,7 @@
             <th>Sumario</th>
             <th>Fecha</th>
             <th>Circuitos</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -33,7 +34,9 @@
               <td> <%= l.tema %></td>
               <td> <%= l.created_at.to_date %></td>
               <td> <%= l.loops.count - 1 %></td>
-
+              <td>
+                <%= link_to '', '#' %>
+              </td>
             </tr>
           <% end %>
         </tbody>

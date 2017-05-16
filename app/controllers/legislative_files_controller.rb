@@ -36,13 +36,13 @@ class LegislativeFilesController < ApplicationController
   private
 
   def loop_params
-    params.require(:loop).permit :nro_exp, :nro_fojas, :bis, :tema, :observacion, :anio
+    params.require(:loop).permit :number, :nro_fojas, :bis, :tema, :observacion, :anio
   end
 
   def build_json
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
-      w = "nro_exp ilike ?"
+      w = "number ilike ?"
       LegislativeFile.where(w, q).as_json only: :id, methods: :text
     end
   end
