@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509140629) do
+ActiveRecord::Schema.define(version: 20170516142244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,9 @@ ActiveRecord::Schema.define(version: 20170509140629) do
   add_index "administrative_files", ["procedure_id"], name: "index_administrative_files_on_procedure_id", using: :btree
 
   create_table "areas", force: :cascade do |t|
-    t.string   "denominacion"
-    t.string   "codigo"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
   end
 
   create_table "areas_procedures", id: false, force: :cascade do |t|
@@ -542,6 +541,22 @@ ActiveRecord::Schema.define(version: 20170509140629) do
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
 
+  create_table "procedure_derivations", force: :cascade do |t|
+    t.integer  "procedure_id"
+    t.integer  "area_id"
+    t.datetime "derived_at"
+    t.datetime "received_at"
+    t.integer  "derived_by"
+    t.integer  "received_by"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "procedure_derivations", ["area_id"], name: "index_procedure_derivations_on_area_id", using: :btree
+  add_index "procedure_derivations", ["derived_by"], name: "index_procedure_derivations_on_derived_by", using: :btree
+  add_index "procedure_derivations", ["procedure_id"], name: "index_procedure_derivations_on_procedure_id", using: :btree
+  add_index "procedure_derivations", ["received_by"], name: "index_procedure_derivations_on_received_by", using: :btree
+
   create_table "procedure_signatories", force: :cascade do |t|
     t.string  "name"
     t.string  "surname"
@@ -745,5 +760,7 @@ ActiveRecord::Schema.define(version: 20170509140629) do
 
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
+  add_foreign_key "procedure_derivations", "areas"
+  add_foreign_key "procedure_derivations", "procedures"
   add_foreign_key "procedures", "contingency_plans"
 end

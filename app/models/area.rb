@@ -1,8 +1,4 @@
 class Area < ActiveRecord::Base
-  has_many :estado_procedures, as: :ref
-  has_and_belongs_to_many :procedures
-
-  def type
-    'Area'
-  end
+  has_many :users
+  has_many :procedure_derivation
 end

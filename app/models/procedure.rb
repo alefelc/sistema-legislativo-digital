@@ -27,6 +27,8 @@ class Procedure < ActiveRecord::Base
   belongs_to :contingency_plan
   has_many :procedure_signatories
 
+  has_one :procedure_derivation
+
   #== Nested attributes
   accepts_nested_attributes_for :uploads, reject_if: :all_blank
   accepts_nested_attributes_for :administrative_files, reject_if: :all_blank
