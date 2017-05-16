@@ -1,0 +1,8 @@
+<div id="sign_people">
+  <%= f.fields_for :procedure_signatories do |sign| %>
+    <%= render 'procedure_signatory_fields', f: sign %>
+    <div class="links">
+      <%= link_to_add_association ' Agregar', f, :procedure_signatories, class: 'btn btn-info btn-lg fa fa-plus', title: 'Agregar otro firmante' %>
+    </div>
+  <% end %>
+</div>

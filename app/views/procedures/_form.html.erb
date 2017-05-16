@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row procedure-form">
   <div class="col-xs-3">
     <%= render 'vertical_navbar' %>
   </div>
@@ -10,12 +10,21 @@
           <%= t '.load_info' %>
         </div>
         <div class="row">
-          <%= render 'info', f: f %>
+          <%= render 'info', f: f, procedure: @procedure %>
         </div>
       </div>
 
+      <div class="tab-pane fade" id="sign_people">
+        <p class="lead box-header with-border">
+          Firmantes del trámite
+        </p>
+        <%= render 'sign_people', f: f %>
+      </div>
+
       <div class="tab-pane fade" id="settings">
-        <p class="lead box-header with-border">Area a la que se deriva actualmente el tramite</p>
+        <p class="lead box-header with-border">
+          Area a la que se deriva actualmente el tramite
+        </p>
         <%= render 'states', f: f %>
       </div>
 

@@ -9,19 +9,40 @@
       </button>
     </div>
   </div>
-  <div class="row box-body" style="display: none">
-    <div class="form-group col-md-6">
-      <%= label_tag :fecha_y_hora %>
-      <div class="input-group">
-        <div class="input-group-addon">
-          <i class="fa fa-clock-o"></i>
+  <%= f.fields_for :contingency_plan do |cp| %>
+    <div class="row box-body" style="display: none">
+      <div class="form-group col-md-6">
+        <%= cp.label :date_at, "Fecha y hora" %>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <%= cp.text_field :date_at, class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia' %>
         </div>
-        <%= text_field_tag :fecha_y_hora, '', class: 'form-control pull-right', placeholder: 'Fecha y hora de la contingencia' %>
+      </div>
+      <div class="form-group col-md-12">
+        <%= cp.label :reason, 'Causa' %>
+        <%= cp.text_area :reason, class: 'form-control', placeholder: 'Indique el motivo de la contingencia' %>
+      </div>
+      <div class="form-group col-md-12">
+        <%= cp.label :generator, "Creador de la contingencia" %>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-pencil"></i>
+          </div>
+          <%= cp.text_field :generator, class: 'form-control pull-right', placeholder: 'Datos de la persona que genera o autoriza esta contingencia' %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+        <%= cp.label :signatory, "Firmante de la contingencia" %>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-pencil"></i>
+          </div>
+          <%= cp.text_field :signatory, class: 'form-control pull-right', placeholder: 'Datos de la persona que firmó la contingencia' %>
+        </div>
       </div>
     </div>
-    <div class="form-group col-md-12">
-      <%= label_tag :causa %>
-      <%= text_area_tag :causa, '', class: 'form-control', placeholder: 'Indique el motivo de la contingencia' %>
-    </div>
-  </div>
+  <% end %>
 </div>

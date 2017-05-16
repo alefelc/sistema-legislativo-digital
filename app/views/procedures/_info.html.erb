@@ -3,7 +3,7 @@
     <label for="<%= :procedure_type %>">
       <%= t('.type') %>
     </label>
-    <%= f.select :type, procedure_types, { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
+    <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
   </div>
 <% end %>
 <% if policy(Procedure).sheets_create? %>
@@ -22,7 +22,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <%= select_tag :legislative_file_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+          <%= f.select :legislative_file_ids, {}, {}, { multiple: true, class: 'input-lg form-control' } %>
         </div>
       </div>
     </div>
@@ -45,13 +45,6 @@
 
   <div class="col-md-12">
     <div class="form-group">
-      <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
-      <%= select_tag :councilor_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="form-group">
       <label for="<%= :procedure_comision %>">
         <%= t('.commissions') %>
       </label>
@@ -59,6 +52,13 @@
     </div>
   </div>
 </div>
+
+  <div class="dispatch-procedure col-md-12">
+    <div class="form-group">
+      <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
+      <%= select_tag :councilor_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+    </div>
+  </div>
 
 <% if policy(Procedure).topic_create? %>
   <div class="form-group common-procedure col-md-12">
@@ -90,24 +90,6 @@
       </tfoot>
     </table>
   </div>
-<!--   <div class="common-procedure col-md-12">
-    <label for="<%= :procedure_persons %>">
-      <%= t('.persons') %>
-    </label>
-    <div class="row">
-      <div class="col-md-10">
-        <div class="form-group">
-          <%= f.select :person_ids, {}, {}, { multiple: true, class: 'input-lg form-control' } %>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <%= link_to '#', class: 'btn-lg initiator-btn btn btn-primary', data: { url: new_initiator_path } do %>
-          <div class="fa fa-user-plus"></div>
-          <%= t '.add' %>
-        <% end %>
-      </div>
-    </div>
-  </div> -->
 <% end %>
 <% if policy(Procedure).observations_create? %>
   <div class="form-group col-md-12">
@@ -135,6 +117,6 @@
 <% end %>
 <% if policy(:contingency_plan).create? %>
   <div class="col-md-12">
-    <%= render 'contingency_plan' %>
+    <%= render 'contingency_plan', f: f %>
   </div>
 <% end %>
