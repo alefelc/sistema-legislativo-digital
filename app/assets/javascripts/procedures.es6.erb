@@ -6,24 +6,46 @@ class ModalInitiator {
     this.table = table;
     this.el = '.initiators-modal';
     this.hideContent();
+    this.filterCheckBoxes();
     this.listenRadios();
     this.listenForm();
     // this.listenInitiatorSubmit();
   }
 
-  listenInitiatorSubmit() {
-    let that = this;
-    let events = {
-      'ajax:success': function (ev, response) {
-        $(`${that.el} .modal`).modal('hide');
-        table.insert(response)
-      },
-      'ajax:error': function (ev) {
-        alert('Ha ocurrido un error en el servidor!');
+  filterCheckBoxes() {
+    let type = $('#procedure_type').val();
+    if (type.length != 0) {
+      switch(type) {
+        case 'Condonacion': // Hide DEM, Bloque, Comision, Concejal
+          $('#type_dem, #type_partisan_block, #type_commission, #type_commission')
+            .each(function() { $(this).parent('label').hide(); });
+          break;
+        case 'Peticion': // Hide all except physical and legal particulars
+          $(`#type_dem, #type_legislative_secretary, #type_partisan_block, #type_commission,
+            #type_councilor, #type_official_distribution, #type_municipal_office`)
+            .each(function() { $(this).parent('label').hide() });
+          break;
+        case 'ComunicacionOficial': // Hide only physical and legal particulars.
+          $('#type_particular_pyshic, #type_particular_legal').each(function() {
+            $(this).parent('label').hide();
+          });
+          break;
       }
     }
-    $(`${this.el} form`).on(events);
   }
+  // listenInitiatorSubmit() {
+  //   let that = this;
+  //   let events = {
+  //     'ajax:success': function (ev, response) {
+  //       $(`${that.el} .modal`).modal('hide');
+  //       table.insert(response)
+  //     },
+  //     'ajax:error': function (ev) {
+  //       alert('Ha ocurrido un error en el servidor!');
+  //     }
+  //   }
+  //   $(`${this.el} form`).on(events);
+  // }
 
   // Listen when form fields changes
   listenForm() {
@@ -101,6 +123,7 @@ class ModalInitiator {
       let value = $('.radio-group input[type="radio"]:checked').val();
       that.showRadios();
       that.hideContent('slow');
+      that.filterCheckBoxes();
       that.clearSelect2();
       $('.radio-group input[type="radio"]:checked').prop('checked', false);
     });
@@ -247,10 +270,18 @@ class Procedures {
 
     options.ajax.url = "<%= url_helpers.legislative_files_path  %>"
     options.placeholder = 'Busque expedientes ...'
-    $('#legislative_file_ids').select2(options)
+    $('#procedure_legislative_file_ids').select2(options)
 
     options.ajax.url = "<%= url_helpers.initiators_path(value: :councilors, format: :json) %>"
     options.placeholder = 'Busque concejales por nombre y/o apellido ...'
+    options.ajax.data = (params) => {
+      let commission_ids = [];
+      $('#comision_ids').select2('data').forEach(function(elem) { commission_ids.push(elem.id) });
+      return {
+        select_q: params.term || '%%',
+        commissions: commission_ids
+      };
+    };
     $('#councilor_ids').select2(options)
 
     options.ajax.url = "<%= url_helpers.initiators_path(value: :commissions, format: :json) %>"
@@ -275,6 +306,9 @@ class Procedures {
       if ($('#procedure_type').val() == 'Despacho') {
         $('.dispatch-procedure').show(1000)
         $('.common-procedure').hide(1000)
+        setTimeout(function() {
+          swal('Por favor, recuerde corroborar la cantidad de firmas del despacho', '', 'warning');
+        }, 1000);
       }
       else {
         $('.dispatch-procedure').hide(1000)
@@ -330,14 +364,16 @@ class InitiatorsTable {
   }
 
   insert(someData) {
+    // Insert info in the initiators table
     let $new = $(this._tr(someData)).hide();
     $(this.el + ' tbody').append($new);
     $new.show('slow');
     setTimeout(() => { $new.removeClass("success") }, 4000);
-  }
 
-  remove() {
-    
+    // Insert data in the form
+    let $hidden = $(`<input name="procedure[initiator_attributes][]"
+      type="hidden" value=${JSON.stringify(someData)}>`);
+    $('.procedure-form').append($hidden);
   }
 
   listenModalSubmit() {
@@ -368,7 +404,7 @@ $(document).on('ready', function() {
   if ($('#procedure-new').length) {
     let form = new ProcedureForm();
     form.initiatorsModal(new InitiatorsTable());
-    $('#fecha_y_hora').datetimepicker({
+    $('#procedure_contingency_plan_attributes_date_at').datetimepicker({
       locale: 'es',
       format:'DD/MM/YYYY HH:mm'
     });
