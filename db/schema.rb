@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418143946) do
+ActiveRecord::Schema.define(version: 20170509140629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,6 +199,8 @@ ActiveRecord::Schema.define(version: 20170418143946) do
     t.date     "date_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "signatory"
+    t.text     "generator"
   end
 
   create_table "dependencias_procedures", id: false, force: :cascade do |t|
@@ -264,14 +266,15 @@ ActiveRecord::Schema.define(version: 20170418143946) do
   add_index "legislative_file_states", ["ref_type", "ref_id"], name: "index_legislative_file_states_on_ref_type_and_ref_id", using: :btree
 
   create_table "legislative_files", force: :cascade do |t|
-    t.string   "nro_exp"
-    t.integer  "nro_fojas"
+    t.string   "number"
+    t.integer  "sheets"
     t.integer  "bis"
-    t.text     "tema"
-    t.text     "observacion"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.date     "anio"
+    t.text     "topic"
+    t.text     "observations"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.date     "date"
+    t.integer  "year"
   end
 
   create_table "legislative_files_procedures", force: :cascade do |t|
@@ -538,6 +541,16 @@ ActiveRecord::Schema.define(version: 20170418143946) do
 
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
+
+  create_table "procedure_signatories", force: :cascade do |t|
+    t.string  "name"
+    t.string  "surname"
+    t.text    "contact_info"
+    t.text    "position"
+    t.integer "procedure_id"
+  end
+
+  add_index "procedure_signatories", ["procedure_id"], name: "index_procedure_signatories_on_procedure_id", using: :btree
 
   create_table "procedure_states", force: :cascade do |t|
     t.string   "nombre"
