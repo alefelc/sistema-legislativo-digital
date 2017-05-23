@@ -713,3 +713,8 @@ $(function () {
   $current.closest('.treeview-menu').addClass('menu-open').css('display', 'block');
   $current.parent('li').addClass('active');
 });
+
+$(document).on('ready', function() {
+  if ($('.treeview.active').length === 0)
+    $('.treeview:first').addClass('active');
+})

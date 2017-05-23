@@ -400,6 +400,49 @@ class InitiatorsTable {
   }
 }
 
+class ProcedureIndex {
+  constructor() {
+    this.derivationBtn = '.listen-derivations';
+    this.returnTableBtn = '.listen-return-back';
+    this.mainBtns = '#procedures .main-buttons-header';
+    this.alternativeHeader = '#procedures .alternative-button-header';
+    this.showingDerivations = false;
+    this.listenerDerivation();
+
+  }
+
+  settingDatatable() {
+  $('#procedures-table').DataTable({
+    fnDrawCallback: () => {
+      console.log('esto funca???');
+      this.updateView();
+    }
+  })
+  }
+
+  updateView() {
+    if (this.showingDerivations) {
+      $('#procedures-table .btn-check').show();
+      $('#procedures-table .btn-eye').hide();
+      $(this.mainBtns).hide();
+      $(this.alternativeHeader).show();
+    } else {
+      $('#procedures-table .btn-eye').show();
+      $('#procedures-table .btn-check').hide();
+      $(this.mainBtns).show();
+      $(this.alternativeHeader).hide();
+    }
+  }
+
+  listenerDerivation() {
+    var that = this;
+    $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
+      that.showingDerivations = !that.showingDerivations;
+      that.updateView();
+    });
+  }
+}
+
 $(document).on('ready', function() {
   if ($('#procedure-new').length) {
     let form = new ProcedureForm();
@@ -417,5 +460,9 @@ $(document).on('ready', function() {
     });
 
     $('#new_procedure').fileupload();
+  };
+
+  if ($('#procedures-table').length) {
+    let table = new ProcedureIndex();
   }
 })
