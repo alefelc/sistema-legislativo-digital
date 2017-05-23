@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516142244) do
+ActiveRecord::Schema.define(version: 20170523041426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(version: 20170516142244) do
 
   add_index "areas_procedures", ["area_id"], name: "index_areas_procedures_on_area_id", using: :btree
   add_index "areas_procedures", ["procedure_id"], name: "index_areas_procedures_on_procedure_id", using: :btree
+
+  create_table "areas_users", force: :cascade do |t|
+    t.integer "area_id"
+    t.integer "user_id"
+  end
+
+  add_index "areas_users", ["area_id"], name: "index_areas_users_on_area_id", using: :btree
+  add_index "areas_users", ["user_id"], name: "index_areas_users_on_user_id", using: :btree
 
   create_table "bloque_periodos", id: false, force: :cascade do |t|
     t.integer  "bloque_id"
