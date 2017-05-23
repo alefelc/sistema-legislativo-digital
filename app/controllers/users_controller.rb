@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def create
     authorize :configurations, :all?
     @user = User.new users_params
+    @user.areas = Area.where id: params[:areas]
     if @user.save
       flash.now[:success] = t '.success'
       redirect_to edit_user_path @user.id
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
   def update
     authorize :configurations, :all?
     @user = User.find params[:id]
+    @user.areas = Area.where id: params[:areas]
     if @user.update user_update_params
       flash[:success] = t '.success'
       redirect_to users_path
@@ -44,11 +46,11 @@ class UsersController < ApplicationController
 
   def users_params
     params.require(:user).permit :person_id, :email, :password,
-                                 :password_confirmation, role_ids: []
+                                 :password_confirmation, areas: [], role_ids: []
   end
 
   def users_params_no_pass
-    params.require(:user).permit :person_id, :email, role_ids: []
+    params.require(:user).permit :person_id, :email, areas: [], role_ids: []
   end
 
   def user_update_params

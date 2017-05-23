@@ -4,20 +4,7 @@
   Trámites ingresados
 .box.box-primary#procedures
   .box-header
-    .row
-      .col-md-5.col-xs-12
-        - if current_user.present? && policy(Procedure).create?
-          = link_to new_procedure_path, class: 'btn btn-primary btn-lg' do
-            %i.fa.fa-plus-circle.fa-lg
-            Nuevo trámite
-      .col-md-2.col-xs-12
-        %button{ type: :button, class: 'btn btn-warning btn-lg', 'data-toggle': :modal, 'data-target': "#myModal" }
-          %i.fa.fa-filter.fa-lg
-          Filtrar datos
-      .col-md-5.col-xs-12
-        = link_to print_procedures_path, class: 'btn btn-danger btn-lg pull-right', target: :_blank do
-          %i.fa.fa-print.fa-lg
-          Imprimir
+    = render 'header_buttons'
 
   .box-body
     %table.table.table-striped.dataTable#procedures-table{ 'data-source': procedures_path(format: :json) }

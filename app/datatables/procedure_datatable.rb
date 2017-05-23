@@ -35,7 +35,10 @@ class ProcedureDatatable
   end
 
   def actions(proc)
-    link_to '', procedure_path(proc), class: 'btn btn-info fa fa-eye'
+    content_tag :div do
+      link_to('', procedure_path(proc), class: 'btn btn-eye btn-info fa fa-eye fa-lg') +
+      link_to('', '#', class: 'btn btn-check btn-success fa fa-check fa-lg')
+    end
   end
 
   def procedures
@@ -52,10 +55,11 @@ class ProcedureDatatable
 
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["courses.name ILIKE ? OR courses.code ILIKE ?
-                  OR courses.type_course ILIKE ? OR courses.division ILIKE ?
-                  OR courses.subdivision ILIKE ?" ]
-      binds += [search] * 5
+      query += ["procedures.id::text ILIKE ?"]
+      # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ?
+      #             OR procedures.type_course ILIKE ? OR procedures.division ILIKE ?
+      #             OR procedures.subdivision ILIKE ?" ]
+      binds += [search]
     end
 
     [query.join(' AND ')] + binds
@@ -76,7 +80,6 @@ class ProcedureDatatable
   def get_iniciadores(tra)
     result = []
     tra.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
-    tra.areas.each { |b| result << "#{b.denominacion}" }
     tra.bloques.each { |b| result << "#{b.denominacion}" }
     tra.comisions.each { |b| result << "#{b.denominacion}" }
     tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }

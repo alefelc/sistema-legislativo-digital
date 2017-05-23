@@ -1,0 +1,46 @@
+<div id="index-derivated-procedures">
+  <h2>
+    Trámites derivados
+  </h2>
+
+  <div class="box box-primary" id="procedures">
+    <div class="box-header">
+    </div>
+
+    <div class="box-body">
+      <table class="table table-striped dataTable" id="derivated-procedures-table" data-source="<%= derivated_procedures_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>Nro</th>
+            <th>Derivado por</th>
+            <th>Derivado a las</th>
+            <th>Recepcionado por</th>
+            <th>Recepcionado a las</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).on('ready', function() {
+  if ($('#index-derivated-procedures').length) {
+    $('#derivated-procedures-table').dataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: $('#derivated-procedures-table').data('url'),
+        method: 'GET',
+        dataType: 'json'
+        // Needed for the filters
+        // data: function(params) {
+        //   params.status_filter = $('select.status-filter').val()
+        //   return params
+      }
+    });
+  }
+});
+</script>

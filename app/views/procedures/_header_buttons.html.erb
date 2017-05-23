@@ -1,0 +1,34 @@
+<div class="row main-buttons-header">
+  <div class="col-md-3 col-xs-12">
+    <% if current_user.present? && policy(Procedure).create? %>
+      <%= link_to new_procedure_path, class: 'btn btn-primary btn-lg' do %>
+        <i class="fa fa-plus-circle fa-lg"></i> Nuevo trámite
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-xs-12">
+    <%= link_to '#', class: 'btn btn-danger btn-lg pull-right listen-derivations' do %>
+      <i class="fa fa-check fa-lg"></i> Derivar a Sec. Leg.
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-xs-12">
+    <button type=button class='btn btn-warning btn-lg' data-toggle=modal data-target="#myModal">
+      <i class="fa fa-filter fa-lg"></i> Filtrar datos
+    </button>
+  </div>
+
+  <div class="col-md-3 col-xs-12">
+    <%= link_to print_procedures_path, class: 'btn btn-default btn-lg pull-right', target: :_blank do %>
+      <i class="fa fa-print fa-lg"></i> Imprimir Reporte
+    <% end %>
+  </div>
+</div>
+<div class="row alternative-button-header">
+  <div class="col-md-12 col-xs-12">
+    <%= link_to '#', class: 'btn btn-success listen-return-back btn-lg pull-right' do %>
+      <i class="fa fa-print fa-save"></i> Listo!
+    <% end %>
+  </div>
+</div>

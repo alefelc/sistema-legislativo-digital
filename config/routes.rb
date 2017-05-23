@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   # Legislative area
   resources :administrative_files, only: [:index, :show]
   resources :legislative_files
+  resources :derivated_procedures
   resources :circuitos ##### REPLACE IT WITH 'LOOPS' #####
 
   # Legislative policies routes
