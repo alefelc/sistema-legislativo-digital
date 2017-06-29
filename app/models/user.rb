@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   # == PaperTrail changes tracker
   has_paper_trail
 
+  delegate :full_name, to: :person
+
   # == Check if an user belongs to an area
   # option can be:
   #   :reception_table

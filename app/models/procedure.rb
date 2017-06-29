@@ -24,10 +24,14 @@ class Procedure < ActiveRecord::Base
            through: :processes_signatories,
            class_name: 'Person',
            source: :person
-  belongs_to :contingency_plan
   has_many :procedure_signatories
 
+  belongs_to :contingency_plan
+  has_one :legislative_file_state
+
   has_one :procedure_derivation
+  has_one :legislative_file_originated, class_name: 'Loop', foreign_key: 'origin_procedure_id'
+
 
   #== Nested attributes
   accepts_nested_attributes_for :uploads, reject_if: :all_blank
@@ -74,6 +78,25 @@ class Procedure < ActiveRecord::Base
 
   def get_observaciones
     self.observaciones
+  end
+
+  def text
+    "##{id}"
+  end
+
+  def get_iniciadores
+    result = []
+    self.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
+    self.bloques.each { |b| result << "#{b.denominacion}" }
+    self.comisions.each { |b| result << "#{b.denominacion}" }
+    self.persons.each { |b| result << "#{b.full_name}" }
+    self.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
+    self.municipal_offices.each { |b| result << "#{b.denominacion}" }
+    result.join ' - '
+  end
+
+  def to_s
+    "##{self.id}"
   end
 
   private
