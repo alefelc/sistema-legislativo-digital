@@ -1,18 +1,23 @@
-- content_for :title, "Concejales"
-#councilor-edit
-
 #councilors
-  %table.table.table-striped.table-bordered#councilors-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
-    %thead
-      %tr
-        %th= t('.fullname')
-        %th= t('.cuit')
-        %th= t('.address')
-        %th= t('.phone')
-        %th= t('.email')
-        %th= t('.period')
-        %th
-    %tbody
+  %h2
+    Concejales
+
+  .box.box-primary#procedures
+    .box-header
+      = render 'header_buttons'
+
+    .box-body
+      %table.table.table-striped#councilors-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
+        %thead
+          %tr
+            %th= t('.fullname')
+            %th= t('.cuit')
+            %th= t('.address')
+            %th= t('.phone')
+            %th= t('.email')
+            %th= t('.period')
+            %th
+        %tbody
 
 :javascript
   Councilors.IndexDataTable.init();

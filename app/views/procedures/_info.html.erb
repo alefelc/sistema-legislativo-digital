@@ -3,7 +3,11 @@
     <label for="<%= :procedure_type %>">
       <%= t('.type') %>
     </label>
-    <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
+    <% if (procedure.type == "Despacho") %>
+      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 , disabled: :disabled } %>
+    <% else %>
+      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
+    <% end %>
   </div>
 <% end %>
 <% if policy(Procedure).sheets_create? %>
@@ -73,7 +77,7 @@
     <table class="initiators-table table table-bordered">
       <thead>
         <tr>
-          <th class="text-center"> Iniciadores </th>
+          <th class="text-center"> Iniciador/es del trámite</th>
           <th style="width: 1%"> </th>
         </tr>
       </thead>
@@ -81,10 +85,31 @@
 
       </tbody>
       <tfoot>
-        <td colspan="2" class="text-center"> <i>Para cargar iniciadores haga click en el botón "Agregar"</i>
+        <td colspan="2" class="text-center"> <i>Para cargar iniciador/es haga click en el botón "Agregar"</i>
           <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
             <div class="fa fa-user-plus"></div>
-            <%= t '.add' %>
+            Agregar Iniciador
+          <% end -%>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+  <div class="common-procedure col-md-12">
+    <table class="signators-table table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center"> Firmante/s del trámite </th>
+          <th style="width: 1%"> </th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+      <tfoot>
+        <td colspan="2" class="text-center"> <i>Para cargar firmantes haga click en el botón "Agregar"</i>
+          <%= button_tag type: 'button', class: 'signator-btn btn btn-info pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
+            <div class="fa fa-user-plus"></div>
+            Agregar Firmante
           <% end -%>
         </td>
       </tfoot>

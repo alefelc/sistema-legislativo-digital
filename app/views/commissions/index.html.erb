@@ -1,0 +1,30 @@
+<div id="commissions">
+  <h2> Comisiones </h2>
+  <div class="box box-primary">
+    <div class="box-header"> <%= render 'header_buttons' %> </div>
+  
+    <div class="box-body">
+      <table class="table table-striped dataTable" id="commissions-table">
+        <thead>
+          <tr>
+            <th> Nombre </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @commissions.each do |c| %>
+            <tr>
+              <td> <%= c.denominacion %> </td>
+              <td>
+                <%= link_to edit_commission_path(c), class: 'btn btn-warning' do %>
+                  <i class="fa fa-lg fa-edit"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

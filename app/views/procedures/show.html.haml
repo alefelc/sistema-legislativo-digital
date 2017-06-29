@@ -12,7 +12,7 @@
         - else
           %i.small= t('.not_specified')
       .col-md-6
-        = link_to edit_procedure_path(@procedure), class: 'btn btn-danger btn-lg pull-right margin-left' do
+        = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
           %i.fa.fa-print{ 'aria-hidden': :true }
           Imprimir trámite
         = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
@@ -51,18 +51,19 @@
                       %i No existen expedientes legislativos asociados
                   - @procedure.legislative_files.each do |p|
                     %li= link_to p.to_s, p, class: 'btn'
-          .col-md-6
-            .box.box-solid
-              .box-header.with-border
-                %i.fa.fa-book
-                %h3.box-title Expedientes administrativos
-              .box-body
-                %ul
-                  - if @procedure.administrative_files.empty?
-                    %li
-                      %i No existen expedientes administrativos asociados
-                  - @procedure.administrative_files.each do |p|
-                    %li= link_to p.to_s, administrative_file_path(p), class: 'btn'
+          - if @procedure.type == "Despacho"
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Expedientes administrativos
+                .box-body
+                  %ul
+                    - if @procedure.administrative_files.empty?
+                      %li
+                        %i No existen expedientes administrativos asociados
+                    - @procedure.administrative_files.each do |p|
+                      %li= link_to p.to_s, administrative_file_path(p), class: 'btn'
 
       - if @procedure.contingency_plan.present?
         .panel.panel-danger
@@ -84,53 +85,66 @@
                 %div.form-control.pull-right
                   = @procedure.contingency_plan.reason
 
-      .panel.panel-default
-        .panel-heading
-          %h3.panel-title Ciclo de vida
-        .panel-body.remove-bottom-panel
-          %ul.timeline
-            %li.time-label
-              %span.bg-red= @procedure.created_at.to_date
+      - if @procedure.type == "Despacho"
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Comisiones y Concejales firmantes del despacho
+          .panel-body
+            = @procedure.get_iniciadores
+      - else
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Iniciadores
+          .panel-body
+            = @procedure.get_iniciadores
 
-            %li
-              %i.fa.fa-long-arrow-down.bg-teal
-              .timeline-item
-                %span.time
-                  %i.fa.fa-clock-o
-                  = @procedure.created_at.to_s(:time)
+      -# .panel.panel-default
+      -#   .panel-heading
+      -#     %h3.panel-title Ciclo de vida
+      -#   .panel-body.remove-bottom-panel
+      -#     %ul.timeline
+      -#       %li.time-label
+      -#         %span.bg-red= @procedure.created_at.to_date
 
-                %h3.timeline-header
-                  %span{ style: 'color: #3c8dbc; font-weight: bold;' } Trámite iniciado
+      -#       %li
+      -#         %i.fa.fa-long-arrow-down.bg-teal
+      -#         .timeline-item
+      -#           %span.time
+      -#             %i.fa.fa-clock-o
+      -#             = @procedure.created_at.to_s(:time)
 
-                .timeline-body
-                  Content goes here
+      -#           %h3.timeline-header
+      -#             %span{ style: 'color: #3c8dbc; font-weight: bold;' } Trámite iniciado
 
-                .timeline-footer
-                  Se adjuntó el archivo bla_bla_bla.jpg
-                  %a.btn.btn-success
-                    .fa.fa-download
-                    Descargar
-            %li
-              %i.fa.fa-users.bg-blue
-              .timeline-item
-                %span.time
-                  %i.fa.fa-clock-o
-                  = @procedure.created_at.to_s(:time)
+            -#     .timeline-body
+            -#       Content goes here
 
-                %h3.timeline-header
-                  %span{ style: 'color: #3c8dbc; font-weight: bold;' } Derivado a secretaría legislativa
+            -#     .timeline-footer
+            -#       Se adjuntó el archivo bla_bla_bla.jpg
+            -#       %a.btn.btn-success
+            -#         .fa.fa-download
+            -#         Descargar
+            -# %li
+            -#   %i.fa.fa-users.bg-blue
+            -#   .timeline-item
+            -#     %span.time
+            -#       %i.fa.fa-clock-o
+            -#       = @procedure.created_at.to_s(:time)
 
-                .timeline-body
-                  Content goes here
+            -#     %h3.timeline-header
+            -#       %span{ style: 'color: #3c8dbc; font-weight: bold;' } Derivado a secretaría legislativa
 
-                .timeline-footer
-                  Se adjuntó el archivo bla_bla_bla.jpg
-                  %a.btn.btn-success
-                    .fa.fa-download
-                    Descargar
+            -#     .timeline-body
+            -#       Content goes here
 
-            %li
-              %i.fa.fa-clock-o.bg-gray
+            -#     .timeline-footer
+            -#       Se adjuntó el archivo bla_bla_bla.jpg
+            -#       %a.btn.btn-success
+            -#         .fa.fa-download
+            -#         Descargar
+
+            -# %li
+            -#   %i.fa.fa-clock-o.bg-gray
 
 :javascript
 $(document).ready(function() {

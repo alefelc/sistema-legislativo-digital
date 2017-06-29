@@ -1,6 +1,6 @@
 <div class="initiators-modal"></div>
 <div id="legislative-file-new">
-  <h2> Nuevo expediente legislativo </h2>
+  <h2> Nuevo Expediente Legislativo </h2>
   <%= form_for @loop, url: legislative_files_path, multipart: true do |f| %>
 
     <div class="box box-primary">
@@ -12,11 +12,6 @@
               <li class="active">
                 <a aria-expanded="true" data-toggle="tab" href="#info">
                   Información
-                </a>
-              </li>
-              <li>
-                <a aria-expanded="true" data-toggle="tab" href="#states">
-                  Estados
                 </a>
               </li>
               <li>
@@ -35,61 +30,44 @@
                   Cargue la información del nuevo expediente
                 </div>
                 <div class="row">
-                  <div class="form-group col-md-10">
-                    <%= label_tag :procedures, "Trámites" %>
-                    <%= select_tag :procedures, nil, class: 'form-control input-lg' %>
+                  <div class="form-group col-md-6">
+                    <%= f.label :origin_procedure_id %>
+                    <%= f.select :origin_procedure_id, {}, {}, class: 'form-control input-lg' %>
                   </div>
 
                   <div class="form-group col-md-2">
-                    <%= f.label :nro_fojas, 'Fojas' %>
-                    <%= f.text_field :nro_fojas, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
+                    <%= f.label :sheets, 'Fojas' %>
+                    <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <%= f.label :date, 'Fecha' %>
+                    <%= f.text_field :date, { class: 'input-lg form-control', type: 'date' } %>
                   </div>
 
                   <div class="form-group col-md-12">
-                    <%= label_tag :anio, 'Fecha' %>
-                    <%= text_field_tag :anio, nil, { class: 'input-lg form-control', type: 'date' } %>
+                    <%= f.label :topic, 'Sumario' %>
+                    <%= f.text_area :topic, class: 'input-lg form-control', placeholder: 'Ingrese sumario' %>
                   </div>
 
-
                   <div class="form-group col-md-12">
-                    <%= label_tag :tema, 'Sumario' %>
-                    <%= text_area_tag :tema, '', class: 'input-lg form-control', placeholder: 'Ingrese sumario' %>
+                    <%= f.label :observations, 'Observaciones' %>
+                    <%= f.text_area :observations, class: 'form-control', placeholder: 'Ingrese observaciones' %>
                   </div>
 
                   <div class="form-group col-md-6">
-                    <%= label_tag :accumulated_in, 'Acumulado en' %>
-                    <%= text_field_tag :accumulated_in, nil, { class: 'input-lg form-control', placeholder: 'Busque expediente', type: 'number', min: '1', step: '1' } %>
+                    <%= f.label :accumulated_in, 'Acumulado en' %>
+                    <%= f.select :accumulated_in, {}, {}, { class: 'form-control' } %>
                   </div>
 
                   <div class="form-group col-md-6">
-                    <%= label_tag :physically_attached, 'Adjuntado físicamente' %>
-                    <%= text_field_tag :physically_attached, nil, { class: 'input-lg form-control', placeholder: 'Busque expediente', type: 'number', min: '1', step: '1' } %>
+                    <%= f.label :physically_attached, 'Adjuntado físicamente' %>
+                    <%= f.select :physically_attached, {}, {}, { class: 'form-control' } %>
                   </div>
 
                   <div class="form-group col-md-12">
-                    <%= f.label :observacion, 'Observaciones' %>
-                    <%= f.text_area :observacion, class: 'input-lg form-control', placeholder: 'Ingrese observaciones' %>
-                  </div>
-
-                  <div class="form-group col-md-12">
-                    <%= label_tag :tags, 'Voces claves' %>
-                    <%= text_field_tag :tags, '', class: 'input-lg form-control', placeholder: 'Busque voces claves/etiquetas' %>
-                  </div>
-                </div>
-              </div>
-
-              <div id="states" class="tab-pane fade">
-                <div class="lead box-header with-border">
-                  Cargue estados del expediente
-                </div>
-                <div class="row">
-                  <div id="legislative_file_states">
-                    <%= f.fields_for :legislative_file_states do |file| %>
-                      <%= render 'legislative_file_state_fields', f: file %>
-                      <div class="links">
-                        <%= link_to_add_association '', f, :legislative_file_states, class: 'btn btn-success btn-lg fa fa-plus', title: 'Agregar nuevo estado' %>
-                      </div>
-                    <% end -%>
+                    <%= f.label :tags, 'Voces claves' %>
+                    <%= f.select :tags, {}, {}, class: 'form-control' %>
                   </div>
                 </div>
               </div>

@@ -15,7 +15,7 @@
             <li>
               <%= link_to procedures_path do %>
                 <i class="fa fa-circle-o"></i>
-                <%= t '.all_processes' %>
+                Trámites
               <% end -%>
             </li>
             <% if policy(Procedure).create? %>
@@ -53,7 +53,7 @@
           <a href="#">
             <i class="fa fa-file-text-o fa-lg"></i>
             <span>
-              <%= 'Secretaría Legislativa' %>
+              Dirección Legislativa
             </span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -61,20 +61,26 @@
             <li>
               <a href="<%= derivated_procedures_path %>">
                 <i class="fa fa-circle-o"></i>
-                Ver trámites derivados
+                Trámites
+              </a>
+            </li>
+            <li>
+              <a href="<%= derivated_procedures_path %>">
+                <i class="fa fa-circle-o"></i>
+                Derivaciones
               </a>
             </li>
             <li>
               <a href="<%= legislative_files_path %>">
                 <i class="fa fa-circle-o"></i>
-                <%= t '.all_legislative_files' %>
+                Expedientes Legislativos
               </a>
             </li>
             <% # if policy(LegislativeFile).create? %>
             <li>
               <a href="<%= new_legislative_file_path %>">
                 <i class="fa fa-circle-o"></i>
-                Nuevo expediente legislativo
+                Nuevo Expediente
               </a>
             </li>
             <!-- <hr style="border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px"/>
@@ -99,6 +105,12 @@
             <span>Sesiones</span>
           </a>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-list-ul fa-lg"></i>
+            <span>Normas</span>
+          </a>
+        </li>
       <% end %>
       <!-- End legislative secretary -->
 
@@ -112,12 +124,32 @@
         <li class="header text-center">
           Configuración de sistema
         </li>
+
         <li class="treeview">
-          <a href="<%= calendar_path %>">
-            <i class="fa fa-book fa-lg"></i>
-            <span>Registro de iniciadores</span>
+          <a href="#">
+            <i class="fa fa-users fa-lg"></i>
+            <span> Autoridades </span>
+            <i class="fa fa-angle-left pull-right"></i>
           </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= councilors_path %>">
+                <i class="fa fa-circle-o"></i> Concejales
+              </a>
+            </li>
+            <li>
+              <a href="<%= commissions_path %>">
+                <i class="fa fa-circle-o"></i> Comisiones
+              </a>
+            </li>
+            <li>
+              <a href="<%= blocks_path %>">
+                <i class="fa fa-circle-o"></i> Bloques
+              </a>
+            </li>
+          </ul>
         </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-user fa-lg"></i>
@@ -204,6 +236,11 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
+            <li>
+              <a href="<%= periods_path %>"> <i class="fa fa-circle-o"></i>
+                Períodos Legislativos
+              </a>
+            </li>
             <li>
               <a href="<%= '#' %>"> <i class="fa fa-circle-o"></i>
                 <%= t '.procedures' %>

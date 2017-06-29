@@ -1,0 +1,28 @@
+<div class="lead box-header with-border">
+  Cargue o modifique estados del expediente
+</div>
+<div id="legislative_file_states">
+  <div id="state-form-modal"></div>
+  <table class="table table-striped">
+    <tbody>
+      <% @loop.legislative_file_states.each do |state| %>
+        <tr>
+          <td> <%= humanize_states state %> </td>
+          <td class="pull-right">
+            <%= link_to '', edit_legislative_file_state_path(state),
+              class: 'edit-state-btn btn btn-warning btn-lg fa fa-pencil fa-lg',
+              remote: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="col-md-12 text-center">
+    <hr>
+    <%= link_to new_legislative_file_state_path(legislative_file_id: @loop.id), class: 'new-state-btn btn btn-primary btn-lg',
+      title: 'Agregar nuevo estado', remote: true do %>
+      <i class="fa fa-plus-circle fa-lg"></i>
+      Nuevo Estado
+    <% end %>
+  </div>
+</div>

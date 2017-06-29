@@ -1,0 +1,42 @@
+<div class="initiators-modal"></div>
+<div id="legislative-file-edit">
+  <h2> Expediente Nro: <%= @loop.number %> </h2>
+  <%= form_for @loop, multipart: true do |f| %>
+
+    <div class="box box-primary">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-xs-3">
+            <%= render 'navbar', f: f %>
+          </div>
+
+          <div class="col-xs-9">
+            <div class="tab-content">
+              <div id="info" class="tab-pane fade in active">
+                <%= render 'info', f: f %>
+              </div>
+
+              <div id="states" class="tab-pane fade">
+                <%= render 'states', f: f %>
+              </div>
+
+              <div id="loops" class="tab-pane fade">
+                <%= render 'loops', f: f %>
+              </div>
+
+              <div id="attached" class="tab-pane fade">
+                <%= render 'attached_files', f: f %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <%= render 'footer', f: f %>
+      </div>
+    </div>
+
+  <% end -%>
+</div>

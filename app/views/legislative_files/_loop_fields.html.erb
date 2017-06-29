@@ -1,0 +1,32 @@
+<div class="nested-fields row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <%= loop.label :origin_procedure_id, "Trámite que dió origen a este expediente" %>
+        <%= loop.select :origin_procedure_id, new_procedure(loop.object), {}, class: 'form-control input-lg'%>
+      </div>
+
+      <div class="form-group col-md-2">
+        <%= loop.label :sheets, 'Fojas' %>
+        <%= loop.text_field :sheets, { class: 'input-lg form-control',
+          placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= loop.label :date, 'Fecha' %>
+        <%= loop.text_field :date, { value: loop.object.date.try(:to_default_s), class: 'input-lg form-control', type: 'date' } %>
+      </div>
+
+      <div class="form-group col-md-12">
+        <%= loop.label :topic, 'Sumario' %>
+        <%= loop.text_area :topic, class: 'input-lg form-control', placeholder: 'Ingrese sumario' %>
+      </div>
+
+      <div class="form-group col-md-12">
+        <%= loop.label :observations, 'Observaciones' %>
+        <%= loop.text_area :observations, class: 'input-lg form-control',
+          placeholder: 'Ingrese observaciones' %>
+      </div>
+    </div>
+  </div>
+</div>

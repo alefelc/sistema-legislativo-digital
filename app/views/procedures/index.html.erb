@@ -1,0 +1,36 @@
+<div id="procedures">
+  <div id="filters">
+    <%= render 'filters' %>
+  </div>
+  <h2 class="main-title text-center"> TRÁMITES INGRESADOS </h2>
+  <h2 class="derivation-title text-center"> DERIVANDO TRÁMITES </h2>
+
+  <div class="box box-primary">
+    <div class="box-header">
+      <%= render 'header_buttons' %>
+    </div>
+    <hr class="minimal-hr">
+    <div class="box-body">
+      <table class="table"
+        id="procedures-table" data-source="<%= procedures_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="text-center"> <%= t '.procedures_type' %> </th>
+            <th class="text-center"> <%= t '.initiators' %> </th>
+            <th class="text-center"> <%= t '.topic' %> </th>
+            <th class="text-center"> <%= t '.created_at' %> </th>
+            <th class="text-center"> <%= t '.sheets' %> </th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="reportrange" placeholder="probando" class="text-center form-control">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+    <span></span> <b class="caret"></b>
+  </div>
+</div>
