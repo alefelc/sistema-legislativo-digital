@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523041426) do
+ActiveRecord::Schema.define(version: 20170622121501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,14 @@ ActiveRecord::Schema.define(version: 20170523041426) do
   add_index "comisions_despachos", ["comision_id"], name: "index_comisions_despachos_on_comision_id", using: :btree
   add_index "comisions_despachos", ["despacho_id"], name: "index_comisions_despachos_on_despacho_id", using: :btree
 
+  create_table "comisions_legislative_file_states", id: false, force: :cascade do |t|
+    t.integer "comision_id"
+    t.integer "legislative_file_state_id"
+  end
+
+  add_index "comisions_legislative_file_states", ["comision_id"], name: "index_coms_leg_file_states_on_comision_id", using: :btree
+  add_index "comisions_legislative_file_states", ["legislative_file_state_id"], name: "index_coms_leg_file_states_on_state_id", using: :btree
+
   create_table "comisions_people", id: false, force: :cascade do |t|
     t.integer "comision_id"
     t.integer "concejal_id"
@@ -257,29 +265,38 @@ ActiveRecord::Schema.define(version: 20170523041426) do
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
   create_table "legislative_file_states", force: :cascade do |t|
-    t.string   "nombre"
     t.text     "especificacion1"
     t.text     "especificacion2"
-    t.string   "tipo"
     t.integer  "loop_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "ref_id"
-    t.string   "ref_type"
-    t.date     "fecha"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "procedure_id"
+    t.integer  "state_type",          default: 0
+    t.integer  "name",                default: 0
+    t.date     "date_at"
+    t.integer  "legislative_file_id"
   end
 
+  add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree
   add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
-  add_index "legislative_file_states", ["ref_type", "ref_id"], name: "index_legislative_file_states_on_ref_type_and_ref_id", using: :btree
+  add_index "legislative_file_states", ["procedure_id"], name: "index_legislative_file_states_on_procedure_id", using: :btree
+
+  create_table "legislative_file_states_loops", id: false, force: :cascade do |t|
+    t.integer "legislative_file_state_id"
+    t.integer "loop_id"
+  end
+
+  add_index "legislative_file_states_loops", ["legislative_file_state_id"], name: "index_leg_file_states_loops_on_state_id", using: :btree
+  add_index "legislative_file_states_loops", ["loop_id"], name: "index_leg_file_states_loops_on_loop_id", using: :btree
 
   create_table "legislative_files", force: :cascade do |t|
     t.string   "number"
     t.integer  "sheets"
-    t.integer  "bis"
+    t.integer  "bis",          default: 0
     t.text     "topic"
     t.text     "observations"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.date     "date"
     t.integer  "year"
   end
@@ -323,12 +340,16 @@ ActiveRecord::Schema.define(version: 20170523041426) do
 
   create_table "loops", force: :cascade do |t|
     t.integer  "legislative_file_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "nro"
-    t.string   "tema"
-    t.date     "anio"
-    t.integer  "fojas"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "number",              default: 0
+    t.string   "topic"
+    t.date     "year"
+    t.integer  "sheets"
+    t.integer  "origin_procedure_id"
+    t.date     "date"
+    t.integer  "bis",                 default: 0
+    t.string   "observations"
   end
 
   add_index "loops", ["legislative_file_id"], name: "index_loops_on_legislative_file_id", using: :btree
@@ -687,7 +708,7 @@ ActiveRecord::Schema.define(version: 20170523041426) do
   add_index "sub_seccions", ["seccion_id"], name: "index_sub_seccions_on_seccion_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "nombre"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -766,6 +787,8 @@ ActiveRecord::Schema.define(version: 20170523041426) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "legislative_file_states", "legislative_files"
+  add_foreign_key "legislative_file_states", "procedures"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
   add_foreign_key "procedure_derivations", "areas"
