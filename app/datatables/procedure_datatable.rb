@@ -1,7 +1,7 @@
 class ProcedureDatatable
   delegate :index_procedure, :person_path, :link_to, :peticion_path,
            :human_attribute_name, :params, :content_tag, :procedure_path,
-           to: :@view
+           :derivated_procedures_path, :check_box_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -20,29 +20,56 @@ class ProcedureDatatable
   def data
     paginated_procedures.map do |proc|
       [
-        show_id(proc.id, Procedure.human_attribute_name(proc.type)),
+        actions(proc),
+        show_id(proc, Procedure.human_attribute_name(proc.type)),
         get_iniciadores(proc),
         proc.topic,
         to_date_time(proc.created_at),
-        proc.sheets,
-        actions(proc)
+        content_tag(:div, proc.sheets, class: 'text-center'),
+        view_procedure(proc)
       ]
     end
   end
 
-  def show_id(id, type)
-    "#{content_tag :b, id} #{content_tag :i, type}"
+  def show_id(proc, type)
+    content_tag :div, class: 'text-center' do
+      "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
+    end
+  end
+
+  def view_procedure(proc)
+    content_tag :div do
+      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg')
+    end
   end
 
   def actions(proc)
-    content_tag :div do
-      link_to('', procedure_path(proc), class: 'btn btn-eye btn-info fa fa-eye fa-lg') +
-      link_to('', '#', class: 'btn btn-check btn-success fa fa-check fa-lg')
+    return if params[:show_derivations].eql? "false"
+    if proc.procedure_derivation.present?
+      if proc.procedure_derivation.received_at.present?
+        title_attr = "Trámite derivado #{proc.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}\n"
+        title_attr += "Trámite recepcionado #{proc.procedure_derivation.received_at.strftime('%d/%m %H:%M')}"
+        content_tag :div, "",
+          class: 'btn btn-default fa fa-lg fa-envelope-open-o tooltip-text active',
+          title: title_attr
+      else
+        title_attr = "Trámite derivado #{proc.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}"
+        content_tag :div, "",
+          class: 'btn btn-default fa fa-lg fa-envelope tooltip-text active',
+          title: title_attr
+      end
+    else
+      title_attr = "Click para derivar #{proc}"
+      link_to derivated_procedures_path(procedure_id: proc.id), method: :post,
+        class: 'btn btn-check btn-success tooltip-text', title: title_attr,
+        remote: true do
+          content_tag :i, nil, class: 'fa fa-lg fa-check'
+      end
     end
   end
 
   def procedures
-    Procedure.order(id: :asc).where(filter)
+    Procedure.order(id: :desc).where filter
   end
 
   def columns
@@ -56,17 +83,21 @@ class ProcedureDatatable
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
       query += ["procedures.id::text ILIKE ?"]
-      # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ?
-      #             OR procedures.type_course ILIKE ? OR procedures.division ILIKE ?
-      #             OR procedures.subdivision ILIKE ?" ]
-      binds += [search]
+      # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ? OR procedures.type_course ILIKE ? OR procedures.division ILIKE ? OR procedures.subdivision ILIKE ?" ]
+      binds += [search] * 1
+    end
+
+    if params[:date_from].present? && params[:date_to].present?
+      query += ["created_at BETWEEN ? AND ?"]
+      binds += [params[:date_from]]
+      binds += [params[:date_to]]
     end
 
     [query.join(' AND ')] + binds
   end
 
   def paginated_procedures
-    procedures.page(page).per(per_page)
+    procedures.page(page).per per_page
   end
 
   def per_page
