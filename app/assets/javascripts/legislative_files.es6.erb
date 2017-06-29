@@ -1,8 +1,8 @@
 "<% url_helpers = Rails.application.routes.url_helpers %>"
 
 class ListenProceduresFinder {
-	constructor(args) {
-		this.select = '#legislative-file-new #procedures';
+	constructor() {
+		this.select = '#legislative_file_origin_procedure_id';
 		this.listen();
 	}
 
@@ -10,7 +10,9 @@ class ListenProceduresFinder {
 		let options = {
 		  allowClear: true,
 		  placeholder: 'Busque trámites',
-		  language: 'es'
+		  language: 'es',
+		  theme: "bootstrap",
+		  minimumInputLength: 2
 		};
 		options.ajax = {
 		  url: "<%= url_helpers.procedures_path %>",
@@ -26,7 +28,100 @@ class ListenProceduresFinder {
 		    return { results: data }
 		  }
 		};
-		$(this.select).select2(options);
+		$(this.select).select2(options).on("select2:select", function(e) {
+	    // token selected
+	    var data = e.params.data;
+	    $('#legislative_file_topic').val(data.topic);
+	    $('#legislative_file_sheets').val(data.sheets);
+	    $('#legislative_file_observations').val(data.observations);
+	    $('#legislative_file_date').val(data.created_at.substr(0,10));
+	   });
+	}
+}
+
+class TagsSelect {
+	constructor() {
+		this.select = '#legislative_file_tags';
+		this.listen();
+	}
+
+	options() {
+		return {
+		  allowClear: true,
+		  language: 'es',
+		  theme: "bootstrap",
+		  placeholder: 'Busque voces claves/etiquetas',
+			ajax: {
+			  url: "<%= url_helpers.tags_path %>",
+			  dataType: 'json',
+			  delay: 250,
+			  cache: true,
+			  data: (params) => {
+			    return { select_q: params.term || '%%' }
+			  },
+			  processResults: (data, params) => {
+			    return { results: data }
+			  }
+			}
+		}
+	}
+
+	listen() {
+		$(this.select).select2(this.options());
+	}
+}
+
+class AttachedLegislativeFiles {
+	constructor(selectId) {
+		this.select = selectId;
+		this.listen();
+	}
+
+	options() {
+		return {
+		  allowClear: true,
+		  language: 'es',
+		  theme: "bootstrap",
+		  placeholder: 'Busque expediente por número',
+			ajax: {
+			  url: "<%= url_helpers.legislative_files_path %>",
+			  dataType: 'json',
+			  delay: 250,
+			  cache: true,
+			  data: (params) => {
+			    return { select_q: params.term || '%%' }
+			  },
+			  processResults: (data, params) => {
+			    return { results: data }
+			  }
+			}
+		}
+	}
+
+	listen() {
+		$(this.select).select2(this.options());
+	}
+}
+
+class LegislativeFileStateModal {
+	constructor() {
+		this.btnNew = '.new-state-btn';
+		this.editBtn = '.edit-state-btn';
+		this.editScope = '#legislative-file-edit';
+		this.listener();
+	}
+
+	listener() {
+		$(this.editScope).on('ajax:success', `${this.btnNew}, ${this.editBtn}`, function(event, data) {
+			$('#state-form-modal').html(data);
+			$('#state-form-modal .modal').modal('show');
+		});
+	}
+
+	close() {
+		$('#state-form-modal').on('ajax:success', 'form', function() {
+			$('#state-form-modal').modal('hide').html();
+		});
 	}
 }
 
@@ -36,6 +131,17 @@ $(document).on('ready', function() {
 	}
 
 	if ($('#legislative-file-new').length) {
-		const listener = new ListenProceduresFinder()
+		const procedure = new ListenProceduresFinder();
+		const tags = new TagsSelect();
+		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
+		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
+	}
+
+	if ($('#legislative-file-edit').length) {
+		const procedure = new ListenProceduresFinder();
+		const tags = new TagsSelect();
+		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
+		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
+		const modalListener = new LegislativeFileStateModal();
 	}
 });

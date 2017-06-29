@@ -64,6 +64,7 @@ class ModalInitiator {
     //   $(this).select2("val", "");
     //   ev.preventDefault();
     // });
+
     let selectors = ['.official_distribution', '.municipal_office',
       '.particular_pyshic', '.particular_legal'];
 
@@ -223,7 +224,13 @@ class ModalInitiator {
 // Procedures index, new and edit.
 class Procedures {
   static indexDataTable() {
-    $('#procedures-table').dataTable({
+    let table = $('#procedures-table').DataTable({
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron trámites relacionados a su búsqueda."
+      },
+      dom: "<'row'<'col-sm-4'l><'procedures-toolbar col-sm-4'><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
       processing: true,
       serverSide: true,
       // columns: [
@@ -236,13 +243,36 @@ class Procedures {
       ajax: {
         url: $('#procedures-table').data('url'),
         method: 'GET',
-        dataType: 'json'
-        // Needed for the filters
-        // data: function(params) {
-        //   params.status_filter = $('select.status-filter').val()
-        //   return params
+        dataType: 'json',
+        data: function(params) {
+          params.show_derivations = $('div.data-derivations').data('show');
+          if ($('#reportrange').data('daterangepicker') !== undefined) {
+            params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
+            params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
+          }
+          return params
+        }
+      },
+      fnPreDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', '0.2');
+      },
+      fnDrawCallback: function() {
+        let column_to_hide = 0; // Derivations column
+        if ($('div.data-derivations').data('show')) {
+          $('.tooltip-text').tooltip();
+          Procedures.listenCheckButtons();
+        }
+        let column = table.column(column_to_hide);
+        column.visible($('div.data-derivations').data('show'));
+        $('table.dataTable').fadeTo('fast', 1);
       }
     })
+  }
+
+  static listenCheckButtons() {
+    $('#procedures-table .btn-check').on('ajax:success', function() {
+      $('#procedures-table').DataTable().draw(false);
+    });
   }
 
   static initiatorsSelect2() {
@@ -385,6 +415,8 @@ class InitiatorsTable {
       switch (value) {
         case 'dem':
           data = { id: "1", text: "DEM", type: "government" };
+          // FIX HARDCODED WAY
+          $('.signators-table tbody').append("<tr> <td> Juan Manuel LLamosas (Intendente) </td> <td> </td> </tr>");
           break;
         case 'legislative_secretary':
           data = { id: "1", text: "Secretaria legislativa", type: "lalal" }
@@ -404,31 +436,17 @@ class ProcedureIndex {
   constructor() {
     this.derivationBtn = '.listen-derivations';
     this.returnTableBtn = '.listen-return-back';
-    this.mainBtns = '#procedures .main-buttons-header';
-    this.alternativeHeader = '#procedures .alternative-button-header';
+    this.mainBtns = '#procedures .main-buttons-header, #procedures .main-title';
+    this.alternativeHeader = '#procedures .alternative-button-header, #procedures .derivation-title';
     this.showingDerivations = false;
     this.listenerDerivation();
-
-  }
-
-  settingDatatable() {
-  $('#procedures-table').DataTable({
-    fnDrawCallback: () => {
-      console.log('esto funca???');
-      this.updateView();
-    }
-  })
   }
 
   updateView() {
     if (this.showingDerivations) {
-      $('#procedures-table .btn-check').show();
-      $('#procedures-table .btn-eye').hide();
       $(this.mainBtns).hide();
       $(this.alternativeHeader).show();
     } else {
-      $('#procedures-table .btn-eye').show();
-      $('#procedures-table .btn-check').hide();
       $(this.mainBtns).show();
       $(this.alternativeHeader).hide();
     }
@@ -438,13 +456,105 @@ class ProcedureIndex {
     var that = this;
     $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
       that.showingDerivations = !that.showingDerivations;
+      $('.data-derivations').data('show', that.showingDerivations);
+      $('#procedures-table').dataTable().fnDraw();
       that.updateView();
+    });
+  }
+}
+
+
+class CreateSignator {
+  constructor() {
+    this.button = 'button.signator-btn';
+    this.signatorTab = '.nav.nav-pills a[href="#sign_people"]';
+    this.addClickEvent();
+  }
+
+  addClickEvent() {
+    $(this.button).on('click', () => { $(this.signatorTab).tab('show') });
+  }
+
+  submit() {
+    // Some content goes here!!!
+    // Add signator to signators-table...
+  }
+}
+
+class ProceduresToolbar {
+  constructor() {
+    this.start = moment().subtract(29, 'days');
+    this.end = moment();
+    this.firstTime = false;
+    this.setToolbar();
+    this.startRangePicker();
+    this.initializePicker();
+  }
+
+  cb(start, end) {
+    $('#procedures #reportrange span').html(start.format('D MMMM, YYYY') +
+      ' - ' + end.format('D MMMM, YYYY'));
+  }
+
+  setToolbar() {
+    $('#procedures #reportrange').appendTo('.procedures-toolbar').show();
+  }
+
+  startRangePicker() {
+    $('#procedures #reportrange').daterangepicker({
+      locale: { "format": "DD/MM/YYYY", "separator": " - ",
+        "applyLabel": "Aceptar", "cancelLabel": "Limpiar",
+        "fromLabel": "Desde", "toLabel": "Hasta",
+        "customRangeLabel": "Rango personalizado",
+        "daysOfWeek": [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        "monthNames": [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
+        "firstDay": 1
+      },
+      startDate: this.start,
+      endDate: this.end,
+      opens: 'center',
+      ranges: {
+       'Hoy': [moment(), moment()],
+       'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Últimos 7 Días': [moment().subtract(6, 'days'), moment()],
+       'Últimos 30 Días': [moment().subtract(29, 'days'), moment()],
+       'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+       'Último Mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, this.cb);
+  }
+
+  initializePicker() {
+    let that = this;
+    $('#reportrange span').html('Click aquí para buscar trámites por fecha.');
+    $('#procedures #reportrange').on('show.daterangepicker', function(ev, picker) {
+      if (!that.firstTime) {
+        that.cb(that.start, that.end);
+        that.firstTime = true;
+      }
+    });
+    this.clearRange();
+    this.updateProceduresTable();
+  }
+
+  clearRange() {
+    $('#procedures #reportrange').on('cancel.daterangepicker', function(ev, picker) {
+      $('#procedures #reportrange span').html('Click aquí para buscar trámites por fecha.');
+      $('#procedures-table').DataTable().draw(false);
+    });
+  }
+
+  updateProceduresTable() {
+    $('#procedures #reportrange').on('apply.daterangepicker', function(ev, picker) {
+      $('#procedures-table').DataTable().draw(false);
     });
   }
 }
 
 $(document).on('ready', function() {
   if ($('#procedure-new').length) {
+    const signators = new CreateSignator();
     let form = new ProcedureForm();
     form.initiatorsModal(new InitiatorsTable());
     $('#procedure_contingency_plan_attributes_date_at').datetimepicker({
@@ -459,10 +569,12 @@ $(document).on('ready', function() {
       $('.derivation:last').select2();
     });
 
-    $('#new_procedure').fileupload();
+    // $('#new_procedure').fileupload();
   };
 
   if ($('#procedures-table').length) {
+    Procedures.indexDataTable();
     let table = new ProcedureIndex();
+    let toolbar = new ProceduresToolbar();
   }
-})
+});
