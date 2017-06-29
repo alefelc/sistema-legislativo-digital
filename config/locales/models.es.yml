@@ -6,6 +6,8 @@ es:
       role: Rol
       user: Usuario
       session: Sesión
+      legislative_file: Expediente Legislativo
+      legislative_file_state: Estado del Expediente
 
     attributes:
       person:
@@ -60,3 +62,10 @@ es:
         started_at: Comienza el
         finished_at: Finaliza el
         observation: Observaciones
+
+      legislative_file:
+        origin_procedure_id: Trámite
+        legislative_file_states: Estado del Expediente
+
+      legislative_files_state:
+        procedure: Trámite

@@ -74,8 +74,11 @@ Rails.application.routes.draw do
   resources :persons
   resources :government_offices
   resources :councilors
+  resources :commissions
+  resources :blocks
   resources :municipal_offices
   resources :government_organs
+  resources :periods
 
   get 'calendar', to: 'calendar#index'
   resources :sessions
@@ -85,4 +88,6 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   #resources :system_params   #### In the future maybe?
+  resources :tags
+  resources :legislative_file_states
 end
