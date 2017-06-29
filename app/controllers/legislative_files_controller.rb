@@ -2,7 +2,7 @@ class LegislativeFilesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @loops = LegislativeFile.all
+    @loops = LegislativeFile.order(created_at: :desc)
     respond_to do |format|
       format.html
       format.json { render json: build_json }
@@ -11,22 +11,39 @@ class LegislativeFilesController < ApplicationController
 
   def new
     @loop = LegislativeFile.new
-    @loop.legislative_file_states.build
+    @loop.loops.build number: 0
   end
 
   def create
-    @loop = LegislativeFile.create loop_params
-    redirect_to @loop
+    file = LegislativeFileService.new loop_create_params
+
+    if file.save!
+      flash[:success] = "Expediente creado correctamente"
+      redirect_to file.instance
+    else
+      flash.now[:error] = file.errors
+      @loop = file.instance
+      render :new
+    end
   end
 
   def edit
     @loop = LegislativeFile.find params[:id]
-    @loop.legislative_file_states.build
+    @legislative_states = @loop.legislative_file_states
+    @loop.loops.build number: @loop.loops.count
   end
 
   def update
-    @loop = LegislativeFile.find params[:id]
-    @loop.legislative_file_states.build
+    file = LegislativeFileService.new loop_update_params
+
+    if file.update!
+      flash[:success] = "Expediente actualizado correctamente"
+      redirect_to file.instance
+    else
+      flash.now[:error] = file.errors
+      @loop = file.instance
+      render :edit
+    end
   end
 
   def show
@@ -35,15 +52,23 @@ class LegislativeFilesController < ApplicationController
 
   private
 
-  def loop_params
-    params.require(:loop).permit :number, :nro_fojas, :bis, :tema, :observacion, :anio
+  def loop_create_params
+    params.require(:legislative_file).permit :sheets, :topic,
+      :observations, :accumulated_in, :year, :date,
+      :origin_procedure_id, :physically_attached
+  end
+
+  def loop_update_params
+    params.require(:legislative_file).permit :number, :sheets, :topic,
+      :observations, :accumulated_in, :year, :date, :origin_procedure_id,
+      :physically_attached, loops_attributes: []
   end
 
   def build_json
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "number ilike ?"
-      LegislativeFile.where(w, q).as_json only: :id, methods: :text
+      LegislativeFile.where(w, q).limit(20).as_json only: :id, methods: :text
     end
   end
 end

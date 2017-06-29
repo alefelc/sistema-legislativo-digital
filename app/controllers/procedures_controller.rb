@@ -15,7 +15,7 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.new
     @procedure.procedure_states.build
     @procedure.administrative_files.build
-    @procedure.procedure_signatories.build
+    # @procedure.procedure_signatories.build
     @procedure.contingency_plan = ContingencyPlan.new
     @procedure.uploads.build
     #2.times {@procedure.administrative_files.build}
@@ -52,9 +52,15 @@ class ProceduresController < ApplicationController
   end
 
   def print
-    pdf = Prawn::Procedures.new()
-    send_data pdf.render, filename: 'tramites.pdf',
-              type: 'application/pdf', disposition: 'inline'
+    if params[:id].present?
+      pdf = Prawn::Procedures.new()
+      send_data pdf.render, filename: 'tramites.pdf',
+                type: 'application/pdf', disposition: 'inline'
+    else
+      pdf = Prawn::Procedures.new()
+      send_data pdf.render, filename: 'tramites.pdf',
+                type: 'application/pdf', disposition: 'inline'
+    end
   end
 
   private
@@ -66,15 +72,14 @@ class ProceduresController < ApplicationController
       procedure_states_attributes: [],
       councilors: [], legislative_file_ids: [], administrative_file_ids: [],
       administrative_files_attributes: [:id, :number, :sheets, :letter, :year],
-      procedure_signatory_attributes: [],
-      procedure_states_attributes: []
+      procedure_signatory_attributes: []
   end
 
   def build_json_response
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "id::text ilike ?"
-      Procedure.where w, q
+      Procedure.where(w, q).limit(20).to_json(methods: :text)
     else
       ProcedureDatatable.new(view_context)
     end
