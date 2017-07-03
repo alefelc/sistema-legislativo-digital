@@ -1,23 +1,21 @@
-# Load DSL and Setup Up Stages
+# Load DSL and set up stages
 require 'capistrano/setup'
 
-# Includes default deployment tasks
+# Include default deployment tasks
 require 'capistrano/deploy'
 
-# Official Ruby on Rails specific tasks for Capistrano
-require 'capistrano/rails'
-# require 'capistrano/rails/assets'
-# require 'capistrano/rails/migrations'
-
-# Official Bundler specific tasks for Capistrano
-require 'capistrano/bundler'
-
-# Official RVM specific tasks for Capistrano
+# RVM support for Capistrano v3
 require 'capistrano/rvm'
 
-# Load console
-require 'capistrano/rails/console'
+# Bundler support for Capistrano 3.x
+require 'capistrano/bundler'
 
-# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
-Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
-Dir.glob('lib/capistrano/**/*.rb').each { |r| import r }
+# Ruby on Rails specific tasks for Capistrano
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+
+# Integrates Unicorn tasks into capistrano deployment scripts
+require 'capistrano3/unicorn'
+
+# Load custom tasks from `lib/capistrano/tasks' if you have any defined
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
