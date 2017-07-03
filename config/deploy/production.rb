@@ -1,3 +1,28 @@
+set :application, 'sld_production'
+set :rails_env, "production"
+set :port, 22
+set :user, 'unrc'
+set :deploy_via, :remote_cache
+set :use_sudo, false
+set :branch, "master"
+
+server '10.0.0.7',
+  roles: [:web, :app, :db],
+  port: fetch(:port),
+  user: fetch(:user),
+  primary: true
+
+set :deploy_to, "/var/www/#{fetch(:application)}"
+
+set :ssh_options, {
+  forward_agent: true,
+  auth_methods: %w(publickey),
+  user: 'unrc',
+}
+
+set :rails_env, :production
+set :conditionally_migrate, true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -59,26 +84,3 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-
-
-set :port, 22
-set :user, 'unrc'
-set :deploy_via, :remote_cache
-set :use_sudo, false
-
-server '10.0.0.7',
-  roles: [:web, :app, :db],
-  port: fetch(:port),
-  user: fetch(:user),
-  primary: true
-
-set :deploy_to, "/var/www/#{fetch(:application)}"
-
-set :ssh_options, {
-  forward_agent: true,
-  auth_methods: %w(publickey),
-  user: 'unrc',
-}
-
-set :rails_env, :production
-set :conditionally_migrate, true
