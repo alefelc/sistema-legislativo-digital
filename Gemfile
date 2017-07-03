@@ -61,11 +61,14 @@ gem 'rails-i18n', '4.0.4'
 gem 'bcrypt', '~> 3.1.7'
 
 # Capistrano for deployment
-gem 'capistrano', '~> 3.1'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano-rvm', '~> 0.1.1'
-gem 'capistrano-rails-console', '~> 1.0', '>= 1.0.2'
-gem 'capistrano-rails', '~> 1.1', group: :development
+gem 'capistrano-rails'
+gem 'capistrano-rvm'
+gem 'capistrano3-unicorn'
+# gem 'capistrano', '~> 3.1'
+# gem 'capistrano-bundler', '~> 1.1.2'
+# gem 'capistrano-rvm', '~> 0.1.1'
+# gem 'capistrano-rails-console', '~> 1.0', '>= 1.0.2'
+# gem 'capistrano-rails', '~> 1.1', group: :development
 
 # Activeadmin
 gem 'activeadmin', github: 'activeadmin'
@@ -154,10 +157,10 @@ end
 
 group :production do
   # Use Unicorn as the app server
-  gem 'unicorn', '~> 4.8.2', group: :production
+  gem 'unicorn', '~> 4.8.2'
 
  # heroku settings
- gem 'rails_12factor'
+ # gem 'rails_12factor'
 end
 
 # Ruby version
