@@ -21,7 +21,7 @@ class ProcedureDatatable
     paginated_procedures.map do |proc|
       [
         actions(proc),
-        show_id(proc, Procedure.human_attribute_name(proc.type)),
+        show_id(proc),
         get_iniciadores(proc),
         proc.topic,
         to_date_time(proc.created_at),
@@ -31,7 +31,12 @@ class ProcedureDatatable
     end
   end
 
-  def show_id(proc, type)
+  def show_id(proc)
+    type = if proc.type.present?
+      Procedure.human_attribute_name proc.type
+    else
+      "No asig."
+    end
     content_tag :div, class: 'text-center' do
       "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
     end

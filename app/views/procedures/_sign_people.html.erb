@@ -2,7 +2,12 @@
   <%= f.fields_for :procedure_signatories do |sign| %>
     <%= render 'procedure_signatory_fields', f: sign %>
   <% end %>
-  <div class="links text-center">
-    <%= link_to_add_association ' Agregar', f, :procedure_signatories, class: 'btn btn-info btn-lg fa fa-plus', title: 'Agregar firmante' %>
+  <div class="row">
+    <div class="links text-center col-xs-12">
+      <%= link_to_add_association f, :procedure_signatories, class: 'btn btn-info btn-lg', title: 'Agregar firmante' do %>
+        <i class="fa fa-plus"></i>
+        Agregar
+      <% end %>
+    </div>
   </div>
 </div>

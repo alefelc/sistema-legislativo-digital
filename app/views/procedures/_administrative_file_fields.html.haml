@@ -1,22 +1,24 @@
-.nested-fields.row
+.nested-fields
   .col-md-10
     .row
       .col-md-3.field
         = f.label :number
-        = f.text_field :number, class: 'form-control', type: :number
+        = f.text_field :number, class: 'form-control input-lg', type: :number, placeholder: 'Nro.'
       .col-md-3.field
         = f.label :letter
-        = f.text_field :letter, class: 'form-control'
+        = f.text_field :letter, class: 'form-control input-lg', placeholder: 'Letra'
       .col-md-3.field
         = f.label :year
-        = f.text_field :year, class: 'form-control', type: :number
+        = f.text_field :year, class: 'form-control input-lg', type: :number, placeholder: 'Año'
       .col-md-3.field
         = f.label :sheets
-        = f.text_field :sheets, class: 'form-control', type: :number
+        = f.text_field :sheets, class: 'form-control input-lg', type: :number, placeholder: 'Hojas'
       -# .col-md-3.field
       -#   = f.label :topic
       -#   = f.text_field :topic, class: 'form-control'
   .col-md-2{ style: "padding-top: 23px;" }
-    = link_to_remove_association ' Quitar', f, class: 'btn btn-danger btn-lg fa fa-times', title: 'Quitar expediente administrativo'
+    = link_to_remove_association f, class: 'btn btn-danger btn-lg', title: 'Quitar expediente administrativo' do
+      %i.fa.fa-times
+      Quitar
   %hr.col-md-11
 

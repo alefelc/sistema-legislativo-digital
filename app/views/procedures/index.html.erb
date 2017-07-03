@@ -11,7 +11,7 @@
     </div>
     <hr class="minimal-hr">
     <div class="box-body">
-      <table class="table"
+      <table class="table table-striped"
         id="procedures-table" data-source="<%= procedures_path(format: :json) %>">
         <thead>
           <tr>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div id="reportrange" placeholder="probando" class="text-center form-control">
+  <div id="reportrange" data-disabled="true" placeholder="probando" class="text-center form-control">
     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
     <span></span> <b class="caret"></b>
   </div>

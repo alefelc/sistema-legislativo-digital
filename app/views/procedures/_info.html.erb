@@ -124,7 +124,7 @@
     <%= f.text_field :observations, { class: 'input-lg form-control', placeholder: t('.observations_placeholder') } %>
   </div>
 <% end %>
-<% if policy(Procedure).finalized_create? %>
+<% if f.object.persisted? && policy(Procedure).finalized_create? %>
   <div class="common-procedure form-group col-md-12" title="Si se finaliza el trámite por favor indique el motivo">
     <div class="checkbox">
       <label>
@@ -145,3 +145,15 @@
     <%= render 'contingency_plan', f: f %>
   </div>
 <% end %>
+
+<div class="col-md-12 col-xs-12">
+  <hr style="border-top: 1px solid #eeeeee;margin: 0px;margin-bottom: 10px;">
+  <%= link_to procedures_path, class: 'btn btn-default pull-left' do %>
+    <i class="fa fa-times-circle"></i>
+    Cancelar
+  <% end %>
+  <button class="btn btn-success btn-lg pull-right" type="submit">
+    <i class="fa fa-save fa-lg"></i>
+    Guardar
+  </button>
+</div>

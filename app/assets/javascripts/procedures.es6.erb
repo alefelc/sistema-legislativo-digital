@@ -246,7 +246,7 @@ class Procedures {
         dataType: 'json',
         data: function(params) {
           params.show_derivations = $('div.data-derivations').data('show');
-          if ($('#reportrange').data('daterangepicker') !== undefined) {
+          if (!$('#procedures #reportrange').data('disabled')) {
             params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
             params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
           }
@@ -485,7 +485,7 @@ class ProceduresToolbar {
   constructor() {
     this.start = moment().subtract(29, 'days');
     this.end = moment();
-    this.firstTime = false;
+    this.firstTime = true;
     this.setToolbar();
     this.startRangePicker();
     this.initializePicker();
@@ -527,11 +527,11 @@ class ProceduresToolbar {
 
   initializePicker() {
     let that = this;
-    $('#reportrange span').html('Click aquí para buscar trámites por fecha.');
+    $('#reportrange span').html('Click para buscar trámites por fecha.');
     $('#procedures #reportrange').on('show.daterangepicker', function(ev, picker) {
-      if (!that.firstTime) {
+      if (that.firstTime) {
         that.cb(that.start, that.end);
-        that.firstTime = true;
+        that.firstTime = false;
       }
     });
     this.clearRange();
@@ -540,13 +540,15 @@ class ProceduresToolbar {
 
   clearRange() {
     $('#procedures #reportrange').on('cancel.daterangepicker', function(ev, picker) {
-      $('#procedures #reportrange span').html('Click aquí para buscar trámites por fecha.');
+      $('#procedures #reportrange').data('disabled', true);
+      $('#procedures #reportrange span').html('Click para buscar trámites por fecha.');
       $('#procedures-table').DataTable().draw(false);
     });
   }
 
   updateProceduresTable() {
     $('#procedures #reportrange').on('apply.daterangepicker', function(ev, picker) {
+      $('#procedures #reportrange').data('disabled', false);
       $('#procedures-table').DataTable().draw(false);
     });
   }

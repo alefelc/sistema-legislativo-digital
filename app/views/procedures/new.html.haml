@@ -6,11 +6,3 @@
     .box.box-primary
       .box-body
         = render 'form', f: form
-      .box-footer
-        .pull-right
-          = link_to procedures_path, class: 'btn btn-default' do
-            .fa.fa-times-circle
-            Cancelar
-          %button.btn.btn-success.btn-lg{ type: :submit }
-            .fa.fa-save.fa-lg
-            = t('.submit')

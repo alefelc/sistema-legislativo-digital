@@ -1,8 +1,13 @@
 <div id="administrative_files">
   <%= f.fields_for :administrative_files do |file| %>
     <%= render 'administrative_file_fields', f: file %>
-    <div class="links">
-      <%= link_to_add_association ' Agregar', f, :administrative_files, class: 'btn btn-info btn-lg fa fa-plus', title: 'Agregar nuevo expediente administrativo' %>
-    </div>
   <% end %>
+  <div class="row">
+    <div class="links text-center col-xs-12">
+      <%= link_to_add_association f, :administrative_files, class: 'btn btn-info btn-lg', title: 'Agregar nuevo expediente administrativo' do %>
+        <i class="fa fa-plus"></i>
+        Agregar
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -26,7 +26,7 @@
   </div>
 </div>
 <div class="row alternative-button-header">
-  <div class="col-md-6 col-xs-6">
+  <div class="col-md-5 col-xs-5">
     <div class="form-inline">
       <div class="form-group">
         <%= label_tag :areas, 'Derivando al área' %>
@@ -35,7 +35,16 @@
     </div>
   </div>
 
-  <div class="col-md-6 col-xs-6">
+  <div class="col-md-5 col-xs-5">
+    <div class="form-inline">
+      <div class="form-group">
+        <%= label_tag :derivation_types, 'Quiero ver' %>
+        <%= select_tag :derivation_types, filter_by_derivated(), class: 'input-lg form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 col-xs-2">
     <%= link_to '#', class: 'btn btn-success listen-return-back btn-lg pull-right',
       title: 'Volver a Trámites Ingresados' do %>
       <i class="fa fa-lg fa-arrow-left"></i> Volver
