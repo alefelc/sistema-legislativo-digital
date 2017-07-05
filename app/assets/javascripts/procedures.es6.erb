@@ -246,10 +246,14 @@ class Procedures {
         dataType: 'json',
         data: function(params) {
           params.show_derivations = $('div.data-derivations').data('show');
+          // Between two dates filter.
           if (!$('#procedures #reportrange').data('disabled')) {
             params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
             params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
           }
+          // Filter by derivated procedures.
+          if (!$('#procedures #derivation_types').data('disabled'))
+            params.derivation_filter = $('#procedures #derivation_types').val();
           return params
         }
       },
@@ -259,12 +263,12 @@ class Procedures {
       fnDrawCallback: function() {
         let column_to_hide = 0; // Derivations column
         if ($('div.data-derivations').data('show')) {
-          $('.tooltip-text').tooltip();
           Procedures.listenCheckButtons();
         }
         let column = table.column(column_to_hide);
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
       }
     })
   }
@@ -446,9 +450,11 @@ class ProcedureIndex {
     if (this.showingDerivations) {
       $(this.mainBtns).hide();
       $(this.alternativeHeader).show();
+      $('#procedures #derivation_types').data('disabled', false);
     } else {
       $(this.mainBtns).show();
       $(this.alternativeHeader).hide();
+      $('#procedures #derivation_types').data('disabled', true);
     }
   }
 
@@ -456,9 +462,9 @@ class ProcedureIndex {
     var that = this;
     $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
       that.showingDerivations = !that.showingDerivations;
+      that.updateView();
       $('.data-derivations').data('show', that.showingDerivations);
       $('#procedures-table').dataTable().fnDraw();
-      that.updateView();
     });
   }
 }
@@ -554,6 +560,38 @@ class ProceduresToolbar {
   }
 }
 
+class ProcedureFilters {
+  constructor() {
+    this.typeId = "#procedures #filter_type";
+    this.typeMultiselect();
+  }
+
+  typeMultiselect() {
+    $(this.typeId).multiselect({
+      // buttonText: (options, select) => {
+      //   if (options.length == 0) return 'Seleccione algún trámite ...';
+      //   else if (options.length > 3) return 'Mas de 3 tipos de trámites ...';
+      //   else {
+      //     let labels = [];
+      //     // options.forEach () => {
+      //     //   if ($(this).attr('label') != undefined)
+      //     //     labels.push $(this).attr('label');
+      //     //   else
+      //     //     labels.push $(this).html();
+      //     return labels.join(', ') + ''
+      //   }
+      // },
+      // onChange: (a, b, c) => {
+      //   data = $.parseJSON($('#filter-values').val())
+      //   data.types = $('#tramites_type option:selected').map((idx, elem) => {
+      //     $(elem).val().toArray().toString();
+      //     $('#filter-values').val(JSON.stringify(data));
+      //   });
+      // }
+    });
+  }
+}
+
 $(document).on('ready', function() {
   if ($('#procedure-new').length) {
     const signators = new CreateSignator();
@@ -578,5 +616,6 @@ $(document).on('ready', function() {
     Procedures.indexDataTable();
     let table = new ProcedureIndex();
     let toolbar = new ProceduresToolbar();
+    let filters = new ProcedureFilters();
   }
 });

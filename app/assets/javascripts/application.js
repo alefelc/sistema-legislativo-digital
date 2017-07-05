@@ -8,7 +8,6 @@
 //= require select2_locale_es
 //= require Chart.min
 //= require bootstrap-multiselect
-//= require reception
 //= require sweetalert
 //= require moment
 //= require daterangepicker
