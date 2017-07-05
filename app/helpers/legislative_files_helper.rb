@@ -1,11 +1,10 @@
 module LegislativeFilesHelper
   def file_states(default=nil)
     options = [
-      ['Iniciado', 'Iniciado'],
-      ['A comision', 'A comision'],
-      ['Orden del dia', 'Orden del dia'],
-      ['Sancionado', 'Sancionado'],
-      ['Retirado', 'Retirado']
+      ['A comision', 'in_comision'],
+      ['Orden del dia', 'day_plan'],
+      ['Sancionado', 'sanctioned'],
+      ['Retirado', 'retired']
     ]
     return options_for_select options, options[default] if default.present?
     options_for_select options
@@ -29,7 +28,7 @@ module LegislativeFilesHelper
       "Derivado el día #{date_at} a las comisiones de "
       # end
     when "dispatched"
-      "Despachado el día #{date_at} con el trámite "
+      "Despacho ingresado el día #{date_at} con el trámite #{link_to state.procedure, state.procedure}"
     when "day_plan"
       "Ingresa en la orden del día nro ... el día #{date_at}"
     when "sanctioned"
