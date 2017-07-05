@@ -29,7 +29,7 @@ class Procedure < ActiveRecord::Base
   belongs_to :contingency_plan
   has_one :legislative_file_state
 
-  has_one :procedure_derivation
+  belongs_to :procedure_derivation
   has_one :legislative_file_originated, class_name: 'Loop', foreign_key: 'origin_procedure_id'
 
 
@@ -99,14 +99,14 @@ class Procedure < ActiveRecord::Base
     "##{self.id}"
   end
 
+  def is_dispatch?
+    type == "Despacho"
+  end
+
   private
 
   def initial_state
     self.procedure_states.create nombre: 'Iniciado', tipo: 1
-  end
-
-  def is_dispatch?
-    type == "Despacho"
   end
 
   def isnt_dispatch?

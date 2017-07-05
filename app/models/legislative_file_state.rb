@@ -3,11 +3,13 @@ class LegislativeFileState < ActiveRecord::Base
 	belongs_to :legislative_file
   belongs_to :procedure
   belongs_to :loop
+  belongs_to :session
   has_and_belongs_to_many :loops
   has_and_belongs_to_many :comisions
 
   # == Validations
-  validates :legislative_file, :procedure, presence: true
+  validates :legislative_file_id, presence: true
+  #### :procedure only if was initiated or dispatched.
 
   # == Callbacks
   before_save :default_date_at
