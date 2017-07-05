@@ -1,59 +1,58 @@
-<div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <%= form_for @legislative_file_state, remote: true do |f| %>
+<%= form_for @legislative_file_state, remote: true do |f| %>
+  <%= f.hidden_field :legislative_file_id %>
+  <div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
         <div class="modal-header bg-primary">
           <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-            <span aria-hidden="true"> × </span>
+            <span class="fa-lg" aria-hidden="true"> × </span>
           </button>
-          <h4 class="modal-title"> Cargue un nuevo estado en el expediente </h4>
+          <h2 class="modal-title text-center"> Nuevo estado en el expediente </h2>
         </div>
 
-        <div class="modal-body row">
-          <div class="col-md-12 form-group">
-            <div class="form-group col-md-4">
-              <%= f.label :name, 'Nombre' %>
-              <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :name, 'Nombre' %>
+                <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :date_at, 'Fecha' %>
+                <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
+              </div>
             </div>
 
-            <div class="form-group col-md-4">
-              <%= f.label :state_type, 'Tipo de estado' %>
-              <%= f.select :state_type, options_for_select([%w(Administrativo administrative), %w(Parlamentario parlamentary), %w(Comisión comision)]), {}, class: 'input-lg form-control' %>
-            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :state_type, 'Tipo' %>
+                <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
+              </div>
 
-            <div class="form-group col-md-4">
-              <%= f.label :date_at, 'Fecha' %>
-              <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
-            </div>
+              <div class="form-group">
+                <%= f.label :date_at, 'Sesión' %>
+                <%= f.text_field :date_at, class: 'input-lg form-control' %>
+              </div>
 
-            <div class="form-group col-md-12">
-              <%= f.label :comisions, 'Comisiones asociadas' %>
-              <%= f.select :comisions, {}, {}, class: 'input-lg form-control' %>
             </div>
-
-            <div class="form-group col-md-4">
-              <%= f.label :date_at, 'Ingrese Sesion' %>
-              <%= f.text_field :date_at, class: 'input-lg form-control' %>
-            </div>
-
-            <div class="form-group col-md-4">
-              <%= f.label :date_at, 'Orden del día' %>
-              <%= f.text_field :date_at, class: 'input-lg form-control' %>
+            <div class="col-md-12">
+              <div class="form-group">
+                <%= f.label :comisions, 'Comisiones asociadas' %>
+                <%= f.select :comisions, {}, {}, class: 'input-lg form-control' %>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal" type="button">
-            <div class="fa fa-times-circle"></div> Cancelar
-          </button>
-          <button class="btn btn-primary btn-lg" type="submit">
-            <div class="fa fa-save fa-lg"></div> Cargar Estado
+          <button class="btn btn-primary btn-lg pull-right" type="submit">
+            <div class="fa fa-save fa-lg"></div> Guardar Estado
           </button>
         </div>
 
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

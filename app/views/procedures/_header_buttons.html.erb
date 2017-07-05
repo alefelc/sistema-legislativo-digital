@@ -39,7 +39,8 @@
     <div class="form-inline">
       <div class="form-group">
         <%= label_tag :derivation_types, 'Quiero ver' %>
-        <%= select_tag :derivation_types, filter_by_derivated(), class: 'input-lg form-control' %>
+        <%= select_tag :derivation_types, filter_by_derivated,
+          "data-disabled": true , class: 'input-lg form-control' %>
       </div>
     </div>
   </div>
