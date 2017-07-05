@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622121501) do
+ActiveRecord::Schema.define(version: 20170705122613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -615,14 +615,15 @@ ActiveRecord::Schema.define(version: 20170622121501) do
     t.text     "topic"
     t.text     "observations"
     t.string   "type"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.date     "fecha"
     t.integer  "loop_id"
     t.integer  "day"
     t.integer  "month"
     t.integer  "year"
     t.integer  "contingency_plan_id"
+    t.integer  "procedure_derivation_id"
   end
 
   add_index "procedures", ["contingency_plan_id"], name: "index_procedures_on_contingency_plan_id", using: :btree
@@ -794,4 +795,5 @@ ActiveRecord::Schema.define(version: 20170622121501) do
   add_foreign_key "procedure_derivations", "areas"
   add_foreign_key "procedure_derivations", "procedures"
   add_foreign_key "procedures", "contingency_plans"
+  add_foreign_key "procedures", "procedure_derivations"
 end
