@@ -6,6 +6,9 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 set :branch, "staging"
 
+## Prevent to store old releases
+set :keep_releases, 1
+
 server '10.0.0.7',
   roles: [:web, :app, :db],
   port: fetch(:port),
