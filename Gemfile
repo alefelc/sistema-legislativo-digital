@@ -130,7 +130,7 @@ group :development do
   gem 'spring', '1.3.6'
 
   # Print rails objects in the cool way
-  gem 'awesome_print', '1.6.1', require: 'ap'
+  gem 'awesome_print', '1.6.1'
 
   # This is very usefull for rails panel extension of google chrome
   gem 'meta_request', '0.3.4'
