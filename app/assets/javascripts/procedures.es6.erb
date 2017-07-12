@@ -463,6 +463,9 @@ class ProcedureIndex {
     $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
       that.showingDerivations = !that.showingDerivations;
       that.updateView();
+      $('#procedures #derivation_types').on('change', () => {
+        $('#procedures-table').DataTable().draw(false);
+      });
       $('.data-derivations').data('show', that.showingDerivations);
       $('#procedures-table').dataTable().fnDraw();
     });
@@ -563,7 +566,65 @@ class ProceduresToolbar {
 class ProcedureFilters {
   constructor() {
     this.typeId = "#procedures #filter_type";
+    this.applyBtn = '#procedures .apply-filters';
+    this.clearBtn = '#procedures .clear-filters';
+    this.startListeners();
+  }
+
+  startListeners() {
+  $('#myModal').on('shown.bs.modal', () => {
     this.typeMultiselect();
+    this.initiators();
+    this.legislative_files();
+    this.administrative_files();
+    this.clear();
+    this.submit();
+  });
+  }
+
+  initiators() {
+    let config = {
+      placeholder: 'Busque por iniciadores',
+      ajax: {
+        url: "<%= url_helpers.initiators_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_initiators').select2(config);
+  }
+
+  legislative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes legislativos',
+      ajax: {
+        url: "<%= url_helpers.legislative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_legislative_file').select2(config);
+  }
+
+  administrative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes administrativos',
+      ajax: {
+        url: "<%= url_helpers.administrative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_administrative_file').select2(config);
   }
 
   typeMultiselect() {
@@ -589,6 +650,23 @@ class ProcedureFilters {
       //   });
       // }
     });
+  }
+
+  reloadDatatable() {
+    $('#procedures-table').DataTable().draw(false);
+  }
+
+  clear() {
+    $(this.clearBtn).on('click', () => {
+      // Clear all fields on filters partial
+      // some code here.....
+      this.reloadDatatable();
+    });
+  }
+
+  submit() {
+    // Only reload datatable, params will be fetched from params callback.
+    $(this.applyBtn).on('click', () => { this.reloadDatatable() });
   }
 }
 
