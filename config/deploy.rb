@@ -2,10 +2,6 @@ lock '3.4.0'
 
 set :repo_url, 'git@github.com:jlgasparrini/sistema-legislativo-digital.git'
 
-# Default branch is :master
-set :branch, 'develop'
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-
 set :use_sudo, false
 
 set :bundle_binstubs, nil

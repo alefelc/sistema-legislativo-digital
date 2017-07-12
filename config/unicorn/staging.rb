@@ -4,18 +4,16 @@
 root = File.expand_path "../..", __FILE__
 working_directory root
 
-## == Master PID location.
-pid "#{root}/tmp/pids/unicorn.pid"
-
 ## == Unicorn options.
 worker_processes 2
 timeout 30
 preload_app true
 
 ## == Set up socket location.
-listen "0.0.0.0:9999", :tcp_nopush => true
 listen "/tmp/unicorn.sld_staging.sock", backlog: 64
-## Probably this line must be removed.
+
+## == Master PID location.
+pid "#{root}/tmp/pids/unicorn.pid"
 
 ## == Log file.
 stderr_path "#{root}/log/unicorn.log"
