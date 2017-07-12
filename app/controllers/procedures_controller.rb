@@ -24,10 +24,23 @@ class ProceduresController < ApplicationController
   def create
     authorize Procedure, :create?
 
+    ##############################
+    ### CONVERT THIS INTO A SERVICE
+    ##############################
     @procedure = Procedure.new procedure_params
 
     form = ProcedureForm.new procedure_params, params[:action], current_user
     if form.valid? && @procedure.save
+      if @procedure.is_dispatch?
+        @procedure.legislative_files.each do |file|
+          file.legislative_file_states.create do |state|
+            state.name = :dispatched
+            state.procedure = @procedure
+            state.state_type = :parliamentary
+          end
+        end
+      end
+
       flash[:success] = t '.success'
       redirect_to @procedure
     else

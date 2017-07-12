@@ -10,6 +10,8 @@ class DerivatedProceduresController < ApplicationController
     derivation = ProcedureDerivation.new derivation_params
     derivation.derived_by = current_user
     derivation.derived_at = DateTime.current
+    ### IMPROVE THIS
+    ## GET THIS AREA FROM PROCEDURE INDEX HEADER... also implements users derivations with possible notification system.
     derivation.area = Area.find_by name: "Secretaria Legislativa"
 
     if derivation.save

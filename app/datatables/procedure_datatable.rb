@@ -44,7 +44,7 @@ class ProcedureDatatable
 
   def view_procedure(proc)
     content_tag :div do
-      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg')
+      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg pull-right')
     end
   end
 
@@ -98,6 +98,21 @@ class ProcedureDatatable
       binds += [params[:date_to]]
     end
 
+    if params[:derivation_filter].present?
+      ## Improve CONSTANTS HERE!!!!
+      case params[:derivation_filter]
+      when 'without_derivation'
+        query += ['procedures.procedure_derivation_id IS null']
+      when 'all_procedures'
+        # DO NOTHING
+        # query += ['procedures.procedure_derivation_id IS NOT null']
+      when 'without_reception'
+        query += ['procedures.procedure_derivation_id IS NOT null']
+      when 'with_reception'
+        query += ['procedures.procedure_derivation_id IS NOT null']
+      end
+    end
+
     [query.join(' AND ')] + binds
   end
 
@@ -124,10 +139,6 @@ class ProcedureDatatable
     result.join ' - '
   end
 
-  # def to_date(date)
-  #   date.strftime("%d/%m/%Y") unless date.nil?
-  # end
-
   def to_date_time(date)
     date_only = date.strftime("%d/%m/%Y")
     time_only = date.strftime("%R")
@@ -135,10 +146,6 @@ class ProcedureDatatable
     datetime += content_tag :div, time_only, class: 'text-center'
     datetime
   end
-
-  # def tramites
-  #   fetch_records
-  # end
 
   # def fetch_records
   #   tramite = Tramite.page(page).per(per_page).order(id: :desc)
@@ -173,17 +180,5 @@ class ProcedureDatatable
   #          .includes(:municipal_offices)
   #          .includes(:reparticion_oficials)
   #          .includes(:persons)
-  # end
-
-  # def per_page
-  #   params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
-  # end
-
-  # def page
-  #   params[:iDisplayStart].to_i/per_page + 1
-  # end
-
-  # def get_raw_records
-  #   Tramite.all
   # end
 end
