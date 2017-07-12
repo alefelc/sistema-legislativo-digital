@@ -29,9 +29,9 @@ module ProceduresHelper
     ##########################
     options_for_select [
       ['Trámites sin derivar', 'without_derivation'],
-      ['Todos los trámites', 'all_procedures'],
       ['Trámites sin recepcionar', 'without_reception'],
-      ['Trámites Recepcionados', 'with_reception']
+      ['Trámites recepcionados', 'with_reception'],
+      ['Todos los trámites', 'all_procedures']
     ]
   end
 
@@ -55,6 +55,19 @@ module ProceduresHelper
       ['Petición Particular', 'Peticion'],
       ['Comunicación Oficial', 'ComunicacionOficial'],
       ['Otros Ingresos', 'Otros']
+    ]
+  end
+
+  def select_procedure_status
+    #####################
+    ## HARDCODE HERE!!!
+    #####################
+    options_for_select [
+      ['Seleccione estado', ''],
+      [],
+      ['Iniciado', 'iniciado'],
+      ['Derivado', 'derivado'],
+      ['Finalizado', 'finalizado']
     ]
   end
 end

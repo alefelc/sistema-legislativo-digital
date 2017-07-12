@@ -52,78 +52,48 @@
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text-o fa-lg"></i>
-            <span>
-              Dirección Legislativa
-            </span>
+            <span> Dirección Legislativa </span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
             <li>
               <a href="<%= derivated_procedures_path %>">
-                <i class="fa fa-circle-o"></i>
-                Trámites
-              </a>
-            </li>
-            <li>
-              <a href="<%= derivated_procedures_path %>">
-                <i class="fa fa-circle-o"></i>
-                Derivaciones
+                <i class="fa fa-circle-o"></i> Trámites
               </a>
             </li>
             <li>
               <a href="<%= legislative_files_path %>">
-                <i class="fa fa-circle-o"></i>
-                Expedientes Legislativos
+                <i class="fa fa-circle-o"></i> Expedientes Legislativos
               </a>
             </li>
             <% # if policy(LegislativeFile).create? %>
             <li>
               <a href="<%= new_legislative_file_path %>">
-                <i class="fa fa-circle-o"></i>
-                Nuevo Expediente
+                <i class="fa fa-circle-o"></i> Nuevo Expediente
               </a>
             </li>
-            <!-- <hr style="border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px"/>
-            <li>
-              <a href="<%= administrative_files_path %>">
-                <i class="fa fa-circle-o"></i>
-                <%= t '.administrative_files' %>
-              </a>
-            </li> -->
           </ul>
         </li>
-
-        <!--       <li class="treeview">
-          <a href="<%= persons_path %>">
-            <i class="fa fa-users fa-lg"></i>
-            <span>Autoridades</span>
+        <li class="treeview">
+          <a href="<%= '#' %>">
+            <i class="fa fa-list fa-lg"></i> <span> Orden del día </span>
           </a>
-        </li> -->
+        </li>
         <li class="treeview">
           <a href="<%= sessions_path %>">
-            <i class="fa fa-bank fa-lg"></i>
-            <span>Sesiones</span>
+            <i class="fa fa-bank fa-lg"></i> <span> Sesiones </span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-list-ul fa-lg"></i>
-            <span>Normas</span>
+            <i class="fa fa-list-ul fa-lg"></i> <span> Normas </span>
           </a>
         </li>
       <% end %>
       <!-- End legislative secretary -->
 
-      <!--       <li class="treeview">
-        <a href="<%= calendar_path %>">
-          <i class="fa fa-calendar fa-lg"></i>
-          <span>Calendario legislativo</span>
-        </a>
-      </li> -->
       <% if policy(:configurations).all? %>
-        <li class="header text-center">
-          Configuración de sistema
-        </li>
+        <li class="header text-center"> Configuración de sistema </li>
 
         <li class="treeview">
           <a href="#">
@@ -241,10 +211,21 @@
                 Períodos Legislativos
               </a>
             </li>
-            <li>
-              <a href="<%= '#' %>"> <i class="fa fa-circle-o"></i>
-                <%= t '.procedures' %>
+            <li class="treeview menu-open">
+              <a href="#"><i class="fa fa-circle-o"></i> Trámites
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
               </a>
+              <ul class="treeview-menu" style="display: block;">
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i> Firmantes del trámite
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li>
               <a href="<%= '#' %>"> <i class="fa fa-circle-o"></i>
@@ -258,104 +239,3 @@
     </ul>
   </section>
 </aside>
-
-
-      <!-- -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
-      -#     %li
-      -#       %a{ href: statitics_mesa_de_entradas_path }
-      -#         %i.fa.fa-bar-chart
-      -#         = t '.statistics'
-
-
-      -#     %li
-      -#       %a{ href: reports_expedientes_path }
-      -#         %i.fa.fa-th-list
-      -#         = t '.reports'
-      -#     %li
-      -#       %a{ href: statitics_expedientes_path }
-      -#         %i.fa.fa-bar-chart
-      -#         = t '.statistics'
-      -# %li.treeview
-      -#   %a{ href: '#' }
-      -#     %i.fa.fa-bank
-      -#     %span= t '.normas'
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: declaracions_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.declaracion'
-      -#     %li
-      -#       %a{ href: decretos_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.decreto'
-      -#     %li
-      -#       %a{ href: especials_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.especiales'
-      -#     %li
-      -#       %a{ href: ordenanzas_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.ordenanza'
-      -#     %li
-      -#       %a{ href: otra_normas_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.otras'
-      -#     %li
-      -#       %a{ href: resolucions_path }
-      -#         %i.fa.fa-circle-o
-      -#         = t '.norma.resolucion'
-      -#     %hr{ style: 'border:1px dotted #222d32; width:200px; margin-top: 1px; margin-bottom: 1px' }
-      -#     %li
-      -#       %a{ href: reports_normas_path }
-      -#         %i.fa.fa-th-list
-      -#         Reportes
-      -#     %li
-      -#       %a{ href: statitics_normas_path }
-      -#         %i.fa.fa-bar-chart
-      -#         Estadísticas
-      -# %li.treeview
-      -#   %a{ href: '#' }
-      -#     %i.fa.fa-user
-      -#     %span Iniciadores
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: persons_path }
-      -#         %i.fa.fa-circle-o
-      -#         Personas Físicas y Jurídicas
-      -#     %li
-      -#       %a{ href: government_offices_path }
-      -#         %i.fa.fa-circle-o
-      -#         Reparticiones oficiales
-      -#     %li
-      -#       %a{ href: municipal_offices_path }
-      -#         %i.fa.fa-circle-o
-      -#         Dependencias municipales
-      -#     %li
-      -#       %a{ href: councilors_path }
-      -#         %i.fa.fa-circle-o
-      -#         Concejales
-      -#     %li
-      -#       %a{ href: government_organs_path }
-      -#         %i.fa.fa-circle-o
-      -#         Órganos de gobierno
-
-      -# %li.treeview
-      -#   %a{ href: '#' }
-      -#     %i.fa.fa-align-center
-      -#     %span Autoridades
-      -#     %i.fa.fa-angle-left.pull-right
-      -#   %ul.treeview-menu
-      -#     %li
-      -#       %a{ href: '#concejal' }
-      -#         %i.fa.fa-circle-o
-      -#         Concejales
-      -#     %li
-      -#       %a{ href: '#comision' }
-      -#         %i.fa.fa-circle-o
-      -#         Comisiones
-      -#     %li
-      -#       %a{ href: '#bloque' }
-      -#         %i.fa.fa-circle-o
-      -#         Bloques -->
