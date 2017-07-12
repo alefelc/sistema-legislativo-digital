@@ -14,6 +14,8 @@ preload_app true
 
 ## == Set up socket location.
 listen "/tmp/unicorn.sld_staging.sock", backlog: 64
+## Probably this line must be removed.
+listen "127.0.0.1:9999", :tcp_nopush => true
 
 ## == Log file.
 stderr_path "#{root}/log/unicorn.log"
