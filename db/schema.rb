@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705122613) do
+ActiveRecord::Schema.define(version: 20170711144429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -592,6 +592,7 @@ ActiveRecord::Schema.define(version: 20170705122613) do
     t.text    "contact_info"
     t.text    "position"
     t.integer "procedure_id"
+    t.integer "ranking",      default: 0
   end
 
   add_index "procedure_signatories", ["procedure_id"], name: "index_procedure_signatories_on_procedure_id", using: :btree
