@@ -86,7 +86,7 @@ gem 'sprockets-rails', '2.3.2', require: 'sprockets/railtie'
 gem 'sprockets', '3.3.0'
 
 # Icons
-gem 'font-awesome-sass'
+gem 'font-awesome-sass', '~> 4.7.0'
 
 # A sophisticated paginator for Ruby webapps
 gem 'kaminari'
