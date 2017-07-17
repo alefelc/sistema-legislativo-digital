@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711144429) do
+ActiveRecord::Schema.define(version: 20170717024638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,11 @@ ActiveRecord::Schema.define(version: 20170711144429) do
     t.text     "generator"
   end
 
+  create_table "day_plans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dependencias_procedures", id: false, force: :cascade do |t|
     t.integer "municipal_office_id"
     t.integer "procedure_id"
@@ -264,6 +269,11 @@ ActiveRecord::Schema.define(version: 20170711144429) do
 
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
+  create_table "laws", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "legislative_file_states", force: :cascade do |t|
     t.text     "especificacion1"
     t.text     "especificacion2"
@@ -275,11 +285,13 @@ ActiveRecord::Schema.define(version: 20170711144429) do
     t.integer  "name",                default: 0
     t.date     "date_at"
     t.integer  "legislative_file_id"
+    t.integer  "session_id"
   end
 
   add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree
   add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
   add_index "legislative_file_states", ["procedure_id"], name: "index_legislative_file_states_on_procedure_id", using: :btree
+  add_index "legislative_file_states", ["session_id"], name: "index_legislative_file_states_on_session_id", using: :btree
 
   create_table "legislative_file_states_loops", id: false, force: :cascade do |t|
     t.integer "legislative_file_state_id"
@@ -791,6 +803,7 @@ ActiveRecord::Schema.define(version: 20170711144429) do
 
   add_foreign_key "legislative_file_states", "legislative_files"
   add_foreign_key "legislative_file_states", "procedures"
+  add_foreign_key "legislative_file_states", "sessions"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
   add_foreign_key "procedure_derivations", "areas"

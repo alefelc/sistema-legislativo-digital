@@ -1,0 +1,286 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class DerivatedProcedures {
+  static indexDataTable() {
+    let table = $('#derivated-procedures-table').DataTable({
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron trámites relacionados a su búsqueda."
+      },
+      dom: "<'row'<'col-sm-4'l><'procedures-toolbar col-sm-4'><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+      processing: true,
+      serverSide: true,
+      // columns: [
+      //   { name: 'attendance_type', orderable: true, searchable: false }
+      //   { name: 'title', orderable: true, searchable: false }
+      //   { name: 'abbreviation', orderable: true, searchable: false }
+      //   { name: 'status', orderable: true, searchable: false }
+      //   { name: 'default', orderable: true, searchable: false }
+      // ]
+      ajax: {
+        url: $('#derivated-procedures-table').data('url'),
+        method: 'GET',
+        dataType: 'json',
+        data: function(params) {
+          params.show_derivations = $('div.data-derivations').data('show');
+          // Between two dates filter.
+          if (!$('#derivated-procedures #reportrange').data('disabled')) {
+            params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
+            params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
+          }
+          // Filter by derivated Derivatedprocedures.
+          if (!$('#derivated-procedures #derivation_types').data('disabled'))
+            params.derivation_filter = $('#derivated-procedures #derivation_types').val();
+          return params
+        }
+      },
+      fnPreDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', '0.2');
+      },
+      fnDrawCallback: function() {
+        let column_to_hide = 0; // Derivations column
+        if ($('div.data-derivations').data('show')) {
+          DerivatedProcedures.listenCheckButtons();
+        }
+        let column = table.column(column_to_hide);
+        column.visible($('div.data-derivations').data('show'));
+        $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
+      }
+    })
+  }
+
+  static listenCheckButtons() {
+    $('#derivated-procedures-table .btn-confirm-derivation').on('ajax:success', function() {
+      $('#derivated-procedures-table').DataTable().draw(false);
+    });
+  }
+
+}
+
+class DerivatedProcedureIndex {
+  constructor() {
+    this.derivationBtn = '.listen-derivations';
+    this.returnTableBtn = '.listen-return-back';
+    this.mainBtns = '#derivated-procedures .main-buttons-header, #derivated-procedures .main-title';
+    this.alternativeHeader = '#derivated-procedures .alternative-button-header, #derivated-procedures .derivation-title';
+    this.showingDerivations = false;
+    this.listenerDerivation();
+  }
+
+  updateView() {
+    if (this.showingDerivations) {
+      $(this.mainBtns).hide();
+      $(this.alternativeHeader).show();
+      $('#derivated-procedures #derivation_types').data('disabled', false);
+    } else {
+      $(this.mainBtns).show();
+      $(this.alternativeHeader).hide();
+      $('#derivated-procedures #derivation_types').data('disabled', true);
+    }
+  }
+
+  listenerDerivation() {
+    var that = this;
+    $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
+      console.log('alalalal')
+      that.showingDerivations = !that.showingDerivations;
+      that.updateView();
+      $('#derivated-procedures #derivation_types').on('change', () => {
+        $('#derivated-procedures-table').DataTable().draw(false);
+      });
+      $('.data-derivations').data('show', that.showingDerivations);
+      $('#derivated-procedures-table').dataTable().fnDraw();
+    });
+  }
+}
+
+class DerivatedProceduresToolbar {
+  constructor() {
+    this.start = moment().subtract(29, 'days');
+    this.end = moment();
+    this.firstTime = true;
+    this.setToolbar();
+    this.startRangePicker();
+    this.initializePicker();
+  }
+
+  cb(start, end) {
+    $('#derivated-procedures #reportrange span').html(start.format('D MMMM, YYYY') +
+      ' - ' + end.format('D MMMM, YYYY'));
+  }
+
+  setToolbar() {
+    $('#derivated-procedures #reportrange').appendTo('.procedures-toolbar').show();
+  }
+
+  startRangePicker() {
+    $('#derivated-procedures #reportrange').daterangepicker({
+      locale: { "format": "DD/MM/YYYY", "separator": " - ",
+        "applyLabel": "Aceptar", "cancelLabel": "Limpiar",
+        "fromLabel": "Desde", "toLabel": "Hasta",
+        "customRangeLabel": "Rango personalizado",
+        "daysOfWeek": [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        "monthNames": [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
+        "firstDay": 1
+      },
+      startDate: this.start,
+      endDate: this.end,
+      opens: 'center',
+      ranges: {
+       'Hoy': [moment(), moment()],
+       'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Últimos 7 Días': [moment().subtract(6, 'days'), moment()],
+       'Últimos 30 Días': [moment().subtract(29, 'days'), moment()],
+       'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+       'Último Mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, this.cb);
+  }
+
+  initializePicker() {
+    let that = this;
+    $('#reportrange span').html('Click para buscar trámites por fecha.');
+    $('#derivated-procedures #reportrange').on('show.daterangepicker', function(ev, picker) {
+      if (that.firstTime) {
+        that.cb(that.start, that.end);
+        that.firstTime = false;
+      }
+    });
+    this.clearRange();
+    this.updateProceduresTable();
+  }
+
+  clearRange() {
+    $('#derivated-procedures #reportrange').on('cancel.daterangepicker', function(ev, picker) {
+      $('#derivated-procedures #reportrange').data('disabled', true);
+      $('#derivated-procedures #reportrange span').html('Click para buscar trámites por fecha.');
+      $('#derivated-procedures-table').DataTable().draw(false);
+    });
+  }
+
+  updateProceduresTable() {
+    $('#derivated-procedures #reportrange').on('apply.daterangepicker', function(ev, picker) {
+      $('#derivated-procedures #reportrange').data('disabled', false);
+      $('#derivated-procedures-table').DataTable().draw(false);
+    });
+  }
+}
+
+class DerivatedProcedureFilters {
+  constructor() {
+    this.typeId = "#derivated-procedures #filter_type";
+    this.applyBtn = '#derivated-procedures .apply-filters';
+    this.clearBtn = '#derivated-procedures .clear-filters';
+    this.startListeners();
+  }
+
+  startListeners() {
+  $('#myModal').on('shown.bs.modal', () => {
+    this.typeMultiselect();
+    this.initiators();
+    this.legislative_files();
+    this.administrative_files();
+    this.clear();
+    this.submit();
+  });
+  }
+
+  initiators() {
+    let config = {
+      placeholder: 'Busque por iniciadores',
+      ajax: {
+        url: "<%= url_helpers.initiators_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#derivated-procedures #filter_initiators').select2(config);
+  }
+
+  legislative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes legislativos',
+      ajax: {
+        url: "<%= url_helpers.legislative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#derivated-procedures #filter_legislative_file').select2(config);
+  }
+
+  administrative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes administrativos',
+      ajax: {
+        url: "<%= url_helpers.administrative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#derivated-procedures #filter_administrative_file').select2(config);
+  }
+
+  typeMultiselect() {
+    $(this.typeId).multiselect({
+      // buttonText: (options, select) => {
+      //   if (options.length == 0) return 'Seleccione algún trámite ...';
+      //   else if (options.length > 3) return 'Mas de 3 tipos de trámites ...';
+      //   else {
+      //     let labels = [];
+      //     // options.forEach () => {
+      //     //   if ($(this).attr('label') != undefined)
+      //     //     labels.push $(this).attr('label');
+      //     //   else
+      //     //     labels.push $(this).html();
+      //     return labels.join(', ') + ''
+      //   }
+      // },
+      // onChange: (a, b, c) => {
+      //   data = $.parseJSON($('#filter-values').val())
+      //   data.types = $('#tramites_type option:selected').map((idx, elem) => {
+      //     $(elem).val().toArray().toString();
+      //     $('#filter-values').val(JSON.stringify(data));
+      //   });
+      // }
+    });
+  }
+
+  reloadDatatable() {
+    $('#derivated-procedures-table').DataTable().draw(false);
+  }
+
+  clear() {
+    $(this.clearBtn).on('click', () => {
+      // Clear all fields on filters partial
+      // some code here.....
+      this.reloadDatatable();
+    });
+  }
+
+  submit() {
+    // Only reload datatable, params will be fetched from params callback.
+    $(this.applyBtn).on('click', () => { this.reloadDatatable() });
+  }
+}
+
+$(document).on('ready', function() {
+  if ($('#derivated-procedures-table').length) {
+    DerivatedProcedures.indexDataTable();
+    let table = new DerivatedProcedureIndex();
+    let toolbar = new DerivatedProceduresToolbar();
+    let filters = new DerivatedProcedureFilters();
+  }
+});
