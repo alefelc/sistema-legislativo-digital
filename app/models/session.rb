@@ -4,4 +4,8 @@ class Session < ActiveRecord::Base
 	has_one :orden_del_dia
 
   enum session_type: [:ordinary, :extraordinary, :intermediate_room, :special]
+
+  def text
+    "Sesión nro: #{self.id}"
+  end
 end

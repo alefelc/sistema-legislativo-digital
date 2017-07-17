@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: SessionDatatable.new(view_context) }
+      format.json { render json: build_json_response }
     end
   end
 
@@ -46,5 +46,15 @@ class SessionsController < ApplicationController
   def session_params
     params.require(:session).permit :number, :observation, :session_type,
       :place, :secret, :started_at, :finished_at
+  end
+
+  def build_json_response
+    if params[:select_q].present?
+      q = "%#{params[:select_q]}%"
+      w = "id::text ilike ?"
+      Session.where(w, q).to_json only: :id, methods: :text
+    else
+      SessionDatatable.new view_context
+    end
   end
 end

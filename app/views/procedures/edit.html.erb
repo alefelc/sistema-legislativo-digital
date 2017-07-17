@@ -2,7 +2,7 @@
 <div id="procedure-new">
   <h2> <%= t '.edit_procedure' %> </h2>
 
-  <%= form_for @procedure, { url: procedures_path(@procedure), multipart: true } do |form| %>
+  <%= form_for @procedure, multipart: true do |form| %>
     <div class="box box-primary">
       <div class="box-body">
         <%= render 'form', f: form %>

@@ -1,46 +1,36 @@
-<div id="index-derivated-procedures">
-  <h2>
-    Trámites derivados
-  </h2>
+<div id="derivated-procedures">
+  <div id="filters">
+    <%= render 'filters' %>
+  </div>
+  <h2 class="main-title text-center"> TRÁMITES INGRESADOS </h2>
+  <h2 class="derivation-title text-center"> RECEPCIONANDO TRÁMITES </h2>
 
-  <div class="box box-primary" id="procedures">
+  <div class="box box-primary">
     <div class="box-header">
+      <%= render 'header_buttons' %>
     </div>
-
+    <hr class="minimal-hr">
     <div class="box-body">
-      <table class="table table-striped dataTable" id="derivated-procedures-table" data-source="<%= derivated_procedures_path(format: :json) %>">
+      <table class="table table-striped"
+        id="derivated-procedures-table" data-source="<%= derivated_procedures_path(format: :json) %>">
         <thead>
           <tr>
-            <th>Nro</th>
-            <th>Derivado por</th>
-            <th>Derivado a las</th>
-            <th>Recepcionado por</th>
-            <th>Recepcionado a las</th>
             <th></th>
+            <th class="text-center"> Nro / Tipo </th>
+            <th class="text-center"> Iniciadores </th>
+            <th class="text-center"> Asunto </th>
+            <th class="text-center"> Creado el </th>
+            <th class="text-center"> Hojas </th>
+            <th class="text-center"></th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
   </div>
+
+  <div id="reportrange" data-disabled="true" placeholder="probando" class="text-center form-control">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+    <span></span> <b class="caret"></b>
+  </div>
 </div>
-<script type="text/javascript">
-$(document).on('ready', function() {
-  if ($('#index-derivated-procedures').length) {
-    $('#derivated-procedures-table').dataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-        url: $('#derivated-procedures-table').data('url'),
-        method: 'GET',
-        dataType: 'json'
-        // Needed for the filters
-        // data: function(params) {
-        //   params.status_filter = $('select.status-filter').val()
-        //   return params
-      }
-    });
-  }
-});
-</script>

@@ -23,18 +23,23 @@ module LegislativeFilesHelper
       end
     when "in_comision"
       # if have only one comision
-      "Derivado el día #{date_at} a la comision de "
-      # else
-      "Derivado el día #{date_at} a las comisiones de "
-      # end
+      text = if state.comisions.length <= 1
+        "Derivado el día #{date_at} a la comision de:"
+      else
+        "Derivado el día #{date_at} a las comisiones de:"
+      end
+      li_content = []
+      state.comisions.each { |c| li_content << content_tag(:li, c.denominacion)  }
+
+      [text, content_tag(:ul, li_content.join.html_safe)].join.html_safe
     when "dispatched"
       "Despacho ingresado el día #{date_at} con el trámite #{link_to state.procedure, state.procedure}"
     when "day_plan"
       "Ingresa en la orden del día nro ... el día #{date_at}"
     when "sanctioned"
-      ""
+      "Sancionado en la sesión nro #{link_to "##{state.session.id}", state.session} el dia #{date_at}"
     when "retired"
-      ""
+      "Retirado ...."
     end.html_safe
   end
 

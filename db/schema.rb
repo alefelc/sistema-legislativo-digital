@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717024638) do
+ActiveRecord::Schema.define(version: 20170717125448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -286,6 +286,8 @@ ActiveRecord::Schema.define(version: 20170717024638) do
     t.date     "date_at"
     t.integer  "legislative_file_id"
     t.integer  "session_id"
+    t.text     "sanction_specified"
+    t.text     "sanction_type"
   end
 
   add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree

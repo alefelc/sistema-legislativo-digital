@@ -1,20 +1,9 @@
 <div id="index-legislative-files">
-  <h2>
-    Expedientes legislativos
-  </h2>
+  <h2 class="text-center"> EXPEDIENTES LEGISLATIVOS </h2>
 
   <div class="box box-primary" id="procedures">
     <div class="box-header">
-      <div class="row">
-        <div class="col-md-5 col-xs-12">
-          <% if current_user.present? #&& policy(LegislativeFile).create? %>
-            <%= link_to new_legislative_file_path, class: 'btn btn-primary btn-lg' do %>
-              <i class="fa fa-plus-circle fa-lg"></i>
-              Nuevo expediente
-            <% end -%>
-          <% end -%>
-        </div>
-      </div>
+      <%= render 'header' %>
     </div>
     <div class="box-body">
       <table class="table table-striped dataTable" id="legislative-files-table" data-source="<%= legislative_files_path(format: :json) %>">

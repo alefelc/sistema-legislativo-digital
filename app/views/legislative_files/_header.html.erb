@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-4 col-xs-12 text-center">
+    <% if current_user.present? #&& policy(LegislativeFile).create? %>
+      <%= link_to new_legislative_file_path, class: 'btn btn-primary btn-lg' do %>
+        <i class="fa fa-plus-circle fa-lg"></i>
+        Nuevo expediente
+      <% end -%>
+    <% end -%>
+  </div>
+
+  <div class="col-md-4 col-xs-12 text-center">
+    <% if current_user.present? #&& policy(LegislativeFile).create? %>
+      <%= link_to new_legislative_file_path, class: 'btn btn-warning btn-lg' do %>
+        <i class="fa fa-filter fa-lg"></i>
+        Filtrar
+      <% end -%>
+    <% end -%>
+  </div>
+
+  <div class="col-md-4 col-xs-12 text-center">
+    <% if current_user.present? #&& policy(LegislativeFile).create? %>
+      <%= link_to new_legislative_file_path, class: 'btn btn-default btn-lg' do %>
+        <i class="fa fa-print fa-lg"></i>
+        Imprimir
+      <% end -%>
+    <% end -%>
+  </div>
+</div>

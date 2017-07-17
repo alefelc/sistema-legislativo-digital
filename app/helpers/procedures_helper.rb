@@ -23,16 +23,25 @@ module ProceduresHelper
     options_for_select result, procedure
   end
 
-  def filter_by_derivated
+  def filter_by_derivated(param={})
     ##########################
     ## Missing constants HERE!!
     ##########################
-    options_for_select [
-      ['Trámites sin derivar', 'without_derivation'],
-      ['Trámites sin recepcionar', 'without_reception'],
-      ['Trámites recepcionados', 'with_reception'],
-      ['Todos los trámites', 'all_procedures']
-    ]
+    if params.present? && params[:default] == :without_reception
+      options_for_select [
+        ['Trámites sin recepcionar', 'without_reception'],
+        ['Trámites recepcionados', 'with_reception'],
+        ['Trámites sin derivar', 'without_derivation'],
+        ['Todos los trámites', 'all_procedures']
+      ]
+    else
+      options_for_select [
+        ['Trámites sin recepcionar', 'without_reception'],
+        ['Trámites recepcionados', 'with_reception'],
+        ['Trámites sin derivar', 'without_derivation'],
+        ['Todos los trámites', 'all_procedures']
+      ]
+    end
   end
 
   def select_periods

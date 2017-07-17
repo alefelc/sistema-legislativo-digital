@@ -1,6 +1,7 @@
 class ProcedureDerivationDatatable
-  delegate :params, :link_to, :content_tag, :derivated_procedure_path,
-    :new_legislative_file_path, :procedure_path, to: :@view
+  delegate :index_procedure, :person_path, :link_to, :peticion_path,
+           :human_attribute_name, :params, :content_tag, :procedure_path,
+           :derivated_procedure_path, :check_box_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -9,60 +10,114 @@ class ProcedureDerivationDatatable
   def as_json(_options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: get_raw_records.count,
-      iTotalDisplayRecords: paginated_records.count,
+      iTotalRecords: procedures.count,
+      iTotalDisplayRecords: procedures.count,
       data: data
     }
   end
 
+  private
   def data
-    paginated_records.map do |derivation|
+    paginated_procedures.map do |proc|
       [
-        procedure_link(derivation.procedure_id),
-        derived_by_link(derivation),
-        derivation.derived_at.to_s,
-        received_by_link(derivation),
-        derivation.received_at.to_s,
-        confimation_button(derivation)
+        actions(proc),
+        show_id(proc),
+        get_iniciadores(proc),
+        proc.topic,
+        to_date_time(proc.created_at),
+        content_tag(:div, proc.sheets, class: 'text-center'),
+        view_procedure(proc)
       ]
     end
   end
 
-  private
-
-  def received_by_link(derivation)
-    if derivation.received_by.present?
-      link_to derivation.received_by.full_name, derivation.received_by
+  def show_id(proc)
+    type = if proc.type.present?
+      Procedure.human_attribute_name proc.type
+    else
+      "No asig."
+    end
+    content_tag :div, class: 'text-center' do
+      "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
     end
   end
 
-  def derived_by_link(derivation)
-    if derivation.derived_by.present?
-      link_to derivation.derived_by.full_name, derivation.derived_by
+  def view_procedure(proc)
+    content_tag :div do
+      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg pull-right')
     end
   end
 
-  def procedure_link(proc_id)
-    link_to proc_id, procedure_path(proc_id)
-  end
-  def confimation_button(derivation)
-    unless derivation.received_at.present?
-      link_to derivated_procedure_path(derivation), method: :put, class: 'btn btn-success btn-confirm-derivation', remote: true do
-        content_tag :i, nil, class: 'fa fa-lg fa-check'
+  def actions(proc)
+    return if params[:show_derivations].eql? "false"
+    derivation = proc.procedure_derivation
+    if derivation.present?
+      if derivation.received_at.present?
+        title_attr = "Trámite derivado #{derivation.derived_at.strftime('%d/%m %H:%M')}\n"
+        title_attr += "Trámite recepcionado #{derivation.received_at.strftime('%d/%m %H:%M')}"
+        content_tag :div, nil, title: title_attr,
+          class: 'btn btn-default fa fa-lg fa-envelope-open tooltip-text active'
+      else
+        title_attr = "Trámite derivado #{derivation.derived_at.strftime('%d/%m %H:%M')}"
+
+        link_to derivated_procedure_path(derivation), method: :put,
+                class: 'btn btn-success btn-confirm-derivation tooltip-text',
+                title: title_attr, remote: true do
+          content_tag :i, nil, class: 'fa fa-lg fa-check fa-envelope'
+        end
       end
+    else
+      title_attr = "Trámite #{proc} sin derivar"
+      content_tag :div, nil, title: title_attr,
+        class: 'btn btn-default btn-lg disabled tooltip-text fa fa-ban fa-lg'
     end
   end
 
-  def get_raw_records
-    ProcedureDerivation.order(id: :desc)#.where filter
+  def procedures
+    Procedure.order(id: :desc).where filter
   end
 
-  def paginated_records
-    get_raw_records.page(page).per per_page
+  def columns
+    %w(id type nil topic created_at sheets)
   end
 
   def filter
-    ""
+    query = []
+    binds = []
+
+    if params[:search][:value].present?
+      search = "%#{params[:search][:value]}%"
+      query += ["procedures.id::text ILIKE ?"]
+      # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ? OR procedures.type_course ILIKE ? OR procedures.division ILIKE ? OR procedures.subdivision ILIKE ?" ]
+      binds += [search] * 1
+    end
+
+    if params[:date_from].present? && params[:date_to].present?
+      query += ["created_at BETWEEN ? AND ?"]
+      binds += [params[:date_from]]
+      binds += [params[:date_to]]
+    end
+
+    if params[:derivation_filter].present?
+      ## Improve CONSTANTS HERE!!!!
+      case params[:derivation_filter]
+      when 'without_derivation'
+        query += ['procedures.procedure_derivation_id IS null']
+      when 'all_procedures'
+        # DO NOTHING
+        # query += ['procedures.procedure_derivation_id IS NOT null']
+      when 'without_reception'
+        query += ['procedures.procedure_derivation_id IS NOT null']
+      when 'with_reception'
+        query += ['procedures.procedure_derivation_id IS NOT null']
+      end
+    end
+
+    [query.join(' AND ')] + binds
+  end
+
+  def paginated_procedures
+    procedures.page(page).per per_page
   end
 
   def per_page
@@ -71,5 +126,24 @@ class ProcedureDerivationDatatable
 
   def page
     params[:start].to_i / per_page + 1
+  end
+
+  def get_iniciadores(tra)
+    result = []
+    tra.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
+    tra.bloques.each { |b| result << "#{b.denominacion}" }
+    tra.comisions.each { |b| result << "#{b.denominacion}" }
+    tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
+    tra.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
+    tra.municipal_offices.each { |b| result << "#{b.denominacion}" }
+    result.join ' - '
+  end
+
+  def to_date_time(date)
+    date_only = date.strftime("%d/%m/%Y")
+    time_only = date.strftime("%R")
+    datetime = content_tag :div, date_only, class: 'text-center'
+    datetime += content_tag :div, time_only, class: 'text-center'
+    datetime
   end
 end

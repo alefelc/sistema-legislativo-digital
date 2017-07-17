@@ -58,6 +58,15 @@ class ProceduresController < ApplicationController
 
   def update
     authorize Procedure, :edit?
+    @procedure = Procedure.find params[:id]
+
+    if @procedure.update procedure_params
+      flash[:success] = 'Trámite actualizado correctamente'
+      redirect_to @procedure
+    else
+      flash[:error] = 'No fue posible actualizar el trámite'
+      redirect_to edit_procedure_path(@procedure)
+    end
   end
 
   def show

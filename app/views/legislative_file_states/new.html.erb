@@ -8,39 +8,43 @@
           <button aria-label="Close" class="close" data-dismiss="modal" type="button">
             <span class="fa-lg" aria-hidden="true"> × </span>
           </button>
-          <h2 class="modal-title text-center"> Nuevo estado en el expediente </h2>
+          <h3 class="modal-title text-center"> Nuevo estado en el expediente </h3>
         </div>
 
         <div class="modal-body">
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :name, 'Nombre' %>
-                <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
-              </div>
-
-              <div class="form-group">
-                <%= f.label :date_at, 'Fecha' %>
-                <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
-              </div>
+            <div class="col-md-6 form-group">
+              <%= f.label :name, 'Nombre' %>
+              <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
             </div>
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :state_type, 'Tipo' %>
-                <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
-              </div>
-
-              <div class="form-group">
-                <%= f.label :date_at, 'Sesión' %>
-                <%= f.text_field :date_at, class: 'input-lg form-control' %>
-              </div>
-
+            <div class="form-group col-md-6">
+              <%= f.label :state_type, 'Tipo' %>
+              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
             </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :session_id, 'Sesión' %>
+              <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :date_at, 'Fecha' %>
+              <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
+              <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
+            </div>
+            <div class="form-group col-md-6" style="margin-top: 25px;">
+              <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
+            </div>
+
             <div class="col-md-12">
               <div class="form-group">
-                <%= f.label :comisions, 'Comisiones asociadas' %>
-                <%= f.select :comisions, {}, {}, class: 'input-lg form-control' %>
+                <%= f.label :comision_ids, 'Comisiones asociadas' %>
+                <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' %>
               </div>
             </div>
           </div>
@@ -56,3 +60,47 @@
     </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $('#initiator-new.modal').on('shown.bs.modal', function() {
+    $('#legislative_file_state_session_id').select2({
+      allowClear: true,
+      placeholder: 'Cargue una sesión',
+      language: 'es',
+      ajax: {
+        url: "<%= sessions_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: function(params) {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: function(data, params) {
+          return { results: data }
+        }
+      }
+    });
+
+    $('#legislative_file_state_comision_ids').select2({
+      allowClear: true,
+      placeholder: 'Seleccione comisiones',
+      language: 'es',
+      ajax: {
+        url: "<%= commissions_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: function(params) {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: function(data, params) {
+          return { results: data }
+        }
+      }
+    })
+  });
+
+  $('form#new_legislative_file_state').on('ajax:success', function() {
+    location.reload();
+  });
+</script>
