@@ -71,6 +71,10 @@ class ProceduresController < ApplicationController
 
   def show
     @procedure = Procedure.find params[:id]
+    respond_to do |format|
+      format.html
+      format.json { render json: @procedure.to_json }
+    end
   end
 
   def print
@@ -89,7 +93,7 @@ class ProceduresController < ApplicationController
 
   def procedure_params
     params.require(:procedure).permit :type, :sheets, :topic, :observations,
-      :day, :month, :year, :uploads, :legislative_files,
+      :day, :month, :year, :uploads, :legislative_files, initiator_attributes: [],
       person_ids: [], comision_ids: [], contingency_plan_attributes: [:date_at, :reason, :generator, :signatory],
       procedure_states_attributes: [],
       councilors: [], legislative_file_ids: [], administrative_file_ids: [],

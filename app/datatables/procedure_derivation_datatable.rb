@@ -1,7 +1,8 @@
 class ProcedureDerivationDatatable
   delegate :index_procedure, :person_path, :link_to, :peticion_path,
            :human_attribute_name, :params, :content_tag, :procedure_path,
-           :derivated_procedure_path, :check_box_tag, to: :@view
+           :derivated_procedure_path, :check_box_tag, :new_legislative_file_path,
+           to: :@view
 
   def initialize(view)
     @view = view
@@ -26,7 +27,7 @@ class ProcedureDerivationDatatable
         proc.topic,
         to_date_time(proc.created_at),
         content_tag(:div, proc.sheets, class: 'text-center'),
-        view_procedure(proc)
+        actions_procedure(proc)
       ]
     end
   end
@@ -42,10 +43,11 @@ class ProcedureDerivationDatatable
     end
   end
 
-  def view_procedure(proc)
-    content_tag :div do
-      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg pull-right')
-    end
+  def actions_procedure(proc)
+    links = []
+    links << link_to('', procedure_path(proc), class: 'btn btn-primary fa fa-eye fa-lg pull-right')
+    links << link_to('', new_legislative_file_path(proc_id: proc.id), class: 'btn btn-info fa fa-file-text fa-lg pull-right')
+    content_tag :div, links.join.html_safe
   end
 
   def actions(proc)
@@ -62,7 +64,7 @@ class ProcedureDerivationDatatable
 
         link_to derivated_procedure_path(derivation), method: :put,
                 class: 'btn btn-success btn-confirm-derivation tooltip-text',
-                title: title_attr, remote: true do
+                title: title_attr, remote: true, data: { confirm: "¿Desea confirmar la recepción del trámite #{proc}?" } do
           content_tag :i, nil, class: 'fa fa-lg fa-check fa-envelope'
         end
       end

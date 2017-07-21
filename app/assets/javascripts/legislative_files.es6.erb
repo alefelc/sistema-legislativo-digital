@@ -11,8 +11,7 @@ class ListenProceduresFinder {
 		  allowClear: true,
 		  placeholder: 'Busque trámites',
 		  language: 'es',
-		  theme: "bootstrap",
-		  minimumInputLength: 2
+		  theme: "bootstrap"
 		};
 		options.ajax = {
 		  url: "<%= url_helpers.procedures_path %>",
@@ -125,6 +124,32 @@ class LegislativeFileStateModal {
 	}
 }
 
+class AutoLoadProcedure {
+	constructor() {
+		this.select = '#legislative_file_origin_procedure_id';
+		this.setSelect2();
+	}
+
+	setSelect2() {
+		let params = new URLSearchParams(window.location.search);
+		let id = params.get('proc_id');
+		let text = `#${params.get('proc_id')}`;
+
+		$(this.select).append(`<option value="${id}">${text}</option>`);
+
+		$.ajax({
+		  url: '/procedures/'+id,
+		  dataType: 'json',
+			success: function(data) {
+				$('#legislative_file_topic').val(data.topic);
+				$('#legislative_file_sheets').val(data.sheets);
+				$('#legislative_file_observations').val(data.observations);
+				$('#legislative_file_date').val(data.created_at.substr(0,10));
+			}
+		});
+	}
+}
+
 $(document).on('ready', function() {
 	if ($('#legislative-file-show').length) {
 		$('input, textarea, select').prop('disabled', true);
@@ -135,6 +160,8 @@ $(document).on('ready', function() {
 		const tags = new TagsSelect();
 		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
 		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
+
+		new AutoLoadProcedure();
 	}
 
 	if ($('#legislative-file-edit').length) {

@@ -67,7 +67,7 @@ class ProcedureDatatable
       title_attr = "Click para derivar #{proc}"
       link_to derivated_procedures_path(procedure_id: proc.id), method: :post,
         class: 'btn btn-check btn-success tooltip-text', title: title_attr,
-        remote: true do
+        remote: true, data: { confirm: "¿Desea derivar el trámite #{proc}?" } do
           content_tag :i, nil, class: 'fa fa-lg fa-check'
       end
     end

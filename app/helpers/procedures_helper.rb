@@ -27,7 +27,7 @@ module ProceduresHelper
     ##########################
     ## Missing constants HERE!!
     ##########################
-    if params.present? && params[:default] == :without_reception
+    if param.present? && param[:default] == :without_reception
       options_for_select [
         ['Trámites sin recepcionar', 'without_reception'],
         ['Trámites recepcionados', 'with_reception'],
@@ -35,10 +35,11 @@ module ProceduresHelper
         ['Todos los trámites', 'all_procedures']
       ]
     else
+      ## Only reception options.
       options_for_select [
+        ['Trámites sin derivar', 'without_derivation'],
         ['Trámites sin recepcionar', 'without_reception'],
         ['Trámites recepcionados', 'with_reception'],
-        ['Trámites sin derivar', 'without_derivation'],
         ['Todos los trámites', 'all_procedures']
       ]
     end

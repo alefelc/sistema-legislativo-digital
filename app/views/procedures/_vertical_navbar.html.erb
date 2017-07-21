@@ -4,13 +4,6 @@
       <%= t '.information' %>
     </a>
   </li>
-  <% if true #policy(Procedure).sign_create? %>
-    <li class="common-procedure">
-      <a href="#sign_people" data-toggle="tab" aria-expanded="false">
-        Firmantes del trámite
-      </a>
-    </li>
-  <% end %>
   <% if policy(Procedure).derivations_create? %>
     <li>
       <a aria-expanded="false" data-toggle="tab" href="#settings">

@@ -47,12 +47,18 @@ class ModalInitiator {
   //   $(`${this.el} form`).on(events);
   // }
 
+  // Show signators table
+  showSignatoriesList() {
+    $('.signators-table').show();
+  }
+
   // Listen when form fields changes
   listenForm() {
     let that = this;
     $('.forms select').on('change', function(ev) {
-      if ($(this).val() != '')
+      if ($(this).val() != '') {
         $(that.el).find('.modal-footer').show('slow');
+      }
       else
         $(that.el).find('.modal-footer').hide('slow');
     });
@@ -159,7 +165,8 @@ class ModalInitiator {
     let options = {
       allowClear: true,
       placeholder: text,
-      language: 'es'
+      language: 'es',
+      closeOnSelect: false
     };
 
     this.clearSelect2();
@@ -200,11 +207,14 @@ class ModalInitiator {
     $('.official_distribution, .particular_pyshic, .particular_legal').hide(param);
     $('.official_distribution_new, .municipal_office_new').hide(param);
     $('.particular_pyshic_new, .particular_legal_new').hide(param);
+    $('.signators-table').hide(param);
   }
 
   // Hide modal footer
   toggleFooter() {
     $(this.el).find('.modal-footer').toggle('slow');
+    //// PLEASE REMOVE THIS!!!
+    $(this.el).find('.signators-table').toggle('slow');
   }
 
   // Hide back initiators button
@@ -262,19 +272,19 @@ class Procedures {
       },
       fnDrawCallback: function() {
         let column_to_hide = 0; // Derivations column
-        if ($('div.data-derivations').data('show')) {
-          Procedures.listenCheckButtons();
-        }
         let column = table.column(column_to_hide);
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
         $('.tooltip-text').tooltip();
+      },
+      fnInitComplete: function() {
+        Procedures.listenCheckButtons();
       }
     })
   }
 
   static listenCheckButtons() {
-    $('#procedures-table .btn-check').on('ajax:success', function() {
+    $('#procedures-table').on('ajax:success', '.btn-check', function() {
       $('#procedures-table').DataTable().draw(false);
     });
   }
@@ -285,6 +295,7 @@ class Procedures {
       placeholder: 'Busque personas y/o instituciones',
       theme: 'bootstrap',
       language: 'es',
+      closeOnSelect: false,
       ajax: {
         url: "<%= url_helpers.initiators_path(format: :json) %>",
         dataType: 'json',
@@ -406,7 +417,7 @@ class InitiatorsTable {
 
     // Insert data in the form
     let $hidden = $(`<input name="procedure[initiator_attributes][]"
-      type="hidden" value=${JSON.stringify(someData)}>`);
+      type="hidden">`).val(JSON.stringify(someData));
     $('.procedure-form').append($hidden);
   }
 
@@ -419,11 +430,12 @@ class InitiatorsTable {
       switch (value) {
         case 'dem':
           data = { id: "1", text: "DEM", type: "government" };
+          ////// REMOVE AND IMPROVE THIS....
           // FIX HARDCODED WAY
           $('.signators-table tbody').append("<tr> <td> Juan Manuel LLamosas (Intendente) </td> <td> </td> </tr>");
           break;
         case 'legislative_secretary':
-          data = { id: "1", text: "Secretaria legislativa", type: "lalal" }
+          data = { id: "1", text: "Secretaria legislativa", type: "legislative_secretary" }
           break;
         default:
           let selectedInfo = $(`#initiator_form_${value}_id`).select2('data')[0];
@@ -481,7 +493,7 @@ class CreateSignator {
   }
 
   addClickEvent() {
-    $(this.button).on('click', () => { $(this.signatorTab).tab('show') });
+    
   }
 
   submit() {

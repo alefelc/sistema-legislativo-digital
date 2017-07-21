@@ -50,7 +50,7 @@
                     %li
                       %i No existen expedientes legislativos asociados
                   - @procedure.legislative_files.each do |p|
-                    %li= link_to p.to_s, p, class: 'btn'
+                    %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
           - if @procedure.type == "Despacho"
             .col-md-6
               .box.box-solid

@@ -47,12 +47,15 @@ class DerivatedProcedures {
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
         $('.tooltip-text').tooltip();
+      },
+      fnInitComplete: function() {
+        DerivatedProcedures.listenCheckButtons();
       }
     })
   }
 
   static listenCheckButtons() {
-    $('#derivated-procedures-table .btn-confirm-derivation').on('ajax:success', function() {
+    $('#derivated-procedures-table').on('ajax:success', '.btn-confirm-derivation', function() {
       $('#derivated-procedures-table').DataTable().draw(false);
     });
   }

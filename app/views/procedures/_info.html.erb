@@ -64,6 +64,29 @@
     </div>
   </div>
 
+<% if policy(Procedure).initiators_create? %>
+  <div class="common-procedure col-md-12">
+    <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
+      <div class="fa fa-user-plus"></div>
+      Cargar Iniciadores
+    <% end -%>
+    <table class="initiators-table table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center"> Iniciadores del trámite</th>
+          <th style="width: 1%"> </th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+      <tfoot>
+        <td colspan="2" class="text-center"> <i>Aún no ha cargado iniciadores. Para cargar iniciador/es haga click en el botón "Agregar"</i>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+<% end %>
 <% if policy(Procedure).topic_create? %>
   <div class="form-group common-procedure col-md-12">
     <label for="<%= :procedure_topic %>">
@@ -72,56 +95,12 @@
     <%= f.text_area :topic, { class: 'input-lg form-control', placeholder: t('.topic_placeholder') } %>
   </div>
 <% end %>
-<% if policy(Procedure).initiators_create? %>
-  <div class="common-procedure col-md-12">
-    <table class="initiators-table table table-bordered">
-      <thead>
-        <tr>
-          <th class="text-center"> Iniciador/es del trámite</th>
-          <th style="width: 1%"> </th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-      <tfoot>
-        <td colspan="2" class="text-center"> <i>Para cargar iniciador/es haga click en el botón "Agregar"</i>
-          <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
-            <div class="fa fa-user-plus"></div>
-            Agregar Iniciador
-          <% end -%>
-        </td>
-      </tfoot>
-    </table>
-  </div>
-  <div class="common-procedure col-md-12">
-    <table class="signators-table table table-bordered">
-      <thead>
-        <tr>
-          <th class="text-center"> Firmante/s del trámite </th>
-          <th style="width: 1%"> </th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-      <tfoot>
-        <td colspan="2" class="text-center"> <i>Para cargar firmantes haga click en el botón "Agregar"</i>
-          <%= button_tag type: 'button', class: 'signator-btn btn btn-info pull-right', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
-            <div class="fa fa-user-plus"></div>
-            Agregar Firmante
-          <% end -%>
-        </td>
-      </tfoot>
-    </table>
-  </div>
-<% end %>
 <% if policy(Procedure).observations_create? %>
   <div class="form-group col-md-12">
     <label for="<%= :procedure_observations %>">
       <%= t('.observations') %>
     </label>
-    <%= f.text_field :observations, { class: 'input-lg form-control', placeholder: t('.observations_placeholder') } %>
+    <%= f.text_field :observations, { class: 'form-control', placeholder: t('.observations_placeholder') } %>
   </div>
 <% end %>
 <% if f.object.persisted? && policy(Procedure).finalized_create? %>

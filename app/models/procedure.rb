@@ -103,6 +103,20 @@ class Procedure < ActiveRecord::Base
     type == "Despacho"
   end
 
+  def initiator_attributes=(initiators={})
+    # case initiators[:type]
+    # when 'dem'
+    # when 'legislative_secretary'
+    # when 'partisan_block'
+    # when 'commission'
+    # when 'councilor'
+    # when 'official_distribution'
+    # when 'municipal_office'
+    # when 'particular_pyshic'
+    # when 'particular_legal'
+    # end
+  end
+
   private
 
   def initial_state
