@@ -1,5 +1,5 @@
 <div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <%= form_for @initiator, url: initiators_path, remote: true do |f| %>
 
@@ -7,7 +7,7 @@
           <button aria-label="Close" class="close" data-dismiss="modal" type="button">
             <span aria-hidden="true"> × </span>
           </button>
-          <h4 class="modal-title"> ¿Quien inicia este tramite? </h4>
+          <h3 class="modal-title text-center"> ¿Quien inicia este tramite? </h3>
         </div>
 
         <div class="modal-body row">
@@ -133,7 +133,7 @@
               <table class="signators-table table table-bordered">
                 <thead>
                   <tr>
-                    <th class="text-center">Firmantes del trámite</th>
+                    <th class="text-center">Firmantes del trámite seleccionados</th>
                     <th style="width: 1%"> </th>
                   </tr>
                 </thead>
@@ -146,6 +146,39 @@
                 </tfoot>
               </table>
             </div>
+            <div class="row">
+              <div class="form-group signator-search">
+                <div class="col-md-12">
+                  <%= label_tag :signator_search, 'Busque firmantes' %>
+                </div>
+                <div class="col-md-10">
+                  <%= select_tag :signator_search, {}, class: 'form-control' %>
+                </div>
+                <div class="col-md-2">
+                  <%= button_tag type: :button, class: 'btn btn-primary create-signatory', title: 'Crear nuevo Firmante' do %>
+                    <%= icon('plus') %> Crear
+                  <% end %>
+                </div>
+              </div>
+              <div class="signator-form">
+                <div class="col-md-6 field">
+                  <%= label_tag :name, 'Nombre' %>
+                  <%= text_field_tag :name, nil, class: 'input-lg form-control', placeholder: 'Nombres del firmante' %>
+                </div>
+                <div class="col-md-6 field">
+                  <%= label_tag :surname, 'Apellido' %>
+                  <%= text_field_tag :surname, nil, class: 'input-lg form-control', placeholder: 'Apellidos del firmante' %>
+                </div>
+                <div class="col-md-4 field">
+                  <%= label_tag :position, 'Cargo' %>
+                  <%= text_field_tag :position, nil, class: 'input-lg form-control', placeholder: 'Cargo' %>
+                </div>
+                <div class="col-md-8 field">
+                   <%= label_tag :contact_info, 'Información de contacto' %>
+                   <%= text_field_tag :contact_info, nil, class: 'input-lg form-control', placeholder: 'Información de contacto, teléfono, email...' %>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -153,42 +186,26 @@
           <button class="btn btn-default pull-left" data-dismiss="modal" type="button">
             <div class="fa fa-times-circle"></div> Cancelar
           </button>
-          <button class="btn btn-warning btn-lg add-signators" type="button">
-            <div class="fa fa-user-plus"></div> Agregue firmantes
-          </button>
-          <button class="btn btn-primary btn-lg" type="submit">
-            <div class="fa fa-save fa-lg"></div> Confirmar
-          </button>
+          <div class="main-footer-actions">
+            <button class="btn btn-warning btn-lg add-signators" type="button">
+              <div class="fa fa-user-plus"></div> Agregue firmantes
+            </button>
+            <button class="btn btn-primary btn-lg" type="submit">
+              <div class="fa fa-save fa-lg"></div> Confirmar
+            </button>
+          </div>
+          <%= button_tag type: :button, class: 'btn btn-lg btn-default signatories-actions' do %>
+            <%= icon 'arrow-circle-o-right', class: 'fa-lg' %>
+            Continuar
+          <% end %>
+
+          <%= button_tag type: :button, class: 'btn btn-lg btn-success confirm-signatory' do %>
+            <%= icon 'check-circle-o', class: 'fa-lg' %>
+            Listo
+          <% end %>
         </div>
 
       <% end %>
     </div>
   </div>
 </div>
-
-
-
-
-<!--           -#   = f.select :type, initiator_options, {}, class: 'input-lg form-control'
-          -# .col-md-6.form-group
-          -#   .person= f.label :name
-          -#   %label.legal-person{for: :person_name }= t('.denomination')
-          -#   = f.text_field :name, class: 'input-lg form-control'
-          -# .col-md-6.form-group.person
-          -#   = f.label :surname
-          -#   = f.text_field :surname, class: 'input-lg form-control'
-          -# .col-md-6.form-group
-          -#   = f.label :cuit_or_dni
-          -#   = f.text_field :cuit_or_dni, class: 'input-lg form-control'
-          -# .col-md-6.form-group
-          -#   = f.label :phone
-          -#   = f.text_field :phone, class: 'input-lg form-control'
-          -# .col-md-6.form-group
-          -#   = f.label :address
-          -#   = f.text_field :address, class: 'input-lg form-control'
-          -# .col-md-6.form-group
-          -#   = f.label :email
-          -#   = f.text_field :email, class: 'input-lg form-control'
-          -# .col-md-6.form-group.person
-          -#   = f.label :position
-          -#   = f.text_field :position, class: 'input-lg form-control' -->

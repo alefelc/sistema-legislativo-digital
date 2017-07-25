@@ -1,8 +1,0 @@
-.initiators-modal
-#procedure-new
-  %h2
-    = t '.new_procedure'
-  = form_for @procedure, { multipart: true } do |form|
-    .box.box-primary
-      .box-body
-        = render 'form', f: form
