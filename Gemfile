@@ -126,8 +126,8 @@ group :production do
   # Use Unicorn as the app server
   gem 'unicorn', '~> 4.8.2'
 
- # heroku settings
- # gem 'rails_12factor'
+  # heroku settings
+  gem 'rails_12factor'
 end
 
 ########################################
@@ -161,4 +161,4 @@ source 'https://rails-assets.org' do
 end
 
 # Ruby version
-# ruby '2.2.1'
+ruby '2.2.1'
