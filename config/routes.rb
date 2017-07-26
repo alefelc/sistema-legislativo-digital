@@ -95,4 +95,5 @@ Rails.application.routes.draw do
 
   resources :laws
   resources :day_plans
+  resources :signators
 end

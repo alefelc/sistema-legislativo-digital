@@ -1,14 +1,3 @@
-source 'https://rails-assets.org' do
-  # A beautiful replacement for Javascript's "Alert".
-  gem 'rails-assets-sweetalert'
-
-  # Ajax synchronizate datatables
-  gem 'rails-assets-datatables'
-
-  # Open source JavaScript jQuery plugin for a full-sized, drag & drop event calendar.
-  gem 'rails-assets-fullcalendar'
-end
-
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -41,10 +30,6 @@ gem 'jquery-rails', '4.0.4'
 # Parse, validate, manipulate, and display dates in JavaScript.
 gem 'momentjs-rails'
 
-# Datetime and Daterange pickers
-gem 'bootstrap-daterangepicker-rails'
-gem 'bootstrap3-datetimepicker-rails'
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
@@ -64,11 +49,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
 gem 'capistrano3-unicorn'
-# gem 'capistrano', '~> 3.1'
-# gem 'capistrano-bundler', '~> 1.1.2'
-# gem 'capistrano-rvm', '~> 0.1.1'
-# gem 'capistrano-rails-console', '~> 1.0', '>= 1.0.2'
-# gem 'capistrano-rails', '~> 1.1', group: :development
 
 # Activeadmin
 gem 'activeadmin', github: 'activeadmin'
@@ -91,35 +71,22 @@ gem 'font-awesome-sass', '~> 4.7.0'
 # A sophisticated paginator for Ruby webapps
 gem 'kaminari'
 
-# Bootstrap Multiselect v0.9.13
-gem 'bootstrap-multiselect-rails'
-
-# Select2 for rails asset pipeline
-gem 'select2-rails'
-
 # Easy file attachment management for ActiveRecord.
 gem 'paperclip'
 
 # Dynamic nested forms.
 gem 'cocoon'
 
-# jQuery File Upload integrated for Rails.
-gem "jquery-fileupload-rails"
-
 # Track changes to your models' data. Good for auditing or versioning.
 gem 'paper_trail'
-
-# icheck packaged for Rails asset pipeline.
-gem 'icheck-rails'
 
 # Minimal authorization through OO design and pure Ruby classes
 gem 'pundit'
 
-# A plugin to enable automatic height for textarea elements.
-gem 'autosize-rails'
-
 # Fast, Nimble PDF Writer for Ruby
 gem 'prawn'
+
+# Prawn table support
 gem 'prawn-table'
 
 group :development do
@@ -161,6 +128,36 @@ group :production do
 
  # heroku settings
  # gem 'rails_12factor'
+end
+
+########################################
+## Replace theses gem and rails-assets.org with webpack or bower.
+# Datetime and Daterange pickers
+gem 'bootstrap-daterangepicker-rails'
+gem 'bootstrap3-datetimepicker-rails'
+
+# Bootstrap Multiselect v0.9.9
+gem 'bootstrap-multiselect-rails'
+
+# Select2 for rails asset pipeline
+gem 'select2-rails'
+
+# jQuery File Upload integrated for Rails.
+gem "jquery-fileupload-rails"
+
+# icheck packaged for Rails asset pipeline.
+gem 'icheck-rails'
+########################################
+
+source 'https://rails-assets.org' do
+  # A beautiful replacement for Javascript's "Alert".
+  gem 'rails-assets-sweetalert'
+
+  # Ajax synchronizate datatables
+  gem 'rails-assets-datatables'
+
+  # Open source JavaScript jQuery plugin for a full-sized, drag & drop event calendar.
+  gem 'rails-assets-fullcalendar'
 end
 
 # Ruby version

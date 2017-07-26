@@ -207,7 +207,8 @@ class ModalInitiator {
     $('.official_distribution, .particular_pyshic, .particular_legal').hide(param);
     $('.official_distribution_new, .municipal_office_new').hide(param);
     $('.particular_pyshic_new, .particular_legal_new').hide(param);
-    $('.signators-table').hide(param);
+    $('.signators-table, .signator-search').hide(param);
+    $('.signatories-actions, .confirm-signatory, .signator-form').hide(param);
   }
 
   // Hide modal footer
@@ -487,18 +488,99 @@ class ProcedureIndex {
 
 class CreateSignator {
   constructor() {
-    this.button = 'button.signator-btn';
-    this.signatorTab = '.nav.nav-pills a[href="#sign_people"]';
+    this.button = 'button.add-signators';
+    this.el = '.initiators-modal';
+    this.signators = [];
+
     this.addClickEvent();
+    this.continueClickEvent();
+    this.createClickEvent();
+    this.readyClickEvent();
   }
 
   addClickEvent() {
-    
+    let that = this;
+    $(this.el).on('click', this.button, function() {
+      let callback = function() { that.listenSearch(); };
+      that.toggleSignators(callback);
+    });
   }
 
-  submit() {
-    // Some content goes here!!!
-    // Add signator to signators-table...
+  toggleSignators(callback) {
+    // $(this.el).find('.modal-footer').toggle('slow');
+    $('.signator-search').toggle('slow', callback);
+    $('.main-footer-actions').toggle('slow');
+    $('.signatories-actions').toggle('slow');
+  }
+
+  continueClickEvent() {
+    $(this.el).on('click', '.signatories-actions', function() {
+      $('.main-footer-actions').toggle('slow');
+      $('.signatories-actions').toggle('slow');
+      $('.signator-search').toggle('slow');
+    });
+  }
+
+  createClickEvent() {
+  let that = this;
+    $(this.el).on('click', '.confirm-signatory', function() {
+      let params = {};
+      $.each($('.signator-form input').serializeArray(), function() {
+        params[this.name] = this.value;
+      });
+      params.initiator_type = $('.radio-group input[type="radio"]:checked').val();
+      that.submit(params, function() {
+        $('.confirm-signatory').toggle('slow');
+        $('.signatories-actions').toggle('slow');
+        $('.signator-form').toggle('slow');
+        $('.signator-search').toggle('slow');
+        $('.signator-form input').val("");
+      }, function() {
+        alert('Ah ocurrido un error! Reintente...');
+      });
+    });
+  }
+
+  readyClickEvent() {
+    $(this.el).on('click', '.create-signatory', function() {
+      $('.confirm-signatory').toggle('slow');
+      $('.signatories-actions').toggle('slow');
+      $('.signator-form').toggle('slow');
+      $('.signator-search').toggle('slow');
+    });
+  }
+
+  listenSearch() {
+    let config = {
+      placeholder: 'Click aquí para agregar firmantes ...',
+      language: 'es',
+      ajax: {
+        url: "<%= url_helpers.signators_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $(this.el).find('#signator_search').select2(config).on('select2:select',
+    function(e) {
+      $('#signator_search').val(null).trigger('change');
+    });
+  }
+
+  submit(params, callbackSuccess, callbackError) {
+    $.ajax({
+      url: "<%= url_helpers.signators_path %>",
+      method: 'POST',
+      data: params,
+      success: function() {
+        callbackSuccess();
+      },
+      error: function() {
+        callbackError();
+      }
+    });
   }
 }
 
@@ -523,14 +605,14 @@ class ProceduresToolbar {
 
   startRangePicker() {
     $('#procedures #reportrange').daterangepicker({
-      locale: { "format": "DD/MM/YYYY", "separator": " - ",
-        "applyLabel": "Aceptar", "cancelLabel": "Limpiar",
-        "fromLabel": "Desde", "toLabel": "Hasta",
-        "customRangeLabel": "Rango personalizado",
-        "daysOfWeek": [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
-        "monthNames": [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      locale: { format: "DD/MM/YYYY", separator: " - ",
+        applyLabel: "Aceptar", cancelLabel: "Limpiar",
+        fromLabel: "Desde", toLabel: "Hasta",
+        customRangeLabel: "Rango personalizado",
+        daysOfWeek: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
-        "firstDay": 1
+        firstDay: 1
       },
       startDate: this.start,
       endDate: this.end,
@@ -641,26 +723,10 @@ class ProcedureFilters {
 
   typeMultiselect() {
     $(this.typeId).multiselect({
-      // buttonText: (options, select) => {
-      //   if (options.length == 0) return 'Seleccione algún trámite ...';
-      //   else if (options.length > 3) return 'Mas de 3 tipos de trámites ...';
-      //   else {
-      //     let labels = [];
-      //     // options.forEach () => {
-      //     //   if ($(this).attr('label') != undefined)
-      //     //     labels.push $(this).attr('label');
-      //     //   else
-      //     //     labels.push $(this).html();
-      //     return labels.join(', ') + ''
-      //   }
-      // },
-      // onChange: (a, b, c) => {
-      //   data = $.parseJSON($('#filter-values').val())
-      //   data.types = $('#tramites_type option:selected').map((idx, elem) => {
-      //     $(elem).val().toArray().toString();
-      //     $('#filter-values').val(JSON.stringify(data));
-      //   });
-      // }
+      buttonText: (options, select) => {
+        if (options.length === 0) return 'Filtre por tipo de trámite ...';
+        else return 'Trámites filtrados, haga click para verificar';
+      }
     });
   }
 
@@ -670,8 +736,14 @@ class ProcedureFilters {
 
   clear() {
     $(this.clearBtn).on('click', () => {
-      // Clear all fields on filters partial
-      // some code here.....
+      // Clear type filter
+      $('#filter_type').multiselect('deselectAll').multiselect('refresh');
+      // Clear legislative files
+      // ...
+      // Clear administrative files
+      // ...
+
+      // Reload datatable
       this.reloadDatatable();
     });
   }
@@ -682,7 +754,7 @@ class ProcedureFilters {
   }
 }
 
-$(document).on('ready', function() {
+$(document).ready(function() {
   if ($('#procedure-new').length) {
     const signators = new CreateSignator();
     let form = new ProcedureForm();

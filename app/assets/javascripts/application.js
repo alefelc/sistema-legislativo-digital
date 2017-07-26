@@ -15,9 +15,9 @@
 //= require moment/es
 //= require icheck
 //= require cocoon
-//= require jquery.autosize
 //= require jquery-fileupload
 //= require fullcalendar
+//= require procedures
 
 /* System libraries */
 //= require_tree .
