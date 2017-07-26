@@ -51,7 +51,7 @@ gem 'capistrano-rvm'
 gem 'capistrano3-unicorn'
 
 # Activeadmin
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 
 # HTML Abstraction Markup Language
 gem 'haml', '4.0.7'
