@@ -127,7 +127,7 @@ group :production do
   gem 'unicorn', '~> 4.8.2'
 
   # heroku settings
-  gem 'rails_12factor'
+  gem 'rails_12factor'
 end
 
 ########################################
@@ -161,4 +161,4 @@ source 'https://rails-assets.org' do
 end
 
 # Ruby version
-ruby '2.2.1'
+ruby '2.2.2'
