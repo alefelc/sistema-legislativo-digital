@@ -565,6 +565,8 @@ class CreateSignator {
     }
     $(this.el).find('#signator_search').select2(config).on('select2:select',
     function(e) {
+      console.log(e.params.data);
+      // Clear search box...
       $('#signator_search').val(null).trigger('change');
     });
   }
