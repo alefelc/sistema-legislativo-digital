@@ -496,6 +496,7 @@ class CreateSignator {
     this.continueClickEvent();
     this.createClickEvent();
     this.readyClickEvent();
+    this.listenRemove();
   }
 
   addClickEvent() {
@@ -565,9 +566,15 @@ class CreateSignator {
     }
     $(this.el).find('#signator_search').select2(config).on('select2:select',
     function(e) {
-      console.log(e.params.data);
       // Clear search box...
       $('#signator_search').val(null).trigger('change');
+      $('.signators-table tbody').append(`<tr> <td> ${e.params.data.text} </td> <td> <a class="btn btn-danger remove-signator"> <i class="fa fa-times"> </i> </a> </td> </tr>`);
+    });
+  }
+
+  listenRemove() {
+    $(this.el).on('click', '.remove-signator', function() {
+      $(this).parents('tr').remove();
     });
   }
 
