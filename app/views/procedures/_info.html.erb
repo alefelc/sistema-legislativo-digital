@@ -18,6 +18,13 @@
     <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 } %>
   </div>
 <% end %>
+  <div class="form-group col-md-5 common-procedure" style="margin-top: 25px">
+    <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
+      <div class="fa fa-user-plus"></div>
+      Cargar Iniciadores
+    <% end -%>
+  </div>
+
 <% if true #dispatch role %>
   <div class="dispatch-procedure col-md-5">
     <label for="<%= :procedure_councilor %>">
@@ -66,10 +73,6 @@
 
 <% if policy(Procedure).initiators_create? %>
   <div class="common-procedure col-md-12">
-    <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
-      <div class="fa fa-user-plus"></div>
-      Cargar Iniciadores
-    <% end -%>
     <table class="initiators-table table table-bordered">
       <thead>
         <tr>

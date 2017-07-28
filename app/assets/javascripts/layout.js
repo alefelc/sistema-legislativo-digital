@@ -714,7 +714,7 @@ $(function () {
   $current.parent('li').addClass('active');
 });
 
-$(document).on('ready', function() {
+$(document).ready(function() {
   if ($('.treeview.active').length === 0)
     $('.treeview:first').addClass('active');
 })

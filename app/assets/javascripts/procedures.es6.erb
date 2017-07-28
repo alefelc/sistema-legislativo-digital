@@ -120,6 +120,11 @@ class ModalInitiator {
     let that = this;
     $('.radio-group').on('change', '.radio input', function(ev) {
       let value = $('.radio-group input[type="radio"]:checked').val();
+      let hideSignators = ['partisan_block', 'commission', 'councilor', 'particular_pyshic'];
+      if (hideSignators.indexOf(value) != -1)
+        $('.add-signators').hide();
+      else
+        $('.add-signators').show();
       that.showForms(this);
       that.hideRadios();
       that.toggleLeftBtn();
@@ -431,9 +436,6 @@ class InitiatorsTable {
       switch (value) {
         case 'dem':
           data = { id: "1", text: "DEM", type: "government" };
-          ////// REMOVE AND IMPROVE THIS....
-          // FIX HARDCODED WAY
-          $('.signators-table tbody').append("<tr> <td> Juan Manuel LLamosas (Intendente) </td> <td> </td> </tr>");
           break;
         case 'legislative_secretary':
           data = { id: "1", text: "Secretaria legislativa", type: "legislative_secretary" }
@@ -499,11 +501,20 @@ class CreateSignator {
     this.listenRemove();
   }
 
+  defaultRows() {
+    switch($('.radio-group input[type="radio"]:checked').val()) {
+      case 'dem':
+        $('.signators-table tbody').append("<tr> <td> Juan Manuel LLamosas (Intendente) </td> <td> <a class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>");
+        break;
+    }
+  }
+
   addClickEvent() {
     let that = this;
     $(this.el).on('click', this.button, function() {
       let callback = function() { that.listenSearch(); };
       that.toggleSignators(callback);
+      that.defaultRows();
     });
   }
 

@@ -9,7 +9,7 @@ class SignatorsController < ApplicationController
   def create
     signatory = ProcedureSignatory.create signator_params
 
-    render json: signatory.to_json
+    render json: signatory.to_json(methods: :text)
   end
 
   private
