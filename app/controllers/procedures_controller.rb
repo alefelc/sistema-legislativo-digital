@@ -49,37 +49,35 @@ class ProceduresController < ApplicationController
 
       ## Saving initiators
       if procedure_params[:initiator_attributes].present?
-        puts "Trygin " * 8
         procedure_params[:initiator_attributes].each do |initiator|
-        puts initiator
-        puts initiator.inspect
-          case initiator['type']
+          initiator = eval initiator
+          case initiator[:type]
           when 'dem'
-            initiator = OrganoDeGobierno.find(codigo: 'DEM')
+            initiator = OrganoDeGobierno.find_by codigo: 'DEM'
             @procedure.organo_de_gobiernos << initiator
           when 'legislative_secretary'
-            initiator = OrganoDeGobierno.find(codigo: 'SL')
+            initiator = OrganoDeGobierno.find_by codigo: 'SL'
             @procedure.organo_de_gobiernos << initiator
           when 'partisan_block'
-            initiator = Bloque.find initiator['id']
+            initiator = Bloque.find initiator[:id]
             @procedure.bloques << initiator
           when 'commission'
-            initiator = Comision.find initiator['id']
+            initiator = Comision.find initiator[:id]
             @procedure.comisions << initiator
           when 'councilor'
-            initiator = Concejal.find initiator['id']
+            initiator = Concejal.find initiator[:id]
             @procedure.persons << initiator
           when 'official_distribution'
-            initiator = ReparticionOficial.find initiator['id']
+            initiator = ReparticionOficial.find initiator[:id]
             @procedure.reparticion_oficials << initiator
           when 'municipal_office'
-            initiator = MunicipalOffice.find initiator['id']
+            initiator = MunicipalOffice.find initiator[:id]
             @procedure.municipal_offices << initiator
           when 'particular_pyshic'
-            initiator = Fisica.find initiator['id']
+            initiator = Fisica.find initiator[:id]
             @procedure.persons << initiator
           when 'particular_legal'
-            initiator = Juridica.find initiator['id']
+            initiator = Juridica.find initiator[:id]
             @procedure.persons << initiator
           end
         end
