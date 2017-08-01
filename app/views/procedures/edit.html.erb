@@ -1,6 +1,10 @@
 <div class="initiators-modal"></div>
-<div id="procedure-new">
-  <h2> <%= t '.edit_procedure' %> </h2>
+<div id="procedure-new" class="<%= 'procedure-dispatch-edit' if @procedure.is_dispatch? %>">
+  <% if @procedure.is_dispatch? %>
+    <h2> Editando despacho nro <%= @procedure.id %> </h2>
+  <% else %>
+    <h2> Editando trámite nro <%= @procedure.id %> </h2>
+  <% end %>
 
   <%= form_for @procedure, multipart: true do |form| %>
     <div class="box box-primary">

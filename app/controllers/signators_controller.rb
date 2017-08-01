@@ -7,6 +7,10 @@ class SignatorsController < ApplicationController
   end
 
   def create
+    if params[:name].blank? && params[:surname].blank? && params[:position].blank? &&
+      params[:contact_info].blank?
+      return render json: { status: :ok }
+    end
     signatory = ProcedureSignatory.create signator_params
 
     render json: signatory.to_json(methods: :text)
@@ -21,8 +25,9 @@ class SignatorsController < ApplicationController
   def build_json_response
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
-      w = "surname ilike ? OR name ilike ?"
-      ProcedureSignatory.where(w, q, q).to_json only: :id, methods: :text
+      w = "(surname ilike ? OR name ilike ?) AND initiator_type = ?"
+      type = ProcedureSignatory.initiator_types[params[:initiator_type].to_sym]
+      ProcedureSignatory.where(w, q, q, type).to_json only: :id, methods: :text
     end
   end
 end

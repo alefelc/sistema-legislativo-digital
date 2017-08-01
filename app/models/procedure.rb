@@ -35,7 +35,7 @@ class Procedure < ActiveRecord::Base
 
   #== Nested attributes
   accepts_nested_attributes_for :uploads, reject_if: :all_blank
-  accepts_nested_attributes_for :administrative_files, reject_if: :all_blank
+  accepts_nested_attributes_for :administrative_files, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :procedure_states, reject_if: :all_blank
   accepts_nested_attributes_for :contingency_plan, reject_if: :all_blank
   accepts_nested_attributes_for :procedure_signatories, reject_if: :all_blank
@@ -103,6 +103,10 @@ class Procedure < ActiveRecord::Base
     type == "Despacho"
   end
 
+  def isnt_dispatch?
+    !is_dispatch?
+  end
+
   def initiator_attributes=(initiators={})
     # case initiators[:type]
     # when 'dem'
@@ -121,9 +125,5 @@ class Procedure < ActiveRecord::Base
 
   def initial_state
     self.procedure_states.create nombre: 'Iniciado', tipo: 1
-  end
-
-  def isnt_dispatch?
-    !is_dispatch?
   end
 end

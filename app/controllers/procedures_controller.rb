@@ -39,6 +39,50 @@ class ProceduresController < ApplicationController
             state.state_type = :parliamentary
           end
         end
+
+        #######################################################
+        ##### REPLACE IT
+        @procedure.update comision_ids: params[:comision_ids]
+        @procedure.update person_ids: params[:councilor_ids]
+        #######################################################
+      end
+
+      ## Saving initiators
+      if procedure_params[:initiator_attributes].present?
+        puts "Trygin " * 8
+        procedure_params[:initiator_attributes].each do |initiator|
+        puts initiator
+        puts initiator.inspect
+          case initiator['type']
+          when 'dem'
+            initiator = OrganoDeGobierno.find(codigo: 'DEM')
+            @procedure.organo_de_gobiernos << initiator
+          when 'legislative_secretary'
+            initiator = OrganoDeGobierno.find(codigo: 'SL')
+            @procedure.organo_de_gobiernos << initiator
+          when 'partisan_block'
+            initiator = Bloque.find initiator['id']
+            @procedure.bloques << initiator
+          when 'commission'
+            initiator = Comision.find initiator['id']
+            @procedure.comisions << initiator
+          when 'councilor'
+            initiator = Concejal.find initiator['id']
+            @procedure.persons << initiator
+          when 'official_distribution'
+            initiator = ReparticionOficial.find initiator['id']
+            @procedure.reparticion_oficials << initiator
+          when 'municipal_office'
+            initiator = MunicipalOffice.find initiator['id']
+            @procedure.municipal_offices << initiator
+          when 'particular_pyshic'
+            initiator = Fisica.find initiator['id']
+            @procedure.persons << initiator
+          when 'particular_legal'
+            initiator = Juridica.find initiator['id']
+            @procedure.persons << initiator
+          end
+        end
       end
 
       flash[:success] = t '.success'
@@ -61,6 +105,11 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.find params[:id]
 
     if @procedure.update procedure_params
+      #######################################################
+      ##### REPLACE IT
+      @procedure.update comision_ids: params[:comision_ids]
+      @procedure.update person_ids: params[:councilor_ids]
+      #######################################################
       flash[:success] = 'Trámite actualizado correctamente'
       redirect_to @procedure
     else
@@ -97,7 +146,7 @@ class ProceduresController < ApplicationController
       person_ids: [], comision_ids: [], contingency_plan_attributes: [:date_at, :reason, :generator, :signatory],
       procedure_states_attributes: [],
       councilors: [], legislative_file_ids: [], administrative_file_ids: [],
-      administrative_files_attributes: [:id, :number, :sheets, :letter, :year],
+      administrative_files_attributes: [:id, :number, :sheets, :letter, :year, :_destroy],
       procedure_signatory_attributes: []
   end
 

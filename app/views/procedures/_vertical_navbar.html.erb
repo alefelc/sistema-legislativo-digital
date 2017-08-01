@@ -11,7 +11,7 @@
       </a>
     </li>
   <% end %>
-  <% if policy(:administrative_file).create? %>
+  <% if policy(:administrative_file).create? && @procedure.isnt_dispatch? %>
     <li class="common-procedure">
       <a aria-expanded="false" data-toggle="tab" href="#administrative-files">
         <%= t '.administrative_files' %>

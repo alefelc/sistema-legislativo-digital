@@ -3,8 +3,8 @@
     <label for="<%= :procedure_type %>">
       <%= t('.type') %>
     </label>
-    <% if (procedure.type == "Despacho") %>
-      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 , disabled: :disabled } %>
+    <% if procedure.is_dispatch? %>
+      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', disabled: :disabled } %>
     <% else %>
       <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
     <% end %>
@@ -18,12 +18,14 @@
     <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 } %>
   </div>
 <% end %>
+<% if @procedure.isnt_dispatch? %>
   <div class="form-group col-md-5 common-procedure" style="margin-top: 25px">
     <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
       <div class="fa fa-user-plus"></div>
       Cargar Iniciadores
     <% end -%>
   </div>
+<% end %>
 
 <% if true #dispatch role %>
   <div class="dispatch-procedure col-md-5">
@@ -33,7 +35,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <%= f.select :legislative_file_ids, {}, {}, { multiple: true, class: 'input-lg form-control' } %>
+          <%= f.select :legislative_file_ids, load_legislative_files(@procedure), {}, multiple: true, class: 'input-lg form-control' %>
         </div>
       </div>
     </div>
@@ -56,10 +58,8 @@
 
   <div class="col-md-12">
     <div class="form-group">
-      <label for="<%= :procedure_comision %>">
-        <%= t('.commissions') %>
-      </label>
-      <%= select_tag :comision_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+      <label for="<%= :procedure_comision %>"> <%= t('.commissions') %> </label>
+      <%= select_tag :comision_ids, load_comisions(@procedure), { multiple: true, class: 'input-lg form-control' } %>
     </div>
   </div>
 </div>
@@ -67,11 +67,11 @@
   <div class="dispatch-procedure col-md-12">
     <div class="form-group">
       <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
-      <%= select_tag :councilor_ids, {}, { multiple: true, class: 'input-lg form-control' } %>
+      <%= select_tag :councilor_ids, load_councilors(@procedure), { multiple: true, class: 'input-lg form-control' } %>
     </div>
   </div>
 
-<% if policy(Procedure).initiators_create? %>
+<% if policy(Procedure).initiators_create? && @procedure.isnt_dispatch? %>
   <div class="common-procedure col-md-12">
     <table class="initiators-table table table-bordered">
       <thead>
@@ -90,7 +90,7 @@
     </table>
   </div>
 <% end %>
-<% if policy(Procedure).topic_create? %>
+<% if policy(Procedure).topic_create? && @procedure.isnt_dispatch? %>
   <div class="form-group common-procedure col-md-12">
     <label for="<%= :procedure_topic %>">
       <%= t('.topic') %>
@@ -106,7 +106,7 @@
     <%= f.text_field :observations, { class: 'form-control', placeholder: t('.observations_placeholder') } %>
   </div>
 <% end %>
-<% if f.object.persisted? && policy(Procedure).finalized_create? %>
+<% if f.object.persisted? && policy(Procedure).finalized_create? &&@procedure.isnt_dispatch? %>
   <div class="common-procedure form-group col-md-12" title="Si se finaliza el trámite por favor indique el motivo">
     <div class="checkbox">
       <label>

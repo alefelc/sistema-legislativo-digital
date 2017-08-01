@@ -164,7 +164,7 @@ class ModalInitiator {
 
   startSelect2(select, value) {
     let selects = ['official_distribution', 'municipal_office',
-      'particular_pyshic', 'particular_legal'];
+      'particular_pyshic', 'particular_legal', 'partisan_block'];
     let text = $(select).data('text');
 
     let options = {
@@ -435,10 +435,10 @@ class InitiatorsTable {
       let data = {};
       switch (value) {
         case 'dem':
-          data = { id: "1", text: "DEM", type: "government" };
+          data = { id: "#", text: "DEM", type: "dem" };
           break;
         case 'legislative_secretary':
-          data = { id: "1", text: "Secretaria legislativa", type: "legislative_secretary" }
+          data = { id: "#", text: "Secretaria legislativa", type: "legislative_secretary" }
           break;
         default:
           let selectedInfo = $(`#initiator_form_${value}_id`).select2('data')[0];
@@ -571,7 +571,17 @@ class CreateSignator {
         dataType: 'json',
         delay: 250,
         cache: true,
-        data: (params) => { return { select_q: params.term || '%%' }; },
+        data: (params) => {
+          params.select_q = params.term || '%%';
+          let typeVal = $('.radio-group input[type="radio"]:checked').val();
+          params.initiator_type = typeVal;
+          return params;
+        },
+        // data: (params) => {
+        //   return {
+        //     select_q: params.term || '%%'
+        //   };
+        // },
         processResults: (data, params) => { return { results: data } }
       }
     }
@@ -799,5 +809,9 @@ $(document).ready(function() {
     let table = new ProcedureIndex();
     let toolbar = new ProceduresToolbar();
     let filters = new ProcedureFilters();
+  }
+
+  if ($('.procedure-edit').length) {
+    $('.procedure-dispatch-edit').show()
   }
 });

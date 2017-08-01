@@ -11,4 +11,8 @@ class Bloque < ActiveRecord::Base
   def type
     'Bloque'
   end
+
+  def text
+    denominacion
+  end
 end

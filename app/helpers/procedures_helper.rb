@@ -9,9 +9,11 @@ module ProceduresHelper
 
   def procedure_types(procedure=nil)
     types = []
-    if procedure.present?
+    if procedure.present? && procedure != "Despacho"
       types += %w(Condonacion Peticion)
       types += %w(Proyecto ComunicacionOficial OtrosIngresos)
+    elsif procedure.present? && procedure == "Despacho"
+      types += %w(Despacho)
     else
       types += %w(Despacho Condonacion Peticion)
       types += %w(Proyecto ComunicacionOficial OtrosIngresos)
@@ -79,5 +81,20 @@ module ProceduresHelper
       ['Derivado', 'derivado'],
       ['Finalizado', 'finalizado']
     ]
+  end
+
+  def load_legislative_files(proc)
+    options = proc.legislative_files.map { |lf| [lf.text, lf.id] }
+    options_for_select options, proc.legislative_file_ids
+  end
+
+  def load_comisions(proc)
+    options = proc.comisions.map { |c| [c.text, c.id] }
+    options_for_select options , proc.comision_ids
+  end
+
+  def load_councilors(proc)
+    options = proc.persons.map { |c| [c.text, c.id] }
+    options_for_select options, proc.person_ids
   end
 end

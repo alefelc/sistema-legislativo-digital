@@ -55,6 +55,9 @@ class InitiatorsController < ApplicationController
       when 'commissions'
         w = "denominacion ilike ?"
         Periodo.last.comisions.where(w, q).to_json only: :id, methods: :text
+      when 'partisan_block'
+        w = "denominacion ilike ?"
+        Periodo.last.bloques.where(w, q).to_json only: :id, methods: :text
       end
     else
       #InitiatorsDatatable.new(view_context)

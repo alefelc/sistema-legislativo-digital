@@ -30,6 +30,9 @@
             - if @procedure.type != 'Despacho'
               %dt Asunto
               %dd= @procedure.topic
+            - if @procedure.is_dispatch?
+              %dt Fecha del despacho
+              %dd= "#{@procedure.day || '--'} / #{@procedure.month || '--'} / #{@procedure.year || '--'}"
             %dt Observaciones
             %dd= @procedure.observations
             %dt Ingreso al sistema
@@ -39,19 +42,20 @@
         .panel-heading
           %h3.panel-title Expedientes asociados
         .panel-body
-          .col-md-6
-            .box.box-solid
-              .box-header.with-border
-                %i.fa.fa-book
-                %h3.box-title Expedientes legislativos
-              .box-body
-                %ul
-                  - if @procedure.legislative_files.empty?
-                    %li
-                      %i No existen expedientes legislativos asociados
-                  - @procedure.legislative_files.each do |p|
-                    %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
-          - if @procedure.type == "Despacho"
+          - if @procedure.is_dispatch?
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Expedientes legislativos
+                .box-body
+                  %ul
+                    - if @procedure.legislative_files.empty?
+                      %li
+                        %i No existen expedientes legislativos asociados
+                    - @procedure.legislative_files.each do |p|
+                      %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
+          - if @procedure.isnt_dispatch?
             .col-md-6
               .box.box-solid
                 .box-header.with-border
@@ -88,9 +92,17 @@
       - if @procedure.type == "Despacho"
         .panel.panel-default
           .panel-heading
-            %h3.panel-title Comisiones y Concejales firmantes del despacho
+            %h3.panel-title Comisiones
           .panel-body
-            = @procedure.get_iniciadores
+            - @procedure.comisions.each do |c|
+              %p= c.denominacion
+
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Concejales firmantes del despacho
+          .panel-body
+            - @procedure.persons.each do |p|
+              %p= p.full_name
       - else
         .panel.panel-default
           .panel-heading
