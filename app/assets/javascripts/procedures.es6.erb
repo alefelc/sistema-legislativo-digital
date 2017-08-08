@@ -487,7 +487,6 @@ class ProcedureIndex {
   }
 }
 
-
 class CreateSignator {
   constructor() {
     this.button = 'button.add-signators';
@@ -499,6 +498,22 @@ class CreateSignator {
     this.createClickEvent();
     this.readyClickEvent();
     this.listenRemove();
+    this.listenSubmit();
+  }
+
+  listenSubmit() {
+    let signators = this.signators;
+    $('.initiators-modal').on('click', '.btn-primary:submit', function() {
+      console.log('event fired...', signators.length);
+      signators.forEach(function(elem, _) {
+        // Insert data in the form
+        console.log('inserting into the form...', elem);
+
+        let $hidden = $(`<input name="procedure[signator_attributes][]"
+          type="hidden">`).val(JSON.stringify(elem));
+        $('.procedure-form').append($hidden);
+      });
+    });
   }
 
   defaultRows() {
@@ -563,6 +578,7 @@ class CreateSignator {
   }
 
   listenSearch() {
+    let that = this;
     let config = {
       placeholder: 'Click aquí para agregar firmantes ...',
       language: 'es',
@@ -590,7 +606,16 @@ class CreateSignator {
       // Clear search box...
       $('#signator_search').val(null).trigger('change');
       $('.signators-table tbody').append(`<tr> <td> ${e.params.data.text} </td> <td> <a class="btn btn-danger remove-signator"> <i class="fa fa-times"> </i> </a> </td> </tr>`);
+      let typeVal = $('.radio-group input[type="radio"]:checked').val();
+      that.saveSignator(e.params.data, typeVal);
     });
+  }
+
+  saveSignator(sign, type) {
+    sign.sign_type = type;
+    this.signators.push(sign);
+    console.log('insertar signators debajo de ');
+    console.dir(sign);
   }
 
   listenRemove() {

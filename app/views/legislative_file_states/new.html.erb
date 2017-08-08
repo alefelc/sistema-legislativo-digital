@@ -37,6 +37,10 @@
               <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
               <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
             </div>
+            <div class="form-group col-md-6">
+              <%= label_tag :session_law, 'Norma asociada' %>
+              <%= select_tag :session_law, {}, {}, class: 'input-lg form-control' %>
+            </div>
             <div class="form-group col-md-6" style="margin-top: 25px;">
               <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
             </div>

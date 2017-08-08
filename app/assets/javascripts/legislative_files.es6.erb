@@ -135,7 +135,8 @@ class AutoLoadProcedure {
 		let id = params.get('proc_id');
 		let text = `#${params.get('proc_id')}`;
 
-		$(this.select).append(`<option value="${id}">${text}</option>`);
+		if (id && text)
+			$(this.select).append(`<option value="${id}">${text}</option>`);
 
 		$.ajax({
 		  url: '/procedures/'+id,

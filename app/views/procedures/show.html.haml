@@ -104,11 +104,17 @@
             - @procedure.persons.each do |p|
               %p= p.full_name
       - else
-        .panel.panel-default
+        .panel.panel-default.col-xs-6
           .panel-heading
             %h3.panel-title Iniciadores
           .panel-body
             = @procedure.get_iniciadores
+        .panel.panel-default.col-xs-6
+          .panel-heading
+            %h3.panel-title Firmantes
+          .panel-body
+            - @procedure.procedure_signatories.each do |signatory|
+              %p= signatory.text
 
       -# .panel.panel-default
       -#   .panel-heading

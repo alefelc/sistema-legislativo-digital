@@ -1,6 +1,7 @@
 class ProcedureSignatory < ActiveRecord::Base
   # == Associations
-  belongs_to :procedure
+  has_many :processes_signatories
+  has_many :procedures, through: :processes_signatories ## Trámites firmados por esta persona
 
   # == Enums
   enum initiator_type: [:dem, :legislative_secretary, :official_distribution,

@@ -17,14 +17,15 @@ class Procedure < ActiveRecord::Base
   has_many :procedure_states
   has_many :administrative_files
   has_many :uploads
-  has_many :processes_signatories,
-           foreign_key: :process_id,
-           class_name: 'ProcessesSignatory'
-  has_many :signatories,
-           through: :processes_signatories,
-           class_name: 'Person',
-           source: :person
-  has_many :procedure_signatories
+  # has_many :processes_signatories,
+  #          foreign_key: :process_id,
+  #          class_name: 'ProcessesSignatory'
+  # has_many :signatories,
+  #          through: :processes_signatories,
+  #          class_name: 'Person',
+  #          source: :person
+  has_many :processes_signatories
+  has_many :procedure_signatories, through: :processes_signatories
 
   belongs_to :contingency_plan
   has_one :legislative_file_state
@@ -38,7 +39,7 @@ class Procedure < ActiveRecord::Base
   accepts_nested_attributes_for :administrative_files, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :procedure_states, reject_if: :all_blank
   accepts_nested_attributes_for :contingency_plan, reject_if: :all_blank
-  accepts_nested_attributes_for :procedure_signatories, reject_if: :all_blank
+  # accepts_nested_attributes_for :procedure_signatories, reject_if: :all_blank
 
   #== Callbacks
   after_create :initial_state
@@ -108,6 +109,20 @@ class Procedure < ActiveRecord::Base
   end
 
   def initiator_attributes=(initiators={})
+    # case initiators[:type]
+    # when 'dem'
+    # when 'legislative_secretary'
+    # when 'partisan_block'
+    # when 'commission'
+    # when 'councilor'
+    # when 'official_distribution'
+    # when 'municipal_office'
+    # when 'particular_pyshic'
+    # when 'particular_legal'
+    # end
+  end
+
+  def signator_attributes=(signatories={})
     # case initiators[:type]
     # when 'dem'
     # when 'legislative_secretary'

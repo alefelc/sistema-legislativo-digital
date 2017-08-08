@@ -1,5 +1,6 @@
+## Intermediate table between signators and procedures
 class ProcessesSignatory < ActiveRecord::Base
   #== Associations
-  belongs_to :process, class_name: 'Procedure'
-  belongs_to :person, class_name: 'Person'
+  belongs_to :procedure
+  belongs_to :procedure_signatory
 end

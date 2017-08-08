@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726142402) do
+ActiveRecord::Schema.define(version: 20170808143423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,10 +288,12 @@ ActiveRecord::Schema.define(version: 20170726142402) do
     t.integer  "session_id"
     t.text     "sanction_specified"
     t.text     "sanction_type"
+    t.integer  "norma_id"
   end
 
   add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree
   add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
+  add_index "legislative_file_states", ["norma_id"], name: "index_legislative_file_states_on_norma_id", using: :btree
   add_index "legislative_file_states", ["procedure_id"], name: "index_legislative_file_states_on_procedure_id", using: :btree
   add_index "legislative_file_states", ["session_id"], name: "index_legislative_file_states_on_session_id", using: :btree
 
@@ -651,14 +653,14 @@ ActiveRecord::Schema.define(version: 20170726142402) do
   add_index "procedures_reparticion_oficials", ["reparticion_oficial_id"], name: "index_procedures_reparticion_oficials_on_reparticion_oficial_id", using: :btree
 
   create_table "processes_signatories", force: :cascade do |t|
-    t.integer  "process_id"
-    t.integer  "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "procedure_id"
+    t.integer  "procedure_signatory_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_index "processes_signatories", ["person_id"], name: "index_processes_signatories_on_person_id", using: :btree
-  add_index "processes_signatories", ["process_id"], name: "index_processes_signatories_on_process_id", using: :btree
+  add_index "processes_signatories", ["procedure_id"], name: "index_processes_signatories_on_procedure_id", using: :btree
+  add_index "processes_signatories", ["procedure_signatory_id"], name: "index_processes_signatories_on_procedure_signatory_id", using: :btree
 
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"

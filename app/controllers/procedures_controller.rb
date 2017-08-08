@@ -83,6 +83,18 @@ class ProceduresController < ApplicationController
         end
       end
 
+      if procedure_params[:signator_attributes].present?
+        procedure_params[:signator_attributes].each do |signatory|
+          signatory = eval signatory
+          ########################################################
+          # SI NO UTILIZO ESTO; GENERARE INFORMACION REPETIDA!
+          ########################################################
+          # @procedure.signatories = ProcedureSignatory.find(signatory[:id])
+          @procedure.procedure_signatories << ProcedureSignatory.find(signatory[:id])
+          @procedure.save
+        end
+      end
+
       flash[:success] = t '.success'
       redirect_to @procedure
     else
@@ -145,7 +157,7 @@ class ProceduresController < ApplicationController
       procedure_states_attributes: [],
       councilors: [], legislative_file_ids: [], administrative_file_ids: [],
       administrative_files_attributes: [:id, :number, :sheets, :letter, :year, :_destroy],
-      procedure_signatory_attributes: []
+      procedure_signatory_attributes: [], signator_attributes: []
   end
 
   def build_json_response
@@ -158,3 +170,4 @@ class ProceduresController < ApplicationController
     end
   end
 end
+  
