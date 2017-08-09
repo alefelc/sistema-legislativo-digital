@@ -405,9 +405,9 @@ class InitiatorsTable {
     })
   }
 
-  _tr(data) {
+  _tr(data, childNodes) {
     return `<tr class='success'>
-      <td>${data.text}</td>
+      <td data-type="${data.type}"> ${data.text} <ul> </ul> </td>
       <td> <div class="btn btn-xs btn-danger btn-remove">
         <i class="fa fa-lg fa-times"></i>
       </div></td>
@@ -502,24 +502,30 @@ class CreateSignator {
   }
 
   listenSubmit() {
-    let signators = this.signators;
+    let that = this;
     $('.initiators-modal').on('click', '.btn-primary:submit', function() {
-      console.log('event fired...', signators.length);
-      signators.forEach(function(elem, _) {
-        // Insert data in the form
-        console.log('inserting into the form...', elem);
+      setTimeout(function() {
+        that.signators.forEach(function(elem, _) {
+          // Insert data in the form
+          let $hidden = $(`<input name="procedure[signator_attributes][]"
+            type="hidden">`).val(JSON.stringify(elem));
+          $('.procedure-form').append($hidden);
 
-        let $hidden = $(`<input name="procedure[signator_attributes][]"
-          type="hidden">`).val(JSON.stringify(elem));
-        $('.procedure-form').append($hidden);
-      });
+          let text = $('<li> </li>').text(elem.text);
+          $(`.initiators-table td[data-type='${elem.sign_type}'] ul`).append(text);
+        });
+      }, 300);
     });
   }
 
   defaultRows() {
     switch($('.radio-group input[type="radio"]:checked').val()) {
       case 'dem':
+        let elem = { id: '#', sign_type: 'dem',  };
         $('.signators-table tbody').append("<tr> <td> Juan Manuel LLamosas (Intendente) </td> <td> <a class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>");
+        let $hidden = $(`<input name="procedure[signator_attributes][]"
+          type="hidden">`).val(JSON.stringify(elem));
+        $('.procedure-form').append($hidden);
         break;
     }
   }
@@ -614,8 +620,6 @@ class CreateSignator {
   saveSignator(sign, type) {
     sign.sign_type = type;
     this.signators.push(sign);
-    console.log('insertar signators debajo de ');
-    console.dir(sign);
   }
 
   listenRemove() {

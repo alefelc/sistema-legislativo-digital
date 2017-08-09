@@ -41,5 +41,8 @@ namespace :db do
       position = sign[2]
       ProcedureSignatory.create name: name, surname: surname, position: position, initiator_type: :dem
     end
+
+    # Intendente
+    ProcedureSignatory.create name: 'Juan Manuel', surname: 'LLamosas', position: 'Intendente', default: true
   end
 end

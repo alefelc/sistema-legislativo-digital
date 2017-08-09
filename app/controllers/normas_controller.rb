@@ -6,7 +6,7 @@ class NormasController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: NormaDatatable.new(view_context) }
+      format.json { render json: build_json_response }
     end
   end
 
@@ -42,4 +42,13 @@ class NormasController < ApplicationController
           "plazo_dia", "plazo_mes", "plazo_anio", "organismo_origen")
   end
 
+  def build_json_response
+    if params[:select_q].present?
+      q = "%#{params[:select_q]}%"
+      w = "nro ilike ?"
+      Norma.where(w, q).to_json(nro)
+    else
+      NormaDatatable.new(view_context)
+    end
+  end
 end

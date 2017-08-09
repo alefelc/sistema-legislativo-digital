@@ -90,7 +90,12 @@ class ProceduresController < ApplicationController
           # SI NO UTILIZO ESTO; GENERARE INFORMACION REPETIDA!
           ########################################################
           # @procedure.signatories = ProcedureSignatory.find(signatory[:id])
-          @procedure.procedure_signatories << ProcedureSignatory.find(signatory[:id])
+          @procedure.procedure_signatories << if signatory[:id] == '#'
+            ## Intendente
+            ProcedureSignatory.mayor
+          else
+            ProcedureSignatory.find(signatory[:id])
+          end
           @procedure.save
         end
       end
