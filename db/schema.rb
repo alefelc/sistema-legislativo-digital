@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808143423) do
+ActiveRecord::Schema.define(version: 20170809155036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -609,6 +609,7 @@ ActiveRecord::Schema.define(version: 20170808143423) do
     t.text    "position"
     t.integer "ranking",        default: 0
     t.integer "initiator_type"
+    t.boolean "default",        default: false
   end
 
   create_table "procedure_states", force: :cascade do |t|
