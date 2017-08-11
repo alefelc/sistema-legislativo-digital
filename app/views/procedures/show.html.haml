@@ -67,7 +67,7 @@
                       %li
                         %i No existen expedientes administrativos asociados
                     - @procedure.administrative_files.each do |p|
-                      %li= link_to p.to_s, administrative_file_path(p), class: 'btn'
+                      %li= p.to_s# link_to p.to_s, administrative_file_path(p), class: 'btn'
 
       - if @procedure.contingency_plan.present?
         .panel.panel-danger

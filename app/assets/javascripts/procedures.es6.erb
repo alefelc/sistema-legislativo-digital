@@ -533,17 +533,19 @@ class CreateSignator {
 
         // REMOVE THIS HARDCODED!!!!
         // Call ProcedureSignatory default true
-        $('.signators-table tbody').append("<tr> <td data-mayor=true> Juan Manuel LLamosas (Intendente) </td> <td> <a class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>");
-        let $hidden = $(`<input name="procedure[signator_attributes][]"
-          type="hidden">`).val(JSON.stringify(elem));
-        $('.procedure-form').append($hidden);
+        if ($('.signators-table td[data-mayor=true]').length > 0) {
+          $('.signators-table tbody').append("<tr> <td data-mayor=true> Juan Manuel LLamosas (Intendente) </td> <td> <a class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>");
+          let $hidden = $(`<input name="procedure[signator_attributes][]"
+            type="hidden">`).val(JSON.stringify(elem));
+          $('.procedure-form').append($hidden);
+        }
         break;
     }
   }
 
   addClickEvent() {
-    let that = this;
     $(this.el).on('click', this.button, function() {
+      console.log('repeating.... ??');
       let callback = function() { that.listenSearch(); };
       that.toggleSignators(callback);
       that.defaultRows();
@@ -554,7 +556,6 @@ class CreateSignator {
     // $(this.el).find('.modal-footer').toggle('slow');
     $('.signator-search').toggle('slow', callback);
     $('.main-footer-actions').toggle('slow');
-    console.log('toggling signators...');
     $('.signators-table').show('slow');
     $('.signatories-actions').toggle('slow');
   }
@@ -853,7 +854,7 @@ $(document).ready(function() {
     let filters = new ProcedureFilters();
   }
 
-  if ($('.procedure-edit').length) {
+  if ($('.procedure-dispatch-edit').length) {
     $('.dispatch-procedure').show();
   }
 });
