@@ -30,7 +30,7 @@ module DespachosHelper
     (1..31).map { |x| [x, x] }
   end
 
-  def month_options
+  def month_options(current_month=nil)
     options_for_select([
       ["Enero", 1],
       ["Febrero", 2],
@@ -44,7 +44,7 @@ module DespachosHelper
       ["Octubre", 10],
       ["Noviembre", 11],
       ["Diciembre", 12]
-    ])
+    ], current_month)
   end
 
   def year_options

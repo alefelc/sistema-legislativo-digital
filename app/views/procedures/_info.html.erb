@@ -50,7 +50,7 @@
     <%= f.select(:day, day_options(), { include_blank: 'No especificado', prompt: 'Día' }, title: 'Día', class: 'input-lg form-control') %>
   </div>
   <div class="col-md-4">
-    <%= f.select(:month, month_options(), { include_blank: 'No especificado', prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
+    <%= f.select(:month, month_options(@procedure.month), { include_blank: 'No especificado', prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
   </div>
   <div class="col-md-4">
     <%= f.select(:year, year_options(), { include_blank: 'No especificado', prompt: 'Año' }, title: 'Año', class: 'input-lg form-control') %>
