@@ -108,11 +108,19 @@
           .panel-heading
             %h3.panel-title Iniciadores y firmantes del trámite
           .panel-body
-            - @procedure.organo_de_gobiernos.each do |b|
+            - dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM")
+            - if dem.present?
               %p
-                ="#{b.denominacion}"
+                ="#{dem.denominacion}"
                 %ul
                   - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory|
+                    %li= signatory.text
+            - sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL")
+            - if sl.present?
+              %p
+                ="#{sl.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).each do |signatory|
                     %li= signatory.text
 
             - @procedure.bloques.each do |b|

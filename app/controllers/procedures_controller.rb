@@ -87,7 +87,7 @@ class ProceduresController < ApplicationController
         procedure_params[:signator_attributes].each do |signatory|
           signatory = eval signatory
           ########################################################
-          # SI NO UTILIZO ESTO; GENERARE INFORMACION REPETIDA!
+          ## SI NO UTILIZO ESTO; GENERARE INFORMACION REPETIDA! ##
           ########################################################
           # @procedure.signatories = ProcedureSignatory.find(signatory[:id])
           @procedure.procedure_signatories << if signatory[:id] == '#'
