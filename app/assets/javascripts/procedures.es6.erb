@@ -565,6 +565,8 @@ class CreateSignator {
       $('.main-footer-actions').toggle('slow');
       $('.signatories-actions').toggle('slow');
       $('.signator-search').toggle('slow');
+      // Unbind events and destroy select2
+      $('.initiators-modal #signator_search').select2('destroy').off();
     });
   }
 
