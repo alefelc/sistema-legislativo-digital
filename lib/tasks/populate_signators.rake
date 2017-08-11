@@ -43,6 +43,6 @@ namespace :db do
     end
 
     # Intendente
-    ProcedureSignatory.create name: 'Juan Manuel', surname: 'LLamosas', position: 'Intendente', default: true
+    ProcedureSignatory.create name: 'Juan Manuel', surname: 'LLamosas', position: 'Intendente', initiator_type: :dem, default: true
   end
 end

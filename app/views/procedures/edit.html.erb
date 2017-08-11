@@ -1,5 +1,5 @@
 <div class="initiators-modal"></div>
-<div id="procedure-new" class="<%= 'procedure-dispatch-edit' if @procedure.is_dispatch? %>">
+<div id="procedure-new" class="procedure-edit <%= 'procedure-dispatch-edit' if @procedure.is_dispatch? %>">
   <% if @procedure.is_dispatch? %>
     <h2> Editando despacho nro <%= @procedure.id %> </h2>
   <% else %>

@@ -104,17 +104,45 @@
             - @procedure.persons.each do |p|
               %p= p.full_name
       - else
-        .panel.panel-default.col-xs-6
+        .panel.panel-default
           .panel-heading
-            %h3.panel-title Iniciadores
+            %h3.panel-title Iniciadores y firmantes del trámite
           .panel-body
-            = @procedure.get_iniciadores
-        .panel.panel-default.col-xs-6
-          .panel-heading
-            %h3.panel-title Firmantes
-          .panel-body
-            - @procedure.procedure_signatories.each do |signatory|
-              %p= signatory.text
+            - @procedure.organo_de_gobiernos.each do |b|
+              %p
+                ="#{b.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory|
+                    %li= signatory.text
+
+            - @procedure.bloques.each do |b|
+              %p= "#{b.denominacion}"
+
+            - @procedure.comisions.each do |b|
+              %p= "#{b.denominacion}"
+
+            - @procedure.persons.each do |b|
+              %p
+                = "#{b.full_name}"
+                %ul
+                  - if b.type == "Juridica"
+                    - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory|
+                      %li= signatory.text
+
+            - @procedure.reparticion_oficials.each do |b|
+              %p
+                = "#{b.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).each do |signatory|
+                    %li= signatory.text
+
+            - @procedure.municipal_offices.each do |b|
+              %p
+                = "#{b.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory|
+                    %li= signatory.text
+
 
       -# .panel.panel-default
       -#   .panel-heading

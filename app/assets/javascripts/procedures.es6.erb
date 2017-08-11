@@ -221,7 +221,7 @@ class ModalInitiator {
     $(this.el).find('.modal-footer').toggle('slow');
     //// PLEASE REMOVE THIS!!!
     console.log('toggle footer.....');
-    $(this.el).find('.signators-table').toggle('slow');
+    $(this.el).find('.signators-table').show('slow');
   }
 
   // Hide back initiators button
@@ -521,6 +521,7 @@ class CreateSignator {
           let text = $('<li> </li>').text(elem.text);
           $(`.initiators-table td[data-type='${elem.sign_type}'] ul`).append(text);
         });
+        that.signators = [];
       }, 300);
     });
   }
@@ -553,6 +554,8 @@ class CreateSignator {
     // $(this.el).find('.modal-footer').toggle('slow');
     $('.signator-search').toggle('slow', callback);
     $('.main-footer-actions').toggle('slow');
+    console.log('toggling signators...');
+    $('.signators-table').show('slow');
     $('.signatories-actions').toggle('slow');
   }
 
@@ -735,14 +738,14 @@ class ProcedureFilters {
   }
 
   startListeners() {
-  $('#myModal').on('shown.bs.modal', () => {
-    this.typeMultiselect();
-    this.initiators();
-    this.legislative_files();
-    this.administrative_files();
-    this.clear();
-    this.submit();
-  });
+    $('#myModal').on('shown.bs.modal', () => {
+      this.typeMultiselect();
+      this.initiators();
+      this.legislative_files();
+      this.administrative_files();
+      this.clear();
+      this.submit();
+    });
   }
 
   initiators() {
@@ -851,6 +854,6 @@ $(document).ready(function() {
   }
 
   if ($('.procedure-edit').length) {
-    $('.procedure-dispatch-edit').show()
+    $('.dispatch-procedure').show();
   }
 });
