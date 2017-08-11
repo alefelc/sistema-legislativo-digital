@@ -544,8 +544,8 @@ class CreateSignator {
   }
 
   addClickEvent() {
+    let that = this;
     $(this.el).on('click', this.button, function() {
-      console.log('repeating.... ??');
       let callback = function() { that.listenSearch(); };
       that.toggleSignators(callback);
       that.defaultRows();
