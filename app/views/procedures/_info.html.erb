@@ -107,11 +107,14 @@
         <% sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL") %>
         <% if sl.present? %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden"
+            value="{'id':'#','text':'<%= sl.text %>','type':'legislative_secretary'}">
             <td>
               <%= sl.denominacion %>
               <ul>
                 <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).each do |signatory| %>
                   <li> <%= signatory.text %> </li>
+                  <input name="procedure[signator_attributes][]" type="hidden" value="{'id':'<%= signatory.id %>','text':'<%= signatory.text %>','sign_type':'legislative_secretary'}">
                 <% end %>
               </ul>
             </td>
@@ -121,6 +124,7 @@
 
         <% @procedure.bloques.each do |b| %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'partisan_block'}">
             <td> <%= b.denominacion %> </td>
             <td></td>
           </tr>
@@ -128,6 +132,7 @@
 
         <% @procedure.comisions.each do |b| %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'commission'}">
             <td> <%= b.denominacion %> </td>
             <td></td>
           </tr>
@@ -135,6 +140,7 @@
 
         <% @procedure.persons.each do |b| %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'<%= calculate_type(b) %>'}">
             <td>
               <%= b.full_name %>
               <ul>
@@ -150,6 +156,7 @@
         <% end %>
 
         <% @procedure.reparticion_oficials.each do |b| %>
+          <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type': 'official_distribution'}">
           <tr>
             <td>
               <%= b.denominacion %>
@@ -165,6 +172,7 @@
 
         <% @procedure.municipal_offices.each do |b| %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id': '<%= b.id %>','text': '<%= b.text %>','type': 'municipal_office'}">
             <td>
               <%= b.denominacion %>
               <ul>

@@ -97,4 +97,14 @@ module ProceduresHelper
     options = proc.persons.map { |c| [c.text, c.id] }
     options_for_select options, proc.person_ids
   end
+
+  def calculate_type(person)
+    if (person.type == 'Concejal')
+      'councilor'
+    elsif (person.type == 'Fisica')
+      'particular_pyshic'
+    else
+      'particular_legal'
+    end
+  end
 end
