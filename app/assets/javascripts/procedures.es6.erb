@@ -406,12 +406,14 @@ class InitiatorsTable {
     })
   }
 
-  _tr(data, childNodes) {
+  // Insert data into the form
+  _tr(data) {
     return `<tr class='success'>
       <td data-type="${data.type}"> ${data.text} <ul> </ul> </td>
       <td> <div class="btn btn-xs btn-danger btn-remove">
         <i class="fa fa-lg fa-times"></i>
       </div></td>
+      <input name="procedure[initiator_attributes][]" type="hidden" value='${JSON.stringify(data)}'>
     </tr>`
   }
 
@@ -421,11 +423,6 @@ class InitiatorsTable {
     $(this.el + ' tbody').append($new);
     $new.show('slow');
     setTimeout(() => { $new.removeClass("success") }, 4000);
-
-    // Insert data in the form
-    let $hidden = $(`<input name="procedure[initiator_attributes][]"
-      type="hidden">`).val(JSON.stringify(someData));
-    $('.procedure-form').append($hidden);
   }
 
   listenModalSubmit() {
