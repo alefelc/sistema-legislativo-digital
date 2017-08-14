@@ -125,6 +125,68 @@ class ProceduresController < ApplicationController
       @procedure.update comision_ids: params[:comision_ids]
       @procedure.update person_ids: params[:councilor_ids]
       #######################################################
+      ## Destroying initiators
+      @procedure.organo_de_gobiernos.destroy_all
+      @procedure.bloques.destroy_all
+      @procedure.comisions.destroy_all
+      @procedure.persons.destroy_all
+      @procedure.reparticion_oficials.destroy_all
+      @procedure.municipal_offices.destroy_all
+      ## Destroying signators
+      @procedure.procedure_signatories.destroy_all
+
+      if procedure_params[:initiator_attributes].present?
+        procedure_params[:initiator_attributes].each do |initiator|
+          initiator = eval initiator
+          case initiator[:type]
+          when 'dem'
+            initiator = OrganoDeGobierno.find_by codigo: 'DEM'
+            @procedure.organo_de_gobiernos << initiator
+          when 'legislative_secretary'
+            initiator = OrganoDeGobierno.find_by codigo: 'SL'
+            @procedure.organo_de_gobiernos << initiator
+          when 'partisan_block'
+            initiator = Bloque.find initiator[:id]
+            @procedure.bloques << initiator
+          when 'commission'
+            initiator = Comision.find initiator[:id]
+            @procedure.comisions << initiator
+          when 'councilor'
+            initiator = Concejal.find initiator[:id]
+            @procedure.persons << initiator
+          when 'official_distribution'
+            initiator = ReparticionOficial.find initiator[:id]
+            @procedure.reparticion_oficials << initiator
+          when 'municipal_office'
+            initiator = MunicipalOffice.find initiator[:id]
+            @procedure.municipal_offices << initiator
+          when 'particular_pyshic'
+            initiator = Fisica.find initiator[:id]
+            @procedure.persons << initiator
+          when 'particular_legal'
+            initiator = Juridica.find initiator[:id]
+            @procedure.persons << initiator
+          end
+        end
+      end
+
+      if procedure_params[:signator_attributes].present?
+        procedure_params[:signator_attributes].each do |signatory|
+          signatory = eval signatory
+          ########################################################
+          ## SI NO UTILIZO ESTO; GENERARE INFORMACION REPETIDA! ##
+          ########################################################
+          # @procedure.signatories = ProcedureSignatory.find(signatory[:id])
+          @procedure.procedure_signatories << if signatory[:id] == '#'
+            ## Intendente
+            ProcedureSignatory.mayor
+          else
+            ProcedureSignatory.find(signatory[:id])
+          end
+          @procedure.save
+        end
+      end
+
       flash[:success] = 'Trámite actualizado correctamente'
       redirect_to @procedure
     else

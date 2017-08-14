@@ -85,15 +85,22 @@
         <% dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM") %>
         <% if dem.present? %>
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden"
+            value="{'id':'#','text':'DEM','type':'dem'}">
             <td>
               <%= dem.denominacion %>
               <ul>
                 <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory| %>
                   <li> <%= signatory.text %> </li>
+                  <input name="procedure[signator_attributes][]" type="hidden" value="{'id':'<%= signatory.id %>','text':'<%= signatory.text %>','sign_type':'dem'}">
                 <% end %>
               </ul>
             </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
