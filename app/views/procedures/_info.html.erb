@@ -14,6 +14,7 @@
   <div class="form-group col-md-2">
     <label for="<%= :procedure_sheets %>">
       <%= t('.sheets') %>
+      <span class="asterisc">*</span>
     </label>
     <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 } %>
   </div>

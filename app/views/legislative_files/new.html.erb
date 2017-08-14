@@ -31,17 +31,26 @@
                 </div>
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <%= f.label :origin_procedure_id %>
+                    <%= f.label :origin_procedure_id do %>
+                      Trámite
+                      <span class="asterisc">*</span>
+                    <% end %>
                     <%= f.select :origin_procedure_id, {}, {}, class: 'form-control input-lg' %>
                   </div>
 
                   <div class="form-group col-md-2">
-                    <%= f.label :sheets, 'Fojas' %>
+                    <%= f.label :sheets do %>
+                      Fojas
+                      <span class="asterisc">*</span>
+                    <% end %>
                     <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
                   </div>
 
                   <div class="form-group col-md-4">
-                    <%= f.label :date, 'Fecha' %>
+                    <%= f.label :date do %>
+                      Fecha
+                      <span class="asterisc">*</span>
+                    <% end %>
                     <%= f.text_field :date, { class: 'input-lg form-control', type: 'date' } %>
                   </div>
 

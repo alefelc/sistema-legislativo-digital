@@ -152,6 +152,39 @@ class AutoLoadProcedure {
 }
 
 $(document).ready(function() {
+	if ($('#index-legislative-files').length) {
+    $('#index-legislative-files').on('click', '.linktoprint', function() {
+			$('#expedientes #caratula').css('display','block');
+	    $('#expedientes #caratula #numero-text').append($(this).data('nro'));
+	    $('#expedientes #caratula #iniciador-text').append($(this).data('iniciador'));
+	    $('#expedientes #caratula #asunto-text').append($(this).data('asunto'));
+	    $('#expedientes #caratula #ingreso-text').append($(this).data('anio'));
+	    $('#expedientes #caratula').print({
+	      globalStyles: true,
+	      mediaPrint: false,
+	      stylesheet: null,
+	      noPrintSelector: '.no-print',
+	      iframe: true,
+	      append: null,
+	      prepend: null,
+	      manuallyCopyFormValues: true,
+	      deferred: $.Deferred(),
+	      timeout: 1000
+	    });
+	    $('#expedientes #caratula #ingreso-text').empty();
+	    $('#expedientes #caratula #numero-text').empty();
+	    $('#expedientes #caratula #iniciador-text').empty();
+	    $('#expedientes #caratula #asunto-text').empty();
+	    $('#expedientes #caratula #ingreso-text').append('<br>');
+	    $('#expedientes #caratula #ingreso-text').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	    $('#expedientes #caratula #numero-text').append('');
+	    $('#expedientes #caratula #iniciador-text').append('&nbsp;');
+	    $('#expedientes #caratula #asunto-text').append('&nbsp;');
+	    $('#expedientes #caratula').css('display','none');
+	    return;
+    });
+	}
+
 	if ($('#legislative-file-show').length) {
 		$('input, textarea, select').prop('disabled', true);
 	}
