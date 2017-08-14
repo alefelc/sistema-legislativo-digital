@@ -108,7 +108,7 @@
         <% if sl.present? %>
           <tr>
             <input name="procedure[initiator_attributes][]" type="hidden"
-            value="{'id':'#','text':'<%= sl.text %>','type':'legislative_secretary'}">
+            value="{'id':'#','text':'Secretaría Legislativa','type':'legislative_secretary'}">
             <td>
               <%= sl.denominacion %>
               <ul>
@@ -118,7 +118,11 @@
                 <% end %>
               </ul>
             </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
@@ -126,7 +130,11 @@
           <tr>
             <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'partisan_block'}">
             <td> <%= b.denominacion %> </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
@@ -134,7 +142,11 @@
           <tr>
             <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'commission'}">
             <td> <%= b.denominacion %> </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
@@ -151,13 +163,17 @@
                 <% end %>
               </ul>
             </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
         <% @procedure.reparticion_oficials.each do |b| %>
-          <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type': 'official_distribution'}">
           <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type': 'official_distribution'}">
             <td>
               <%= b.denominacion %>
               <ul>
@@ -166,7 +182,11 @@
                 <% end %>
               </ul>
             </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
 
@@ -181,7 +201,11 @@
                 <% end %>
               </ul>
             </td>
-            <td></td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
           </tr>
         <% end %>
       </tbody>
