@@ -23,7 +23,7 @@
   <div class="form-group col-md-5 common-procedure" style="margin-top: 25px">
     <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
       <div class="fa fa-user-plus"></div>
-      Cargar Iniciadores
+      Cargar Iniciador
     <% end -%>
   </div>
 <% end %>
@@ -82,10 +82,96 @@
         </tr>
       </thead>
       <tbody>
+        <% dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM") %>
+        <% if dem.present? %>
+          <tr>
+            <td>
+              <%= dem.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
 
+        <% sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL") %>
+        <% if sl.present? %>
+          <tr>
+            <td>
+              <%= sl.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% @procedure.bloques.each do |b| %>
+          <tr>
+            <td> <%= b.denominacion %> </td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% @procedure.comisions.each do |b| %>
+          <tr>
+            <td> <%= b.denominacion %> </td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% @procedure.persons.each do |b| %>
+          <tr>
+            <td>
+              <%= b.full_name %>
+              <ul>
+                <% if b.type == "Juridica" %>
+                  <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory| %>
+                    <li> <%= signatory.text %> </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% @procedure.reparticion_oficials.each do |b| %>
+          <tr>
+            <td>
+              <%= b.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% @procedure.municipal_offices.each do |b| %>
+          <tr>
+            <td>
+              <%= b.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
       </tbody>
       <tfoot>
-        <td colspan="2" class="text-center"> <i>Aún no ha cargado iniciadores. Para cargar iniciador/es haga click en el botón "Cargar Iniciadores"</i>
+        <td colspan="2" class="text-center"> <i> Para asociar iniciadores al trámite haga click en el botón "Cargar Iniciador"</i>
         </td>
       </tfoot>
     </table>
