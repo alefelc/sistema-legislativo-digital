@@ -504,19 +504,19 @@ class CreateSignator {
     $('.initiators-modal').on('click', '.btn-primary:submit', function() {
       setTimeout(function() {
         that.signators.forEach(function(elem, _) {
-          // Insert data in the form
+          if (elem) { // Only if exists
+            // Mayor present
+            if ($('.signators-table td[data-mayor=true]').length) {
+              let text = $('<li></li>').text("LLamosas, Juan Manuel (Intendente)");
+              $(`.initiators-table td[data-type='dem'] ul`).append(text);
+            }
+            let $hidden = $(`<input name="procedure[signator_attributes][]"
+              type="hidden">`).val(JSON.stringify(elem));
+            $('.procedure-form').append($hidden);
 
-          // Mayor present
-          if ($('.signators-table td[data-mayor=true]').length) {
-            let text = $('<li></li>').text("LLamosas, Juan Manuel (Intendente)");
-            $(`.initiators-table td[data-type='dem'] ul`).append(text);
+            let text = $('<li> </li>').text(elem.text);
+            $(`.initiators-table td[data-type='${elem.sign_type}'] ul`).append(text);
           }
-          let $hidden = $(`<input name="procedure[signator_attributes][]"
-            type="hidden">`).val(JSON.stringify(elem));
-          $('.procedure-form').append($hidden);
-
-          let text = $('<li> </li>').text(elem.text);
-          $(`.initiators-table td[data-type='${elem.sign_type}'] ul`).append(text);
         });
         that.signators = [];
       }, 300);
@@ -624,7 +624,7 @@ class CreateSignator {
     function(e) {
       // Clear search box...
       $('#signator_search').val(null).trigger('change');
-      $('.signators-table tbody').append(`<tr> <td> ${e.params.data.text} </td> <td> <a class="btn btn-danger remove-signator"> <i class="fa fa-times"> </i> </a> </td> </tr>`);
+      $('.signators-table tbody').append(`<tr> <td> ${e.params.data.text} </td> <td> <a data-index="${that.signators.length}" class="btn btn-danger remove-signator"> <i class="fa fa-times"> </i> </a> </td> </tr>`);
       let typeVal = $('.radio-group input[type="radio"]:checked').val();
       that.saveSignator(e.params.data, typeVal);
     });
@@ -636,8 +636,10 @@ class CreateSignator {
   }
 
   listenRemove() {
+    var that = this;
     $(this.el).on('click', '.remove-signator', function() {
       $(this).parents('tr').remove();
+      that.signators[$(this).data("index")] = null;
     });
   }
 
