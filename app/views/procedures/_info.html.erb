@@ -158,6 +158,7 @@
               <ul>
                 <% if b.type == "Juridica" %>
                   <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory| %>
+                    <input name="procedure[signator_attributes][]" type="hidden" value="{'id': '<%= signatory.id %>', 'text':'<%= signatory.text %>', ' sign_type':'particular_legal'}">
                     <li> <%= signatory.text %> </li>
                   <% end %>
                 <% end %>
