@@ -51,8 +51,8 @@ class Procedure < ActiveRecord::Base
     result = persons.collect(&:full_name)
     result += bloques.collect(&:name)
     result += comisions.collect(&:denominacion)
-    result += organo_de_gobiernos.collect(&:name)
-    result += reparticion_oficials.collect(&:name)
+    result += organo_de_gobiernos.collect(&:denominacion)
+    result += reparticion_oficials.collect(&:denominacion)
     result += areas.collect(&:name)
     result.flatten.join("; ")
   end

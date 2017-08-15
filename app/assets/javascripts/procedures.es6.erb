@@ -506,10 +506,10 @@ class CreateSignator {
         that.signators.forEach(function(elem, _) {
           if (elem) { // Only if exists
             // Mayor present
-            if ($('.signators-table td[data-mayor=true]').length) {
-              let text = $('<li></li>').text("LLamosas, Juan Manuel (Intendente)");
-              $(`.initiators-table td[data-type='dem'] ul`).append(text);
-            }
+            // if ($('.signators-table td[data-mayor=true]').length) {
+            //   let text = $('<li></li>').text("LLamosas, Juan Manuel (Intendente)");
+            //   $(`.initiators-table td[data-type='dem'] ul`).append(text);
+            // }
             let $hidden = $(`<input name="procedure[signator_attributes][]"
               type="hidden">`).val(JSON.stringify(elem));
             $('.procedure-form').append($hidden);
@@ -526,15 +526,15 @@ class CreateSignator {
   defaultRows() {
     switch($('.radio-group input[type="radio"]:checked').val()) {
       case 'dem':
-        let elem = { id: '#', sign_type: 'dem',  };
-
+        let elem = { id: '#', sign_type: 'dem', text: 'Juan Manuel LLamosas (Intendente)' };
         // REMOVE THIS HARDCODED!!!!
         // Call ProcedureSignatory default true
-        if ($('.signators-table td[data-mayor=true]').length > 0) {
-          $('.signators-table tbody').append("<tr> <td data-mayor=true> Juan Manuel LLamosas (Intendente) </td> <td> <a class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>");
-          let $hidden = $(`<input name="procedure[signator_attributes][]"
-            type="hidden">`).val(JSON.stringify(elem));
-          $('.procedure-form').append($hidden);
+        if ($('.signators-table td[data-mayor=true]').length == 0) {
+          $('.signators-table tbody').append(`<tr> <td data-mayor=true> Juan Manuel LLamosas (Intendente) </td> <td> <a data-index="${this.signators.length}" class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>`);
+          // let $hidden = $(`<input name="procedure[signator_attributes][]"
+          //   type="hidden">`).val(JSON.stringify(elem));
+          this.saveSignator(elem, 'dem');
+          // $('.procedure-form').append($hidden);
         }
         break;
     }
@@ -639,6 +639,8 @@ class CreateSignator {
     var that = this;
     $(this.el).on('click', '.remove-signator', function() {
       $(this).parents('tr').remove();
+      console.log('index...', $(this).data("index"));
+      console.log(that.signators);
       that.signators[$(this).data("index")] = null;
     });
   }

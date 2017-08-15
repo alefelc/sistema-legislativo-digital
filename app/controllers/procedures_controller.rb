@@ -205,9 +205,10 @@ class ProceduresController < ApplicationController
 
   def print
     if params[:id].present?
-      pdf = Prawn::Procedures.new()
-      send_data pdf.render, filename: 'tramites.pdf',
-                type: 'application/pdf', disposition: 'inline'
+      procedure = Procedure.find_by(id: params[:id])
+      pdf = Prawn::Procedures.new({procedure: procedure}, view_context)
+      send_data pdf.render, filename: "tramite_#{procedure.id}.pdf",
+                type: 'application/pdf', disposition: 'inline', size: 10
     else
       pdf = Prawn::Procedures.new()
       send_data pdf.render, filename: 'tramites.pdf',
