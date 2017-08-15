@@ -21,7 +21,7 @@ class LegislativeFileService
   end
 
   def update!
-    true
+    @file.update @params
   end
 
   def instance

@@ -60,7 +60,7 @@ class LegislativeFilesController < ApplicationController
 
   def loop_update_params
     params.require(:legislative_file).permit :number, :sheets, :topic,
-      :observations, :accumulated_in, :year, :date, :origin_procedure_id,
+      :observations, :accumulated_in, :year, :date,# :origin_procedure_id,
       :physically_attached, loops_attributes: []
   end
 
