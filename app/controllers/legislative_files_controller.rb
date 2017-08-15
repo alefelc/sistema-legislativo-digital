@@ -34,7 +34,7 @@ class LegislativeFilesController < ApplicationController
   end
 
   def update
-    file = LegislativeFileService.new loop_update_params
+    file = LegislativeFileService.new loop_update_params, params[:id]
 
     if file.update!
       flash[:success] = "Expediente actualizado correctamente"
@@ -60,7 +60,7 @@ class LegislativeFilesController < ApplicationController
 
   def loop_update_params
     params.require(:legislative_file).permit :number, :sheets, :topic,
-      :observations, :accumulated_in, :year, :date,# :origin_procedure_id,
+      :observations, :accumulated_in, :year, :date, :origin_procedure_id,
       :physically_attached, loops_attributes: []
   end
 

@@ -1,8 +1,12 @@
 class LegislativeFileService
-  def initialize(params)
+  def initialize(params, id=nil)
     @params = params
     puts params.inspect
-    @file = LegislativeFile.new params.slice(:sheets, :topic, :observations, :year, :date)
+    if id.present?
+      @file = LegislativeFile.find_by id: id
+    else
+      @file = LegislativeFile.new params.slice(:sheets, :topic, :observations, :year, :date)
+    end
     @loop = @file.loops.build params.slice(:sheets, :topic, :observations, :year, :date, :origin_procedure_id)
     @errors = []
   end

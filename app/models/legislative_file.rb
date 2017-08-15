@@ -53,6 +53,10 @@ class LegislativeFile < ActiveRecord::Base
     result
   end
 
+  def origin_procedure_id=(proc_id)
+    loops.find_by(number: 0).update origin_procedure_id: proc_id
+  end
+
   private
 
   # After save legislative file, is necessary to check
