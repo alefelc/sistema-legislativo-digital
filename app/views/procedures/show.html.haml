@@ -55,6 +55,7 @@
                         %i No existen expedientes legislativos asociados
                     - @procedure.legislative_files.each do |p|
                       %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
+
           - if @procedure.isnt_dispatch?
             .col-md-6
               .box.box-solid
@@ -68,6 +69,17 @@
                         %i No existen expedientes administrativos asociados
                     - @procedure.administrative_files.each do |p|
                       %li= p.to_s# link_to p.to_s, administrative_file_path(p), class: 'btn'
+
+          - if @procedure.legislative_file_originated.present?
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Trámite culminado en
+                .box-body
+                  %ul
+                    - p = @procedure.legislative_file_originated.legislative_file
+                    %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
 
       - if @procedure.contingency_plan.present?
         .panel.panel-danger
