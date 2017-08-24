@@ -23,8 +23,8 @@
               <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
             </div>
 
-            <div class="form-group col-md-6">
-              <%= f.label :session_id, 'Sesión' %>
+            <div class="session_nro form-group col-md-6">
+              <%= f.label :session_id, 'Sesión número:' %>
               <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
             </div>
 
@@ -33,23 +33,23 @@
               <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group session col-md-6">
               <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
               <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
             </div>
 
-            <div class="form-group col-md-6" style="margin-top: 25px;">
+            <div class="form-group session col-md-6" style="margin-top: 25px;">
               <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
             </div>
 
             <div class="col-md-12">
-              <div class="form-group">
+              <div class="comisions form-group">
                 <%= f.label :comision_ids, 'Comisiones asociadas' %>
                 <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' %>
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group session col-md-6">
               <%= f.label :norma_id, 'Norma asociada' %>
               <%= f.select :norma_id, {}, {}, class: 'input-lg form-control' %>
             </div>
@@ -71,7 +71,7 @@
   $('#initiator-new.modal').on('shown.bs.modal', function() {
     $('#legislative_file_state_session_id').select2({
       allowClear: true,
-      placeholder: 'Cargue una sesión',
+      placeholder: 'Busque sesión',
       language: 'es',
       ajax: {
         url: "<%= sessions_path %>",
@@ -124,7 +124,50 @@
     });
   });
 
+  $('.session').hide()
+
   $('form#new_legislative_file_state').on('ajax:success', function() {
     location.reload();
+  });
+
+  $('#legislative_file_state_state_type').change(function() {
+    switch ($(this).val()) {
+      case "parliamentary":
+        $('.session_nro').show('fast');
+        break;
+      case "administrative":
+        $('.session_nro').hide('fast');
+        break;
+      case "comision":
+        $('.session_nro').hide('fast');
+        break;
+    }
+  });
+
+  $('#legislative_file_state_name').change(function() {
+    switch ($(this).val()) {
+      case "in_comision":
+        $('#legislative_file_state_state_type').removeAttr('disabled');
+        $('.session').hide('fast');
+        $('..comisions').show('fast');
+        break;
+      case "day_plan":
+        $('#legislative_file_state_state_type').val("parliamentary").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.comisions, .session').hide('fast');
+        break;
+      case "sanctioned":
+        $('#legislative_file_state_state_type').val("parliamentary").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.session').show('fast');
+        $('.comisions').hide('fast');
+        break;
+      case "retired":
+        $('#legislative_file_state_state_type').val("administrative").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.session, .comision').hide('fast');
+        $('.comisions').hide('fast');
+        break;
+    }
   });
 </script>
