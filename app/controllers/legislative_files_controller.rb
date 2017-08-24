@@ -10,11 +10,13 @@ class LegislativeFilesController < ApplicationController
   end
 
   def new
+    authorize LegislativeFile, :create?
     @loop = LegislativeFile.new
     @loop.loops.build number: 0
   end
 
   def create
+    authorize LegislativeFile, :create?
     file = LegislativeFileService.new loop_create_params
 
     if file.save!
@@ -28,12 +30,14 @@ class LegislativeFilesController < ApplicationController
   end
 
   def edit
+    authorize LegislativeFile, :update?
     @loop = LegislativeFile.find params[:id]
     @legislative_states = @loop.legislative_file_states
     @loop.loops.build number: @loop.loops.count
   end
 
   def update
+    authorize LegislativeFile, :update?
     file = LegislativeFileService.new loop_update_params, params[:id]
 
     if file.update!

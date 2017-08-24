@@ -1,3 +1,61 @@
+<div id="expedientes">
+  <div id="caratula">
+    <br> <br> <br> <br>
+
+    <div id="column-one">
+      <p id="column-one-p-one">
+        <br><br><br>
+        <span id="title"> MOVIMIENTOS </span>
+        <br> <br> <br>
+        <span class="titles" id="ingreso">INGRESO:</span>
+        <span id="ingreso-text">
+          <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+        </span>
+        <br> <br> <br> <br>
+        <span class="titles" id="estado">ESTADO PARLAMENTARIO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="dictamen">DICTAMEN</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion">APROBACION PRIMERA LECTURA:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion-two">APROBACION DEFINITIVA</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="archivo">ARCHIVO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="rechazo">RECHAZO:</span>
+      </p>
+    </div>
+    <div id="column-two">
+      <div id="logo">
+        <img src="<%= image_url('logo-carat.png')%>" id="carat-image">
+      </div>
+      <p id="column-two-p-one">
+        CONCEJO DELIBERANTE <br> RIO CUARTO
+      </p>
+        <br> <br>
+      <p id="column-two-p-two"></p>
+        <br>
+        <span class="titles-two" id="exp-num">EXPEDIENTE Nº:</span>
+        <span id="numero-text"></span>
+        <br>
+        <br>
+        <span class="titles-two" id="iniciador">INICIADOR:</span>
+        <span id="iniciador-text"> &nbsp </span>
+        <br> <br> <br> <br> <br>
+        <span class="titles-two" id="asunto">ASUNTO:</span>
+        <span id="asunto-text"> &nbsp </span>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        <span class="titles-two" id="comision">COMISIÓN</span>
+        <span id="comision-text">&nbsp</span>
+        <br> <br> <br> <br>
+        <span class="titles-two" id="dispositivo">DISPOSITIVO LEGAL SANCIONADO:</span>
+        <span id="dispositivo-text">&nbsp</span>
+        <br> <br> <br>
+    </div>
+  </div>
+</div>
+
+
 <div class="initiators-modal"></div>
 <div id="legislative-file-show">
   <h2> Información del Expediente Legislativo </h2>
@@ -14,18 +72,21 @@
                 <div class="col-md-6">
                   Expediente Legislativo nro: <strong> <%= @loop.number %> </strong>
                 </div>
-                <div class="col-md-6">
-                  <div class="pull-right">
-                    <%= link_to edit_legislative_file_path, class: 'btn btn-lg btn-warning' do %>
-                      <i class="fa fa-lg fa-pencil-square-o"></i>
-                      Editar
-                    <% end %>
-                    <%= link_to '#', class: 'btn btn-danger btn-lg' do %>
-                      <i class="fa fa-lg fa-print"></i>
-                      Imprimir Carátula
-                    <% end %>
+                <% if policy(LegislativeFile).update? %>
+                  <div class="col-md-6">
+                    <div class="pull-right">
+                      <%= link_to edit_legislative_file_path, class: 'btn btn-lg btn-warning' do %>
+                        <i class="fa fa-lg fa-pencil-square-o"></i>
+                        Editar
+                      <% end %>
+                      <%= link_to '#', class: 'linktoprint btn btn-danger btn-lg',
+                        data: { expediente: @loop.id, nro: @loop.number, iniciador: "", asunto: @loop.topic.to_s.upcase, anio: @loop.year } do %>
+                        <i class="fa fa-lg fa-print"></i>
+                        Imprimir Carátula
+                      <% end %>
+                    </div>
                   </div>
-                </div>
+                  <% end %>
               </div>
               <div class="row">
                 <div class="form-group col-md-6">

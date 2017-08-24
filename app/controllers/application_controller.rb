@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       render json: { error: "Usted no esta autorizado para realizar esta acción" }, status: 403
     else
       flash[:error] = "Usted no esta autorizado para realizar esta acción"
-      redirect_to dashboard_index_path, format: :html, turbolinks: false
+      redirect_to root_path, format: :html, turbolinks: false
     end
   end
 
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
         render json: { error: 'Usted no ha ingresado al sistema' }, status: 403
       else
         flash[:error] = 'Usted no ha ingresado al sistema'
-        redirect_to(root_path)
+        redirect_to root_path
       end
     end
   end

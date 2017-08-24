@@ -152,8 +152,8 @@ class AutoLoadProcedure {
 }
 
 $(document).ready(function() {
-	if ($('#index-legislative-files').length) {
-    $('#index-legislative-files').on('click', '.linktoprint', function() {
+	if ($('#index-legislative-files, #legislative-file-show').length) {
+    $('#index-legislative-files, #legislative-file-show').on('click', '.linktoprint', function() {
 			$('#expedientes #caratula').css('display','block');
 	    $('#expedientes #caratula #numero-text').append($(this).data('nro'));
 	    $('#expedientes #caratula #iniciador-text').append($(this).data('iniciador'));
