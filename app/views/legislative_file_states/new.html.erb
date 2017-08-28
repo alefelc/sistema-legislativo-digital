@@ -9,10 +9,16 @@
             <span class="fa-lg" aria-hidden="true"> × </span>
           </button>
           <h3 class="modal-title text-center state-title"> Nuevo estado en el expediente </h3>
+          <h3 class="modal-title text-center law-title"> Nueva Norma </h3>
           <h3 class="modal-title text-center session-title"> Nueva Sesión </h3>
         </div>
 
         <div class="modal-body">
+          <div class="row form-law">
+            <div class="col-md-6"></div>
+            <div class="col-md-6"></div>
+          </div>
+
           <div class="row form-session">
             <div class="col-md-6">
               <div class="form-group">
@@ -67,13 +73,15 @@
 
             <div class="session_nro form-group col-md-6">
               <%= f.label :session_id, 'Sesión número:' %>
-              <div class="col-md-10">
-                <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
-              </div>
-              <div class="col-md-2">
-                <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
-                  <i class="fa fa-plus-circle fa-lg"></i>
-                <% end %>
+              <div class="row">
+                <div class="col-md-9">
+                  <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+                </div>
+                <div class="col-md-1">
+                  <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                  <% end %>
+                </div>
               </div>
             </div>
 
@@ -98,9 +106,18 @@
               </div>
             </div>
 
-            <div class="form-group session col-md-6">
+            <div class="form-group associated-laws col-md-6">
               <%= f.label :norma_id, 'Norma asociada' %>
-              <%= f.select :norma_id, {}, {}, class: 'input-lg form-control' %>
+              <div class="row">
+                <div class="col-md-9">
+                  <%= f.select :norma_id, {}, {}, class: 'input-lg form-control' %>
+                </div>
+                <div class="col-md-1">
+                  <%= button_tag type: :button, class: 'btn btn-success create-law' do %>
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -180,11 +197,16 @@
         }
       }
     });
+  });
 
-    $('#state-form-modal .create-session').on('click', function() {
-      $('.main-body, .state-title, .save-state').hide('fast');
-      $('.form-session, .session-title, .save-session').show('fast');
-    });
+  $('#state-form-modal .create-session').on('click', function() {
+    $('.main-body, .state-title, .save-state').hide('fast');
+    $('.form-session, .session-title, .save-session').show('fast');
+  });
+
+  $('#state-form-modal .create-law').on('click', function() {
+    $('.main-body, .state-title, .save-state').hide('fast');
+    $('.form-law, .law-title, .save-law').show('fast');
   });
 
   $('form#new_legislative_file_state').on('ajax:success', function() {
@@ -255,5 +277,31 @@
     });
   });
 
-  $('.session, .session-title, .save-session, .save-law, .form-session').hide();
+  $('.save-law').on('click', function() {
+    var params = {};
+    $.each($('.form-session input').serializeArray(), function() {
+      params[this.name] = this.value;
+    });
+
+    $.ajax({
+      url: '/sessions',
+      method: 'POST',
+      data: { session: params },
+      dataType: 'json',
+      delay: 250,
+      cache: true,
+      success: function() {
+        $('.save-session, .form-session').hide('fast');
+        $('.main-body, .save-state').show('fast');
+      },
+      error: function() {
+        alert('Imposible crear la sesión, reintente...');
+      }
+    });
+  });
+
+  $('.form-law, .law-title, .session-title, .save-session, .save-law, .form-session').hide();
+  setTimeout(function() {
+    $('.session').hide();
+  }, 500);
 </script>

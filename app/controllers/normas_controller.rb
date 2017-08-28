@@ -46,7 +46,7 @@ class NormasController < ApplicationController
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "nro ilike ?"
-      Norma.where(w, q).to_json(nro)
+      Norma.where(w, q).to_json(only: :id, methods: :text)
     else
       NormaDatatable.new(view_context)
     end

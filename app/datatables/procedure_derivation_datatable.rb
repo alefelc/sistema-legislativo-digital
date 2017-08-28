@@ -47,7 +47,7 @@ class ProcedureDerivationDatatable
     links = []
     links << link_to('', procedure_path(proc), class: 'btn btn-primary fa fa-eye fa-lg pull-right')
     links << if proc.procedure_derivation.present? && proc.procedure_derivation.received_at?
-      if proc.is_dispatch?
+      if proc.isnt_dispatch?
         link_to('', new_legislative_file_path(proc_id: proc.id), class: 'btn btn-info fa fa-file-text fa-lg pull-right')
       end
     end
