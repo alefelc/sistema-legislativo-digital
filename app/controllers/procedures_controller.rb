@@ -120,11 +120,6 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.find params[:id]
 
     if @procedure.update procedure_params
-      #######################################################
-      ##### REPLACE IT
-      @procedure.update comision_ids: params[:comision_ids]
-      @procedure.update person_ids: params[:councilor_ids]
-      #######################################################
       ## Destroying initiators
       @procedure.organo_de_gobiernos.destroy_all
       @procedure.bloques.destroy_all
@@ -134,6 +129,12 @@ class ProceduresController < ApplicationController
       @procedure.municipal_offices.destroy_all
       ## Destroying signators
       @procedure.procedure_signatories.destroy_all
+
+      #######################################################
+      ##### REPLACE IT
+      @procedure.update comision_ids: params[:comision_ids]
+      @procedure.update person_ids: params[:councilor_ids]
+      #######################################################
 
       if procedure_params[:initiator_attributes].present?
         procedure_params[:initiator_attributes].each do |initiator|
