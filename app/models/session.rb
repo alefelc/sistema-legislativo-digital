@@ -6,6 +6,6 @@ class Session < ActiveRecord::Base
   enum session_type: [:ordinary, :extraordinary, :intermediate_room, :special]
 
   def text
-    "Sesión nro: #{self.id}"
+    self.number
   end
 end

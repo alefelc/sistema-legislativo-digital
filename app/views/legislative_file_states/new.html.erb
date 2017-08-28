@@ -8,11 +8,53 @@
           <button aria-label="Close" class="close" data-dismiss="modal" type="button">
             <span class="fa-lg" aria-hidden="true"> × </span>
           </button>
-          <h3 class="modal-title text-center"> Nuevo estado en el expediente </h3>
+          <h3 class="modal-title text-center state-title"> Nuevo estado en el expediente </h3>
+          <h3 class="modal-title text-center session-title"> Nueva Sesión </h3>
         </div>
 
         <div class="modal-body">
-          <div class="row">
+          <div class="row form-session">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= label_tag :number, 'Nro sesión' %>
+                <%= text_field_tag :number, nil, type: :number, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :place, 'Lugar' %>
+                <%= text_field_tag :place, nil, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :session_type, 'Tipo de Sesión' %>
+                <%= select_tag :session_type, options_for_select(session_types), class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :secret, 'Secreta?' %>
+                <%= check_box_tag :secret %>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= label_tag :started_at, 'Comienza el' %>
+                <div class="input-group">
+                  <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
+                  <%= text_field_tag :started_at, nil, class: 'form-control', placeholder: 'Fecha y hora de inicio' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag :finished_at, 'Finaliza el' %>
+                <div class="input-group">
+                  <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
+                  <%= text_field_tag :finished_at, nil, class: 'form-control', placeholder: 'Fecha y hora de finalización' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag :observation, 'Observación' %>
+                <%= text_field_tag :observation, nil, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div class="row main-body">
             <div class="col-md-6 form-group">
               <%= f.label :name, 'Nombre' %>
               <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
@@ -25,7 +67,14 @@
 
             <div class="session_nro form-group col-md-6">
               <%= f.label :session_id, 'Sesión número:' %>
-              <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+              <div class="col-md-10">
+                <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+              </div>
+              <div class="col-md-2">
+                <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
+                  <i class="fa fa-plus-circle fa-lg"></i>
+                <% end %>
+              </div>
             </div>
 
             <div class="form-group col-md-6">
@@ -57,8 +106,14 @@
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-primary btn-lg pull-right" type="submit">
+          <button class="btn btn-primary btn-lg pull-right save-state" type="submit">
             <div class="fa fa-save fa-lg"></div> Guardar Estado
+          </button>
+          <button class="btn btn-warning btn-lg pull-right save-session" type="button">
+            <div class="fa fa-save fa-lg"></div> Guardar Sesión
+          </button>
+          <button class="btn btn-info btn-lg pull-right save-law" type="button">
+            <div class="fa fa-save fa-lg"></div> Guardar Norma
           </button>
         </div>
 
@@ -68,7 +123,10 @@
 <% end %>
 
 <script type="text/javascript">
+
   $('#initiator-new.modal').on('shown.bs.modal', function() {
+    window.modalInitialized = true;
+
     $('#legislative_file_state_session_id').select2({
       allowClear: true,
       placeholder: 'Busque sesión',
@@ -122,9 +180,16 @@
         }
       }
     });
-  });
 
-  $('.session').hide()
+    $('#state-form-modal .create-session').on('click', function() {
+      $('.main-body').hide('fast');
+      $('.save-state').hide('fast');
+      $('.save-session').show('fast');
+      $('.form-session').show('fast');
+      $('.state-title').hide();
+      $('.session-title').show();
+    });
+  });
 
   $('form#new_legislative_file_state').on('ajax:success', function() {
     location.reload();
@@ -170,4 +235,29 @@
         break;
     }
   });
+
+  $('.save-session').on('click', function() {
+    var params = {};
+    $.each($('.form-session input').serializeArray(), function() {
+      params[this.name] = this.value;
+    });
+
+    $.ajax({
+      url: '/sessions',
+      method: 'POST',
+      data: { session: params },
+      dataType: 'json',
+      delay: 250,
+      cache: true,
+      success: function() {
+        $('.save-session, .form-session').hide('fast');
+        $('.main-body, .save-state').show('fast');
+      },
+      error: function() {
+        alert('Imposible crear la sesión, reintente...');
+      }
+    });
+  });
+
+  $('.session, .session-title, .save-session, .save-law, .form-session').hide();
 </script>

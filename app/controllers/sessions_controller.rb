@@ -16,10 +16,16 @@ class SessionsController < ApplicationController
     @session = Session.new session_params
     if @session.save!
       flash[:success] = t '.success'
-      redirect_to session_path(@session)
+      respond_to do |format|
+        format.html { redirect_to session_path(@session) }
+        format.json { render json: @session.to_json }
+      end
     else
       flash.now[:error] = @session.errors.full_messages
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @session.to_json, status: :unprocessable_entity }
+      end
     end
   end
 
