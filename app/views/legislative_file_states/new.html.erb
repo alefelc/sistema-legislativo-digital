@@ -182,12 +182,8 @@
     });
 
     $('#state-form-modal .create-session').on('click', function() {
-      $('.main-body').hide('fast');
-      $('.save-state').hide('fast');
-      $('.save-session').show('fast');
-      $('.form-session').show('fast');
-      $('.state-title').hide();
-      $('.session-title').show();
+      $('.main-body, .state-title, .save-state').hide('fast');
+      $('.form-session, .session-title, .save-session').show('fast');
     });
   });
 
