@@ -1,11 +1,11 @@
-<div id="sessions">
+<div id="laws-index">
   <h2 class="text-center"> NORMAS </h2>
 
   <div class="box box-primary">
     <div class="box-header">
       <div class="row">
         <div class="col-md-4">
-          <%= link_to new_session_path, class: 'btn btn-primary btn-lg' do %>
+          <%= link_to new_law_path, class: 'btn btn-primary btn-lg' do %>
             <i class="fa fa-plus-circle fa-lg"></i>
             Nueva Norma
           <% end -%>
@@ -13,19 +13,17 @@
       </div>
     </div>
     <div class="box-body">
-      <table class="table table-striped" id="session-table" data-source="<%= sessions_path(format: :json) %>">
+      <table class="table table-striped" id="law-table" data-source="<%= laws_path(format: :json) %>">
         <thead>
           <tr>
-            <th> # </th>
-            <th> Número </th>
-            <th> Tipo de sesión </th>
+            <th> Número / Letra / Bis </th>
+            <th> Tipo de norma </th>
             <th> Fecha </th>
-            <th> Lugar </th>
-            <th> Secreta? </th>
-            <th> Observaciones </th>
+            <th> Sumario </th>
+            <th> Expedientes </th>
             <th> </th>
           </tr>
-        </thead>
+        </thead>zf
         <tbody></tbody>
       </table>
     </div>

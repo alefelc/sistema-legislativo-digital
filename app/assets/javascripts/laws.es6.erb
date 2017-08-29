@@ -1,0 +1,26 @@
+// Manage session table
+class Law {
+  constructor() {
+    this.table = '#laws-index table#law-table';
+    this.startDataTable();
+  }
+
+  startDataTable() {
+    $(this.table).dataTable({
+      processing: true,
+      serverSide: true,
+      lengthChange: true,
+      ajax: {
+        url: $(this.table).data('source'),
+        method: 'GET'
+      }
+    });
+  }
+}
+
+// Script started
+$(document).ready(() => {
+  if ($('#laws-index').length) {
+    const law = new Law();
+  }
+});

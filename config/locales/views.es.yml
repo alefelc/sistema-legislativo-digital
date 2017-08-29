@@ -280,6 +280,15 @@ es:
       intermediate_room: Cuarto intermedio
       special: Especial
 
+  laws:
+    types:
+      ordenanza: Ordenanza
+      decreto: Decreto
+      declaracion: Declaración
+      resolucion: Resolución
+      especial: Norma Especial
+      otra_norma: Otra Norma
+
   activeadmin:
     dashboard:
       user: Usuario

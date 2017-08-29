@@ -63,6 +63,12 @@ es:
         finished_at: Finaliza el
         observation: Observaciones
 
+      law:
+        number: Número
+        letter: Letra
+        year: Año
+        law_type: Tipo de Norma
+
       legislative_file:
         origin_procedure_id: Trámite
         legislative_file_states: Estado del Expediente

@@ -185,7 +185,7 @@
       placeholder: 'Busque normas',
       language: 'es',
       ajax: {
-        url: "<%= normas_path %>",
+        url: "<%= laws_path %>",
         dataType: 'json',
         delay: 250,
         cache: true,
@@ -231,24 +231,24 @@
     switch ($(this).val()) {
       case "in_comision":
         $('#legislative_file_state_state_type').removeAttr('disabled');
-        $('.session').hide('fast');
-        $('..comisions').show('fast');
+        $('.session, .associated-laws').hide('fast');
+        $('.comisions').show('fast');
         break;
       case "day_plan":
         $('#legislative_file_state_state_type').val("parliamentary").change();
         $('#legislative_file_state_state_type').attr('disabled', true);
-        $('.comisions, .session').hide('fast');
+        $('.comisions, .session, .associated-laws').hide('fast');
         break;
       case "sanctioned":
         $('#legislative_file_state_state_type').val("parliamentary").change();
         $('#legislative_file_state_state_type').attr('disabled', true);
-        $('.session').show('fast');
+        $('.session, .associated-laws').show('fast');
         $('.comisions').hide('fast');
         break;
       case "retired":
         $('#legislative_file_state_state_type').val("administrative").change();
         $('#legislative_file_state_state_type').attr('disabled', true);
-        $('.session, .comision').hide('fast');
+        $('.session, .comisions, .associated-laws').hide('fast');
         $('.comisions').hide('fast');
         break;
     }
@@ -268,7 +268,7 @@
       delay: 250,
       cache: true,
       success: function() {
-        $('.save-session, .form-session').hide('fast');
+        $('.save-law, .form-law').hide('fast');
         $('.main-body, .save-state').show('fast');
       },
       error: function() {
@@ -279,19 +279,19 @@
 
   $('.save-law').on('click', function() {
     var params = {};
-    $.each($('.form-session input').serializeArray(), function() {
+    $.each($('.form-law input').serializeArray(), function() {
       params[this.name] = this.value;
     });
 
     $.ajax({
-      url: '/sessions',
+      url: '/normas',
       method: 'POST',
-      data: { session: params },
+      data: { norma: params },
       dataType: 'json',
       delay: 250,
       cache: true,
       success: function() {
-        $('.save-session, .form-session').hide('fast');
+        $('.save-law, .form-law').hide('fast');
         $('.main-body, .save-state').show('fast');
       },
       error: function() {
@@ -302,6 +302,6 @@
 
   $('.form-law, .law-title, .session-title, .save-session, .save-law, .form-session').hide();
   setTimeout(function() {
-    $('.session').hide();
+    $('.session, .associated-laws').hide();
   }, 500);
 </script>
