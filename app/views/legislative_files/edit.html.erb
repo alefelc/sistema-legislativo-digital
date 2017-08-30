@@ -8,12 +8,16 @@
         <div class="row">
 
           <div class="col-xs-3">
-            <%= render 'navbar', f: f %>
+            <%= render 'navbar_edit', f: f %>
           </div>
 
           <div class="col-xs-9">
             <div class="tab-content">
-              <div id="info" class="tab-pane fade in active">
+              <div id="summary" class="tab-pane fade in active">
+                <%= render 'summary', f: f %>
+              </div>
+
+              <div id="info" class="tab-pane fade in">
                 <%= render 'info', f: f %>
               </div>
 
