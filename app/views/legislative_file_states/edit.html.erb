@@ -102,9 +102,11 @@
             <div class="col-md-12">
               <div class="comisions form-group">
                 <%= f.label :comision_ids, 'Comisiones asociadas' %>
-                <%= f.select :comision_ids, {}, multiple: true, class: 'input-lg form-control' do %>
-                  <% @legislative_file_state.comisions.each do |c| %>
-                    <option value="<%= c.id %>"> <%= c.text %> </option>
+                <%= f.select :comision_ids, multiple: true, class: 'input-lg form-control' do %>
+                  <% if @legislative_file_state.comisions.present? %>
+                    <% @legislative_file_state.comisions.each do |c| %>
+                      <option value="<%= c.id %>"> <%= c.text %> </option>
+                    <% end %>
                   <% end %>
                 <% end %>
               </div>
