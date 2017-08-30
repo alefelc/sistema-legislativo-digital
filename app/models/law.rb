@@ -4,4 +4,8 @@ class Law < ActiveRecord::Base
 
   # == Enums
   enum law_type: [:ordenanza, :decreto, :declaracion, :resolucion, :especial, :otra_norma]
+
+  def text
+    "#{number} / #{letter} / #{year}"
+  end
 end

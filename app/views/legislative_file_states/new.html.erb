@@ -15,8 +15,30 @@
 
         <div class="modal-body">
           <div class="row form-law">
-            <div class="col-md-6"></div>
-            <div class="col-md-6"></div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :number, 'Norma nro' %>
+                <%= text_field_tag :number, nil, type: :number, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :letter, 'Letra' %>
+                <%= text_field_tag :letter, nil, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :year, 'Año' %>
+                <%= text_field_tag :year, nil, type: :number, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <%= label_tag :law_type, 'Tipo de norma' %>
+                <%= select_tag :law_type, options_for_select(law_types), class: 'form-control' %>
+              </div>
+            </div>
           </div>
 
           <div class="row form-session">
@@ -106,11 +128,11 @@
               </div>
             </div>
 
-            <div class="form-group associated-laws col-md-6">
-              <%= f.label :norma_id, 'Norma asociada' %>
+            <div class="form-group associated-laws col-md-12">
+              <%= f.label :law_ids, 'Normas asociadas' %>
               <div class="row">
-                <div class="col-md-9">
-                  <%= f.select :norma_id, {}, {}, class: 'input-lg form-control' %>
+                <div class="col-md-10">
+                  <%= f.select :law_ids, {}, {}, multiple: true, class: 'input-lg form-control' %>
                 </div>
                 <div class="col-md-1">
                   <%= button_tag type: :button, class: 'btn btn-success create-law' do %>
@@ -180,10 +202,11 @@
       }
     });
 
-    $('#legislative_file_state_norma_id').select2({
+    $('#legislative_file_state_law_ids').select2({
       allowClear: true,
       placeholder: 'Busque normas',
       language: 'es',
+      multiple: true,
       ajax: {
         url: "<%= laws_path %>",
         dataType: 'json',
@@ -284,9 +307,9 @@
     });
 
     $.ajax({
-      url: '/normas',
+      url: '/laws',
       method: 'POST',
-      data: { norma: params },
+      data: { law: params },
       dataType: 'json',
       delay: 250,
       cache: true,
@@ -295,7 +318,7 @@
         $('.main-body, .save-state').show('fast');
       },
       error: function() {
-        alert('Imposible crear la sesión, reintente...');
+        alert('Imposible crear la norma, reintente...');
       }
     });
   });
