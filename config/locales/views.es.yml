@@ -289,6 +289,15 @@ es:
       especial: Norma Especial
       otra_norma: Otra Norma
 
+  legislative_files:
+    states:
+      initialized: Iniciado
+      in_comision: A Comisión
+      dispatched: Dictaminado
+      day_plan: Orden del Día
+      sanctioned: Sancionado
+      retired: Retirado
+
   activeadmin:
     dashboard:
       user: Usuario

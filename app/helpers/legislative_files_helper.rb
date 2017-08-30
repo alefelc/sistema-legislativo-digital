@@ -55,4 +55,12 @@ module LegislativeFilesHelper
       'No se encontró trámite asociado'
     end
   end
+
+  def build_specification(state)
+    text = case state.name
+    when "initialized"
+      "Trámite #{link_to state.procedure, state.procedure}"
+    end
+    return text.try(:html_safe)
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828161810) do
+ActiveRecord::Schema.define(version: 20170829141526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,14 @@ ActiveRecord::Schema.define(version: 20170828161810) do
     t.string   "letter"
     t.string   "year"
   end
+
+  create_table "laws_legislative_file_states", id: false, force: :cascade do |t|
+    t.integer "law_id"
+    t.integer "legislative_file_state_id"
+  end
+
+  add_index "laws_legislative_file_states", ["law_id"], name: "index_laws_legislative_file_states_on_law_id", using: :btree
+  add_index "laws_legislative_file_states", ["legislative_file_state_id"], name: "index_laws_legislative_file_states_on_legislative_file_state_id", using: :btree
 
   create_table "legislative_file_states", force: :cascade do |t|
     t.text     "especificacion1"

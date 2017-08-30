@@ -88,6 +88,7 @@
                   </div>
                   <% end %>
               </div>
+
               <div class="row">
                 <div class="form-group col-md-6">
                   <%= label_tag :procedures, "Trámite" %>
@@ -131,6 +132,30 @@
                 <div class="form-group col-md-12">
                   <%= label_tag :tags, 'Voces claves' %>
                   <%= text_field_tag :tags, '', class: 'form-control', placeholder: 'No hay voces claves/etiquetas' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table table-striped margin-out">
+                    <thead>
+                      <tr> <th class="text-center" colspan="3"> Trámites del expediente </th> </tr>
+                      <tr>
+                        <th> Estado </th>
+                        <th> Fecha </th>
+                        <th> Especificación </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @loop.legislative_file_states.each do |state| %>
+                        <tr>
+                          <td> <%= I18n.t("legislative_files.states.#{state.name}") %> </td>
+                          <td> <%= state.date_at %> </td>
+                          <td> <%= build_specification state %> </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

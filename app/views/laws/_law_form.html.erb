@@ -1,18 +1,22 @@
-<div class="col-md-6">
+<div class="col-md-2">
   <div class="form-group">
     <%= f.label :number %>
     <%= f.text_field :number, type: :number, class: 'form-control' %>
   </div>
+</div>
+<div class="col-md-2">
   <div class="form-group">
     <%= f.label :letter %>
     <%= f.text_field :letter, class: 'form-control' %>
   </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-2">
   <div class="form-group">
     <%= f.label :year %>
     <%= f.text_field :year, type: :number, class: 'form-control' %>
   </div>
+</div>
+<div class="col-md-6">
   <div class="form-group">
     <%= f.label :law_type %>
     <%= f.select :law_type, law_types, {}, class: 'form-control' %>

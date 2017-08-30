@@ -9,22 +9,22 @@ class LawsDatatable
   def as_json(_options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: normas.count,
-      iTotalDisplayRecords: normas.count,
+      iTotalRecords: laws.count,
+      iTotalDisplayRecords: laws.count,
       data: data
     }
   end
 
   private
   def data
-    paginated_normas.map do |norma|
+    paginated_laws.map do |law|
       [
-        "#{norma.nro} / #{norma.letra} / #{norma.bis}",
-        norma.type,
-        norma.anio,
-        norma.sumario,
+        "#{law.number} / #{law.letter} / #{law.year}",
+        law.law_type,
+        law.year,
+        '',
         'expediente nro 1',
-        actions(norma)
+        actions(law)
       ]
     end
   end
@@ -33,8 +33,8 @@ class LawsDatatable
     date.present? ? date.strftime('%d/%m/%Y - %H:%M') : ''
   end
 
-  def normas
-    Norma.where(filter).order(:id)
+  def laws
+    Law.where(filter).order(:id)
   end
 
   def sort_column(column)
@@ -49,15 +49,15 @@ class LawsDatatable
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
       query += ["(people.nombre ILIKE ?  OR people.apellido ILIKE ?)"]
-      query += ["(people.nro_doc ILIKE ?  OR people.telefono ILIKE ?)"]
+      query += ["(people.number_doc ILIKE ?  OR people.telefono ILIKE ?)"]
       query += ["(people.email ILIKE ?  OR people.domicilio ILIKE ?)"]
       binds += [search] * 6
     end
     [query.join(' OR ')] + binds
   end
 
-  def paginated_normas
-    normas.page(page).per(per_page)
+  def paginated_laws
+    laws.page(page).per(per_page)
   end
 
   def per_page
@@ -68,7 +68,7 @@ class LawsDatatable
     params[:start].to_i / per_page + 1
   end
 
-  def actions(norma)
-    link_to '', norma, class: 'btn btn-info fa fa-eye'
+  def actions(law)
+    link_to '', law, class: 'btn btn-info fa fa-eye'
   end
 end

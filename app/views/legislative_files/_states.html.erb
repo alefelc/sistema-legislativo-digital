@@ -8,9 +8,11 @@
         <tr>
           <td> <%= humanize_states state %> </td>
           <td class="pull-right">
+          <% unless state.initialized? || state.dispatched? %>
             <%= link_to '', edit_legislative_file_state_path(state),
               class: 'edit-state-btn btn btn-warning btn-lg fa fa-pencil fa-lg',
               remote: true %>
+          <% end %>
           </td>
         </tr>
       <% end %>

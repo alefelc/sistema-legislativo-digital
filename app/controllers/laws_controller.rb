@@ -19,7 +19,7 @@ class LawsController < ApplicationController
   end
 
   def edit
-
+    @law = Law.find params[:id]
   end
 
   def destroy
@@ -29,7 +29,7 @@ class LawsController < ApplicationController
   def create
     @law = Law.new law_params
     respond_to do |format|
-      if @law.save!
+      if @law.save
         flash[:success] = t '.success'
         format.html { redirect_to law_path(@law) }
         format.json { render json: @law.to_json }
@@ -42,7 +42,18 @@ class LawsController < ApplicationController
   end
 
   def update
-
+    @law = Law.find params[:id]
+    respond_to do |format|
+      if @law.update law_params
+        flash[:success] = t '.success'
+        format.html { redirect_to law_path(@law) }
+        format.json { render json: @law.to_json }
+      else
+        flash.now[:error] = @law.errors.full_messages
+        format.html { render :new }
+        format.json { render json: @law.to_json, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

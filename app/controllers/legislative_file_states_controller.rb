@@ -17,13 +17,22 @@ class LegislativeFileStatesController < ApplicationController
     if state.save
       render json: { success: :OK }
     else
-      render json: { errors: state.errors.full_messages }, status: :forbidden
+      render json: { errors: state.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    state = LegislativeFileState.find params[:id]
+    if state.update state_params
+      render json: { success: :OK }
+    else
+      render json: { errors: state.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def state_params
     params.require(:legislative_file_state).permit :legislative_file_id, :name,
       :date_at, :state_type, :session_id, :sanction_specified, :sanction_type,
-      comision_ids: []
+      comision_ids: [], law_ids: []
   end
 end
