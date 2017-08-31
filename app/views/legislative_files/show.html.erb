@@ -90,49 +90,26 @@
               </div>
 
               <div class="row">
-                <div class="form-group col-md-6">
-                  <%= label_tag :procedures, "Trámite" %>
-                  <span class="input-lg form-control" disabled>
-                    <%= origin_procedure @loop %>
-                  </span>
-                </div>
-
-                <div class="form-group col-md-2">
-                  <%= f.label :sheets, 'Fojas' %>
-                  <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: 'Fojas', type: 'number', min: '1', step: '1' } %>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <%= f.label :date, 'Fecha' %>
-                  <span class="input-lg form-control" disabled>
-                    <%= @loop.date %>
-                  </span>
-                </div>
-
-                <div class="form-group col-md-12">
-                  <%= f.label :topic, 'Sumario' %>
-                  <%= f.text_area :topic, class: 'input-lg form-control', placeholder: 'No hay sumario' %>
-                </div>
-
-                <div class="form-group col-md-12">
-                  <%= f.label :observations, 'Observaciones' %>
-                  <%= f.text_area :observations, class: 'form-control', placeholder: 'No hay observaciones' %>
-                </div>
-
-                <div class="form-group col-md-6">
-                  <%= label_tag :accumulated_in, 'Acumulado en' %>
-                  <%= text_field_tag :accumulated_in, nil, { class: 'form-control', placeholder: 'No hay expedientes', type: 'number', min: '1', step: '1' } %>
-                </div>
-
-                <div class="form-group col-md-6">
-                  <%= label_tag :physically_attached, 'Adjuntado físicamente' %>
-                  <%= text_field_tag :physically_attached, nil, { class: 'form-control', placeholder: 'No hay expedientes', type: 'number', min: '1', step: '1' } %>
-                </div>
-
-                <div class="form-group col-md-12">
-                  <%= label_tag :tags, 'Voces claves' %>
-                  <%= text_field_tag :tags, '', class: 'form-control', placeholder: 'No hay voces claves/etiquetas' %>
-                </div>
+                <dl class="dl-horizontal">
+                  <div class="col-md-3">
+                    <dt>Trámite asociado:</dt>
+                      <dd><%= origin_procedure @loop %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fojas:</dt>
+                      <dd><%= @loop.sheets %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fecha:</dt>
+                      <dd><%= @loop.date %></dd>
+                  </div>
+                  <div class="col-md-12">
+                    <dt>Sumario:</dt>
+                      <dd><%= @loop.topic %></dd>
+                    <dt>Observaciones:</dt>
+                      <dd><%= @loop.observations %></dd>
+                  </div>
+                </dl>
               </div>
 
               <div class="row">
@@ -149,9 +126,30 @@
                     <tbody>
                       <% @loop.legislative_file_states.each do |state| %>
                         <tr>
-                          <td> <%= I18n.t("legislative_files.states.#{state.name}") %> </td>
-                          <td> <%= state.date_at %> </td>
-                          <td> <%= build_specification state %> </td>
+                          <td>
+                            <div>
+                              <strong>
+                                <%= I18n.t("legislative_files.states.#{state.name}") %>
+                              </strong>
+                            </div>
+                            <%= build_small_state_procedure state %>
+                          </td>
+                          <td>
+                            <div>
+                              <strong> <%= state.date_at %> </strong>
+                            </div>
+                            <%= build_small_state_type state %>
+                          </td>
+                          <td>
+                            <% build_specification(state).each do |i| %>
+                              <div> <%= i.html_safe %></div>
+                            <% end %>
+                            <small>
+                              <% if state.initialized? %>
+                              <%= "(Fte/s: #{build_signators(state)})" %>
+                              <% end %>
+                            </small>
+                          </td>
                         </tr>
                       <% end %>
                     </tbody>

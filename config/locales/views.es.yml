@@ -121,6 +121,10 @@ es:
     edit:
       update_person: Actualizar persona
       update: Actualizar
+    types:
+      Fisica: Persona física
+      Concejal: Concejal
+      Juridica: Persona jurídica
 
   procedures:
     show:
@@ -297,6 +301,12 @@ es:
       day_plan: Orden del Día
       sanctioned: Sancionado
       retired: Retirado
+
+  legislative_file_states:
+    types:
+      parliamentary: Parlamentario
+      administrative: Administrativo
+      comision: Comisión
 
   activeadmin:
     dashboard:

@@ -1,0 +1,21 @@
+<table>
+  <tbody>
+    <tr>
+      <td width="1%"> Trámite asociado: </td>
+      <td width="48%"> <%= @loop.origin_procedure %> </td>
+      <td width="1%"> Fojas: </td>
+      <td width="48%"> <%= @loop.sheets %> </td>
+    </tr>
+    <tr>
+      <td width="1%"> Fecha: </td>
+      <td width="48%"> <%= @loop.date %> </td>
+      <td width="1%"> </td>
+      <td width="48%"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<dl class="dl-horizontal">
+  <dt>Sumario:</dt>
+    <dd><%= @loop.topic %></dd>
+</dl>

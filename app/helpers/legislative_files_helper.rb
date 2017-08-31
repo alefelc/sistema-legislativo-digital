@@ -57,10 +57,39 @@ module LegislativeFilesHelper
   end
 
   def build_specification(state)
-    text = case state.name
-    when "initialized"
-      "Trámite #{link_to state.procedure, state.procedure}"
+    results = []
+    procedure = state.legislative_file.origin_procedure
+    case state.name
+    when 'initialized'
+      procedure.organo_de_gobiernos.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, "(#{b.codigo})"}" }
+      procedure.bloques.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, '(Bloque partidario)'}" }
+      procedure.comisions.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, '(Comisión)'}" }
+      procedure.persons.each { |b| results << "#{content_tag :strong, b.full_name} #{content_tag :small, "(#{I18n.t("persons.types.#{b.type}")})"}" }
+      procedure.reparticion_oficials.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, '(Repartición oficial)'}" }
+      procedure.municipal_offices.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, '(Dependencia municipal)'}" }
+    when 'dispatched'
+      procedure.comisions.each { |b| results << "#{content_tag :strong, b.denominacion} #{content_tag :small, '(Comisión)'}" }
     end
-    return text.try(:html_safe)
+    results
+  end
+
+  def build_signators(state)
+    procedure = state.legislative_file.origin_procedure
+    procedure.procedure_signatories.join(' - ')
+  end
+
+  def build_small_state_procedure(state)
+    if state.initialized? || state.dispatched?
+      content_tag :small do
+        ## THIS IS WRONG, because it never will work for circuits!!!!
+        link_to "Trám. #{state.legislative_file.origin_procedure}", state.legislative_file.origin_procedure
+      end
+    end
+  end
+
+  def build_small_state_type(state)
+    content_tag :small do
+      I18n.t("legislative_file_states.types.#{state.state_type}")
+    end
   end
 end

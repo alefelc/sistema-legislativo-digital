@@ -11,6 +11,10 @@ class ProcedureSignatory < ActiveRecord::Base
     "#{surname}, #{name} (#{position})"
   end
 
+  def to_s
+    "#{surname}, #{name}"
+  end
+
   # Intendente
   def self.mayor
     ProcedureSignatory.find_by default: true
