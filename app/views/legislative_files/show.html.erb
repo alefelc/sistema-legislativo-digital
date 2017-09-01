@@ -141,14 +141,9 @@
                             <%= build_small_state_type state %>
                           </td>
                           <td>
-                            <% build_specification(state).each do |i| %>
-                              <div> <%= i.html_safe %></div>
+                            <% if state.initialized? %>
+                              <%= render 'initiators_signators' %>
                             <% end %>
-                            <small>
-                              <% if state.initialized? %>
-                              <%= "(Fte/s: #{build_signators(state)})" %>
-                              <% end %>
-                            </small>
                           </td>
                         </tr>
                       <% end %>
