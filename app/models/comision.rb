@@ -12,4 +12,8 @@ class Comision < ActiveRecord::Base
   def text
     "#{denominacion}"
   end
+
+  def to_s
+    self.denominacion
+  end
 end

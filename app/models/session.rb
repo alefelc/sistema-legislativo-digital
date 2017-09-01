@@ -8,4 +8,8 @@ class Session < ActiveRecord::Base
   def text
     self.number
   end
+
+  def to_s
+    "Sesión ##{self.number}"
+  end
 end

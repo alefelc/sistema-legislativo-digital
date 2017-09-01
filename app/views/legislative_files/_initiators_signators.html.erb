@@ -45,7 +45,7 @@
 
 <% @procedure.reparticion_oficials.each do |b| %>
   <div>
-    <div> <strong> <%= b.denominacion %> </strong></div>
+    <div> <strong> <%= b.denominacion %> </strong> (Repartición oficial) </div>
     <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).map do |signatory| %>
       <% "#{signatory.surname}, #{signatory.name}" %>
     <% end %>
@@ -55,7 +55,7 @@
 
 <% @procedure.municipal_offices.each do |b| %>
   <div>
-    <div><strong><%= b.denominacion %></strong></div>
+    <div><strong><%= b.denominacion %></strong> (Dependencia municipal) </div>
     <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory| %>
       <% "#{signatory.surname}, #{signatory.name}" %>
     <% end %>

@@ -143,6 +143,19 @@
                           <td>
                             <% if state.initialized? %>
                               <%= render 'initiators_signators' %>
+                            <% elsif state.dispatched? %>
+                              <% state.procedure.comisions.each do |b| %>
+                                <div> <strong> <%= b.denominacion %> </strong> </div>
+                              <% end %>
+                              <small>
+                                (Concejales: <%= state.procedure.persons.map(&:text).join(' - ') %>)
+                              </small>
+                            <% elsif state.in_comision? %>
+                              <% state.comisions.each do |c|  %>
+                                <div><strong> <%= c %> </strong></div>
+                              <% end %>
+                            <% elsif state.day_plan? %>
+                              <strong> Asunto a Tratar </strong>
                             <% end %>
                           </td>
                         </tr>
