@@ -291,8 +291,8 @@
       delay: 250,
       cache: true,
       success: function() {
-        $('.save-law, .form-law').hide('fast');
-        $('.main-body, .save-state').show('fast');
+        $('.save-session, .form-session, .session-title').hide('fast');
+        $('.main-body, .save-state, .state-title').show('fast');
       },
       error: function() {
         alert('Imposible crear la sesión, reintente...');
@@ -314,8 +314,8 @@
       delay: 250,
       cache: true,
       success: function() {
-        $('.save-law, .form-law').hide('fast');
-        $('.main-body, .save-state').show('fast');
+        $('.save-law, .form-law, .law-title').hide('fast');
+        $('.main-body, .save-state, .state-title').show('fast');
       },
       error: function() {
         alert('Imposible crear la norma, reintente...');
@@ -327,4 +327,9 @@
   setTimeout(function() {
     $('.session, .associated-laws').hide();
   }, 500);
+
+  $('#started_at, #finished_at').datetimepicker({
+    locale: 'es',
+    format:'DD/MM/YYYY HH:mm'
+  });
 </script>

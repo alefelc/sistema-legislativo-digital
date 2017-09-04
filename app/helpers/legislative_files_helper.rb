@@ -96,6 +96,10 @@ module LegislativeFilesHelper
       content_tag :small do
         link_to state.session, state.session
       end
+    elsif state.sanctioned?
+      content_tag :small do
+        link_to state.session, state.session
+      end
     end
   end
 
