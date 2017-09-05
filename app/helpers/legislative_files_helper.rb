@@ -108,4 +108,8 @@ module LegislativeFilesHelper
       I18n.t("legislative_file_states.types.#{state.state_type}")
     end
   end
+
+  def calculate_sheets(loop)
+    loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets)
+  end
 end

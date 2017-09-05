@@ -18,7 +18,7 @@ class AdministrativeFile < ActiveRecord::Base
     output = ''
     output += "Nro #{number} " if number.present?
     output += "Letra #{letter} " if letter.present?
-    output += "Fojas #{sheets} " if sheets.present?
     output += "Año #{year} " if year.present?
+    output += "(Fojas #{sheets}) " if sheets.present?
   end
 end
