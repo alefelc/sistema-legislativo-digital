@@ -12,14 +12,15 @@ People.IndexDataTable = do ->
         url: $('#people-table').data('url')
         method: 'GET'
       columns: [
-        { orderable: false  },
-        { orderable: false },
-        { orderable: false  },
         { orderable: false },
         { orderable: false },
         { orderable: false },
         { orderable: false },
-        { orderable: false, width: '6%' }
+        { orderable: false },
+        { orderable: false },
+        { orderable: false },
+        { orderable: false }
+        { orderable: false },
       ]
       initComplete: () ->
         $('#people-table').on 'ajax:success', '.person-edit', (XHR, data, status) ->

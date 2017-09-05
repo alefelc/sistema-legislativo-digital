@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+  # Get available current period to all helper views.
+  helper_method :current_period
+
+  # Track who is responsible for changes.
+  before_action :set_paper_trail_whodunnit
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception,
@@ -11,6 +18,8 @@ class ApplicationController < ActionController::Base
     session[:previous_url] = request.fullpath if !request.xhr? # don't store ajax calls
   end
 
+  rescue_from Pundit::NotAuthorizedError, with: :permission_denied
+
   private
 
   # Overwriting the sign_in redirect path method
@@ -18,9 +27,31 @@ class ApplicationController < ActionController::Base
     session[:previous_url] || root_path
   end
 
+  def permission_denied
+    if params[:format] == 'json'
+      render json: { error: "Usted no esta autorizado para realizar esta acción" }, status: 403
+    else
+      flash[:error] = "Usted no esta autorizado para realizar esta acción"
+      redirect_to root_path, format: :html, turbolinks: false
+    end
+  end
+
   protected
 
   def authenticate_user!
-    user_signed_in? ? super : redirect_to(root_path)
+    if user_signed_in?
+      super
+    else
+      if params[:format] == 'json'
+        render json: { error: 'Usted no ha ingresado al sistema' }, status: 403
+      else
+        flash[:error] = 'Usted no ha ingresado al sistema'
+        redirect_to root_path
+      end
+    end
+  end
+
+  def current_period
+    Periodo.current_period
   end
 end

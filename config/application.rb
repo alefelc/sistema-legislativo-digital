@@ -1,7 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+# es6 support
+require "action_view/railtie"
 require "sprockets/railtie"
+require 'sprockets/es6'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,7 +30,8 @@ module Sld
     # Load subfolder models
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
     # Load subfolder legacy models
-    config.autoload_paths += Dir[Rails.root.join('lib', 'tasks', '{**}')]
+    # config.autoload_paths += Dir[Rails.root.join('lib', 'tasks', '{**}')]
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     # Load subfolder controllers
     config.autoload_paths += Dir[Rails.root.join('app', 'controller', '{**}')]
 

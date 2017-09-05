@@ -1,0 +1,77 @@
+es:
+  activerecord:
+    models:
+      person: Persona
+      procedure: Trámite
+      role: Rol
+      user: Usuario
+      session: Sesión
+      legislative_file: Expediente Legislativo
+      legislative_file_state: Estado del Expediente
+
+    attributes:
+      person:
+        type: Tipo de persona
+        name: Nombre
+        surname: Apellido
+        cuit_or_dni: CUIT / DNI
+        phone: Teléfono
+        address: Dirección
+        position: Cargo / Ocupación
+
+      procedure:
+        sheets: Fojas
+        observations: Observación
+        type: Tipo
+        Proyecto: Proy.
+        ComunicacionOficial: C.O.
+        Despacho: Desp.
+        Condonacion: Cond.
+        Peticion: Pet. Part.
+        topic: Sumario
+        created_at: Creado el
+        update_at: Actualizado el
+        comisions: Comisiones
+        legislative_files: Expedientes legislativos
+        persons: Concejales
+        initiators: Iniciadores
+
+      role:
+        name: Nombre
+        activities: Roles
+
+      user:
+        person: Persona
+        email: Email
+        roles: Permisos y roles
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña
+
+      administrative_file:
+        number: Número
+        letter: Letra
+        year: Año
+        sheets: Hojas
+        topic: Sumario
+
+      session:
+        number: Número de sesión
+        place: Lugar
+        session_type: Tipo de sesión
+        secret: ¿Secreta?
+        started_at: Comienza el
+        finished_at: Finaliza el
+        observation: Observaciones
+
+      law:
+        number: Número
+        letter: Letra
+        year: Año
+        law_type: Tipo de Norma
+
+      legislative_file:
+        origin_procedure_id: Trámite
+        legislative_file_states: Estado del Expediente
+
+      legislative_files_state:
+        procedure: Trámite

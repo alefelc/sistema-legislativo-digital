@@ -1,0 +1,195 @@
+<div id="expedientes">
+  <div id="caratula">
+    <br> <br> <br> <br>
+
+    <div id="column-one">
+      <p id="column-one-p-one">
+        <br><br><br>
+        <span id="title"> MOVIMIENTOS </span>
+        <br> <br> <br>
+        <span class="titles" id="ingreso">INGRESO:</span>
+        <span id="ingreso-text">
+          <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+        </span>
+        <br> <br> <br> <br>
+        <span class="titles" id="estado">ESTADO PARLAMENTARIO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="dictamen">DICTAMEN</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion">APROBACION PRIMERA LECTURA:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion-two">APROBACION DEFINITIVA</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="archivo">ARCHIVO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="rechazo">RECHAZO:</span>
+      </p>
+    </div>
+    <div id="column-two">
+      <div id="logo">
+        <img src="<%= image_url('logo-carat.png')%>" id="carat-image">
+      </div>
+      <p id="column-two-p-one">
+        CONCEJO DELIBERANTE <br> RIO CUARTO
+      </p>
+        <br> <br>
+      <p id="column-two-p-two"></p>
+        <br>
+        <span class="titles-two" id="exp-num">EXPEDIENTE Nº:</span>
+        <span id="numero-text"></span>
+        <br>
+        <br>
+        <span class="titles-two" id="iniciador">INICIADOR:</span>
+        <span id="iniciador-text"> &nbsp </span>
+        <br> <br> <br> <br> <br>
+        <span class="titles-two" id="asunto">ASUNTO:</span>
+        <span id="asunto-text"> &nbsp </span>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        <span class="titles-two" id="comision">COMISIÓN</span>
+        <span id="comision-text">&nbsp</span>
+        <br> <br> <br> <br>
+        <span class="titles-two" id="dispositivo">DISPOSITIVO LEGAL SANCIONADO:</span>
+        <span id="dispositivo-text">&nbsp</span>
+        <br> <br> <br>
+    </div>
+  </div>
+</div>
+
+
+<div class="initiators-modal"></div>
+<div id="legislative-file-show">
+  <h2> Información del Expediente Legislativo </h2>
+  <%= form_for @loop, disabled: 'disabled' do |f| %>
+
+    <div class="box box-primary">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-xs-12">
+
+            <div id="info" class="tab-pane fade in active">
+              <div class="row box-header lead with-border">
+                <div class="col-md-6">
+                  Expediente Legislativo nro: <strong> <%= @loop.number %> </strong>
+                </div>
+                <% if policy(LegislativeFile).update? %>
+                  <div class="col-md-6">
+                    <div class="pull-right">
+                      <%= link_to edit_legislative_file_path, class: 'btn btn-lg btn-warning' do %>
+                        <i class="fa fa-lg fa-pencil-square-o"></i>
+                        Editar
+                      <% end %>
+                      <%= link_to '#', class: 'linktoprint btn btn-danger btn-lg',
+                        data: { expediente: @loop.id, nro: @loop.number, iniciador: "", asunto: @loop.topic.to_s.upcase, anio: @loop.year } do %>
+                        <i class="fa fa-lg fa-print"></i>
+                        Imprimir Carátula
+                      <% end %>
+                    </div>
+                  </div>
+                  <% end %>
+              </div>
+
+              <div class="row">
+                <dl class="dl-horizontal">
+                  <div class="col-md-3">
+                    <dt>Trámite asociado:</dt>
+                      <dd><%= origin_procedure @loop %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fojas:</dt>
+                      <dd><%= @loop.sheets %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fecha:</dt>
+                      <dd><%= @loop.date %></dd>
+                  </div>
+                  <div class="col-md-12">
+                    <dt>Sumario:</dt>
+                      <dd><%= @loop.topic %></dd>
+                    <dt>Observaciones:</dt>
+                      <dd><%= @loop.observations %></dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table table-striped margin-out">
+                    <thead>
+                      <tr> <th class="text-center" colspan="3"> Trámites del expediente </th> </tr>
+                      <tr>
+                        <th> Estado </th>
+                        <th> Fecha </th>
+                        <th> Especificación </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @loop.legislative_file_states.each do |state| %>
+                        <tr>
+                          <td>
+                            <div>
+                              <strong>
+                                <%= I18n.t("legislative_files.states.#{state.name}") %>
+                              </strong>
+                            </div>
+                            <%= build_small_state_procedure state %>
+                          </td>
+                          <td>
+                            <div>
+                              <strong> <%= state.date_at %> </strong>
+                            </div>
+                            <%= build_small_state_type state %>
+                          </td>
+                          <td>
+                            <% if state.initialized? %>
+                              <%= render 'initiators_signators' %>
+                            <% elsif state.dispatched? %>
+                              <% state.procedure.comisions.each do |b| %>
+                                <div> <strong> <%= b.denominacion %> </strong> </div>
+                              <% end %>
+                              <small>
+                                (Concejales: <%= state.procedure.persons.map(&:text).join(' - ') %>)
+                              </small>
+                            <% elsif state.in_comision? %>
+                              <% state.comisions.each do |c|  %>
+                                <div><strong> <%= c %> </strong></div>
+                              <% end %>
+                            <% elsif state.day_plan? %>
+                              <strong> Asunto a Tratar </strong>
+                            <% elsif state.sanctioned? %>
+                             <div> <strong> <%= state.sanction_specified %> </strong> </div>
+                              <small> [<%= state.sanction_type %>] </small>
+
+                              <p>
+                                <div>Sancionada la Ordenanza <%= link_to "#11111", "#11111" %></div>
+                                <div>Decreto Promulgatorio <%= link_to "#5555", "#5555" %></div>
+                                <div>Promulgado el 12/12/2017</div>
+                                <div>Comunicada al DEM el 12/12/2015</div>
+                              </p>
+                              <p>
+                                <div>Sancionada la Resolución <%= link_to "#5555", "#5555" %></div>
+                                <div>Comunicada el 12/12/2017 a</div>
+                                <div>Notificada el 12/12/2017 a</div>
+                              </p>
+                              <p>
+                                <div>Sancionada la Declaración <%= link_to "#9999", "#9999" %></div>
+                                <div>Comunicada el 12/12/2017 a</div>
+                                <div>Notificada el 12/12/2017 a</div>
+                              </p>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <% end -%>
+</div>

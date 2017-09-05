@@ -44,4 +44,7 @@ class Norma < ActiveRecord::Base
     self.destinos.where(tipo: type)
   end
 
+  def text
+    "#{self.type} #{self.nro} #{self.letra} #{self.bis}"
+  end
 end

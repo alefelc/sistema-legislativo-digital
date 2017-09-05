@@ -1,0 +1,54 @@
+<div class="row main-buttons-header">
+  <div class="col-md-3 col-xs-12 text-center">
+    <% if current_user.present? && policy(Procedure).create? %>
+      <%= link_to new_procedure_path, class: 'btn btn-primary btn-lg' do %>
+        <i class="fa fa-plus-circle fa-lg"></i> Nuevo
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-xs-12 data-derivations text-center" data-show="false">
+    <%= link_to '#', class: 'btn btn-danger btn-lg listen-derivations' do %>
+      <i class="fa fa-paper-plane-o fa-lg"></i> Derivar
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-xs-12 text-center">
+    <button type=button class='btn btn-warning btn-lg' data-toggle=modal data-target="#myModal">
+      <i class="fa fa-filter fa-lg"></i> Filtrar
+    </button>
+  </div>
+
+  <div class="col-md-3 col-xs-12 text-center">
+    <%= link_to print_procedures_path, class: 'btn btn-default btn-lg', target: :_blank do %>
+      <i class="fa fa-print fa-lg"></i> Reporte
+    <% end %>
+  </div>
+</div>
+<div class="row alternative-button-header">
+  <div class="col-md-5 col-xs-5">
+    <div class="form-inline">
+      <div class="form-group">
+        <%= label_tag :areas, 'Derivando al área' %>
+        <%= select_tag :areas, derivated_areas, class: 'input-lg form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 col-xs-4">
+    <div class="form-inline">
+      <div class="form-group">
+        <%= label_tag :derivation_types, 'Quiero ver' %>
+        <%= select_tag :derivation_types, filter_by_derivated,
+          "data-disabled": true , class: 'input-lg form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-xs-3">
+    <%= link_to '#', class: 'btn btn-success listen-return-back btn-lg pull-right',
+      title: 'Volver a Trámites Ingresados' do %>
+      <i class="fa fa-lg fa-arrow-left"></i> Volver
+    <% end %>
+  </div>
+</div>

@@ -1,19 +1,4 @@
 es:
-  layouts:
-    layout:
-      sld: Sistema Legislativo
-      normas: Normas
-      norma:
-        decreto: Decretos
-        resolucion: Resoluciones
-        declaracion: Declaraciones
-        ordenanza: Ordenanzas
-        especiales: Normas Especiales
-        otras: Otras Normas
-      expedientes: Expedientes
-      expediente:
-        legislativo: Expedientes Legislativos
-        pendientes: Trámites Pendientes
   reports:
     mesa_de_entradas:
       btnheader:
@@ -597,10 +582,13 @@ es:
   time:
     formats:
       default: '%d/%m/%Y - %H:%M'
-  devise:
-    failure:
-      user:
-        unauthenticated: 'El usuario no ha iniciado sesión.'
-    sessions:
-      user:
-        signed_in: Iniciaste sesión correctamente
+
+
+  activemodel:
+    attributes:
+      procedure_form:
+        sheets: Fojas
+        comisions: Comisiones
+        persons: Concejales
+        legislative_files: Expedientes Legislativos
+        initiators: Iniciadores

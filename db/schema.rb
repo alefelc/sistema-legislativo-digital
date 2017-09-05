@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907144144) do
+ActiveRecord::Schema.define(version: 20170829141526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,38 +36,44 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "adjunta_fisicamentes", ["adjunta_id"], name: "index_adjunta_fisicamentes_on_adjunta_id", using: :btree
   add_index "adjunta_fisicamentes", ["adjuntado_id"], name: "index_adjunta_fisicamentes_on_adjuntado_id", using: :btree
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "areas", force: :cascade do |t|
-    t.string   "denominacion"
-    t.string   "codigo"
+  create_table "administrative_files", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "sheets"
+    t.integer  "bis"
+    t.text     "topic"
+    t.integer  "file_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "sub_indice"
+    t.string   "letter"
+    t.integer  "procedure_id"
+    t.integer  "year"
   end
 
-  create_table "areas_tramites", id: false, force: :cascade do |t|
+  add_index "administrative_files", ["file_id"], name: "index_administrative_files_on_file_id", using: :btree
+  add_index "administrative_files", ["procedure_id"], name: "index_administrative_files_on_procedure_id", using: :btree
+
+  create_table "areas", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  create_table "areas_procedures", id: false, force: :cascade do |t|
     t.integer "area_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "areas_tramites", ["area_id"], name: "index_areas_tramites_on_area_id", using: :btree
-  add_index "areas_tramites", ["tramite_id"], name: "index_areas_tramites_on_tramite_id", using: :btree
+  add_index "areas_procedures", ["area_id"], name: "index_areas_procedures_on_area_id", using: :btree
+  add_index "areas_procedures", ["procedure_id"], name: "index_areas_procedures_on_procedure_id", using: :btree
+
+  create_table "areas_users", force: :cascade do |t|
+    t.integer "area_id"
+    t.integer "user_id"
+  end
+
+  add_index "areas_users", ["area_id"], name: "index_areas_users_on_area_id", using: :btree
+  add_index "areas_users", ["user_id"], name: "index_areas_users_on_user_id", using: :btree
 
   create_table "bloque_periodos", id: false, force: :cascade do |t|
     t.integer  "bloque_id"
@@ -89,13 +95,13 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "bloques_tramites", id: false, force: :cascade do |t|
+  create_table "bloques_procedures", id: false, force: :cascade do |t|
     t.integer "bloque_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "bloques_tramites", ["bloque_id"], name: "index_bloques_tramites_on_bloque_id", using: :btree
-  add_index "bloques_tramites", ["tramite_id"], name: "index_bloques_tramites_on_tramite_id", using: :btree
+  add_index "bloques_procedures", ["bloque_id"], name: "index_bloques_procedures_on_bloque_id", using: :btree
+  add_index "bloques_procedures", ["procedure_id"], name: "index_bloques_procedures_on_procedure_id", using: :btree
 
   create_table "boletin_oficials", force: :cascade do |t|
     t.integer  "nro"
@@ -131,47 +137,6 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "capitulos_normas", ["capitulo_id"], name: "index_capitulos_normas_on_capitulo_id", using: :btree
   add_index "capitulos_normas", ["norma_id"], name: "index_capitulos_normas_on_norma_id", using: :btree
 
-  create_table "circuito_ordens", force: :cascade do |t|
-    t.integer  "seccion_id"
-    t.integer  "sub_seccion_id"
-    t.string   "destino"
-    t.integer  "circuito_id"
-    t.integer  "orden_del_dia_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "circuito_ordens", ["circuito_id"], name: "index_circuito_ordens_on_circuito_id", using: :btree
-  add_index "circuito_ordens", ["orden_del_dia_id"], name: "index_circuito_ordens_on_orden_del_dia_id", using: :btree
-
-  create_table "circuitos", force: :cascade do |t|
-    t.integer  "expediente_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "nro"
-    t.string   "tema"
-    t.date     "anio"
-    t.integer  "fojas"
-  end
-
-  add_index "circuitos", ["expediente_id"], name: "index_circuitos_on_expediente_id", using: :btree
-
-  create_table "circuitos_despachos", force: :cascade do |t|
-    t.integer "circuito_id"
-    t.integer "despacho_id"
-  end
-
-  add_index "circuitos_despachos", ["circuito_id"], name: "index_circuitos_despachos_on_circuito_id", using: :btree
-  add_index "circuitos_despachos", ["despacho_id"], name: "index_circuitos_despachos_on_despacho_id", using: :btree
-
-  create_table "circuitos_normas", id: false, force: :cascade do |t|
-    t.integer "circuito_id"
-    t.integer "norma_id"
-  end
-
-  add_index "circuitos_normas", ["circuito_id"], name: "index_circuitos_normas_on_circuito_id", using: :btree
-  add_index "circuitos_normas", ["norma_id"], name: "index_circuitos_normas_on_norma_id", using: :btree
-
   create_table "clasificacions", force: :cascade do |t|
     t.string   "nombre"
     t.string   "tipo"
@@ -204,6 +169,14 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "comisions_despachos", ["comision_id"], name: "index_comisions_despachos_on_comision_id", using: :btree
   add_index "comisions_despachos", ["despacho_id"], name: "index_comisions_despachos_on_despacho_id", using: :btree
 
+  create_table "comisions_legislative_file_states", id: false, force: :cascade do |t|
+    t.integer "comision_id"
+    t.integer "legislative_file_state_id"
+  end
+
+  add_index "comisions_legislative_file_states", ["comision_id"], name: "index_coms_leg_file_states_on_comision_id", using: :btree
+  add_index "comisions_legislative_file_states", ["legislative_file_state_id"], name: "index_coms_leg_file_states_on_state_id", using: :btree
+
   create_table "comisions_people", id: false, force: :cascade do |t|
     t.integer "comision_id"
     t.integer "concejal_id"
@@ -228,21 +201,35 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "comisions_personas", ["comision_id"], name: "index_comisions_personas_on_comision_id", using: :btree
   add_index "comisions_personas", ["concejal_id"], name: "index_comisions_personas_on_concejal_id", using: :btree
 
-  create_table "comisions_tramites", id: false, force: :cascade do |t|
+  create_table "comisions_procedures", id: false, force: :cascade do |t|
     t.integer "comision_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "comisions_tramites", ["comision_id"], name: "index_comisions_tramites_on_comision_id", using: :btree
-  add_index "comisions_tramites", ["tramite_id"], name: "index_comisions_tramites_on_tramite_id", using: :btree
+  add_index "comisions_procedures", ["comision_id"], name: "index_comisions_procedures_on_comision_id", using: :btree
+  add_index "comisions_procedures", ["procedure_id"], name: "index_comisions_procedures_on_procedure_id", using: :btree
 
-  create_table "dependencias_tramites", id: false, force: :cascade do |t|
+  create_table "contingency_plans", force: :cascade do |t|
+    t.text     "reason"
+    t.date     "date_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text     "signatory"
+    t.text     "generator"
+  end
+
+  create_table "day_plans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dependencias_procedures", id: false, force: :cascade do |t|
     t.integer "municipal_office_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "dependencias_tramites", ["municipal_office_id"], name: "index_dependencias_tramites_on_municipal_office_id", using: :btree
-  add_index "dependencias_tramites", ["tramite_id"], name: "index_dependencias_tramites_on_tramite_id", using: :btree
+  add_index "dependencias_procedures", ["municipal_office_id"], name: "index_dependencias_procedures_on_municipal_office_id", using: :btree
+  add_index "dependencias_procedures", ["procedure_id"], name: "index_dependencias_procedures_on_procedure_id", using: :btree
 
   create_table "despachos_concejals", id: false, force: :cascade do |t|
     t.integer "despacho_id"
@@ -282,80 +269,81 @@ ActiveRecord::Schema.define(version: 20160907144144) do
 
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
-  create_table "estado_expedientes", force: :cascade do |t|
-    t.string   "nombre"
+  create_table "laws", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "law_type"
+    t.string   "number"
+    t.string   "letter"
+    t.string   "year"
+  end
+
+  create_table "laws_legislative_file_states", id: false, force: :cascade do |t|
+    t.integer "law_id"
+    t.integer "legislative_file_state_id"
+  end
+
+  add_index "laws_legislative_file_states", ["law_id"], name: "index_laws_legislative_file_states_on_law_id", using: :btree
+  add_index "laws_legislative_file_states", ["legislative_file_state_id"], name: "index_laws_legislative_file_states_on_legislative_file_state_id", using: :btree
+
+  create_table "legislative_file_states", force: :cascade do |t|
     t.text     "especificacion1"
     t.text     "especificacion2"
-    t.string   "tipo"
-    t.integer  "circuito_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "ref_id"
-    t.string   "ref_type"
-    t.date     "fecha"
+    t.integer  "loop_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "procedure_id"
+    t.integer  "state_type",          default: 0
+    t.integer  "name",                default: 0
+    t.date     "date_at"
+    t.integer  "legislative_file_id"
+    t.integer  "session_id"
+    t.text     "sanction_specified"
+    t.text     "sanction_type"
+    t.integer  "norma_id"
   end
 
-  add_index "estado_expedientes", ["circuito_id"], name: "index_estado_expedientes_on_circuito_id", using: :btree
-  add_index "estado_expedientes", ["ref_type", "ref_id"], name: "index_estado_expedientes_on_ref_type_and_ref_id", using: :btree
+  add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree
+  add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
+  add_index "legislative_file_states", ["norma_id"], name: "index_legislative_file_states_on_norma_id", using: :btree
+  add_index "legislative_file_states", ["procedure_id"], name: "index_legislative_file_states_on_procedure_id", using: :btree
+  add_index "legislative_file_states", ["session_id"], name: "index_legislative_file_states_on_session_id", using: :btree
 
-  create_table "estado_tramites", force: :cascade do |t|
-    t.string   "nombre"
-    t.text     "especificacion"
-    t.string   "tipo"
-    t.integer  "tramite_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "ref_id"
-    t.string   "ref_type"
+  create_table "legislative_file_states_loops", id: false, force: :cascade do |t|
+    t.integer "legislative_file_state_id"
+    t.integer "loop_id"
   end
 
-  add_index "estado_tramites", ["ref_id"], name: "index_estado_tramites_on_ref_id", using: :btree
-  add_index "estado_tramites", ["tramite_id"], name: "index_estado_tramites_on_tramite_id", using: :btree
+  add_index "legislative_file_states_loops", ["legislative_file_state_id"], name: "index_leg_file_states_loops_on_state_id", using: :btree
+  add_index "legislative_file_states_loops", ["loop_id"], name: "index_leg_file_states_loops_on_loop_id", using: :btree
 
-  create_table "expediente_administrativos", force: :cascade do |t|
-    t.string   "nro_exp"
-    t.integer  "nro_fojas"
-    t.integer  "bis"
-    t.text     "tema"
-    t.text     "observacion"
-    t.integer  "expediente_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "sub_indice"
-    t.string   "letra"
-    t.integer  "tramite_id"
+  create_table "legislative_files", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "sheets"
+    t.integer  "bis",          default: 0
+    t.text     "topic"
+    t.text     "observations"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.date     "date"
     t.integer  "year"
   end
 
-  add_index "expediente_administrativos", ["expediente_id"], name: "index_expediente_administrativos_on_expediente_id", using: :btree
-  add_index "expediente_administrativos", ["tramite_id"], name: "index_expediente_administrativos_on_tramite_id", using: :btree
-
-  create_table "expedientes", force: :cascade do |t|
-    t.string   "nro_exp"
-    t.integer  "nro_fojas"
-    t.integer  "bis"
-    t.text     "tema"
-    t.text     "observacion"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.date     "anio"
+  create_table "legislative_files_procedures", force: :cascade do |t|
+    t.integer "legislative_file_id"
+    t.integer "procedure_id"
   end
 
-  create_table "expedientes_despachos", force: :cascade do |t|
-    t.integer "expediente_id"
-    t.integer "despacho_id"
-  end
+  add_index "legislative_files_procedures", ["legislative_file_id"], name: "index_legislative_files_procedures_on_legislative_file_id", using: :btree
+  add_index "legislative_files_procedures", ["procedure_id"], name: "index_legislative_files_procedures_on_procedure_id", using: :btree
 
-  add_index "expedientes_despachos", ["despacho_id"], name: "index_expedientes_despachos_on_despacho_id", using: :btree
-  add_index "expedientes_despachos", ["expediente_id"], name: "index_expedientes_despachos_on_expediente_id", using: :btree
-
-  create_table "expedientes_tags", id: false, force: :cascade do |t|
-    t.integer "expediente_id"
+  create_table "legislative_files_tags", id: false, force: :cascade do |t|
+    t.integer "legislative_file_id"
     t.integer "tag_id"
   end
 
-  add_index "expedientes_tags", ["expediente_id"], name: "index_expedientes_tags_on_expediente_id", using: :btree
-  add_index "expedientes_tags", ["tag_id"], name: "index_expedientes_tags_on_tag_id", using: :btree
+  add_index "legislative_files_tags", ["legislative_file_id"], name: "index_legislative_files_tags_on_legislative_file_id", using: :btree
+  add_index "legislative_files_tags", ["tag_id"], name: "index_legislative_files_tags_on_tag_id", using: :btree
 
   create_table "libros", force: :cascade do |t|
     t.string   "nombre"
@@ -364,6 +352,51 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at", null: false
     t.integer  "orden"
   end
+
+  create_table "loop_ordens", force: :cascade do |t|
+    t.integer  "seccion_id"
+    t.integer  "sub_seccion_id"
+    t.string   "destino"
+    t.integer  "loop_id"
+    t.integer  "orden_del_dia_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "loop_ordens", ["loop_id"], name: "index_loop_ordens_on_loop_id", using: :btree
+  add_index "loop_ordens", ["orden_del_dia_id"], name: "index_loop_ordens_on_orden_del_dia_id", using: :btree
+
+  create_table "loops", force: :cascade do |t|
+    t.integer  "legislative_file_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "number",              default: 0
+    t.string   "topic"
+    t.date     "year"
+    t.integer  "sheets"
+    t.integer  "origin_procedure_id"
+    t.date     "date"
+    t.integer  "bis",                 default: 0
+    t.string   "observations"
+  end
+
+  add_index "loops", ["legislative_file_id"], name: "index_loops_on_legislative_file_id", using: :btree
+
+  create_table "loops_despachos", force: :cascade do |t|
+    t.integer "loop_id"
+    t.integer "despacho_id"
+  end
+
+  add_index "loops_despachos", ["despacho_id"], name: "index_loops_despachos_on_despacho_id", using: :btree
+  add_index "loops_despachos", ["loop_id"], name: "index_loops_despachos_on_loop_id", using: :btree
+
+  create_table "loops_normas", id: false, force: :cascade do |t|
+    t.integer "loop_id"
+    t.integer "norma_id"
+  end
+
+  add_index "loops_normas", ["loop_id"], name: "index_loops_normas_on_loop_id", using: :btree
+  add_index "loops_normas", ["norma_id"], name: "index_loops_normas_on_norma_id", using: :btree
 
   create_table "modifica_relationships", force: :cascade do |t|
     t.integer  "modifica_id"
@@ -391,9 +424,9 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "municipal_offices_tramites", force: :cascade do |t|
+  create_table "municipal_offices_procedures", force: :cascade do |t|
     t.integer  "municipal_office_id"
-    t.integer  "tramite_id"
+    t.integer  "procedure_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
@@ -412,16 +445,16 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.integer  "plazo_anio"
     t.string   "organismo_origen"
     t.string   "type"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "expediente_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "legislative_file_id"
     t.integer  "tipo"
     t.text     "descripcion"
     t.integer  "anio"
-    t.integer  "indice",            limit: 8
+    t.integer  "indice",              limit: 8
   end
 
-  add_index "normas", ["expediente_id"], name: "index_normas_on_expediente_id", using: :btree
+  add_index "normas", ["legislative_file_id"], name: "index_normas_on_legislative_file_id", using: :btree
 
   create_table "normas_otra_publicacions", id: false, force: :cascade do |t|
     t.integer "norma_id"
@@ -465,13 +498,13 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "organo_de_gobiernos_tramites", id: false, force: :cascade do |t|
+  create_table "organo_de_gobiernos_procedures", id: false, force: :cascade do |t|
     t.integer "organo_de_gobierno_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "organo_de_gobiernos_tramites", ["organo_de_gobierno_id"], name: "index_organo_de_gobiernos_tramites_on_organo_de_gobierno_id", using: :btree
-  add_index "organo_de_gobiernos_tramites", ["tramite_id"], name: "index_organo_de_gobiernos_tramites_on_tramite_id", using: :btree
+  add_index "organo_de_gobiernos_procedures", ["organo_de_gobierno_id"], name: "index_organo_de_gobiernos_procedures_on_organo_de_gobierno_id", using: :btree
+  add_index "organo_de_gobiernos_procedures", ["procedure_id"], name: "index_organo_de_gobiernos_procedures_on_procedure_id", using: :btree
 
   create_table "otra_publicacions", force: :cascade do |t|
     t.string   "nombre"
@@ -482,19 +515,17 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.string   "nombre"
-    t.string   "apellido"
-    t.integer  "tipo_doc"
-    t.string   "nro_doc"
-    t.string   "telefono"
+    t.string   "name"
+    t.string   "surname"
+    t.string   "cuit_or_dni"
+    t.string   "phone"
     t.string   "email"
-    t.string   "domicilio"
-    t.integer  "cargo"
+    t.string   "address"
     t.integer  "bloque_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "type"
-    t.integer  "cuit"
+    t.string   "position"
   end
 
   add_index "people", ["bloque_id"], name: "index_people_on_bloque_id", using: :btree
@@ -507,13 +538,13 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "people_periodos", ["concejal_id"], name: "index_people_periodos_on_concejal_id", using: :btree
   add_index "people_periodos", ["periodo_id"], name: "index_people_periodos_on_periodo_id", using: :btree
 
-  create_table "people_tramites", id: false, force: :cascade do |t|
+  create_table "people_procedures", id: false, force: :cascade do |t|
     t.integer "person_id"
-    t.integer "tramite_id"
+    t.integer "procedure_id"
   end
 
-  add_index "people_tramites", ["person_id"], name: "index_people_tramites_on_person_id", using: :btree
-  add_index "people_tramites", ["tramite_id"], name: "index_people_tramites_on_tramite_id", using: :btree
+  add_index "people_procedures", ["person_id"], name: "index_people_procedures_on_person_id", using: :btree
+  add_index "people_procedures", ["procedure_id"], name: "index_people_procedures_on_procedure_id", using: :btree
 
   create_table "periodos", force: :cascade do |t|
     t.date     "desde"
@@ -567,15 +598,82 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "personas_tramites", ["persona_id"], name: "index_personas_tramites_on_persona_id", using: :btree
   add_index "personas_tramites", ["tramite_id"], name: "index_personas_tramites_on_tramite_id", using: :btree
 
-  create_table "processes_signatories", force: :cascade do |t|
-    t.integer  "process_id"
-    t.integer  "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "procedure_derivations", force: :cascade do |t|
+    t.integer  "procedure_id"
+    t.integer  "area_id"
+    t.datetime "derived_at"
+    t.datetime "received_at"
+    t.integer  "derived_by"
+    t.integer  "received_by"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "processes_signatories", ["person_id"], name: "index_processes_signatories_on_person_id", using: :btree
-  add_index "processes_signatories", ["process_id"], name: "index_processes_signatories_on_process_id", using: :btree
+  add_index "procedure_derivations", ["area_id"], name: "index_procedure_derivations_on_area_id", using: :btree
+  add_index "procedure_derivations", ["derived_by"], name: "index_procedure_derivations_on_derived_by", using: :btree
+  add_index "procedure_derivations", ["procedure_id"], name: "index_procedure_derivations_on_procedure_id", using: :btree
+  add_index "procedure_derivations", ["received_by"], name: "index_procedure_derivations_on_received_by", using: :btree
+
+  create_table "procedure_signatories", force: :cascade do |t|
+    t.string  "name"
+    t.string  "surname"
+    t.text    "contact_info"
+    t.text    "position"
+    t.integer "ranking",        default: 0
+    t.integer "initiator_type"
+    t.boolean "default",        default: false
+  end
+
+  create_table "procedure_states", force: :cascade do |t|
+    t.string   "nombre"
+    t.text     "especificacion"
+    t.string   "tipo"
+    t.integer  "procedure_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "ref_id"
+    t.string   "ref_type"
+  end
+
+  add_index "procedure_states", ["procedure_id"], name: "index_procedure_states_on_procedure_id", using: :btree
+  add_index "procedure_states", ["ref_id"], name: "index_procedure_states_on_ref_id", using: :btree
+
+  create_table "procedures", force: :cascade do |t|
+    t.integer  "sheets"
+    t.text     "topic"
+    t.text     "observations"
+    t.string   "type"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.date     "fecha"
+    t.integer  "loop_id"
+    t.integer  "day"
+    t.integer  "month"
+    t.integer  "year"
+    t.integer  "contingency_plan_id"
+    t.integer  "procedure_derivation_id"
+  end
+
+  add_index "procedures", ["contingency_plan_id"], name: "index_procedures_on_contingency_plan_id", using: :btree
+  add_index "procedures", ["loop_id"], name: "index_procedures_on_loop_id", using: :btree
+
+  create_table "procedures_reparticion_oficials", id: false, force: :cascade do |t|
+    t.integer "reparticion_oficial_id"
+    t.integer "procedure_id"
+  end
+
+  add_index "procedures_reparticion_oficials", ["procedure_id"], name: "index_procedures_reparticion_oficials_on_procedure_id", using: :btree
+  add_index "procedures_reparticion_oficials", ["reparticion_oficial_id"], name: "index_procedures_reparticion_oficials_on_reparticion_oficial_id", using: :btree
+
+  create_table "processes_signatories", force: :cascade do |t|
+    t.integer  "procedure_id"
+    t.integer  "procedure_signatory_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "processes_signatories", ["procedure_id"], name: "index_processes_signatories_on_procedure_id", using: :btree
+  add_index "processes_signatories", ["procedure_signatory_id"], name: "index_processes_signatories_on_procedure_signatory_id", using: :btree
 
   create_table "relationship_concejals", force: :cascade do |t|
     t.integer  "suplente_id"
@@ -593,18 +691,11 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "reparticion_oficials_tramites", id: false, force: :cascade do |t|
-    t.integer "reparticion_oficial_id"
-    t.integer "tramite_id"
-  end
-
-  add_index "reparticion_oficials_tramites", ["reparticion_oficial_id"], name: "index_reparticion_oficials_tramites_on_reparticion_oficial_id", using: :btree
-  add_index "reparticion_oficials_tramites", ["tramite_id"], name: "index_reparticion_oficials_tramites_on_tramite_id", using: :btree
-
   create_table "roles", force: :cascade do |t|
-    t.string   "rol_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "activities", default: [],              array: true
   end
 
   create_table "roles_users", id: false, force: :cascade do |t|
@@ -615,37 +706,26 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
-  create_table "rols", force: :cascade do |t|
-    t.string   "tipo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rols_usuarios", id: false, force: :cascade do |t|
-    t.integer "usuario_id"
-    t.integer "rol_id"
-  end
-
-  add_index "rols_usuarios", ["rol_id"], name: "index_rols_usuarios_on_rol_id", using: :btree
-  add_index "rols_usuarios", ["usuario_id"], name: "index_rols_usuarios_on_usuario_id", using: :btree
-
   create_table "seccions", force: :cascade do |t|
     t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sesions", force: :cascade do |t|
-    t.integer  "nro"
-    t.text     "observacion"
-    t.string   "tipo1"
-    t.string   "tipo2"
+  create_table "sessions", force: :cascade do |t|
+    t.integer  "number"
+    t.text     "observation"
     t.integer  "diario_de_sesion_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "session_type"
+    t.string   "place"
+    t.boolean  "secret"
+    t.datetime "started_at"
+    t.datetime "finished_at"
   end
 
-  add_index "sesions", ["diario_de_sesion_id"], name: "index_sesions_on_diario_de_sesion_id", using: :btree
+  add_index "sessions", ["diario_de_sesion_id"], name: "index_sessions_on_diario_de_sesion_id", using: :btree
 
   create_table "sub_seccions", force: :cascade do |t|
     t.string   "nombre"
@@ -657,7 +737,7 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "sub_seccions", ["seccion_id"], name: "index_sub_seccions_on_seccion_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "nombre"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -670,28 +750,8 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.integer  "orden"
   end
 
-  create_table "tramites", force: :cascade do |t|
-    t.integer  "nro_fojas"
-    t.text     "asunto"
-    t.integer  "responsable"
-    t.integer  "tipo_contribucion"
-    t.integer  "condicion_contribuyente"
-    t.text     "observaciones"
-    t.string   "type"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.date     "fecha"
-    t.boolean  "pendiente",               default: false
-    t.integer  "circuito_id"
-    t.integer  "day"
-    t.integer  "month"
-    t.integer  "year"
-  end
-
-  add_index "tramites", ["circuito_id"], name: "index_tramites_on_circuito_id", using: :btree
-
   create_table "uploads", force: :cascade do |t|
-    t.integer  "tramite_id"
+    t.integer  "procedure_id"
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
@@ -700,23 +760,24 @@ ActiveRecord::Schema.define(version: 20160907144144) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "uploads", ["tramite_id"], name: "index_uploads_on_tramite_id", using: :btree
+  add_index "uploads", ["procedure_id"], name: "index_uploads_on_procedure_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "person_id"
     t.integer  "personal_id"
+    t.boolean  "admin",                  default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -744,6 +805,24 @@ ActiveRecord::Schema.define(version: 20160907144144) do
   add_index "usuarios", ["persona_id"], name: "index_usuarios_on_persona_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "municipal_offices_tramites", "municipal_offices"
-  add_foreign_key "municipal_offices_tramites", "tramites"
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+
+  add_foreign_key "legislative_file_states", "legislative_files"
+  add_foreign_key "legislative_file_states", "procedures"
+  add_foreign_key "legislative_file_states", "sessions"
+  add_foreign_key "municipal_offices_procedures", "municipal_offices"
+  add_foreign_key "municipal_offices_procedures", "procedures"
+  add_foreign_key "procedure_derivations", "areas"
+  add_foreign_key "procedure_derivations", "procedures"
+  add_foreign_key "procedures", "contingency_plans"
+  add_foreign_key "procedures", "procedure_derivations"
 end

@@ -1,2 +1,0 @@
-class ActuacionAdministrativa < Tramite
-end

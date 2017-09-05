@@ -1,20 +1,23 @@
+/*  External libraries */
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-//= require jquery.tokeninput.min
-//= require select2.min
-//= require jquery.elastic.min
+//= require datatables
+//= require datatables/dataTables.bootstrap
+//= require select2
+//= require select2_locale_es
 //= require Chart.min
 //= require bootstrap-multiselect
-//= require reception
-//= require react
-//= require react_ujs
-//= require components
 //= require sweetalert
-//= require alertify
 //= require moment
 //= require daterangepicker
-//= require people
+//= require bootstrap-datetimepicker
+//= require moment/es
+//= require icheck
+//= require cocoon
+//= require jquery-fileupload
+//= require fullcalendar
+//= require procedures
+
+/* System libraries */
 //= require_tree .

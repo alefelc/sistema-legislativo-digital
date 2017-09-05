@@ -1,0 +1,36 @@
+<div id="derivated-procedures">
+  <div id="filters">
+    <%= render 'filters' %>
+  </div>
+  <h2 class="main-title text-center"> TRÁMITES INGRESADOS </h2>
+  <h2 class="derivation-title text-center"> RECEPCIONANDO TRÁMITES </h2>
+
+  <div class="box box-primary">
+    <div class="box-header">
+      <%= render 'header_buttons' %>
+    </div>
+    <hr class="minimal-hr">
+    <div class="box-body">
+      <table class="table table-striped"
+        id="derivated-procedures-table" data-source="<%= derivated_procedures_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="text-center"> Nro / Tipo </th>
+            <th class="text-center"> Iniciadores </th>
+            <th class="text-center"> Asunto </th>
+            <th class="text-center"> Creado el </th>
+            <th class="text-center"> Hojas </th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="reportrange" data-disabled="true" placeholder="probando" class="text-center form-control">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+    <span></span> <b class="caret"></b>
+  </div>
+</div>

@@ -1,0 +1,863 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+// Modal initiators
+class ModalInitiator {
+  constructor(table) {
+    this.table = table;
+    this.el = '.initiators-modal';
+    this.hideContent();
+    this.filterCheckBoxes();
+    this.listenRadios();
+    this.listenForm();
+    // this.listenInitiatorSubmit();
+  }
+
+  filterCheckBoxes() {
+    let type = $('#procedure_type').val();
+    if (type.length != 0) {
+      switch(type) {
+        case 'Condonacion': // Hide DEM, Bloque, Comision, Concejal
+          $('#type_dem, #type_partisan_block, #type_commission, #type_commission')
+            .each(function() { $(this).parent('label').hide(); });
+          break;
+        case 'Peticion': // Hide all except physical and legal particulars
+          $(`#type_dem, #type_legislative_secretary, #type_partisan_block, #type_commission,
+            #type_councilor, #type_official_distribution, #type_municipal_office`)
+            .each(function() { $(this).parent('label').hide() });
+          break;
+        case 'ComunicacionOficial': // Hide only physical and legal particulars.
+          $('#type_particular_pyshic, #type_particular_legal').each(function() {
+            $(this).parent('label').hide();
+          });
+          break;
+      }
+    }
+  }
+  // listenInitiatorSubmit() {
+  //   let that = this;
+  //   let events = {
+  //     'ajax:success': function (ev, response) {
+  //       $(`${that.el} .modal`).modal('hide');
+  //       table.insert(response)
+  //     },
+  //     'ajax:error': function (ev) {
+  //       alert('Ha ocurrido un error en el servidor!');
+  //     }
+  //   }
+  //   $(`${this.el} form`).on(events);
+  // }
+
+  // Show signators table
+  showSignatoriesList() {
+    $('.signators-table').show();
+  }
+
+  // Listen when form fields changes
+  listenForm() {
+    let that = this;
+    $('.forms select').on('change', function(ev) {
+      if ($(this).val() != '') {
+        $(that.el).find('.modal-footer').show('slow');
+      }
+      else
+        $(that.el).find('.modal-footer').hide('slow');
+    });
+    // IMPROVE THIS!
+    // TO PREVENT SOME ERRORS
+    // $('.forms select').on('select2:unselecting', function(ev) {
+    //   $(that.el).find('.modal-footer').hide('slow');
+    //   console.log('select2', that.currentSelect2);
+    //   $(this).select2("val", "");
+    //   ev.preventDefault();
+    // });
+
+    let selectors = ['.official_distribution', '.municipal_office',
+      '.particular_pyshic', '.particular_legal'];
+
+    selectors.forEach(function(element, index) {
+      $(element).on('click', '.btn-info', function() {
+        $(`${element}_new`).show('fast');
+        $(this).hide();
+        $(`${element} .btn-danger`).show('fast');
+        $(that.currentSelect2).select2('enable', false);
+      });
+
+      $(`${element}`).on('click', '.btn-danger', function() {
+        $(`${element}_new`).hide('fast');
+        $(that.currentSelect2).select2('enable', '');
+        $(`${element} .btn-danger`).hide();
+        $(`${element} .btn-info`).show('fast');
+      });
+
+      // Submit...
+      $(`${element}_new`).on('click', '.btn-success', function() {
+        $(`${element}_new`).hide('fast');
+        $(that.currentSelect2).select2('enable', '');
+        $(`${element} .btn-danger`).hide();
+        $(`${element} .btn-info`).show('fast');
+        $(`${element}_new input`).serialize();
+
+        let dataRequest = {};
+        $.each($(`#new_initiator_form ${element}_new input`).serializeArray(), function() {
+          dataRequest[this.name] = this.value;
+        });
+        dataRequest.initiator_form = { type: element.slice(1) };
+
+        $.ajax({
+          url: "<%= url_helpers.initiators_path %>",
+          data: dataRequest,
+          method: 'POST',
+          success: (response) => {
+            $(that.currentSelect2).select2('trigger', 'select', { data: response });
+          }
+        });
+      });
+    });
+  }
+
+  // Listen when radio buttons will be click!
+  listenRadios() {
+    let that = this;
+    $('.radio-group').on('change', '.radio input', function(ev) {
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      let hideSignators = ['partisan_block', 'commission', 'councilor', 'particular_pyshic'];
+      if (hideSignators.indexOf(value) != -1)
+        $('.add-signators').hide();
+      else
+        $('.add-signators').show();
+      that.showForms(this);
+      that.hideRadios();
+      that.toggleLeftBtn();
+      $(`.${value} .btn-danger`).hide();
+    });
+    // Listen back button
+    $('.radio-group').on('click', '.back-button button', function() {
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      that.showRadios();
+      that.hideContent('slow');
+      that.filterCheckBoxes();
+      that.clearSelect2();
+      $('.radio-group input[type="radio"]:checked').prop('checked', false);
+    });
+  }
+
+  showForms(radio) {
+    let select_val = $(radio).val();
+    switch (select_val) {
+      case 'dem':
+        this.toggleFooter();
+        break;
+      case 'legislative_secretary':
+        this.toggleFooter();
+        break;
+      default:
+        this.showByValue(select_val);
+    }
+  }
+
+  showByValue(value) {
+    $(`.forms .${value}`).show('fast', () => {
+      let selector = `select#initiator_form_${value}_id, select#${value}_id`
+      this.startSelect2(selector, value);
+    });
+  }
+
+  startSelect2(select, value) {
+    let selects = ['official_distribution', 'municipal_office',
+      'particular_pyshic', 'particular_legal', 'partisan_block'];
+    let text = $(select).data('text');
+
+    let options = {
+      allowClear: true,
+      placeholder: text,
+      language: 'es',
+      closeOnSelect: false
+    };
+
+    this.clearSelect2();
+
+    if (selects.includes(value)) {
+      options.ajax = {
+        url: "<%= url_helpers.initiators_path %>" + `?value=${value}`,
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return {
+            select_q: params.term || '%%'
+          };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    } else {
+      options
+    }
+    this.currentSelect2 = select;
+    $(select).select2(options);
+  }
+
+  clearSelect2() {
+    if (this.currentSelect2) {
+      $(this.currentSelect2).select2('destroy');
+      this.currentSelect2 = undefined;
+    }
+  }
+
+  hideContent(param) {
+    $(this.el).find('.modal-footer').hide(param);
+    $('.radio-group .back-button').hide(param);
+    $('.commission, .partisan_block, .councilor, .municipal_office').hide(param);
+    $('.official_distribution, .particular_pyshic, .particular_legal').hide(param);
+    $('.official_distribution_new, .municipal_office_new').hide(param);
+    $('.particular_pyshic_new, .particular_legal_new').hide(param);
+    $('.signators-table, .signator-search').hide(param);
+    $('.signatories-actions, .confirm-signatory, .signator-form').hide(param);
+  }
+
+  // Hide modal footer
+  toggleFooter() {
+    $(this.el).find('.modal-footer').toggle('slow');
+    //// PLEASE REMOVE THIS!!!
+    console.log('toggle footer.....');
+    $(this.el).find('.signators-table').show('slow');
+  }
+
+  // Hide back initiators button
+  toggleLeftBtn() {
+    $('.radio-group .back-button').toggle('slow');
+  }
+
+  showRadios() {
+    $('input[type="radio"]').closest('label').show('slow');
+  }
+
+  hideRadios() {
+    $('input[type="radio"]:not(:checked)').closest('label').hide('slow');
+  }
+}
+
+// Procedures index, new and edit.
+class Procedures {
+  static indexDataTable() {
+    let table = $('#procedures-table').DataTable({
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron trámites relacionados a su búsqueda."
+      },
+      dom: "<'row'<'col-sm-4'l><'procedures-toolbar col-sm-4'><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+      processing: true,
+      serverSide: true,
+      // columns: [
+      //   { name: 'attendance_type', orderable: true, searchable: false }
+      //   { name: 'title', orderable: true, searchable: false }
+      //   { name: 'abbreviation', orderable: true, searchable: false }
+      //   { name: 'status', orderable: true, searchable: false }
+      //   { name: 'default', orderable: true, searchable: false }
+      // ]
+      ajax: {
+        url: $('#procedures-table').data('url'),
+        method: 'GET',
+        dataType: 'json',
+        data: function(params) {
+          params.show_derivations = $('div.data-derivations').data('show');
+          // Between two dates filter.
+          if (!$('#procedures #reportrange').data('disabled')) {
+            params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
+            params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
+          }
+          // Filter by derivated procedures.
+          if (!$('#procedures #derivation_types').data('disabled'))
+            params.derivation_filter = $('#procedures #derivation_types').val();
+          return params
+        }
+      },
+      fnPreDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', '0.2');
+      },
+      fnDrawCallback: function() {
+        let column_to_hide = 0; // Derivations column
+        let column = table.column(column_to_hide);
+        column.visible($('div.data-derivations').data('show'));
+        $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
+      },
+      fnInitComplete: function() {
+        Procedures.listenCheckButtons();
+      }
+    })
+  }
+
+  static listenCheckButtons() {
+    $('#procedures-table').on('ajax:success', '.btn-check', function() {
+      $('#procedures-table').DataTable().draw(false);
+    });
+  }
+
+  static initiatorsSelect2() {
+    let options = {
+      multiple: true,
+      placeholder: 'Busque personas y/o instituciones',
+      theme: 'bootstrap',
+      language: 'es',
+      closeOnSelect: false,
+      ajax: {
+        url: "<%= url_helpers.initiators_path(format: :json) %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return {
+            select_q: params.term || '%%'
+          };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    }
+    $('#procedure_person_ids').select2(options)
+
+    options.ajax.url = "<%= url_helpers.legislative_files_path  %>"
+    options.placeholder = 'Busque expedientes ...'
+    $('#procedure_legislative_file_ids').select2(options)
+
+    options.ajax.url = "<%= url_helpers.initiators_path(value: :councilors, format: :json) %>"
+    options.placeholder = 'Busque concejales por nombre y/o apellido ...'
+    options.ajax.data = (params) => {
+      let commission_ids = [];
+      $('#comision_ids').select2('data').forEach(function(elem) { commission_ids.push(elem.id) });
+      return {
+        select_q: params.term || '%%',
+        commissions: commission_ids
+      };
+    };
+    $('#councilor_ids').select2(options)
+
+    options.ajax.url = "<%= url_helpers.initiators_path(value: :commissions, format: :json) %>"
+    options.placeholder = 'Busque por nombre de comisión ...'
+    $('#comision_ids').select2(options)
+
+    $('.finished').on('click', () => {
+      if ($('.finished').attr('checked')) {
+        $('.finished').attr('checked', false);
+        $('.finished-field').css('display', 'none');
+      }
+      else {
+        $('.finished').attr('checked', true);
+        $('.finished-field').css('display', 'block');
+      }
+    });
+  }
+
+  static updateProcedureType() {
+    $('.dispatch-procedure').hide()
+    $(document).on('change', '#procedure_type', () => {
+      if ($('#procedure_type').val() == 'Despacho') {
+        $('.dispatch-procedure').show(1000)
+        $('.common-procedure').hide(1000)
+        setTimeout(function() {
+          swal('Por favor, recuerde corroborar la cantidad de firmas del despacho', '', 'warning');
+        }, 1000);
+      }
+      else {
+        $('.dispatch-procedure').hide(1000)
+        $('.common-procedure').show(1000)
+      }
+    })
+  }
+}
+
+class ProcedureForm {
+  constructor() {
+    this.requestInProcess = false;
+  }
+
+  initiatorsModal(table) {
+    $('#procedure-new').on('click', '.initiator-btn', (ev) => {
+      if (!this.requestInProcess) {
+        this.requestInProcess = true;
+        $.get(
+          $(ev.currentTarget).data('url'),
+          (response) => {
+            $('.initiators-modal').html(response);
+            $('.initiators-modal .modal').modal('show');
+            new ModalInitiator(table);
+          }
+        ).always(() => { this.requestInProcess = false });
+      }
+    });
+  }
+}
+
+class InitiatorsTable {
+  constructor() {
+    this.el = '.initiators-table';
+    this.initiators = [];
+    this.listenModalSubmit();
+    this.listenDeleteBtn();
+  }
+
+  listenDeleteBtn() {
+    $(this.el).on('click', '.btn-remove', function(ev) {
+      $(this).closest('tr').remove();
+    })
+  }
+
+  // Insert data into the form
+  _tr(data) {
+    return `<tr class='success'>
+      <td data-type="${data.type}"> ${data.text} <ul> </ul> </td>
+      <td> <div class="btn btn-xs btn-danger btn-remove">
+        <i class="fa fa-lg fa-times"></i>
+      </div></td>
+      <input name="procedure[initiator_attributes][]" type="hidden" value='${JSON.stringify(data)}'>
+    </tr>`
+  }
+
+  insert(someData) {
+    // Insert info in the initiators table
+    let $new = $(this._tr(someData)).hide();
+    $(this.el + ' tbody').append($new);
+    $new.show('slow');
+    setTimeout(() => { $new.removeClass("success") }, 4000);
+  }
+
+  listenModalSubmit() {
+    let that = this;
+    $('.initiators-modal').on('submit', 'form', function(ev) {
+      ev.preventDefault();
+      let value = $('.radio-group input[type="radio"]:checked').val();
+      let data = {};
+      switch (value) {
+        case 'dem':
+          data = { id: "#", text: "DEM", type: "dem" };
+          break;
+        case 'legislative_secretary':
+          data = { id: "#", text: "Secretaria legislativa", type: "legislative_secretary" }
+          break;
+        default:
+          let selectedInfo = $(`#initiator_form_${value}_id`).select2('data')[0];
+          data = { id: selectedInfo.id, text: selectedInfo.text, type: value };
+          break;
+      }
+      that.insert(data);
+      $('.initiators-modal .modal').modal('hide');
+    });
+  }
+}
+
+class ProcedureIndex {
+  constructor() {
+    this.derivationBtn = '.listen-derivations';
+    this.returnTableBtn = '.listen-return-back';
+    this.mainBtns = '#procedures .main-buttons-header, #procedures .main-title';
+    this.alternativeHeader = '#procedures .alternative-button-header, #procedures .derivation-title';
+    this.showingDerivations = false;
+    this.listenerDerivation();
+  }
+
+  updateView() {
+    if (this.showingDerivations) {
+      $(this.mainBtns).hide();
+      $(this.alternativeHeader).show();
+      $('#procedures #derivation_types').data('disabled', false);
+    } else {
+      $(this.mainBtns).show();
+      $(this.alternativeHeader).hide();
+      $('#procedures #derivation_types').data('disabled', true);
+    }
+  }
+
+  listenerDerivation() {
+    var that = this;
+    $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
+      that.showingDerivations = !that.showingDerivations;
+      that.updateView();
+      $('#procedures #derivation_types').on('change', () => {
+        $('#procedures-table').DataTable().draw(false);
+      });
+      $('.data-derivations').data('show', that.showingDerivations);
+      $('#procedures-table').dataTable().fnDraw();
+    });
+  }
+}
+
+class CreateSignator {
+  constructor() {
+    this.button = 'button.add-signators';
+    this.el = '.initiators-modal';
+    this.signators = [];
+
+    this.addClickEvent();
+    this.continueClickEvent();
+    this.createClickEvent();
+    this.readyClickEvent();
+    this.listenRemove();
+    this.listenSubmit();
+  }
+
+  listenSubmit() {
+    let that = this;
+    $('.initiators-modal').on('click', '.btn-primary:submit', function() {
+      setTimeout(function() {
+        that.signators.forEach(function(elem, _) {
+          if (elem) { // Only if exists
+            // Mayor present
+            // if ($('.signators-table td[data-mayor=true]').length) {
+            //   let text = $('<li></li>').text("LLamosas, Juan Manuel (Intendente)");
+            //   $(`.initiators-table td[data-type='dem'] ul`).append(text);
+            // }
+            let $hidden = $(`<input name="procedure[signator_attributes][]"
+              type="hidden">`).val(JSON.stringify(elem));
+            $('.procedure-form').append($hidden);
+
+            let text = $('<li> </li>').text(elem.text);
+            $(`.initiators-table td[data-type='${elem.sign_type}'] ul`).append(text);
+          }
+        });
+        that.signators = [];
+      }, 300);
+    });
+  }
+
+  defaultRows() {
+    switch($('.radio-group input[type="radio"]:checked').val()) {
+      case 'dem':
+        let elem = { id: '#', sign_type: 'dem', text: 'Juan Manuel LLamosas (Intendente)' };
+        // REMOVE THIS HARDCODED!!!!
+        // Call ProcedureSignatory default true
+        if ($('.signators-table td[data-mayor=true]').length == 0) {
+          $('.signators-table tbody').append(`<tr> <td data-mayor=true> Juan Manuel LLamosas (Intendente) </td> <td> <a data-index="${this.signators.length}" class='btn btn-danger remove-signator'> <i class='fa fa-times'> </i> </a> </td> </tr>`);
+          // let $hidden = $(`<input name="procedure[signator_attributes][]"
+          //   type="hidden">`).val(JSON.stringify(elem));
+          this.saveSignator(elem, 'dem');
+          // $('.procedure-form').append($hidden);
+        }
+        break;
+    }
+  }
+
+  addClickEvent() {
+    let that = this;
+    $(this.el).on('click', this.button, function() {
+      let callback = function() { that.listenSearch(); };
+      that.toggleSignators(callback);
+      that.defaultRows();
+    });
+  }
+
+  toggleSignators(callback) {
+    // $(this.el).find('.modal-footer').toggle('slow');
+    $('.signator-search').toggle('slow', callback);
+    $('.main-footer-actions').toggle('slow');
+    $('.signators-table').show('slow');
+    $('.signatories-actions').toggle('slow');
+  }
+
+  continueClickEvent() {
+    $(this.el).on('click', '.signatories-actions', function() {
+      $('.main-footer-actions').toggle('slow');
+      $('.signatories-actions').toggle('slow');
+      $('.signator-search').toggle('slow');
+      // Unbind events and destroy select2
+      $('.initiators-modal #signator_search').select2('destroy').off();
+    });
+  }
+
+  createClickEvent() {
+  let that = this;
+    $(this.el).on('click', '.confirm-signatory', function() {
+      let params = {};
+      $.each($('.signator-form input').serializeArray(), function() {
+        params[this.name] = this.value;
+      });
+      params.initiator_type = $('.radio-group input[type="radio"]:checked').val();
+      that.submit(params, function() {
+        $('.confirm-signatory').toggle('slow');
+        $('.signatories-actions').toggle('slow');
+        $('.signator-form').toggle('slow');
+        $('.signator-search').toggle('slow');
+        $('.signator-form input').val("");
+      }, function() {
+        alert('Ah ocurrido un error! Reintente...');
+      });
+    });
+  }
+
+  readyClickEvent() {
+    $(this.el).on('click', '.create-signatory', function() {
+      $('.confirm-signatory').toggle('slow');
+      $('.signatories-actions').toggle('slow');
+      $('.signator-form').toggle('slow');
+      $('.signator-search').toggle('slow');
+    });
+  }
+
+  listenSearch() {
+    let that = this;
+    let config = {
+      placeholder: 'Click aquí para agregar firmantes ...',
+      language: 'es',
+      ajax: {
+        url: "<%= url_helpers.signators_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          params.select_q = params.term || '%%';
+          let typeVal = $('.radio-group input[type="radio"]:checked').val();
+          params.initiator_type = typeVal;
+          return params;
+        },
+        // data: (params) => {
+        //   return {
+        //     select_q: params.term || '%%'
+        //   };
+        // },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $(this.el).find('#signator_search').select2(config).on('select2:select',
+    function(e) {
+      // Clear search box...
+      $('#signator_search').val(null).trigger('change');
+      $('.signators-table tbody').append(`<tr> <td> ${e.params.data.text} </td> <td> <a data-index="${that.signators.length}" class="btn btn-danger remove-signator"> <i class="fa fa-times"> </i> </a> </td> </tr>`);
+      let typeVal = $('.radio-group input[type="radio"]:checked').val();
+      that.saveSignator(e.params.data, typeVal);
+    });
+  }
+
+  saveSignator(sign, type) {
+    sign.sign_type = type;
+    this.signators.push(sign);
+  }
+
+  listenRemove() {
+    var that = this;
+    $(this.el).on('click', '.remove-signator', function() {
+      $(this).parents('tr').remove();
+      console.log('index...', $(this).data("index"));
+      console.log(that.signators);
+      that.signators[$(this).data("index")] = null;
+    });
+  }
+
+  submit(params, callbackSuccess, callbackError) {
+    $.ajax({
+      url: "<%= url_helpers.signators_path %>",
+      method: 'POST',
+      data: params,
+      success: function() {
+        callbackSuccess();
+      },
+      error: function() {
+        callbackError();
+      }
+    });
+  }
+}
+
+class ProceduresToolbar {
+  constructor() {
+    this.start = moment().subtract(29, 'days');
+    this.end = moment();
+    this.firstTime = true;
+    this.setToolbar();
+    this.startRangePicker();
+    this.initializePicker();
+  }
+
+  cb(start, end) {
+    $('#procedures #reportrange span').html(start.format('D MMMM, YYYY') +
+      ' - ' + end.format('D MMMM, YYYY'));
+  }
+
+  setToolbar() {
+    $('#procedures #reportrange').appendTo('.procedures-toolbar').show();
+  }
+
+  startRangePicker() {
+    $('#procedures #reportrange').daterangepicker({
+      locale: { format: "DD/MM/YYYY", separator: " - ",
+        applyLabel: "Aceptar", cancelLabel: "Limpiar",
+        fromLabel: "Desde", toLabel: "Hasta",
+        customRangeLabel: "Rango personalizado",
+        daysOfWeek: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
+        monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
+        firstDay: 1
+      },
+      startDate: this.start,
+      endDate: this.end,
+      opens: 'center',
+      ranges: {
+       'Hoy': [moment(), moment()],
+       'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Últimos 7 Días': [moment().subtract(6, 'days'), moment()],
+       'Últimos 30 Días': [moment().subtract(29, 'days'), moment()],
+       'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+       'Último Mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, this.cb);
+  }
+
+  initializePicker() {
+    let that = this;
+    $('#reportrange span').html('Click para buscar trámites por fecha.');
+    $('#procedures #reportrange').on('show.daterangepicker', function(ev, picker) {
+      if (that.firstTime) {
+        that.cb(that.start, that.end);
+        that.firstTime = false;
+      }
+    });
+    this.clearRange();
+    this.updateProceduresTable();
+  }
+
+  clearRange() {
+    $('#procedures #reportrange').on('cancel.daterangepicker', function(ev, picker) {
+      $('#procedures #reportrange').data('disabled', true);
+      $('#procedures #reportrange span').html('Click para buscar trámites por fecha.');
+      $('#procedures-table').DataTable().draw(false);
+    });
+  }
+
+  updateProceduresTable() {
+    $('#procedures #reportrange').on('apply.daterangepicker', function(ev, picker) {
+      $('#procedures #reportrange').data('disabled', false);
+      $('#procedures-table').DataTable().draw(false);
+    });
+  }
+}
+
+class ProcedureFilters {
+  constructor() {
+    this.typeId = "#procedures #filter_type";
+    this.applyBtn = '#procedures .apply-filters';
+    this.clearBtn = '#procedures .clear-filters';
+    this.startListeners();
+  }
+
+  startListeners() {
+    $('#myModal').on('shown.bs.modal', () => {
+      this.typeMultiselect();
+      this.initiators();
+      this.legislative_files();
+      this.administrative_files();
+      this.clear();
+      this.submit();
+    });
+  }
+
+  initiators() {
+    let config = {
+      placeholder: 'Busque por iniciadores',
+      ajax: {
+        url: "<%= url_helpers.initiators_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_initiators').select2(config);
+  }
+
+  legislative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes legislativos',
+      ajax: {
+        url: "<%= url_helpers.legislative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_legislative_file').select2(config);
+  }
+
+  administrative_files() {
+    let config = {
+      placeholder: 'Busque por expedientes administrativos',
+      ajax: {
+        url: "<%= url_helpers.administrative_files_path  %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+    $('#procedures #filter_administrative_file').select2(config);
+  }
+
+  typeMultiselect() {
+    $(this.typeId).multiselect({
+      buttonText: (options, select) => {
+        if (options.length === 0) return 'Filtre por tipo de trámite ...';
+        else return 'Trámites filtrados, haga click para verificar';
+      }
+    });
+  }
+
+  reloadDatatable() {
+    $('#procedures-table').DataTable().draw(false);
+  }
+
+  clear() {
+    $(this.clearBtn).on('click', () => {
+      // Clear type filter
+      $('#filter_type').multiselect('deselectAll').multiselect('refresh');
+      // Clear legislative files
+      // ...
+      // Clear administrative files
+      // ...
+
+      // Reload datatable
+      this.reloadDatatable();
+    });
+  }
+
+  submit() {
+    // Only reload datatable, params will be fetched from params callback.
+    $(this.applyBtn).on('click', () => { this.reloadDatatable() });
+  }
+}
+
+$(document).ready(function() {
+  if ($('#procedure-new').length) {
+    const signators = new CreateSignator();
+    let form = new ProcedureForm();
+    form.initiatorsModal(new InitiatorsTable());
+    $('#procedure_contingency_plan_attributes_date_at').datetimepicker({
+      locale: 'es',
+      format:'DD/MM/YYYY HH:mm'
+    });
+    Procedures.initiatorsSelect2();
+    Procedures.updateProcedureType();
+    $('.derivation').select2();
+
+    $('.add_fields').on('click', function() {
+      $('.derivation:last').select2();
+    });
+
+    // $('#new_procedure').fileupload();
+  };
+
+  if ($('#procedures-table').length) {
+    Procedures.indexDataTable();
+    let table = new ProcedureIndex();
+    let toolbar = new ProceduresToolbar();
+    let filters = new ProcedureFilters();
+  }
+
+  if ($('.procedure-dispatch-edit').length) {
+    $('.dispatch-procedure').show();
+  }
+});

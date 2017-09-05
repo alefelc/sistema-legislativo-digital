@@ -1,5 +1,5 @@
 class DeclaracionsController < ApplicationController
-  before_action :authenticate_user!, { except: [ :show, :index ] }
+  before_action :authenticate_user!
 
   respond_to :json, :html
 

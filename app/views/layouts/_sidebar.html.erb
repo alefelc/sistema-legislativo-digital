@@ -1,0 +1,241 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="header text-center"> <%= t '.main_navigation' %> </li>
+
+      <!-- Reception table -->
+      <% if current_user.try :belongs_to_area?, :reception_table %>
+        <li class="treeview">
+          <%= link_to '#' do %>
+            <i class="fa fa-tags fa-lg"></i>
+            <span> <%= t '.reception' %> </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          <% end -%>
+          <ul class="treeview-menu">
+            <li>
+              <%= link_to procedures_path do %>
+                <i class="fa fa-circle-o"></i>
+                Trámites
+              <% end -%>
+            </li>
+            <% if policy(Procedure).create? %>
+              <li>
+                <%= link_to new_procedure_path do %>
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.new_process' %>
+                <% end -%>
+              </li>
+            <% end %>
+            <% if edit_link? 'procedures' %>
+              <li class="active">
+                <%= link_to '#' do %>
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.edit_process' %>
+                <% end -%>
+              </li>
+            <% end %>
+            <% if show_link? 'procedures' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.show_process' %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- End reception table -->
+
+      <!-- Legislative secretary -->
+      <% if current_user.try :belongs_to_area?, :legislative_secretary %>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-file-text-o fa-lg"></i>
+            <span> Dirección Legislativa </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= derivated_procedures_path %>">
+                <i class="fa fa-circle-o"></i> Trámites
+              </a>
+            </li>
+            <li>
+              <a href="<%= legislative_files_path %>">
+                <i class="fa fa-circle-o"></i> Expedientes Legislativos
+              </a>
+            </li>
+            <% # if policy(LegislativeFile).create? %>
+            <li>
+              <a href="<%= new_legislative_file_path %>">
+                <i class="fa fa-circle-o"></i> Nuevo Expediente
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="<%= day_plans_path %>">
+            <i class="fa fa-list fa-lg"></i> <span> Orden del día </span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="<%= sessions_path %>">
+            <i class="fa fa-bank fa-lg"></i> <span> Sesiones </span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="<%= laws_path %>">
+            <i class="fa fa-list-ul fa-lg"></i> <span> Normas </span>
+          </a>
+        </li>
+      <% end %>
+      <!-- End legislative secretary -->
+
+      <% if policy(:configurations).all? %>
+        <li class="header text-center"> Configuración de sistema </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users fa-lg"></i>
+            <span> Autoridades </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= councilors_path %>">
+                <i class="fa fa-circle-o"></i> Concejales
+              </a>
+            </li>
+            <li>
+              <a href="<%= commissions_path %>">
+                <i class="fa fa-circle-o"></i> Comisiones
+              </a>
+            </li>
+            <li>
+              <a href="<%= blocks_path %>">
+                <i class="fa fa-circle-o"></i> Bloques
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user fa-lg"></i>
+            <span>
+              <%= t '.users' %>
+            </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= users_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.all_users' %>
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_user_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.new_user' %>
+              </a>
+            </li>
+            <% if edit_link? 'users' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.edit_user' %>
+                </a>
+              </li>
+            <% end %>
+            <% if show_link? 'users' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.show_user' %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear fa-lg"></i>
+            <span>
+              <%= t '.roles' %>
+            </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= roles_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.all_roles' %>
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_role_path %>">
+                <i class="fa fa-circle-o"></i>
+                <%= t '.new_rol' %>
+              </a>
+            </li>
+            <% if edit_link? 'roles' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.edit_rol' %>
+                </a>
+              </li>
+            <% end %>
+            <% if show_link? 'roles' %>
+              <li class="active">
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>
+                  <%= t '.show_rol' %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"> <i class="fa fa-gears fa-lg"></i>
+            <span>
+              <%= t '.parameters' %>
+            </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= periods_path %>"> <i class="fa fa-circle-o"></i>
+                Períodos Legislativos
+              </a>
+            </li>
+            <li class="treeview menu-open">
+              <a href="#"><i class="fa fa-circle-o"></i> Trámites
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu" style="display: block;">
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i> Firmantes del trámite
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="<%= '#' %>"> <i class="fa fa-circle-o"></i>
+                <%= t '.legislative_files' %>
+              </a>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+
+    </ul>
+  </section>
+</aside>

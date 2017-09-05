@@ -1,4 +1,28 @@
 module ApplicationHelper
+  def edit_link?(controller)
+    params[:id].present? &&
+    params[:controller] == controller &&
+    params[:action] == 'edit'
+  end
+
+  def show_link?(controller)
+    params[:id].present? &&
+    params[:controller] == controller &&
+    params[:action] == 'show'
+  end
+
+  def index_link?(controller)
+    params[:controller] == controller &&
+    params[:action] == 'index'
+  end
+
+  def flash_icon(status)
+    status = status.to_sym
+    icons = { success: 'icon fa fa-check', warning: 'icon fa fa-warning',
+              info: 'icon fa fa-info', error: 'icon fa fa-ban' }
+    icons[status] if icons.key?(status)
+  end
+
   def resource_name
     :user
   end
@@ -101,8 +125,8 @@ module ApplicationHelper
     link_to pro.id.to_s, proyecto_path(pro)
   end
 
-  def index_tramite(tramite)
-    link_to tramite.id.to_s, tramite
+  def index_procedure(proc)
+    link_to proc.id.to_s, procedure_path(proc), class: 'btn btn-xs btn-default'
   end
 
   def index_tramites(tramites)

@@ -1,6 +1,6 @@
 class Upload < ActiveRecord::Base
   #== Associations
-  belongs_to :tramite
+  belongs_to :procedure
 
   #== Attachment
   has_attached_file :file, { preserve_files: "true" }

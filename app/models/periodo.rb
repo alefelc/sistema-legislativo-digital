@@ -15,4 +15,8 @@ class Periodo < ActiveRecord::Base
   def format
     "#{desde} - #{hasta}"
   end
+
+  def self.current_period
+    Periodo.order(hasta: :desc).first
+  end
 end

@@ -9,5 +9,4 @@ class Concejal < Person
   #== Association recursive suplencia
   has_many :suplentes, class_name: "RelationshipConcejal", foreign_key: "suplente_id"
   has_one :titular, class_name: "RelationshipConcejal", foreign_key: "titular_id"
-
 end

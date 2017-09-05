@@ -1,0 +1,314 @@
+es:
+  layouts:
+    header:
+      sld: Sistema Legislativo
+    application:
+      normas: Normas
+      norma:
+        decreto: Decretos
+        resolucion: Resoluciones
+        declaracion: Declaraciones
+        ordenanza: Ordenanzas
+        especiales: Normas Especiales
+        otras: Otras Normas
+      expedientes: Expedientes
+      expediente:
+        legislativo: Expedientes Legislativos
+        pendientes: Trámites Pendientes
+    sidebar:
+      parameters: Parámetros del sistema
+      main_navigation: Navegación Principal
+      reception: Mesa de entradas
+      all_processes: Ver trámites
+      new_process: Nuevo trámite
+      edit_process: Editando trámite
+      show_process: Mostrando trámite
+      reports: Reportes
+      statistics: Estadísticas
+      users: Usuarios
+      all_users: Ver usuarios
+      new_user: Nuevo usuario
+      edit_user: Editando usuario
+      show_user: Mostrando usuario
+      roles: Roles
+      all_roles: Ver roles
+      new_rol: Nuevo rol
+      edit_rol: Editando rol
+      show_rol: Mostrando rol
+      files: Expedientes
+      all_administrative_files: Ver exped. administrativos
+      all_legislative_files: Ver expedientes legislativos
+      legislative_files: Expedientes legislativos
+
+    flash_messages:
+      success: Generado correctamente
+  councilors:
+    index:
+      fullname: Concejal
+      cuit: 'DNI / CUIT'
+      address: 'Domicilio'
+      phone: 'Teléfono'
+      email: Email
+      period: Periodos
+    edit:
+      update_councilor: Actualizar concejal
+      update: Actualizar
+    show:
+      data: Datos concejal
+      surname: 'Apellido:'
+      name: 'Nombre:'
+      dni_cuit: 'DNI / CUIT:'
+      phone: 'Teléfono:'
+      email: 'Email:'
+      address: 'Domicilio'
+      created_at: Creado el
+
+  dashboard:
+    index:
+      home: Inicio
+
+  government_offices:
+    show:
+      created_at: Creado el
+      data: Datos repartición oficial
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar repartición oficial
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  government_organs:
+    show:
+      created_at: Creado el
+      data: Datos órgano de gobierno
+      denomination: 'Denominación:'
+    edit:
+      update_government_organ: Actualizar órgano de gobierno
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  municipal_offices:
+    show:
+      created_at: Creado el
+      data: Datos dependencia municipal
+      denomination: 'Denominación:'
+    edit:
+      update_gov_office: Actualizar dependencia municipal
+      update: Actualizar
+    index:
+      denomination: Denominación
+
+  persons:
+    show:
+      personal_data: Información personal
+      created_at: Creado el %{date}
+      name: "Nombre:"
+      surname: "Apellido:"
+      dni_cuit: "DNI / CUIT:"
+      address: "Domicilio:"
+      phone: "Teléfono:"
+      email: "Email:"
+    index:
+      type: Persona
+      name: Nombre
+      surname: Apellido
+      address: Domicilio
+      dni_cuit: 'DNI / CUIT'
+      phone: Teléfono
+      email: Email
+    edit:
+      update_person: Actualizar persona
+      update: Actualizar
+    types:
+      Fisica: Persona física
+      Concejal: Concejal
+      Juridica: Persona jurídica
+
+  procedures:
+    show:
+      not_specified: no especificado
+    index:
+      procedures_type: Nro / tipo
+      new: Trámite
+      new_commission_dispatch: Despacho de comisión
+      processes: Nro.
+      type: Tipo
+      sheets: Fojas
+      initiators: Iniciadores
+      topic: Sumario
+      created_at: Creado el
+    new:
+      procedures: Trámites
+      new_procedure: Nuevo Trámite
+      initiators: Iniciadores
+      finished_at: Finalizado en
+      finished_placeholder: Indique la culminación del trámite
+      placeholder_initiators: Busque iniciadores...
+      submit: Guardar trámite nuevo
+    info:
+      commissions: Comisiones
+      dispatch_date: Fecha del despacho
+      councilors: Concejales firmantes
+      legislative_files: Expedientes legislativos
+      topic_placeholder: Sumario del trámite
+      blank_type: Seleccione tipo de trámite
+      topic: Asunto
+      persons: Iniciadores
+      type: Tipo de trámite
+      add: Agregar
+      sheets_number: Nro. fojas
+      sheets: Fojas
+      observations: Observaciones
+      observations_placeholder: Detalles respecto al trámite
+      process_completed: ¿Trámite finalizado?
+      finished_placeholder: Indique motivos de la finalización del trámite
+    vertical_navbar:
+      information: Información
+      derivations: Derivaciones
+      administrative_files: Expedientes Administrativos
+      attached_files: Archivos Adjuntos
+    types:
+      # condonation: Condonación
+      # particular_request: Petición Particular
+      # project: Proyecto
+      # official_communication: Comunicación Oficial
+      # commission_dispatch: Despacho de Comisión
+      # others: Otros Ingresos
+      Condonacion: Condonación / Eximición
+      Peticion: Petición Particular
+      Despacho: Despacho de Comisión
+      ComunicacionOficial: Comunicación Oficial
+      Proyecto: Proyecto
+      OtrosIngresos: Otros Ingresos
+    form:
+      load_info: Cargue información del trámite
+    edit:
+      edit_procedure: Editar trámite
+      submit: Actualizar trámite
+
+  roles:
+    procedure: Trámites
+    admin: Administrador
+    contingency_plan: Contingencia
+    administrative_file: Expediente administrativo
+    legislative_file: Expediente legislativo
+    new:
+      cancel: Cancelar
+      submit: Guardar
+      new: Creando nuevo rol
+      title: Información del rol
+      name_placeholder: Ingrese nombre del rol...
+    edit:
+      edit: Editando rol
+      title: Información del rol
+      name_placeholder: Ingrese nombre del rol...
+      cancel: Cancelar
+      submit: Guardar
+    index:
+      rols: Roles del sistema
+      new: Nuevo rol
+      name: Nombre del rol
+      created_at: Creado el
+      activities: Permisos
+      roles_amount: Roles asignados
+    activities:
+      procedure: "Trámites:"
+      configurations: "Administrador:"
+      administrative_file: "Expediente administrativo:"
+      contingency_plan: "Plan de Contingencia:"
+      legislative_file: "Expediente legislativo:"
+    actions:
+      configurations:
+        all: "Configuraciones del sistema"
+      procedure:
+        create: Crear trámites
+        type_create: Tipos de trámites (en nuevo)
+        sheets_create: Hojas (en nuevo)
+        topic_create: Asunto (en nuevo)
+        initiators_create: Iniciadores (en nuevo)
+        observations_create: Observaciones (en nuevo)
+        finalized_create: Trámite finalizado? (en nuevo)
+        upload_create: Archivos adjuntos (en nuevo)
+        derivations_create: Cargar derivaciones (en nuevo)
+        edit: Editar trámites
+        type_update: Tipos de trámites (en editar)
+        sheets_update: Hojas (en editar)
+        topic_update: Asunto (en editar)
+        initiators_update: Iniciadores (en editar)
+        observations_update: Observaciones (en editar)
+        finalized_update: Trámite finalizado? (en editar)
+        upload_update: Archivos adjuntos (en editar)
+        derivations_update: Cargar derivaciones (en editar)
+      legislative_file:
+        create: Crear expediente legislativo
+        update: Actualizar expediente legislativo
+      administrative_file:
+        create: Crear expediente administrativo
+        update: Actualizar expediente administrativo
+      contingency_plan:
+        create: Crear plan de contingencia
+        update: Actualizar plan de contingencia
+
+  initiators:
+    types:
+      Fisica: Persona física
+      Juridica: Persona jurídica
+    new:
+      denomination: Denominación
+
+  users:
+    new:
+      user_title: Creando usuario
+      submit: Guardar
+    user_form:
+      add: Crear persona no existente
+    edit:
+      user_title: Editando usuario
+      submit: Actualizar
+    index:
+      user: Usuario
+      email: e-mail
+      current_sign_in_at: Inicio de sesión actual
+      last_sign_in_at: Último inicio de sesión
+      current_sign_in_ip: IP sesión actual
+      last_sign_in_ip: IP último inicio de sesión
+      created_at: Creado el
+      updated_at: Actualizado el
+
+  sessions:
+    types:
+      ordinary: Ordinaria
+      extraordinary: Extraordinaria
+      intermediate_room: Cuarto intermedio
+      special: Especial
+
+  laws:
+    types:
+      ordenanza: Ordenanza
+      decreto: Decreto
+      declaracion: Declaración
+      resolucion: Resolución
+      especial: Norma Especial
+      otra_norma: Otra Norma
+
+  legislative_files:
+    states:
+      initialized: Iniciado
+      in_comision: A Comisión
+      dispatched: Dictaminado
+      day_plan: Orden del Día
+      sanctioned: Sancionado
+      retired: Retirado
+
+  legislative_file_states:
+    types:
+      parliamentary: Parlamentario
+      administrative: Administrativo
+      comision: Comisión
+
+  activeadmin:
+    dashboard:
+      user: Usuario
+      procedure: Trámite

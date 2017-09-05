@@ -1,0 +1,22 @@
+es:
+  procedures:
+    create:
+      success: Trámite creado correctamente
+    update:
+      success: Trámite actualizado correctamente
+  roles:
+    presence:
+      activities: no han sido seleccionados
+    create:
+      success: Rol creado correctamente
+    update:
+      success: Rol actualizado correctamente
+  users:
+    update:
+      success: Usuario actualizado correctamente
+
+  sessions:
+    create:
+      success: Sesión creada correctamente
+    update:
+      success: Sesión actualizada correctamente

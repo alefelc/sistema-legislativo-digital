@@ -1,0 +1,213 @@
+#procedure-show
+  %h2
+    = "Trámite nro: "
+    %b= "#{@procedure.id}"
+
+  .box.box-primary
+    .lead.box-header.with-border.row
+      .procedure-type.col-md-6
+        Tipo de trámite:
+        - if @procedure.type.present?
+          %b= I18n.t("procedures.types.#{@procedure.type}")
+        - else
+          %i.small= t('.not_specified')
+      .col-md-6
+        = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
+          %i.fa.fa-print{ 'aria-hidden': :true }
+          Imprimir trámite
+        = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
+          %i.fa.fa-pencil{ 'aria-hidden': :true }
+          Editar trámite
+
+    .box-body
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Información
+        .panel-body
+          %dl.dl-horizontal
+            %dt Fojas
+            %dd= @procedure.sheets
+            - if @procedure.type != 'Despacho'
+              %dt Asunto
+              %dd= @procedure.topic
+            - if @procedure.is_dispatch?
+              %dt Fecha del despacho
+              %dd= "#{@procedure.day || '--'} / #{@procedure.month || '--'} / #{@procedure.year || '--'}"
+            %dt Observaciones
+            %dd= @procedure.observations
+            %dt Ingreso al sistema
+            %dd= @procedure.created_at
+
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Expedientes asociados
+        .panel-body
+          - if @procedure.is_dispatch?
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Expedientes legislativos
+                .box-body
+                  %ul
+                    - if @procedure.legislative_files.empty?
+                      %li
+                        %i No existen expedientes legislativos asociados
+                    - @procedure.legislative_files.each do |p|
+                      %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
+
+          - if @procedure.isnt_dispatch?
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Expedientes administrativos
+                .box-body
+                  %ul
+                    - if @procedure.administrative_files.empty?
+                      %li
+                        %i No existen expedientes administrativos asociados
+                    - @procedure.administrative_files.each do |p|
+                      %li= p.to_s# link_to p.to_s, administrative_file_path(p), class: 'btn'
+
+          - if @procedure.legislative_file_originated.present?
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  %i.fa.fa-book
+                  %h3.box-title Trámite culminado en
+                .box-body
+                  %ul
+                    - p = @procedure.legislative_file_originated.legislative_file
+                    %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
+
+      - if @procedure.contingency_plan.present?
+        .panel.panel-danger
+          .panel-heading
+            %h3.panel-title= "Contingencia nro: #{@procedure.contingency_plan.id}"
+          .panel-body.remove-bottom-panel
+            .form-group.col-xs-12
+              %label Cargado en el sistema a las:
+              .input-group.col-xs-3
+                .input-group-addon
+                  %i.fa.fa-clock-o
+                %span.form-control.pull-right
+                  = @procedure.created_at
+            .form-group.col-xs-12
+              %label Motivo:
+              .input-group
+                .input-group-addon
+                  %i.fa.fa-file-text-o
+                %div.form-control.pull-right
+                  = @procedure.contingency_plan.reason
+
+      - if @procedure.type == "Despacho"
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Comisiones
+          .panel-body
+            - @procedure.comisions.each do |c|
+              %p= c.denominacion
+
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Concejales firmantes del despacho
+          .panel-body
+            - @procedure.persons.each do |p|
+              %p= p.full_name
+      - else
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Iniciadores y firmantes del trámite
+          .panel-body
+            - dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM")
+            - if dem.present?
+              %p
+                ="#{dem.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory|
+                    %li= signatory.text
+            - sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL")
+            - if sl.present?
+              %p
+                ="#{sl.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).each do |signatory|
+                    %li= signatory.text
+
+            - @procedure.bloques.each do |b|
+              %p= "#{b.denominacion}"
+
+            - @procedure.comisions.each do |b|
+              %p= "#{b.denominacion}"
+
+            - @procedure.persons.each do |b|
+              %p
+                = "#{b.full_name}"
+                %ul
+                  - if b.type == "Juridica"
+                    - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory|
+                      %li= signatory.text
+
+            - @procedure.reparticion_oficials.each do |b|
+              %p
+                = "#{b.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).each do |signatory|
+                    %li= signatory.text
+
+            - @procedure.municipal_offices.each do |b|
+              %p
+                = "#{b.denominacion}"
+                %ul
+                  - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory|
+                    %li= signatory.text
+
+
+      -# .panel.panel-default
+      -#   .panel-heading
+      -#     %h3.panel-title Ciclo de vida
+      -#   .panel-body.remove-bottom-panel
+      -#     %ul.timeline
+      -#       %li.time-label
+      -#         %span.bg-red= @procedure.created_at.to_date
+
+      -#       %li
+      -#         %i.fa.fa-long-arrow-down.bg-teal
+      -#         .timeline-item
+      -#           %span.time
+      -#             %i.fa.fa-clock-o
+      -#             = @procedure.created_at.to_s(:time)
+
+      -#           %h3.timeline-header
+      -#             %span{ style: 'color: #3c8dbc; font-weight: bold;' } Trámite iniciado
+
+            -#     .timeline-body
+            -#       Content goes here
+
+            -#     .timeline-footer
+            -#       Se adjuntó el archivo bla_bla_bla.jpg
+            -#       %a.btn.btn-success
+            -#         .fa.fa-download
+            -#         Descargar
+            -# %li
+            -#   %i.fa.fa-users.bg-blue
+            -#   .timeline-item
+            -#     %span.time
+            -#       %i.fa.fa-clock-o
+            -#       = @procedure.created_at.to_s(:time)
+
+            -#     %h3.timeline-header
+            -#       %span{ style: 'color: #3c8dbc; font-weight: bold;' } Derivado a secretaría legislativa
+
+            -#     .timeline-body
+            -#       Content goes here
+
+            -#     .timeline-footer
+            -#       Se adjuntó el archivo bla_bla_bla.jpg
+            -#       %a.btn.btn-success
+            -#         .fa.fa-download
+            -#         Descargar
+
+            -# %li
+            -#   %i.fa.fa-clock-o.bg-gray

@@ -1,5 +1,9 @@
+## Don't change or move this file! It's only a example.
+
 ## Sample file to configure database conection
-## Chane user name and password and rename this file to config/database.yml
+
+## Replace username and password with your local settings.
+## Save the changes in `YOUR_PROJECT_PATH/config/database.yml`.
 
 default: &default
   adapter: postgresql

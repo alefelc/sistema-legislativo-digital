@@ -26,10 +26,6 @@ $shadow_color: #000000;
   font-weight: bold;
 }
 
-.main-title {
-  margin-top: 5px;
-}
-
 .nav-tabs > li > a {
   color: gray;
 }
@@ -38,14 +34,24 @@ $shadow_color: #000000;
   margin-top: 10px;
 }
 
-div.dataTables_filter label::before {
-  content: "\f002";
-  color: #3c4444 !important;
-  font-size: 16px;
-  font-family: FontAwesome;
-  color: #585858;
-  margin-right: 5px;
-  margin-left: 1px;
+.dataTables_filter  {
+  @extend .pull-right;
+  label::before {
+    content: "\f002";
+    color: #3c4444 !important;
+    font-size: 16px;
+    font-family: FontAwesome;
+    color: #585858;
+    margin-right: 5px;
+    margin-left: 1px;
+  }
+}
+
+.dataTables_paginate {
+  @extend .pull-right;
+  .pagination {
+    margin: 0px;
+  }
 }
 
 .report-range {
@@ -54,4 +60,61 @@ div.dataTables_filter label::before {
   padding: 5px 10px;
   border: 1px solid #ccc;
   width: 100%
+}
+
+.box .nav-stacked > li {
+  border-bottom: 2px solid #f4f4f4;
+}
+
+.box-footer {
+  border-top: 2px solid #f4f4f4;
+}
+
+.box-header.with-border {
+    border-bottom: 2px solid #f4f4f4;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+textarea {
+  max-width: 100%;
+}
+
+// Hide repeated elements
+.select2-results__option[aria-selected=true] {
+  display: none;
+}
+
+.alert.alert-dismissable {
+  border-color: black;
+  margin-top: 4px;
+}
+
+.modal-header { padding: 5px !important; }
+
+.modal-header-warning {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.footer-content {
+  padding: 0;
+}
+
+.margin-out {
+  margin: 0;
+}
+
+// Fix autoheigth on select2
+// .select2-container--bootstrap
+// .select2-selection--multiple
+// .select2-selection__rendered {
+//   display: inline-table;
+// }
+
+.asterisc {
+  color: red;
+  float: right;
 }

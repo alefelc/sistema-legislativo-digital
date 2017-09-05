@@ -15,11 +15,11 @@ class CircuitosController < ApplicationController
         ##add relation circuit and tramites
         unless params[:tramites_pendientes].blank?
           JSON.parse(params[:tramites_pendientes]).each do |key, value|
-            tramite = Tramite.find(value["id"])
+            tramite = Procedure.find(value["id"])
             circuito.tramites << tramite
 
             #set finalized state to tramite
-            tramite.estado_tramites.create do |e|
+            tramite.estado_procedures.create do |e|
               e.nombre = "Finalizado"
               e.tipo = 3
               e.especificacion = "Circuito Nro: " + circuito.nro.to_s
@@ -70,14 +70,14 @@ class CircuitosController < ApplicationController
         circuito.update params[:circuito].to_hash
 
         current_tramites = []
-        old_tramites = circuito.tramites.map{ |x| x.id }
+        old_tramites = circuito.procedures.map{ |x| x.id }
         JSON.parse(params[:tramites_pendientes]).each do |key, value|
           unless old_tramites.include?(value["id"])
-            tramite = Tramite.find(value["id"])
-            circuito.tramites << tramite
+            tramite = Procedure.find(value["id"])
+            circuito.Procedures << tramite
 
             #set finalized state to tramite
-            tramite.estado_tramites.create do |e|
+            tramite.estado_procedures.create do |e|
               e.nombre = "Finalizado"
               e.tipo = 3
               e.especificacion = "Circuito Nro: " + circuito.nro.to_s
@@ -90,8 +90,8 @@ class CircuitosController < ApplicationController
 
         # delete tramites and final state
         (old_tramites - current_tramites).each do |id|
-          circuito.tramites.delete(id)
-          tramite = Tramite.find(id)
+          circuito.procedures.delete(id)
+          tramite = Procedure.find(id)
           tramite.estado_tramites.find_by(ref_id: expediente.id, tipo: "3").delete
           tramite.pendiente = true
           tramite.save

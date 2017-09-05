@@ -2,15 +2,13 @@
 %html
   %head
     %title Sistema Legislativo Digital
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': true
+    = javascript_include_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
-
     = favicon_link_tag 'favicon.ico'
 
-    %meta{:charset => "UTF-8"}
-    / Tell the browser to be responsive to screen width
-    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name: 'viewport' }
 
     / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     / WARNING: Respond.js doesn't work if you view the page via file://
@@ -19,4 +17,37 @@
       %script{ src: 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js' }
 
 
-  = render 'layouts/layout'
+  %body.skin-green.fixed.sidebar-mini
+    .wrapper
+      = render 'layouts/header'
+
+      = render 'layouts/sidebar'
+
+      = render 'layouts/page_content'
+
+      = render 'layouts/footer'
+
+  :javascript
+
+  $(document).ready(function() {
+
+    $(document).on('ajax:success', '#user-form', function() {
+      window.location.reload();
+    });
+
+    $(document).on('ajax:error', '#user-form', function() {
+      swal({
+        title: 'Email o contraseña NO válidos',
+        text: 'Por favor, intente nuevamente',
+        type: 'error'
+      });
+    });
+
+    $('#log-out').on('click', function(e) {
+      $.ajax({
+        url: '/users/sign_out',
+        type: 'DELETE',
+        success: function() { window.location.reload() }
+      });
+    });
+  });

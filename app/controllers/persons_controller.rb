@@ -1,17 +1,18 @@
 class PersonsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!
 
   respond_to :json, :html
 
   def create
-    pers = params[:person]
-    @person = Person.create pers.to_hash
+    person = Person.new persons_params
 
-    render json: {
-      status: :ok,
-      message: "Success!",
-      iniciador: @person.as_json(methods: 'type' )
-    }.to_json
+    if person.save!
+      response = { message: "Success!", iniciador: person.as_json(methods: 'type') }
+      render json: response, status: :ok
+    else
+      response = { message: person.errors }
+      render json: response, status: :bad_request
+    end
   end
 
   def update
@@ -34,7 +35,7 @@ class PersonsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: PeopleDatatable.new(view_context) }
+      format.json { render json: build_json }
     end
   end
 
@@ -43,10 +44,27 @@ class PersonsController < ApplicationController
     render layout: false
   end
 
+  def new
+    @person = Person.new
+    render layout: false
+  end
+
   private
 
+  def build_json
+    if params[:select_q]
+      q = "%#{params[:select_q]}%"
+      w = "concat(surname, ' ', name) ilike ? or "
+      w += "concat(name, ' ', surname) ilike ? or "
+      w += "cuit_or_dni ilike ?"
+      Person.where(w, q, q, q).to_json only: :id, methods: :text
+    else
+      PeopleDatatable.new(view_context)
+    end
+  end
+
   def persons_params
-    params.require(:person).permit :type, :nombre, :apellido, :email, :nro_doc,
-                                   :telefono, :domicilio, :cuit
+    params.require(:person).permit :type, :name, :surname, :cuit_or_dni, :phone,
+      :cuit_or_dni, :address, :position, :email, :bloque_id
   end
 end

@@ -1,0 +1,64 @@
+<% @procedure = @loop.origin_procedure %>
+<% dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM") %>
+<% if dem.present? %>
+  <div>
+    <div> <strong> <%= dem.denominacion %> </strong> (DEM) </div>
+    <small>
+      <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).map do |signatory| %>
+        <% "#{signatory.surname}, #{signatory.name}" %>
+      <% end %>
+      <%= "(Fte./s: #{sign.join(' - ')})" if sign.present? %>
+    </small>
+  </div>
+<% end %>
+
+<% sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL") %>
+<% if sl.present? %>
+  <div>
+    <div><strong> <%= sl.denominacion %> </strong> (Direc. Legislativa)</div>
+    <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).map do |signatory| %>
+      <% "#{signatory.surname}, #{signatory.name}" %>
+    <% end %>
+    <small><%= "(Fte./s: #{sign.join(' - ')})" if sign.present? %></small>
+  </div>
+<% end %>
+
+<% @procedure.bloques.each do |b| %>
+  <div> <strong> <%= b.denominacion %> </strong> (Bloque partidario) </div>
+<% end %>
+
+<% @procedure.comisions.each do |b| %>
+  <div> <strong> <%= b.denominacion %> </strong> (Comisión) </div>
+<% end %>
+
+<% @procedure.persons.each do |b| %>
+  <div>
+    <div><strong> <%= b.full_name %> </strong> (<%= I18n.t("persons.types.#{b.type}") %>) </div>
+    <% if b.type == "Juridica" %>
+      <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).map do |signatory| %>
+        <% "#{signatory.surname}, #{signatory.name}" %>
+      <% end %>
+      <small><%= "(Fte./s: #{sign.join(' - ')})" if sign.present? %></small>
+    <% end %>
+  </div>
+<% end %>
+
+<% @procedure.reparticion_oficials.each do |b| %>
+  <div>
+    <div> <strong> <%= b.denominacion %> </strong> (Repartición oficial) </div>
+    <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).map do |signatory| %>
+      <% "#{signatory.surname}, #{signatory.name}" %>
+    <% end %>
+    <small><%= "(Fte./s: #{sign.join(' - ')})" if sign.present? %></small>
+  </div>
+<% end %>
+
+<% @procedure.municipal_offices.each do |b| %>
+  <div>
+    <div><strong><%= b.denominacion %></strong> (Dependencia municipal) </div>
+    <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory| %>
+      <% "#{signatory.surname}, #{signatory.name}" %>
+    <% end %>
+    <small><%= "(Fte./s: #{sign.join(' - ')})" if sign.present? %></small>
+  </div>
+<% end %>

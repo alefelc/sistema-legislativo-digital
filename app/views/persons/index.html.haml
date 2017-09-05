@@ -1,19 +1,24 @@
-- content_for :title, "Personas físicas y jurídicas"
 #person-edit
 
 #people
-  %table.table.table-striped.table-bordered#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
-    %thead
-      %tr
-        %th= t('.type')
-        %th= t('.name')
-        %th= t('.surname')
-        %th= t('.address')
-        %th= t('.dni_cuit')
-        %th= t('.phone')
-        %th= t('.email')
-        %th
-    %tbody
+  %h2
+    Listado de personas cargadas en el sistema
+
+  .box.box-primary
+    .box-body
+      %table.table.table-striped#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
+        %thead
+          %tr
+            %th #
+            %th= t('.type')
+            %th= t('.name')
+            %th= t('.surname')
+            %th= t('.address')
+            %th= t('.dni_cuit')
+            %th= t('.phone')
+            %th= t('.email')
+            %th
+        %tbody
 
 :javascript
   People.IndexDataTable.init();

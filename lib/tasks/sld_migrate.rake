@@ -33,7 +33,7 @@ namespace :db do
 
   desc "Carga de organos de gobierno"
   task gobierno: :environment do
-    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL (DEM)", codigo: "DEM"
+    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL", codigo: "DEM"
     print '.'
     OrganoDeGobierno.create denominacion: "CONCEJO DELIBERANTE RIO CUARTO", codigo: "CONC"
     print '.'

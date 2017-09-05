@@ -1,0 +1,268 @@
+<% if policy(Procedure).type_create? %>
+  <div class="form-group col-md-5">
+    <label for="<%= :procedure_type %>">
+      <%= t('.type') %>
+    </label>
+    <% if procedure.is_dispatch? %>
+      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', disabled: :disabled } %>
+    <% else %>
+      <%= f.select :type, procedure_types(procedure.type), { include_blank: t('.blank_type') }, { class: 'form-control input-lg', type: :number, min: 1, step: 1 } %>
+    <% end %>
+  </div>
+<% end %>
+<% if policy(Procedure).sheets_create? %>
+  <div class="form-group col-md-2">
+    <label for="<%= :procedure_sheets %>">
+      <%= t('.sheets') %>
+      <span class="asterisc">*</span>
+    </label>
+    <%= f.text_field :sheets, { class: 'input-lg form-control', placeholder: t('.sheets'), type: :number, min: 1, step: 1 } %>
+  </div>
+<% end %>
+<% if @procedure.isnt_dispatch? %>
+  <div class="form-group col-md-5 common-procedure" style="margin-top: 25px">
+    <%= button_tag type: 'button', class: 'initiator-btn btn btn-primary btn-lg', data: { url: new_initiator_path }, style: 'padding-left: 10px;' do %>
+      <div class="fa fa-user-plus"></div>
+      Cargar Iniciador
+    <% end -%>
+  </div>
+<% end %>
+
+<% if true #dispatch role %>
+  <div class="dispatch-procedure col-md-5">
+    <label for="<%= :procedure_councilor %>">
+      <%= t('.legislative_files') %>
+    </label>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= f.select :legislative_file_ids, load_legislative_files(@procedure), {}, multiple: true, class: 'input-lg form-control' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="dispatch-procedure">
+  <div class="col-md-12">
+    <%= label_tag t('.dispatch_date') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:day, day_options(), { include_blank: 'No especificado', prompt: 'Día' }, title: 'Día', class: 'input-lg form-control') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:month, month_options(@procedure.month), { include_blank: 'No especificado', prompt: 'Mes' }, title: 'Mes', class: 'input-lg form-control') %>
+  </div>
+  <div class="col-md-4">
+    <%= f.select(:year, year_options(), { include_blank: 'No especificado', prompt: 'Año' }, title: 'Año', class: 'input-lg form-control') %>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="<%= :procedure_comision %>"> <%= t('.commissions') %> </label>
+      <%= select_tag :comision_ids, load_comisions(@procedure), { multiple: true, class: 'input-lg form-control' } %>
+    </div>
+  </div>
+</div>
+
+  <div class="dispatch-procedure col-md-12">
+    <div class="form-group">
+      <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
+      <%= select_tag :councilor_ids, load_councilors(@procedure), { multiple: true, class: 'input-lg form-control' } %>
+    </div>
+  </div>
+
+<% if policy(Procedure).initiators_create? && @procedure.isnt_dispatch? %>
+  <div class="common-procedure col-md-12">
+    <table class="initiators-table table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center"> Iniciadores del trámite</th>
+          <th style="width: 1%"> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM") %>
+        <% if dem.present? %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden"
+            value="{'id':'#','text':'DEM','type':'dem'}">
+            <td>
+              <%= dem.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:dem]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                  <input name="procedure[signator_attributes][]" type="hidden" value="{'id':'<%= signatory.id %>','text':'<%= signatory.text %>','sign_type':'dem'}">
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% sl = @procedure.organo_de_gobiernos.find_by(codigo: "SL") %>
+        <% if sl.present? %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden"
+            value="{'id':'#','text':'Secretaría Legislativa','type':'legislative_secretary'}">
+            <td>
+              <%= sl.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:legislative_secretary]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                  <input name="procedure[signator_attributes][]" type="hidden" value="{'id':'<%= signatory.id %>','text':'<%= signatory.text %>','sign_type':'legislative_secretary'}">
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @procedure.bloques.each do |b| %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'partisan_block'}">
+            <td> <%= b.denominacion %> </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @procedure.comisions.each do |b| %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'commission'}">
+            <td> <%= b.denominacion %> </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @procedure.persons.each do |b| %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type':'<%= calculate_type(b) %>'}">
+            <td>
+              <%= b.full_name %>
+              <ul>
+                <% if b.type == "Juridica" %>
+                  <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory| %>
+                    <input name="procedure[signator_attributes][]" type="hidden" value="{'id': '<%= signatory.id %>', 'text':'<%= signatory.text %>', ' sign_type':'particular_legal'}">
+                    <li> <%= signatory.text %> </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @procedure.reparticion_oficials.each do |b| %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id':'<%= b.id %>','text':'<%= b.text %>','type': 'official_distribution'}">
+            <td>
+              <%= b.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:official_distribution]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @procedure.municipal_offices.each do |b| %>
+          <tr>
+            <input name="procedure[initiator_attributes][]" type="hidden" value="{'id': '<%= b.id %>','text': '<%= b.text %>','type': 'municipal_office'}">
+            <td>
+              <%= b.denominacion %>
+              <ul>
+                <% @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:municipal_office]).each do |signatory| %>
+                  <li> <%= signatory.text %> </li>
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <div class="btn btn-xs btn-danger btn-remove">
+                <i class="fa fa-lg fa-times"></i>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <td colspan="2" class="text-center"> <i> Para asociar iniciadores al trámite haga click en el botón "Cargar Iniciador"</i>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+<% end %>
+<% if policy(Procedure).topic_create? && @procedure.isnt_dispatch? %>
+  <div class="form-group common-procedure col-md-12">
+    <label for="<%= :procedure_topic %>">
+      <%= t('.topic') %>
+    </label>
+    <%= f.text_area :topic, { class: 'input-lg form-control', placeholder: t('.topic_placeholder') } %>
+  </div>
+<% end %>
+<% if policy(Procedure).observations_create? %>
+  <div class="form-group col-md-12">
+    <label for="<%= :procedure_observations %>">
+      <%= t('.observations') %>
+    </label>
+    <%= f.text_field :observations, { class: 'form-control', placeholder: t('.observations_placeholder') } %>
+  </div>
+<% end %>
+<% if f.object.persisted? && policy(Procedure).finalized_create? &&@procedure.isnt_dispatch? %>
+  <div class="common-procedure form-group col-md-12" title="Si se finaliza el trámite por favor indique el motivo">
+    <div class="checkbox">
+      <label>
+        <div class="finished">
+          <%= check_box_tag :process_completed %>
+        </div>
+        <%= label_tag :process_completed, t('.process_completed') %>
+      </label>
+    </div>
+    <div class="finished-field" style="display: none">
+      <%= label_tag :finalizado_en %>
+      <%= text_field_tag :finalizado_en, '', { class: 'form-control', placeholder: t('.finished_placeholder') } %>
+    </div>
+  </div>
+<% end %>
+<% if policy(:contingency_plan).create? %>
+  <div class="col-md-12">
+    <%= render 'contingency_plan', f: f %>
+  </div>
+<% end %>
+
+<div class="col-md-12 col-xs-12">
+  <hr style="border-top: 1px solid #eeeeee;margin: 0px;margin-bottom: 10px;">
+  <%= link_to procedures_path, class: 'btn btn-default pull-left' do %>
+    <i class="fa fa-times-circle"></i>
+    Cancelar
+  <% end %>
+  <button class="btn btn-success btn-lg pull-right" type="submit">
+    <i class="fa fa-save fa-lg"></i>
+    Guardar
+  </button>
+</div>

@@ -1,0 +1,29 @@
+<h2 class="text-center">
+  Editando sesión
+</h2>
+
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Información de la sesión</h3>
+  </div>
+
+  <%= form_for @session do |form| %>
+
+    <div class="box-body row">
+      <%= render 'session_form', f: form %>
+    </div>
+
+    <div class="box-footer">
+      <div class="pull-right">
+        <%= link_to sessions_path, class: 'btn btn-default' do %>
+          <i class="fa fa-times-circle"></i>
+          Cancelar
+        <% end -%>
+        <%= button_tag type: :submit, class: 'btn btn-lg btn-success' do %>
+          <i class="fa fa-save fa-lg"></i>
+          Actualizar sesión
+        <% end -%>
+      </div>
+    </div>
+  <% end -%>
+</div>

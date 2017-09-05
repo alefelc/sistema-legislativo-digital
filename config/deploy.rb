@@ -1,42 +1,35 @@
-# config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'sld_new'
 set :repo_url, 'git@github.com:jlgasparrini/sistema-legislativo-digital.git'
-
-# Default branch is :master
-set :branch, 'develop'
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 set :use_sudo, false
 
 set :bundle_binstubs, nil
 
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 set :linked_files, fetch(:linked_files, []).push('config/database.yml')
-
-set :linked_dirs, fetch(:linked_dirs, []).push('shared/log', 'shared/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 after 'deploy:publishing', 'deploy:restart'
 
-set(:config_files, %w(
-   unicorn.rb
-   unicorn_init_new.sh
-))
+# set(:config_files, %w(
+#    unicorn.rb
+#    unicorn_init_new.sh
+# ))
 
-set(:executable_config_files, %w(
-  unicorn_init_new.sh
-))
+# set(:executable_config_files, %w(
+#   unicorn_init_new.sh
+# ))
 
-set(:symlinks, [
-  {
-  source: "unicorn_init_new.sh",
-  link: "/etc/init.d/unicorn_sld_new"
-  }
-])
+# set(:symlinks, [
+#   {
+#   source: "unicorn_init_new.sh",
+#   link: "/etc/init.d/unicorn_sld_new"
+#   }
+# ])
 
 namespace :deploy do
   task :restart do
-    invoke 'unicorn:restart'
+    invoke 'unicorn:reload'
   end
 end
 # Default deploy_to directory is /var/www/my_app_name

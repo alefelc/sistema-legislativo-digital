@@ -1,0 +1,13 @@
+- activities_sets.each do |set|
+  .col-md-4.col-sm-4.col-xs-12
+    .box.box-danger.box-border
+      .box-header.with-border.text-center
+        %h2.box-title= set[:title]
+      .box-body
+        %ul.to_do
+          - set[:activities].each do |activity|
+            %li.remove-bullet{ class: "#{activity[:child].present? ? 'double-tab' : ''}"}
+              %p
+                .fa-checkbox.xs
+                  = check_box_tag "role[activities][]", activity[:activity], @role.has?(activity[:activity]), { id: activity[:activity], class: 'icheck-me', 'data-skin': :square, 'data-color': :red }
+                  %label.pointer{ for: activity[:activity] }= activity[:name]

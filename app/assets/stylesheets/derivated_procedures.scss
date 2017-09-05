@@ -1,0 +1,35 @@
+#derivated-procedures {
+  .derivation-title {
+    display: none;
+  }
+
+  .minimal-hr {
+    margin: 0;
+  }
+
+  .alternative-button-header {
+    display: none;
+  }
+
+  .dataTables_empty {
+    @extend .text-center;
+    color: black;
+  }
+
+  .dataTables_processing.panel.panel-default {
+    border: 0;
+  }
+
+  #reportrange {
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    display: none;
+  }
+
+  .dataTables_info {
+    font-style: italic;
+  }
+}

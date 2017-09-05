@@ -1,0 +1,22 @@
+<% if flash.any? %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert-<%= message_type %> alert alert-dismissable hide-alert ">
+      <button class="close" type="button" data-dismiss="alert" aria-hidden="true"> × </button>
+      <ul class="fa-ul">
+        <% if message.is_a? Array %>
+          <% message.each do |msg| %>
+            <li>
+              <i class="fa fa-li <%= flash_icon(message_type) %>"></i>
+              <%= msg %>
+            </li>
+          <% end -%>
+        <% else %>
+          <li>
+            <i class="fa fa-li <%= flash_icon(message_type)%>"></i>
+            <%= message %>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end %>
+<% end %>

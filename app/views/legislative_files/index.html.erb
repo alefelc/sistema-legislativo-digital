@@ -1,0 +1,104 @@
+<div id="expedientes">
+  <div id="caratula">
+    <br> <br> <br> <br>
+
+    <div id="column-one">
+      <p id="column-one-p-one">
+        <br><br><br>
+        <span id="title"> MOVIMIENTOS </span>
+        <br> <br> <br>
+        <span class="titles" id="ingreso">INGRESO:</span>
+        <span id="ingreso-text">
+          <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+        </span>
+        <br> <br> <br> <br>
+        <span class="titles" id="estado">ESTADO PARLAMENTARIO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="dictamen">DICTAMEN</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion">APROBACION PRIMERA LECTURA:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="aprobacion-two">APROBACION DEFINITIVA</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="archivo">ARCHIVO:</span>
+        <br> <br> <br> <br>
+        <span class="titles" id="rechazo">RECHAZO:</span>
+      </p>
+    </div>
+    <div id="column-two">
+      <div id="logo">
+        <img src="<%= image_url('logo-carat.png')%>" id="carat-image">
+      </div>
+      <p id="column-two-p-one">
+        CONCEJO DELIBERANTE <br> RIO CUARTO
+      </p>
+        <br> <br>
+      <p id="column-two-p-two"></p>
+        <br>
+        <span class="titles-two" id="exp-num">EXPEDIENTE Nº:</span>
+        <span id="numero-text"></span>
+        <br>
+        <br>
+        <span class="titles-two" id="iniciador">INICIADOR:</span>
+        <span id="iniciador-text"> &nbsp </span>
+        <br> <br> <br> <br> <br>
+        <span class="titles-two" id="asunto">ASUNTO:</span>
+        <span id="asunto-text"> &nbsp </span>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        <span class="titles-two" id="comision">COMISIÓN</span>
+        <span id="comision-text">&nbsp</span>
+        <br> <br> <br> <br>
+        <span class="titles-two" id="dispositivo">DISPOSITIVO LEGAL SANCIONADO:</span>
+        <span id="dispositivo-text">&nbsp</span>
+        <br> <br> <br>
+    </div>
+  </div>
+</div>
+
+<div id="index-legislative-files">
+  <h2 class="text-center"> EXPEDIENTES LEGISLATIVOS </h2>
+
+  <div class="box box-primary" id="procedures">
+    <div class="box-header">
+      <%= render 'header' %>
+    </div>
+    <div class="box-body">
+      <table class="table table-striped dataTable" id="legislative-files-table" data-source="<%= legislative_files_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>Expediente nro</th>
+            <th>Sumario</th>
+            <th>Fecha</th>
+            <th>Trámite</th>
+            <th>Circuitos</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @loops.each do |l| %>
+            <tr>
+              <td> <%= l.number %></td>
+              <td> <%= l.topic %></td>
+              <td> <%= l.created_at.to_date %></td>
+              <td> <%= link_to l.origin_procedure, l.origin_procedure if l.origin_procedure.present? %></td>
+              <td> <%= l.loops.count - 1 %></td>
+              <td>
+                <i class='linktoprint btn btn-danger fa fa-print fa-lg' data-expediente='<%= l.id %>' data-nro='<%= l.number %>' data-iniciador='<%=  %>' data-asunto='<%= l.topic.try(:upcase) %>' data-anio='<%= to_date(l.date) %>' title='Imprimir Carátula'></i>
+                <%= link_to '', legislative_file_path(l), class: 'btn btn-info fa fa-lg fa-eye' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  if ($('#index-legislative-files').length) {
+    $('#legislative-files-table').dataTable({
+      "order": []
+    });
+  }
+});
+</script>

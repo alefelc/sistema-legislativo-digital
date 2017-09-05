@@ -6,28 +6,29 @@ gem 'rails', '4.2.1'
 # A very fast & simple Ruby web server.
 gem 'thin', '1.6.4'
 
-# Use postgresql as the database for Active Record
+# Is the Ruby interface to the PostgreSQL RDBMS.
 gem 'pg', '0.18.2'
 
-# Use SCSS for stylesheets
+# Ruby on Rails stylesheet engine for Sass
 gem 'sass-rails', '~> 5.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+# Use CoffeeScript for .coffee assets and views || Coffee files moved to es6
+gem 'coffee-rails'
+
+# Sprockets ES6 transformer
+gem 'sprockets-es6'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', '0.12.2'
 
-# React gem for interpreting jsx code.
-gem 'react-rails', '1.7.0'
-
-# Use jquery as the JavaScript library
+# A gem to automate using jQuery with Rails
 gem 'jquery-rails', '4.0.4'
+
+# Parse, validate, manipulate, and display dates in JavaScript.
 gem 'momentjs-rails'
-gem 'bootstrap-daterangepicker-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -45,40 +46,30 @@ gem 'rails-i18n', '4.0.4'
 gem 'bcrypt', '~> 3.1.7'
 
 # Capistrano for deployment
-gem 'capistrano', '~> 3.1'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano-rvm', '~> 0.1.1'
-gem 'capistrano-rails-console', '~> 1.0', '>= 1.0.2'
-gem 'capistrano-rails', '~> 1.1', group: :development
+gem 'capistrano-rails'
+gem 'capistrano-rvm'
+gem 'capistrano3-unicorn'
 
 # Activeadmin
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 
 # HTML Abstraction Markup Language
 gem 'haml', '4.0.7'
 
 # Bootstrap for Sass
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass'
 
 # Sprockets Rails integration
 gem 'sprockets-rails', '2.3.2', require: 'sprockets/railtie'
+
+# Rack-based asset packaging system
 gem 'sprockets', '3.3.0'
 
 # Icons
-gem 'font-awesome-sass', '~> 4.4.0'
+gem 'font-awesome-sass', '~> 4.7.0'
 
-# Ajax synchronizate datatables
-gem 'jquery-datatables-rails', '3.3.0'
-gem 'ajax-datatables-rails', '0.3.1'
-gem 'kaminari', '0.16.3'
-
-# Bootstrap Multiselect v0.9.13
-gem 'bootstrap-multiselect-rails', '0.9.9'
-
-# A beautiful replacement for Javascript's "Alert".
-gem 'rails-assets-sweetalert', source: 'https://rails-assets.org'
-
-gem 'alertify-rails'
+# A sophisticated paginator for Ruby webapps
+gem 'kaminari'
 
 # Easy file attachment management for ActiveRecord.
 gem 'paperclip'
@@ -86,8 +77,20 @@ gem 'paperclip'
 # Dynamic nested forms.
 gem 'cocoon'
 
-# jQuery File Upload integrated for Rails.
-gem "jquery-fileupload-rails"
+# Track changes to your models' data. Good for auditing or versioning.
+gem 'paper_trail'
+
+# Minimal authorization through OO design and pure Ruby classes
+gem 'pundit'
+
+# Fast, Nimble PDF Writer for Ruby
+gem 'prawn'
+
+# Prawn table support
+gem 'prawn-table'
+
+# Barcode support
+gem 'barby'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -97,13 +100,14 @@ group :development do
   gem 'spring', '1.3.6'
 
   # Print rails objects in the cool way
-  gem 'awesome_print', '1.6.1', require: 'ap'
+  gem 'awesome_print', '1.6.1'
 
   # This is very usefull for rails panel extension of google chrome
   gem 'meta_request', '0.3.4'
 
   # Better error page for Rack apps
   gem 'better_errors', '2.1.1'
+  gem 'binding_of_caller'
 
   # Take off assets in rails console
   gem 'quiet_assets', '1.1.0'
@@ -111,6 +115,9 @@ group :development do
   # Haml generators for Rails 4
   gem 'haml-rails', '~> 0.9'
 
+  gem 'rails-erd'
+
+  gem 'pry'
   # Profiler for your development and production Ruby rack apps.
   # gem 'rack-mini-profiler', '0.9.7'
 
@@ -118,17 +125,43 @@ group :development do
   #gem 'mysql2', '0.4.1'
 end
 
-group :development, :test do
-  gem 'rails-erd'
-end
-
 group :production do
   # Use Unicorn as the app server
-  gem 'unicorn', '~> 4.8.2', group: :production
+  gem 'unicorn', '~> 4.8.2'
 
- # heroku settings
- # gem 'rails_12factor'
+  # heroku settings
+  gem 'rails_12factor'
 end
 
-# heroku settings
-# ruby 2.2.1
+########################################
+## Replace theses gem and rails-assets.org with webpack or bower.
+# Datetime and Daterange pickers
+gem 'bootstrap-daterangepicker-rails'
+gem 'bootstrap3-datetimepicker-rails'
+
+# Bootstrap Multiselect v0.9.9
+gem 'bootstrap-multiselect-rails'
+
+# Select2 for rails asset pipeline
+gem 'select2-rails'
+
+# jQuery File Upload integrated for Rails.
+gem "jquery-fileupload-rails"
+
+# icheck packaged for Rails asset pipeline.
+gem 'icheck-rails'
+########################################
+
+source 'https://rails-assets.org' do
+  # A beautiful replacement for Javascript's "Alert".
+  gem 'rails-assets-sweetalert'
+
+  # Ajax synchronizate datatables
+  gem 'rails-assets-datatables'
+
+  # Open source JavaScript jQuery plugin for a full-sized, drag & drop event calendar.
+  gem 'rails-assets-fullcalendar'
+end
+
+# Ruby version
+ruby '2.2.2'

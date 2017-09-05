@@ -1,0 +1,213 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class ListenProceduresFinder {
+	constructor() {
+		this.select = '#legislative_file_origin_procedure_id';
+		this.listen();
+	}
+
+	listen() {
+		let options = {
+		  allowClear: true,
+		  placeholder: 'Busque trámites',
+		  language: 'es',
+		  theme: "bootstrap"
+		};
+		options.ajax = {
+		  url: "<%= url_helpers.procedures_path %>",
+		  dataType: 'json',
+		  delay: 250,
+		  cache: true,
+		  data: (params) => {
+		    return {
+		      select_q: params.term || '%%'
+		    };
+		  },
+		  processResults: (data, params) => {
+		    return { results: data }
+		  }
+		};
+		$(this.select).select2(options).on("select2:select", function(e) {
+	    // token selected
+	    var data = e.params.data;
+	    $('#legislative_file_topic').val(data.topic);
+	    $('#legislative_file_sheets').val(data.sheets);
+	    $('#legislative_file_observations').val(data.observations);
+	    $('#legislative_file_date').val(data.created_at.substr(0,10));
+	   });
+	}
+}
+
+class TagsSelect {
+	constructor() {
+		this.select = '#legislative_file_tags';
+		this.listen();
+	}
+
+	options() {
+		return {
+		  allowClear: true,
+		  language: 'es',
+		  theme: "bootstrap",
+		  placeholder: 'Busque voces claves/etiquetas',
+			ajax: {
+			  url: "<%= url_helpers.tags_path %>",
+			  dataType: 'json',
+			  delay: 250,
+			  cache: true,
+			  data: (params) => {
+			    return { select_q: params.term || '%%' }
+			  },
+			  processResults: (data, params) => {
+			    return { results: data }
+			  }
+			}
+		}
+	}
+
+	listen() {
+		$(this.select).select2(this.options());
+	}
+}
+
+class AttachedLegislativeFiles {
+	constructor(selectId) {
+		this.select = selectId;
+		this.listen();
+	}
+
+	options() {
+		return {
+		  allowClear: true,
+		  language: 'es',
+		  theme: "bootstrap",
+		  placeholder: 'Busque expediente por número',
+			ajax: {
+			  url: "<%= url_helpers.legislative_files_path %>",
+			  dataType: 'json',
+			  delay: 250,
+			  cache: true,
+			  data: (params) => {
+			    return { select_q: params.term || '%%' }
+			  },
+			  processResults: (data, params) => {
+			    return { results: data }
+			  }
+			}
+		}
+	}
+
+	listen() {
+		$(this.select).select2(this.options());
+	}
+}
+
+class LegislativeFileStateModal {
+	constructor() {
+		this.btnNew = '.new-state-btn';
+		this.editBtn = '.edit-state-btn';
+		this.editScope = '#legislative-file-edit';
+		this.listener();
+	}
+
+	listener() {
+		$(this.editScope).on('ajax:success', `${this.btnNew}, ${this.editBtn}`, function(event, data) {
+			$('#state-form-modal').html(data);
+			$('#state-form-modal .modal').modal('show');
+		});
+	}
+
+	close() {
+		$('#state-form-modal').on('ajax:success', 'form', function() {
+			$('#state-form-modal').modal('hide').html();
+		});
+	}
+}
+
+class AutoLoadProcedure {
+	constructor() {
+		this.select = '#legislative_file_origin_procedure_id';
+		this.setSelect2();
+	}
+
+	setSelect2() {
+		let params = new URLSearchParams(window.location.search);
+		let id = params.get('proc_id');
+		let text = `#${params.get('proc_id')}`;
+
+		if (id && text)
+			$(this.select).append(`<option value="${id}">${text}</option>`);
+
+		$.ajax({
+		  url: '/procedures/'+id,
+		  dataType: 'json',
+			success: function(data) {
+				$('#legislative_file_topic').val(data.topic);
+				$('#legislative_file_sheets').val(data.sheets);
+				$('#legislative_file_observations').val(data.observations);
+				$('#legislative_file_date').val(data.created_at.substr(0,10));
+			}
+		});
+	}
+}
+
+$(document).ready(function() {
+	if ($('#index-legislative-files, #legislative-file-show').length) {
+    $('#index-legislative-files, #legislative-file-show').on('click', '.linktoprint', function() {
+			$('#expedientes #caratula').css('display','block');
+	    $('#expedientes #caratula #numero-text').append($(this).data('nro'));
+	    $('#expedientes #caratula #iniciador-text').append($(this).data('iniciador'));
+	    $('#expedientes #caratula #asunto-text').append($(this).data('asunto'));
+	    $('#expedientes #caratula #ingreso-text').append($(this).data('anio'));
+	    $('#expedientes #caratula').print({
+	      globalStyles: true,
+	      mediaPrint: false,
+	      stylesheet: null,
+	      noPrintSelector: '.no-print',
+	      iframe: true,
+	      append: null,
+	      prepend: null,
+	      manuallyCopyFormValues: true,
+	      deferred: $.Deferred(),
+	      timeout: 1000
+	    });
+	    $('#expedientes #caratula #ingreso-text').empty();
+	    $('#expedientes #caratula #numero-text').empty();
+	    $('#expedientes #caratula #iniciador-text').empty();
+	    $('#expedientes #caratula #asunto-text').empty();
+	    $('#expedientes #caratula #ingreso-text').append('<br>');
+	    $('#expedientes #caratula #ingreso-text').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	    $('#expedientes #caratula #numero-text').append('');
+	    $('#expedientes #caratula #iniciador-text').append('&nbsp;');
+	    $('#expedientes #caratula #asunto-text').append('&nbsp;');
+	    $('#expedientes #caratula').css('display','none');
+	    return;
+    });
+	}
+
+	if ($('#legislative-file-show').length) {
+		$('input, textarea, select').prop('disabled', true);
+	}
+
+	if ($('#legislative-file-new').length) {
+		const procedure = new ListenProceduresFinder();
+		const tags = new TagsSelect();
+		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
+		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
+
+		new AutoLoadProcedure();
+	}
+
+	if ($('#legislative-file-edit').length) {
+		const procedure = new ListenProceduresFinder();
+		const tags = new TagsSelect();
+		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
+		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
+		const modalListener = new LegislativeFileStateModal();
+
+		$('.delete-state-btn').on('ajax:complete', function() {
+			location.reload();
+			$(window).scrollTop(0);
+		})
+	}
+});

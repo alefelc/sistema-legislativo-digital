@@ -1,0 +1,8 @@
+<div id="procedure_states">
+  <%= f.fields_for :procedure_states do |state| %>
+    <%= render 'procedure_state_fields', f: state %>
+    <div class="links">
+      <%= link_to_add_association '', f, :procedure_states, class: 'btn btn-success btn-lg fa fa-plus' %>
+    </div>
+  <% end %>
+</div>

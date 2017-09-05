@@ -1,0 +1,40 @@
+#users
+  %h2
+    Usuarios del sistema
+
+  .box.box-primary
+    .box-header
+      .row
+        .col-md-5.col-xs-12
+          - if current_user.present?
+            = link_to new_user_path, 'data-target': '#myModal', class: 'btn btn-primary btn-lg' do
+              %i.fa.fa-plus-circle.fa-lg
+              Nuevo usuario
+
+    .box-body
+      %table.table.table-hover.table-striped.dataTable#users-table{ 'data-source': users_path(format: :json) }
+        %thead
+          %tr
+            %th #
+            %th= t('.user')
+            %th= t('.email')
+            %th= t('.current_sign_in_at')
+            %th= t('.last_sign_in_at')
+            %th= t('.current_sign_in_ip')
+            %th= t('.last_sign_in_ip')
+            %th= t('.created_at')
+            %th= t('.updated_at')
+            %th
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.id
+              %td= link_to_if user.person.present?, user.person.try(:full_name), edit_user_path(user), class: 'btn'
+              %td= link_to user.email, edit_user_path(user), class: 'btn'
+              %td= user.current_sign_in_at
+              %td= user.last_sign_in_at
+              %td= user.current_sign_in_ip
+              %td= user.last_sign_in_ip
+              %td= user.created_at
+              %td= user.updated_at
+              %td= link_to content_tag(:i, nil, class: 'fa fa-pencil'), edit_user_path(user), class: 'btn btn-warning'

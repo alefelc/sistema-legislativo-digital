@@ -1,0 +1,335 @@
+<%= form_for @legislative_file_state, remote: true do |f| %>
+  <%= f.hidden_field :legislative_file_id %>
+  <div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header bg-primary">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span class="fa-lg" aria-hidden="true"> × </span>
+          </button>
+          <h3 class="modal-title text-center state-title"> Nuevo estado en el expediente </h3>
+          <h3 class="modal-title text-center law-title"> Nueva Norma </h3>
+          <h3 class="modal-title text-center session-title"> Nueva Sesión </h3>
+        </div>
+
+        <div class="modal-body">
+          <div class="row form-law">
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :number, 'Norma nro' %>
+                <%= text_field_tag :number, nil, type: :number, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :letter, 'Letra' %>
+                <%= text_field_tag :letter, nil, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <%= label_tag :year, 'Año' %>
+                <%= text_field_tag :year, nil, type: :number, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <%= label_tag :law_type, 'Tipo de norma' %>
+                <%= select_tag :law_type, options_for_select(law_types), class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-session">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= label_tag :number, 'Nro sesión' %>
+                <%= text_field_tag :number, nil, type: :number, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :place, 'Lugar' %>
+                <%= text_field_tag :place, nil, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :session_type, 'Tipo de Sesión' %>
+                <%= select_tag :session_type, options_for_select(session_types), class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :secret, 'Secreta?' %>
+                <%= check_box_tag :secret %>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= label_tag :started_at, 'Comienza el' %>
+                <div class="input-group">
+                  <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
+                  <%= text_field_tag :started_at, nil, class: 'form-control', placeholder: 'Fecha y hora de inicio' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag :finished_at, 'Finaliza el' %>
+                <div class="input-group">
+                  <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
+                  <%= text_field_tag :finished_at, nil, class: 'form-control', placeholder: 'Fecha y hora de finalización' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag :observation, 'Observación' %>
+                <%= text_field_tag :observation, nil, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div class="row main-body">
+            <div class="col-md-6 form-group">
+              <%= f.label :name, 'Nombre' %>
+              <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :state_type, 'Tipo' %>
+              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
+            </div>
+
+            <div class="session_nro form-group col-md-6">
+              <%= f.label :session_id, 'Sesión número:' %>
+              <div class="row">
+                <div class="col-md-9">
+                  <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+                </div>
+                <div class="col-md-1">
+                  <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :date_at, 'Fecha' %>
+              <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control' %>
+            </div>
+
+            <div class="form-group session col-md-6">
+              <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
+              <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
+            </div>
+
+            <div class="form-group session col-md-6" style="margin-top: 25px;">
+              <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
+            </div>
+
+            <div class="col-md-12">
+              <div class="comisions form-group">
+                <%= f.label :comision_ids, 'Comisiones asociadas' %>
+                <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' %>
+              </div>
+            </div>
+
+            <div class="form-group associated-laws col-md-12">
+              <%= f.label :law_ids, 'Normas asociadas' %>
+              <div class="row">
+                <div class="col-md-10">
+                  <%= f.select :law_ids, {}, {}, multiple: true, class: 'input-lg form-control' %>
+                </div>
+                <div class="col-md-1">
+                  <%= button_tag type: :button, class: 'btn btn-success create-law' do %>
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-lg pull-right save-state" type="submit">
+            <div class="fa fa-save fa-lg"></div> Guardar Estado
+          </button>
+          <button class="btn btn-warning btn-lg pull-right save-session" type="button">
+            <div class="fa fa-save fa-lg"></div> Guardar Sesión
+          </button>
+          <button class="btn btn-info btn-lg pull-right save-law" type="button">
+            <div class="fa fa-save fa-lg"></div> Guardar Norma
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+  $('#initiator-new.modal').on('shown.bs.modal', function() {
+    window.modalInitialized = true;
+
+    $('#legislative_file_state_session_id').select2({
+      allowClear: true,
+      placeholder: 'Busque sesión',
+      language: 'es',
+      ajax: {
+        url: "<%= sessions_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: function(params) {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: function(data, params) {
+          return { results: data }
+        }
+      }
+    });
+
+    $('#legislative_file_state_comision_ids').select2({
+      allowClear: true,
+      placeholder: 'Seleccione comisiones',
+      language: 'es',
+      ajax: {
+        url: "<%= commissions_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: function(params) {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: function(data, params) {
+          return { results: data }
+        }
+      }
+    });
+
+    $('#legislative_file_state_law_ids').select2({
+      allowClear: true,
+      placeholder: 'Busque normas',
+      language: 'es',
+      multiple: true,
+      ajax: {
+        url: "<%= laws_path %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: function(params) {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: function(data, params) {
+          return { results: data }
+        }
+      }
+    });
+  });
+
+  $('#state-form-modal .create-session').on('click', function() {
+    $('.main-body, .state-title, .save-state').hide('fast');
+    $('.form-session, .session-title, .save-session').show('fast');
+  });
+
+  $('#state-form-modal .create-law').on('click', function() {
+    $('.main-body, .state-title, .save-state').hide('fast');
+    $('.form-law, .law-title, .save-law').show('fast');
+  });
+
+  $('form#new_legislative_file_state').on('ajax:success', function() {
+    location.reload();
+  });
+
+  $('#legislative_file_state_state_type').change(function() {
+    switch ($(this).val()) {
+      case "parliamentary":
+        $('.session_nro').show('fast');
+        break;
+      case "administrative":
+        $('.session_nro').hide('fast');
+        break;
+      case "comision":
+        $('.session_nro').hide('fast');
+        break;
+    }
+  });
+
+  $('#legislative_file_state_name').change(function() {
+    switch ($(this).val()) {
+      case "in_comision":
+        $('#legislative_file_state_state_type').removeAttr('disabled');
+        $('.session, .associated-laws').hide('fast');
+        $('.comisions').show('fast');
+        break;
+      case "day_plan":
+        $('#legislative_file_state_state_type').val("parliamentary").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.comisions, .session, .associated-laws').hide('fast');
+        break;
+      case "sanctioned":
+        $('#legislative_file_state_state_type').val("parliamentary").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.session, .associated-laws').show('fast');
+        $('.comisions').hide('fast');
+        break;
+      case "retired":
+        $('#legislative_file_state_state_type').val("administrative").change();
+        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('.session, .comisions, .associated-laws').hide('fast');
+        $('.comisions').hide('fast');
+        break;
+    }
+  });
+
+  $('.save-session').on('click', function() {
+    var params = {};
+    $.each($('.form-session input').serializeArray(), function() {
+      params[this.name] = this.value;
+    });
+
+    $.ajax({
+      url: '/sessions',
+      method: 'POST',
+      data: { session: params },
+      dataType: 'json',
+      delay: 250,
+      cache: true,
+      success: function() {
+        $('.save-session, .form-session, .session-title').hide('fast');
+        $('.main-body, .save-state, .state-title').show('fast');
+      },
+      error: function() {
+        alert('Imposible crear la sesión, reintente...');
+      }
+    });
+  });
+
+  $('.save-law').on('click', function() {
+    var params = {};
+    $.each($('.form-law input').serializeArray(), function() {
+      params[this.name] = this.value;
+    });
+
+    $.ajax({
+      url: '/laws',
+      method: 'POST',
+      data: { law: params },
+      dataType: 'json',
+      delay: 250,
+      cache: true,
+      success: function() {
+        $('.save-law, .form-law, .law-title').hide('fast');
+        $('.main-body, .save-state, .state-title').show('fast');
+      },
+      error: function() {
+        alert('Imposible crear la norma, reintente...');
+      }
+    });
+  });
+
+  $('.form-law, .law-title, .session-title, .save-session, .save-law, .form-session').hide();
+  setTimeout(function() {
+    $('.session, .associated-laws').hide();
+  }, 500);
+
+  $('#started_at, #finished_at').datetimepicker({
+    locale: 'es',
+    format:'DD/MM/YYYY HH:mm'
+  });
+</script>
