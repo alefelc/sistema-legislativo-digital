@@ -204,5 +204,10 @@ $(document).ready(function() {
 		const accumulatedIn = new AttachedLegislativeFiles("#legislative_file_accumulated_in");
 		const physicallyAttached = new AttachedLegislativeFiles("#legislative_file_physically_attached");
 		const modalListener = new LegislativeFileStateModal();
+
+		$('.delete-state-btn').on('ajax:complete', function() {
+			location.reload();
+			$(window).scrollTop(0);
+		})
 	}
 });

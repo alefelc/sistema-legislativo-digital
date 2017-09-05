@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   def build_json_response
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
-      w = "id::text ilike ?"
+      w = "number::text ilike ?"
       Session.where(w, q).to_json only: :id, methods: :text
     else
       SessionDatatable.new view_context

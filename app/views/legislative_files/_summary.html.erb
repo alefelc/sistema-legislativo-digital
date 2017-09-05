@@ -1,21 +1,177 @@
-<table>
-  <tbody>
-    <tr>
-      <td width="1%"> Trámite asociado: </td>
-      <td width="48%"> <%= @loop.origin_procedure %> </td>
-      <td width="1%"> Fojas: </td>
-      <td width="48%"> <%= @loop.sheets %> </td>
-    </tr>
-    <tr>
-      <td width="1%"> Fecha: </td>
-      <td width="48%"> <%= @loop.date %> </td>
-      <td width="1%"> </td>
-      <td width="48%"> </td>
-    </tr>
-  </tbody>
-</table>
+<div class="box-body">
+  <div class="row">
 
-<dl class="dl-horizontal">
-  <dt>Sumario:</dt>
-    <dd><%= @loop.topic %></dd>
-</dl>
+    <div class="col-xs-12">
+
+      <div id="info" class="tab-pane fade in active">
+        <div class="row box-header lead with-border">
+          <div class="col-md-12">
+            Información completa del Expediente Legislativo <strong> <%= @loop.number %> </strong> año <strong> <%= @loop.year || '2017' %> </strong>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-danger">
+              <div class="box-header with-border text-center">
+                <h3 class="box-title"> Información del expediente </h3>
+              </div>
+              <div class="box-body">
+                <dl class="dl-horizontal">
+                  <div class="col-md-3">
+                    <dt>Trámite asociado:</dt>
+                      <dd><%= origin_procedure @loop %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fojas:</dt>
+                      <dd><%= @loop.sheets %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fecha:</dt>
+                      <dd><%= @loop.date %></dd>
+                  </div>
+                  <div class="col-md-12">
+                    <dt>Sumario:</dt>
+                      <dd><%= @loop.topic %></dd>
+                    <dt>Observaciones:</dt>
+                      <dd><%= @loop.observations %></dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-danger">
+              <div class="box-header with-border text-center">
+                <h3 class="box-title"> Información del circuito número 1 </h3>
+              </div>
+              <div class="box-body">
+                <dl class="dl-horizontal">
+                  <div class="col-md-3">
+                    <dt>Trámite asociado:</dt>
+                      <dd><%= origin_procedure @loop %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fojas:</dt>
+                      <dd><%= @loop.sheets %></dd>
+                  </div>
+                  <div class="col-md-3">
+                    <dt>Fecha:</dt>
+                      <dd><%= @loop.date %></dd>
+                  </div>
+                  <div class="col-md-12">
+                    <dt>Sumario:</dt>
+                      <dd><%= @loop.topic %></dd>
+                    <dt>Observaciones:</dt>
+                      <dd><%= @loop.observations %></dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-danger">
+              <div class="box-header with-border text-center">
+                <h3 class="box-title"> Trámites del expediente </h3>
+              </div>
+              <div class="box-body">
+                <table class="table table-striped margin-out">
+                  <thead>
+                    <tr>
+                      <th> Estado </th>
+                      <th> Fecha </th>
+                      <th> Especificación </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @loop.legislative_file_states.each do |state| %>
+                      <tr>
+                        <td>
+                          <div>
+                            <strong>
+                              <%= I18n.t("legislative_files.states.#{state.name}") %>
+                            </strong>
+                          </div>
+                          <%= build_small_state_procedure state %>
+                        </td>
+                        <td>
+                          <div>
+                            <strong> <%= state.date_at %> </strong>
+                          </div>
+                          <%= build_small_state_type state %>
+                        </td>
+                        <td>
+                          <% if state.initialized? %>
+                            <%= render 'initiators_signators' %>
+                          <% elsif state.dispatched? %>
+                            <% state.procedure.comisions.each do |b| %>
+                              <div> <strong> <%= b.denominacion %> </strong> </div>
+                            <% end %>
+                            <small>
+                              (Concejales: <%= state.procedure.persons.map(&:text).join(' - ') %>)
+                            </small>
+                          <% elsif state.in_comision? %>
+                            <% state.comisions.each do |c|  %>
+                              <div><strong> <%= c %> </strong></div>
+                            <% end %>
+                          <% elsif state.day_plan? %>
+                            <strong> Asunto a Tratar </strong>
+                          <% elsif state.sanctioned? %>
+                           <div> <strong> <%= state.sanction_specified %> </strong> </div>
+                            <small> [<%= state.sanction_type %>] </small>
+
+                            <p>
+                              <div>Sancionada la Ordenanza <%= link_to "#11111", "#11111" %></div>
+                              <div>Decreto Promulgatorio <%= link_to "#5555", "#5555" %></div>
+                              <div>Promulgado el 12/12/2017</div>
+                              <div>Comunicada al DEM el 12/12/2015</div>
+                            </p>
+                            <p>
+                              <div>Sancionada la Resolución <%= link_to "#5555", "#5555" %></div>
+                              <div>Comunicada el 12/12/2017 a</div>
+                              <div>Notificada el 12/12/2017 a</div>
+                            </p>
+                            <p>
+                              <div>Sancionada la Declaración <%= link_to "#9999", "#9999" %></div>
+                              <div>Comunicada el 12/12/2017 a</div>
+                              <div>Notificada el 12/12/2017 a</div>
+                            </p>
+                          <% end %>
+                        </td>
+                        <td class="pull-right">
+                          <% unless state.initialized? || state.dispatched? %>
+                            <%= link_to '', edit_legislative_file_state_path(state),
+                              class: 'edit-state-btn btn btn-warning btn-lg fa fa-pencil fa-lg',
+                              remote: true %>
+                            <%= link_to '', state, method: :delete, remote: true,
+                              class: 'delete-state-btn btn btn-danger btn-lg fa fa-trash fa-lg' %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="footer-content col-md-12 text-center">
+              <hr>
+              <%= link_to new_legislative_file_state_path(legislative_file_id: @loop.id), class: 'new-state-btn btn btn-primary btn-lg',
+                title: 'Agregar nuevo estado', remote: true do %>
+                <i class="fa fa-plus-circle fa-lg"></i>
+                Nuevo Estado
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
