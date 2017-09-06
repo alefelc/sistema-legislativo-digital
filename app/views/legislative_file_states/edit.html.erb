@@ -1,4 +1,4 @@
-<%= form_for @legislative_file_state, remote: true do |f| %>
+<%= form_for @legislative_file_state, remote: true, class: 'edit-state-form' do |f| %>
   <%= f.hidden_field :legislative_file_id %>
   <div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
     <div class="modal-dialog" role="document">
@@ -214,7 +214,7 @@
     $('.form-law, .law-title, .save-law').show('fast');
   });
 
-  $('form#new_legislative_file_state').on('ajax:success', function() {
+  $('form.edit-state-form').on('ajax:success', function() {
     location.reload();
   });
 
