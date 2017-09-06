@@ -253,24 +253,24 @@
   $('#legislative_file_state_name').change(function() {
     switch ($(this).val()) {
       case "in_comision":
-        $('#legislative_file_state_state_type').removeAttr('disabled');
+        $('#legislative_file_state_state_type').removeAttr('readonly');
         $('.session, .associated-laws').hide('fast');
         $('.comisions').show('fast');
         break;
       case "day_plan":
         $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('#legislative_file_state_state_type').attr('readonly', true);
         $('.comisions, .session, .associated-laws').hide('fast');
         break;
       case "sanctioned":
         $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('#legislative_file_state_state_type').attr('readonly', true);
         $('.session, .associated-laws').show('fast');
         $('.comisions').hide('fast');
         break;
       case "retired":
         $('#legislative_file_state_state_type').val("administrative").change();
-        $('#legislative_file_state_state_type').attr('disabled', true);
+        $('#legislative_file_state_state_type').attr('readonly', true);
         $('.session, .comisions, .associated-laws').hide('fast');
         $('.comisions').hide('fast');
         break;
