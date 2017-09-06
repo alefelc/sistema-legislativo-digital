@@ -58,7 +58,7 @@
 
 <div class="initiators-modal"></div>
 <div id="legislative-file-show">
-  <h2> Información del Expediente Legislativo </h2>
+  <h2 class="text-center"> INFORMACIÓN DEL EXPEDIENTE LEGISLATIVO </h2>
   <%= form_for @loop, disabled: 'disabled' do |f| %>
 
     <div class="box box-primary">
@@ -69,8 +69,8 @@
 
             <div id="info" class="tab-pane fade in active">
               <div class="row box-header lead with-border">
-                <div class="col-md-6">
-                  Expediente Legislativo nro: <strong> <%= @loop.number %> </strong>
+                <div class="col-md-6 text-bottom-align">
+                  <strong> Expediente legislativo número <%= @loop.number %> año <%= @loop.created_at.year %> </strong>
                 </div>
                 <% if policy(LegislativeFile).update? %>
                   <div class="col-md-6">

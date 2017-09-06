@@ -7,48 +7,42 @@
 
         <div class="row">
           <div class="col-md-12">
-            <div class="box-boy">
-              <dl class="dl-horizontal">
-                <div class="col-md-12">
-                  <div class="pull-right">
-                    <dt>Fojas totales:</dt>
-                      <dd><%= calculate_sheets @loop %></dd>
-                  </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <h3 class="word-top">Fojas:</h3>
                 </div>
-                <div class="col-md-6">
-                  <dt>SUMARIO:</dt>
-                    <dd><%= @loop.topic %></dd>
+                <div class="col-md-2">
+                  <%= calculate_sheets @loop %>
                 </div>
-                <div class="col-md-12">
-                  <dt>Exp. administrativos:</dt>
-                    <% @loop.origin_procedure.administrative_files.each do |af| %>
-                      <dd> <%= af %> </dd>
-                    <% end %>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <h3 class="word-top"> Sumario:  </h3>
                 </div>
-                <div class="col-md-12">
-                  <% if @loop.observations.present? %>
-                    <dt>Observaciones:</dt>
-                      <dd><%= @loop.observations %></dd>
+                <div class="col-md-10">
+                  <%= @loop.topic %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <h3 class="word-top">Exp. adm.:</h3>
+                </div>
+                <div class="col-md-10">
+                  <% @loop.origin_procedure.administrative_files.each do |af| %>
+                    <%= af %>
                   <% end %>
                 </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box box-danger">
-              <div class="box-header with-border text-center">
-                <h3 class="box-title"> Información del circuito número 1 </h3>
               </div>
-              <div class="box-body">
-                <dl class="dl-horizontal">
-                  <div class="col-md-12">
-                    <dt>SUMARIO:</dt>
-                      <dd>Este es un sumario que deberia ser lo suficientemente largo como para detectar si esto rompe algo en la vista del expediente</dd>
-                  </div>
-                </dl>
+              <div class="row">
+                <div class="col-md-2">
+                  <% if @loop.observations.present? %>
+                    <h3 class="word-top">Observ.:</h3>
+                  <% end %>
+                </div>
+                <div class="col-md-10">
+                  <%= @loop.observations %>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,6 @@
 ## Global javascript settings
+$('document').on 'ready', () ->
+  $('.tooltip-text').tooltip();
 
 ## Select2 default settings
 $.fn.select2.defaults.set 'theme', 'bootstrap'
@@ -94,12 +96,8 @@ $ ->
       return
   return
 
-$.fn.select2.amd.require ['select2/selection/search'], (Search) ->
-    oldRemoveChoice = Search.prototype.searchRemoveChoice
-    Search.prototype.searchRemoveChoice = () ->
-        oldRemoveChoice.apply this, arguments
-        this.$search.val ''
-
-# $ ->
-#   icheck()
-#   return
+#$.fn.select2.amd.require ['select2/selection/search'], (Search) ->
+#    oldRemoveChoice = Search.prototype.searchRemoveChoice
+#    Search.prototype.searchRemoveChoice = () ->
+#        oldRemoveChoice.apply this, arguments
+#        this.$search.val ''

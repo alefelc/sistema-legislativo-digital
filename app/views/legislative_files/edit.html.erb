@@ -1,9 +1,16 @@
 <div id="state-form-modal"></div>
 <div id="legislative-file-edit">
-  <h2> Expediente número <%= @loop.number %> año <%= @loop.created_at.year %></h2>
+  <h2 class="text-center"> ACTUALIZAR EXPEDIENTE LEGISLATIVO </h2>
   <%= form_for @loop, multipart: true do |f| %>
 
     <div class="box box-primary">
+      <div class="box-header with-border">
+        <div class="col-md-6 text-bottom-align">
+          <div class="box-title">
+            <strong> Expediente legislativo número <%= @loop.number %> año <%= @loop.created_at.year %> </strong>
+          </div>
+        </div>
+      </div>
       <div class="box-body">
         <div class="row">
 

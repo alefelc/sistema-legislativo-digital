@@ -71,7 +71,8 @@ $shadow_color: #000000;
 }
 
 .box-header.with-border {
-    border-bottom: 2px solid #f4f4f4;
+  border-bottom: 2px solid #f4f4f4;
+  padding-top: 0px;
 }
 
 .pointer:hover {
@@ -117,4 +118,8 @@ textarea {
 .asterisc {
   color: red;
   float: right;
+}
+
+.text-bottom-align {
+  padding-top: 17px;
 }

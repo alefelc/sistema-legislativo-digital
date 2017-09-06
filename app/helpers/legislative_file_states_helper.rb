@@ -32,4 +32,15 @@ module LegislativeFileStatesHelper
       ["2° Lectura","2° Lectura"]
     ]
   end
+
+  def session_number(state)
+    options_for_select [
+      [state.session, state.session_id]
+    ]
+  end
+
+  def state_comisions(state)
+    comisions = state.comisions.map {|c| [c.text, c.id]}
+    options_for_select comisions
+  end
 end
