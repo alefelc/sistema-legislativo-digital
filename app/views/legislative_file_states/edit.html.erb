@@ -104,7 +104,7 @@
                 <%= f.label :comision_ids, 'Comisiones asociadas' %>
                 <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
                   <% @legislative_file_state.comisions.each do |c| %>
-                    <option value="<%= c.id %>"> <%= c.text %> </option>
+                    <option selected value="<%= c.id %>"> <%= c.text %> </option>
                   <% end %>
                 <% end %>
               </div>
