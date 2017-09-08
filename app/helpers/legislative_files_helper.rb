@@ -79,14 +79,9 @@ module LegislativeFilesHelper
   end
 
   def build_small_state_procedure(state)
-    if state.initialized?
+    if state.initialized? || state.dispatched?
       content_tag :small do
-        ## THIS IS WRONG, because it never will work for circuits!!!!
-        link_to "Trámite #{state.legislative_file.origin_procedure}", state.legislative_file.origin_procedure
-      end
-    elsif state.dispatched?
-      content_tag :small do
-        link_to "Trámite #{state.procedure}", state.legislative_file.origin_procedure
+        link_to "Trámite #{state.procedure}", state.procedure
       end
     elsif state.in_comision?
       if state.session.present?
