@@ -89,8 +89,10 @@ module LegislativeFilesHelper
         link_to "Trámite #{state.procedure}", state.legislative_file.origin_procedure
       end
     elsif state.in_comision?
-      content_tag :small do
-        link_to state.session, state.session
+      if state.session.present?
+        content_tag :small do
+          link_to state.session, state.session
+        end
       end
     elsif state.day_plan?
       content_tag :small do

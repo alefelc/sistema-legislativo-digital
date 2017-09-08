@@ -70,7 +70,7 @@ $shadow_color: #000000;
   border-top: 2px solid #f4f4f4;
 }
 
-.box-header.with-border {
+.box-header.without-pad {
   border-bottom: 2px solid #f4f4f4;
   padding-top: 0px;
 }
@@ -84,9 +84,9 @@ textarea {
 }
 
 // Hide repeated elements
-.select2-results__option[aria-selected=true] {
-  display: none;
-}
+// .select2-results__option[aria-selected=true] {
+//   display: none;
+// }
 
 .alert.alert-dismissable {
   border-color: black;
@@ -122,4 +122,8 @@ textarea {
 
 .text-bottom-align {
   padding-top: 17px;
+}
+
+.text-bold {
+  font-weight: bold;
 }

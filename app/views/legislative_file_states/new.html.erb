@@ -15,6 +15,12 @@
 
         <div class="modal-body">
           <div class="row form-law">
+            <div class="col-md-12">
+              <div class="form-group">
+                <%= label_tag :law_type, 'Tipo de norma' %>
+                <%= select_tag :law_type, options_for_select(law_types), class: 'form-control' %>
+              </div>
+            </div>
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :number, 'Norma nro' %>
@@ -31,12 +37,6 @@
               <div class="form-group">
                 <%= label_tag :year, 'Año' %>
                 <%= text_field_tag :year, nil, type: :number, class: 'form-control' %>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <%= label_tag :law_type, 'Tipo de norma' %>
-                <%= select_tag :law_type, options_for_select(law_types), class: 'form-control' %>
               </div>
             </div>
           </div>
@@ -87,10 +87,10 @@
               <%= f.label :name, 'Nombre' %>
               <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
             </div>
-
+            <%= hidden_field_tag 'legislative_file_state[state_type]', 'parliamentary' %>
             <div class="form-group col-md-6">
               <%= f.label :state_type, 'Tipo' %>
-              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
+              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control legislative_file_state_type' %>
             </div>
 
             <div class="session_nro form-group col-md-6">
@@ -182,6 +182,11 @@
           return { results: data }
         }
       }
+    }).on('select2:select', function(e) {
+      $.getJSON('/sessions/' + $(this).val(), function(result) {
+        var date = moment(new Date(result.started_at)).format('YYYY-MM-DD');
+        $('#legislative_file_state_date_at').val(date);
+      });
     });
 
     $('#legislative_file_state_comision_ids').select2({
@@ -253,24 +258,24 @@
   $('#legislative_file_state_name').change(function() {
     switch ($(this).val()) {
       case "in_comision":
-        $('#legislative_file_state_state_type').removeAttr('readonly');
+        $('.legislative_file_state_type').removeAttr('disabled');
         $('.session, .associated-laws').hide('fast');
         $('.comisions').show('fast');
         break;
       case "day_plan":
-        $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("parliamentary").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.comisions, .session, .associated-laws').hide('fast');
         break;
       case "sanctioned":
-        $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("parliamentary").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.session, .associated-laws').show('fast');
         $('.comisions').hide('fast');
         break;
       case "retired":
-        $('#legislative_file_state_state_type').val("administrative").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("administrative").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.session, .comisions, .associated-laws').hide('fast');
         $('.comisions').hide('fast');
         break;
@@ -290,9 +295,12 @@
       dataType: 'json',
       delay: 250,
       cache: true,
-      success: function() {
+      success: function(data) {
         $('.save-session, .form-session, .session-title').hide('fast');
         $('.main-body, .save-state, .state-title').show('fast');
+
+        var $option = $("<option selected></option>").val(data.id).text(data.text);
+        $('#legislative_file_state_session_id').append($option).trigger('select2:select');
       },
       error: function() {
         alert('Imposible crear la sesión, reintente...');
@@ -302,7 +310,7 @@
 
   $('.save-law').on('click', function() {
     var params = {};
-    $.each($('.form-law input').serializeArray(), function() {
+    $.each($('.form-law input, .form-law select').serializeArray(), function() {
       params[this.name] = this.value;
     });
 

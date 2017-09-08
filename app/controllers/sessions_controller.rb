@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       flash[:success] = t '.success'
       respond_to do |format|
         format.html { redirect_to session_path(@session) }
-        format.json { render json: @session.to_json }
+        format.json { render json: @session.to_json(methods: :text) }
       end
     else
       flash.now[:error] = @session.errors.full_messages
@@ -31,6 +31,10 @@ class SessionsController < ApplicationController
 
   def show
     @session = Session.find params[:id]
+    respond_to do |format|
+      format.html
+      format.json { render json: @session.to_json }
+    end
   end
 
   def edit

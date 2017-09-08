@@ -7,7 +7,6 @@ class Users {
       placeholder: 'Busque una persona para asignarle un usuario',
       theme: 'bootstrap',
       language: 'es',
-      minimumInputLength: 2,
       ajax: {
         url: "<%= url_helpers.persons_path(format: :json) %>",
         dataType: 'json',
