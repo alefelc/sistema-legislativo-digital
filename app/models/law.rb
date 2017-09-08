@@ -8,4 +8,8 @@ class Law < ActiveRecord::Base
   def text
     "#{number} / #{letter} / #{year} (#{I18n.t "laws.types.#{law_type}" })"
   end
+
+  def to_s
+    "#{number}/#{letter}/#{year}"
+  end
 end
