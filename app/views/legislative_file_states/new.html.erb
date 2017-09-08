@@ -340,4 +340,52 @@
     locale: 'es',
     format:'DD/MM/YYYY HH:mm'
   });
+
+  $('.new_legislative_file_state').submit(function(e) {
+    var errors = [];
+    var fieldErrors = [];
+    // Date always must be present.
+    if (!$('#legislative_file_state_date_at').val()) {
+      errors.push('Fecha no puede estar en blanco');
+      fieldErrors.push($('#legislative_file_state_date_at').parent());
+    }
+
+    // Validation to parliamentary state type.
+    if ($('.legislative_file_state_type').val() == 'parliamentary')
+      if (!$('#legislative_file_state_session_id').val()) {
+        errors.push('Sesión no puede estar en blanco');
+        fieldErrors.push($('.session_nro'));
+      }
+
+    var state = $('#legislative_file_state_name').val();
+    switch(state) {
+      case 'in_comision':
+        // In comision state must be present when name is in_comision.
+        if (!$('#legislative_file_state_comision_ids').val().length) {
+          errors.push('Comisión/es no puede estar en blanco');
+          fieldErrors.push($('.comisions'));
+        }
+        break;
+      case 'day_plan':
+        break;
+      case 'sanctioned':
+        if (!$('#legislative_file_state_law_ids').val().length) {
+          errors.push('Norma/s no puede estar en blanco');
+          fieldErrors.push($('.associated-laws'));
+        }
+        break;
+      case 'retired':
+        break;
+    }
+
+    if (errors.length) {
+      alert(errors.join('\n'));
+      fieldErrors.forEach(function(elem) { elem.addClass('has-error') });
+      setTimeout(function() {
+        fieldErrors.forEach(function(elem) { elem.removeClass('has-error') });
+      }, 3000);
+      e.preventDefault();
+      return false;
+    }
+  });
 </script>

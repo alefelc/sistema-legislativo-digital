@@ -1,4 +1,4 @@
-<%= form_for @legislative_file_state, remote: true, class: 'edit-state-form' do |f| %>
+<%= form_for @legislative_file_state, remote: true do |f| %>
   <%= f.hidden_field :legislative_file_id %>
   <div class="modal fade" data-backdrop="static" id="initiator-new" role="dialog">
     <div class="modal-dialog" role="document">
@@ -65,10 +65,10 @@
               <%= f.label :name, 'Nombre' %>
               <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
             </div>
-
+            <%= hidden_field_tag 'legislative_file_state[state_type]', 'parliamentary' %>
             <div class="form-group col-md-6">
               <%= f.label :state_type, 'Tipo' %>
-              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control' %>
+              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control legislative_file_state_type' %>
             </div>
 
             <div class="session_nro form-group col-md-6">
@@ -214,7 +214,7 @@
     $('.form-law, .law-title, .save-law').show('fast');
   });
 
-  $('form.edit-state-form').on('ajax:success', function() {
+  $('form.edit_legislative_file_state').on('ajax:success', function() {
     location.reload();
   });
 
@@ -235,24 +235,24 @@
   $('#legislative_file_state_name').change(function() {
     switch ($(this).val()) {
       case "in_comision":
-        $('#legislative_file_state_state_type').removeAttr('readonly');
+        $('.legislative_file_state_type').removeAttr('disabled');
         $('.session, .associated-laws').hide('fast');
         $('.comisions').show('fast');
         break;
       case "day_plan":
-        $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("parliamentary").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.comisions, .session, .associated-laws').hide('fast');
         break;
       case "sanctioned":
-        $('#legislative_file_state_state_type').val("parliamentary").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("parliamentary").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.session, .associated-laws').show('fast');
         $('.comisions').hide('fast');
         break;
       case "retired":
-        $('#legislative_file_state_state_type').val("administrative").change();
-        $('#legislative_file_state_state_type').attr('readonly', true);
+        $('.legislative_file_state_type').val("administrative").change();
+        $('.legislative_file_state_type').attr('disabled', true);
         $('.session, .comisions, .associated-laws').hide('fast');
         $('.comisions').hide('fast');
         break;
@@ -310,4 +310,52 @@
   setTimeout(function() {
     $('.session, .associated-laws').hide();
   }, 500);
+
+  $('.edit_legislative_file_state').submit(function(e) {
+    var errors = [];
+    var fieldErrors = [];
+    // Date always must be present.
+    if (!$('#legislative_file_state_date_at').val()) {
+      errors.push('Fecha no puede estar en blanco');
+      fieldErrors.push($('#legislative_file_state_date_at').parent());
+    }
+
+    // Validation to parliamentary state type.
+    if ($('.legislative_file_state_type').val() == 'parliamentary')
+      if (!$('#legislative_file_state_session_id').val()) {
+        errors.push('Sesión no puede estar en blanco');
+        fieldErrors.push($('.session_nro'));
+      }
+
+    var state = $('#legislative_file_state_name').val();
+    switch(state) {
+      case 'in_comision':
+        // In comision state must be present when name is in_comision.
+        if (!$('#legislative_file_state_comision_ids').val().length) {
+          errors.push('Comisión/es no puede estar en blanco');
+          fieldErrors.push($('.comisions'));
+        }
+        break;
+      case 'day_plan':
+        break;
+      case 'sanctioned':
+        if (!$('#legislative_file_state_law_ids').val().length) {
+          errors.push('Norma/s no puede estar en blanco');
+          fieldErrors.push($('.associated-laws'));
+        }
+        break;
+      case 'retired':
+        break;
+    }
+
+    if (errors.length) {
+      alert(errors.join('\n'));
+      fieldErrors.forEach(function(elem) { elem.addClass('has-error') });
+      setTimeout(function() {
+        fieldErrors.forEach(function(elem) { elem.removeClass('has-error') });
+      }, 3000);
+      e.preventDefault();
+      return false;
+    }
+  });
 </script>
