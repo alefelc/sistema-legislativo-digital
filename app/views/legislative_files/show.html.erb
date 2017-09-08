@@ -186,23 +186,14 @@
                                 <% elsif state.sanctioned? %>
                                  <div> <strong> <%= state.sanction_specified %> </strong> </div>
                                   <small> [<%= state.sanction_type %>] </small>
-
-                                  <p>
-                                    <div>Sancionada la Ordenanza <%= link_to "#11111", "#11111" %></div>
-                                    <div>Decreto Promulgatorio <%= link_to "#5555", "#5555" %></div>
-                                    <div>Promulgado el 12/12/2017</div>
-                                    <div>Comunicada al DEM el 12/12/2015</div>
-                                  </p>
-                                  <p>
-                                    <div>Sancionada la Resolución <%= link_to "#5555", "#5555" %></div>
-                                    <div>Comunicada el 12/12/2017 a</div>
-                                    <div>Notificada el 12/12/2017 a</div>
-                                  </p>
-                                  <p>
-                                    <div>Sancionada la Declaración <%= link_to "#9999", "#9999" %></div>
-                                    <div>Comunicada el 12/12/2017 a</div>
-                                    <div>Notificada el 12/12/2017 a</div>
-                                  </p>
+                                  <% state.laws.each do |l| %>
+                                    <p>
+                                      <% if (l.law_type == 'ordenanza') %>
+                                      <div>
+                                        Sancionada la Ordenanza <%= link_to l, l %></div>
+                                      <% end %>
+                                    </p>
+                                  <% end %>
                                 <% end %>
                               </td>
                             </tr>
