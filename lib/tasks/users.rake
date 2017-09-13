@@ -63,5 +63,5 @@ namespace :users do
     print "."
 
     puts "\n - - - - - - - - - - - - - Users loaded successfully!\n"
-  endu
+  end
 end
