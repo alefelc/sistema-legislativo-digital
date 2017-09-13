@@ -1,7 +1,7 @@
 namespace :fill do
   desc "Fill commissions"
   task commissions: :environment do
-    commissions = Period.last.comisions
+    commissions = Periodo.last.comisions
     gobierno = commissions.where "denominacion ilike '%gobierno%'"
     economia = commissions.where "denominacion ilike '%economía%'"
     desarrollo_social = commissions.where "denominacion ilike '%desarrollo social%'"
