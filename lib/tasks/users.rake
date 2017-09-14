@@ -25,7 +25,7 @@ namespace :users do
     User.create do |u|
       u.email = "rarias@gmail.com"
       u.password = "rarias123"
-      u.roles << []
+      u.roles << legislative_role
       u.person = Person.create name: "Romina", surname: "Arias"
     end
     print "."
@@ -57,7 +57,7 @@ namespace :users do
     User.create do |u|
       u.email = "fegasdel@hotmail.com"
       u.password = "fegasdel123"
-      u.roles << []
+      u.roles << legislative_role
       u.person = Person.create name: "Federico", surname: "Delborgo"
     end
     print "."
