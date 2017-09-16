@@ -1,8 +1,8 @@
-== How to install on your localhost
+## How to install on your localhost
 * Clone this repo.
 
 ## Necessary tools:
-* [Postgresql](https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-16-04-es). 
+* [Postgresql](https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-16-04-es).
 `sudo apt-get install postgresql postgresql-contrib libpq-dev`.
 * Set postgres user password `sudo -u postgres psql postgres` `\password postgres`.
 
@@ -12,4 +12,11 @@
 * Create gemset `rvm gemset use 2.2.2@sld --create` and install bundle with `gem install bundle`.
 
 
-* Rails app instalation `bundle install`
+## Rails app instalation
+* `bundle install`
+* Using `config/database.yml.example` make database credentials on `config/database.yml` file.
+
+* Create database `rake db:create db:schema:load`.
+
+## Add some data into the DB
+* ...
