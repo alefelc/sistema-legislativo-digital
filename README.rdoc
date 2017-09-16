@@ -19,4 +19,7 @@
 * Create database `rake db:create db:schema:load`.
 
 ## Add some data into the DB
-* ...
+* `rake roles:migrate users:migrate periods:migrate areas:migrate commissions:migrate councilors:migrate signators:migrate`
+
+## Deploy to heroku staging
+* Install [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
