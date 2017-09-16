@@ -1,6 +1,6 @@
-namespace :db do
+namespace :signators do
   desc "Cargar firmantes de los trámites dentro de la DB"
-  task populate_signatories: :environment do
+  task migrate: :environment do
     records = [
       ["Franco", "Castaldi", "Director de Gestión de Programas del Instituto Municipal de la Vivienda (IMV)"],
       ["Abg. Mauricio Daniel", "Dova", "Secretaría de Gobierno"],

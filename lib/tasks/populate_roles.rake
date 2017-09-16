@@ -1,6 +1,6 @@
-namespace :db do
+namespace :roles do
   desc "Cargar roles dentro de la DB"
-  task populate_roles: :environment do
+  task migrate: :environment do
     puts "Adding roles"
     Roles::Activity.activities_with_name.each do |role|
       title = role[:title]

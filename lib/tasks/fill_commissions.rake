@@ -1,6 +1,6 @@
-namespace :fill do
+namespace :commissions do
   desc "Fill commissions"
-  task commissions: :environment do
+  task migrate: :environment do
     commissions = [
       "Reforma política",
       "Derechos Humanos",

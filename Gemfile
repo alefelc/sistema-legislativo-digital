@@ -123,6 +123,8 @@ group :development do
 
   # Use MySql legacy database
   #gem 'mysql2', '0.4.1'
+
+  gem 'rubocop'
 end
 
 group :production do

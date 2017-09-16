@@ -1,5 +1,5 @@
 namespace :users do
-  desc "Add users to staging environment"
+  desc "Add some users"
   task migrate: :environment do
     puts "Adding users.."
     ticket_table_role = Role.where name: ["Trámites", "Expediente administrativo"]
