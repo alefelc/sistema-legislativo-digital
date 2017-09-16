@@ -1,0 +1,235 @@
+namespace :populate do
+  TASKS = %w(
+    roles users periods areas commissions
+    councilors signators commission_members
+  )
+
+  desc "Cargar roles dentro de la DB"
+  task roles: :environment do
+    puts "Adding roles"
+    Roles::Activity.activities_with_name.each do |role|
+      title = role[:title]
+      activities = role[:activities].collect { |x| x[:activity] }
+      Role.create name: title, activities: activities
+      print "."
+    end
+    puts " - - - - - - - - - - - - - - - Roles added successfully!!"
+  end
+
+  desc "Add some users"
+  task users: :environment do
+    puts "Adding users.."
+    ticket_table_role = Role.where name: ["Trámites", "Expediente administrativo"]
+    legislative_role = Role.where name: "Expediente legislativo"
+    User.create do |u|
+      u.email = "jlgasparrini@gmail.com"
+      u.password = "password"
+      u.roles << Role.all
+      u.person = Person.create name: "Leonel", surname: "Gasparrini"
+      u.admin = true
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "alcides.ricotto@gmail.com"
+      u.password = "aricotto123"
+      u.roles << Role.all
+      u.person = Person.create name: "Alcides", surname: "Ricotto"
+      u.admin = true
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "rarias@gmail.com"
+      u.password = "rarias123"
+      u.roles << legislative_role
+      u.person = Person.create name: "Romina", surname: "Arias"
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "mechenique@live.com"
+      u.password = "mechenique123"
+      u.roles << ticket_table_role
+      u.person = Person.create name: "Maria Rosa", surname: "Etchenique"
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "lpermigiani@hotmail.com"
+      u.password = "lpermigiani123"
+      u.roles << ticket_table_role
+      u.person = Person.create name: "Lorena", surname: "Permigiani"
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "carinacandellero@gmail.com"
+      u.password = "ccandellero123"
+      u.roles << ticket_table_role
+      u.person = Person.create name: "Carina", surname: "Candellero"
+    end
+    print "."
+
+    User.create do |u|
+      u.email = "fegasdel@hotmail.com"
+      u.password = "fegasdel123"
+      u.roles << legislative_role
+      u.person = Person.create name: "Federico", surname: "Delborgo"
+    end
+    print "."
+
+    puts "\n - - - - - - - - - - - - - Users loaded successfully!\n"
+  end
+
+  desc "Fill periods"
+  task periods: :environment do
+    puts "Adding periods...."
+    Periodo.create desde: "Mon, 02 Jul 2012", hasta: "Fri, 01 Jul 2016"
+    print "."
+    Periodo.create desde: "Sat, 02 Jul 2016", hasta: "Thu, 02 Jul 2020"
+    print "."
+    puts "\n - - - - - - - - - - - - - - Periods added succesfully! \n"
+  end
+
+  desc "Destroy all and create correct areas"
+  task areas: :environment do
+    puts "Migrating areas..."
+    Area.create name: 'Mesa de Entradas'
+    print "."
+    Area.create name: 'Secretaria Legislativa'
+    print "."
+    puts "\n - - - - - - - - - - - - Areas added successfully \n"
+  end
+
+  desc "Fill commissions"
+  task commissions: :environment do
+    commissions = [
+      "Reforma política",
+      "Derechos Humanos",
+      "Desarrollo Económico y Agroindustria",
+      "Desarrollo Humano, Cultura y Deportes",
+      "Desarrollo Social y Salud",
+      "Economía y Presupuesto",
+      "Educación, Mujer, Niñez y Adolescencia",
+      "Gobierno Peticiones Generales, Acuerdos, Interpretaciones y Relaciones Institucionales",
+      "Modernización del Estado y Seguridad",
+      "Obras Públicas y Vialidad",
+      "Planificación y Coordinación de Labor",
+      "Planificación y Gestión Ambiental",
+      "Servicios Públicos y Desarrollo Urbano"
+    ]
+    puts "Loading commissions"
+    commissions.each do |c|
+      print "."
+      Periodo.last.comisions.create(denominacion: c)
+    end
+    puts "\n - - - - - - - - - - - - - - - - - Loading commisions ended\n"
+  end
+
+  desc "Add councilors to staging environment"
+  task councilors: :environment do
+    puts "Loading councilors..."
+    councilors = [
+      ["Bressan", "Marcelo Antonio"],
+      ["Concordano", "Estela Graciela"],
+      ["Chiappe", "Armando Aníbal"],
+      ["Fernández", "Cristina Isabel"],
+      ["Fuentes", "Darío Enrique"],
+      ["Martínez", "María Graciela"],
+      ["Meirotti", "Ricardo"],
+      ["Paulizzi", "Leticia Anahí"],
+      ["Petrone", "María Andrea"],
+      ["Rasmusen", "Silvio Raúl"],
+      ["Sabarinni", "Ema Vilma"],
+      ["Rins", "Ismael Emiliano"],
+      ["Panza", "María Alicia"],
+      ["Ordoñez", "Carlos Ariel"],
+      ["Lannutti", "Mónica Graciela"],
+      ["Carranza", "Martín Ignacio Alejandro"],
+      ["Betorz", "Ricardo Manuel"],
+      ["Segre", "Jimena Soledad"],
+      ["Carrizo", "Pablo Rafael"],
+      ["Gadpen", "Marilina"]
+    ]
+    councilors.each do |c|
+      Periodo.last.concejals.create surname: c[0], name: c[1]
+      print "."
+    end
+    puts "\n - - - - - - - - - - - - - Councilors loaded successfully!! \n"
+  end
+
+  desc "Cargar firmantes de los trámites dentro de la DB"
+  task signators: :environment do
+    records = [
+      ["Franco", "Castaldi", "Director de Gestión de Programas del Instituto Municipal de la Vivienda (IMV)"],
+      ["Abg. Mauricio Daniel", "Dova", "Secretaría de Gobierno"],
+      ["Pablo Javier", "Antonetti", "Secretaría de Economía"],
+      ["Dante Camilo", "Vieyra", "Secretaría de Desarrollo Social y Económico"],
+      ["Marcelo Guillermo Enrique", "Ferrario", "Secretaría de Salud y Deportes"],
+      ["Guillermo Luis, Natali", "Secretaría de Relaciones Institucionales y Comunicación"],
+      ["Martín", "Cantoro", "Secretaría de Obras Públicas"],
+      ["Enrique Fernando", "Novo", "Secretaría de Servicios Públicos"],
+      ["Roberto Gustavo", "Dova", "Secretaría Privada"],
+      ["Guillermo", "De Rivas", "Secretaría de Gobierno Abierto y Modernización"],
+      ["Julian Carlos", "Oberti", "Fiscal Municipal"],
+      ["Pablo Ezequiel", "Salinas", "Director General del Ente Municipal de Obras Sanitarias (EMOS)"],
+      ["Pablo Fabián", "Pellegrini", "Director Presidente del Ente Descentralizado de Control Municipal (EDECOM)"]]
+
+    records.each do |sign|
+      name = sign[0]
+      surname = sign[1]
+      position = sign[2]
+      ProcedureSignatory.create name: name, surname: surname, position: position, initiator_type: :dem
+    end
+
+    # Intendente
+    ProcedureSignatory.create name: 'Juan Manuel', surname: 'LLamosas', position: 'Intendente', initiator_type: :dem, default: true
+  end
+
+  desc "Fill councilors integration on comisions"
+  task commission_members: :environment do
+    puts "Migrating data..."
+    # Comision.find_by(denominacion: "Reforma política").concejals << Concejal.where surname: [""]
+    Comision.find_by(denominacion: "Derechos Humanos").concejals <<
+      Concejal.where(surname: ["Gadpen", "Petrone", "Segre", "Chiappe", "Concordano", "Fernández", "Lannutti"])
+      print "."
+    Comision.find_by(denominacion: "Desarrollo Económico y Agroindustria").concejals <<
+      Concejal.where(surname: ["Meirotti", "Panza", "Martínez", "Chiappe", "Fernández", "Sabarini", "Carrizo"])
+      print "."
+    Comision.find_by(denominacion: "Desarrollo Humano, Cultura y Deportes").concejals <<
+      Concejal.where(surname: ["Rasmusen", "Meirotti", "Chiappe", "Fernández", "Lannutti", "Segre"])
+      print "."
+    Comision.find_by(denominacion: "Desarrollo Social y Salud").concejals <<
+      Concejal.where(surname: ["Martínez", "Betorz", "Concordano", "Bressan", "Rasmusen", "Panza", "Carrizo"])
+      print "."
+    Comision.find_by(denominacion: "Economía y Presupuesto").concejals <<
+      Concejal.where(surname: ["Concordano", "Betorz", "Bressan", "Chiappe", "Fernández", "Panza", "Carranza"])
+      print "."
+    Comision.find_by(denominacion: "Educación, Mujer, Niñez y Adolescencia").concejals <<
+      Concejal.where(surname: ["Concordano", "Rasmusen ", "Lannutti", "Bressan", "Petrone", "Gadpen", "Segre"])
+      print "."
+    Comision.find_by(denominacion: "Gobierno Peticiones Generales, Acuerdos, Interpretaciones y Relaciones Institucionales").concejals <<
+      Concejal.where(surname: ["Concordano", "Petrone ", "Carranza", "Concordano", "Martínez", "Chiappe", "Sabarini", "Carrizo"])
+      print "."
+    Comision.find_by(denominacion: "Modernización del Estado y Seguridad").concejals <<
+      Concejal.where(surname: ["Betorz", "Bressan", "Rasmusen", "Chiappe", "Concordano", "Chiappe", "Ordóñez", "Segre"])
+      print "."
+    Comision.find_by(denominacion: "Obras Públicas y Vialidad").concejals <<
+      Concejal.where(surname: ["Martínez", "Betorz", "Rasmusen", "Bressan", "Concordano", "Panza", "Carrizo"])
+      print "."
+    Comision.find_by(denominacion: "Planificación y Coordinación de Labor").concejals <<
+      Concejal.where(surname: ["Fuentes", "Paulizzi", "Ordóñez", "Carrizo"])
+      print "."
+    Comision.find_by(denominacion: "Planificación y Gestión Ambiental").concejals <<
+      Concejal.where(surname: ["Chiappe", "Segre", "Meirotti", "Martínez", "Fernández", "Carranza", "Betorz"])
+      print "."
+    Comision.find_by(denominacion: "Servicios Públicos y Desarrollo Urbano").concejals <<
+      Concejal.where(surname: ["Bressan", "Carranza", "Rasmusen", "Martínez", "Meirotti", "Gadpen", "Carrizo"])
+      print "."
+    puts "\n - - - - - - - - - - - Migration finished \n"
+  end
+
+  desc "Run all tasks to populate the database"
+  task :data => TASKS
+end
