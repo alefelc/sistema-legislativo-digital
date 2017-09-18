@@ -2,6 +2,7 @@ namespace :populate do
   TASKS = %w(
     roles users periods areas commissions
     councilors signators commission_members
+    government_agencies
   )
 
   desc "Cargar roles dentro de la DB"
@@ -228,6 +229,16 @@ namespace :populate do
       Concejal.where(surname: ["Bressan", "Carranza", "Rasmusen", "Martínez", "Meirotti", "Gadpen", "Carrizo"])
       print "."
     puts "\n - - - - - - - - - - - Migration finished \n"
+  end
+
+  desc "Populate government agencies"
+  task government_agencies: :environment do
+    puts "Adding government agencies"
+    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL (DEM)", codigo: "DEM"
+    print "."
+    OrganoDeGobierno.create denominacion: "Secretaría Legislativa", codigo: "SL"
+    print "."
+    puts "\n - - - - - - - - - - - - - - - - - - Government agencies successfully added! \n"
   end
 
   desc "Run all tasks to populate the database"
