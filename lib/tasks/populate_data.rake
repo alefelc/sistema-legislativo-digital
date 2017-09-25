@@ -1,8 +1,8 @@
 namespace :populate do
   TASKS = %w(
-    roles users periods areas commissions
+    roles areas users periods commissions
     councilors signators commission_members
-    government_agencies
+    government_agencies bloques
   )
 
   desc "Cargar roles dentro de la DB"
@@ -17,6 +17,16 @@ namespace :populate do
     puts " - - - - - - - - - - - - - - - Roles added successfully!!"
   end
 
+  desc "Destroy all and create correct areas"
+  task areas: :environment do
+    puts "Migrating areas..."
+    Area.create name: 'Mesa de Entradas'
+    print "."
+    Area.create name: 'Secretaria Legislativa'
+    print "."
+    puts "\n - - - - - - - - - - - - Areas added successfully \n"
+  end
+
   desc "Add some users"
   task users: :environment do
     puts "Adding users.."
@@ -28,6 +38,7 @@ namespace :populate do
       u.roles << Role.all
       u.person = Person.create name: "Leonel", surname: "Gasparrini"
       u.admin = true
+      u.areas << Area.all
     end
     print "."
 
@@ -37,6 +48,7 @@ namespace :populate do
       u.roles << Role.all
       u.person = Person.create name: "Alcides", surname: "Ricotto"
       u.admin = true
+      u.areas << Area.all
     end
     print "."
 
@@ -45,6 +57,7 @@ namespace :populate do
       u.password = "rarias123"
       u.roles << legislative_role
       u.person = Person.create name: "Romina", surname: "Arias"
+      u.areas << Area.find_by name: 'Secretaria Legislativa'
     end
     print "."
 
@@ -53,6 +66,7 @@ namespace :populate do
       u.password = "mechenique123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Maria Rosa", surname: "Etchenique"
+      u.areas << Area.find_by name: 'Mesa de Entradas'
     end
     print "."
 
@@ -61,6 +75,7 @@ namespace :populate do
       u.password = "lpermigiani123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Lorena", surname: "Permigiani"
+      u.areas << Area.find_by name: 'Mesa de Entradas'
     end
     print "."
 
@@ -69,6 +84,7 @@ namespace :populate do
       u.password = "ccandellero123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Carina", surname: "Candellero"
+      u.areas << Area.find_by name: 'Mesa de Entradas'
     end
     print "."
 
@@ -77,6 +93,7 @@ namespace :populate do
       u.password = "fegasdel123"
       u.roles << legislative_role
       u.person = Person.create name: "Federico", surname: "Delborgo"
+      u.areas << Area.find_by name: 'Secretaria Legislativa'
     end
     print "."
 
@@ -91,16 +108,6 @@ namespace :populate do
     Periodo.create desde: "Sat, 02 Jul 2016", hasta: "Thu, 02 Jul 2020"
     print "."
     puts "\n - - - - - - - - - - - - - - Periods added succesfully! \n"
-  end
-
-  desc "Destroy all and create correct areas"
-  task areas: :environment do
-    puts "Migrating areas..."
-    Area.create name: 'Mesa de Entradas'
-    print "."
-    Area.create name: 'Secretaria Legislativa'
-    print "."
-    puts "\n - - - - - - - - - - - - Areas added successfully \n"
   end
 
   desc "Fill commissions"
