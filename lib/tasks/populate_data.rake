@@ -234,7 +234,7 @@ namespace :populate do
   desc "Populate government agencies"
   task government_agencies: :environment do
     puts "Adding government agencies"
-    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL (DEM)", codigo: "DEM"
+    OrganoDeGobierno.create denominacion: "DEPARTAMENTO EJECUTIVO MUNICIPAL", codigo: "DEM"
     print "."
     OrganoDeGobierno.create denominacion: "Secretaría Legislativa", codigo: "SL"
     print "."
