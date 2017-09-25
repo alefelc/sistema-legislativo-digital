@@ -57,7 +57,7 @@ namespace :populate do
       u.password = "rarias123"
       u.roles << legislative_role
       u.person = Person.create name: "Romina", surname: "Arias"
-      u.areas << Area.find_by name: 'Secretaria Legislativa'
+      u.areas << Area.find_by(name: 'Secretaria Legislativa')
     end
     print "."
 
@@ -66,7 +66,7 @@ namespace :populate do
       u.password = "mechenique123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Maria Rosa", surname: "Etchenique"
-      u.areas << Area.find_by name: 'Mesa de Entradas'
+      u.areas << Area.find_by(name: 'Mesa de Entradas')
     end
     print "."
 
@@ -75,7 +75,7 @@ namespace :populate do
       u.password = "lpermigiani123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Lorena", surname: "Permigiani"
-      u.areas << Area.find_by name: 'Mesa de Entradas'
+      u.areas << Area.find_by(name: 'Mesa de Entradas')
     end
     print "."
 
@@ -84,7 +84,7 @@ namespace :populate do
       u.password = "ccandellero123"
       u.roles << ticket_table_role
       u.person = Person.create name: "Carina", surname: "Candellero"
-      u.areas << Area.find_by name: 'Mesa de Entradas'
+      u.areas << Area.find_by(name: 'Mesa de Entradas')
     end
     print "."
 
@@ -93,7 +93,7 @@ namespace :populate do
       u.password = "fegasdel123"
       u.roles << legislative_role
       u.person = Person.create name: "Federico", surname: "Delborgo"
-      u.areas << Area.find_by name: 'Secretaria Legislativa'
+      u.areas << Area.find_by(name: 'Secretaria Legislativa')
     end
     print "."
 
