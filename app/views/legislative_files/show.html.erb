@@ -115,9 +115,7 @@
                           <h5 class="word-top text-bold pull-right">Exp. adm.:</h5>
                         </div>
                         <div class="col-md-10">
-                          <% @loop.origin_procedure.administrative_files.each do |af| %>
-                            <%= af %>
-                          <% end %>
+                          <%= @loop.origin_procedure.administrative_files.join('  -  ') %>
                         </div>
                       </div>
                     <% end %>

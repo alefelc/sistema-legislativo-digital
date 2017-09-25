@@ -170,8 +170,7 @@ class ModalInitiator {
     let options = {
       allowClear: true,
       placeholder: text,
-      language: 'es',
-      closeOnSelect: false
+      language: 'es'
     };
 
     this.clearSelect2();
@@ -302,7 +301,6 @@ class Procedures {
       placeholder: 'Busque personas y/o instituciones',
       theme: 'bootstrap',
       language: 'es',
-      closeOnSelect: false,
       ajax: {
         url: "<%= url_helpers.initiators_path(format: :json) %>",
         dataType: 'json',

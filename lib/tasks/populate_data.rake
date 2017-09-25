@@ -241,6 +241,17 @@ namespace :populate do
     puts "\n - - - - - - - - - - - - - - - - - - Government agencies successfully added! \n"
   end
 
+  desc "Populate bloques"
+  task bloques: :environment do
+    puts "Populate bloques"
+    Bloque.create denominacion: "UNIÓN POR CÓRDOBA"
+    print "."
+    Bloque.create denominacion: "FRENTE CAMBIEMOS PARA EL DESARROLLO DE RÍO CUARTO"
+    print "."
+    Bloque.create denominacion: "RESPETO MST"
+    print "."
+  end
+
   desc "Run all tasks to populate the database"
   task :data => TASKS
 end

@@ -130,12 +130,6 @@ class ProceduresController < ApplicationController
       ## Destroying signators
       @procedure.procedure_signatories.destroy_all
 
-      #######################################################
-      ##### REPLACE IT
-      @procedure.update comision_ids: params[:comision_ids]
-      @procedure.update person_ids: params[:councilor_ids]
-      #######################################################
-
       if procedure_params[:initiator_attributes].present?
         procedure_params[:initiator_attributes].each do |initiator|
           initiator = eval initiator
@@ -169,6 +163,9 @@ class ProceduresController < ApplicationController
             @procedure.persons << initiator
           end
         end
+      else
+        @procedure.update person_ids: params[:councilor_ids]
+        @procedure.update comision_ids: params[:comision_ids]
       end
 
       if procedure_params[:signator_attributes].present?
@@ -239,4 +236,4 @@ class ProceduresController < ApplicationController
     end
   end
 end
-  
+
