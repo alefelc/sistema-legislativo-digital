@@ -225,7 +225,7 @@ es:
       procedure:
         create: Crear trámites
         type_create: Tipos de trámites (en nuevo)
-        sheets_create: Hojas (en nuevo)
+        sheets_create: Fojas (en nuevo)
         topic_create: Asunto (en nuevo)
         initiators_create: Iniciadores (en nuevo)
         observations_create: Observaciones (en nuevo)
@@ -234,7 +234,7 @@ es:
         derivations_create: Cargar derivaciones (en nuevo)
         edit: Editar trámites
         type_update: Tipos de trámites (en editar)
-        sheets_update: Hojas (en editar)
+        sheets_update: Fojas (en editar)
         topic_update: Asunto (en editar)
         initiators_update: Iniciadores (en editar)
         observations_update: Observaciones (en editar)

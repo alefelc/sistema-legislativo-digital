@@ -251,11 +251,11 @@ namespace :populate do
   desc "Populate bloques"
   task bloques: :environment do
     puts "Populate bloques"
-    Bloque.create denominacion: "UNIÓN POR CÓRDOBA"
+    Bloque.create denominacion: "UNIÓN POR CÓRDOBA", periodos: [Periodo.last]
     print "."
-    Bloque.create denominacion: "FRENTE CAMBIEMOS PARA EL DESARROLLO DE RÍO CUARTO"
+    Bloque.create denominacion: "FRENTE CAMBIEMOS PARA EL DESARROLLO DE RÍO CUARTO", periodos: [Periodo.last]
     print "."
-    Bloque.create denominacion: "RESPETO MST"
+    Bloque.create denominacion: "RESPETO MST", periodos: [Periodo.last]
     print "."
   end
 

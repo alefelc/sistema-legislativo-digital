@@ -8,6 +8,9 @@ class Bloque < ActiveRecord::Base
 
   has_many :estado_procedures, as: :ref
 
+  validates :denominacion, presence: true
+  validates :periodos, presence: true
+
   def type
     'Bloque'
   end
