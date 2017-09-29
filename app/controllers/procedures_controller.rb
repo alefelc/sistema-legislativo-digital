@@ -113,6 +113,8 @@ class ProceduresController < ApplicationController
 
     @procedure = Procedure.find params[:id]
     @procedure.contingency_plan = ContingencyPlan.new if @procedure.contingency_plan.nil?
+
+    @procedure.uploads.build
   end
 
   def update

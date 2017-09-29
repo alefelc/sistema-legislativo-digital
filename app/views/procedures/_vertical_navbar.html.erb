@@ -4,13 +4,6 @@
       <%= t '.information' %>
     </a>
   </li>
-  <% if policy(Procedure).derivations_create? %>
-    <li>
-      <a aria-expanded="false" data-toggle="tab" href="#settings">
-        <%= t '.derivations' %>
-      </a>
-    </li>
-  <% end %>
   <% if policy(:administrative_file).create? && @procedure.isnt_dispatch? %>
     <li class="common-procedure">
       <a aria-expanded="false" data-toggle="tab" href="#administrative-files">
@@ -19,7 +12,7 @@
     </li>
   <% end %>
   <li>
-    <a aria-expanded="false" data-toggle="tab" href="#profile">
+    <a aria-expanded="false" data-toggle="tab" href="#upload">
       <%= t '.attached_files' %>
     </a>
   </li>

@@ -33,19 +33,6 @@ class ModalInitiator {
       }
     }
   }
-  // listenInitiatorSubmit() {
-  //   let that = this;
-  //   let events = {
-  //     'ajax:success': function (ev, response) {
-  //       $(`${that.el} .modal`).modal('hide');
-  //       table.insert(response)
-  //     },
-  //     'ajax:error': function (ev) {
-  //       alert('Ha ocurrido un error en el servidor!');
-  //     }
-  //   }
-  //   $(`${this.el} form`).on(events);
-  // }
 
   // Show signators table
   showSignatoriesList() {
@@ -62,14 +49,6 @@ class ModalInitiator {
       else
         $(that.el).find('.modal-footer').hide('slow');
     });
-    // IMPROVE THIS!
-    // TO PREVENT SOME ERRORS
-    // $('.forms select').on('select2:unselecting', function(ev) {
-    //   $(that.el).find('.modal-footer').hide('slow');
-    //   console.log('select2', that.currentSelect2);
-    //   $(this).select2("val", "");
-    //   ev.preventDefault();
-    // });
 
     let selectors = ['.official_distribution', '.municipal_office',
       '.particular_pyshic', '.particular_legal'];
@@ -839,13 +818,8 @@ $(document).ready(function() {
     });
     Procedures.initiatorsSelect2();
     Procedures.updateProcedureType();
-    $('.derivation').select2();
 
-    $('.add_fields').on('click', function() {
-      $('.derivation:last').select2();
-    });
-
-    // $('#new_procedure').fileupload();
+    //$('#new_procedure').fileupload();
   };
 
   if ($('#procedures-table').length) {
