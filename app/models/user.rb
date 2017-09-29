@@ -30,8 +30,4 @@ class User < ActiveRecord::Base
       areas.where(name: 'Secretaria Legislativa').present? || admin?
     end
   end
-
-  def area_id
-    areas.first.try :id
-  end
 end

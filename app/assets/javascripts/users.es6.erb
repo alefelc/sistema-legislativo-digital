@@ -66,6 +66,17 @@ class CreatePerson {
   }
 }
 
+class Areas {
+  constructor() {
+    this.select = '#user_area_ids';
+    this.multipleSelect();
+  }
+
+  multipleSelect() {
+    $(this.select).multiselect();
+  }
+}
+
 // Script start
 $(document).ready(function(){
   if ($('#users').length)
@@ -74,10 +85,12 @@ $(document).ready(function(){
   if ($('#user-new').length) {
     Users.searchRoles();
     new CreatePerson();
+    new Areas();
   }
 
   if ($('#user-edit').length) {
     Users.searchRoles();
     new CreatePerson();
+    new Areas();
   }
 });

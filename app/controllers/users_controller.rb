@@ -46,11 +46,11 @@ class UsersController < ApplicationController
 
   def users_params
     params.require(:user).permit :person_id, :email, :password,
-                                 :password_confirmation, areas: [], role_ids: []
+                                 :password_confirmation, area_ids: [], role_ids: []
   end
 
   def users_params_no_pass
-    params.require(:user).permit :person_id, :email, areas: [], role_ids: []
+    params.require(:user).permit :person_id, :email, area_ids: [], role_ids: []
   end
 
   def user_update_params
