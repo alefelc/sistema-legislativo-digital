@@ -8,7 +8,6 @@ class Norma < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_many :capitulos_normas
   has_many :capitulos, through: :capitulos_normas
-  has_many :destinos
 
   belongs_to :expediente
 
@@ -22,26 +21,6 @@ class Norma < ActiveRecord::Base
 
   def expedientes
     self.circuitos.map { |x| x.expediente }.uniq
-  end
-
-  def com_date
-    self.destinos.where(tipo: 0).first().try(:fecha)
-  end
-
-  def com_dest
-    self.destinos.where(tipo: 0).first().try(:destino)
-  end
-
-  def not_date
-    self.destinos.where(tipo: 1).first().try(:fecha)
-  end
-
-  def not_dest
-    self.destinos.where(tipo: 1).first().try(:destino)
-  end
-
-  def get_destinos(type)
-    self.destinos.where(tipo: type)
   end
 
   def text

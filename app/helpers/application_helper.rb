@@ -84,23 +84,6 @@ module ApplicationHelper
     ]
   end
 
-  def fechas(norma)
-    resp = ""
-    if norma.sancion.present?
-      resp = resp + "Sanción: #{norma.sancion}\n"
-    end
-    norma.destinos.each do |d|
-      case d.tipo
-      when 0
-        return resp + "Comunic: #{d.fecha}\n"
-      when 1
-        return resp + "Notific: #{d.fecha}\n"
-      when 2
-        return resp + "Public: #{d.fecha}\n"
-      end
-    end
-  end
-
   def index_exp(exp)
     link_to exp.nro_exp, exp
   end
@@ -363,17 +346,6 @@ module ApplicationHelper
   def get_digesto_actual
     ## por ahora lo dejo con el last para obtener el ultimo osea el actual. Hay que agregarle el campo año al digesto
     Digesto.last
-  end
-
-  def tipo_destinos(tipo)
-    case tipo
-    when 0
-      "Comunicación"
-    when 1
-      "Notificación"
-    when 2
-      "Publicación"
-    end
   end
 
   def get_sumario(norma)
