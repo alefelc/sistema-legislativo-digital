@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829141526) do
+ActiveRecord::Schema.define(version: 20171011132030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,14 +239,16 @@ ActiveRecord::Schema.define(version: 20170829141526) do
   add_index "despachos_concejals", ["concejal_id"], name: "index_despachos_concejals_on_concejal_id", using: :btree
   add_index "despachos_concejals", ["despacho_id"], name: "index_despachos_concejals_on_despacho_id", using: :btree
 
-  create_table "destinos", force: :cascade do |t|
-    t.integer  "tipo"
-    t.date     "fecha"
-    t.string   "destino"
-    t.integer  "norma_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "destinations", force: :cascade do |t|
+    t.integer  "destiny"
+    t.integer  "law_id"
+    t.date     "date"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "destinations", ["law_id"], name: "index_destinations_on_law_id", using: :btree
 
   create_table "diario_de_sesions", force: :cascade do |t|
     t.datetime "created_at", null: false
