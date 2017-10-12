@@ -12,13 +12,25 @@
 </div>
 <div class="col-md-2">
   <div class="form-group">
-    <%= f.label :letter %>
-    <%= f.text_field :letter, class: 'form-control' %>
-  </div>
-</div>
-<div class="col-md-2">
-  <div class="form-group">
     <%= f.label :year %>
     <%= f.text_field :year, type: :number, class: 'form-control' %>
   </div>
+</div>
+<%= f.fields_for :destinies do |destiny| %>
+  <div class="col-md-4">
+    <h4 class="text-center"> <%= destiny.object.type_of_destiny %> </h4>
+    <div class="form-group">
+      <%= destiny.label :name, 'Destino' %>
+      <%= destiny.text_field :name, class: 'form-control' %>
+
+      <%= destiny.label :date, 'Fecha' %>
+      <%= destiny.text_field :date, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<div class="col-md-2">
+  <!-- <div class="form-group">
+    <%= f.label :letter %>
+    <%= f.text_field :letter, class: 'form-control' %>
+  </div> -->
 </div>

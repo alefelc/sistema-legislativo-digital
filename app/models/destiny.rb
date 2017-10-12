@@ -3,5 +3,5 @@ class Destiny < ActiveRecord::Base
 	belongs_to :law
 
   # == Enums
-  enum law_type: [:comunication, :notification, :publish]
+  enum type_of_destiny: [:comunication, :notification, :publish]
 end

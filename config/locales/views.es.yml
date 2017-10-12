@@ -308,6 +308,12 @@ es:
       administrative: Administrativo
       comision: Comisión
 
+  destinies:
+    type_of_destiny:
+      comunication: Comunicación
+      notification: Notificación
+      publish: Publicación
+
   activeadmin:
     dashboard:
       user: Usuario

@@ -20,6 +20,9 @@ class LawsController < ApplicationController
 
   def edit
     @law = Law.find params[:id]
+    @law.destinies.new type_of_destiny: :notification
+    @law.destinies.new type_of_destiny: :comunication
+    @law.destinies.new type_of_destiny: :publish
   end
 
   def destroy
