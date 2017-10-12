@@ -1,4 +1,4 @@
-<div class="law-new">
+<div class="law-edit">
   <h2 class="text-center"> Editando Norma </h2>
 
   <div class="box box-primary">
@@ -8,7 +8,7 @@
 
     <%= form_for @law do |form| %>
 
-      <div class="box-body row">
+      <div class="box-body">
         <%= render 'law_form', f: form %>
       </div>
 
@@ -20,7 +20,7 @@
           <% end -%>
           <%= button_tag type: :submit, class: 'btn btn-lg btn-success' do %>
             <i class="fa fa-save fa-lg"></i>
-            Crear Norma
+            Guardar Norma
           <% end -%>
         </div>
       </div>

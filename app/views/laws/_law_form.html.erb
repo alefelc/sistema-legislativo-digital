@@ -1,36 +1,37 @@
-<div class="col-md-6">
-  <div class="form-group">
-    <%= f.label :law_type %>
-    <%= f.select :law_type, law_types, {}, class: 'form-control' %>
-  </div>
-</div>
-<div class="col-md-2">
-  <div class="form-group">
-    <%= f.label :number %>
-    <%= f.text_field :number, type: :number, class: 'form-control' %>
-  </div>
-</div>
-<div class="col-md-2">
-  <div class="form-group">
-    <%= f.label :year %>
-    <%= f.text_field :year, type: :number, class: 'form-control' %>
-  </div>
-</div>
-<%= f.fields_for :destinies do |destiny| %>
-  <div class="col-md-4">
-    <h4 class="text-center"> <%= destiny.object.type_of_destiny %> </h4>
+<div class="row">
+  <div class="col-md-3">
     <div class="form-group">
-      <%= destiny.label :name, 'Destino' %>
-      <%= destiny.text_field :name, class: 'form-control' %>
-
-      <%= destiny.label :date, 'Fecha' %>
-      <%= destiny.text_field :date, class: 'form-control' %>
+      <%= f.label :law_type %>
+      <%= f.select :law_type, law_types, {}, class: 'form-control input-lg' %>
     </div>
   </div>
-<% end %>
-<div class="col-md-2">
-  <!-- <div class="form-group">
-    <%= f.label :letter %>
-    <%= f.text_field :letter, class: 'form-control' %>
-  </div> -->
+  <div class="col-md-2">
+    <div class="form-group">
+      <%= f.label :number %>
+      <%= f.text_field :number, type: :number, class: 'form-control input-lg' %>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <%= f.label :year %>
+      <%= f.text_field :year, type: :number, class: 'form-control input-lg' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <%= f.fields_for :destinies do |destiny| %>
+    <div class="col-md-4">
+      <h4 class="text-center">
+        <%= I18n.t("destinies.type_of_destiny.#{destiny.object.type_of_destiny}") %>
+      </h4>
+      <div class="form-group">
+        <%= destiny.label :name, 'Destino' %>
+        <%= destiny.text_field :name, class: 'form-control input-lg' %>
+
+        <%= destiny.label :date, 'Fecha' %>
+        <%= destiny.text_field :date, class: 'form-control input-lg', type: :date %>
+      </div>
+    </div>
+  <% end %>
 </div>
