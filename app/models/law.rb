@@ -3,7 +3,7 @@ class Law < ActiveRecord::Base
   has_and_belongs_to_many :legislative_file_states
   has_many :destinies
 
-  accepts_nested_attributes_for :destinies
+  accepts_nested_attributes_for :destinies, reject_if: :all_blank
 
   # == Enums
   enum law_type: [:ordenanza, :decreto, :declaracion, :resolucion, :especial, :otra_norma]

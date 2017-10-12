@@ -24,28 +24,45 @@
       <div class="col-md-2">
         <div class="form-group">
           <%= f.label :number %>
-          <%= f.text_field :number, type: :number, class: 'form-control', disabled: true %>
+          <%= f.text_field :number, type: :number, class: 'form-control', readonly: true %>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="form-group">
-          <%= f.label :letter %>
-          <%= f.text_field :letter, class: 'form-control', disabled: true %>
+      <% if (f.object.letter.present?) %>
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= f.label :letter %>
+            <%= f.text_field :letter, class: 'form-control', readonly: true %>
+          </div>
         </div>
-      </div>
+      <% end %>
       <div class="col-md-2">
         <div class="form-group">
           <%= f.label :year %>
-          <%= f.text_field :year, class: 'form-control', disabled: true %>
+          <%= f.text_field :year, class: 'form-control', readonly: true %>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
           <%= f.label :law_type %>
-          <%= f.select :law_type, law_types, {}, class: 'form-control', disabled: true %>
+          <%= f.select :law_type, law_types, {}, class: 'form-control', readonly: true %>
         </div>
       </div>
+
+      <% f.object.destinies.each do |d| %>
+        <div class="col-md-4">
+          <h4 class="text-center">
+            <%= I18n.t("destinies.type_of_destiny.#{d.object.type_of_destiny}")%>
+          </h4>
+          <div class="form-group">
+            <%= d.label :name, 'Destino' %>
+            <%= d.text_field :name, class: 'form-control', readonly: true %>
+          </div>
+
+          <%= d.label :date, 'Fecha' %>
+          <%= d.text_field :date, class: 'form-control input-lg', type: :date, readonly: true %>
+        </div>
+      <% end %>
 
     <% end -%>
   </div>
