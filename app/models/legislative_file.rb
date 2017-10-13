@@ -20,7 +20,6 @@ class LegislativeFile < ActiveRecord::Base
 
   # == Callbacks
   before_create :sequential_number
-  # after_create :zero_loop_by_default
 
   # == Nested attributes
   accepts_nested_attributes_for :loops, reject_if: :all_blank
@@ -55,24 +54,5 @@ class LegislativeFile < ActiveRecord::Base
 
   def origin_procedure_id=(proc_id)
     loops.find_by(number: 0).update origin_procedure_id: proc_id
-  end
-
-  private
-
-  # After save legislative file, is necessary to check
-  # if its state and its first loop was created correctly.
-  def zero_loop_by_default
-    loop = loops.build
-    state = legislative_file_states.build loop: loop
-    begin
-      ActiveRecord::Base.transaction do
-        loop.save!
-        state.save!
-      end
-    rescue Exception => e
-      loop.errors.each { |attr, error| self.errors.add(attr, error) } if loop.present?
-      state.errors.each { |attr, error| self.errors.add(attr, error) } if state.present?
-      raise ActiveRecord::Rollback
-    end
   end
 end

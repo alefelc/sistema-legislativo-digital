@@ -16,6 +16,9 @@ class LegislativeFileService
       ActiveRecord::Base.transaction do
         @file.save!
         @loop.save!
+        if @loop.origin_procedure.topic.blank?
+          @loop.origin_procedure.update(topic: @file.topic)
+        end
         @state = @file.legislative_file_states.build procedure: Procedure.find_by(id: @params.fetch(:origin_procedure_id))
         @state.save!
       end

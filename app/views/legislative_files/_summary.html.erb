@@ -108,6 +108,12 @@
                                 <% if l.law_type == "ordenanza" %>
                                   <div>Sancionada la Ordenanza <%= link_to l, l %></div>
                                 <% end %>
+                                <% if l.law_type == "declaracion" %>
+                                  <div>Sancionada la Declaración nro <%= link_to l, l %></div>
+                                <% end %>
+                                <% if l.law_type == "resolucion" %>
+                                  <div>Sancionada la Resolución nro <%= link_to l, l %></div>
+                                <% end %>
                               </p>
                             <% end %>
                           <% end %>
