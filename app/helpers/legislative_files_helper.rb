@@ -100,4 +100,9 @@ module LegislativeFilesHelper
     loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets) +
     loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){|sum,x| sum + x.sheets }
   end
+
+  def state_date(state)
+    state.dispatched? ? state.procedure.full_date : state.date_at
+  end
+
 end

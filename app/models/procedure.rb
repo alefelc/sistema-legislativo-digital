@@ -47,6 +47,10 @@ class Procedure < ActiveRecord::Base
   #== PaperTrail changes tracker
   has_paper_trail
 
+  def full_date
+    "#{self.day || '--'}/#{self.month || '--'}/#{self.year || '--'}"
+  end
+
   def initiators
     result = persons.collect(&:full_name)
     result += bloques.collect(&:name)
@@ -59,26 +63,6 @@ class Procedure < ActiveRecord::Base
 
   def to_date(date)
     date.strftime("%d/%m/%Y") unless date.nil?
-  end
-
-  def get_fecha
-    to_date(self.fecha).to_s unless self.fecha.nil?
-  end
-
-  def get_fojas
-    self.nro_fojas.to_s
-  end
-
-  def get_asunto
-    self.asunto.to_s
-  end
-
-  def get_date_time
-    self.updated_at
-  end
-
-  def get_observaciones
-    self.observaciones
   end
 
   def text

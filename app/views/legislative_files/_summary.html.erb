@@ -10,7 +10,7 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-2">
-                  <h5 class="word-top text-bold pull-right">Fojas:</h5>
+                  <h5 class="word-top text-bold pull-right"> Fojas: </h5>
                 </div>
                 <div class="col-md-2">
                   <%= calculate_sheets @loop %>
@@ -18,7 +18,7 @@
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <h5 class="word-top text-bold pull-right"> Sumario:  </h5>
+                  <h5 class="word-top text-bold pull-right"> Sumario: </h5>
                 </div>
                 <div class="col-md-10">
                   <%= @loop.topic %>
@@ -79,7 +79,7 @@
                         </td>
                         <td>
                           <div>
-                            <strong> <%= state.date_at %> </strong>
+                            <strong> <%= state_date(state) %> </strong>
                           </div>
                           <%= build_small_state_type state %>
                         </td>

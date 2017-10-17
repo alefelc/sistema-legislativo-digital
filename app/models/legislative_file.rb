@@ -3,7 +3,7 @@ class LegislativeFile < ActiveRecord::Base
   has_many :administrative_files
   has_many :loops
   has_many :legislative_file_states, dependent: :delete_all
-  has_many :normas
+  has_many :laws
   has_many :tags  ## Change to has_many and add tags model
 
   # == Association recursive expediente acumula
