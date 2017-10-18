@@ -1,12 +1,13 @@
 module LegislativeFilesHelper
   def file_states(default=nil)
+    puts "Entre en file_states; default: #{default}"
     options = [
       ['A comision', 'in_comision'],
       ['Orden del dia', 'day_plan'],
       ['Sancionado', 'sanctioned'],
       ['Retirado', 'retired']
     ]
-    return options_for_select options, options[default] if default.present?
+    return options_for_select options, default if default.present?
     options_for_select options
   end
 
@@ -98,7 +99,7 @@ module LegislativeFilesHelper
 
   def calculate_sheets(loop)
     loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets) +
-    loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){|sum,x| sum + x.sheets }
+    loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
   end
 
   def state_date(state)

@@ -53,7 +53,7 @@ class Procedure < ActiveRecord::Base
 
   def initiators
     result = persons.collect(&:full_name)
-    result += bloques.collect(&:name)
+    result += bloques.collect(&:denominacion)
     result += comisions.collect(&:denominacion)
     result += organo_de_gobiernos.collect(&:denominacion)
     result += reparticion_oficials.collect(&:denominacion)

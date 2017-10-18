@@ -63,7 +63,7 @@
           <div class="row main-body">
             <div class="col-md-6 form-group">
               <%= f.label :name, 'Nombre' %>
-              <%= f.select :name, file_states, {}, class: 'input-lg form-control' %>
+              <%= f.select :name, file_states(@legislative_file_state.name), {}, class: 'input-lg form-control' %>
             </div>
             <%= hidden_field_tag 'legislative_file_state[state_type]', 'parliamentary' %>
             <div class="form-group col-md-6">
@@ -103,8 +103,10 @@
               <div class="comisions form-group">
                 <%= f.label :comision_ids, 'Comisiones asociadas' %>
                 <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
-                  <% @legislative_file_state.comisions.each do |c| %>
-                    <option selected value="<%= c.id %>"> <%= c.text %> </option>
+                  <% if @legislative_file_state.comisions.present? %>
+                    <% @legislative_file_state.comisions.each do |c| %>
+                      <option selected value="<%= c.id %>"> <%= c.text %> </option>
+                    <% end %>
                   <% end %>
                 <% end %>
               </div>
@@ -358,4 +360,8 @@
       return false;
     }
   });
+
+  setTimeout(function() {
+    $('#legislative_file_state_name').trigger('change');
+  }, 500);
 </script>
