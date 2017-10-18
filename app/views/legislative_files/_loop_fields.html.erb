@@ -3,7 +3,7 @@
     <div class="row">
       <div class="form-group col-md-6">
         <%= f.label :origin_procedure_id, "Trámite que dió origen a este expediente" %>
-        <%= f.select :origin_procedure_id, new_procedure(f.object), {}, class: 'form-control input-lg'%>
+        <%= f.select :origin_procedure_id, new_procedure(f.object), {}, class: 'form-control input-lg procedure-finder'%>
       </div>
 
       <div class="form-group col-md-2">
