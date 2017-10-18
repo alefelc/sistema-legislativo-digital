@@ -65,7 +65,9 @@ class LegislativeFilesController < ApplicationController
   def loop_update_params
     params.require(:legislative_file).permit :number, :sheets, :topic,
       :observations, :accumulated_in, :year, :date, :origin_procedure_id,
-      :physically_attached, loops_attributes: []
+      :physically_attached, loops_attributes: [
+        :id, :origin_procedure_id, :sheets, :date, :topic, :observations
+      ]
   end
 
   def build_json

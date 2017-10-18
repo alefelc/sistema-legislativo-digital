@@ -5,7 +5,7 @@
     <% @loop.loops.each do |loop| %>
       <% if loop.nonfirst? %>
         <li role="presentation" class="<%= 'active' if loop.id.nil? %>">
-          <a href="#loop_<%= loop.number || 'new' %>" role="tab" data-toggle="tab" aria-expanded="true">
+          <a href="#loop_<%= loop.id || 'new' %>" role="tab" data-toggle="tab" aria-expanded="true">
             <% if loop.new_record? %>
               Nuevo Circuito
             <% else %>
@@ -17,11 +17,11 @@
     <% end %>
   </ul>
   <div class="tab-content panel panel-default">
-        <%= f.fields_for :loops do |loop| %>
-          <% if loop.object.number.nonzero? %>
-          <div class="tab-pane panel-body fade <%= 'active' if loop.object.id.nil? %> in" role="tabpanel" id="loop_<%= loop.object.id || 'new' %>">
-            <%= render 'loop_fields', loop: loop %>
-          </div>
-          <% end %>
-        <% end %>
+    <%= f.fields_for :loops do |loop| %>
+      <% if loop.object.number.nonzero? %>
+        <div class="tab-pane panel-body fade <%= 'active' if loop.object.id.nil? %> in" role="tabpanel" id="loop_<%= loop.object.id || 'new' %>">
+          <%= render 'loop_fields', f: loop %>
+        </div>
+      <% end %>
+    <% end %>
   </div>

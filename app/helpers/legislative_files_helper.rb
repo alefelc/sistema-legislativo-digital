@@ -1,6 +1,5 @@
 module LegislativeFilesHelper
   def file_states(default=nil)
-    puts "Entre en file_states; default: #{default}"
     options = [
       ['A comision', 'in_comision'],
       ['Orden del dia', 'day_plan'],
