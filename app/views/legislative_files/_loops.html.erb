@@ -5,7 +5,7 @@
     <% @loop.loops.each do |loop| %>
       <% if loop.nonfirst? %>
         <li role="presentation" class="<%= 'active' if loop.id.nil? %>">
-          <a href="#loop_<%= loop.id || 'new' %>" role="tab" data-toggle="tab" aria-expanded="true">
+          <a href="#loop_<%= loop.id || 'new' %>" role="tab" data-toggle="tab" aria-expanded="true" class='loop-data'>
             <% if loop.new_record? %>
               Nuevo Circuito
             <% else %>

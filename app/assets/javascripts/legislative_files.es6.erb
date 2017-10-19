@@ -2,7 +2,7 @@
 
 class ListenProceduresFinder {
 	constructor() {
-		this.select = '#legislative_file_origin_procedure_id, .procedure-finder';
+		this.select = '#legislative_file_origin_procedure_id';
 		this.listen();
 	}
 
@@ -208,6 +208,42 @@ $(document).ready(function() {
 		$('.delete-state-btn').on('ajax:complete', function() {
 			location.reload();
 			$(window).scrollTop(0);
-		})
+		});
+
+		$('.all-loops-data, .loop-data').on('shown.bs.tab', function(ev) {
+			let tabId = $('#loops li.active a').attr("href");
+			if ($(tabId + ' .procedure-finder').data('select2')) return;
+			console.log('aca estoy', tabId + ' .procedure-finder', this);
+			let options = {
+			  allowClear: true,
+			  placeholder: 'Busque trámites',
+			  language: 'es',
+			  theme: "bootstrap"
+			};
+			options.ajax = {
+			  url: "<%= url_helpers.procedures_path %>",
+			  dataType: 'json',
+			  delay: 250,
+			  cache: true,
+			  data: (params) => {
+			    return { select_q: params.term || '%%' };
+			  },
+			  processResults: (data, params) => {
+			    return { results: data }
+			  }
+			};
+			$(tabId + ' .procedure-finder').select2(options).on("select2:select", function(e) {
+		    // token selected
+		    var data = e.params.data;
+		    $('#loops .panel-body.active').find('[id*="topic"]').val(data.topic);
+		    $('#loops .panel-body.active').find('[id*="sheets"]').val(data.sheets);
+		    $('#loops .panel-body.active').find('[id*="observations"]').val(data.observations);
+		    $('#loops .panel-body.active').find('[id*="date"]').val(data.created_at.substr(0,10));
+		  });
+		});
 	}
+
+	$('.legislative-data').on('shown.bs.tab', function() {
+		$('#legislative_file_origin_procedure_id').select2('destroy').select2();
+	});
 });
