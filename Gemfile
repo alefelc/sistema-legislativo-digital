@@ -165,6 +165,3 @@ source 'https://rails-assets.org' do
   # Open source JavaScript jQuery plugin for a full-sized, drag & drop event calendar.
   gem 'rails-assets-fullcalendar'
 end
-
-# Ruby version
-ruby '2.2.2'

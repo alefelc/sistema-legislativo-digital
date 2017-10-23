@@ -1,4 +1,4 @@
-lock '3.4.0'
+lock '3.4.1'
 
 set :repo_url, 'git@github.com:jlgasparrini/sistema-legislativo-digital.git'
 
