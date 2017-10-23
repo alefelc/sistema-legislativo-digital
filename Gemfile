@@ -46,9 +46,10 @@ gem 'rails-i18n', '4.0.4'
 gem 'bcrypt', '~> 3.1.7'
 
 # Capistrano for deployment
-gem 'capistrano-rails'
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano-bundler'
 gem 'capistrano-rvm'
-gem 'capistrano3-unicorn'
 
 # Activeadmin
 gem 'activeadmin'

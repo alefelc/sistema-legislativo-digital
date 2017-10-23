@@ -1,6 +1,9 @@
 # Load DSL and set up stages
 require 'capistrano/setup'
 
+# Lets have some console loveliness
+require "capistrano/console"
+
 # Include default deployment tasks
 require 'capistrano/deploy'
 
@@ -14,8 +17,9 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
-# Integrates Unicorn tasks into capistrano deployment scripts
-require 'capistrano3/unicorn'
-
 # Load custom tasks from `lib/capistrano/tasks' if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+
+# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
+Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
+Dir.glob('lib/capistrano/**/*.rb').each { |r| import r }
