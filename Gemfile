@@ -156,9 +156,6 @@ gem 'icheck-rails'
 ########################################
 
 source 'https://rails-assets.org' do
-  # A beautiful replacement for Javascript's "Alert".
-  gem 'rails-assets-sweetalert'
-
   # Ajax synchronizate datatables
   gem 'rails-assets-datatables'
 
