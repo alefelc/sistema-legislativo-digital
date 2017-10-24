@@ -14,7 +14,8 @@
       %span.icon-bar
     .row.navbar-title
       .col-md-10.takeoff-padding
-        .text-center#path-name= yield(:title)
+        .text-center#path-name= "STAGING ENVIRONMENT" if Rails.env.staging?
+        .text-center#path-name= "DEVELOPMENT ENVIRONMENT" if Rails.env.development?
       .col-md-2.takeoff-padding
         .navbar-custom-menu
           %ul.nav.navbar-nav

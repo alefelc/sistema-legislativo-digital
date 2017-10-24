@@ -63,10 +63,6 @@ es:
       address: 'Domicilio'
       created_at: Creado el
 
-  dashboard:
-    index:
-      home: Inicio
-
   government_offices:
     show:
       created_at: Creado el

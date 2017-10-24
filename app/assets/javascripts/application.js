@@ -8,7 +8,6 @@
 //= require select2_locale_es
 //= require Chart.min
 //= require bootstrap-multiselect
-//= require sweetalert
 //= require moment
 //= require daterangepicker
 //= require bootstrap-datetimepicker
@@ -17,6 +16,7 @@
 //= require cocoon
 //= require jquery-fileupload
 //= require fullcalendar
+//= require sweetalert.min
 //= require procedures
 
 
