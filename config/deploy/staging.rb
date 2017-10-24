@@ -23,7 +23,7 @@ set :ssh_options, {
   user: 'unrc',
 }
 
-set :rails_env, :production
+set :rails_env, :staging
 set :conditionally_migrate, true
 
 # server-based syntax
