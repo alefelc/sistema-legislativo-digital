@@ -8,7 +8,7 @@ class ProcedureSignatory < ActiveRecord::Base
     :municipal_office, :particular_legal]
 
   def text
-    "#{surname}, #{name} (#{position})"
+    "#{name} #{surname} (#{position})"
   end
 
   def to_s

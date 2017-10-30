@@ -22,7 +22,7 @@ namespace :populate do
     puts "Migrating areas..."
     Area.create name: 'Mesa de Entradas'
     print "."
-    Area.create name: 'Secretaria Legislativa'
+    Area.create name: 'Secretaría Legislativa'
     print "."
     puts "\n - - - - - - - - - - - - Areas added successfully \n"
   end
@@ -57,7 +57,7 @@ namespace :populate do
       u.password = "rarias123"
       u.roles << legislative_role
       u.person = Person.create name: "Romina", surname: "Arias"
-      u.areas << Area.find_by(name: 'Secretaria Legislativa')
+      u.areas << Area.find_by(name: 'Secretaría Legislativa')
     end
     print "."
 
@@ -93,7 +93,7 @@ namespace :populate do
       u.password = "fegasdel123"
       u.roles << legislative_role
       u.person = Person.create name: "Federico", surname: "Delborgo"
-      u.areas << Area.find_by(name: 'Secretaria Legislativa')
+      u.areas << Area.find_by(name: 'Secretaría Legislativa')
     end
     print "."
 

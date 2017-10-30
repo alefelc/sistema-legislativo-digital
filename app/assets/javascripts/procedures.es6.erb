@@ -9,7 +9,6 @@ class ModalInitiator {
     this.filterCheckBoxes();
     this.listenRadios();
     this.listenForm();
-    // this.listenInitiatorSubmit();
   }
 
   filterCheckBoxes() {
@@ -413,7 +412,7 @@ class InitiatorsTable {
           data = { id: "#", text: "DEM", type: "dem" };
           break;
         case 'legislative_secretary':
-          data = { id: "#", text: "Secretaria legislativa", type: "legislative_secretary" }
+          data = { id: "#", text: "Secretaría legislativa", type: "legislative_secretary" }
           break;
         default:
           let selectedInfo = $(`#initiator_form_${value}_id`).select2('data')[0];

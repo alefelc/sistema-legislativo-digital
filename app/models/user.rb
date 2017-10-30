@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     when :reception_table
       areas.where(name: 'Mesa de Entradas').present? || admin?
     when :legislative_secretary
-      areas.where(name: 'Secretaria Legislativa').present? || admin?
+      areas.where(name: 'Secretaría Legislativa').present? || admin?
     end
   end
 end

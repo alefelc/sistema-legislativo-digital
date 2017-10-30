@@ -23,4 +23,8 @@ class Periodo < ActiveRecord::Base
   def to_s
     "#{desde} - #{hasta}"
   end
+
+  def available_concejals
+    concejals.where withdrawn: nil
+  end
 end

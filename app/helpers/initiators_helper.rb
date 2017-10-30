@@ -9,7 +9,7 @@ module InitiatorsHelper
   end
 
   def councilors_select
-  	options_for_select current_period.concejals.collect { |c| [ c.fullname_with_dni, c.id ] }
+  	options_for_select current_period.available_concejals.collect { |c| [ c.fullname_with_dni, c.id ] }
   end
 
   def blocks_select
