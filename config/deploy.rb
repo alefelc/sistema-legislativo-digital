@@ -12,6 +12,8 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 # Defaults to [:web]
 set :assets_roles, [:app]
 
+set :keep_assets, nil
+
 after 'deploy:publishing', 'deploy:restart'
 
 # set(:config_files, %w(
