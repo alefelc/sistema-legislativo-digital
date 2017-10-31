@@ -10,7 +10,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 
 # Defaults to [:web]
-set :assets_roles, [:web, :app]
+set :assets_roles, [:app]
 
 after 'deploy:publishing', 'deploy:restart'
 
