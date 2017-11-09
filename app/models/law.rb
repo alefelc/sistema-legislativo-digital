@@ -13,6 +13,7 @@ class Law < ActiveRecord::Base
   end
 
   def to_s
-    "#{number}/#{letter}/#{year}"
+    return "#{number}/#{letter}/#{year}" if letter.present?
+    "#{number}/#{year}"
   end
 end

@@ -2,7 +2,7 @@ namespace :populate do
   TASKS = %w(
     roles areas users periods commissions
     councilors signators commission_members
-    government_agencies bloques
+    government_agencies
   )
 
   desc "Cargar roles dentro de la DB"

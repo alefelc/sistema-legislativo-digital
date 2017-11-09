@@ -133,7 +133,7 @@ class ProcedureDatatable
     tra.organo_de_gobiernos.each { |b| result << "#{b.denominacion}" }
     tra.bloques.each { |b| result << "#{b.denominacion}" }
     tra.comisions.each { |b| result << "#{b.denominacion}" }
-    tra.persons.each { |b| result << link_to(b.full_name, person_path(b)) }
+    tra.persons.each { |b| result << b.full_name }
     tra.reparticion_oficials.each { |b| result << "#{b.denominacion}" }
     tra.municipal_offices.each { |b| result << "#{b.denominacion}" }
     result.join ' - '

@@ -8,7 +8,7 @@
         <li class="treeview">
           <%= link_to '#' do %>
             <i class="fa fa-tags fa-lg"></i>
-            <span> <%= t '.reception' %> </span>
+            <span> Mesa de Entradas </span>
             <i class="fa fa-angle-left pull-right"></i>
           <% end -%>
           <ul class="treeview-menu">
@@ -22,7 +22,7 @@
               <li>
                 <%= link_to new_procedure_path do %>
                   <i class="fa fa-circle-o"></i>
-                  <%= t '.new_process' %>
+                  Nuevo Trámite
                 <% end -%>
               </li>
             <% end %>
@@ -76,7 +76,7 @@
         </li>
         <li class="treeview">
           <a href="<%= day_plans_path %>">
-            <i class="fa fa-list fa-lg"></i> <span> Orden del día </span>
+            <i class="fa fa-list fa-lg"></i> <span> Orden del Día </span>
           </a>
         </li>
         <li class="treeview">
@@ -93,7 +93,7 @@
       <!-- End legislative secretary -->
 
       <% if policy(:configurations).all? %>
-        <li class="header text-center"> Configuración de sistema </li>
+        <li class="header text-center"> Configuración de Sistema </li>
 
         <li class="treeview">
           <a href="#">

@@ -18,9 +18,7 @@ es:
     sidebar:
       parameters: Parámetros del sistema
       main_navigation: Navegación Principal
-      reception: Mesa de entradas
       all_processes: Ver trámites
-      new_process: Nuevo trámite
       edit_process: Editando trámite
       show_process: Mostrando trámite
       reports: Reportes

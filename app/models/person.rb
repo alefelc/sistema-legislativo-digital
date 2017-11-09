@@ -29,6 +29,10 @@ class Person < ActiveRecord::Base
   end
 
   def text
+    if type == 'Concejal'
+      return "Concejal #{full_name}"
+    end
+
     if cuit_or_dni.present?
      "#{full_name} [#{cuit_or_dni}]"
     else

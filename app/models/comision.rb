@@ -10,7 +10,7 @@ class Comision < ActiveRecord::Base
   has_many :estado_procedures, as: :ref
 
   def text
-    "#{denominacion}"
+    "Comisión de #{denominacion}"
   end
 
   def to_s

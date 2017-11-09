@@ -19,7 +19,7 @@ class LawsDatatable
   def data
     paginated_laws.map do |law|
       [
-        "#{law.number} / #{law.letter} / #{law.year}",
+        "#{law.number} / #{law.year}",
         law.law_type,
         law.year,
         '',

@@ -20,7 +20,7 @@ class CouncilorsDatatable
   def data
     paginated_councilors.map do |p|
       [
-        link_to_if(p.full_name.present?, p.full_name, councilor_path(p)),
+        p.full_name,
         p.cuit_or_dni,
         p.address,
         p.phone,
