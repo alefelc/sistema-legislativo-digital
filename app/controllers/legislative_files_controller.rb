@@ -75,6 +75,8 @@ class LegislativeFilesController < ApplicationController
       q = "%#{params[:select_q]}%"
       w = "number ilike ?"
       LegislativeFile.where(w, q).order(id: :desc).limit(20).as_json only: :id, methods: :text
+    else
+      LegislativeFileDatatable.new(view_context)
     end
   end
 end

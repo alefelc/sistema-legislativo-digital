@@ -6,6 +6,7 @@ class LegislativeFileService
     else
       @file = LegislativeFile.new params.slice(:sheets, :topic, :observations, :year, :date, :loops_attributes)
     end
+    @loop = @file.loops.build params.slice(:sheets, :topic, :observations, :year, :date, :origin_procedure_id)
     @errors = []
   end
 
@@ -14,12 +15,15 @@ class LegislativeFileService
       ActiveRecord::Base.transaction do
         @file.save!
         @loop.save!
-        if @loop.origin_procedure.topic.blank?
+        if @loop.origin_procedure.present? && @loop.origin_procedure.topic.blank?
           @loop.origin_procedure.update(topic: @file.topic)
         end
-        @state = @file.legislative_file_states.build procedure: Procedure.find_by(id: @params.fetch(:origin_procedure_id))
-        @state.save!
+        if @state && @state.fetch(:origin_procedure_id).present?
+          @state = @file.legislative_file_states.build procedure: Procedure.find_by(id: @params.fetch(:origin_procedure_id))
+          @state.save!
+        end
       end
+      true
     rescue Exception => e
       false
     end

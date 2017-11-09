@@ -41,6 +41,7 @@ class LegislativeFile < ActiveRecord::Base
   end
 
   def sequential_number
+    return if self.number.present?
     last = LegislativeFile.last
     self.number = (last.number.to_i + 1).to_s if last.present?
   end

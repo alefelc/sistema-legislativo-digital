@@ -75,7 +75,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @loops.each do |l| %>
+<!--           <% @loops.last(10).each do |l| %>
             <tr>
               <td> <%= l.number %></td>
               <td> <%= l.topic %></td>
@@ -87,7 +87,7 @@
                 <%= link_to '', legislative_file_path(l), class: 'btn btn-info fa fa-lg fa-eye' %>
               </td>
             </tr>
-          <% end %>
+          <% end %> -->
         </tbody>
       </table>
     </div>
@@ -96,9 +96,46 @@
 <script type="text/javascript">
 $(document).ready(function() {
   if ($('#index-legislative-files').length) {
-    $('#legislative-files-table').dataTable({
-      "order": []
-    });
+    var table = $('#legislative-files-table').DataTable({
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron expedientes relacionados a su búsqueda."
+      },
+      dom: "<'row'<'col-sm-4'l><'legislative-files-toolbar col-sm-4'><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: $('#legislative-files-table').data('url'),
+        method: 'GET',
+        dataType: 'json',
+        data: function(params) {
+          // params.show_derivations = $('div.data-derivations').data('show');
+          // // Between two dates filter.
+          // if (!$('#legislative-files #reportrange').data('disabled')) {
+          //   params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
+          //   params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
+          // }
+          // // Filter by derivated procedures.
+          // if (!$('#legislative-files #derivation_types').data('disabled'))
+          //   params.derivation_filter = $('#legislative-files #derivation_types').val();
+          return params
+        }
+      },
+      fnPreDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', '0.2');
+      },
+      fnDrawCallback: function() {
+        let column_to_hide = 0; // Derivations column
+        let column = table.column(column_to_hide);
+        column.visible($('div.data-derivations').data('show'));
+        $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
+      },
+      fnInitComplete: function() {
+        Procedures.listenCheckButtons();
+      }
+    })
   }
 });
 </script>
