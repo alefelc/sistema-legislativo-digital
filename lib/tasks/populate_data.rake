@@ -99,22 +99,29 @@ namespace :populate do
 
     user = User.find_by email: "leo@admin.com"
     user.areas << Area.all
+    user.roles << Role.all
+    user.update(admin: true)
     puts "."
 
     user = User.find_by email: "mechenique@entrada.com"
     user.areas << Area.find_by(name: 'Mesa de Entradas')
+    user.roles << ticket_table_role
     puts "."
 
     user = User.find_by email: "rarias@entrada.com"
     user.areas << Area.find_by(name: 'Secretaría Legislativa')
+    user.roles << legislative_role
     puts "."
 
     user = User.find_by email: "romiarias@entrada.com"
     user.areas << Area.find_by(name: 'Secretaría Legislativa')
+    user.roles << legislative_role
     puts "."
 
     user = User.find_by email: "guille@admin.com"
     user.areas << Area.all
+    user.roles << Role.all
+    user.update(admin: true)
     puts "."
 
     puts "\n - - - - - - - - - - - - - Users loaded successfully!\n"
