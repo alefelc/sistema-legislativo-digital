@@ -52,23 +52,23 @@ namespace :populate do
     end
     print "."
 
-    User.create do |u|
-      u.email = "rarias@gmail.com"
-      u.password = "rarias123"
-      u.roles << legislative_role
-      u.person = Person.create name: "Romina", surname: "Arias"
-      u.areas << Area.find_by(name: 'Secretaría Legislativa')
-    end
-    print "."
+    # User.create do |u|
+    #   u.email = "rarias@gmail.com"
+    #   u.password = "rarias123"
+    #   u.roles << legislative_role
+    #   u.person = Person.create name: "Romina", surname: "Arias"
+    #   u.areas << Area.find_by(name: 'Secretaría Legislativa')
+    # end
+    # print "."
 
-    User.create do |u|
-      u.email = "mechenique@live.com"
-      u.password = "mechenique123"
-      u.roles << ticket_table_role
-      u.person = Person.create name: "Maria Rosa", surname: "Etchenique"
-      u.areas << Area.find_by(name: 'Mesa de Entradas')
-    end
-    print "."
+    # User.create do |u|
+    #   u.email = "mechenique@live.com"
+    #   u.password = "mechenique123"
+    #   u.roles << ticket_table_role
+    #   u.person = Person.create name: "Maria Rosa", surname: "Etchenique"
+    #   u.areas << Area.find_by(name: 'Mesa de Entradas')
+    # end
+    # print "."
 
     User.create do |u|
       u.email = "lpermigiani@hotmail.com"
@@ -96,6 +96,26 @@ namespace :populate do
       u.areas << Area.find_by(name: 'Secretaría Legislativa')
     end
     print "."
+
+    user = User.find_by email: "leo@admin.com"
+    user.areas << Area.all
+    puts "."
+
+    user = User.find_by email: "mechenique@entrada.com"
+    user.areas << Area.find_by(name: 'Mesa de Entradas')
+    puts "."
+
+    user = User.find_by email: "rarias@entrada.com"
+    user.areas << Area.find_by(name: 'Secretaría Legislativa')
+    puts "."
+
+    user = User.find_by email: "romiarias@entrada.com"
+    user.areas << Area.find_by(name: 'Secretaría Legislativa')
+    puts "."
+
+    user = User.find_by email: "guille@admin.com"
+    user.areas << Area.all
+    puts "."
 
     puts "\n - - - - - - - - - - - - - Users loaded successfully!\n"
   end
