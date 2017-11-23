@@ -98,10 +98,10 @@ module LegislativeFilesHelper
 
   def calculate_sheets(loop)
     if loop.origin_procedure.present?
-      loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets) +
+      loop.sheets.to_i + loop.origin_procedure.administrative_files.sum(:sheets) +
       loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
     else
-      loop.sheets +
+      loop.sheets.to_i +
       loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
     end
   end
