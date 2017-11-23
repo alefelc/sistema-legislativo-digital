@@ -97,8 +97,13 @@ module LegislativeFilesHelper
   end
 
   def calculate_sheets(loop)
-    loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets) +
-    loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
+    if loop.origin_procedure.present?
+      loop.sheets + loop.origin_procedure.administrative_files.sum(:sheets) +
+      loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
+    else
+      loop.sheets +
+      loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
+    end
   end
 
   def state_date(state)
