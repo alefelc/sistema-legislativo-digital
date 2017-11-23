@@ -74,7 +74,7 @@
                 Editar
               <% end %>
               <%= link_to '#', class: 'linktoprint btn btn-danger btn-lg',
-                data: { expediente: @loop.id, nro: @loop.number, iniciador: @loop.origin_procedure.initiators, asunto: @loop.topic.to_s.upcase, anio: @loop.year } do %>
+                data: { expediente: @loop.id, nro: @loop.number, iniciador: (@loop.origin_procedure.present? ? @loop.origin_procedure.initiators : ''), asunto: @loop.topic.to_s.upcase, anio: @loop.year } do %>
                 <i class="fa fa-lg fa-print"></i>
                 Imprimir Carátula
               <% end %>

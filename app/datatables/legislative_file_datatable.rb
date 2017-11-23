@@ -46,7 +46,7 @@ class LegislativeFileDatatable
 
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["legislative_files.id::text ILIKE ?"]
+      query += ["legislative_files.number::text ILIKE ?"]
       # query += ["legislative_files.id ILIKE ? OR legislative_files.code ILIKE ? OR legislative_files.type_course ILIKE ? OR legislative_files.division ILIKE ? OR legislative_files.subdivision ILIKE ?" ]
       binds += [search] * 1
     end
