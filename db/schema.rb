@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030121617) do
+ActiveRecord::Schema.define(version: 20171123142009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -321,7 +321,7 @@ ActiveRecord::Schema.define(version: 20171030121617) do
 
   create_table "legislative_files", force: :cascade do |t|
     t.string   "number"
-    t.integer  "sheets"
+    t.integer  "sheets",       default: 0
     t.integer  "bis",          default: 0
     t.text     "topic"
     t.text     "observations"
@@ -346,6 +346,21 @@ ActiveRecord::Schema.define(version: 20171030121617) do
 
   add_index "legislative_files_tags", ["legislative_file_id"], name: "index_legislative_files_tags_on_legislative_file_id", using: :btree
   add_index "legislative_files_tags", ["tag_id"], name: "index_legislative_files_tags_on_tag_id", using: :btree
+
+  create_table "legislative_sessions", force: :cascade do |t|
+    t.integer  "number"
+    t.text     "observation"
+    t.integer  "diario_de_sesion_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "session_type"
+    t.string   "place"
+    t.boolean  "secret"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+  end
+
+  add_index "legislative_sessions", ["diario_de_sesion_id"], name: "index_legislative_sessions_on_diario_de_sesion_id", using: :btree
 
   create_table "libros", force: :cascade do |t|
     t.string   "nombre"
@@ -376,10 +391,10 @@ ActiveRecord::Schema.define(version: 20171030121617) do
     t.string   "topic"
     t.date     "year"
     t.integer  "sheets"
-    t.integer  "origin_procedure_id"
     t.date     "date"
     t.integer  "bis",                 default: 0
     t.string   "observations"
+    t.integer  "origin_procedure_id"
   end
 
   add_index "loops", ["legislative_file_id"], name: "index_loops_on_legislative_file_id", using: :btree
@@ -715,21 +730,6 @@ ActiveRecord::Schema.define(version: 20171030121617) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer  "number"
-    t.text     "observation"
-    t.integer  "diario_de_sesion_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "session_type"
-    t.string   "place"
-    t.boolean  "secret"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-  end
-
-  add_index "sessions", ["diario_de_sesion_id"], name: "index_sessions_on_diario_de_sesion_id", using: :btree
-
   create_table "sub_seccions", force: :cascade do |t|
     t.string   "nombre"
     t.integer  "seccion_id"
@@ -820,8 +820,8 @@ ActiveRecord::Schema.define(version: 20171030121617) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "legislative_file_states", "legislative_files"
+  add_foreign_key "legislative_file_states", "legislative_sessions", column: "session_id"
   add_foreign_key "legislative_file_states", "procedures"
-  add_foreign_key "legislative_file_states", "sessions"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
   add_foreign_key "procedure_derivations", "areas"
