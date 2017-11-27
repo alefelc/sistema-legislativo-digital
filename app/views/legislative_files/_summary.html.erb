@@ -24,7 +24,7 @@
                   <%= @loop.topic %>
                 </div>
               </div>
-              <% if @loop.origin_procedure.administrative_files.present? %>
+              <% if @loop.origin_procedure && @loop.origin_procedure.administrative_files.present? %>
                 <div class="row">
                   <div class="col-md-2">
                     <h5 class="word-top text-bold pull-right">Exp. adm.:</h5>
