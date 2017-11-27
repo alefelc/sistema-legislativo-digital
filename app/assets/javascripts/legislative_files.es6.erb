@@ -20,6 +20,7 @@ class ListenProceduresFinder {
 		  cache: true,
 		  data: (params) => {
 		    return {
+		    	filter_procedures: 'legislative_files',
 		      select_q: params.term || '%%'
 		    };
 		  },
@@ -244,6 +245,7 @@ $(document).ready(function() {
 	}
 
 	$('.legislative-data').on('shown.bs.tab', function() {
-		$('#legislative_file_origin_procedure_id').select2('destroy').select2();
+		$('#legislative_file_origin_procedure_id').select2('destroy');
+		new ListenProceduresFinder();
 	});
 });
