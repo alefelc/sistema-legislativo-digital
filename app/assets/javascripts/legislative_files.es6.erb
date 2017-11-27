@@ -246,6 +246,7 @@ $(document).ready(function() {
 
 	$('.legislative-data').on('shown.bs.tab', function() {
 		$('#legislative_file_origin_procedure_id').select2('destroy');
+		console.log("Trying to update");
 		new ListenProceduresFinder();
 	});
 });
