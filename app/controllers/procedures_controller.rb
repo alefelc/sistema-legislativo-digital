@@ -232,7 +232,12 @@ class ProceduresController < ApplicationController
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "id::text ilike ?"
-      Procedure.where(w, q).limit(20).order(id: :desc).to_json(methods: :text)
+      if params[:filter_procedures].present?
+        w += " AND type != 'Despacho'"
+        Procedure.where(w, q).limit(20).order(id: :desc).to_json(methods: :text)
+      else
+        Procedure.where(w, q).limit(20).order(id: :desc).to_json(methods: :text)
+      end
     else
       ProcedureDatatable.new(view_context)
     end

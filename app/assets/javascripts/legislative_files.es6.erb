@@ -29,13 +29,15 @@ class ListenProceduresFinder {
 		  }
 		};
 		$(this.select).select2(options).on("select2:select", function(e) {
-	    // token selected
-	    var data = e.params.data;
+      // token selected
+      var data = e.params.data;
 	    $('#legislative_file_topic').val(data.topic);
-	    $('#legislative_file_sheets').val(data.sheets);
+      $('#legislative_file_sheets').val(data.sheets);
 	    $('#legislative_file_observations').val(data.observations);
 	    $('#legislative_file_date').val(data.created_at.substr(0,10));
-	   });
+	  }).on("select2:unselected", function(e) {
+			$('#legislative_file_origin_procedure_id option:last').val("");
+	 	});
 	}
 }
 

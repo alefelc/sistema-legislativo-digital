@@ -18,8 +18,11 @@ module ApplicationHelper
 
   def flash_icon(status)
     status = status.to_sym
-    icons = { success: 'icon fa fa-check', warning: 'icon fa fa-warning',
-              info: 'icon fa fa-info', error: 'icon fa fa-ban' }
+    icons = {
+      success: 'icon fa fa-check', warning: 'icon fa fa-warning',
+      info: 'icon fa fa-info-circle', error: 'icon fa fa-ban', alert: 'icon fa fa-ban',
+      notice: 'icon fa fa-info-circle'
+    }
     icons[status] if icons.key?(status)
   end
 

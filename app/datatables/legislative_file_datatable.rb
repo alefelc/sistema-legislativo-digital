@@ -1,5 +1,6 @@
 class LegislativeFileDatatable
-  delegate :content_tag, :params, :to_date, :legislative_file_path, :link_to, to: :@view
+  delegate :content_tag, :params, :to_date, :legislative_file_path, :link_to,
+    :build_initiators, to: :@view
 
   def initialize(view)
     @view = view
@@ -24,7 +25,7 @@ class LegislativeFileDatatable
         (file.origin_procedure.present? ? link_to(file.origin_procedure, file.origin_procedure) : ""),
         (file.loops.count - 1),
         content_tag(:i, nil, class: 'linktoprint btn btn-danger fa fa-print fa-lg',
-          'data-expediente': file.id, 'data-nro': file.number, 'data-iniciador': '',
+          'data-expediente': file.id, 'data-nro': file.number, 'data-iniciador': build_initiators(file),
           'data-asunto': file.topic.try(:upcase), 'data-anio': to_date(file.date),
           title: 'Imprimir Carátula') +
         link_to('', legislative_file_path(file), class: 'btn btn-info fa fa-lg fa-eye')
@@ -46,7 +47,7 @@ class LegislativeFileDatatable
 
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["legislative_files.number::text ILIKE ?"]
+      query += ["legislative_files.number ILIKE ?"]
       # query += ["legislative_files.id ILIKE ? OR legislative_files.code ILIKE ? OR legislative_files.type_course ILIKE ? OR legislative_files.division ILIKE ? OR legislative_files.subdivision ILIKE ?" ]
       binds += [search] * 1
     end

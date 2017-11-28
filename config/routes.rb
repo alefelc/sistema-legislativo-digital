@@ -2,10 +2,14 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   # Define access for users
-  devise_for :users
+  devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock' }
 
   # Set dashboard as root
   root to: 'dashboard#index'
+  devise_scope :user do
+    get 'sign_in', to: 'devise/sessions#new'
+    delete '/users/sign_out' => 'devise/sessions#destroy'
+  end
 
   # Reception routes
   resources :procedures do
@@ -58,18 +62,6 @@ Rails.application.routes.draw do
   resources :dependencia_municipals
   resources :pendientes, only: :index
 
-  # Reports/statistics area ##### Rethink this and talk to LALO #####
-  namespace :statitics do
-    get 'mesa_de_entradas'
-    get 'expedientes'
-    get 'normas'
-  end
-  namespace :reports do
-    get 'mesa_de_entradas'
-    get 'expedientes'
-    get 'normas'
-  end
-
   resources :expediente_reports   ##### yet useful? #####
   resources :normas
 
@@ -83,7 +75,7 @@ Rails.application.routes.draw do
   resources :periods
 
   get 'calendar', to: 'calendar#index'
-  resources :sessions
+  resources :legislative_sessions
 
   # Admin access only
   # Users and role access

@@ -1,4 +1,4 @@
-class Session < ActiveRecord::Base
+class LegislativeSession < ActiveRecord::Base
 	belongs_to :diario_de_sesion
   has_many :legislative_file_states
 	has_one :orden_del_dia

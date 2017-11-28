@@ -161,7 +161,7 @@
       placeholder: 'Busque sesión',
       language: 'es',
       ajax: {
-        url: "<%= sessions_path %>",
+        url: "<%= legislative_sessions_path %>",
         dataType: 'json',
         delay: 250,
         cache: true,
@@ -275,9 +275,9 @@
     });
 
     $.ajax({
-      url: '/sessions',
+      url: '/legislative_sessions',
       method: 'POST',
-      data: { session: params },
+      data: { legislative_session: params },
       dataType: 'json',
       delay: 250,
       cache: true,

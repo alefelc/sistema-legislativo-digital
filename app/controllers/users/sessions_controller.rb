@@ -1,3 +1,3 @@
 class Users::SessionsController < Devise::SessionsController
-  respond_to :json
+  skip_filter: authenticate_user!
 end

@@ -1,0 +1,32 @@
+<div id="sign-in">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <h1 class="text-center login-title"> </h1>
+        <div class="account-wall">
+          <img src="<%= image_url('concejo_logo.jpg') %>" id="carat-image" class="profile-img imagez">
+          <%= devise_error_messages! %>
+
+          <%= form_for user_session_path do |f| %>
+           <%= label_tag 'user[email]', 'Usuario' %>
+           <%= text_field_tag 'user[email]', nil, class: 'form-control', type: :email, placeholder: 'Ingrese Usuario' %>
+
+            <%= label_tag 'user[password]', 'Contraseña' %>
+            <%= password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Ingrese contraseña' %>
+
+<!--             <% if devise_mapping.rememberable? %>
+              <label for="" class="checkbox pull-left" style="padding-left: 20px">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me, "Recordar Ingreso", style: 'padding-left: 0px' %>
+              </label>
+            <% end %> -->
+            <div class="col-md-12" style='padding-top: 20px;'>
+              <%= f.submit 'Ingresar', class: 'btn btn-lg btn-success btn-block' %>
+            </div>
+            <span class="clearfix"></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

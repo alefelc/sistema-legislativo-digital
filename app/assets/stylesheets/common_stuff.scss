@@ -134,3 +134,28 @@ textarea {
 .select2-results__option[aria-selected=true] { display: none; }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+// Session CSS
+.profile-img {
+  width: 356px;
+  height: 356px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+#session {
+  height: 100% !important;
+}
+
+.layout-session-container {
+  height: 100% !important;
+  width: 100% !important;
+  display: table !important;
+}
+
+.layout-session-row {
+  display: table-cell !important;
+  height: 100% !important;
+  vertical-align: middle !important;
+}

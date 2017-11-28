@@ -30,23 +30,23 @@
 
   $(document).ready(function() {
 
-    $(document).on('ajax:success', '#user-form', function() {
-      window.location.reload();
-    });
+    -# $(document).on('ajax:success', '#user-form', function() {
+    -#   window.location.reload();
+    -# });
 
-    $(document).on('ajax:error', '#user-form', function() {
-      swal({
-        title: 'Email o contraseña NO válidos',
-        text: 'Por favor, intente nuevamente',
-        type: 'error'
-      });
-    });
+    -# $(document).on('ajax:error', '#user-form', function() {
+    -#   swal({
+    -#     title: 'Email o contraseña NO válidos',
+    -#     text: 'Por favor, intente nuevamente',
+    -#     type: 'error'
+    -#   });
+    -# });
 
-    $('#log-out').on('click', function(e) {
-      $.ajax({
-        url: '/users/sign_out',
-        type: 'DELETE',
-        success: function() { window.location.reload() }
-      });
-    });
+    -# $('#log-out').on('click', function(e) {
+    -#   $.ajax({
+    -#     url: '/users/sign_out',
+    -#     type: 'DELETE',
+    -#     success: function() { window.location.reload() }
+    -#   });
+    -# });
   });

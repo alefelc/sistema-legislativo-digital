@@ -72,9 +72,13 @@ class LegislativeFilesController < ApplicationController
 
   def build_json
     if params[:select_q].present?
-      q = "%#{params[:select_q]}%"
-      w = "number ilike ?"
-      LegislativeFile.where(w, q).order(id: :desc).limit(20).as_json only: :id, methods: :text
+      q = params[:select_q]
+      w = "number::int = ?"
+      if params[:select_q] == '%%'
+        LegislativeFile.order("number::int desc").limit(20).as_json only: :id, methods: :text
+      else
+        LegislativeFile.where(w, q).as_json only: :id, methods: :text
+      end
     else
       LegislativeFileDatatable.new(view_context)
     end

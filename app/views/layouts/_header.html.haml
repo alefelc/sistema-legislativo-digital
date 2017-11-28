@@ -37,7 +37,9 @@
                   %li.user-footer
 
                     #log-out.pull-right
-                      %a.btn.btn-danger.fa.fa-sign-out{ href: '#', title: 'Salir del Sistema' } Salir
+                      = link_to destroy_user_session_path, method: :delete, class: 'btn btn-danger' do
+                        %i.fa.fa-sign-out
+                        Salir del Sistema
             - else
               %li.dropdown.user.user-menu
                 %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle': 'dropdown', href: '#'}
@@ -46,7 +48,7 @@
                 %ul.dropdown-menu
 
                   %li.user-footer
-                    = form_tag user_session_path, remote: true, id: 'user-form' do
+                    = form_tag user_session_path, id: 'user-form' do
                       = label_tag 'Usuario'
                       = text_field_tag 'user[email]', nil, class: 'form-control', type: :email, placeholder: 'Ingrese email'
                       = label_tag 'Contraseña'

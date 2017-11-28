@@ -7,6 +7,20 @@ module ProceduresHelper
     ]
   end
 
+  def options_for_procedures
+    types = [
+      ['Todos los Trámites', 'all_procedures'],
+      ['Despachos de Comisión', 'dispatches'],
+      ['Condonaciones / Eximisiones', 'condonation'],
+      ['Peticiónes Particulares', 'particular_petitions'],
+      ['Proyectos', 'projects'],
+      ['Comunicaciones Oficiales', 'comunications'],
+      ['Otros Trámites', 'others']
+    ]
+
+    options_for_select types
+  end
+
   def procedure_types(procedure=nil)
     types = []
     if procedure.present? && procedure != "Despacho"

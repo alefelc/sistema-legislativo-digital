@@ -9,15 +9,15 @@ class SessionDatatable
   def as_json(_options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: sessions.count,
-      iTotalDisplayRecords: sessions.count,
+      iTotalRecords: legislative_sessions.count,
+      iTotalDisplayRecords: legislative_sessions.count,
       data: data
     }
   end
 
   private
   def data
-    paginated_sessions.map do |session|
+    paginated_legislative_sessions.map do |session|
       [
         session.id,
         session.number,
@@ -35,8 +35,8 @@ class SessionDatatable
     date.present? ? date.strftime('%d/%m/%Y - %H:%M') : ''
   end
 
-  def sessions
-    Session.where(filter).order(:id)
+  def legislative_sessions
+    LegislativeSession.where(filter).order(:id)
   end
 
   def columns
@@ -62,8 +62,8 @@ class SessionDatatable
     [query.join(' OR ')] + binds
   end
 
-  def paginated_sessions
-    sessions.page(page).per(per_page)
+  def paginated_legislative_sessions
+    legislative_sessions.page(page).per(per_page)
   end
 
   def per_page

@@ -57,8 +57,8 @@ class CouncilorsDatatable
 
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["(denominacion ILIKE ?)"]
-      binds += [search] * 1
+      query += ["(name ILIKE ? OR surname ILIKE ?)"]
+      binds += [search] * 2
     end
     [query.join(' OR ')] + binds
   end

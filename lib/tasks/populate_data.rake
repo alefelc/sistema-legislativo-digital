@@ -1,8 +1,7 @@
 namespace :populate do
   TASKS = %w(
-    roles areas users periods commissions
-    councilors signators commission_members
-    government_agencies
+    roles areas users periods commissions signators
+    commission_members government_agencies
   )
 
   desc "Cargar roles dentro de la DB"
@@ -225,7 +224,9 @@ namespace :populate do
   desc "Fill councilors integration on comisions"
   task commission_members: :environment do
     puts "Migrating data..."
-    # Comision.find_by(denominacion: "Reforma política").concejals << Concejal.where surname: [""]
+    Comision.find_by(denominacion: "Reforma política").concejals <<
+      Concejal.where(surname: ["Ordoñez", "Carranza", "Bressan", "Petrone", "Paulizzi", "Carrizo"])
+      print "."
     Comision.find_by(denominacion: "Derechos Humanos").concejals <<
       Concejal.where(surname: ["Gadpen", "Petrone", "Segre", "Chiappe", "Concordano", "Fernández", "Lannutti"])
       print "."
@@ -284,6 +285,23 @@ namespace :populate do
     print "."
     Bloque.create denominacion: "RESPETO MST", periodos: [Periodo.last]
     print "."
+  end
+
+  desc "Populate municipal offices"
+  task municipal_offices: :environment do
+    mun_offices = [
+      "CONSEJO MUNICIPAL DEL ARBOLADO PUBLICO", "DEFENSORIA DEL PUEBLO",
+      "FUNDACION POR LA CULTURA", "JUNTA ELECTORAL MUNICIPAL", "SEC. DE DESARROLLO URBANO, OBRAS Y SSPP",
+      "SEC. DE GOBIERNO Y REL. INSTITUCIONALES", "SECRETARIA DE ECONOMIA", "SECRETARIA DE OBRAS PUBLICAS",
+      "SECRETARIA DE RELACIONES INSTIT. Y COMUN", "SECRETARIA DE SALUD Y DEPORTES",
+      "SECRETARIO DE CULTURA", "SUBSECRET. DE AGROINDUSTRIA Y COMERCIO",
+      "SUBSECRETARIA DE CULTURA", "SUBSECRETARIA DE DEPORTES", "SUBSECRETARIA DE GOBIERNO",
+      "SUBSECRETARIA DE HACIENDA", "SUBSECRETARIA DE TRANSPORTE",
+      "SUBSECRETARIO LEGAL Y TECNICO", "TRIBUNAL DE CUENTAS"
+    ]
+    mun_offices.each do |x|
+      MunicipalOffice.create denominacion: x
+    end
   end
 
   desc "Run all tasks to populate the database"

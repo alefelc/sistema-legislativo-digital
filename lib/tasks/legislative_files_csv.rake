@@ -11,7 +11,7 @@ namespace :migrate do
       bis = row[2]
       year = row[3]
       topic = row[4]
-      observation = row[5]
+      # observation = row[5]
       # acum = row[6]
       # adj_fis = row[7]
       # n = row[8]

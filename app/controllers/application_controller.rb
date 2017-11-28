@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pundit
+
+  layout :layout
+
   # Get available current period to all helper views.
   helper_method :current_period
 
@@ -23,8 +26,8 @@ class ApplicationController < ActionController::Base
   private
 
   # Overwriting the sign_in redirect path method
-  def after_sign_in_path_for(resource)
-    session[:previous_url] || root_path
+  def after_sign_out_path_for(resource)
+    new_user_session_path
   end
 
   def permission_denied
@@ -36,22 +39,30 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def layout
+    if is_a?(Devise::SessionsController)
+      'session'
+    # elsif current_person.present? && current_person.instance_of?(Owner)
+    #   'admin'
+    else
+      'application'
+    end
+  end
+
   protected
 
   def authenticate_user!
     if user_signed_in?
       super
     else
-      if params[:format] == 'json'
-        render json: { error: 'Usted no ha ingresado al sistema' }, status: 403
-      else
-        flash[:error] = 'Usted no ha ingresado al sistema'
-        redirect_to root_path
-      end
+      flash[:error] = 'Usted no ha ingresado al sistema'
+      redirect_to sign_in_path
     end
   end
 
   def current_period
     Periodo.current_period
   end
+
+
 end

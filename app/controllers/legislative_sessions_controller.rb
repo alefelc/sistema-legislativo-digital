@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class LegislativeSessionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
@@ -9,15 +9,15 @@ class SessionsController < ApplicationController
   end
 
   def new
-    @session = Session.new
+    @session = LegislativeSession.new
   end
 
   def create
-    @session = Session.new session_params
+    @session = LegislativeSession.new legislative_session_params
     if @session.save!
       flash[:success] = t '.success'
       respond_to do |format|
-        format.html { redirect_to session_path(@session) }
+        format.html { redirect_to legislative_session_path(@session) }
         format.json { render json: @session.to_json(methods: :text) }
       end
     else
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
   end
 
   def show
-    @session = Session.find params[:id]
+    @session = LegislativeSession.find params[:id]
     respond_to do |format|
       format.html
       format.json { render json: @session.to_json }
@@ -38,14 +38,14 @@ class SessionsController < ApplicationController
   end
 
   def edit
-    @session = Session.find params[:id]
+    @session = LegislativeSession.find params[:id]
   end
 
   def update
-    @session = Session.find params[:id]
-    if @session.update(session_params)
+    @session = LegislativeSession.find params[:id]
+    if @session.update(legislative_session_params)
       flash[:success] = t('.success')
-      redirect_to sessions_path
+      redirect_to legislative_sessions_path
     else
       flash.now[:error] = @session.errors.full_messages
       render :edit
@@ -53,8 +53,8 @@ class SessionsController < ApplicationController
   end
 
   private
-  def session_params
-    params.require(:session).permit :number, :observation, :session_type,
+  def legislative_session_params
+    params.require(:legislative_session).permit :number, :observation, :session_type,
       :place, :secret, :started_at, :finished_at
   end
 
@@ -62,7 +62,7 @@ class SessionsController < ApplicationController
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "number::text ilike ?"
-      Session.where(w, q).to_json only: :id, methods: :text
+      LegislativeSession.where(w, q).to_json only: :id, methods: :text
     else
       SessionDatatable.new view_context
     end

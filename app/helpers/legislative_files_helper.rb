@@ -110,4 +110,7 @@ module LegislativeFilesHelper
     state.dispatched? ? state.procedure.full_date : state.date_at
   end
 
+  def build_initiators(file)
+    file.first_loop.origin_procedure.try(:get_iniciadores)
+  end
 end

@@ -14,7 +14,7 @@ class Users {
         cache: true,
         data: (params) => {
           return {
-            select_q: params.term
+            select_q: params.term || "%%"
           };
         },
         processResults: (data, params) => {
