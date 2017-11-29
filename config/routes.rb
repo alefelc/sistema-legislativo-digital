@@ -4,9 +4,13 @@ Rails.application.routes.draw do
   # Define access for users
   devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock' }
 
-  # Set dashboard as root
-  root to: 'dashboard#index'
+  # Dashboard
+  get '/dashboard', to: 'dashboard#index'
+
   devise_scope :user do
+    # Set sign in as root
+    root to: "devise/sessions#new"
+
     get 'sign_in', to: 'devise/sessions#new'
     delete '/users/sign_out' => 'devise/sessions#destroy'
   end
