@@ -80,7 +80,7 @@ module ProceduresHelper
       ['Condonación / Eximisión', 'Condonacion'],
       ['Petición Particular', 'Peticion'],
       ['Comunicación Oficial', 'ComunicacionOficial'],
-      ['Otros Ingresos', 'Otros']
+      ['Otros Ingresos', 'OtrosIngresos']
     ]
   end
 

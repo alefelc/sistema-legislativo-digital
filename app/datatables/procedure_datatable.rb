@@ -98,6 +98,12 @@ class ProcedureDatatable
       binds += [params[:date_to]]
     end
 
+    if params[:type_filter].present?
+      types_filter = []
+      params[:type_filter].each { |type| types_filter += ["type = '#{type}'"] }
+      query += [types_filter.join(' OR ')]
+    end
+
     if params[:derivation_filter].present?
       ## Improve CONSTANTS HERE!!!!
       case params[:derivation_filter]

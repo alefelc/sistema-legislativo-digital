@@ -1,6 +1,6 @@
 class CouncilorsDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to_if, :current_user, to: :@view
+  delegate :params, :link_to, :current_user, :content_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -32,11 +32,9 @@ class CouncilorsDatatable
   end
 
   def edit_button(councilor)
-    link_to_if current_user.present?, '',
-               edit_councilor_path(councilor),
-               class: 'btn btn-warning fa fa-pencil-square-o councilor-edit',
-               title: 'Editar Concejal',
-               remote: true
+    link_to edit_councilor_path(councilor), class: 'btn btn-warning', title: 'Editar Concejal' do
+      content_tag 'i', '', class: 'fa fa-pencil-square-o'
+    end
   end
 
   def councilors

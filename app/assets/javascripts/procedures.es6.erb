@@ -248,6 +248,10 @@ class Procedures {
           // Filter by derivated procedures.
           if (!$('#procedures #derivation_types').data('disabled'))
             params.derivation_filter = $('#procedures #derivation_types').val();
+
+          if ($('#filter_type').val().length)
+            params.type_filter = $('#filter_type').val();
+
           return params
         }
       },
@@ -652,7 +656,6 @@ class ProceduresToolbar {
   }
 
   setToolbar() {
-    $('#procedures #procedures_filter').appendTo('.procedures-toolbar').show();
     $('#procedures #reportrange').appendTo('.procedures-toolbar').show();
   }
 
@@ -726,6 +729,7 @@ class ProcedureFilters {
       this.administrative_files();
       this.clear();
       this.submit();
+      $('#myModal').off('shown.bs.modal');
     });
   }
 
@@ -790,13 +794,8 @@ class ProcedureFilters {
   clear() {
     $(this.clearBtn).on('click', () => {
       // Clear type filter
-      $('#filter_type').multiselect('deselectAll').multiselect('refresh');
-      // Clear legislative files
-      // ...
-      // Clear administrative files
-      // ...
+      $('#filter_type').multiselect('deselectAll', false).multiselect('refresh');
 
-      // Reload datatable
       this.reloadDatatable();
     });
   }

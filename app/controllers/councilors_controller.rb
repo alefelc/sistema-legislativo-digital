@@ -6,25 +6,44 @@ class CouncilorsController < ApplicationController
     end
   end
 
+  def new
+    @councilor = Concejal.new
+  end
+
   def show
     @councilor = Concejal.find params[:id]
   end
 
   def edit
     @councilor = Concejal.find params[:id]
-    render layout: false
+  end
+
+  def create
+    @councilor = Concejal.new councilors_params
+    if @councilor.save
+      flash[:success] = "Concejal cargado correctamente"
+      redirect_to councilors_path
+    else
+      flash.now[:error] = @councilor.errors.full_messages
+      render :new
+    end
   end
 
   def update
-    councilor = Concejal.find params[:id]
-    councilor.update councilors_params
-    render json: councilor
+    @councilor = Concejal.find params[:id]
+    if @councilor.update councilors_params
+      flash[:success] = "Concejal actualizado correctamente"
+      redirect_to councilors_path
+    else
+      flash.now[:error] = @councilor.errors.full_messages
+      render :edit
+    end
   end
 
   private
 
   def councilors_params
-    params.require(:councilor).permit(:nombre, :apellido, :cuit, :telefono, :email,
-                                      :domicilio, :cargo, :bloque_id)
+    params.require(:councilor).permit(:name, :surname, :cuit_or_dni, :phone,
+      :email, :address, :bloque_id)
   end
 end
