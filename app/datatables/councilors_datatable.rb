@@ -38,7 +38,7 @@ class CouncilorsDatatable
   end
 
   def councilors
-    Concejal.where(filter).order(:id)
+    Concejal.where(filter).order(id: :desc)
   end
 
   def columns

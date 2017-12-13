@@ -71,7 +71,10 @@ Rails.application.routes.draw do
 
   resources :persons
   resources :government_offices
-  resources :councilors
+  resources :councilors do
+    post 'councilors', on: :collection
+  end
+
   resources :commissions
   resources :blocks
   resources :municipal_offices

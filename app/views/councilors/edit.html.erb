@@ -4,6 +4,12 @@
   <div class="box box-primary">
     <div class="box-header with-border">
       <h3 class="box-title"> Actualize Información del Concejal </h3>
+      <div class="pull-right">
+        <%= link_to '#', class: 'btn btn-danger' do %>
+          <i class="fa fa-trash"></i>
+          Dar de Baja
+        <% end %>
+      </div>
     </div>
 
     <%= form_for @councilor, as: :councilor, url: edit_councilor_path(@councilor) do |f| %>

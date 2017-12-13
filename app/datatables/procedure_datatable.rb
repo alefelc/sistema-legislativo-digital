@@ -74,7 +74,15 @@ class ProcedureDatatable
   end
 
   def procedures
-    Procedure.order(id: :desc).where filter
+    if params[:search][:value].present?
+      persons_join = "LEFT JOIN people_procedures ON " +
+      "people_procedures.procedure_id = procedures.id LEFT JOIN " +
+      "people ON people.id = people_procedures.person_id"
+      Procedure.order(id: :desc).joins(persons_join).where(filter)
+        .includes(:persons)
+    else
+      Procedure.order(id: :desc).where filter
+    end
   end
 
   def columns
@@ -86,10 +94,33 @@ class ProcedureDatatable
     binds = []
 
     if params[:search][:value].present?
+      #   tramite = Tramite.page(page).per(per_page).order(id: :desc)
+      #   if params[:sSearch].present?
+      #     query = "(tramites.asunto ilike " +
+      #     "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
+      #     "'%#{params[:sSearch]}%')"
+
+      #     persons_join = "LEFT JOIN people_tramites ON " +
+      #     "people_tramites.tramite_id = tramites.id LEFT JOIN " +
+      #     "people ON people.id = people_tramites.person_id"
+      #     tramite = tramite.where(query).joins(persons_join)
+      #   end
+      #   tramite.includes(:bloques)
+      #          .includes(:comisions)
+      #          .includes(:areas)
+      #          .includes(:organo_de_gobiernos)
+      #          .includes(:municipal_offices)
+      #          .includes(:reparticion_oficials)
+      #          .includes(:persons)
       search = "%#{params[:search][:value]}%"
-      query += ["procedures.id::text ILIKE ?"]
-      # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ? OR procedures.type_course ILIKE ? OR procedures.division ILIKE ? OR procedures.subdivision ILIKE ?" ]
-      binds += [search] * 1
+      query += [
+        "procedures.id::text ILIKE ? OR \
+        procedures.topic ILIKE ? OR \
+        procedures.observations ILIKE ? OR \
+        CONCAT(people.name, ' ', people.surname) ILIKE ? OR \
+        CONCAT(people.surname, ' ', people.name) ILIKE ?"
+      ]
+      binds += [search] * 5
     end
 
     if params[:date_from].present? && params[:date_to].present?
@@ -152,39 +183,4 @@ class ProcedureDatatable
     datetime += content_tag :div, time_only, class: 'text-center'
     datetime
   end
-
-  # def fetch_records
-  #   tramite = Tramite.page(page).per(per_page).order(id: :desc)
-  #   if params[:filtering].present?
-  #     filters = JSON.parse(params[:filtering])
-  #     if filters['created_at'].present?
-  #       dates = filters['created_at']
-  #       from = Date.parse(dates['from']) - 1.day
-  #       to = Date.parse(dates['to']) + 1.day
-  #       tramite = tramite.where(created_at: from..to)
-  #     end
-  #     if filters['types'].present?
-  #       tramite = tramite.where(type: filters['types'].split(','))
-  #     end
-  #   end
-  #   if params[:sSearch].present?
-  #     query = "(tramites.id::text ilike '%#{params[:sSearch]}%') OR " +
-  #     "(CONCAT(people.apellido, ' ', people.nombre) ilike " +
-  #     "'%#{params[:sSearch]}%') OR (tramites.asunto ilike " +
-  #     "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
-  #     "'%#{params[:sSearch]}%')"
-
-  #     persons_join = "LEFT JOIN people_tramites ON " +
-  #     "people_tramites.tramite_id = tramites.id LEFT JOIN " +
-  #     "people ON people.id = people_tramites.person_id"
-  #     tramite = tramite.where(query).joins(persons_join)
-  #   end
-  #   tramite.includes(:bloques)
-  #          .includes(:comisions)
-  #          .includes(:areas)
-  #          .includes(:organo_de_gobiernos)
-  #          .includes(:municipal_offices)
-  #          .includes(:reparticion_oficials)
-  #          .includes(:persons)
-  # end
 end
