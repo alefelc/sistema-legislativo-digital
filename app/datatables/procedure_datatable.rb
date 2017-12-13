@@ -75,11 +75,11 @@ class ProcedureDatatable
 
   def procedures
     if params[:search][:value].present?
-      persons_join = "LEFT JOIN people_procedures ON " +
-      "people_procedures.procedure_id = procedures.id LEFT JOIN " +
+      persons_join = "INNER JOIN people_procedures ON " +
+      "people_procedures.procedure_id = procedures.id INNER JOIN " +
       "people ON people.id = people_procedures.person_id"
       Procedure.order(id: :desc).joins(persons_join).where(filter)
-        .includes(:persons)
+        .includes(:persons).distinct
     else
       Procedure.order(id: :desc).where filter
     end
@@ -114,11 +114,11 @@ class ProcedureDatatable
       #          .includes(:persons)
       search = "%#{params[:search][:value]}%"
       query += [
-        "procedures.id::text ILIKE ? OR \
+        "(procedures.id::text ILIKE ? OR \
         procedures.topic ILIKE ? OR \
         procedures.observations ILIKE ? OR \
         CONCAT(people.name, ' ', people.surname) ILIKE ? OR \
-        CONCAT(people.surname, ' ', people.name) ILIKE ?"
+        CONCAT(people.surname, ' ', people.name) ILIKE ?)"
       ]
       binds += [search] * 5
     end
@@ -131,7 +131,7 @@ class ProcedureDatatable
 
     if params[:type_filter].present?
       types_filter = []
-      params[:type_filter].each { |type| types_filter += ["type = '#{type}'"] }
+      params[:type_filter].each { |type| types_filter += ["procedures.type = '#{type}'"] }
       query += [types_filter.join(' OR ')]
     end
 
