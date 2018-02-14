@@ -38,7 +38,7 @@
                   = f.fields_for @upload, multiple: true do |file_form|
                     = file_form.file_field :file, multiple: true
                   %h3 Archivos cargados
-                  %table.table.table-bordered.upload-table
+                  %table.table.table-bordered.upload-table.table-hover
                     %thead
                       %tr
                         %th Nombre del archivo

@@ -22,7 +22,7 @@
 
             - if current_user.present?
               %li.dropdown.user.user-menu
-                %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle': 'dropdown', href: '#' }
+                %a.dropdown-toggle.btn.btn-xs.btn-primary.btn-header-color{ 'data-toggle': 'dropdown', href: '#' }
                   %img.user-image{ src: image_url('concejo_logo_only.jpg') }
                     %span.hidden-xs= current_user.email
                 %ul.dropdown-menu
@@ -42,7 +42,7 @@
                         Salir del Sistema
             - else
               %li.dropdown.user.user-menu
-                %a.dropdown-toggle.btn.btn-xs.btn-success{ 'data-toggle': 'dropdown', href: '#'}
+                %a.dropdown-toggle.btn.btn-xs.btn-primary.btn-header-color{ 'data-toggle': 'dropdown', href: '#'}
                   %img.user-image{ src: image_path('sign_in.png') }
                     %span.hidden-xs Ingreso al Sistema
                 %ul.dropdown-menu

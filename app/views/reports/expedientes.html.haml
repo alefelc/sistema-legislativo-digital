@@ -64,7 +64,7 @@
     %span.fa.fa-filter{ "aria-hidden": true }
     Filtrar datos
 
-  %table.datatable-keyevents.table.table-striped.table-bordered#expediente-report-table{"data-source" => reports_expedientes_path(format: :json)}
+  %table.datatable-keyevents.table.table-striped.table-bordered.table-hover#expediente-report-table{"data-source" => reports_expedientes_path(format: :json)}
     %thead
       %tr
         %th= t('.table.expediente')

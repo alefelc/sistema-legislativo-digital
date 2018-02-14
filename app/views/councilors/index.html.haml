@@ -9,7 +9,7 @@
     .box-body
       .row
         .col-md-12
-          %table.table.table-striped#councilors-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
+          %table.table.table-striped#councilors-table.table-hover{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
             %thead
               %tr
                 %th= t('.fullname')

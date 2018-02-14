@@ -6,7 +6,7 @@
       %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
       = t('.btnheader.new')
 
-  %table.datatable-keyevents.table.table-striped.table-bordered#proyecto-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => proyectos_path(format: :json)}
+  %table.datatable-keyevents.table.table-striped.table-bordered.table-hover#proyecto-table{style: "table-layout: fixed; word-wrap: break-word;", "data-source" => proyectos_path(format: :json)}
     %thead
       %tr
         %th= t('.table.proyecto')

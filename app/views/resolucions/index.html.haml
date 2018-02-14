@@ -6,7 +6,7 @@
       %span.glyphicon.glyphicon-plus-sign{ "aria-hidden": true }
       = t('.btnheader.new')
 
-  %table.datatable-keyevents.table.table-striped.table-bordered#resolucion-table{"data-source" => resolucions_path(format: :json)}
+  %table.datatable-keyevents.table.table-striped.table-bordered.table-hover#resolucion-table{"data-source" => resolucions_path(format: :json)}
     %thead
       %tr
         %th= t('.table.resolucion')
