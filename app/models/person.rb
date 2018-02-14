@@ -13,7 +13,9 @@ class Person < ActiveRecord::Base
            source: :process
 
   def full_name
-    if surname.present? && name.present?
+    if self.type == 'Concejal'
+      "Concejal #{name} #{surname}"
+    elsif surname.present? && name.present?
       "#{surname}, #{name}"
     elsif surname.present?
       surname
@@ -25,7 +27,11 @@ class Person < ActiveRecord::Base
   end
 
   def fullname_with_dni
-    cuit_or_dni.present? ? full_name + " (DNI: #{cuit_or_dni})" : full_name
+    if type == 'Concejal'
+      "Concejal #{name} #{surname}"
+    else
+      cuit_or_dni.present? ? full_name + " (DNI: #{cuit_or_dni})" : full_name
+    end
   end
 
   def text

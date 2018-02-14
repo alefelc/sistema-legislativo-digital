@@ -49,15 +49,15 @@
 
 #caratula h7{
   padding-left: 10px;
-  padding-right: 10px;  
+  padding-right: 10px;
 }
 
-#caratula #column-two-p-two #numero-text{ 
+#caratula #numero-text{
   padding-left: 2%;
-  font-size: 10ex;
+  font-size: 60px;
   text-decoration: bold;
   font-weight: bold;
-} 
+}
 
 #caratula #ingreso-text{
   text-decoration: bold;
@@ -72,4 +72,4 @@
   padding: 2%;
   height: 8em;
   width: 7em;
-}    
+}

@@ -2137,7 +2137,7 @@ a:focus {
   background-color: #367fa9;
 }
 .btn-success {
-  background-color: #3c8dbc;
+  background-color: #00a65a;
   border-color: #367fa9;
 }
 .btn-success:hover,
@@ -4225,4 +4225,8 @@ table.text-center th {
 
 .box-border {
   border: 1px solid #eaeaea;
+}
+
+.btn-header-color {
+  background-color: #367fa9 !important;
 }
