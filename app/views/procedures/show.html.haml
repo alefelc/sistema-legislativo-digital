@@ -146,7 +146,7 @@
 
             - @procedure.persons.each do |b|
               %p
-                = "#{b.full_name}"
+                = link_to "#{b.full_name}", person_path(b)
                 %ul
                   - if b.type == "Juridica"
                     - @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).each do |signatory|
