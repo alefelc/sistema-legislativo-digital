@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   delegate :full_name, to: :person
 
+  accepts_nested_attributes_for :person
+
   # == Check if an user belongs to an area
   # option can be:
   #   :reception_table
@@ -28,6 +30,8 @@ class User < ActiveRecord::Base
       areas.where(name: 'Mesa de Entradas').present? || admin?
     when :legislative_secretary
       areas.where(name: 'Secretaría Legislativa').present? || admin?
+    when :archive_area
+      areas.where(name: 'Archivo').present? || admin?
     end
   end
 end

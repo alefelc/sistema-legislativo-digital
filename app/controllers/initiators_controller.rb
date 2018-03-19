@@ -72,14 +72,14 @@ class InitiatorsController < ApplicationController
     when 'official_distribution'
       ReparticionOficial.create denominacion: fields[:denomination]
     when 'particular_pyshic'
-      Fisica.create name: fields[:name], surname: fields[:surname]
+      Fisica.create initiators_params
     when 'particular_legal'
       Juridica.create name: fields[:denomination]
     end
   end
 
-  ## Missing STRONG PARAMETERS HERE!!!
   def initiators_params
-    params.require(:initiator_form).permit(:denomination, :name, :surname, :type)
+    params.require(:initiator_form).permit :denomination, :name, :surname,
+      :type, :cuit_or_dni, :phone, :address, :email, :position
   end
 end

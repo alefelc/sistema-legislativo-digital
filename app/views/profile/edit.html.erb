@@ -1,0 +1,28 @@
+  <%= form_for @user, id: :my_profile, url: '/my_profile' do |f| %>
+
+  <h2 class="main-title text-center"> MIS DATOS </h2>
+  <div class="box box-primary">
+    <div class="box-header">
+      <h3 class="box-title">Actualize sus datos personales y/o contraseña</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <%= f.fields_for :person do |data_form| %>
+          <%= render partial: 'user_data', locals: { f: data_form } %>
+        <% end %>
+        <%= render partial: 'user_password', locals: { f: f } %>
+      </div>
+    </div>
+    <div class="box-footer">
+      <%= link_to root_path, class: 'pull-left btn btn-default' do %>
+        <%= icon 'times', class: 'fa-lg' %>
+        Cancelar
+      <% end %>
+
+      <button class="pull-right btn btn-success btn-lg" type="submit">
+        <%= icon 'save', class: 'fa-lg' %>
+        Guardar
+      </button>
+    </div>
+  </div>
+<% end %>

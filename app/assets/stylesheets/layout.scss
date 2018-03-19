@@ -251,9 +251,9 @@ a:focus {
   top: 9px;
   right: 7px;
   text-align: center;
-  font-size: 9px;
   padding: 2px 3px;
   line-height: .9;
+  font-weight: 700;
 }
 .main-header .logo {
   -webkit-transition: width 0.3s ease-in-out;
@@ -2138,12 +2138,12 @@ a:focus {
 }
 .btn-success {
   background-color: #00a65a;
-  border-color: #367fa9;
+  border-color: #008d4c;
 }
 .btn-success:hover,
 .btn-success:active,
 .btn-success.hover {
-  background-color: #367fa9;
+  background-color: #008d4c;;
 }
 .btn-info {
   background-color: #00c0ef;
@@ -3849,7 +3849,8 @@ table.text-center th {
   // border-color: #d6e9c6;
   // color: #468847;
   // text-align: left;
-  background-color: #3c8dbc !important;
+  // background-color: #3c8dbc !important;
+  background-color: #00a65a !important
 }
 .bg-navy {
   background-color: #001f3f !important;
@@ -4229,4 +4230,14 @@ table.text-center th {
 
 .btn-header-color {
   background-color: #367fa9 !important;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-padding {
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }

@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-6 form-group form-group-lg">
+    <%= f.label :legislative_file_id, 'EXPEDIENTE LEGISLATIVO' %>
+    <%= f.select :legislative_file_id, [f.object.legislative_file_id], {}, class: 'form-control', required: true %>
+  </div>
+  <div class="col-md-6 form-group">
+    <%= f.label :borrowed_at, 'PRESTADO EL DÍA' %>
+    <div class='input-group date' id='borrowed_at'>
+        <span class="input-group-addon">
+            <span class="fa fa-clock-o fa-lg"></span>
+        </span>
+        <%= f.text_field :borrowed_at, class: 'form-control input-lg', required: true, data: { provide: 'datepicker' } %>
+    </div>
+  </div>
+
+  <div class="form-group form-group-lg">
+    <div class="col-md-12">
+      <%= f.label :person_id, 'RETIRÓ' %>
+    </div>
+    <div class="col-md-11">
+      <%= f.select :person_id, {}, {}, class: 'form-control input-lg', required: true %>
+    </div>
+    <div class="col-md-1">
+      <%= link_to '#', class: 'btn btn-primary btn-lg btn-add-new-user' do %>
+        <i class="fa fa-user-plus"></i>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  "<% url_helpers = Rails.application.routes.url_helpers %>"
+
+  $(document).ready(function() {
+    $('#borrowed_at').datetimepicker({
+      defaultDate: moment().format(),
+      format: 'DD/MM/YYYY h:mm a',
+      sideBySide: true
+    });
+
+    var config = {
+      placeholder: 'Busque expedientes legislativos por nro...',
+      theme: 'bootstrap',
+      language: 'es',
+      ajax: {
+        url: "<%= url_helpers.legislative_files_path(format: :json) %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    };
+    $('#loan_legislative_file_id').select2(config);
+
+    var config = {
+      placeholder: 'Busque personas por nombre y/o apellido...',
+      theme: 'bootstrap',
+      language: 'es',
+      ajax: {
+        url: "<%= url_helpers.persons_loans_path(format: :json) %>",
+        dataType: 'json',
+        delay: 250,
+        cache: true,
+        data: (params) => {
+          return { select_q: params.term || '%%' };
+        },
+        processResults: (data, params) => {
+          return { results: data }
+        }
+      }
+    };
+    $('#loan_person_id').select2(config);
+
+    $('.btn-add-new-user').on('click', function() {
+
+    });
+  });
+</script>

@@ -14,14 +14,14 @@
           <ul class="treeview-menu">
             <li>
               <%= link_to procedures_path do %>
-                <i class="fa fa-circle-o"></i>
+                <i class="fa fa-circle"></i>
                 Trámites
               <% end -%>
             </li>
             <% if policy(Procedure).create? %>
               <li>
                 <%= link_to new_procedure_path do %>
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   Nuevo Trámite
                 <% end -%>
               </li>
@@ -29,7 +29,7 @@
             <% if edit_link? 'procedures' %>
               <li class="active">
                 <%= link_to '#' do %>
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.edit_process' %>
                 <% end -%>
               </li>
@@ -37,7 +37,7 @@
             <% if show_link? 'procedures' %>
               <li class="active">
                 <a href="#">
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.show_process' %>
                 </a>
               </li>
@@ -51,25 +51,25 @@
       <% if current_user.try :belongs_to_area?, :legislative_secretary %>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-file-text-o fa-lg"></i>
+            <i class="fa fa-file-text fa-lg"></i>
             <span> Dirección Legislativa </span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
             <li>
               <a href="<%= derivated_procedures_path %>">
-                <i class="fa fa-circle-o"></i> Trámites
+                <i class="fa fa-circle"></i> Trámites
               </a>
             </li>
             <li>
               <a href="<%= legislative_files_path %>">
-                <i class="fa fa-circle-o"></i> Expedientes Legislativos
+                <i class="fa fa-circle"></i> Expedientes Legislativos
               </a>
             </li>
             <% # if policy(LegislativeFile).create? %>
             <li>
               <a href="<%= new_legislative_file_path %>">
-                <i class="fa fa-circle-o"></i> Nuevo Expediente
+                <i class="fa fa-circle"></i> Nuevo Expediente
               </a>
             </li>
           </ul>
@@ -92,6 +92,34 @@
       <% end %>
       <!-- End legislative secretary -->
 
+      <!-- Legislative secretary -->
+      <% if current_user.try :belongs_to_area?, :archive_area %>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-archive fa-lg"></i>
+            <span> Archivo </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= pendant_loans_path %>">
+                <i class="fa fa-circle"></i> Préstamos pendientes
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_loan_path %>">
+                <i class="fa fa-circle"></i> Nuevo Préstamo
+              </a>
+            </li>
+            <li>
+              <a href="<%= loans_path %>">
+                <i class="fa fa-circle"></i> Todos los préstamos
+              </a>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+
       <% if policy(:configurations).all? %>
         <li class="header text-center"> Configuración de Sistema </li>
 
@@ -104,17 +132,17 @@
           <ul class="treeview-menu">
             <li>
               <a href="<%= councilors_path %>">
-                <i class="fa fa-circle-o"></i> Concejales
+                <i class="fa fa-circle"></i> Concejales
               </a>
             </li>
             <li>
               <a href="<%= commissions_path %>">
-                <i class="fa fa-circle-o"></i> Comisiones
+                <i class="fa fa-circle"></i> Comisiones
               </a>
             </li>
             <li>
               <a href="<%= blocks_path %>">
-                <i class="fa fa-circle-o"></i> Bloques
+                <i class="fa fa-circle"></i> Bloques
               </a>
             </li>
           </ul>
@@ -131,20 +159,20 @@
           <ul class="treeview-menu">
             <li>
               <a href="<%= users_path %>">
-                <i class="fa fa-circle-o"></i>
+                <i class="fa fa-circle"></i>
                 <%= t '.all_users' %>
               </a>
             </li>
             <li>
               <a href="<%= new_user_path %>">
-                <i class="fa fa-circle-o"></i>
+                <i class="fa fa-circle"></i>
                 <%= t '.new_user' %>
               </a>
             </li>
             <% if edit_link? 'users' %>
               <li class="active">
                 <a href="#">
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.edit_user' %>
                 </a>
               </li>
@@ -152,7 +180,7 @@
             <% if show_link? 'users' %>
               <li class="active">
                 <a href="#">
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.show_user' %>
                 </a>
               </li>
@@ -170,20 +198,20 @@
           <ul class="treeview-menu">
             <li>
               <a href="<%= roles_path %>">
-                <i class="fa fa-circle-o"></i>
+                <i class="fa fa-circle"></i>
                 <%= t '.all_roles' %>
               </a>
             </li>
             <li>
               <a href="<%= new_role_path %>">
-                <i class="fa fa-circle-o"></i>
+                <i class="fa fa-circle"></i>
                 <%= t '.new_rol' %>
               </a>
             </li>
             <% if edit_link? 'roles' %>
               <li class="active">
                 <a href="#">
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.edit_rol' %>
                 </a>
               </li>
@@ -191,7 +219,7 @@
             <% if show_link? 'roles' %>
               <li class="active">
                 <a href="#">
-                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle"></i>
                   <%= t '.show_rol' %>
                 </a>
               </li>
@@ -207,19 +235,19 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="<%= periods_path %>"> <i class="fa fa-circle-o"></i>
+              <a href="<%= periods_path %>"> <i class="fa fa-circle"></i>
                 Períodos Legislativos
               </a>
             </li>
             <li class="treeview menu-open">
-              <a href="#"><i class="fa fa-circle-o"></i> Trámites
+              <a href="#"><i class="fa fa-circle"></i> Trámites
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu" style="display: block;">
                 <li>
-                  <a href="#"><i class="fa fa-circle-o"></i> Firmantes del trámite
+                  <a href="#"><i class="fa fa-circle"></i> Firmantes del trámite
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -228,7 +256,7 @@
               </ul>
             </li>
             <li>
-              <a href="<%= '#' %>"> <i class="fa fa-circle-o"></i>
+              <a href="<%= '#' %>"> <i class="fa fa-circle"></i>
                 <%= t '.legislative_files' %>
               </a>
             </li>
