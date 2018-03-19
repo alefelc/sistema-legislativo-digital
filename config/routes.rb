@@ -83,6 +83,10 @@ Rails.application.routes.draw do
 
   get 'calendar', to: 'calendar#index'
   resources :legislative_sessions
+  resources :loans do
+    get 'pendant', on: :collection, to: 'loans#pendants'
+    get 'persons', on: :collection, to: 'loans#persons'
+  end
 
   # Admin access only
   # Users and role access
@@ -95,4 +99,7 @@ Rails.application.routes.draw do
   resources :laws
   resources :day_plans
   resources :signators
+
+  get   '/my_profile', to: 'profile#edit'
+  patch '/my_profile', to: 'profile#update'
 end
