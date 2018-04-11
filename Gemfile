@@ -85,10 +85,7 @@ gem 'paper_trail'
 gem 'pundit'
 
 # Fast, Nimble PDF Writer for Ruby
-gem 'prawn'
-
-# Prawn table support
-gem 'prawn-table'
+gem 'prawn-rails'
 
 # Barcode support
 gem 'barby'

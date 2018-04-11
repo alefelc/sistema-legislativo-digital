@@ -2,9 +2,13 @@
   Puede editar la información del expediente legislativo
 </div>
 <div class="row">
-  <div class="form-group col-md-6">
-    <%= f.label :origin_procedure_id, "Trámite que dió origen a este expediente" %>
-    <%= f.select :origin_procedure_id, new_procedure(@loop), {}, class: 'form-control input-lg'%>
+  <div class="form-group form-group-lg col-md-6">
+    <%= f.label :origin_procedure_ids, "Trámite que dió origen a este expediente" %>
+    <%= f.select :origin_procedure_ids, {}, {}, multiple: true, class: 'form-control input-lg' do %>
+      <% f.object.origin_procedures.each do |proc| %>
+        <option value="<%= proc.id %>" selected> <%= proc.text %> </option>
+      <% end %>
+    <% end %>
   </div>
 
   <div class="form-group col-md-2">

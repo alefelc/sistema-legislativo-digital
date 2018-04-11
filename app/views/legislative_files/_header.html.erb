@@ -19,7 +19,7 @@
 
   <div class="col-md-4 col-xs-12 text-center">
     <% if current_user.present? #&& policy(LegislativeFile).create? %>
-      <%= link_to new_legislative_file_path, class: 'btn btn-default btn-lg' do %>
+      <%= link_to '#', class: 'btn btn-default btn-lg' do %>
         <i class="fa fa-print fa-lg"></i>
         Imprimir
       <% end -%>

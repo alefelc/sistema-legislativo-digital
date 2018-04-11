@@ -44,8 +44,9 @@ module LegislativeFilesHelper
   end
 
   def new_procedure(loop)
-    return [] if loop.origin_procedure.blank?
-    options_for_select [[loop.origin_procedure, loop.origin_procedure.id]], [loop.origin_procedure]
+    return [] if loop.origin_procedures.blank?
+    selected_procs = loop.origin_procedures.map { |proc| [proc.id, proc] }
+    options_for_select selected_procs, loop.origin_procedure_ids
   end
 
   def origin_procedure(loop)
@@ -97,8 +98,8 @@ module LegislativeFilesHelper
   end
 
   def calculate_sheets(loop)
-    if loop.origin_procedure.present?
-      loop.sheets.to_i + loop.origin_procedure.administrative_files.sum(:sheets) +
+    if loop.origin_procedures.present?
+      loop.sheets.to_i + loop.origin_procedures.map(&:administrative_files).map{ |p| p.present? ? p.sheets : 0 }.sum +
       loop.legislative_file_states.dispatched.collect(&:procedure).inject(0){ |sum,x| sum + x.sheets }
     else
       loop.sheets.to_i +
@@ -111,6 +112,6 @@ module LegislativeFilesHelper
   end
 
   def build_initiators(file)
-    file.first_loop.origin_procedure.try(:get_iniciadores)
+    file.first_loop.procedures.map { |p| p.get_iniciadores }
   end
 end

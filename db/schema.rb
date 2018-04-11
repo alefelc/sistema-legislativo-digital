@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313052232) do
+ActiveRecord::Schema.define(version: 20180326104431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -426,6 +426,14 @@ ActiveRecord::Schema.define(version: 20180313052232) do
 
   add_index "loops_normas", ["loop_id"], name: "index_loops_normas_on_loop_id", using: :btree
   add_index "loops_normas", ["norma_id"], name: "index_loops_normas_on_norma_id", using: :btree
+
+  create_table "loops_procedures", force: :cascade do |t|
+    t.integer "loop_id"
+    t.integer "procedure_id"
+  end
+
+  add_index "loops_procedures", ["loop_id"], name: "index_loops_procedures_on_loop_id", using: :btree
+  add_index "loops_procedures", ["procedure_id"], name: "index_loops_procedures_on_procedure_id", using: :btree
 
   create_table "modifica_relationships", force: :cascade do |t|
     t.integer  "modifica_id"

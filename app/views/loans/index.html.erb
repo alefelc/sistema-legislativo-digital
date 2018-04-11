@@ -17,7 +17,11 @@
             <tr>
               <td> <%= loan.legislative_file.text %> </td>
               <td> <%= loan.borrowed_at %> </td>
-              <td> <%= loan.returned_at %> </td>
+              <td class="text-center"> <%= loan.returned_at %>
+                <% if loan.returned_at.blank? %>
+                  <label class="btn btn-xs btn-danger">Pendiente</label>
+                <% end %>
+              </td>
               <td> <%= loan.person.text %> </td>
             </tr>
           <% end %>
@@ -28,5 +32,7 @@
 </div>
 
 <script type="text/javascript">
-  $('#loans-table').dataTable();
+  $('#loans-table').dataTable({
+    "bSort" : false
+  });
 </script>

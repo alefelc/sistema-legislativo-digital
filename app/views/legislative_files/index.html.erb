@@ -75,19 +75,6 @@
           </tr>
         </thead>
         <tbody>
-<!--           <% @loops.last(10).each do |l| %>
-            <tr>
-              <td> <%= l.number %></td>
-              <td> <%= l.topic %></td>
-              <td> <%= l.created_at.to_date %></td>
-              <td> <%= link_to l.origin_procedure, l.origin_procedure if l.origin_procedure.present? %></td>
-              <td> <%= l.loops.count - 1 %></td>
-              <td>
-                <i class='linktoprint btn btn-danger fa fa-print fa-lg' data-expediente='<%= l.id %>' data-nro='<%= l.number %>' data-iniciador='<%=  %>' data-asunto='<%= l.topic.try(:upcase) %>' data-anio='<%= to_date(l.date) %>' title='Imprimir Carátula'></i>
-                <%= link_to '', legislative_file_path(l), class: 'btn btn-info fa fa-lg fa-eye' %>
-              </td>
-            </tr>
-          <% end %> -->
         </tbody>
       </table>
     </div>

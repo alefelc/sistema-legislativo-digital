@@ -23,7 +23,9 @@ Rails.application.routes.draw do
 
   # Legislative area
   resources :administrative_files, only: [:index, :show]
-  resources :legislative_files
+  resources :legislative_files do
+    get 'print'
+  end
   resources :derivated_procedures do
     get 'print', on: :collection
   end

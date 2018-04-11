@@ -1,61 +1,3 @@
-<div id="expedientes">
-  <div id="caratula">
-    <br> <br> <br> <br>
-
-    <div id="column-one">
-      <p id="column-one-p-one">
-        <br><br><br>
-        <span id="title"> MOVIMIENTOS </span>
-        <br> <br> <br>
-        <span class="titles" id="ingreso">INGRESO:</span>
-        <span id="ingreso-text">
-          <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-        </span>
-        <br> <br> <br> <br>
-        <span class="titles" id="estado">ESTADO PARLAMENTARIO:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="dictamen">DICTAMEN</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="aprobacion">APROBACION PRIMERA LECTURA:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="aprobacion-two">APROBACION DEFINITIVA</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="archivo">ARCHIVO:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="rechazo">RECHAZO:</span>
-      </p>
-    </div>
-    <div id="column-two">
-      <div id="logo">
-        <img src="<%= image_url('dem_logo.jpg')%>" id="carat-image">
-      </div>
-      <p id="column-two-p-one">
-        CONCEJO DELIBERANTE <br> RIO CUARTO
-      </p>
-        <br> <br>
-      <p id="column-two-p-two"></p>
-        <br>
-        <span class="titles-two" id="exp-num">EXPEDIENTE Nº:</span>
-        <span id="numero-text"></span>
-        <br>
-        <br>
-        <span class="titles-two" id="iniciador">INICIADOR:</span>
-        <span id="iniciador-text"> &nbsp </span>
-        <br> <br> <br> <br> <br>
-        <span class="titles-two" id="asunto">ASUNTO:</span>
-        <span id="asunto-text"> &nbsp </span>
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-        <span class="titles-two" id="comision">COMISIÓN</span>
-        <span id="comision-text">&nbsp</span>
-        <br> <br> <br> <br>
-        <span class="titles-two" id="dispositivo">DISPOSITIVO LEGAL SANCIONADO:</span>
-        <span id="dispositivo-text">&nbsp</span>
-        <br> <br> <br>
-    </div>
-  </div>
-</div>
-
-
 <div class="initiators-modal"></div>
 <div id="legislative-file-show">
   <h2 class="text-center"> INFORMACIÓN DEL EXPEDIENTE LEGISLATIVO </h2>
@@ -73,8 +15,7 @@
                 <i class="fa fa-lg fa-pencil-square-o"></i>
                 Editar
               <% end %>
-              <%= link_to '#', class: 'linktoprint btn btn-danger btn-lg',
-                data: { expediente: @loop.id, nro: @loop.number, iniciador: (@loop.origin_procedure.present? ? @loop.origin_procedure.initiators : ''), asunto: @loop.topic.to_s.upcase, anio: @loop.year } do %>
+              <%= link_to legislative_file_print_path(@loop), class: 'btn btn-danger btn-lg' do%>
                 <i class="fa fa-lg fa-print"></i>
                 Imprimir Carátula
               <% end %>
@@ -94,22 +35,32 @@
                 <div class="col-md-12">
                   <div class="box-body">
                     <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-3">
                         <h5 class="word-top text-bold pull-right">Fojas:</h5>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-9">
                         <%= calculate_sheets @loop %>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-3">
                         <h5 class="word-top text-bold pull-right"> Sumario:  </h5>
                       </div>
-                      <div class="col-md-10">
+                      <div class="col-md-9">
                         <%= @loop.topic %>
                       </div>
                     </div>
-                    <% if @loop.origin_procedure.present? && @loop.origin_procedure.administrative_files.present? %>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <h5 class="word-top text-bold pull-right"> Trámites Asociados: </h5>
+                      </div>
+                      <div class="col-md-9">
+                        <% @loop.first_loop.origin_procedures.each do |proc| %>
+                          <%= link_to proc, proc %>
+                        <% end %>
+                      </div>
+                    </div>
+                    <% if @loop.origin_procedures.present? && @loop.origin_procedures.collect(&:administrative_files).flatten.present? %>
                       <div class="row">
                         <div class="col-md-2">
                           <h5 class="word-top text-bold pull-right">Exp. adm.:</h5>

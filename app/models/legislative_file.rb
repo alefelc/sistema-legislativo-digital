@@ -18,6 +18,8 @@ class LegislativeFile < ActiveRecord::Base
   has_one :adjunta_relationship, class_name: "AdjuntaFisicamente", foreign_key: "adjuntado_id"
   has_one :adjunta, through: :adjunta_relationship
 
+  validates :sheets, presence: true
+
   # == Callbacks
   before_create :sequential_number
 
@@ -32,12 +34,13 @@ class LegislativeFile < ActiveRecord::Base
   end
 
   # Return procedure that begins the legislative file.
-  def origin_procedure
-    loops.find_by(number: 0).try(:origin_procedure)
+  def origin_procedures
+    return nil if first_loop.blank?
+    first_loop.origin_procedures
   end
 
-  def origin_procedure_id
-    origin_procedure.try(:id)
+  def origin_procedure_ids
+    first_loop.origin_procedure_ids
   end
 
   def sequential_number
@@ -53,7 +56,15 @@ class LegislativeFile < ActiveRecord::Base
     result
   end
 
-  def origin_procedure_id=(proc_id)
-    loops.find_by(number: 0).update origin_procedure_id: proc_id
+  def initiators
+    result = ''
+    origin_procedures.each do |proc|
+      result += proc.get_iniciadores
+    end
+    result
+  end
+
+  def origin_procedure_ids=(proc_ids)
+    first_loop.update origin_procedure_ids: proc_ids
   end
 end

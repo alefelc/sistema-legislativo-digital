@@ -13,17 +13,11 @@ class Procedure < ActiveRecord::Base
   has_and_belongs_to_many :areas
   has_and_belongs_to_many :municipal_offices, through: :municipal_offices_procedures
   has_and_belongs_to_many :legislative_files
+  has_and_belongs_to_many :legislative_files_originated, class_name: 'Loop', join_table: 'loops_procedures'
 
   has_many :procedure_states
   has_many :administrative_files
   has_many :uploads
-  # has_many :processes_signatories,
-  #          foreign_key: :process_id,
-  #          class_name: 'ProcessesSignatory'
-  # has_many :signatories,
-  #          through: :processes_signatories,
-  #          class_name: 'Person',
-  #          source: :person
   has_many :processes_signatories
   has_many :procedure_signatories, through: :processes_signatories
 
@@ -31,7 +25,6 @@ class Procedure < ActiveRecord::Base
   has_one :legislative_file_state
 
   belongs_to :procedure_derivation
-  has_one :legislative_file_originated, class_name: 'Loop', foreign_key: 'origin_procedure_id'
 
 
   #== Nested attributes

@@ -2,7 +2,7 @@
 
 class ListenProceduresFinder {
 	constructor() {
-		this.select = '#legislative_file_origin_procedure_id';
+		this.select = '#legislative_file_origin_procedure_ids';
 		this.listen();
 	}
 
@@ -18,6 +18,7 @@ class ListenProceduresFinder {
 		  dataType: 'json',
 		  delay: 250,
 		  cache: true,
+		  multiple: true,
 		  data: (params) => {
 		    return {
 		    	filter_procedures: 'legislative_files',
@@ -36,7 +37,7 @@ class ListenProceduresFinder {
 	    $('#legislative_file_observations').val(data.observations);
 	    $('#legislative_file_date').val(data.created_at.substr(0,10));
 	  }).on("select2:unselected", function(e) {
-			$('#legislative_file_origin_procedure_id option:last').val("");
+			$('#legislative_file_origin_procedure_ids option:last').val("");
 	 	});
 	}
 }
@@ -129,7 +130,7 @@ class LegislativeFileStateModal {
 
 class AutoLoadProcedure {
 	constructor() {
-		this.select = '#legislative_file_origin_procedure_id';
+		this.select = '#legislative_file_origin_procedure_ids';
 		this.setSelect2();
 	}
 
@@ -139,7 +140,7 @@ class AutoLoadProcedure {
 		let text = `#${params.get('proc_id')}`;
 
 		if (id && text)
-			$(this.select).append(`<option value="${id}">${text}</option>`);
+			$(this.select).append(`<option selected value="${id}">${text}</option>`);
 
 		$.ajax({
 		  url: '/procedures/'+id,
@@ -155,39 +156,6 @@ class AutoLoadProcedure {
 }
 
 $(document).ready(function() {
-	if ($('#index-legislative-files, #legislative-file-show').length) {
-    $('#index-legislative-files, #legislative-file-show').on('click', '.linktoprint', function() {
-			$('#expedientes #caratula').css('display','block');
-	    $('#expedientes #caratula #numero-text').append($(this).data('nro'));
-	    $('#expedientes #caratula #iniciador-text').append($(this).data('iniciador'));
-	    $('#expedientes #caratula #asunto-text').append($(this).data('asunto'));
-	    $('#expedientes #caratula #ingreso-text').append($(this).data('anio'));
-	    $('#expedientes #caratula').print({
-	      globalStyles: true,
-	      mediaPrint: false,
-	      stylesheet: null,
-	      noPrintSelector: '.no-print',
-	      iframe: true,
-	      append: null,
-	      prepend: null,
-	      manuallyCopyFormValues: true,
-	      deferred: $.Deferred(),
-	      timeout: 1000
-	    });
-	    $('#expedientes #caratula #ingreso-text').empty();
-	    $('#expedientes #caratula #numero-text').empty();
-	    $('#expedientes #caratula #iniciador-text').empty();
-	    $('#expedientes #caratula #asunto-text').empty();
-	    $('#expedientes #caratula #ingreso-text').append('<br>');
-	    $('#expedientes #caratula #ingreso-text').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-	    $('#expedientes #caratula #numero-text').append('');
-	    $('#expedientes #caratula #iniciador-text').append('&nbsp;');
-	    $('#expedientes #caratula #asunto-text').append('&nbsp;');
-	    $('#expedientes #caratula').css('display','none');
-	    return;
-    });
-	}
-
 	if ($('#legislative-file-show').length) {
 		$('input, textarea, select').prop('disabled', true);
 	}
@@ -228,6 +196,7 @@ $(document).ready(function() {
 			  dataType: 'json',
 			  delay: 250,
 			  cache: true,
+			  multiple: true,
 			  data: (params) => {
 			    return { select_q: params.term || '%%' };
 			  },
@@ -247,7 +216,7 @@ $(document).ready(function() {
 	}
 
 	$('.legislative-data').on('shown.bs.tab', function() {
-		$('#legislative_file_origin_procedure_id').select2('destroy');
+		$('#legislative_file_origin_procedure_ids').select2('destroy');
 		console.log("Trying to update");
 		new ListenProceduresFinder();
 	});

@@ -30,12 +30,18 @@
                   Cargue la información del nuevo expediente
                 </div>
                 <div class="row">
-                  <div class="form-group col-md-6">
-                    <%= f.label :origin_procedure_id do %>
+                  <div class="form-group form-group-lg col-md-6">
+                    <%= f.label :origin_procedure_ids do %>
                       Trámite
                       <span class="asterisc">*</span>
                     <% end %>
-                    <%= f.select :origin_procedure_id, {}, {}, class: 'form-control input-lg' %>
+                    <%= f.select :origin_procedure_ids, {}, {}, multiple: true, class: 'form-control input-lg' do %>
+                    <% if @procedure_ids.present? %>
+                        <% @procedure_ids.each do |proc| %>
+                          <option value="<%= proc.id %>" selected> <%= proc.text %> </option>
+                        <% end %>
+                      <% end %>
+                    <% end %>
                   </div>
 
                   <div class="form-group col-md-2">

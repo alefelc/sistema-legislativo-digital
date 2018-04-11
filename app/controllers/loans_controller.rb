@@ -3,7 +3,7 @@ class LoansController < ApplicationController
   before_action :set_loan, only: [:edit, :update]
 
   def index
-    @loans = Loan.all
+    @loans = Loan.order(created_at: :desc)
   end
 
   def pendants

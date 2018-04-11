@@ -25,6 +25,8 @@ class LegislativeFilesController < ApplicationController
     else
       flash.now[:error] = file.errors
       @loop = file.instance
+      @procedure_ids = Procedure.where id: loop_create_params[:origin_procedure_ids]
+      pry
       render :new
     end
   end
@@ -54,20 +56,26 @@ class LegislativeFilesController < ApplicationController
     @loop = LegislativeFile.find params[:id]
   end
 
+  def print
+    file = LegislativeFile.find params[:legislative_file_id]
+    pdf = Prawn::LegislativeFile.new(file, view_context)
+    send_data pdf.render, filename: "expediente_#{file.id}.pdf",
+              type: 'application/pdf', disposition: 'inline'
+  end
+
   private
 
   def loop_create_params
     params.require(:legislative_file).permit :sheets, :topic,
-      :observations, :accumulated_in, :year, :date,
-      :origin_procedure_id, :physically_attached
+      :observations, :accumulated_in, :year, :date, :physically_attached, origin_procedure_ids: []
   end
 
   def loop_update_params
     params.require(:legislative_file).permit :number, :sheets, :topic,
-      :observations, :accumulated_in, :year, :date, :origin_procedure_id,
+      :observations, :accumulated_in, :year, :date,
       :physically_attached, loops_attributes: [
-        :id, :origin_procedure_id, :sheets, :date, :topic, :observations
-      ]
+        :id, :sheets, :date, :topic, :observations, origin_procedure_ids: []
+      ], origin_procedure_ids: []
   end
 
   def build_json

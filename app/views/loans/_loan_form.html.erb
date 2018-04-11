@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-md-6 form-group form-group-lg">
-    <%= f.label :legislative_file_id, 'EXPEDIENTE LEGISLATIVO' %>
+    <%= f.label :legislative_file_id, 'Ingrese Expediente Legislativo' %>
     <%= f.select :legislative_file_id, [f.object.legislative_file_id], {}, class: 'form-control', required: true %>
   </div>
   <div class="col-md-6 form-group">
-    <%= f.label :borrowed_at, 'PRESTADO EL DÍA' %>
+    <%= f.label :borrowed_at, 'Prestado el día' %>
     <div class='input-group date' id='borrowed_at'>
         <span class="input-group-addon">
             <span class="fa fa-clock-o fa-lg"></span>
@@ -15,13 +15,13 @@
 
   <div class="form-group form-group-lg">
     <div class="col-md-12">
-      <%= f.label :person_id, 'RETIRÓ' %>
+      <%= f.label :person_id, 'Seleccione la persona que retiró el expediente' %>
     </div>
     <div class="col-md-11">
       <%= f.select :person_id, {}, {}, class: 'form-control input-lg', required: true %>
     </div>
     <div class="col-md-1">
-      <%= link_to '#', class: 'btn btn-primary btn-lg btn-add-new-user' do %>
+      <%= link_to '#', class: 'btn btn-primary btn-lg btn-add-new-person' do %>
         <i class="fa fa-user-plus"></i>
       <% end %>
     </div>
@@ -76,8 +76,25 @@
     };
     $('#loan_person_id').select2(config);
 
-    $('.btn-add-new-user').on('click', function() {
+    $('.btn-add-new-person').on('click', function() {
+      var modal = '.new-person-form';
 
+      $.get("<%= url_helpers.new_person_path %>", (response) => {
+        $(modal).html(response);
+        $(modal).find('.modal').modal('show');
+      });
+
+      var events = {
+        'ajax:success': (event) => {
+          $(modal).find('.modal').modal('hide');
+        },
+        'ajax:error': (event) => {
+          console.log('Imprementation missing: Error handler was necessary!');
+        }
+      };
+
+      // modal events handler
+      $(modal).on(events);
     });
   });
 </script>

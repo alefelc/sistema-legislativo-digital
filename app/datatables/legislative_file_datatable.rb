@@ -1,6 +1,6 @@
 class LegislativeFileDatatable
   delegate :content_tag, :params, :to_date, :legislative_file_path, :link_to,
-    :build_initiators, to: :@view
+    :build_initiators, :legislative_file_print_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -22,14 +22,21 @@ class LegislativeFileDatatable
         file.number,
         file.topic,
         file.created_at.to_date,
-        (file.origin_procedure.present? ? link_to(file.origin_procedure, file.origin_procedure) : ""),
+        origin_procedures(file),
         (file.loops.count - 1),
-        content_tag(:i, nil, class: 'linktoprint btn btn-danger fa fa-print fa-lg',
-          'data-expediente': file.id, 'data-nro': file.number, 'data-iniciador': build_initiators(file),
-          'data-asunto': file.topic.try(:upcase), 'data-anio': to_date(file.date),
-          title: 'Imprimir Carátula') +
+        link_to('', legislative_file_print_path(file), class: 'btn btn-danger fa fa-print fa-lg', title: 'Imprimir Carátula', target: :_blank) +
         link_to('', legislative_file_path(file), class: 'btn btn-info fa fa-lg fa-eye')
       ]
+    end
+  end
+
+  def origin_procedures(file)
+    links = []
+    if file.origin_procedures.present?
+      file.origin_procedures.each do |proc|
+        links << content_tag(:div, link_to(proc, proc))
+      end
+      links
     end
   end
 
