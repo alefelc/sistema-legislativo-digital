@@ -75,14 +75,22 @@
           </ul>
         </li>
         <li class="treeview">
-          <a href="<%= day_plans_path %>">
+          <a href="#">
             <i class="fa fa-list fa-lg"></i> <span> Orden del Día </span>
+            <i class="fa fa-angle-left pull-right"></i>
           </a>
-        </li>
-        <li class="treeview">
-          <a href="<%= legislative_sessions_path %>">
-            <i class="fa fa-bank fa-lg"></i> <span> Sesiones </span>
-          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= day_plans_path %>">
+                <i class="fa fa-circle"></i> Ordenes del día
+              </a>
+            </li>
+            <li>
+              <a href="<%= new_day_plan_path %>">
+                <i class="fa fa-circle"></i> Nueva Orden del Día
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="treeview">
           <a href="<%= laws_path %>">
@@ -261,6 +269,11 @@
               </a>
             </li>
           </ul>
+        </li>
+        <li class="treeview">
+          <a href="<%= legislative_sessions_path %>">
+            <i class="fa fa-bank fa-lg"></i> <span> Sesiones </span>
+          </a>
         </li>
       <% end %>
 

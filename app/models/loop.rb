@@ -4,7 +4,7 @@ class Loop < ActiveRecord::Base
   ##belongs_to :origin_procedure, class_name: 'Procedure', foreign_key: 'origin_procedure_id'
   has_and_belongs_to_many :procedures, join_table: 'legislative_files_procedures', foreign_key: 'legislative_file_id'
   has_and_belongs_to_many :despachos, join_table: 'loops_despachos'
-  has_and_belongs_to_many :origin_procedures, join_table: 'loops_procedures', class_name: 'Procedure'
+  has_many :origin_procedures, class_name: 'Procedure', foreign_key: 'legislative_file_originated_id'
 
   #== Asociacion con orden del dia
   has_many :loop_ordens

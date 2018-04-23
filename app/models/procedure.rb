@@ -13,7 +13,7 @@ class Procedure < ActiveRecord::Base
   has_and_belongs_to_many :areas
   has_and_belongs_to_many :municipal_offices, through: :municipal_offices_procedures
   has_and_belongs_to_many :legislative_files
-  has_and_belongs_to_many :legislative_files_originated, class_name: 'Loop', join_table: 'loops_procedures'
+  belongs_to :legislative_file_originated, class_name: 'Loop'
 
   has_many :procedure_states
   has_many :administrative_files

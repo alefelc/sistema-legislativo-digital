@@ -25,9 +25,20 @@ class Prawn::LegislativeFile < Prawn::Document
     text "RIO CUARTO", align: :center, :size => 30
   end
 
+  def formatted_file_number
+    # Using a TTF font file
+    font("app/pdfs/prawn/fonts/book_antiqua_bold.ttf") do
+      return text @file.number, size: 72
+    end
+  end
+
   def file_number
-    text "<font size='12'>EXPEDIENTE LEGISLATIVO Nº:</font> <font size='52'><b>#{@file.number}</b></font>",
-     :inline_format => true
+    bounding_box([0, 550], width: 200, height: 150) do
+      text "EXP LEGISLATIVO Nº", size: 12
+    end
+    bounding_box([160, 580], width: 250, height: 150) do
+      formatted_file_number
+    end
   end
 
   def content

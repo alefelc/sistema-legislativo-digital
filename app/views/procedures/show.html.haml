@@ -15,7 +15,7 @@
         = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-success btn-lg pull-right margin-left btn-print', target: '_blank' do
           %i.fa.fa-barcode{ 'aria-hidden': :true }
           Imprimir Ticket
-        = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
+        - link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
           %i.fa.fa-print{ 'aria-hidden': :true }
           Imprimir Trámite
         = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
@@ -73,7 +73,7 @@
                     - @procedure.administrative_files.each do |p|
                       %li= p.to_s# link_to p.to_s, administrative_file_path(p), class: 'btn'
 
-          - if @procedure.legislative_files_originated.present?
+          - if @procedure.legislative_file_originated.present?
             .col-md-6
               .box.box-solid
                 .box-header.with-border
@@ -81,7 +81,7 @@
                   %h3.box-title Trámite culminado en
                 .box-body
                   %ul
-                    - p = @procedure.legislative_files_originated.legislative_file
+                    - p = @procedure.legislative_file_originated.legislative_file
                     %li= link_to "Expediente nro: #{p.text}", p, class: 'btn'
 
       - if @procedure.contingency_plan.present?

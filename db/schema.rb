@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326104431) do
+ActiveRecord::Schema.define(version: 20180423141257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -427,14 +427,6 @@ ActiveRecord::Schema.define(version: 20180326104431) do
   add_index "loops_normas", ["loop_id"], name: "index_loops_normas_on_loop_id", using: :btree
   add_index "loops_normas", ["norma_id"], name: "index_loops_normas_on_norma_id", using: :btree
 
-  create_table "loops_procedures", force: :cascade do |t|
-    t.integer "loop_id"
-    t.integer "procedure_id"
-  end
-
-  add_index "loops_procedures", ["loop_id"], name: "index_loops_procedures_on_loop_id", using: :btree
-  add_index "loops_procedures", ["procedure_id"], name: "index_loops_procedures_on_procedure_id", using: :btree
-
   create_table "modifica_relationships", force: :cascade do |t|
     t.integer  "modifica_id"
     t.integer  "me_modifica_id"
@@ -681,8 +673,8 @@ ActiveRecord::Schema.define(version: 20180326104431) do
     t.text     "topic"
     t.text     "observations"
     t.string   "type"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.date     "fecha"
     t.integer  "loop_id"
     t.integer  "day"
@@ -690,9 +682,11 @@ ActiveRecord::Schema.define(version: 20180326104431) do
     t.integer  "year"
     t.integer  "contingency_plan_id"
     t.integer  "procedure_derivation_id"
+    t.integer  "legislative_file_originated_id"
   end
 
   add_index "procedures", ["contingency_plan_id"], name: "index_procedures_on_contingency_plan_id", using: :btree
+  add_index "procedures", ["legislative_file_originated_id"], name: "index_procedures_on_legislative_file_originated_id", using: :btree
   add_index "procedures", ["loop_id"], name: "index_procedures_on_loop_id", using: :btree
 
   create_table "procedures_reparticion_oficials", id: false, force: :cascade do |t|
