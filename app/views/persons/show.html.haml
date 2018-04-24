@@ -28,9 +28,8 @@
       / /.col
       .col-sm-6.invoice-col
         %span.pull-right
-          = link_to 'Editar', edit_person_path(@person),
-                    class: 'btn btn-warning fa fa-edit person-edit',
-                    remote: true, title: 'Editar persona'
+          = link_to 'Editar', edit_person_path(@person), title: 'Editar datos',
+            class: 'btn btn-warning fa fa-edit person-edit'
         %address
           %strong= t '.address'
           = @person.address || '-.'

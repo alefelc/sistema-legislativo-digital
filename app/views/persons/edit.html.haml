@@ -1,35 +1,39 @@
-#edit-person.modal.fade{ role: "dialog", tabindex: "-1" }
-  .modal-dialog{ role: "document" }
-    .modal-content
-      = form_for @person, as: :person, url: person_path, remote: true do |f|
+#person-edit
+  %h2.text-center
+    Actualize los datos personales
 
-        .modal-header.bg-primary
-          %button.close{ "aria-label": "Close", "data-dismiss": "modal", type: "go tobutton" }
-            %span{ "aria-hidden": "true" } ×
-          %h4.modal-title= t '.update_person'
+  .box.box-primary
+    = form_for @person, as: :person, url: person_path do |f|
+      .lead.box-header.with-border
+        Edite datos del usuario
+      .box-body
+        .form-group.col-md-6
+          = f.label :type
+          = f.select :type, options_for_select(initiator_options, @person.type), {}, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :surname
+          = f.text_field :surname, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :address
+          = f.text_field :address, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :cuit_or_dni
+          = f.text_field :cuit_or_dni, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :phone
+          = f.text_field :phone, class: 'form-control'
+        .form-group.col-md-6
+          = f.label :email
+          = f.text_field :email, class: 'form-control', type: 'email'
 
-        .modal-body
-          .form-group
-            = f.label :type
-            = f.select :type, options_for_select(initiator_options, @person.type), {}, class: 'form-control'
-          .form-group
-            = f.label :nombre
-            = f.text_field :nombre, class: 'form-control'
-          .form-group
-            = f.label :apellido
-            = f.text_field :apellido, class: 'form-control'
-          .form-group
-            = f.label :domicilio
-            = f.text_field :domicilio, class: 'form-control'
-          .form-group
-            = f.label :nro_doc
-            = f.text_field :nro_doc, class: 'form-control'
-          .form-group
-            = f.label :telefono
-            = f.text_field :telefono, class: 'form-control'
-          .form-group
-            = f.label :email
-            = f.text_field :email, class: 'form-control', type: 'email'
-
-        .modal-footer
-          = f.submit t('.update'), class: 'btn btn-primary', type: :submit
+      .box-footer
+        .pull-right
+          = link_to users_path, class: 'btn btn-default' do
+            .fa.fa-times-circle
+            Cancelar
+          %button.btn.btn-success.btn-lg{ type: :submit }
+            .fa.fa-save.fa-lg
+            Guardar

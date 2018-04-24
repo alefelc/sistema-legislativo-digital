@@ -21,11 +21,16 @@ class PersonsController < ApplicationController
     @person = Person.find(params[:id])
     @person.update persons_params
 
-    render json: {
-      status: :ok,
-      message: "Success!",
-      iniciador: @person.as_json(methods: 'type' )
-    }.to_json
+    respond_to do |format|
+      format.html { render :show }
+      format.json {
+        render json: {
+          status: :ok,
+          message: "Success!",
+          iniciador: @person.as_json(methods: 'type' )
+        }.to_json
+      }
+    end
   end
 
   def show
@@ -41,7 +46,6 @@ class PersonsController < ApplicationController
 
   def edit
     @person = Person.find params[:id]
-    render layout: false
   end
 
   def new
