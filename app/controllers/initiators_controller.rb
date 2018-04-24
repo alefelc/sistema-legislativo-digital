@@ -80,6 +80,6 @@ class InitiatorsController < ApplicationController
 
   def initiators_params
     params.require(:initiator_form).permit :denomination, :name, :surname,
-      :type, :cuit_or_dni, :phone, :address, :email, :position
+      :cuit_or_dni, :phone, :address, :email, :position
   end
 end
