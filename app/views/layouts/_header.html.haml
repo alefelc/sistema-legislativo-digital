@@ -61,19 +61,19 @@
 
                   %li.user-header
                     %h4= current_user.person.full_name if current_user.person.present?
-                  - if current_user.present? && current_user.admin?
-                    .btn-padding
-                      %a.btn.btn-success.btn-lg.btn-full{ href: '/my_profile', title: 'Opciones de Administrador' }
-                        %i.fa.fa-user
-                        Mis Datos
+                  - if current_user.admin?
                     .btn-padding
                       %a.btn.btn-warning.btn-lg.btn-full{ href: '/admin', title: 'Opciones de Administrador' }
                         %i.fa.fa-gears
                         Administrador
-                    .btn-padding
-                      = link_to destroy_user_session_path, method: :delete, class: 'btn btn-danger btn-lg btn-full' do
-                        %i.fa.fa-sign-out
-                        Salir del Sistema
+                  .btn-padding
+                    %a.btn.btn-success.btn-lg.btn-full{ href: '/my_profile', title: 'Actualiza tus datos personales' }
+                      %i.fa.fa-user
+                      Mis Datos
+                  .btn-padding
+                    = link_to destroy_user_session_path, method: :delete, class: 'btn btn-danger btn-lg btn-full' do
+                      %i.fa.fa-sign-out
+                      Salir del Sistema
             - else
               %li.dropdown.user.user-menu
                 %a.dropdown-toggle.btn.btn-xs.btn-primary.btn-header-color{ 'data-toggle': 'dropdown', href: '#'}
