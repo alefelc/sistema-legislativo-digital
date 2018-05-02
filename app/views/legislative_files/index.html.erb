@@ -1,77 +1,19 @@
-<div id="expedientes">
-  <div id="caratula">
-    <br> <br> <br> <br>
-
-    <div id="column-one">
-      <p id="column-one-p-one">
-        <br><br><br>
-        <span id="title"> MOVIMIENTOS </span>
-        <br> <br> <br>
-        <span class="titles" id="ingreso">INGRESO:</span>
-        <span id="ingreso-text">
-          <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-        </span>
-        <br> <br> <br> <br>
-        <span class="titles" id="estado">ESTADO PARLAMENTARIO:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="dictamen">DICTAMEN</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="aprobacion">APROBACION PRIMERA LECTURA:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="aprobacion-two">APROBACION DEFINITIVA</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="archivo">ARCHIVO:</span>
-        <br> <br> <br> <br>
-        <span class="titles" id="rechazo">RECHAZO:</span>
-      </p>
-    </div>
-    <div id="column-two">
-      <div id="logo">
-        <img src="<%= image_url 'dem_logo.jpg' %>" id="carat-image">
-      </div>
-      <p id="column-two-p-one">
-        CONCEJO DELIBERANTE <br> RIO CUARTO
-      </p>
-        <br> <br>
-      <p id="column-two-p-two"></p>
-        <br>
-        <span class="titles-two" id="exp-num">EXPEDIENTE Nº:</span>
-        <span id="numero-text"></span>
-        <br>
-        <br>
-        <span class="titles-two" id="iniciador">INICIADOR:</span>
-        <span id="iniciador-text"> &nbsp </span>
-        <br> <br> <br> <br> <br>
-        <span class="titles-two" id="asunto">ASUNTO:</span>
-        <span id="asunto-text"> &nbsp </span>
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-        <span class="titles-two" id="comision">COMISIÓN</span>
-        <span id="comision-text">&nbsp</span>
-        <br> <br> <br> <br>
-        <span class="titles-two" id="dispositivo">DISPOSITIVO LEGAL SANCIONADO:</span>
-        <span id="dispositivo-text">&nbsp</span>
-        <br> <br> <br>
-    </div>
-  </div>
-</div>
-
 <div id="index-legislative-files">
   <h2 class="text-center"> EXPEDIENTES LEGISLATIVOS </h2>
 
   <div class="box box-primary" id="procedures">
     <div class="box-header">
-      <%= render 'header' %>
+      <%= render 'header' if current_user.belongs_to_area? :legislative_secretary %>
     </div>
     <div class="box-body">
       <table class="table table-striped dataTable table-hover" id="legislative-files-table" data-source="<%= legislative_files_path(format: :json) %>">
         <thead>
           <tr>
-            <th>Expediente nro</th>
+            <th style="white-space:nowrap;">Exp. Nro.</th>
             <th>Sumario</th>
-            <th class="center">Fecha</th>
-            <th>Trámite</th>
+            <th>Fecha</th>
+            <th>Trámites</th>
             <th>Circuitos</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +30,7 @@ $(document).ready(function() {
         processing: "<div></div><div></div><div></div><div></div><div></div>",
         emptyTable: "No se encontraron expedientes relacionados a su búsqueda."
       },
+      "columnDefs": [{ className: "dt-head-center", targets: [0, 1, 2, 3, 4] }],
       dom: "<'row'<'col-sm-4'l><'legislative-files-toolbar col-sm-4'><'col-sm-4'f>>" +
         "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
       processing: true,
@@ -97,15 +40,6 @@ $(document).ready(function() {
         method: 'GET',
         dataType: 'json',
         data: function(params) {
-          // params.show_derivations = $('div.data-derivations').data('show');
-          // // Between two dates filter.
-          // if (!$('#legislative-files #reportrange').data('disabled')) {
-          //   params.date_from = $('#reportrange').data('daterangepicker').startDate.format();
-          //   params.date_to = $('#reportrange').data('daterangepicker').endDate.format();
-          // }
-          // // Filter by derivated procedures.
-          // if (!$('#legislative-files #derivation_types').data('disabled'))
-          //   params.derivation_filter = $('#legislative-files #derivation_types').val();
           return params
         }
       },

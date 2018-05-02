@@ -9,5 +9,6 @@
             %li.remove-bullet{ class: "#{activity[:child].present? ? 'double-tab' : ''}"}
               %p
                 .fa-checkbox.xs
-                  = check_box_tag "role[activities][]", activity[:activity], @role.has?(activity[:activity]), { id: activity[:activity], class: 'icheck-me', 'data-skin': :square, 'data-color': :red }
+                  - unless activity[:parent] == 'title'
+                    = check_box_tag "role[activities][]", activity[:activity], @role.has?(activity[:activity]), { id: activity[:activity], class: 'icheck-me', 'data-skin': :square, 'data-color': :red }
                   %label.pointer{ for: activity[:activity] }= activity[:name]

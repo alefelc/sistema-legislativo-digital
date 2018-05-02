@@ -12,17 +12,22 @@
             <i class="fa fa-angle-left pull-right"></i>
           <% end -%>
           <ul class="treeview-menu">
+            <% if policy(:sidebar_reception).legislative_file? %>
+            <li>
+              <%= link_to legislative_files_path do %>
+                <i class="fa fa-circle"></i> Expedientes Legislativos
+              <% end -%>
+            </li>
+            <% end %>
             <li>
               <%= link_to procedures_path do %>
-                <i class="fa fa-circle"></i>
-                Trámites
+                <i class="fa fa-circle"></i> Trámites
               <% end -%>
             </li>
             <% if policy(Procedure).create? %>
               <li>
                 <%= link_to new_procedure_path do %>
-                  <i class="fa fa-circle"></i>
-                  Nuevo Trámite
+                  <i class="fa fa-circle"></i> Nuevo Trámite
                 <% end -%>
               </li>
             <% end %>

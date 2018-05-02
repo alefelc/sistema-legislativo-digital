@@ -1,6 +1,12 @@
 ## Global javascript settings
-$('document').on 'ready', () ->
-  $('.tooltip-text').tooltip();
+$('document').ready ->
+  $('.tooltip-text').tooltip()
+
+  $('.dataTable.table-hover').on 'click', '.current-tr', () ->
+    id = $(this).find('.current-url').data 'url'
+    if id == null || id == undefined
+      return
+    location.assign id
 
 ## Select2 default settings
 $.fn.select2.defaults.set 'theme', 'bootstrap'
@@ -29,6 +35,8 @@ $.extend $.fn.dataTable.defaults,
       "sSortAscending":  ": Activar para ordenar la columna de manera ascendente"
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     "searchPlaceholder": "¿Qué desea buscar?"
+  createdRow: (row, data, index) ->
+    $(row).addClass('current-tr');
 
 $.ctrl = (key, callback, args) ->
   isCtrl = false

@@ -188,6 +188,7 @@ es:
     contingency_plan: Contingencia
     administrative_file: Expediente administrativo
     legislative_file: Expediente legislativo
+    sidebar: Sidebar
     new:
       cancel: Cancelar
       submit: Guardar

@@ -19,15 +19,21 @@ class LegislativeFileDatatable
   def data
     paginated_legislative_files.map do |file|
       [
-        file.number,
+        file_number(file),
         file.topic,
-        file.created_at.to_date,
+        created_at(file),
         origin_procedures(file),
-        (file.loops.count - 1),
-        link_to('', legislative_file_print_path(file), class: 'btn btn-danger fa fa-print fa-lg', title: 'Imprimir Carátula', target: :_blank) +
-        link_to('', legislative_file_path(file), class: 'btn btn-info fa fa-lg fa-eye')
+        (file.loops.count - 1)
       ]
     end
+  end
+
+  def file_number(file)
+    content_tag :div, file.number, 'data-url': legislative_file_path(file), class: 'current-url'
+  end
+
+  def created_at(file)
+    content_tag :div, file.created_at.to_date, style: "white-space:nowrap;"
   end
 
   def origin_procedures(file)

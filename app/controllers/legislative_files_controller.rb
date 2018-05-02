@@ -26,8 +26,7 @@ class LegislativeFilesController < ApplicationController
       flash.now[:error] = file.errors
       @loop = file.instance
       @procedure_ids = Procedure.where id: loop_create_params[:origin_procedure_ids]
-      pry
-      render :new
+      render :index
     end
   end
 

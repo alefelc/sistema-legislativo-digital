@@ -163,3 +163,8 @@ textarea {
 .table-hover > tbody > tr:hover {
   background-color: #D2D2D2;
 }
+
+.dataTable.table-hover {
+  .dt-head-center { text-align: center }
+  tbody td { cursor: pointer }
+}

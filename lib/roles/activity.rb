@@ -40,19 +40,23 @@ module Roles::Activity
     { name: "Editar exped. legislativos", activity: 'legislative_file:update' }
   ].freeze
 
+  SIDEBAR = [
+    { name: "Mesa de Entradas", activity: 'legislative_file_reception:title', parent: 'title' },
+    { name: "Expedientes Legislativos", activity: 'sidebar_reception:legislative_file', child: 'reception' },
+  ].freeze
+
   def self.admin_role()
     Role.create_with(activities: ADMIN + only_activities).
       find_or_create_by(name: 'admin', admin: true)
   end
 
   def self.activities()
-    [
-      PROCEDURE, ADMIN, ADMINISTRATIVE_FILE, CONTINGENCY_PLAN, LEGISLATIVE_FILE
-    ]
+    [ PROCEDURE, ADMIN, ADMINISTRATIVE_FILE, CONTINGENCY_PLAN, LEGISLATIVE_FILE,
+      SIDEBAR ]
   end
 
   def self.activities_with_name()
-    names = %w(procedure admin administrative_file contingency_plan legislative_file)
+    names = %w(procedure admin administrative_file contingency_plan legislative_file sidebar)
     activities.map.with_index do |act, index|
       { activities: act, title: I18n.t("roles.#{names[index]}") }
     end.flatten
