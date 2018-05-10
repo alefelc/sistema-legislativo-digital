@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423141257) do
+ActiveRecord::Schema.define(version: 20180510122320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -321,7 +321,7 @@ ActiveRecord::Schema.define(version: 20180423141257) do
 
   create_table "legislative_files", force: :cascade do |t|
     t.string   "number"
-    t.integer  "sheets",       default: 0
+    t.integer  "sheets",       default: 0, null: false
     t.integer  "bis",          default: 0
     t.text     "topic"
     t.text     "observations"
