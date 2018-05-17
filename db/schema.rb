@@ -402,7 +402,7 @@ ActiveRecord::Schema.define(version: 20180510122320) do
     t.integer  "number",              default: 0
     t.string   "topic"
     t.date     "year"
-    t.integer  "sheets"
+    t.integer  "sheets",              default: 0, null: false
     t.date     "date"
     t.integer  "bis",                 default: 0
     t.string   "observations"

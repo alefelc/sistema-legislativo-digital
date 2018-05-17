@@ -53,6 +53,12 @@ class PersonsController < ApplicationController
     render layout: false
   end
 
+  def print
+    pdf = Prawn::People.new(view_context)
+    send_data pdf.render, filename: "reporte_personas.pdf",
+              type: 'application/pdf', disposition: 'inline'
+  end
+
   private
 
   def build_json

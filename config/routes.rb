@@ -63,7 +63,9 @@ Rails.application.routes.draw do
     get 'search_tag', on: :collection
   end
 
-  resources :persons, only: [:create, :update, :new], as: :people
+  resources :persons, only: [:create, :update, :new], as: :people do
+    get 'print', on: :collection
+  end
   resources :reparticion_oficials
   resources :dependencia_municipals
   resources :pendientes, only: :index

@@ -5,6 +5,10 @@
     Listado de personas cargadas en el sistema
 
   .box.box-primary
+    .box-header
+      = link_to print_people_path, class: 'btn btn-danger' do
+        Print people
+        %i.fa.fa-print
     .box-body
       %table.table.table-striped.table-hover#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
         %thead
