@@ -65,6 +65,7 @@ class LegislativeFile < ActiveRecord::Base
   end
 
   def origin_procedure_ids=(proc_ids)
-    first_loop.update origin_procedure_ids: proc_ids
+    procedures = Procedure.where id: proc_ids
+    procedures.each { |proc| proc.update legislative_file_originated_id: self.id }
   end
 end

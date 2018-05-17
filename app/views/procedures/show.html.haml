@@ -12,15 +12,16 @@
         - else
           %i.small= t('.not_specified')
       .col-md-8
-        = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-success btn-lg pull-right margin-left btn-print', target: '_blank' do
-          %i.fa.fa-barcode{ 'aria-hidden': :true }
-          Imprimir Ticket
-        - link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
-          %i.fa.fa-print{ 'aria-hidden': :true }
-          Imprimir Trámite
-        = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
-          %i.fa.fa-pencil{ 'aria-hidden': :true }
-          Editar Trámite
+        - if policy(Procedure).create?
+          = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-success btn-lg pull-right margin-left btn-print', target: '_blank' do
+            %i.fa.fa-barcode{ 'aria-hidden': :true }
+            Imprimir Ticket
+          - link_to print_procedures_path(id: @procedure.id), class: 'btn btn-danger btn-lg pull-right margin-left btn-print', target: '_blank' do
+            %i.fa.fa-print{ 'aria-hidden': :true }
+            Imprimir Trámite
+          = link_to edit_procedure_path(@procedure), class: 'btn btn-warning btn-lg pull-right' do
+            %i.fa.fa-pencil{ 'aria-hidden': :true }
+            Editar Trámite
 
     .box-body
       .panel.panel-default

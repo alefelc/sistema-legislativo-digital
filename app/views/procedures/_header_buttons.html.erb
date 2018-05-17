@@ -1,17 +1,19 @@
 <div class="row main-buttons-header">
-  <div class="col-md-3 col-xs-12 text-center">
-    <% if current_user.present? && policy(Procedure).create? %>
+  <% if current_user.present? && policy(Procedure).create? %>
+    <div class="col-md-3 col-xs-12 text-center">
       <%= link_to new_procedure_path, class: 'btn btn-primary btn-lg' do %>
         <i class="fa fa-plus-circle fa-lg"></i> Nuevo
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <div class="col-md-3 col-xs-12 data-derivations text-center" data-show="false">
-    <%= link_to '#', class: 'btn btn-danger btn-lg listen-derivations' do %>
-      <i class="fa fa-paper-plane-o fa-lg"></i> Derivar
-    <% end %>
-  </div>
+  <% if policy(Procedure).create? %>
+    <div class="col-md-3 col-xs-12 data-derivations text-center" data-show="false">
+      <%= link_to '#', class: 'btn btn-danger btn-lg listen-derivations' do %>
+        <i class="fa fa-paper-plane-o fa-lg"></i> Derivar
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="col-md-3 col-xs-12 text-center">
     <button type=button class='btn btn-warning btn-lg' data-toggle=modal data-target="#myModal">
@@ -19,12 +21,15 @@
     </button>
   </div>
 
-  <div class="col-md-3 col-xs-12 text-center">
-    <%= link_to print_procedures_path, class: 'btn btn-default btn-lg', target: :_blank do %>
-      <i class="fa fa-print fa-lg"></i> Reporte
-    <% end %>
-  </div>
+  <% if policy(Procedure).create? %>
+    <div class="col-md-3 col-xs-12 text-center">
+      <%= link_to print_procedures_path, class: 'btn btn-default btn-lg', target: :_blank do %>
+        <i class="fa fa-print fa-lg"></i> Reporte
+      <% end %>
+    </div>
+  <% end %>
 </div>
+
 <div class="row alternative-button-header">
   <div class="col-md-5 col-xs-5">
     <div class="form-inline">

@@ -21,7 +21,7 @@
               <% end %>
             </div>
           </div>
-          <% end %>
+        <% end %>
       </div>
 
       <div class="box-body">
@@ -60,7 +60,7 @@
                         <% end %>
                       </div>
                     </div>
-                    <% if @loop.origin_procedures.present? && @loop.origin_procedures.collect(&:administrative_files).flatten.present? %>
+                    <% if @loop.first_loop.origin_procedures.present? && @loop.first_loop.origin_procedures.collect(&:administrative_files).flatten.present? %>
                       <div class="row">
                         <div class="col-md-2">
                           <h5 class="word-top text-bold pull-right">Exp. adm.:</h5>
