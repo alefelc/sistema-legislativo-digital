@@ -59,7 +59,7 @@ class LegislativeFile < ActiveRecord::Base
   def initiators
     result = ''
     origin_procedures.each do |proc|
-      result += proc.get_iniciadores
+      result += proc.persons.map{ |b| b.full_name }.join('; ')
     end
     result
   end
