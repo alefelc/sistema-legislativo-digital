@@ -10,12 +10,9 @@ class Prawn::Procedures < Prawn::Document
     @view = view_context
     if params[:procedure].present?
       @procedure = params[:procedure]
-      super({ page_size: [200, 300], :font_size => 40, text: 30 })
+      super({ page_size: [200, 300] })
       order_number
-      stroke do
-        move_down 110
-        horizontal_rule
-      end
+      scissors_line
       barcode(30, 130)
       barcode(30, 30)
     else
@@ -25,6 +22,12 @@ class Prawn::Procedures < Prawn::Document
   end
 
   private
+  def scissors_line
+    bounding_box([-25, 110], width: 600, height: 100) do
+      icon "<icon size='12' color='AAAAAA'>fa-scissors</icon>  " + "_ " * 52, inline_format: true
+    end
+  end
+
   def render_table(params=nil)
     header
     content(params)
@@ -32,7 +35,7 @@ class Prawn::Procedures < Prawn::Document
   end
 
   def order_number
-    text "Trámite nro #{@procedure.id}", :align => :center
+    text "Trámite nro #{@procedure.id}", size: 10, :align => :center
   end
 
   def barcode(x, y)

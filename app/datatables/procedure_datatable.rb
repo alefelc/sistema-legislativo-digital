@@ -25,8 +25,7 @@ class ProcedureDatatable
         get_iniciadores(proc),
         proc.topic,
         to_date_time(proc.created_at),
-        content_tag(:div, proc.sheets, class: 'text-center'),
-        view_procedure(proc)
+        content_tag(:div, proc.sheets, class: 'text-center')
       ]
     end
   end
@@ -37,14 +36,8 @@ class ProcedureDatatable
     else
       "No asig."
     end
-    content_tag :div, class: 'text-center' do
+    content_tag :div, class: 'text-center current-url', 'data-url': procedure_path(proc) do
       "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
-    end
-  end
-
-  def view_procedure(proc)
-    content_tag :div do
-      link_to('', procedure_path(proc), class: 'btn btn-info fa fa-eye fa-lg pull-right')
     end
   end
 

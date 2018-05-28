@@ -24,29 +24,6 @@
                 <i class="fa fa-circle"></i> Trámites
               <% end -%>
             </li>
-            <% if policy(Procedure).create? %>
-              <li>
-                <%= link_to new_procedure_path do %>
-                  <i class="fa fa-circle"></i> Nuevo Trámite
-                <% end -%>
-              </li>
-            <% end %>
-            <% if edit_link? 'procedures' %>
-              <li class="active">
-                <%= link_to '#' do %>
-                  <i class="fa fa-circle"></i>
-                  <%= t '.edit_process' %>
-                <% end -%>
-              </li>
-            <% end %>
-            <% if show_link? 'procedures' %>
-              <li class="active">
-                <a href="#">
-                  <i class="fa fa-circle"></i>
-                  <%= t '.show_process' %>
-                </a>
-              </li>
-            <% end %>
           </ul>
         </li>
       <% end %>
@@ -71,36 +48,12 @@
                 <i class="fa fa-circle"></i> Expedientes Legislativos
               </a>
             </li>
-            <% # if policy(LegislativeFile).create? %>
-            <li>
-              <a href="<%= new_legislative_file_path %>">
-                <i class="fa fa-circle"></i> Nuevo Expediente
+            <li class="treeview">
+              <a href="<%= laws_path %>">
+                <i class="fa fa-circle"></i> <span> Normas </span>
               </a>
             </li>
           </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-list fa-lg"></i> <span> Orden del Día </span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <a href="<%= day_plans_path %>">
-                <i class="fa fa-circle"></i> Ordenes del día
-              </a>
-            </li>
-            <li>
-              <a href="<%= new_day_plan_path %>">
-                <i class="fa fa-circle"></i> Nueva Orden del Día
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="<%= laws_path %>">
-            <i class="fa fa-list-ul fa-lg"></i> <span> Normas </span>
-          </a>
         </li>
       <% end %>
       <!-- End legislative secretary -->
@@ -116,17 +69,12 @@
           <ul class="treeview-menu">
             <li>
               <a href="<%= pendant_loans_path %>">
-                <i class="fa fa-circle"></i> Préstamos pendientes
-              </a>
-            </li>
-            <li>
-              <a href="<%= new_loan_path %>">
-                <i class="fa fa-circle"></i> Nuevo Préstamo
+                <i class="fa fa-circle"></i> Préstamos Pendientes
               </a>
             </li>
             <li>
               <a href="<%= loans_path %>">
-                <i class="fa fa-circle"></i> Todos los préstamos
+                <i class="fa fa-circle"></i> Préstamos
               </a>
             </li>
           </ul>
