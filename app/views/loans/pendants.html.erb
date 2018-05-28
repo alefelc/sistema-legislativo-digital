@@ -24,6 +24,14 @@
                   <i class="fa fa-folder-open-o fa-lg"></i>
                   Devolución
                 <% end %>
+                <%= link_to loan_print_path(loan), class: 'btn btn-danger',
+                            target: :_blank, data: {
+                              'file-number': loan.legislative_file.number,
+                              'loan-id': loan.id
+                            } do %>
+                  <i class="fa fa-print fa-lg"></i>
+                  Cupón
+                <% end %>
               </td>
             </tr>
           <% end %>

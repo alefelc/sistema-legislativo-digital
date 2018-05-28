@@ -86,6 +86,7 @@ gem 'pundit'
 
 # Fast, Nimble PDF Writer for Ruby
 gem 'prawn-rails'
+gem 'prawn-icon'
 
 # Barcode support
 gem 'barby'
