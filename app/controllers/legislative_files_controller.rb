@@ -66,13 +66,14 @@ class LegislativeFilesController < ApplicationController
 
   def loop_create_params
     params.require(:legislative_file).permit :sheets, :topic,
-      :observations, :accumulated_in, :year, :date, :physically_attached, origin_procedure_ids: []
+      :observations, :accumulated_in, :year, :date, :physically_attached,
+      uploads: [], origin_procedure_ids: []
   end
 
   def loop_update_params
     params.require(:legislative_file).permit :number, :sheets, :topic,
-      :observations, :accumulated_in, :year, :date,
-      :physically_attached, origin_procedure_ids: []
+      :observations, :accumulated_in, :year, :date, :physically_attached,
+      uploads: [], origin_procedure_ids: []
       # loops_attributes: [
       #   :id, :sheets, :date, :topic, :observations, origin_procedure_ids: []
       # ],

@@ -1,9 +1,16 @@
 <div class="lead box-header with-border">
   Puede adjuntar todo tipo de archivos
 </div>
-<%= f.fields_for :uploads do |upload| %>
-  <div class="form-group uploads">
-    <%= f.label :upload, 'Busque y seleccione archivos' %>
-    <%= f.file_field :upload, type: :file, multiple: true %>
-  </div>
-<% end %>
+
+<div class="form-group">
+  <%= f.label :uploads, 'Busque y seleccione archivos' %>
+  <%= f.file_field :uploads, type: :file, multiple: true %>
+</div>
+
+<ul>
+  <% f.object.uploads.each do |upload| %>
+    <li>
+      <%= link_to upload.file_file_name, upload.file.url %>
+    </li>
+  <% end %>
+</ul>

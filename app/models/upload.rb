@@ -1,6 +1,7 @@
 class Upload < ActiveRecord::Base
   #== Associations
   belongs_to :procedure
+  belongs_to :legislative_file
 
   #== Attachment
   has_attached_file :file, { preserve_files: "true" }
@@ -15,4 +16,15 @@ class Upload < ActiveRecord::Base
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
   },
   message: ", Unicamente Imágenes, PDF, EXCEL, WORD o Archivo de TEXTO están permitidos."
+
+  def thumb
+    return self.file.url(:thumb) if self.can_thumbnail?
+    '/thumb/default.png'
+  end
+
+  private
+
+  def can_thumbnail?
+    self.check_file_type.try(:[], :thumb).present?
+  end
 end

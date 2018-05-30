@@ -1,7 +1,7 @@
 <div id="state-form-modal"></div>
 <div id="legislative-file-edit">
   <h2 class="text-center"> ACTUALIZAR EXPEDIENTE LEGISLATIVO </h2>
-  <%= form_for @loop, multipart: true do |f| %>
+  <%= form_for @loop, html: { multipart: true } do |f| %>
 
     <div class="box box-primary">
       <div class="box-header with-border">
@@ -30,7 +30,9 @@
               </div>
 
               <div id="loops" class="tab-pane fade">
-                <%= render 'loops', f: f %>
+                <%=
+                  # render 'loops', f: f
+                %>
               </div>
 
               <div id="attached" class="tab-pane fade">

@@ -5,6 +5,7 @@ class LegislativeFile < ActiveRecord::Base
   has_many :legislative_file_states, dependent: :delete_all
   has_many :laws
   has_many :tags  ## Change to has_many and add tags model
+  has_many :uploads
 
   # == Association recursive expediente acumula
   has_many :acumulados_relationship, class_name: "Acumula", foreign_key: "acumula_id"
@@ -25,6 +26,7 @@ class LegislativeFile < ActiveRecord::Base
 
   # == Nested attributes
   accepts_nested_attributes_for :loops, reject_if: :all_blank
+  accepts_nested_attributes_for :uploads
 
   # == Methods
   # Return first loop. Physical representation of legislative file into DB.
@@ -67,5 +69,9 @@ class LegislativeFile < ActiveRecord::Base
   def origin_procedure_ids=(proc_ids)
     procedures = Procedure.where id: proc_ids
     procedures.each { |proc| proc.update legislative_file_originated_id: self.id }
+  end
+
+  def uploads=(files)
+    files.each { |file| uploads.create file: file }
   end
 end
