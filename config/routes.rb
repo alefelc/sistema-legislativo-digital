@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :administrative_files, only: [:index, :show]
   resources :legislative_files do
     get 'print'
+    delete 'upload'
   end
   resources :derivated_procedures do
     get 'print', on: :collection

@@ -62,6 +62,16 @@ class LegislativeFilesController < ApplicationController
               type: 'application/pdf', disposition: 'inline'
   end
 
+  def upload
+    # check correct permissions here, and also delete if the request was made from current legislative_file
+    upload = Upload.find params[:file_id]
+    if upload.delete
+      render json: { status: :ok, file: { id: upload.id} }
+    else
+      render json: { errors: upload.errors.full_messages }, status: :forbidden
+    end
+  end
+
   private
 
   def loop_create_params

@@ -7,10 +7,21 @@
   <%= f.file_field :uploads, type: :file, multiple: true %>
 </div>
 
-<ul>
+<u class="uploads">
   <% f.object.uploads.each do |upload| %>
-    <li>
+    <li id="<%= upload.id %>" >
       <%= link_to upload.file_file_name, upload.file.url %>
+      <%= link_to legislative_file_upload_path(f.object.id, file_id: upload.id, format: :json), method: :delete, class: 'btn btn-xs', data: { upload: upload.id }, remote: true do %>
+        <i class="fa fa-xs fa-times"></i>
+      <% end %>
     </li>
   <% end %>
 </ul>
+
+<script type="text/javascript">
+  $('.uploads').on('ajax:success', function(ev, data) {
+    $('.uploads').find('[id=' + data.file.id + ']').remove();
+  }).on('ajax:error', function() {
+    swal('', 'No es posible eliminar este archivo', 'error');
+  });
+</script>
