@@ -22,6 +22,7 @@
             <th> Prestado el día </th>
             <th> Devuelto el día </th>
             <th> Retiró </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,16 @@
                 <% end %>
               </td>
               <td> <%= loan.person.text %> </td>
+              <td>
+                <%= link_to loan_print_return_path(loan), class: 'btn btn-success',
+                            target: :_blank, data: {
+                              'file-number': loan.legislative_file.number,
+                              'loan-id': loan.id
+                            } do %>
+                  <i class="fa fa-print fa-lg"></i>
+                  Devolución
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

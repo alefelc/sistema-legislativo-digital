@@ -92,6 +92,7 @@ Rails.application.routes.draw do
     get 'pendant', on: :collection, to: 'loans#pendants'
     get 'persons', on: :collection, to: 'loans#persons'
     get 'print'
+    get 'print_return'
   end
 
   # Admin access only

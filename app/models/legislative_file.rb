@@ -59,16 +59,16 @@ class LegislativeFile < ActiveRecord::Base
   end
 
   def initiators
-    result = ''
+    people = []
     origin_procedures.each do |proc|
-      result += proc.persons.map{ |b| b.full_name }.join('; ')
+      people.concat(proc.persons)
     end
-    result
-  end
-
-  def origin_procedure_ids=(proc_ids)
-    procedures = Procedure.where id: proc_ids
-    procedures.each { |proc| proc.update legislative_file_originated_id: self.id }
+    if people.all? { |p| p.type == 'Concejal' }
+      result = people.map { |b| b.full_name }.join('; ')
+    else
+      result = people.map { |b| b.full_name }.join('; ')
+    end
+    result[0..664]
   end
 
   def uploads=(files)

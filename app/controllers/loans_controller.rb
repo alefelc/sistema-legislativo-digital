@@ -51,6 +51,13 @@ class LoansController < ApplicationController
               type: 'application/pdf', disposition: 'inline'
   end
 
+  def print_return
+    loan_coupon = Loan.find params[:loan_id]
+    pdf = Prawn::LoanReturnCoupon.new loan_coupon, view_context
+    send_data pdf.render, filename: "cupon_nro_#{loan_coupon.id}.pdf",
+              type: 'application/pdf', disposition: 'inline'
+  end
+
   private
 
   def loan_params

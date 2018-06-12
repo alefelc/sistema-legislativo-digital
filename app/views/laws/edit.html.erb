@@ -6,7 +6,7 @@
       <h3 class="box-title"> Información de la Norma </h3>
     </div>
 
-    <%= form_for @law do |form| %>
+    <%= form_for @law, html: { multipart: true } do |form| %>
 
       <div class="box-body">
         <%= render 'law_form', f: form %>

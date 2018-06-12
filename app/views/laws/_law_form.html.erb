@@ -17,6 +17,12 @@
       <%= f.text_field :year, type: :number, class: 'form-control input-lg' %>
     </div>
   </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= f.label :uploads, 'Busque y seleccione archivos' %>
+      <%= f.file_field :uploads, type: :file, multiple: true %>
+    </div>
+  </div>
 </div>
 
 <div class="row">

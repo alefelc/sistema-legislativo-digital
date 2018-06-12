@@ -306,7 +306,7 @@ es:
   destinies:
     type_of_destiny:
       comunication: Comunicación
-      notification: Notificación
+      notification: Aprobación
       publish: Publicación
 
   activeadmin:

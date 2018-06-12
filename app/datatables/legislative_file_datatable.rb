@@ -23,9 +23,19 @@ class LegislativeFileDatatable
         file.topic,
         created_at(file),
         origin_procedures(file),
-        (file.loops.count - 1)
+        attached_files(file)
       ]
     end
+  end
+
+  def attached_files(file)
+    attachements = []
+    file.uploads.each do |upload|
+      content_tag :div do
+        attachements << content_tag(:div, link_to(upload.file_file_name, upload.file.url))
+      end
+    end
+    attachements
   end
 
   def file_number(file)

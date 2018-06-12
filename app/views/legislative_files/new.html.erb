@@ -120,3 +120,40 @@
     </div>
   <% end -%>
 </div>
+
+
+Loop.where.not(origin_procedure_id: nil).each do |loop|
+  loop.origin_procedures << Procedure.find(loop.origin_procedure_id) if loop.origin_procedures.empty?
+end
+
+Loop.where.not(origin_procedure_id: nil).each do |loop|
+  proc = Procedure.find(loop.origin_procedure_id)
+  proc.update legislative_file_originated_id: loop.id
+end
+
+Procedure.where(legislative_file_originated_id: nil).each do |proc|
+  proc.
+end
+
+
+
+counter = 0
+Loop.where.not(origin_procedure_id: nil).each do |loop8|
+  next if loop8.origin_procedures.present?
+  counter += 1
+  loop8.origin_procedures << Procedure.find(loop8.origin_procedure_id)
+  puts "NOOOOOOOOOOOOOOO" if !loop8.save
+end
+puts "TOTAL #{counter}"
+
+
+
+
+counter = 0
+array = []
+Loop.where.not(origin_procedure_id: nil).each do |loop8|
+  next if loop8.origin_procedures.empty?
+  counter += 1
+  array << loop.id
+end
+puts "TOTAL #{counter}"
