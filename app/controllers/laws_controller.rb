@@ -62,7 +62,7 @@ class LawsController < ApplicationController
   private
 
   def law_params
-    params.require(:law).permit(:number, :letter, :year, :law_type, :destinies_attributes, destinies_attributes: [])
+    params.require(:law).permit(:number, :letter, :year, :law_type, :destinies_attributes, uploads: [])
   end
 
   def build_json_response

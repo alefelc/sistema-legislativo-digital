@@ -187,7 +187,6 @@ $(document).ready(function() {
 		$('.all-loops-data, .loop-data').on('shown.bs.tab', function(ev) {
 			let tabId = $('#loops li.active a').attr("href");
 			if ($(tabId + ' .procedure-finder').data('select2')) return;
-			console.log('aca estoy', tabId + ' .procedure-finder', this);
 			let options = {
 			  allowClear: true,
 			  placeholder: 'Busque trámites',
@@ -220,7 +219,6 @@ $(document).ready(function() {
 
 	$('.legislative-data').on('shown.bs.tab', function() {
 		$('#legislative_file_origin_procedure_ids').select2('destroy');
-		console.log("Trying to update");
 		new ListenProceduresFinder();
 	});
 });

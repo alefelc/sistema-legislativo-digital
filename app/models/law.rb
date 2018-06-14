@@ -2,6 +2,7 @@ class Law < ActiveRecord::Base
   # == Associations
   has_and_belongs_to_many :legislative_file_states
   has_many :destinies
+  has_many :uploads
 
   accepts_nested_attributes_for :destinies, reject_if: :all_blank
 
@@ -15,5 +16,9 @@ class Law < ActiveRecord::Base
   def to_s
     return "#{number}/#{letter}/#{year}" if letter.present?
     "#{number}/#{year}"
+  end
+
+  def uploads=(files)
+    files.each { |file| uploads.create file: file }
   end
 end

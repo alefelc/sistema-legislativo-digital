@@ -1,6 +1,6 @@
 class LawsDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to, to: :@view
+  delegate :params, :link_to, :content_tag, :law_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -19,14 +19,26 @@ class LawsDatatable
   def data
     paginated_laws.map do |law|
       [
-        "#{law.number} / #{law.year}",
+        law_number(law),
         law.law_type,
         law.year,
-        '',
-        'expediente nro 1',
-        actions(law)
+        attached_files(law)
       ]
     end
+  end
+
+  def law_number(law)
+    content_tag :div, "#{law.number} / #{law.year}", 'data-url': law_path(law), class: 'current-url'
+  end
+
+  def attached_files(law)
+    attachements = []
+    law.uploads.each do |upload|
+      content_tag :div do
+        attachements << content_tag(:div, link_to(upload.file_file_name, upload.file.url))
+      end
+    end
+    attachements
   end
 
   def format_date(date)

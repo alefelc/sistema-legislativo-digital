@@ -2,6 +2,7 @@ class Upload < ActiveRecord::Base
   #== Associations
   belongs_to :procedure
   belongs_to :legislative_file
+  belongs_to :law
 
   #== Attachment
   has_attached_file :file, { preserve_files: "true" }
