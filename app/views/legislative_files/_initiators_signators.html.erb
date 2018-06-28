@@ -1,4 +1,4 @@
-<% @procedure = @loop.origin_procedure %>
+<% @procedure = @loop.origin_procedures.first %>
 <% dem = @procedure.organo_de_gobiernos.find_by(codigo: "DEM") %>
 <% if dem.present? %>
   <div>
