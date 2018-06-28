@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612155133) do
+ActiveRecord::Schema.define(version: 20180628074021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -351,9 +351,9 @@ ActiveRecord::Schema.define(version: 20180612155133) do
     t.integer  "number"
     t.text     "observation"
     t.integer  "diario_de_sesion_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "session_type"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "session_type",        default: 0, null: false
     t.string   "place"
     t.boolean  "secret"
     t.datetime "started_at"

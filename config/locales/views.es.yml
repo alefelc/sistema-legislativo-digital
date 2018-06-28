@@ -280,6 +280,8 @@ es:
       special: Especial
 
   laws:
+    update:
+       success: Norma actualizada correctamente
     types:
       ordenanza: Ordenanza
       decreto: Decreto
