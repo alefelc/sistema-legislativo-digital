@@ -20,10 +20,8 @@ class LegislativeFileService
             proc.update(topic: @file.topic) if proc.topic.blank?
           end
         end
-        if @state && @state.fetch(:origin_procedure_ids).present?
-          @state = @file.legislative_file_states.build procedure: Procedure.find_by(id: @params.fetch(:origin_procedure_ids))
-          @state.save!
-        end
+        @state = @file.legislative_file_states.build
+        @state.save!
       end
       true
     rescue Exception => e
