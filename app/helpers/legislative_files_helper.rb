@@ -81,9 +81,9 @@ module LegislativeFilesHelper
 
   def build_small_state_procedure(state)
     if state.initialized? || state.dispatched?
-      content_tag :small do
-        link_to "Trámite #{state.procedure}", state.procedure
-      end
+      # content_tag :small do
+      #   link_to "Trámite #{state.procedure}", state.procedure
+      # end
     elsif state.session.present?
       content_tag :small do
         link_to state.session, state.session

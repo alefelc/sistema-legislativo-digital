@@ -52,7 +52,7 @@ class LegislativeFile < ActiveRecord::Base
   end
 
   def text
-    result = number || ''
+    result = number || 'S/N'
     result += " - #{bis}" if bis.present? && !bis.zero?
     result += "  (año: #{year})" if year.present?
     result

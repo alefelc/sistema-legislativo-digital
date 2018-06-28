@@ -19,6 +19,9 @@ class Loop < ActiveRecord::Base
   # == Callbacks
   before_create :set_loop_number
 
+  # == Delegations
+  delegate :number, to: :legislative_file
+
   # == Methods
   def first?
     self.number.zero?
