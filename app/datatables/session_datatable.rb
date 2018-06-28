@@ -1,6 +1,7 @@
 class SessionDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to, to: :@view
+  delegate :params, :link_to, :edit_legislative_session_path,
+  :content_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -19,16 +20,33 @@ class SessionDatatable
   def data
     paginated_legislative_sessions.map do |session|
       [
-        session.id,
-        session.number,
-        I18n.t("sessions.types.#{session.session_type}"),
-        format_date(session.started_at),
+        session_number(session),
+        session_type(session),
         session.place,
-        session.secret,
-        session.observation,
-        actions(session)
+        session_secret(session),
+        session_day_plan(session),
+        format_date(session.started_at),
       ]
     end
+  end
+
+  def session_day_plan(session)
+    content_tag :div, "##{session.number}", class: 'label label-primary', onclick: 'preventRedirection();'
+  end
+
+  def session_secret(session)
+    session.secret ? 'Si' : 'No'
+  end
+
+  def session_number(session)
+    number = "##{session.number}"
+    content_tag :div, class: 'text-center current-url', 'data-url': edit_legislative_session_path(session) do
+      "#{content_tag :b, number}".html_safe
+    end
+  end
+
+  def session_type(session)
+    I18n.t("sessions.types.#{session.session_type}")
   end
 
   def format_date(date)
@@ -36,7 +54,7 @@ class SessionDatatable
   end
 
   def legislative_sessions
-    LegislativeSession.where(filter).order(:id)
+    LegislativeSession.where(filter).order(created_at: :desc)
   end
 
   def columns
@@ -54,10 +72,8 @@ class SessionDatatable
     ## Must be fixed
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["(people.nombre ILIKE ?  OR people.apellido ILIKE ?)"]
-      query += ["(people.nro_doc ILIKE ?  OR people.telefono ILIKE ?)"]
-      query += ["(people.email ILIKE ?  OR people.domicilio ILIKE ?)"]
-      binds += [search] * 6
+      query += ["(number::text ILIKE ?)"]
+      binds += [search] * 1
     end
     [query.join(' OR ')] + binds
   end
@@ -72,9 +88,5 @@ class SessionDatatable
 
   def page
     params[:start].to_i / per_page + 1
-  end
-
-  def actions(session)
-    link_to '', session, class: 'btn btn-info fa fa-eye'
   end
 end

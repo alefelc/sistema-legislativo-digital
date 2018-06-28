@@ -1,7 +1,7 @@
 class ProcedureDatatable
   delegate :index_procedure, :person_path, :link_to, :peticion_path,
            :human_attribute_name, :params, :content_tag, :procedure_path,
-           :derivated_procedures_path, :check_box_tag, to: :@view
+           :derivated_procedures_path, :check_box_tag, :legislative_file_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -25,9 +25,17 @@ class ProcedureDatatable
         get_iniciadores(proc),
         proc.topic,
         to_date_time(proc.created_at),
-        content_tag(:div, proc.sheets, class: 'text-center')
+        legislative_file_label(proc)
       ]
     end
+  end
+
+  def legislative_file_label(proc)
+    # content_tag(:div, proc.sheets, class: 'text-center')
+    return if proc.legislative_file_originated.blank?
+    file_text = "##{proc.legislative_file_originated.number}"
+    file_url = legislative_file_path(proc.legislative_file_originated.legislative_file_id)
+    link_to file_text, file_url, class: 'label label-info', onclick: "preventRedirection();"
   end
 
   def show_id(proc)
@@ -60,7 +68,8 @@ class ProcedureDatatable
       title_attr = "Click para derivar #{proc}"
       link_to derivated_procedures_path(procedure_id: proc.id), method: :post,
         class: 'btn btn-check btn-success tooltip-text', title: title_attr,
-        remote: true, data: { confirm: "¿Desea derivar el trámite #{proc}?" } do
+        onclick: "preventRedirection();", remote: true,
+        data: { confirm: "¿Desea derivar el trámite #{proc}?" } do
           content_tag :i, nil, class: 'fa fa-lg fa-check'
       end
     end
@@ -79,7 +88,7 @@ class ProcedureDatatable
   end
 
   def columns
-    %w(id type nil topic created_at sheets)
+    %w(id type nil topic created_at legislative_file_originated)
   end
 
   def filter

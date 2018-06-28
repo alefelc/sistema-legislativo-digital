@@ -38,20 +38,15 @@ class ProcedureDerivationDatatable
     else
       "No asig."
     end
-    content_tag :div, class: 'text-center' do
+    content_tag :div, class: 'text-center current-url', 'data-url': procedure_path(proc) do
       "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
     end
   end
 
   def actions_procedure(proc)
-    links = []
-    links << link_to('', procedure_path(proc), class: 'btn btn-primary fa fa-eye fa-lg pull-right')
-    links << if proc.procedure_derivation.present? && proc.procedure_derivation.received_at?
-      if proc.isnt_dispatch? && proc.legislative_file_originated.blank?
-        link_to('', new_legislative_file_path(proc_id: proc.id), class: 'btn btn-info fa fa-file-text fa-lg pull-right')
-      end
+    if proc.isnt_dispatch? && proc.legislative_file_originated.blank?
+      link_to('', new_legislative_file_path(proc_id: proc.id), class: 'btn btn-info fa fa-file-text fa-lg pull-right', onclick: 'preventRedirection();')
     end
-    content_tag :div, links.join.html_safe
   end
 
   def actions(proc)
@@ -67,7 +62,7 @@ class ProcedureDerivationDatatable
         title_attr = "Trámite derivado #{derivation.derived_at.strftime('%d/%m %H:%M')}"
 
         link_to derivated_procedure_path(derivation), method: :put,
-                class: 'btn btn-success btn-confirm-derivation tooltip-text',
+                class: 'btn btn-success btn-confirm-derivation tooltip-text', onclick: 'preventRedirection();',
                 title: title_attr, remote: true, data: { confirm: "¿Desea confirmar la recepción del trámite #{proc}?" } do
           content_tag :i, nil, class: 'fa fa-lg fa-check fa-envelope'
         end

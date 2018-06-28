@@ -29,17 +29,18 @@ class LegislativeFileDatatable
   end
 
   def attached_files(file)
-    attachements = []
+    attachements = ""
     file.uploads.each do |upload|
       content_tag :div do
-        attachements << content_tag(:div, link_to(upload.file_file_name, upload.file.url))
+        attachements += content_tag(:div, link_to(upload.file_file_name, upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
       end
     end
     attachements
   end
 
   def file_number(file)
-    content_tag :div, file.number, 'data-url': legislative_file_path(file), class: 'current-url'
+    number = file.number.present? ? "##{file.number}" : 'S/N'
+    content_tag :b, number, 'data-url': legislative_file_path(file), class: 'current-url'
   end
 
   def created_at(file)
@@ -47,10 +48,10 @@ class LegislativeFileDatatable
   end
 
   def origin_procedures(file)
-    links = []
+    links = ""
     if file.origin_procedures.present?
       file.origin_procedures.each do |proc|
-        links << content_tag(:div, link_to(proc, proc))
+        links += content_tag(:div, link_to(proc, proc, class: 'label label-info', onclick: "preventRedirection();")).html_safe
       end
       links
     end

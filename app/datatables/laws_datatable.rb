@@ -20,22 +20,34 @@ class LawsDatatable
     paginated_laws.map do |law|
       [
         law_number(law),
-        law.law_type,
-        law.year,
+        I18n.t("laws.types.#{law.law_type}"),
+        law_session(law),
+        law_legislative_file(law),
+        law.created_at.strftime('%d/%m/%Y'),
         attached_files(law)
       ]
     end
   end
 
+  def law_session(law)
+    content_tag :div, law.id, class: 'label label-warning'
+  end
+
+  def law_legislative_file(law)
+    content_tag :div, law.id, class: 'label label-info'
+  end
+
   def law_number(law)
-    content_tag :div, "#{law.number} / #{law.year}", 'data-url': law_path(law), class: 'current-url'
+    content_tag :b, "##{law.number} / #{law.year}", 'data-url': law_path(law), class: 'current-url'
   end
 
   def attached_files(law)
-    attachements = []
+    attachements = ""
     law.uploads.each do |upload|
       content_tag :div do
-        attachements << content_tag(:div, link_to(upload.file_file_name, upload.file.url))
+        attachements += content_tag(:div, link_to(upload.file_file_name,
+          upload.file.url, class: 'label label-success', target: '_blank',
+          onclick: "preventRedirection();"))
       end
     end
     attachements
@@ -46,7 +58,7 @@ class LawsDatatable
   end
 
   def laws
-    Law.where(filter).order(:id)
+    Law.where(filter).order(created_at: :desc)
   end
 
   def sort_column(column)
@@ -60,10 +72,8 @@ class LawsDatatable
     ## Must be fixed
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["(people.nombre ILIKE ?  OR people.apellido ILIKE ?)"]
-      query += ["(people.number_doc ILIKE ?  OR people.telefono ILIKE ?)"]
-      query += ["(people.email ILIKE ?  OR people.domicilio ILIKE ?)"]
-      binds += [search] * 6
+      query += ["(laws.number ILIKE ?)"]
+      binds += [search] * 1
     end
     [query.join(' OR ')] + binds
   end
