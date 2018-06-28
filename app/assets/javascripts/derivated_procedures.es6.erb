@@ -87,7 +87,6 @@ class DerivatedProcedureIndex {
   listenerDerivation() {
     var that = this;
     $(`${this.derivationBtn}, ${this.returnTableBtn}`).on('click', function() {
-      console.log('alalalal')
       that.showingDerivations = !that.showingDerivations;
       that.updateView();
       $('#derivated-procedures #derivation_types').on('change', () => {

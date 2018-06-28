@@ -272,8 +272,9 @@ class Procedures {
   }
 
   static listenCheckButtons() {
-    $('#procedures-table').on('ajax:success', '.btn-check', function() {
+    $('#procedures-table').on('ajax:success', '.btn-check', function(ev) {
       $('#procedures-table').DataTable().draw(false);
+      $('.prevent-redirect').removeClass('prevent-redirect');
     });
   }
 

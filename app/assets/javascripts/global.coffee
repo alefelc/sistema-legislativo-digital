@@ -6,7 +6,8 @@ $('document').ready ->
     id = $(this).find('.current-url').data 'url'
     if id == null || id == undefined
       return
-    location.assign id
+    if !$('.prevent-redirect').length
+      location.assign id
 
 ## Select2 default settings
 $.fn.select2.defaults.set 'theme', 'bootstrap'
@@ -109,3 +110,6 @@ $ ->
 #    Search.prototype.searchRemoveChoice = () ->
 #        oldRemoveChoice.apply this, arguments
 #        this.$search.val ''
+
+window.preventRedirection = () ->
+  $('body').addClass 'prevent-redirect'
