@@ -14,11 +14,6 @@
                   Información
                 </a>
               </li>
-              <li>
-                <a aria-expanded="true" data-toggle="tab" href="#attached">
-                  Archivos adjuntos
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -85,18 +80,6 @@
                     <%= f.select :tags, {}, {}, class: 'form-control' %>
                   </div>
                 </div>
-              </div>
-
-              <div id="attached" class="tab-pane fade">
-                <div class="lead box-header with-border">
-                  Puede adjuntar todo tipo de archivos
-                </div>
-                <%= f.fields_for :uploads do |upload| %>
-                  <div class="form-group uploads">
-                    <%= f.label :upload, 'Busque y seleccione archivos' %>
-                    <%= f.file_field :upload, type: :file, multiple: true %>
-                  </div>
-                <% end %>
               </div>
 
             </div>
