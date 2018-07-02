@@ -32,7 +32,7 @@ class LegislativeFileDatatable
     attachements = ""
     file.uploads.each do |upload|
       content_tag :div do
-        attachements += content_tag(:div, link_to(upload.file_file_name, upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
+        attachements += content_tag(:div, link_to(truncate(upload.file_file_name, 20), upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
       end
     end
     attachements
@@ -110,5 +110,13 @@ class LegislativeFileDatatable
 
   def page
     params[:start].to_i / per_page + 1
+  end
+
+  def truncate(string, length = 30, ellipsis = '...')
+    return string if string.length <= length
+    string.to_s[0..length] + ellipsis
+  end
+
+  def tooltip(string, length)
   end
 end

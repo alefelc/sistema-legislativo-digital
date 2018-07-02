@@ -35,7 +35,7 @@ class ProcedureDatatable
     return if proc.legislative_file_originated.blank?
     file_text = "##{proc.legislative_file_originated.number}"
     file_url = legislative_file_path(proc.legislative_file_originated.legislative_file_id)
-    link_to file_text, file_url, class: 'label label-info', onclick: "preventRedirection();"
+    link_to file_text, file_url, class: 'label label-info'
   end
 
   def show_id(proc)
