@@ -10,12 +10,12 @@ class Law < ActiveRecord::Base
   enum law_type: [:ordenanza, :decreto, :declaracion, :resolucion, :especial, :otra_norma]
 
   def text
-    "#{number} / #{letter} / #{year} (#{I18n.t "laws.types.#{law_type}" })"
+    "##{number} / #{letter} / #{year} (#{I18n.t "laws.types.#{law_type}" })"
   end
 
   def to_s
-    return "#{number}/#{letter}/#{year}" if letter.present?
-    "#{number}/#{year}"
+    return "##{number} / #{letter} / #{year}" if letter.present?
+    "##{number} / #{year}"
   end
 
   def uploads=(files)
