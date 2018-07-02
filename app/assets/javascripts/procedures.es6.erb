@@ -267,7 +267,13 @@ class Procedures {
       },
       fnInitComplete: function() {
         Procedures.listenCheckButtons();
-      }
+      },
+      'columnDefs': [{
+        'targets': 5,
+        'createdCell':  function (td, cellData, rowData, row, col) {
+           $(td).attr('onclick', 'preventRedirection();');
+        }
+     }]
     })
   }
 

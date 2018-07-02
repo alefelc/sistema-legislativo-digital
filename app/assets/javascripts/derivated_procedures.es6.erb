@@ -50,7 +50,13 @@ class DerivatedProcedures {
       },
       fnInitComplete: function() {
         DerivatedProcedures.listenCheckButtons();
-      }
+      },
+      columnDefs: [{
+        'targets': [0, 6],
+        'createdCell':  function (td, cellData, rowData, row, col) {
+           $(td).attr('onclick', 'preventRedirection();');
+        }
+      }]
     })
   }
 
