@@ -4,7 +4,7 @@ class LegislativeFileService
     if id.present?
       @file = LegislativeFile.find_by id: id
     else
-      @file = LegislativeFile.new params.slice(:sheets, :topic, :observations, :year, :date, :loops_attributes)
+      @file = LegislativeFile.new params.slice(:sheets, :topic, :observations, :year, :date, :loops_attributes, :uploads)
       @loop = @file.loops.build params.slice(:sheets, :topic, :observations, :year, :date, :origin_procedure_ids)
     end
     @errors = []
@@ -30,7 +30,7 @@ class LegislativeFileService
   end
 
   def update!
-    @file.update @params.slice(:sheets, :topic, :observations, :year, :date)
+    @file.update @params.slice(:sheets, :topic, :observations, :year, :date, :uploads)
     @file.first_loop.update @params.slice(:sheets, :topic, :observations, :year, :date, :origin_procedure_ids)
   end
 
