@@ -23,6 +23,11 @@ class Prawn::LoanCoupon < Prawn::Document
   end
 
   def user_sheet
+    bounding_box([-30, 710], width: 600, height: 800) do
+      transparent(0.3) do
+        image "app/assets/images/concejo_logo_only.jpeg", position: :center, width: 300
+      end
+    end
     bounding_box([-30, 675], width: 600, height: 800) do
       text "CONCEJO DELIBERANTE CIUDAD RIO CUARTO", size: 20, align: :center
       move_down 20
@@ -44,6 +49,11 @@ class Prawn::LoanCoupon < Prawn::Document
   end
 
   def borrowed_sheet
+    bounding_box([-30, 310], width: 600, height: 800) do
+      transparent(0.3) do
+        image "app/assets/images/concejo_logo_only.jpeg", position: :center, width: 300
+      end
+    end
     bounding_box([-30, 275], width: 600, height: 800) do
       text "CONCEJO DELIBERANTE CIUDAD RIO CUARTO", size: 20, align: :center
       move_down 20
@@ -60,4 +70,3 @@ class Prawn::LoanCoupon < Prawn::Document
     end
   end
 end
-
