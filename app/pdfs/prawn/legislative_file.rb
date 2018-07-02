@@ -74,7 +74,7 @@ class Prawn::LegislativeFile < Prawn::Document
   end
 
   def footer
-    text "INGRESO:  #{@file.created_at.to_date}", valign: :bottom, style: :bold
+    text "INGRESO:  #{@file.date.to_date}", valign: :bottom, style: :bold
     barcode(410, 0)
   end
 
@@ -86,4 +86,3 @@ class Prawn::LegislativeFile < Prawn::Document
     outputter.to_pdf
   end
 end
-
