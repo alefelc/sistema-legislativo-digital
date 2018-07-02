@@ -72,6 +72,7 @@ es:
       legislative_file:
         origin_procedure_id: Trámite
         legislative_file_states: Estado del Expediente
+        sheets: Fojas
 
       legislative_files_state:
         procedure: Trámite
