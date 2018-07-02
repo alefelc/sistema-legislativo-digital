@@ -113,3 +113,4 @@ $ ->
 
 window.preventRedirection = () ->
   $('body').addClass 'prevent-redirect'
+  setTimeout(->  $('body').removeClass 'prevent-redirect', 250)
