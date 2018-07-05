@@ -168,3 +168,12 @@ textarea {
   .dt-head-center { text-align: center }
   tbody td { cursor: pointer }
 }
+
+.float-left {
+  float: left;
+  margin: 1px;
+}
+
+.dataTables_processing.panel.panel-default {
+  border: 0;
+}

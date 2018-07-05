@@ -30,11 +30,22 @@ class LawsDatatable
   end
 
   def law_session(law)
-    content_tag :div, law.id, class: 'label label-warning'
+    states = law.legislative_file_states.sanctioned
+    return unless states.present?
+    session = states.first.legislative_session
+    return unless session.present?
+    link_to session, session, class: 'label label-warning'
   end
 
   def law_legislative_file(law)
-    content_tag :div, law.id, class: 'label label-info'
+    file_ids = law.legislative_file_states.collect &:legislative_file_id
+    files = LegislativeFile.where id: file_ids
+    return unless files.present?
+    labels = ""
+    files.each do |lf|
+      labels += content_tag(:div, link_to(lf, lf, class: 'label label-info'), class: 'float-left')
+    end
+    labels.html_safe
   end
 
   def law_number(law)

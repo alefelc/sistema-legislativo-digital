@@ -19,7 +19,17 @@ class Session {
         'createdCell':  function (td, cellData, rowData, row, col) {
            $(td).attr('onclick', 'preventRedirection();');
         }
-      }]
+      }],
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron sesiones relacionadas a su búsqueda."
+      },
+      fnPreDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', '0.2');
+      },
+      fnDrawCallback: function() {
+        $('table.dataTable').fadeTo('fast', 1);
+      }
     });
   }
 }

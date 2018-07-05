@@ -31,9 +31,7 @@ class LegislativeFileDatatable
   def attached_files(file)
     attachements = ""
     file.uploads.each do |upload|
-      content_tag :div do
-        attachements += content_tag(:div, link_to(truncate(upload.file_file_name, 20), upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
-      end
+      attachements += content_tag(:div, link_to(truncate(upload.file_file_name, 20), upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
     end
     attachements
   end
