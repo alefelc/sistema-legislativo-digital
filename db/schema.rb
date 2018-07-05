@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180628074021) do
+ActiveRecord::Schema.define(version: 20180705141451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,13 +272,16 @@ ActiveRecord::Schema.define(version: 20180628074021) do
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
   create_table "laws", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "law_type"
     t.string   "number"
     t.string   "letter"
     t.string   "year"
+    t.integer  "legislative_session_id"
   end
+
+  add_index "laws", ["legislative_session_id"], name: "index_laws_on_legislative_session_id", using: :btree
 
   create_table "laws_legislative_file_states", id: false, force: :cascade do |t|
     t.integer "law_id"
@@ -292,24 +295,22 @@ ActiveRecord::Schema.define(version: 20180628074021) do
     t.text     "especificacion1"
     t.text     "especificacion2"
     t.integer  "loop_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "procedure_id"
-    t.integer  "state_type",          default: 0
-    t.integer  "name",                default: 0
+    t.integer  "state_type",             default: 0
+    t.integer  "name",                   default: 0
     t.date     "date_at"
     t.integer  "legislative_file_id"
-    t.integer  "session_id"
+    t.integer  "legislative_session_id"
     t.text     "sanction_specified"
     t.text     "sanction_type"
-    t.integer  "norma_id"
   end
 
   add_index "legislative_file_states", ["legislative_file_id"], name: "index_legislative_file_states_on_legislative_file_id", using: :btree
+  add_index "legislative_file_states", ["legislative_session_id"], name: "index_legislative_file_states_on_legislative_session_id", using: :btree
   add_index "legislative_file_states", ["loop_id"], name: "index_legislative_file_states_on_loop_id", using: :btree
-  add_index "legislative_file_states", ["norma_id"], name: "index_legislative_file_states_on_norma_id", using: :btree
   add_index "legislative_file_states", ["procedure_id"], name: "index_legislative_file_states_on_procedure_id", using: :btree
-  add_index "legislative_file_states", ["session_id"], name: "index_legislative_file_states_on_session_id", using: :btree
 
   create_table "legislative_file_states_loops", id: false, force: :cascade do |t|
     t.integer "legislative_file_state_id"
@@ -837,8 +838,9 @@ ActiveRecord::Schema.define(version: 20180628074021) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "laws", "legislative_sessions"
   add_foreign_key "legislative_file_states", "legislative_files"
-  add_foreign_key "legislative_file_states", "legislative_sessions", column: "session_id"
+  add_foreign_key "legislative_file_states", "legislative_sessions"
   add_foreign_key "legislative_file_states", "procedures"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
