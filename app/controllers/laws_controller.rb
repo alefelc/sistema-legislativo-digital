@@ -33,6 +33,7 @@ class LawsController < ApplicationController
     @law = Law.new law_params
     respond_to do |format|
       if @law.save
+        @law.update uploads: params[:uploads]
         flash[:success] = t '.success'
         format.html { redirect_to law_path(@law) }
         format.json { render json: @law.to_json }
@@ -48,6 +49,7 @@ class LawsController < ApplicationController
     @law = Law.find params[:id]
     respond_to do |format|
       if @law.update law_params
+        @law.update uploads: params[:uploads]
         flash[:success] = t '.success'
         format.html { redirect_to law_path(@law) }
         format.json { render json: @law.to_json }
@@ -62,7 +64,7 @@ class LawsController < ApplicationController
   private
 
   def law_params
-    params.require(:law).permit(:number, :letter, :year, :law_type, :destinies_attributes, uploads: [])
+    params.require(:law).permit(:number, :letter, :year, :law_type, :destinies_attributes)
   end
 
   def build_json_response
