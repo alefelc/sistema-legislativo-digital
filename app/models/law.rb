@@ -3,6 +3,7 @@ class Law < ActiveRecord::Base
   has_and_belongs_to_many :legislative_file_states
   has_many :destinies
   has_many :uploads
+  belongs_to :legislative_session
 
   accepts_nested_attributes_for :destinies, reject_if: :all_blank
 

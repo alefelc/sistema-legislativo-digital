@@ -3,7 +3,7 @@ class LegislativeFileState < ActiveRecord::Base
 	belongs_to :legislative_file
   belongs_to :procedure
   belongs_to :loop
-  belongs_to :session
+  belongs_to :legislative_session
   has_and_belongs_to_many :loops
   has_and_belongs_to_many :comisions
   has_and_belongs_to_many :laws

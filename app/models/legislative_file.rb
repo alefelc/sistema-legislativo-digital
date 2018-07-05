@@ -75,4 +75,8 @@ class LegislativeFile < ActiveRecord::Base
   def uploads=(files)
     files.each { |file| uploads.create file: file }
   end
+
+  def to_s
+    "##{self.number}"
+  end
 end
