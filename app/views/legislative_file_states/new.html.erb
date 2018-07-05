@@ -88,10 +88,10 @@
             </div>
 
             <div class="session_nro form-group col-md-6">
-              <%= f.label :session_id, 'Sesión número:' %>
+              <%= f.label :legislative_session_id, 'Sesión número:' %>
               <div class="row">
                 <div class="col-md-9">
-                  <%= f.select :session_id, {}, {}, class: 'input-lg form-control' %>
+                  <%= f.select :legislative_session_id, {}, {}, class: 'input-lg form-control' %>
                 </div>
                 <div class="col-md-1">
                   <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
@@ -160,7 +160,7 @@
   $('#initiator-new.modal').on('shown.bs.modal', function() {
     window.modalInitialized = true;
 
-    $('#legislative_file_state_session_id').select2({
+    $('#legislative_file_state_legislative_session_id').select2({
       allowClear: true,
       placeholder: 'Busque sesión',
       language: 'es',
@@ -294,7 +294,7 @@
         $('.main-body, .save-state, .state-title').show('fast');
 
         var $option = $("<option selected></option>").val(data.id).text(data.text);
-        $('#legislative_file_state_session_id').append($option).trigger('select2:select');
+        $('#legislative_file_state_legislative_session_id').append($option).trigger('select2:select');
       },
       error: function() {
         alert('Imposible crear la sesión, reintente...');
@@ -346,7 +346,7 @@
 
     // Validation to parliamentary state type.
     if ($('.legislative_file_state_type').val() == 'parliamentary')
-      if (!$('#legislative_file_state_session_id').val()) {
+      if (!$('#legislative_file_state_legislative_session_id').val()) {
         errors.push('Sesión no puede estar en blanco');
         fieldErrors.push($('.session_nro'));
       }

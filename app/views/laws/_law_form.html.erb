@@ -14,20 +14,60 @@
   <div class="col-md-2">
     <div class="form-group">
       <%= f.label :year %>
-      <%= f.text_field :year, type: :number, class: 'form-control input-lg' %>
+      <%= f.text_field :year, type: :number, class: 'form-control input-lg', value: Date.current.year %>
     </div>
   </div>
-  <% if f.object.persisted? %>
-    <div class="col-md-4">
-      <div class="form-group">
-        <%= f.label :uploads, 'Busque y seleccione archivos' %>
-        <%= f.file_field :uploads, type: :file, multiple: true %>
-      </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= f.label :legislative_session, 'Ap. sesión nro' %>
+      <%= f.select :legislative_session, {}, {}, class: 'form-control input-lg'%>
     </div>
-  <% end %>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= label_tag 'uploads[]', 'Busque y seleccione archivos' %>
+      <%= file_field_tag 'uploads[]', type: :file, multiple: true %>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Comunicación' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Fecha' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Promulgación' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Fecha' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Boletín Oficial' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= f.label :legislative_session, 'Fecha' %>
+    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <%= f.fields_for :destinies do |destiny| %>
     <div class="col-md-4">
       <h4 class="text-center">
@@ -42,4 +82,4 @@
       </div>
     </div>
   <% end %>
-</div>
+</div> -->
