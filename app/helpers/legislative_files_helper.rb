@@ -84,9 +84,10 @@ module LegislativeFilesHelper
       # content_tag :small do
       #   link_to "Trámite #{state.procedure}", state.procedure
       # end
-    elsif state.session.present?
-      content_tag :small do
-        link_to state.session, state.session
+    elsif state.legislative_session.present?
+      text = "Sesión #{state.legislative_session}"
+      content_tag :div do
+        link_to(text, state.legislative_session, class: 'label label-warning')
       end
     end
   end
