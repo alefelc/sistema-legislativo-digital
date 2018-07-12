@@ -62,7 +62,7 @@ class LegislativeSessionsController < ApplicationController
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
       w = "number::text ilike ?"
-      LegislativeSession.where(w, q).to_json only: :id, methods: :text
+      LegislativeSession.order(number: :desc).where(w, q).to_json only: :id, methods: :text
     else
       SessionDatatable.new view_context
     end

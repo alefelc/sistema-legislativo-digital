@@ -117,7 +117,7 @@
                                 <%= build_small_state_type state %>
                               </td>
                               <td>
-                                <% if state.initialized? %>
+                                <% if state.initialized? && @loop.origin_procedures.present? %>
                                   <%= render 'initiators_signators' %>
                                 <% elsif state.dispatched? %>
                                   <% state.procedure.comisions.each do |b| %>

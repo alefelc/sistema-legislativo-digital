@@ -18,58 +18,66 @@ class ProcedureDatatable
 
   private
   def data
-    paginated_procedures.map do |proc|
+    paginated_procedures.map do |procedure|
       [
-        actions(proc),
-        show_id(proc),
-        get_iniciadores(proc),
-        proc.topic,
-        to_date_time(proc.created_at),
-        legislative_file_label(proc)
+        actions(procedure),
+        show_id(procedure),
+        get_iniciadores(procedure),
+        procedure.topic,
+        to_date_time(procedure.created_at),
+        legislative_file_label(procedure)
       ]
     end
   end
 
-  def legislative_file_label(proc)
-    # content_tag(:div, proc.sheets, class: 'text-center')
-    return if proc.legislative_file_originated.blank?
-    file_text = "##{proc.legislative_file_originated.number}"
-    file_url = legislative_file_path(proc.legislative_file_originated.legislative_file_id)
-    link_to file_text, file_url, class: 'label label-info'
+  def legislative_file_label(procedure)
+    # content_tag(:div, procedure.sheets, class: 'text-center')
+    if procedure.is_dispatch?
+      labels = ""
+      procedure.legislative_files.each do |lf|
+        labels += content_tag(:div, link_to(lf, lf, class: 'label label-info'))
+      end
+      labels.html_safe
+    else
+      return if procedure.legislative_file_originated.blank?
+      file_text = "##{procedure.legislative_file_originated.number}"
+      file_url = legislative_file_path(procedure.legislative_file_originated.legislative_file_id)
+      link_to file_text, file_url, class: 'label label-info'
+    end
   end
 
-  def show_id(proc)
-    type = if proc.type.present?
-      Procedure.human_attribute_name proc.type
+  def show_id(procedure)
+    type = if procedure.type.present?
+      Procedure.human_attribute_name procedure.type
     else
       "No asig."
     end
-    content_tag :div, class: 'text-center current-url', 'data-url': procedure_path(proc) do
-      "#{content_tag :b, proc} #{content_tag :i, type}".html_safe
+    content_tag :div, class: 'text-center current-url', 'data-url': procedure_path(procedure) do
+      "#{content_tag :b, procedure} #{content_tag :i, type}".html_safe
     end
   end
 
-  def actions(proc)
+  def actions(procedure)
     return if params[:show_derivations].eql? "false"
-    if proc.procedure_derivation.present?
-      if proc.procedure_derivation.received_at.present?
-        title_attr = "Trámite derivado #{proc.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}\n"
-        title_attr += "Trámite recepcionado #{proc.procedure_derivation.received_at.strftime('%d/%m %H:%M')}"
+    if procedure.procedure_derivation.present?
+      if procedure.procedure_derivation.received_at.present?
+        title_attr = "Trámite derivado #{procedure.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}\n"
+        title_attr += "Trámite recepcionado #{procedure.procedure_derivation.received_at.strftime('%d/%m %H:%M')}"
         content_tag :div, "",
           class: 'btn btn-default fa fa-lg fa-envelope-open-o tooltip-text active',
           title: title_attr
       else
-        title_attr = "Trámite derivado #{proc.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}"
+        title_attr = "Trámite derivado #{procedure.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}"
         content_tag :div, "",
           class: 'btn btn-default fa fa-lg fa-envelope tooltip-text active',
           title: title_attr
       end
     else
-      title_attr = "Click para derivar #{proc}"
-      link_to derivated_procedures_path(procedure_id: proc.id), method: :post,
+      title_attr = "Click para derivar #{procedure}"
+      link_to derivated_procedures_path(procedure_id: procedure.id), method: :post,
         class: 'btn btn-check btn-success tooltip-text', title: title_attr,
         onclick: "preventRedirection();", remote: true,
-        data: { confirm: "¿Desea derivar el trámite #{proc}?" } do
+        data: { confirm: "¿Desea derivar el trámite #{procedure}?" } do
           content_tag :i, nil, class: 'fa fa-lg fa-check'
       end
     end
