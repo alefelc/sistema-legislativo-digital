@@ -58,7 +58,7 @@ class LegislativeFilesController < ApplicationController
   def print
     file = LegislativeFile.find params[:legislative_file_id]
     pdf = Prawn::LegislativeFile.new(file, view_context)
-    send_data pdf.render, filename: "expediente_#{file.id}.pdf",
+    send_data pdf.render, filename: "expediente_#{file.number}.pdf",
               type: 'application/pdf', disposition: 'inline'
   end
 
