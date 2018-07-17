@@ -30,10 +30,12 @@ class LawsDatatable
   end
 
   def law_session(law)
-    states = law.legislative_file_states.sanctioned
-    return unless states.present?
-    session = states.first.legislative_session
-    return unless session.present?
+    # states = law.legislative_file_states.sanctioned
+    # return unless states.present?
+    # session = states.first.legislative_session
+    # return unless session.present?
+    session = law.legislative_session
+    return if session.nil?
     link_to session, session, class: 'label label-warning'
   end
 
