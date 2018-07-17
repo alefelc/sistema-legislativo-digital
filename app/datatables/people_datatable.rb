@@ -1,6 +1,6 @@
 class PeopleDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to, :current_user, to: :@view
+  delegate :params, :link_to, :current_user, :content_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -19,29 +19,31 @@ class PeopleDatatable
   def data
     paginated_persons.map do |p|
       [
-        p.id,
-        p.type,
+        person_type(p),
         p.name,
         p.surname,
         p.address,
         p.cuit_or_dni,
         p.phone,
-        p.email,
-        actions(p)
+        p.email
       ]
     end
   end
+
+  def person_type(person)
+      content_tag :b, person.type, 'data-url': person_path(person), class: 'current-url'
+    end
 
   def actions(p)
     link_to '', person_path(p), class: 'btn btn-info fa fa-eye'
   end
 
   def persons
-    Person.where(filter).where.not(type: "Concejal").order(:id)
+    Person.where(filter).where.not(type: "Concejal").order(id: :desc)
   end
 
   def columns
-    %w(type nombre apellido domicilio nro_doc telefono email false)
+    %w(type name surname address cuit_or_dni phone email)
   end
 
   def sort_column(column)
@@ -54,10 +56,10 @@ class PeopleDatatable
 
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
-      query += ["(people.nombre ILIKE ?  OR people.apellido ILIKE ?)"]
-      query += ["(people.nro_doc ILIKE ?  OR people.telefono ILIKE ?)"]
-      query += ["(people.email ILIKE ?  OR people.domicilio ILIKE ?)"]
-      binds += [search] * 6
+      query += ["(people.name ILIKE ?  OR people.surname ILIKE ?)"]
+      query += ["(people.cuit_or_dni ILIKE ?  OR people.phone ILIKE ?)"]
+      query += ["(people.email ILIKE ?)"]
+      binds += [search] * 5
     end
     [query.join(' OR ')] + binds
   end
