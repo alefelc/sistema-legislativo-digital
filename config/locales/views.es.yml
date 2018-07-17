@@ -96,14 +96,15 @@ es:
 
   persons:
     show:
-      personal_data: Información personal
-      created_at: Creado el %{date}
       name: "Nombre:"
       surname: "Apellido:"
       dni_cuit: "DNI / CUIT:"
       address: "Domicilio:"
       phone: "Teléfono:"
       email: "Email:"
+      Fisica: Persona Física
+      Concejal: Concejal
+      Juridica: Persona Jurídica
     index:
       type: Persona
       name: Nombre
@@ -116,9 +117,9 @@ es:
       update_person: Actualizar persona
       update: Actualizar
     types:
-      Fisica: Persona física
+      Fisica: Persona Física
       Concejal: Concejal
-      Juridica: Persona jurídica
+      Juridica: Persona Jurídica
 
   procedures:
     show:
