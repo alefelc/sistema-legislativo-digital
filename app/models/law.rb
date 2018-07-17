@@ -20,6 +20,12 @@ class Law < ActiveRecord::Base
   end
 
   def uploads=(files)
+    return if files.blank?
     files.each { |file| uploads.create file: file }
+  end
+
+  def legislative_files=(files)
+    # do some stuff here
+    # create or update some legislative files states
   end
 end
