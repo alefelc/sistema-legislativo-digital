@@ -1,85 +1,71 @@
 <div class="row">
-  <div class="col-md-3">
-    <div class="form-group">
-      <%= f.label :law_type %>
-      <%= f.select :law_type, law_types, {}, class: 'form-control input-lg' %>
-    </div>
+  <div class="form-group col-md-3">
+    <%= f.label :law_type %>
+    <%= f.select :law_type, law_types, {}, class: 'form-control input-lg' %>
   </div>
-  <div class="col-md-2">
-    <div class="form-group">
-      <%= f.label :number %>
-      <%= f.text_field :number, type: :number, class: 'form-control input-lg' %>
-    </div>
+  <div class="form-group col-md-2">
+    <%= f.label :number %>
+    <%= f.text_field :number, type: :number, class: 'form-control input-lg' %>
   </div>
-  <div class="col-md-2">
-    <div class="form-group">
-      <%= f.label :year %>
-      <%= f.text_field :year, type: :number, class: 'form-control input-lg', value: Date.current.year %>
-    </div>
+  <div class="form-group col-md-2">
+    <%= f.label :year %>
+    <%= f.text_field :year, type: :number, class: 'form-control input-lg', value: Date.current.year %>
   </div>
 </div>
 <hr>
 <div class="row">
-  <div class="col-md-4">
-    <div class="form-group">
-      <%= f.label :legislative_session, 'Ap. sesión nro' %>
-      <%= f.select :legislative_session, {}, {}, class: 'form-control input-lg'%>
-    </div>
+  <div class="form-group-lg col-md-3">
+    <%= f.label :legislative_session_id, 'Ap. sesión nro' %>
+    <%= f.select :legislative_session_id, {}, {}, class: 'form-control input-lg' %>
   </div>
-  <div class="col-md-4">
-    <div class="form-group">
-      <%= label_tag 'uploads[]', 'Busque y seleccione archivos' %>
-      <%= file_field_tag 'uploads[]', type: :file, multiple: true %>
-    </div>
-  </div>
-</div>
-<hr>
-<div class="row">
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Comunicación' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
-  </div>
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Fecha' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
+  <!-- <div class="form-group-lg col-md-5">
+    <%= label_tag "law[legislative_files]", 'Expedientes Legislativos' %>
+    <%= select_tag "law[legislative_files]", {}, multiple: true, class: 'form-control input-lg' %>
+  </div> -->
+  <div class="form-group col-md-4">
+    <%= label_tag 'uploads[]', 'Adjunte Norma' %>
+    <%= file_field_tag 'uploads[]', type: :file, multiple: true %>
   </div>
 </div>
 <hr>
-<div class="row">
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Promulgación' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
-  </div>
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Fecha' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
-  </div>
-</div>
-<hr>
-<div class="row">
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Boletín Oficial' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
-  </div>
-  <div class="col-md-4">
-    <%= f.label :legislative_session, 'Fecha' %>
-    <%= f.text_field :legislative_session, class: 'form-control input-lg' %>
-  </div>
-</div>
-
 <!-- <div class="row">
-  <%= f.fields_for :destinies do |destiny| %>
-    <div class="col-md-4">
-      <h4 class="text-center">
-        <%= I18n.t("destinies.type_of_destiny.#{destiny.object.type_of_destiny}") %>
-      </h4>
-      <div class="form-group">
-        <%= destiny.label :name, 'Destino' %>
-        <%= destiny.text_field :name, class: 'form-control input-lg' %>
-
-        <%= destiny.label :date, 'Fecha' %>
-        <%= destiny.text_field :date, class: 'form-control input-lg', type: :date %>
-      </div>
-    </div>
-  <% end %>
-</div> -->
+  <div class="col-md-4">
+    <%= label_tag "communications[][info]", 'Comunicación' %>
+    <%= text_field_tag "communications[][info]", nil, placeholder: 'Comunicado a', class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= label_tag "communications[][date]", 'Fecha' %>
+    <%= text_field_tag "communications[][date]", nil, class: 'form-control input-lg', type: :date %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <%= label_tag "promulgation[info]", 'Promulgación' %>
+    <%= text_field_tag "promulgation[info]", nil, placeholder: 'Decreto promulgatorio', class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= label_tag "promulgation[date]", 'Fecha' %>
+    <%= text_field_tag "promulgation[date]", nil, class: 'form-control input-lg', type: :date %>
+  </div>
+  <div class="form-group col-md-4">
+    <%= label_tag 'uploads[]', 'Adjunte decreto promulgatorio' %>
+    <%= file_field_tag 'uploads[]', type: :file %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4">
+    <%= label_tag "official_release[info]", 'Boletín Oficial' %>
+    <%= text_field_tag "official_release[info]", nil, placeholder: 'Boletín Oficial Nro', class: 'form-control input-lg' %>
+  </div>
+  <div class="col-md-4">
+    <%= label_tag "official_release[date]", 'Fecha' %>
+    <%= text_field_tag "official_release[date]", nil, class: 'form-control input-lg', type: :date %>
+  </div>
+  <div class="form-group col-md-4">
+    <%= label_tag 'uploads[]', 'Adjunte Boletín' %>
+    <%= file_field_tag 'uploads[]', type: :file %>
+  </div>
+</div>
+ -->

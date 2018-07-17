@@ -27,6 +27,7 @@
           <%= f.text_field :number, type: :number, class: 'form-control', readonly: true %>
         </div>
       </div>
+
       <% if (f.object.letter.present?) %>
         <div class="col-md-2">
           <div class="form-group">
@@ -35,6 +36,7 @@
           </div>
         </div>
       <% end %>
+
       <div class="col-md-2">
         <div class="form-group">
           <%= f.label :year %>
@@ -51,12 +53,7 @@
 
       <div class="col-md-6">
         <%= f.label :legislative_session, 'Sesión' %>
-        <%= f.text_field :legislative_session, nil, class: 'form-control', readonly: true %>
-      </div>
-
-      <div class="col-md-6">
-        <%= f.label :legislative_session, 'Sesión' %>
-        <%= f.text_field :legislative_session, nil, class: 'form-control', readonly: true %>
+        <%= f.text_field :legislative_session, class: 'form-control', readonly: true %>
       </div>
     <% end -%>
   </div>

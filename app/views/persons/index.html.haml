@@ -1,19 +1,18 @@
 #person-edit
 
 #people
-  %h2
-    Listado de personas cargadas en el sistema
-
+  %h2.text-center
+    PERSONAS
   .box.box-primary
     .box-header
-      = link_to print_people_path, class: 'btn btn-danger' do
-        Print people
+      = link_to print_people_path, class: 'btn btn-lg btn-danger pull-right' do
         %i.fa.fa-print
+        = "Reporte #{Date.today.year}"
+    %hr.minimal-hr
     .box-body
-      %table.table.table-striped.table-hover#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
+      %table.table.table-striped.dataTable.table-hover#people-table{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': persons_path(format: :json) }
         %thead
           %tr
-            %th #
             %th= t('.type')
             %th= t('.name')
             %th= t('.surname')
@@ -21,7 +20,6 @@
             %th= t('.dni_cuit')
             %th= t('.phone')
             %th= t('.email')
-            %th
         %tbody
 
 :javascript

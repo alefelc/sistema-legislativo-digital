@@ -5,13 +5,13 @@
 
   .box.box-primary
     .lead.box-header.with-border.row
-      .procedure-type.col-md-4
+      .procedure-type.col-md-6
         Tipo de trámite:
         - if @procedure.type.present?
           %b= I18n.t("procedures.types.#{@procedure.type}")
         - else
           %i.small= t('.not_specified')
-      .col-md-8
+      .col-md-6
         - if policy(Procedure).create?
           = link_to print_procedures_path(id: @procedure.id), class: 'btn btn-success btn-lg pull-right margin-left btn-print', target: '_blank' do
             %i.fa.fa-barcode{ 'aria-hidden': :true }

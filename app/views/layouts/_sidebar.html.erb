@@ -24,6 +24,11 @@
                 <i class="fa fa-circle"></i> Trámites
               <% end -%>
             </li>
+            <li>
+              <%= link_to persons_path do %>
+                <i class="fa fa-circle"></i> Personas
+              <% end -%>
+            </li>
           </ul>
         </li>
       <% end %>
@@ -56,6 +61,11 @@
             <li class="treeview">
               <a href="<%= legislative_sessions_path %>">
                 <i class="fa fa-circle"></i> <span> Sesiones </span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="<%= day_plans_path %>">
+                <i class="fa fa-circle"></i> <span> Ordenes del Día </span>
               </a>
             </li>
           </ul>

@@ -1,0 +1,29 @@
+<div class="dayplan-new">
+  <h2 class="text-center"> Creando nueva Orden del Día </h2>
+
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title"> Información de la Orden del Día </h3>
+    </div>
+
+    <%= form_for @dayplan, html: { multipart: true } do |form| %>
+
+      <div class="box-body">
+        <%= render 'form', f: form %>
+      </div>
+
+      <div class="box-footer">
+        <div class="pull-right">
+          <%= link_to day_plans_path, class: 'btn btn-default' do %>
+            <i class="fa fa-times-circle"></i>
+            Cancelar
+          <% end -%>
+          <%= button_tag type: :submit, class: 'btn btn-lg btn-success' do %>
+            <i class="fa fa-save fa-lg"></i>
+            Crear Orden del Día
+          <% end -%>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>

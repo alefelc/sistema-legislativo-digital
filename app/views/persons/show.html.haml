@@ -3,65 +3,66 @@
 
 #person-show
   %section.invoice
-    / title row
     .row
       .col-xs-12
         %h2.page-header
           %i.fa.fa-user
-          = t '.personal_data'
-          %small.pull-right= t '.created_at', date: @person.created_at
-      / /.col
-    / info row
+          INFORMACIÓN DEL INICIADOR
+          %small.pull-right= "Ingresó al sistema el día #{@person.created_at}"
     .row.invoice-info
-      .col-xs-12
-        %i= t ".#{@person.type}"
+      .col-xs-10
+        %h4.text-bold= t ".#{@person.type}"
+      .col-xs-2
+        .pull-right
+          = link_to edit_person_path(@person), title: 'Editar datos de la persona', class: 'btn btn-lg btn-warning' do
+            %i.fa.fa-edit
+            Editar
       .col-sm-6.invoice-col
         %address
           %strong= t '.name'
-          = @person.name || '-.'
+          %i= @person.name || '-.'
           %br/
           %strong= t '.surname'
-          = @person.surname || '-.'
+          %i= @person.surname || '-.'
           %br/
           %strong= t '.dni_cuit'
-          = @person.cuit_or_dni || '-.'
-      / /.col
+          %i= @person.cuit_or_dni || '-.'
       .col-sm-6.invoice-col
-        %span.pull-right
-          = link_to 'Editar', edit_person_path(@person), title: 'Editar datos',
-            class: 'btn btn-warning fa fa-edit person-edit'
         %address
           %strong= t '.address'
-          = @person.address || '-.'
+          %i= @person.address || '-.'
           %br/
           %strong= t '.phone'
-          = @person.phone || '-.'
+          %i= @person.phone || '-.'
           %br/
           %strong= t '.email'
-          = @person.email || '-.'
-
-    %hr
+          %i= @person.email || '-.'
 
     .row
+      .col-xs-12
+        %h2.page-header
+          %i.fa.fa-tag
+          TRÁMITES
       .col-xs-12.table-responsive
         %table.table.table-striped.table-hover#person-tramites
           %thead
             %tr
               %th Nro
-              %th Tramite
+              %th Trámite
               %th Fojas
               %th Asunto / Solicitud
               %th Observaciones
               %th Actualizado el
           %tbody
-            - @person.procedures.each do |t|
+            - @person.procedures.each do |procedure|
               %tr
-                %td= link_to t.id, procedure_path(t)
-                %td= t.type
-                %td= t.sheets
-                %td= t.topic
-                %td= t.observations
-                %td= t.updated_at
+                %td
+                  %b{ 'data-url': procedure_path(procedure), class: 'current-url' }= procedure
+                %td= procedure.type
+                %td= procedure.sheets
+                %td= procedure.topic
+                %td= procedure.observations
+                %td= procedure.updated_at
           %tfoot
             %tr
               %td
@@ -70,12 +71,6 @@
               %td
               %td
               %td
-
-    .row.no-print
-      .col-xs-12
-        %button.btn.btn-danger.pull-left{:style => "margin-right: 5px;", :type => "button"}
-          %i.fa.fa-print
-          Imprimir
 
 :javascript
 $(document).ready(function() {
