@@ -1,3 +1,5 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
 // Manage session table
 class Law {
   constructor() {
@@ -34,9 +36,66 @@ class Law {
   }
 }
 
+class LawSession {
+  constructor() {
+    this.select = $('#law_legislative_session_id');
+    this.startSelect();
+  }
+
+  startSelect() {
+    this.select.select2(this.options());
+  }
+
+  options() {
+    return {
+      allowClear: true,
+      theme: 'bootstrap',
+      language: 'es',
+      placeholder: 'Busque Sesión',
+      ajax: {
+        url: "<%= url_helpers.legislative_sessions_path(format: :json) %>",
+        dataType: 'json',
+        data: (params) => { return { select_q: params.term || '%%' } },
+        processResults: (data, params) => { return { results: data } }
+      }
+    };
+  }
+}
+
+class LawLegislativeFiles {
+  constructor() {
+    this.select = $('#law_legislative_files');
+    this.startSelect();
+  }
+
+  startSelect() {
+    this.select.select2(this.options());
+  }
+
+  options() {
+    return {
+      theme: 'bootstrap',
+      language: 'es',
+      multiple: true,
+      placeholder: 'Busque Expedientes Legislativos',
+      ajax: {
+        url: "<%= url_helpers.legislative_files_path(format: :json) %>",
+        dataType: 'json',
+        data: (params) => { return { select_q: params.term || '%%' } },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+  }
+}
+
 // Script started
 $(document).ready(() => {
   if ($('#laws-index').length) {
     const law = new Law();
+  }
+
+  if ($('.law-new').length) {
+    const lawSession = new LawSession();
+    const lawLegislativeFiles = new LawLegislativeFiles();
   }
 });

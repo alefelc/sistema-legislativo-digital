@@ -8,6 +8,9 @@ People.IndexDataTable = do ->
       processing: true
       serverSide: true
       lengthChange: true
+      language:
+        processing: "<div></div><div></div><div></div><div></div><div></div>"
+        emptyTable: "No se encontraron personas relacionadas a su búsqueda."
       ajax:
         url: $('#people-table').data('url')
         method: 'GET'
@@ -17,16 +20,6 @@ People.IndexDataTable = do ->
         { orderable: false },
         { orderable: false },
         { orderable: false },
-        { orderable: false },
-        { orderable: false },
         { orderable: false }
         { orderable: false },
       ]
-      initComplete: () ->
-        $('#people-table').on 'ajax:success', '.person-edit', (XHR, data, status) ->
-          $('#person-edit').html(data)
-          $('#person-edit .modal').modal 'show'
-
-        $('#person-edit').on 'ajax:success', (XHR, data, status) ->
-          $('#people-table').dataTable().fnDraw()
-          $('#edit-person.modal').modal 'hide'
