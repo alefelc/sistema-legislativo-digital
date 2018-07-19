@@ -4,6 +4,9 @@ class Person < ActiveRecord::Base
   # has_and_belongs_to_many :comisions
   # belongs_to :bloque
 
+  #== PaperTrail changes tracker
+  has_paper_trail
+
   #== Associations
   has_and_belongs_to_many :procedures
   has_many :estado_procedure, as: :ref

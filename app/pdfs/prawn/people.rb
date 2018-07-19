@@ -18,7 +18,7 @@ class Prawn::People < Prawn::Document
 
   def content
     people = Person.where('created_at > ?', Date.today.beginning_of_year).order(id: :desc)
-    th = ["Ingresado", "Nombre", "Apellido", "Dirección", "Teléfono", "Trámites"]
+    th = ["Ingresado", "Nombre", "Apellido", "Domicilio ", "Teléfono", "Trámites"]
     rows = [th]
     people.each do |p|
       rows << [p.created_at.strftime('%d-%m'), p.name, p.surname, p.address, p.phone, p.procedure_ids.join(',')]

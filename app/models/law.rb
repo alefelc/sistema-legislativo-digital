@@ -25,7 +25,12 @@ class Law < ActiveRecord::Base
   end
 
   def legislative_files=(files)
-    # do some stuff here
-    # create or update some legislative files states
+    files = LegislativeFile.find files
+    files.each do |file|
+      self.legislative_file_states.create do |state|
+        state.state_type = :parliamentary
+        state.name = :sanctioned
+      end
+    end
   end
 end

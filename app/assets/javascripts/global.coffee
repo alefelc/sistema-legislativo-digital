@@ -37,7 +37,8 @@ $.extend $.fn.dataTable.defaults,
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     "searchPlaceholder": "¿Qué desea buscar?"
   createdRow: (row, data, index) ->
-    $(row).addClass('current-tr');
+    $(row).addClass('current-tr')
+  stateSave: true
 
 $.ctrl = (key, callback, args) ->
   isCtrl = false

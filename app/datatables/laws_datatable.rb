@@ -58,9 +58,9 @@ class LawsDatatable
     attachements = ""
     law.uploads.each do |upload|
       content_tag :div do
-        attachements += content_tag(:div, link_to(upload.file_file_name,
-          upload.file.url, class: 'label label-success', target: '_blank',
-          onclick: "preventRedirection();"))
+        attachements += content_tag(:div, link_to('',
+          upload.file.url, class: 'btn btn-success fa fa-download tooltip-text', target: '_blank',
+          onclick: "preventRedirection();", title: upload.file_file_name))
       end
     end
     attachements
