@@ -16,7 +16,7 @@ es:
         surname: Apellido
         cuit_or_dni: CUIT / DNI
         phone: Teléfono
-        address: Dirección
+        address: Domicilio
         position: Cargo / Ocupación
 
       procedure:

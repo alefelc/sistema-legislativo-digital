@@ -21,8 +21,6 @@ class CouncilorsDatatable
     paginated_councilors.map do |p|
       [
         p.full_name,
-        p.cuit_or_dni,
-        p.address,
         p.phone,
         p.email,
         format_periods(p.periodos),

@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   end
   resources :derivated_procedures do
     get 'print', on: :collection
+    post 'resolve', on: :collection
+    post 'resolve_pendants', on: :collection
   end
   resources :circuitos ##### REPLACE IT WITH 'LOOPS' #####
 

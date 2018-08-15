@@ -1,4 +1,4 @@
-class ProcedureDerivation < ActiveRecord::Base
+ class ProcedureDerivation < ActiveRecord::Base
   # == Associations
   belongs_to :procedure
   belongs_to :area

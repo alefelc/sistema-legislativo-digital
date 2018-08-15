@@ -70,6 +70,31 @@
             </li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users fa-lg"></i>
+            <span> Composición del Cuerpo </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="<%= councilors_path %>">
+                <i class="fa fa-circle"></i> Concejales
+              </a>
+            </li>
+            <li>
+              <a href="<%= commissions_path %>">
+                <i class="fa fa-circle"></i> Comisiones
+              </a>
+            </li>
+            <li>
+              <a href="<%= blocks_path %>">
+                <i class="fa fa-circle"></i> Bloques Políticos
+              </a>
+            </li>
+          </ul>
+        </li>
       <% end %>
       <!-- End legislative secretary -->
 
@@ -98,31 +123,6 @@
 
       <% if policy(:configurations).all? %>
         <li class="header text-center"> Configuración de Sistema </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-users fa-lg"></i>
-            <span> Autoridades </span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <a href="<%= councilors_path %>">
-                <i class="fa fa-circle"></i> Concejales
-              </a>
-            </li>
-            <li>
-              <a href="<%= commissions_path %>">
-                <i class="fa fa-circle"></i> Comisiones
-              </a>
-            </li>
-            <li>
-              <a href="<%= blocks_path %>">
-                <i class="fa fa-circle"></i> Bloques
-              </a>
-            </li>
-          </ul>
-        </li>
 
         <li class="treeview">
           <a href="#">

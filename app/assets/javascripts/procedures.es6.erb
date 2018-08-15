@@ -813,6 +813,35 @@ class ProcedureFilters {
   }
 }
 
+class UpdatePendantsProcedures {
+  constructor() {
+    this.btn = $('.sent-pendants');
+    this.onClick();
+  }
+
+  onClick() {
+    this.btn.on('click', (ev) => {
+      let response = confirm('Enviará todos los trámites pendientes!');
+      if (response) {
+        this.updatePendantDerivations();
+      }
+    });
+  }
+
+  updatePendantDerivations() {
+    $.ajax({
+      url: "<%= url_helpers.resolve_derivated_procedures_path %>",
+      method: 'POST',
+      success: () => {
+        $('#procedures-table').DataTable().draw();
+      },
+      error: () => {
+        alert('Lo sentimos, ha ocurrido un error');
+      }
+    })
+  }
+}
+
 $(document).ready(function() {
   if ($('#procedure-new').length) {
     const signators = new CreateSignator();
@@ -833,6 +862,8 @@ $(document).ready(function() {
     let table = new ProcedureIndex();
     let toolbar = new ProceduresToolbar();
     let filters = new ProcedureFilters();
+
+    const MultipleProcedures = new UpdatePendantsProcedures();
   }
 
   if ($('.procedure-dispatch-edit').length) {

@@ -57,13 +57,16 @@ class LawsDatatable
   def attached_files(law)
     attachements = ""
     law.uploads.each do |upload|
-      content_tag :div do
-        attachements += content_tag(:div, link_to('',
-          upload.file.url, class: 'btn btn-success fa fa-download tooltip-text', target: '_blank',
-          onclick: "preventRedirection();", title: upload.file_file_name))
-      end
+      attachements += link_to('', upload.file.url,
+        class: 'btn btn-success fa fa-download tooltip-text', target: '_blank',
+        onclick: "preventRedirection();", title: short_file_name(upload))
     end
     attachements
+  end
+
+  def short_file_name(file)
+    return file.file_file_name if file.file_file_name.length <= 26
+    file.file_file_name[0..26] + '...'
   end
 
   def format_date(date)

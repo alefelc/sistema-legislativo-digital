@@ -25,11 +25,13 @@ class Law {
       },
       fnDrawCallback: function() {
         $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
       },
       columnDefs: [{
         'targets': [2, 3, 5],
         'createdCell':  function (td, cellData, rowData, row, col) {
            $(td).attr('onclick', 'preventRedirection();');
+           $(td).attr('class', 'display-inline');
         }
       }]
     });

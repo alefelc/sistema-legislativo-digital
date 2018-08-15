@@ -45,18 +45,18 @@ module ProceduresHelper
     ##########################
     if param.present? && param[:default] == :without_reception
       options_for_select [
-        ['Trámites sin recepcionar', 'without_reception'],
-        ['Trámites recepcionados', 'with_reception'],
-        ['Trámites sin derivar', 'without_derivation'],
-        ['Todos los trámites', 'all_procedures']
+        ['Para recepcionar', 'without_reception'],
+        ['Recepcionados', 'with_reception'],
+        ['En mesa de entradas', 'without_derivation'],
+        ['Todos', 'all_procedures']
       ]
     else
       ## Only reception options.
       options_for_select [
-        ['Trámites sin derivar', 'without_derivation'],
-        ['Trámites sin recepcionar', 'without_reception'],
-        ['Trámites recepcionados', 'with_reception'],
-        ['Todos los trámites', 'all_procedures']
+        ['Para derivar', 'without_derivation'],
+        ['Sin Recepcionar', 'without_reception'],
+        ['Recepcionados', 'with_reception'],
+        ['Todos', 'all_procedures']
       ]
     end
   end

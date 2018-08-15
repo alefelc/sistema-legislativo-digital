@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
 
   def full_name
     if self.type == 'Concejal'
-      "Concejal #{name} #{surname} (Bque #{bloque.denominacion})"
+      "Concejal #{name} #{surname} (Bque #{bloque.try(:denominacion)})"
     elsif surname.present? && name.present?
       "#{surname}, #{name}"
     elsif surname.present?
@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
 
   def fullname_with_dni
     if type == 'Concejal'
-      "Concejal #{name} #{surname} - Bloque #{bloque.denominacion}"
+      "Concejal #{name} #{surname} - Bloque #{bloque.try(:denominacion)}"
     else
       cuit_or_dni.present? ? full_name + " (DNI: #{cuit_or_dni})" : full_name
     end

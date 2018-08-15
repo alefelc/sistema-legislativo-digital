@@ -45,12 +45,15 @@ class ProcedureDerivationDatatable
 
   def actions_procedure(proc)
     if proc.isnt_dispatch? && proc.legislative_file_originated.blank?
-      link_to('', new_legislative_file_path(proc_id: proc.id), class: 'btn btn-info fa fa-file-text fa-lg pull-right', onclick: 'preventRedirection();')
+      link_to('', new_legislative_file_path(proc_id: proc.id),
+        class: 'btn btn-info fa fa-file-text fa-lg pull-right',
+        onclick: 'preventRedirection();', title: 'Crear Expediente')
     end
   end
 
   def actions(proc)
     return if params[:show_derivations].eql? "false"
+    return if proc.id < 8040
     derivation = proc.procedure_derivation
     if derivation.present?
       if derivation.received_at.present?
@@ -75,7 +78,9 @@ class ProcedureDerivationDatatable
   end
 
   def procedures
-    Procedure.order(id: :desc).where filter
+    procedure_derivation = "FULL OUTER JOIN procedure_derivations ON procedure_derivations.procedure_id = procedures.id"
+    Procedure.order(id: :desc).joins(procedure_derivation)
+      .includes(:procedure_derivation).where filter
   end
 
   def columns
@@ -104,13 +109,15 @@ class ProcedureDerivationDatatable
       case params[:derivation_filter]
       when 'without_derivation'
         query += ['procedures.procedure_derivation_id IS null']
-      when 'all_procedures'
-        # DO NOTHING
-        # query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['procedures.id > 8040']
       when 'without_reception'
         query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['received_at IS null']
       when 'with_reception'
         query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['received_at IS NOT null']
+      when 'all_procedures'
+        # DON'T APPLY ANY FILTER
       end
     end
 

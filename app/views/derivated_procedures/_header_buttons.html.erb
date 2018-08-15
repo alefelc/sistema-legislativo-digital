@@ -26,27 +26,24 @@
   </div>
 </div>
 <div class="row alternative-button-header">
-<!--   <div class="col-md-5 col-xs-5">
-    <div class="form-inline">
-      <div class="form-group">
-        <%= label_tag :areas, 'Derivando al área' %>
-        <%= select_tag :areas, derivated_areas, class: 'input-lg form-control' %>
-      </div>
-    </div>
-  </div> -->
+  <div class="col-md-4 col-xs-4">
+    <%= link_to '#', class: 'btn btn-lg btn-success update-dispatched' do %>
+      <i class="fa fa-list-ul fa-lg"></i> Recepcionar Todo
+    <% end %>
+  </div>
 
   <div class="col-md-4 col-xs-4">
     <div class="form-inline">
       <div class="form-group">
-        <%= label_tag :derivation_types, 'Quiero ver' %>
+        <%= label_tag :derivation_types, 'Ver trámites' %>
         <%= select_tag :derivation_types, filter_by_derivated(default: :without_reception),
           "data-disabled": true , class: 'input-lg form-control' %>
       </div>
     </div>
   </div>
 
-  <div class="col-md-3 col-xs-3 col-md-offset-5 col-xs-offset-5">
-    <%= link_to '#', class: 'btn btn-success listen-return-back btn-lg pull-right',
+  <div class="col-md-4 col-xs-4">
+    <%= link_to '#', class: 'btn btn-primary listen-return-back btn-lg pull-right',
       title: 'Volver a Trámites Ingresados' do %>
       <i class="fa fa-lg fa-arrow-left"></i> Volver
     <% end %>

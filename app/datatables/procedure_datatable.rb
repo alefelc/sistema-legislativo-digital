@@ -59,6 +59,7 @@ class ProcedureDatatable
 
   def actions(procedure)
     return if params[:show_derivations].eql? "false"
+    return if procedure.id < 8040
     if procedure.procedure_derivation.present?
       if procedure.procedure_derivation.received_at.present?
         title_attr = "Trámite derivado #{procedure.procedure_derivation.derived_at.strftime('%d/%m %H:%M')}\n"
@@ -84,14 +85,16 @@ class ProcedureDatatable
   end
 
   def procedures
+    procedure_derivation = "FULL OUTER JOIN procedure_derivations ON procedure_derivations.procedure_id = procedures.id"
     if params[:search][:value].present?
       persons_join = "INNER JOIN people_procedures ON " +
       "people_procedures.procedure_id = procedures.id INNER JOIN " +
       "people ON people.id = people_procedures.person_id"
-      Procedure.order(id: :desc).joins(persons_join).where(filter)
-        .includes(:persons).distinct
+      Procedure.order(id: :desc).joins(procedure_derivation).joins(persons_join).where(filter)
+        .includes(:persons).includes(:procedure_derivation).distinct
     else
-      Procedure.order(id: :desc).where filter
+      Procedure.order(id: :desc).joins(procedure_derivation)
+        .includes(:procedure_derivation).where filter
     end
   end
 
@@ -150,13 +153,15 @@ class ProcedureDatatable
       case params[:derivation_filter]
       when 'without_derivation'
         query += ['procedures.procedure_derivation_id IS null']
-      when 'all_procedures'
-        # DO NOTHING
-        # query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['procedures.id > 8040']
       when 'without_reception'
         query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['received_at IS null']
       when 'with_reception'
         query += ['procedures.procedure_derivation_id IS NOT null']
+        query += ['received_at IS NOT null']
+      when 'all_procedures'
+        # DO NOTHING
       end
     end
 

@@ -34,10 +34,8 @@
       <%= t('.legislative_files') %>
     </label>
     <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <%= f.select :legislative_file_ids, load_legislative_files(@procedure), {}, multiple: true, class: 'input-lg form-control' %>
-        </div>
+      <div class="col-md-12 form-group-lg">
+        <%= f.select :legislative_file_ids, load_legislative_files(@procedure), {}, multiple: true, class: 'input-lg form-control' %>
       </div>
     </div>
   </div>
@@ -58,7 +56,7 @@
   </div>
 
   <div class="col-md-12">
-    <div class="form-group">
+    <div class="form-group form-group-lg">
       <label for="<%= :procedure_comision %>"> <%= t('.commissions') %> </label>
       <%= select_tag :comision_ids, load_comisions(@procedure), { multiple: true, class: 'input-lg form-control' } %>
     </div>
@@ -66,7 +64,7 @@
 </div>
 
   <div class="dispatch-procedure col-md-12">
-    <div class="form-group">
+    <div class="form-group form-group-lg">
       <label for="<%= :procedure_councilor %>"> <%= t('.councilors') %> </label>
       <%= select_tag :councilor_ids, load_councilors(@procedure), { multiple: true, class: 'input-lg form-control' } %>
     </div>

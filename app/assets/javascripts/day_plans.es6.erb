@@ -1,0 +1,42 @@
+class DayPlansDatatable {
+  constructor() {
+    this.tableId = '#day-plan-table';
+    return this.buildTable();
+  }
+
+  buildTable() {
+    let table = $(this.tableId).DataTable(this.tableOptions());
+    return table
+  }
+
+  tableOptions() {
+    return {
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron ordenes del día."
+      },
+      dom: "<'row'<'col-sm-4'l><'procedures-toolbar col-sm-4'><'col-sm-4'f>>" +
+           "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+      processing: true,
+      serverSide: true,
+      ajax: this.buildTableAjax(),
+      fnPreDrawCallback: () => { $('table.dataTable').fadeTo('fast', '0.2') },
+      fnDrawCallback: () => {
+        $('table.dataTable').fadeTo('fast', 1);
+        $('.tooltip-text').tooltip();
+      },
+    }
+  }
+
+  buildTableAjax() {
+    return {
+      url: $(this.tableId).data('url'), method: 'GET', dataType: 'json'
+    }
+  }
+}
+
+$(document).ready(function() {
+  if ($('#day-plan-table').length) {
+    const table = new DayPlansDatatable();
+  }
+});

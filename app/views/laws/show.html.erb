@@ -1,60 +1,71 @@
-<div class="row">
-  <div class="col-md-12">
-    <h2 class="text-center">
-      <%= I18n.t("laws.types.#{@law.law_type}") %> <b> <%= "##{@law.number}" %> </b>
-    </h2>
-  </div>
-</div>
-
-<div class="box box-primary">
-  <div class="box-header lead with-border">
-    <div class="col-md-6 text-bottom-align">
-      <strong>Información de la <%= I18n.t("laws.types.#{@law.law_type}") %></strong>
-    </div>
-    <div class="pull-right">
-      <%= link_to edit_law_path(@law), class: 'btn btn-lg btn-warning' do %>
-        <i class="fa fa-pencil"></i>
-        Editar Norma
-      <% end -%>
+<div class="law-show">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">
+        <%= I18n.t("laws.types.#{@law.law_type}") %> <b> <%= "##{@law.number}" %> </b>
+      </h2>
     </div>
   </div>
 
-  <div class="box-body row">
-    <%= form_for @law do |f| %>
-      <div class="col-md-2">
-        <div class="form-group">
-          <%= f.label :number %>
-          <%= f.text_field :number, type: :number, class: 'form-control', readonly: true %>
-        </div>
+  <div class="box box-primary">
+    <div class="box-header lead with-border">
+      <div class="col-md-6 text-bottom-align">
+        <strong>Información de la <%= I18n.t("laws.types.#{@law.law_type}") %></strong>
       </div>
+      <div class="pull-right">
+        <%= link_to edit_law_path(@law), class: 'btn btn-lg btn-warning' do %>
+          <i class="fa fa-pencil"></i>
+          Editar Norma
+        <% end -%>
+      </div>
+    </div>
 
-      <% if (f.object.letter.present?) %>
+    <div class="box-body row">
+      <%= form_for @law do |f| %>
         <div class="col-md-2">
           <div class="form-group">
-            <%= f.label :letter %>
-            <%= f.text_field :letter, class: 'form-control', readonly: true %>
+            <%= f.label :number %>
+            <%= f.text_field :number, type: :number, class: 'form-control', readonly: true %>
           </div>
         </div>
-      <% end %>
 
-      <div class="col-md-2">
-        <div class="form-group">
-          <%= f.label :year %>
-          <%= f.text_field :year, class: 'form-control', readonly: true %>
+        <% if (f.object.letter.present?) %>
+          <div class="col-md-2">
+            <div class="form-group">
+              <%= f.label :letter %>
+              <%= f.text_field :letter, class: 'form-control', readonly: true %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= f.label :year %>
+            <%= f.text_field :year, class: 'form-control', readonly: true %>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :law_type %>
-          <%= f.select :law_type, law_types, {}, class: 'form-control', readonly: true %>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :law_type %>
+            <%= f.select :law_type, law_types, {}, class: 'form-control', readonly: true %>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <%= f.label :legislative_session, 'Sesión' %>
-        <%= f.text_field :legislative_session, class: 'form-control', readonly: true %>
-      </div>
-    <% end -%>
+        <div class="col-md-6">
+          <%= f.label :legislative_session, 'Sesión' %>
+          <%= f.text_field :legislative_session, class: 'form-control', readonly: true %>
+        </div>
+
+        <div class="col-md-6 attachements">
+          <h4> Archivos adjuntos </h4>
+          <% @law.uploads.each do |attachment| %>
+            <%= link_to attachment.file.url, class: 'btn btn-success', target: '_blank', title:  attachment.file_file_name do %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% end %>
+        </div>
+      <% end -%>
+    </div>
   </div>
 </div>

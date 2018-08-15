@@ -284,6 +284,35 @@ class DerivatedProcedureFilters {
   }
 }
 
+class ProcedureDerivations {
+  constructor() {
+    this.btn = $('.update-dispatched');
+    this.onClick();
+  }
+
+  onClick() {
+    this.btn.on('click', (ev) => {
+      let response = confirm('Recepcionará todos los trámites pendientes!');
+      if (response) {
+        this.updatePendantDerivations();
+      }
+    });
+  }
+
+  updatePendantDerivations() {
+    $.ajax({
+      url: "<%= url_helpers.resolve_pendants_derivated_procedures_path %>",
+      method: 'POST',
+      success: () => {
+        $('#derivated-procedures-table').DataTable().draw();
+      },
+      error: () => {
+        alert('Lo sentimos, ha ocurrido un error');
+      }
+    })
+  }
+}
+
 $(document).ready(function() {
   if ($('#derivated-procedures-table').length) {
     DerivatedProcedures.indexDataTable();
@@ -292,5 +321,7 @@ $(document).ready(function() {
     let filters = new DerivatedProcedureFilters();
 
     $('.listen-derivations').click();
+
+    const MultipleDerivations = new ProcedureDerivations();
   }
 });
