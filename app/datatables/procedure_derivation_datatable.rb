@@ -92,8 +92,8 @@ class ProcedureDerivationDatatable
     binds = []
 
     if params[:search][:value].present?
-      search = "%#{params[:search][:value]}%"
-      query += ["procedures.id::text ILIKE ?"]
+      search = params[:search][:value]
+      query += ["procedures.id = ?"]
       # query += ["procedures.id ILIKE ? OR procedures.code ILIKE ? OR procedures.type_course ILIKE ? OR procedures.division ILIKE ? OR procedures.subdivision ILIKE ?" ]
       binds += [search] * 1
     end
