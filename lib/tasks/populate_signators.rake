@@ -2,8 +2,8 @@ namespace :populate do
   desc "Cargar firmantes de los trámites dentro de la DB"
   task signators: :environment do
     records = [
-      ["Dante Camilo", "Vieyra", "Secretaría de Gobierno y Desarrollo Regional"]
-      ["Mauricio", "Dova", "Secretaría de Políticas Sociales"]
+      ["Dante Camilo", "Vieyra", "Secretaría de Gobierno y Desarrollo Regional"],
+      ["Mauricio", "Dova", "Secretaría de Políticas Sociales"],
       ["Guillermo Luis", "Natali", "Secretaría de Control y Prevención Ciudadana"]
 
       # ["Franco", "Castaldi", "Director de Gestión de Programas del Instituto Municipal de la Vivienda (IMV)"],
