@@ -22,6 +22,7 @@
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function() {
   if ($('#index-legislative-files').length) {
@@ -35,6 +36,7 @@ $(document).ready(function() {
         'targets': [3, 4],
         'createdCell':  function (td, cellData, rowData, row, col) {
            $(td).attr('onclick', 'preventRedirection();');
+           $(td).attr('class', 'display-inline');
         }
       }],
       dom: "<'row'<'col-sm-4'l><'legislative-files-toolbar col-sm-4'><'col-sm-4'f>>" +
@@ -58,6 +60,11 @@ $(document).ready(function() {
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
         $('.tooltip-text').tooltip();
+
+        let keyword = $('.dataTables_filter input').val();
+        let body = $('table tbody');
+        body.unmark();
+        body.mark(keyword);
       },
       fnInitComplete: function() {
         Procedures.listenCheckButtons();
