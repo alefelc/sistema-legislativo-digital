@@ -18,6 +18,7 @@
 //= require fullcalendar
 //= require sweetalert.min
 //= require procedures
+//= require jquery.mark.min
 
 
 /* System libraries */
