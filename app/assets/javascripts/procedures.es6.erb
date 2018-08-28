@@ -219,6 +219,7 @@ class ModalInitiator {
 class Procedures {
   static indexDataTable() {
     let table = $('#procedures-table').DataTable({
+      searchHighlight: true,
       language: {
         processing: "<div></div><div></div><div></div><div></div><div></div>",
         emptyTable: "No se encontraron trámites relacionados a su búsqueda."
@@ -227,13 +228,6 @@ class Procedures {
         "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
       processing: true,
       serverSide: true,
-      // columns: [
-      //   { name: 'attendance_type', orderable: true, searchable: false }
-      //   { name: 'title', orderable: true, searchable: false }
-      //   { name: 'abbreviation', orderable: true, searchable: false }
-      //   { name: 'status', orderable: true, searchable: false }
-      //   { name: 'default', orderable: true, searchable: false }
-      // ]
       ajax: {
         url: $('#procedures-table').data('url'),
         method: 'GET',
@@ -258,15 +252,21 @@ class Procedures {
       fnPreDrawCallback: function() {
         $('table.dataTable').fadeTo('fast', '0.2');
       },
-      fnDrawCallback: function() {
+      fnDrawCallback: function(settings) {
         let column_to_hide = 0; // Derivations column
         let column = table.column(column_to_hide);
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
         $('.tooltip-text').tooltip();
+
+        let keyword = $('.dataTables_filter input').val();
+        let body = $('table tbody');
+        body.unmark();
+        body.mark(keyword);
       },
       fnInitComplete: function() {
         Procedures.listenCheckButtons();
+        this.table = $('#procedures-table').DataTable();
       },
       'columnDefs': [{
         'targets': 5,
@@ -274,7 +274,7 @@ class Procedures {
            $(td).attr('onclick', 'preventRedirection();');
         }
      }]
-    })
+    });
   }
 
   static listenCheckButtons() {

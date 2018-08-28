@@ -23,3 +23,8 @@ People.IndexDataTable = do ->
         { orderable: false }
         { orderable: false },
       ]
+      fnDrawCallback: ->
+        keyword = $('.dataTables_filter input').val()
+        body = $('table tbody')
+        body.unmark()
+        body.mark(keyword)

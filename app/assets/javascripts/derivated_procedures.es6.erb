@@ -47,6 +47,11 @@ class DerivatedProcedures {
         column.visible($('div.data-derivations').data('show'));
         $('table.dataTable').fadeTo('fast', 1);
         $('.tooltip-text').tooltip();
+
+        let keyword = $('.dataTables_filter input').val();
+        let body = $('table tbody');
+        body.unmark();
+        body.mark(keyword);
       },
       fnInitComplete: function() {
         DerivatedProcedures.listenCheckButtons();
