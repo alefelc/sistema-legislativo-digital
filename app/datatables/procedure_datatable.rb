@@ -87,8 +87,8 @@ class ProcedureDatatable
   def procedures
     procedure_derivation = "FULL OUTER JOIN procedure_derivations ON procedure_derivations.procedure_id = procedures.id"
     if params[:search][:value].present?
-      persons_join = "INNER JOIN people_procedures ON " +
-      "people_procedures.procedure_id = procedures.id INNER JOIN " +
+      persons_join = "LEFT OUTER JOIN people_procedures ON " +
+      "people_procedures.procedure_id = procedures.id LEFT OUTER JOIN " +
       "people ON people.id = people_procedures.person_id"
       Procedure.order(id: :desc).joins(procedure_derivation).joins(persons_join).where(filter)
         .includes(:persons).includes(:procedure_derivation).distinct
@@ -107,33 +107,20 @@ class ProcedureDatatable
     binds = []
 
     if params[:search][:value].present?
-      #   tramite = Tramite.page(page).per(per_page).order(id: :desc)
-      #   if params[:sSearch].present?
-      #     query = "(tramites.asunto ilike " +
-      #     "'%#{params[:sSearch]}%') OR (tramites.observaciones ilike " +
-      #     "'%#{params[:sSearch]}%')"
-
-      #     persons_join = "LEFT JOIN people_tramites ON " +
-      #     "people_tramites.tramite_id = tramites.id LEFT JOIN " +
-      #     "people ON people.id = people_tramites.person_id"
-      #     tramite = tramite.where(query).joins(persons_join)
-      #   end
-      #   tramite.includes(:bloques)
-      #          .includes(:comisions)
-      #          .includes(:areas)
-      #          .includes(:organo_de_gobiernos)
-      #          .includes(:municipal_offices)
-      #          .includes(:reparticion_oficials)
-      #          .includes(:persons)
-      search = "%#{params[:search][:value]}%"
-      query += [
-        "(procedures.id::text ILIKE ? OR \
-        procedures.topic ILIKE ? OR \
-        procedures.observations ILIKE ? OR \
-        CONCAT(people.name, ' ', people.surname) ILIKE ? OR \
-        CONCAT(people.surname, ' ', people.name) ILIKE ?)"
-      ]
-      binds += [search] * 5
+      search = params[:search][:value]
+      if /\A\d+\z/.match(search) # check if is a positive number
+        query += ["(procedures.id = ?)"]
+        binds += [search] * 1
+      else
+        search = "%#{search}%"
+        query += [
+          "(procedures.topic ILIKE ? OR \
+          procedures.observations ILIKE ? OR \
+          CONCAT(people.name, ' ', people.surname) ILIKE ? OR \
+          CONCAT(people.surname, ' ', people.name) ILIKE ?)"
+        ]
+        binds += [search] * 4
+      end
     end
 
     if params[:date_from].present? && params[:date_to].present?
