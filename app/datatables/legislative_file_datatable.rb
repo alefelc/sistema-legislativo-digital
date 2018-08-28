@@ -31,9 +31,16 @@ class LegislativeFileDatatable
   def attached_files(file)
     attachements = ""
     file.uploads.each do |upload|
-      attachements += content_tag(:div, link_to(truncate(upload.file_file_name, 20), upload.file.url, class: 'label label-success', target: '_blank', onclick: "preventRedirection();")).html_safe
+      attachements += link_to('', upload.file.url,
+        class: 'btn btn-success fa fa-download tooltip-text', target: '_blank',
+        onclick: "preventRedirection();", title: short_file_name(upload))
     end
     attachements
+  end
+
+  def short_file_name(file)
+    return file.file_file_name if file.file_file_name.length <= 26
+    file.file_file_name[0..26] + '...'
   end
 
   def file_number(file)
@@ -56,7 +63,13 @@ class LegislativeFileDatatable
   end
 
   def legislative_files
-    LegislativeFile.order(id: :desc).where filter
+    loops = "LEFT OUTER JOIN loops AS l ON l.legislative_file_id = legislative_files.id AND l.number = 0"
+    if params[:search][:value].present?
+      loops = "LEFT OUTER JOIN loops AS l ON l.legislative_file_id = legislative_files.id AND l.number = 0"
+      LegislativeFile.joins(loops).includes(:loops).where filter
+    else
+      LegislativeFile.order(id: :desc).joins(loops).where(filter).includes :loops
+    end
   end
 
   def columns
@@ -70,32 +83,10 @@ class LegislativeFileDatatable
     if params[:search][:value].present?
       search = "%#{params[:search][:value]}%"
       query += ["legislative_files.number ILIKE ?"]
-      # query += ["legislative_files.id ILIKE ? OR legislative_files.code ILIKE ? OR legislative_files.type_course ILIKE ? OR legislative_files.division ILIKE ? OR legislative_files.subdivision ILIKE ?" ]
-      binds += [search] * 1
+      query += ["l.topic ILIKE ?"]
+      binds += [search] * 2
     end
-
-    # if params[:date_from].present? && params[:date_to].present?
-    #   query += ["created_at BETWEEN ? AND ?"]
-    #   binds += [params[:date_from]]
-    #   binds += [params[:date_to]]
-    # end
-
-    # if params[:derivation_filter].present?
-    #   ## Improve CONSTANTS HERE!!!!
-    #   case params[:derivation_filter]
-    #   when 'without_derivation'
-    #     query += ['legislative_files.procedure_derivation_id IS null']
-    #   when 'all_legislative_files'
-    #     # DO NOTHING
-    #     # query += ['legislative_files.procedure_derivation_id IS NOT null']
-    #   when 'without_reception'
-    #     query += ['legislative_files.procedure_derivation_id IS NOT null']
-    #   when 'with_reception'
-    #     query += ['legislative_files.procedure_derivation_id IS NOT null']
-    #   end
-    # end
-
-    [query.join(' AND ')] + binds
+    [query.join(' OR ')] + binds
   end
 
   def paginated_legislative_files
