@@ -76,10 +76,11 @@ module ProceduresHelper
     ## Procedures.types HERE!!!
     ####################
     options_for_select [
-      ['Despacho de Comisión', 'Despacho'],
-      ['Condonación / Eximisión', 'Condonacion'],
-      ['Petición Particular', 'Peticion'],
-      ['Comunicación Oficial', 'ComunicacionOficial'],
+      ['Despachos de Comisión', 'Despacho'],
+      ['Proyectos', 'Proyecto'],
+      ['Condonaciónes / Eximisiónes', 'Condonacion'],
+      ['Peticiones Particulares', 'Peticion'],
+      ['Comunicaciónes Oficiales', 'ComunicacionOficial'],
       ['Otros Ingresos', 'OtrosIngresos']
     ]
   end
