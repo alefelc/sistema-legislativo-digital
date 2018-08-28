@@ -1,39 +1,39 @@
 <div class="col-md-6">
   <div class="form-group">
-    <%= f.label :number %>
+    <%= f.label :number, 'Número' %>
     <%= f.text_field :number, type: :number, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :place %>
+    <%= f.label :place, 'Lugar' %>
     <%= f.text_field :place, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :session_type %>
+    <%= f.label :session_type, 'Tipo de Sesión' %>
     <%= f.select :session_type, session_types, {}, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :secret %>
+    <%= f.label :secret, 'Secreta' %>
     <%= f.check_box :secret %>
   </div>
 </div>
 
 <div class="col-md-6">
   <div class="form-group">
-    <%= f.label :started_at %>
+    <%= f.label :started_at, 'Comienza' %>
     <div class="input-group">
       <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
       <%= f.text_field :started_at, class: 'form-control', placeholder: 'Fecha y hora de inicio' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :finished_at %>
+    <%= f.label :finished_at, 'Termina' %>
     <div class="input-group">
       <div class="input-group-addon"> <i class="fa fa-clock-o"></i> </div>
       <%= f.text_field :finished_at, class: 'form-control', placeholder: 'Fecha y hora de finalización' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :observation %>
+    <%= f.label :observation, 'Observaciones' %>
     <%= f.text_field :observation, class: 'form-control' %>
   </div>
 </div>
