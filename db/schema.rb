@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705141451) do
+ActiveRecord::Schema.define(version: 20180914063654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,16 @@ ActiveRecord::Schema.define(version: 20180705141451) do
 
   add_index "areas_users", ["area_id"], name: "index_areas_users_on_area_id", using: :btree
   add_index "areas_users", ["user_id"], name: "index_areas_users_on_user_id", using: :btree
+
+  create_table "authorities", force: :cascade do |t|
+    t.integer  "periodo_id"
+    t.integer  "person_id"
+    t.integer  "internal_position"
+    t.date     "assumption_date"
+    t.date     "recess_date"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "bloque_periodos", id: false, force: :cascade do |t|
     t.integer  "bloque_id"
@@ -646,13 +656,16 @@ ActiveRecord::Schema.define(version: 20180705141451) do
   add_index "procedure_derivations", ["received_by"], name: "index_procedure_derivations_on_received_by", using: :btree
 
   create_table "procedure_signatories", force: :cascade do |t|
-    t.string  "name"
-    t.string  "surname"
-    t.text    "contact_info"
-    t.text    "position"
-    t.integer "ranking",        default: 0
-    t.integer "initiator_type"
-    t.boolean "default",        default: false
+    t.string   "name"
+    t.string   "surname"
+    t.text     "contact_info"
+    t.text     "position"
+    t.integer  "ranking",        default: 0
+    t.integer  "initiator_type"
+    t.boolean  "default",        default: false
+    t.date     "leave_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "procedure_states", force: :cascade do |t|
