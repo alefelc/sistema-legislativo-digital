@@ -1,0 +1,33 @@
+"<% url_helpers = Rails.application.routes.url_helpers %>"
+
+class PersonSearch {
+  constructor() {
+    this.select = $('#authority_person_id');
+    this.listenSelect();
+  }
+
+  config() {
+    return {
+      placeholder: 'Busque la autoridad...',
+      allowClear: true,
+      minimumInputLength: 3,
+      ajax: {
+        url: "<%= url_helpers.persons_path %>",
+        dataType: 'json',
+        language: 'es',
+        data: (params) => { return { select_q: params.term || '%%' }; },
+        processResults: (data, params) => { return { results: data } }
+      }
+    }
+  }
+
+  listenSelect() {
+    this.select.select2(this.config());
+  }
+}
+
+$(document).ready(() => {
+  if ($('.authority-form').length != 0) {
+    const searchBar = new PersonSearch();
+  }
+});

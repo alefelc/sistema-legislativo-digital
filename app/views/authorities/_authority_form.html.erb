@@ -1,0 +1,36 @@
+<div class="col-md-6 authority-form">
+  <div class="form-group">
+    <%= f.label :periodo_id, 'Periodo' %>
+    <%= f.select :periodo_id, f.object.authority_periods, {}, class: 'form-control input-lg' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :internal_position, 'Cargo' %>
+    <%= f.select :internal_position, f.object.authority_positions, { include_blank: true },
+      class: 'form-control input-lg' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :assumption_date, 'Asume en el cargo el dia' %>
+    <div class="input-group">
+      <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+      <%= f.text_field :assumption_date, class: 'form-control input-lg', type: :date %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :recess_date, 'Se retiró el día' %>
+    <div class="input-group">
+      <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+        <%= f.text_field :recess_date, class: 'form-control input-lg', type: :date %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group-lg">
+    <%= f.label :person_id, 'Datos de la Autoridad' %>
+    <%= f.select :person_id, {}, {}, class: 'form-control' do %>
+      <% if f.object.person.present? %>
+        <option value="<%= f.object.person_id %>"> <%= f.object.person.text %> </option>
+      <% end %>
+    <% end %>
+  </div>
+</div>

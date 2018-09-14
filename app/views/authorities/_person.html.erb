@@ -1,0 +1,31 @@
+<div class="col-md-3">
+  <div class="box box-success">
+    <h4 class="text-center"> <%= auth.internal_position %> </h4>
+
+    <div class="box-body box-profile">
+      <%= auth.picture %>
+
+      <h3 class="profile-username text-center"> <%= auth.full_name %> </h3>
+
+      <p class="text-muted text-center"> <%= auth.bloc_party %> </p>
+
+      <ul class="list-group list-group-unbordered">
+        <li class="list-group-item">
+          <b>Comisiones</b> <a class="pull-right">Comisión de Planificación y Coordinación de Labor (Presidente)</a>
+        </li>
+        <li class="list-group-item">
+          <b>DNI</b> <a class="pull-right"> <%= auth.dni %> </a>
+        </li>
+        <li class="list-group-item">
+          <b>Teléfono</b> <a class="pull-right"> <%= auth.phone %> </a>
+        </li>
+      </ul>
+
+      <a href="<%= auth.edit_url %>" class="btn btn-primary btn-block"
+        <i class="fa fa-edit"></i>
+        <b>Editar</b>
+      </a>
+    </div>
+    <!-- /.box-body -->
+  </div>
+</div>

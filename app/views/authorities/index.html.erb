@@ -1,0 +1,26 @@
+<div id="authorities">
+  <h2 class="text-center"> AUTORIDADES </h2>
+  <div class="box box-primary">
+
+    <div class="box-header">
+      <div class="col-md-3 col-xs-12">
+        <%= link_to new_authority_path, class: 'btn btn-primary btn-lg' do %>
+          <i class="fa fa-plus-circle fa-lg"></i> Nuevo
+        <% end %>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <div class="row">
+        <% @authorities.each do |auth| %>
+          <%= render 'person', auth: auth %>
+        <% end %>
+        <% if @authorities.empty? %>
+          <div class="text-center">
+            <h3> No se encuentran autoridades cargadas </h3>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
