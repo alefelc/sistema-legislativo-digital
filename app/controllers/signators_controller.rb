@@ -2,7 +2,7 @@ class SignatorsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: build_json_response }
+      format.json { render json: SignatorsDatatable.new(view_context) }
     end
   end
 
@@ -14,6 +14,13 @@ class SignatorsController < ApplicationController
     signatory = ProcedureSignatory.create signator_params
 
     render json: signatory.to_json(methods: :text)
+  end
+
+  def edit
+    @signatory = ProcedureSignatory.find(params[:id]).decorate
+  end
+
+  def update
   end
 
   private

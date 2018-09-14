@@ -1,0 +1,28 @@
+<div id="signatories-index">
+
+  <div id="people-signatory">
+    <h2 class="text-center">
+      Firmantes de Trámites
+    </h2>
+
+    <div class="box box-primary">
+      <div class="box-body">
+        <table class="table table-striped dataTable table-hover" id="signators-index-table" style="table-layout: fixed; word-wrap: break-word;", data-source="<%=signators_path(format: :json)%>">
+          <thead>
+            <tr>
+              <th> Id </th>
+              <th> Nombre </th>
+              <th> Apellido </th>
+              <th> Cargo </th>
+              <th> Info de Contacto </th>
+              <th> Tipo de Firmante </th>
+              <th> Dado de Baja </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

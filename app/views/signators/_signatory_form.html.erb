@@ -1,0 +1,26 @@
+<div class="signator-form">
+  <div class="col-md-6 field">
+    <%= f.label :name, 'Nombre' %>
+    <%= f.text_field :name, class: 'input-lg form-control', placeholder: 'Nombres del firmante' %>
+  </div>
+  <div class="col-md-6 field">
+    <%= f.label :surname, 'Apellido' %>
+    <%= f.text_field :surname, class: 'input-lg form-control', placeholder: 'Apellidos del firmante' %>
+  </div>
+  <div class="col-md-6 field">
+    <%= f.label :position, 'Cargo' %>
+    <%= f.text_field :position, class: 'input-lg form-control', placeholder: 'Cargo' %>
+  </div>
+  <div class="col-md-6 field">
+     <%= f.label :contact_info, 'Información de contacto' %>
+     <%= f.text_field :contact_info, class: 'input-lg form-control', placeholder: 'Información de contacto, teléfono, email...' %>
+  </div>
+  <div class="col-md-6 field">
+    <%= f.label :leave_date, 'Se retiró el día' %>
+    <%= f.text_field :leave_date, class: 'input-lg form-control', type: :date %>
+  </div>
+  <div class="col-md-6 field">
+    <%= f.label :initiator_type, 'Tipo de Firmante' %>
+    <%= f.select :initiator_type, f.object.signator_types, {}, class: 'input-lg form-control'%>
+  </div>
+</div>

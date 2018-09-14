@@ -1,0 +1,37 @@
+class SignatorsIndex {
+  constructor() {
+    this.table = $('#signatories-index #signators-index-table');
+    this.endpoint = this.table.data('url');
+    this.datatable = this.initDataTable();
+  }
+
+  initDataTable() {
+    return this.table.DataTable(this.tableConf());
+  }
+
+  tableConf() {
+    return {
+      processing: true,
+      serverSide: true,
+      lengthChange: true,
+      language: {
+        processing: "<div></div><div></div><div></div><div></div><div></div>",
+        emptyTable: "No se encontraron personas relacionadas a su búsqueda."
+      },
+      ajax: { url: this.endpoint, method: 'GET' },
+      fnPreDrawCallback: () => { $('table.dataTable').fadeTo('fast', '0.2') },
+      fnDrawCallback: () => {
+        $('table.dataTable').fadeTo('fast', '1');
+        $('.tooltip-text').tooltip();
+        let keyword = $('.dataTables_filter input').val();
+        $('table tbody').unmark().mark(keyword);
+      }
+    }
+  }
+}
+
+$(document).ready(() => {
+  if ($('#signatories-index').length) {
+    const signatorsPeople = new SignatorsIndex();
+  }
+})
