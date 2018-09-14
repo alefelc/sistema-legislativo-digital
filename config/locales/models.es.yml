@@ -76,3 +76,8 @@ es:
 
       legislative_files_state:
         procedure: Trámite
+
+      authority:
+        person: Seleccione una autoridad. Persona
+        internal_position: Cargo
+        assumption_date: Día que asume en el cargo

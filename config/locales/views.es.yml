@@ -312,6 +312,14 @@ es:
       notification: Aprobación
       publish: Publicación
 
+  signatories:
+    initiator_types:
+      dem: DEM
+      legislative_secretary: Secretaría Legislativa
+      official_distribution: Repartición Oficial
+      municipal_office: Dependencia Municipal
+      particular_legal: Persona Física
+
   activeadmin:
     dashboard:
       user: Usuario

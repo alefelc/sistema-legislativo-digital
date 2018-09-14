@@ -64,8 +64,8 @@ class PersonsController < ApplicationController
   def build_json
     if params[:select_q]
       q = "%#{params[:select_q]}%"
-      w = "concat(surname, ' ', name) ilike ? or "
-      w += "concat(name, ' ', surname) ilike ? or "
+      w = "concat(trim(surname), ' ', trim(name)) ilike ? or "
+      w += "concat(trim(name), ' ', trim(surname)) ilike ? or "
       w += "cuit_or_dni ilike ?"
       Person.where(w, q, q, q).to_json only: :id, methods: :text
     else

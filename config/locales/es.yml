@@ -566,6 +566,15 @@ es:
   norma:
     confirm_remove: '¿Esta seguro que desea eliminar la norma? Esta acción no se puede deshacer.'
 
+  authorities:
+    positions:
+      president: Presidente
+      first_vicepresident: Vicepresidente Primero
+      second_vicepresident: Vicepresidente Segundo
+      third_vicepresident: Vicepresidente Tercero
+      prosecutor: Prosecretario
+      secretary: Secretario
+
   tokeninput:
     placeholder:
       exp_example: 'Nro + Bis + Año  -  Ej: 10902015'

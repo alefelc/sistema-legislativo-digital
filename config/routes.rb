@@ -107,7 +107,8 @@ Rails.application.routes.draw do
 
   resources :laws
   resources :day_plans
-  resources :signators
+  resources :procedure_signatories, as: :signators, controller: :signators
+  resources :authorities
 
   get   '/my_profile', to: 'profile#edit'
   patch '/my_profile', to: 'profile#update'
