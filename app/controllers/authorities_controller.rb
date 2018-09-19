@@ -23,6 +23,17 @@ class AuthoritiesController < ApplicationController
     end
   end
 
+  def update
+    @authority = Authority.find params[:id]
+    if @authority.update authority_params
+      flash[:success] = t '.success'
+      redirect_to authorities_path
+    else
+      flash.now[:error] = @authority.errors.full_messages
+      render :new
+    end
+  end
+
   private
   def authority_params
     params.require(:authority).permit :periodo_id, :internal_position,

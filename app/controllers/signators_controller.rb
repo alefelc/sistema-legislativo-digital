@@ -2,7 +2,7 @@ class SignatorsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: SignatorsDatatable.new(view_context) }
+      format.json { render json: build_json_response }
     end
   end
 
@@ -21,20 +21,30 @@ class SignatorsController < ApplicationController
   end
 
   def update
+    @signatory = ProcedureSignatory.find params[:id]
+    if @signatory.update signator_params
+      flash[:success] = t '.success'
+      redirect_to signators_path
+    else
+      flash.now[:error] = @signatory.errors.full_messages
+      render :new
+    end
   end
 
   private
 
   def signator_params
-    params.permit :name, :surname, :position, :contact_info, :initiator_type
+    params.require(:procedure_signatory).permit :name, :surname, :position, :contact_info, :initiator_type, :leave_date
   end
 
   def build_json_response
     if params[:select_q].present?
       q = "%#{params[:select_q]}%"
-      w = "(surname ilike ? OR name ilike ?) AND initiator_type = ?"
+      w = "(surname ilike ? OR name ilike ?) AND initiator_type = ? AND leave_date IS NULL"
       type = ProcedureSignatory.initiator_types[params[:initiator_type].to_sym]
       ProcedureSignatory.where(w, q, q, type).to_json only: :id, methods: :text
+    else
+      SignatorsDatatable.new(view_context)
     end
   end
 end
