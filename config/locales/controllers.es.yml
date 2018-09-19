@@ -30,3 +30,7 @@ es:
       success: Autoridad actualizada correctamente
     create:
       success: Autoridad creada correctamente
+
+  laws:
+    upload:
+      success: Archivo eliminado correctamente
