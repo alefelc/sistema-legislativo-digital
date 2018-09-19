@@ -20,3 +20,13 @@ es:
       success: Sesión creada correctamente
     update:
       success: Sesión actualizada correctamente
+
+  signators:
+    update:
+      success: Firmante actualizado correctamente
+
+  authorities:
+    update:
+      success: Autoridad actualizada correctamente
+    create:
+      success: Autoridad creada correctamente
