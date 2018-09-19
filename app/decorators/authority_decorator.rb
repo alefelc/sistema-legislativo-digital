@@ -10,7 +10,7 @@ class AuthorityDecorator < Draper::Decorator
   end
 
   def bloc_party
-    object.person.bloque
+    object.person.try :bloque
   end
 
   def edit_url
