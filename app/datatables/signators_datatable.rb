@@ -39,7 +39,7 @@ class SignatorsDatatable
   end
 
   def format_date(date)
-    date.present? ? date.strftime('%d/%m/%Y - %H:%M') : ''
+    date.present? ? date.strftime('%d/%m/%Y') : ''
   end
 
   def signators
