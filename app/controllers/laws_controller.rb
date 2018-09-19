@@ -25,8 +25,19 @@ class LawsController < ApplicationController
     @law.destinies.new type_of_destiny: :publish
   end
 
-  def destroy
+  def upload
+    # check correct permissions here, and also delete if the request was made from current legislative_file
+    upload = Upload.find params[:file_id]
+    if upload.delete
+      flash[:success] = t '.success'
+      redirect_to edit_law_path(params[:law_id])
+    else
+      flash[:error] = upload.errors.full_messages
+      redirect_to edit_law_path(params[:law_id])
+    end
+  end
 
+  def destroy
   end
 
   def create

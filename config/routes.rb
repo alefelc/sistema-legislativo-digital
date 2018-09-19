@@ -105,7 +105,9 @@ Rails.application.routes.draw do
   resources :tags
   resources :legislative_file_states
 
-  resources :laws
+  resources :laws do
+    delete 'upload'
+  end
   resources :day_plans
   resources :procedure_signatories, as: :signators, controller: :signators
   resources :authorities

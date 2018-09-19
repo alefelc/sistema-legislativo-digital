@@ -29,6 +29,15 @@
   <div class="form-group col-md-4">
     <%= label_tag 'uploads[]', 'Adjunte Norma' %>
     <%= file_field_tag 'uploads[]', type: :file, multiple: true %>
+    <% f.object.uploads.each do |upload| %>
+      <%= link_to upload.file.url, class: 'btn btn-success', target: '_blank', title: upload.file_file_name do %>
+        <%= upload.file_file_name %>
+        <i class="fa fa-download"></i>
+      <% end %>
+      <%= link_to law_upload_path(f.object.id, file_id: upload.id), method: :delete, class: 'btn btn-danger', data: { upload: upload.id } do %>
+        <i class="fa fa-xs fa-times"></i>
+      <% end %>
+    <% end %>
   </div>
 </div>
 <hr>
