@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
            through: :processes_signatories,
            source: :process
 
+  belongs_to :picture, class_name: 'Upload'
+
   def full_name
     if self.type == 'Concejal'
       "Concejal #{name} #{surname} (Bque #{bloque.try(:denominacion)})"
