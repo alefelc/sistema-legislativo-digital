@@ -100,7 +100,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <% @loop.legislative_file_states.order(:created_at).each do |state| %>
+                          <% @loop.legislative_file_states.order(:date_at).each do |state| %>
                             <tr>
                               <td>
                                 <div>

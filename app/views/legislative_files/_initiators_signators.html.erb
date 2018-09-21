@@ -33,7 +33,12 @@
 
 <% @procedure.persons.each do |b| %>
   <div>
-    <div><strong> <%= b.full_name %> </strong> (<%= I18n.t("persons.types.#{b.type}") %>) </div>
+    <div>
+      <strong> <%= b.full_name %> </strong>
+      <% unless b.type == 'Concejal' %>
+        (<%= I18n.t("persons.types.#{b.type}") %>)
+      <% end %>
+    </div>
     <% if b.type == "Juridica" %>
       <% sign = @procedure.procedure_signatories.where(initiator_type: ProcedureSignatory.initiator_types[:particular_legal]).map do |signatory| %>
         <% "#{signatory.surname}, #{signatory.name}" %>

@@ -10,6 +10,12 @@
             <strong> Expediente legislativo número <%= @loop.number %> año <%= @loop.created_at.year %> </strong>
           </div>
         </div>
+        <div class="float-right">
+          <%= link_to legislative_file_print_path(@loop), class: 'btn btn-danger btn-lg' do%>
+            <i class="fa fa-lg fa-print"></i>
+            Imprimir Carátula
+          <% end %>
+        </div>
       </div>
 
       <div class="box-body">
