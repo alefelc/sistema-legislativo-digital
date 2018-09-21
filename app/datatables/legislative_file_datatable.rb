@@ -1,6 +1,7 @@
 class LegislativeFileDatatable
   delegate :content_tag, :params, :to_date, :legislative_file_path, :link_to,
-    :build_initiators, :legislative_file_print_path, to: :@view
+    :build_initiators, :legislative_file_print_path, :current_user,
+    :edit_legislative_file_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -44,8 +45,11 @@ class LegislativeFileDatatable
   end
 
   def file_number(file)
+    file_url = legislative_file_path(file)
+    file_url = edit_legislative_file_path(file) if current_user.belongs_to_area? :legislative_secretary
+      
     number = file.number.present? ? "##{file.number}" : 'S/N'
-    content_tag :b, number, 'data-url': legislative_file_path(file), class: 'current-url'
+    content_tag :b, number, 'data-url': file_url, class: 'current-url'
   end
 
   def created_at(file)
