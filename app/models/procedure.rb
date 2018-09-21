@@ -74,7 +74,7 @@ class Procedure < ActiveRecord::Base
   end
 
   def to_s
-    "##{self.id}"
+    "Trámite ##{self.id}"
   end
 
   def is_dispatch?

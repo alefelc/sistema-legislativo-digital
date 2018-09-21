@@ -61,76 +61,80 @@
             </div>
           </div>
           <div class="row main-body">
-            <div class="col-md-6 form-group">
-              <%= f.label :name, 'Nombre' %>
-              <%= f.select :name, file_states(@legislative_file_state.name), {}, class: 'input-lg form-control' %>
-            </div>
-            <%= hidden_field_tag 'legislative_file_state[state_type]', 'parliamentary' %>
-            <div class="form-group col-md-6">
-              <%= f.label :state_type, 'Tipo' %>
-              <%= f.select :state_type, states_types, {}, class: 'input-lg form-control legislative_file_state_type' %>
-            </div>
-
-            <div class="session_nro form-group col-md-6">
-              <%= f.label :session_id, 'Sesión número:' %>
-              <div class="row">
-                <div class="col-md-9">
-                  <%= f.select :session_id, session_number(@legislative_file_state), {}, class: 'input-lg form-control' %>
-                </div>
-                <div class="col-md-1">
-                  <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
-                    <i class="fa fa-plus-circle fa-lg"></i>
-                  <% end %>
-                </div>
+            <% unless @legislative_file_state.initialized? %>
+              <div class="col-md-6 form-group">
+                <%= f.label :name, 'Nombre' %>
+                <%= f.select :name, file_states(@legislative_file_state.name), {}, class: 'input-lg form-control' %>
               </div>
-            </div>
+              <%= hidden_field_tag 'legislative_file_state[state_type]', 'parliamentary' %>
+              <div class="form-group col-md-6">
+                <%= f.label :state_type, 'Tipo' %>
+                <%= f.select :state_type, states_types, {}, class: 'input-lg form-control legislative_file_state_type' %>
+              </div>
 
-            <div class="form-group col-md-6">
-              <%= f.label :date_at, 'Fecha' %>
-              <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control', value: @legislative_file_state.date_at.to_default_s %>
-            </div>
-
-            <div class="form-group session col-md-6">
-              <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
-              <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
-            </div>
-
-            <div class="form-group session col-md-6" style="margin-top: 25px;">
-              <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
-            </div>
-
-            <div class="col-md-12">
-              <div class="comisions form-group">
-                <%= f.label :comision_ids, 'Comisiones asociadas' %>
-                <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
-                  <% if @legislative_file_state.comisions.present? %>
-                    <% @legislative_file_state.comisions.each do |c| %>
-                      <option selected value="<%= c.id %>"> <%= c.text %> </option>
+              <div class="session_nro form-group col-md-6">
+                <%= f.label :session_id, 'Sesión número:' %>
+                <div class="row">
+                  <div class="col-md-9">
+                    <%= f.select :session_id, session_number(@legislative_file_state), {}, class: 'input-lg form-control' %>
+                  </div>
+                  <div class="col-md-1">
+                    <%= button_tag type: :button, class: 'btn btn-success create-session' do %>
+                      <i class="fa fa-plus-circle fa-lg"></i>
                     <% end %>
-                  <% end %>
-                <% end %>
+                  </div>
+                </div>
               </div>
-            </div>
+            <% end %>
 
-            <div class="form-group associated-laws col-md-12">
-              <%= f.label :law_ids, 'Normas asociadas' %>
-              <div class="row">
-                <div class="col-md-9">
-                  <%= f.select :law_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
-                    <% if @legislative_file_state.laws.present? %>
-                      <% @legislative_file_state.laws.each do |c| %>
+              <div class="form-group col-md-6">
+                <%= f.label :date_at, 'Fecha' %>
+                <%= f.text_field :date_at, type: 'date', class: 'input-lg form-control', value: @legislative_file_state.date_at.to_default_s %>
+              </div>
+
+              <% unless @legislative_file_state.initialized? %>
+              <div class="form-group session col-md-6">
+                <%= label_tag :session_specification, 'Especifique tipo de sanción' %>
+                <%= f.select :sanction_specified, sancion_options1, {}, class: 'input-lg form-control' %>
+              </div>
+
+              <div class="form-group session col-md-6" style="margin-top: 25px;">
+                <%= f.select :sanction_type, sancion_options2, {}, class: 'input-lg form-control' %>
+              </div>
+
+              <div class="col-md-12">
+                <div class="comisions form-group">
+                  <%= f.label :comision_ids, 'Comisiones asociadas' %>
+                  <%= f.select :comision_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
+                    <% if @legislative_file_state.comisions.present? %>
+                      <% @legislative_file_state.comisions.each do |c| %>
                         <option selected value="<%= c.id %>"> <%= c.text %> </option>
                       <% end %>
                     <% end %>
                   <% end %>
                 </div>
-                <div class="col-md-1">
-                  <%= button_tag type: :button, class: 'btn btn-success create-law' do %>
-                    <i class="fa fa-plus-circle fa-lg"></i>
-                  <% end %>
+              </div>
+
+              <div class="form-group associated-laws col-md-12">
+                <%= f.label :law_ids, 'Normas asociadas' %>
+                <div class="row">
+                  <div class="col-md-9">
+                    <%= f.select :law_ids, {}, {}, multiple: true, class: 'input-lg form-control' do %>
+                      <% if @legislative_file_state.laws.present? %>
+                        <% @legislative_file_state.laws.each do |c| %>
+                          <option selected value="<%= c.id %>"> <%= c.text %> </option>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <div class="col-md-1">
+                    <%= button_tag type: :button, class: 'btn btn-success create-law' do %>
+                      <i class="fa fa-plus-circle fa-lg"></i>
+                    <% end %>
+                  </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
 
