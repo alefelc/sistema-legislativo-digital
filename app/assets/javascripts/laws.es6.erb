@@ -90,6 +90,29 @@ class LawLegislativeFiles {
   }
 }
 
+class LawDynamicType {
+  constructor() {
+    this.law_type = $('#law_law_type');
+    this.filter_by = "ordenanza";
+    this.form = $('.hide-by-law-type');
+    this.updateView(true);
+    this.listenChanges();
+  }
+
+  updateView(first_time) {
+    let latency = 1000; // Seconds
+    if (first_time) latency = 0;
+    if (this.law_type.val() == this.filter_by)
+      this.form.show(latency);
+    else
+      this.form.hide(latency);
+  }
+
+  listenChanges() {
+    this.law_type.on('change', () => { this.updateView() });
+  }
+}
+
 // Script started
 $(document).ready(() => {
   if ($('#laws-index').length) {
@@ -98,11 +121,13 @@ $(document).ready(() => {
 
   if ($('.law-new').length) {
     const lawSession = new LawSession();
+    const lawType = new LawDynamicType();
     const lawLegislativeFiles = new LawLegislativeFiles();
   }
 
   if ($('.law-edit').length) {
     const lawSession = new LawSession();
+    const lawType = new LawDynamicType();
     const lawLegislativeFiles = new LawLegislativeFiles();
   }
 });

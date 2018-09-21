@@ -43,45 +43,48 @@
 </div>
 <hr>
 
-<div class="row">
-  <div class="col-md-4">
-    <%= label_tag "communications[][info]", 'Comunicación' %>
-    <%= text_field_tag "communications[][info]", nil, placeholder: 'Comunicado a', class: 'form-control input-lg' %>
-  </div>
-  <div class="col-md-4">
-    <%= label_tag "communications[][date]", 'Fecha' %>
-    <%= text_field_tag "communications[][date]", nil, class: 'form-control input-lg', type: :date %>
-  </div>
-</div>
-<hr>
+<div class="hide-by-law-type">
 
-<div class="row">
-  <div class="col-md-4">
-    <%= label_tag "promulgation[info]", 'Promulgación' %>
-    <%= text_field_tag "promulgation[info]", nil, placeholder: 'Decreto promulgatorio', class: 'form-control input-lg' %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= label_tag "communications[][info]", 'Comunicación' %>
+      <%= text_field_tag "communications[][info]", nil, placeholder: 'Comunicado a', class: 'form-control input-lg' %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag "communications[][date]", 'Fecha' %>
+      <%= text_field_tag "communications[][date]", nil, class: 'form-control input-lg', type: :date %>
+    </div>
   </div>
-  <div class="col-md-4">
-    <%= label_tag "promulgation[date]", 'Fecha' %>
-    <%= text_field_tag "promulgation[date]", nil, class: 'form-control input-lg', type: :date %>
-  </div>
-  <div class="form-group col-md-4">
-    <%= label_tag 'uploads[]', 'Adjunte decreto promulgatorio' %>
-    <%= file_field_tag 'uploads[]', type: :file %>
-  </div>
-</div>
-<hr>
+  <hr>
 
-<div class="row">
-  <div class="col-md-4">
-    <%= label_tag "official_release[info]", 'Boletín Oficial' %>
-    <%= text_field_tag "official_release[info]", nil, placeholder: 'Boletín Oficial Nro', class: 'form-control input-lg' %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= label_tag "promulgation[info]", 'Promulgación' %>
+      <%= text_field_tag "promulgation[info]", nil, placeholder: 'Decreto promulgatorio', class: 'form-control input-lg' %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag "promulgation[date]", 'Fecha' %>
+      <%= text_field_tag "promulgation[date]", nil, class: 'form-control input-lg', type: :date %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= label_tag 'uploads[]', 'Adjunte decreto promulgatorio' %>
+      <%= file_field_tag 'uploads[]', type: :file %>
+    </div>
   </div>
-  <div class="col-md-4">
-    <%= label_tag "official_release[date]", 'Fecha' %>
-    <%= text_field_tag "official_release[date]", nil, class: 'form-control input-lg', type: :date %>
-  </div>
-  <div class="form-group col-md-4">
-    <%= label_tag 'uploads[]', 'Adjunte Boletín' %>
-    <%= file_field_tag 'uploads[]', type: :file %>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= label_tag "official_release[info]", 'Boletín Oficial' %>
+      <%= text_field_tag "official_release[info]", nil, placeholder: 'Boletín Oficial Nro', class: 'form-control input-lg' %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag "official_release[date]", 'Fecha' %>
+      <%= text_field_tag "official_release[date]", nil, class: 'form-control input-lg', type: :date %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= label_tag 'uploads[]', 'Adjunte Boletín' %>
+      <%= file_field_tag 'uploads[]', type: :file %>
+    </div>
   </div>
 </div>
