@@ -68,7 +68,14 @@ class LegislativeFile < ActiveRecord::Base
     else
       result = people.map { |b| b.full_name }.join('; ')
     end
-    origin_procedures.each { |p| result += "; " + p.comisions.collect(&:denominacion).join('; ') }
+    origin_procedures.each do |p|
+      result += "; " unless result.empty?
+      result += p.comisions.collect(&:denominacion).join('; ')
+      result += p.organo_de_gobiernos.collect(&:denominacion).join('; ')
+      result += p.bloques.collect(&:denominacion).join('; ')
+      result += p.reparticion_oficials.collect(&:denominacion).join('; ')
+      result += p.municipal_offices.collect(&:denominacion).join('; ')
+    end
     result[0..664]
   end
 
