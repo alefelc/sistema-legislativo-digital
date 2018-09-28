@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180914154916) do
+ActiveRecord::Schema.define(version: 20180928135717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,17 +249,6 @@ ActiveRecord::Schema.define(version: 20180914154916) do
   add_index "despachos_concejals", ["concejal_id"], name: "index_despachos_concejals_on_concejal_id", using: :btree
   add_index "despachos_concejals", ["despacho_id"], name: "index_despachos_concejals_on_despacho_id", using: :btree
 
-  create_table "destinies", force: :cascade do |t|
-    t.integer  "law_id"
-    t.date     "date"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "type_of_destiny"
-  end
-
-  add_index "destinies", ["law_id"], name: "index_destinies_on_law_id", using: :btree
-
   create_table "diario_de_sesions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -289,6 +278,7 @@ ActiveRecord::Schema.define(version: 20180914154916) do
     t.string   "letter"
     t.string   "year"
     t.integer  "legislative_session_id"
+    t.date     "communication_date"
   end
 
   add_index "laws", ["legislative_session_id"], name: "index_laws_on_legislative_session_id", using: :btree
