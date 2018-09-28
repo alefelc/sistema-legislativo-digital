@@ -20,9 +20,6 @@ class LawsController < ApplicationController
 
   def edit
     @law = Law.find params[:id]
-    @law.destinies.new type_of_destiny: :notification
-    @law.destinies.new type_of_destiny: :comunication
-    @law.destinies.new type_of_destiny: :publish
   end
 
   def upload
@@ -76,7 +73,7 @@ class LawsController < ApplicationController
   private
 
   def law_params
-    params.require(:law).permit(:number, :letter, :year, :law_type, :destinies_attributes,
+    params.require(:law).permit(:number, :letter, :year, :law_type,
       :legislative_session_id)
   end
 
