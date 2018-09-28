@@ -59,12 +59,4 @@ module DeclaracionsHelper
   def search_value_classify_decl(id_clasif, id_norm)
     Declaracion.find(id_norm).clasificacions.where(nombre: id_clasif).present? unless id_norm.nil?
   end
-
-  def select_destiny
-    [
-      ["Comunicación", "0"],
-      ["Notificación", "1"],
-      ["Publicación", "2"]
-    ]
-  end
 end
