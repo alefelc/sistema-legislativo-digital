@@ -72,14 +72,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_declaration: Creando Declaración
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -100,7 +98,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_declaracion: Creando Declaración
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
@@ -126,14 +123,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_otra_norma: Creando Otra Norma
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -154,7 +149,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_otra_norma: Creando Otra Norma
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
@@ -220,14 +214,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_especial: Creando Especial
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -248,7 +240,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_especial: Creando Especial
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
@@ -274,14 +265,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_resolucion: Creando Resolución
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -302,7 +291,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_resolucion: Creando Resolución
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
@@ -328,14 +316,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_ordenanza: Creando Ordenanza
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -356,7 +342,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_ordenanza: Creando Ordenanza
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido
@@ -382,14 +367,12 @@ es:
       table:
         ref_type: Tipo de vínculo
         date: Fechas
-        destiny: Destino
       title:
         create_decreto: Creando Decreto
         clasification: Clasificación
       btn_clasification:
         ready: Listo
         classify: Clasificar Norma
-        destiny: Destino
         dates: Fechas
       tags: Voces claves
       letter: Letra
@@ -410,7 +393,6 @@ es:
       to: Hasta
       index: LETRA/NUMERO/BIS
       new_decreto: Creando Decreto
-      destiny: Destino
       not_clear: No aclara
       working_day: Dia hábil
       calendar_day: Dia corrido

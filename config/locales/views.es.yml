@@ -306,12 +306,6 @@ es:
       administrative: Administrativo
       comision: Comisión
 
-  destinies:
-    type_of_destiny:
-      comunication: Comunicación
-      notification: Aprobación
-      publish: Publicación
-
   signatories:
     initiator_types:
       dem: DEM
