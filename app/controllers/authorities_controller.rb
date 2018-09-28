@@ -6,7 +6,7 @@ class AuthoritiesController < ApplicationController
   end
 
   def new
-    @authority = Authority.new
+    @authority = Authority.new.decorate
   end
 
   def edit
