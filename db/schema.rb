@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181001132010) do
+ActiveRecord::Schema.define(version: 20181001140139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -433,6 +433,18 @@ ActiveRecord::Schema.define(version: 20181001132010) do
   add_index "modifica_relationships", ["me_modifica_id"], name: "index_modifica_relationships_on_me_modifica_id", using: :btree
   add_index "modifica_relationships", ["modifica_id"], name: "index_modifica_relationships_on_modifica_id", using: :btree
 
+  create_table "municipal_gazettes", force: :cascade do |t|
+    t.integer  "number"
+    t.date     "release_date"
+    t.integer  "law_id"
+    t.integer  "upload_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "municipal_gazettes", ["law_id"], name: "index_municipal_gazettes_on_law_id", using: :btree
+  add_index "municipal_gazettes", ["upload_id"], name: "index_municipal_gazettes_on_upload_id", using: :btree
+
   create_table "municipal_offices", force: :cascade do |t|
     t.string   "denominacion"
     t.datetime "created_at",   null: false
@@ -832,6 +844,8 @@ ActiveRecord::Schema.define(version: 20181001132010) do
   add_foreign_key "legislative_file_states", "legislative_files"
   add_foreign_key "legislative_file_states", "legislative_sessions"
   add_foreign_key "legislative_file_states", "procedures"
+  add_foreign_key "municipal_gazettes", "laws"
+  add_foreign_key "municipal_gazettes", "uploads"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
   add_foreign_key "procedure_derivations", "areas"
