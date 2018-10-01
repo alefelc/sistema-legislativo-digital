@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180928135717) do
+ActiveRecord::Schema.define(version: 20181001132010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,21 +112,6 @@ ActiveRecord::Schema.define(version: 20180928135717) do
 
   add_index "bloques_procedures", ["bloque_id"], name: "index_bloques_procedures_on_bloque_id", using: :btree
   add_index "bloques_procedures", ["procedure_id"], name: "index_bloques_procedures_on_procedure_id", using: :btree
-
-  create_table "boletin_oficials", force: :cascade do |t|
-    t.integer  "nro"
-    t.date     "publicacion"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "boletin_oficials_normas", id: false, force: :cascade do |t|
-    t.integer "boletin_oficial_id"
-    t.integer "norma_id"
-  end
-
-  add_index "boletin_oficials_normas", ["boletin_oficial_id"], name: "index_boletin_oficials_normas_on_boletin_oficial_id", using: :btree
-  add_index "boletin_oficials_normas", ["norma_id"], name: "index_boletin_oficials_normas_on_norma_id", using: :btree
 
   create_table "capitulos", force: :cascade do |t|
     t.string   "nombre"
