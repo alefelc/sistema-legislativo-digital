@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181001140139) do
+ActiveRecord::Schema.define(version: 20181011132209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,17 +256,23 @@ ActiveRecord::Schema.define(version: 20181001140139) do
   add_index "documentacion_presentadas", ["condonacion_id"], name: "index_documentacion_presentadas_on_condonacion_id", using: :btree
 
   create_table "laws", force: :cascade do |t|
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "law_type"
     t.string   "number"
     t.string   "letter"
     t.string   "year"
     t.integer  "legislative_session_id"
     t.date     "communication_date"
+    t.integer  "municipal_gazette_id"
+    t.date     "date"
+    t.string   "enactment_decree"
+    t.date     "enactment_decree_date"
+    t.integer  "enactment_decree_upload_id"
   end
 
   add_index "laws", ["legislative_session_id"], name: "index_laws_on_legislative_session_id", using: :btree
+  add_index "laws", ["municipal_gazette_id"], name: "index_laws_on_municipal_gazette_id", using: :btree
 
   create_table "laws_legislative_file_states", id: false, force: :cascade do |t|
     t.integer "law_id"
@@ -436,13 +442,11 @@ ActiveRecord::Schema.define(version: 20181001140139) do
   create_table "municipal_gazettes", force: :cascade do |t|
     t.integer  "number"
     t.date     "release_date"
-    t.integer  "law_id"
     t.integer  "upload_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  add_index "municipal_gazettes", ["law_id"], name: "index_municipal_gazettes_on_law_id", using: :btree
   add_index "municipal_gazettes", ["upload_id"], name: "index_municipal_gazettes_on_upload_id", using: :btree
 
   create_table "municipal_offices", force: :cascade do |t|
@@ -841,10 +845,10 @@ ActiveRecord::Schema.define(version: 20181001140139) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "laws", "legislative_sessions"
+  add_foreign_key "laws", "municipal_gazettes"
   add_foreign_key "legislative_file_states", "legislative_files"
   add_foreign_key "legislative_file_states", "legislative_sessions"
   add_foreign_key "legislative_file_states", "procedures"
-  add_foreign_key "municipal_gazettes", "laws"
   add_foreign_key "municipal_gazettes", "uploads"
   add_foreign_key "municipal_offices_procedures", "municipal_offices"
   add_foreign_key "municipal_offices_procedures", "procedures"
