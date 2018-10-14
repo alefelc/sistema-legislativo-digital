@@ -1,4 +1,5 @@
 class MunicipalGazette < ActiveRecord::Base
-  belongs_to :law
-  belongs_to :file
+  # == Associations
+  belongs_to :upload
+  has_one :law
 end
