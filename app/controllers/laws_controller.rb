@@ -1,5 +1,5 @@
 class LawsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   respond_to :json, :html
 
@@ -12,6 +12,7 @@ class LawsController < ApplicationController
 
   def new
     @law = Law.new
+    @law.municipal_gazette = MunicipalGazette.new
   end
 
   def show
@@ -20,6 +21,7 @@ class LawsController < ApplicationController
 
   def edit
     @law = Law.find params[:id]
+    @law.build_municipal_gazette
   end
 
   def upload
@@ -44,7 +46,7 @@ class LawsController < ApplicationController
         @law.update uploads: params[:uploads], legislative_files: params[:legislative_file_ids]
 
         flash[:success] = t '.success'
-        format.html { redirect_to law_path(@law) }
+        format.html { redirect_to edit_law_path(@law) }
         format.json { render json: @law.to_json }
       else
         flash.now[:error] = @law.errors.full_messages
@@ -60,7 +62,7 @@ class LawsController < ApplicationController
       if @law.update law_params
         @law.update uploads: params[:uploads]
         flash[:success] = t '.success'
-        format.html { redirect_to law_path(@law) }
+        format.html { redirect_to edit_law_path(@law) }
         format.json { render json: @law.to_json }
       else
         flash.now[:error] = @law.errors.full_messages
@@ -73,8 +75,10 @@ class LawsController < ApplicationController
   private
 
   def law_params
-    params.require(:law).permit(:number, :letter, :year, :law_type,
-      :legislative_session_id)
+    params.require(:law).permit :number, :letter, :year, :law_type,
+      :communication_date, :legislative_session_id, :uploads,
+      :enactment_decree, :enactment_decree_date, :enactment_decree_upload,
+      municipal_gazette_attributes: [:number, :release_date, :upload]
   end
 
   def build_json_response

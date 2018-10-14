@@ -3,6 +3,11 @@ class Law < ActiveRecord::Base
   has_and_belongs_to_many :legislative_file_states
   has_many :uploads
   belongs_to :legislative_session
+  belongs_to :municipal_gazette
+  belongs_to :enactment_decree_upload, :enactment_decree_upload
+
+  # == Nested attributes
+  accepts_nested_attributes_for :municipal_gazette, reject_if: :all_blank
 
   # == Enums
   enum law_type: [:ordenanza, :decreto, :declaracion, :resolucion, :especial, :otra_norma]

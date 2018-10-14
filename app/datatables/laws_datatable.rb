@@ -1,6 +1,6 @@
 class LawsDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to, :content_tag, :law_path, to: :@view
+  delegate :params, :link_to, :content_tag, :edit_law_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -51,7 +51,7 @@ class LawsDatatable
   end
 
   def law_number(law)
-    content_tag :b, "##{law.number} / #{law.year}", 'data-url': law_path(law), class: 'current-url'
+    content_tag :b, "##{law.number} / #{law.year}", 'data-url': edit_law_path(law), class: 'current-url'
   end
 
   def attached_files(law)
