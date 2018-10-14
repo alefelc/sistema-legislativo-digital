@@ -47,39 +47,41 @@
   <div class="row">
     <div class="col-md-3">
       <%= f.label :communication_date, 'Fecha de Comunicación al DEM' %>
-      <%= f.text_field :communication_date, type: :date, class: 'form-control input-lg' %>
+      <%= f.text_field :communication_date, type: :date, value: f.object.communication_date.try(:to_default_s) ,class: 'form-control input-lg' %>
     </div>
   </div>
   <hr>
 
   <div class="row">
     <div class="col-md-4">
-      <%= label_tag "promulgation[info]", 'Promulgación' %>
-      <%= text_field_tag "promulgation[info]", nil, placeholder: 'Decreto Promulgatorio Nro', class: 'form-control input-lg' %>
+      <%= f.label :enactment_decree, 'Promulgación' %>
+      <%= f.text_field :enactment_decree, placeholder: 'Decreto Promulgatorio Nro', class: 'form-control input-lg' %>
     </div>
     <div class="col-md-4">
-      <%= label_tag "promulgation[date]", 'Fecha' %>
-      <%= text_field_tag "promulgation[date]", nil, class: 'form-control input-lg', type: :date %>
+      <%= f.label :enactment_decree_date, 'Fecha' %>
+      <%= f.text_field :enactment_decree_date, class: 'form-control input-lg', type: :date, value: f.object.enactment_decree_date.try(:to_default_s) %>
     </div>
     <div class="form-group col-md-4">
-      <%= label_tag 'uploads[]', 'Adjunte Decreto Promulgatorio' %>
-      <%= file_field_tag 'uploads[]', type: :file %>
+      <%= f.label :enactment_decree_upload, 'Adjunte Decreto Promulgatorio' %>
+      <%= f.file_field :enactment_decree_upload, type: :file %>
     </div>
   </div>
   <hr>
 
   <div class="row">
-    <div class="col-md-4">
-      <%= label_tag "official_release[info]", 'Boletín Oficial' %>
-      <%= text_field_tag "official_release[info]", nil, placeholder: 'Boletín Oficial Nro', class: 'form-control input-lg' %>
-    </div>
-    <div class="col-md-4">
-      <%= label_tag "official_release[date]", 'Fecha' %>
-      <%= text_field_tag "official_release[date]", nil, class: 'form-control input-lg', type: :date %>
-    </div>
-    <div class="form-group col-md-4">
-      <%= label_tag 'uploads[]', 'Adjunte Boletín' %>
-      <%= file_field_tag 'uploads[]', type: :file %>
-    </div>
+    <% f.fields_for :municipal_gazette do |gazette| %>
+      <div class="col-md-4">
+        <%= gazette.label :number, 'Boletín Oficial' %>
+        <%= gazette.text_field :number, placeholder: 'Boletín Oficial Nro', class: 'form-control input-lg' %>
+      </div>
+      <div class="col-md-4">
+        <%= gazette.label :release_date, 'Fecha' %>
+        <%= gazette.text_field :release_date, class: 'form-control input-lg', type: :date %>
+      </div>
+      <div class="form-group col-md-4">
+        <%= gazette.label :upload, 'Adjunte Boletín' %>
+        <%= gazette.file_field :upload, type: :file %>
+      </div>
+    <% end %>
   </div>
 </div>
