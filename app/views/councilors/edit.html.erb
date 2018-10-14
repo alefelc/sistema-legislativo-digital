@@ -39,6 +39,10 @@
           <%= f.label :email %>
           <%= f.text_field :email, class: 'form-control', placeholder: 'Ingrese Email' %>
         </div>
+        <div class="form-group col-md-6">
+          <%= f.label :withdrawn, 'Mandato Cumplido'%>
+          <%= f.text_field :withdrawn, class: 'form-control', type: :date %>
+        </div>
       </div>
 
       <div class="box-footer">

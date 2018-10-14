@@ -11,14 +11,11 @@ class ProceduresController < ApplicationController
   def new
     authorize Procedure, :create?
 
-    #@procedure = ProcedureForm.new
     @procedure = Procedure.new
     @procedure.procedure_states.build
     @procedure.administrative_files.build
-    # @procedure.procedure_signatories.build
-    @procedure.contingency_plan = ContingencyPlan.new
+    @procedure.build_contingency_plan
     @procedure.uploads.build
-    #2.times {@procedure.administrative_files.build}
   end
 
   def create
