@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/jlgasparrini/zebra-zpl.git
+  revision: 63dc5c3c6a5484bdeeaf9a9c2371a387e90914ca
+  specs:
+    zebra-zpl (1.0.4)
+      cups
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -383,8 +390,6 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-    zebra-zpl (1.0.2)
-      cups
 
 PLATFORMS
   ruby
@@ -445,7 +450,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn (~> 4.8.2)
   web-console (~> 2.0)
-  zebra-zpl
+  zebra-zpl!
 
 BUNDLED WITH
    1.15.3

@@ -92,7 +92,7 @@ gem 'prawn-icon'
 gem 'barby'
 
 # Zebra printer connection
-gem 'zebra-zpl'
+gem 'zebra-zpl', github: 'jlgasparrini/zebra-zpl'
 
 # Decorators/View-Models for Rails Applications
 gem 'draper'
