@@ -91,8 +91,10 @@ gem 'prawn-icon'
 # Barcode support
 gem 'barby'
 
-# Zebra printer connection
-gem 'zebra-zpl', github: 'jlgasparrini/zebra-zpl'
+group ENV['HEROKU'] ? :test : :default do
+  # Zebra printer connection
+  gem 'zebra-zpl', github: 'jlgasparrini/zebra-zpl'
+end
 
 # Decorators/View-Models for Rails Applications
 gem 'draper'
