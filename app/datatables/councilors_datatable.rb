@@ -1,6 +1,7 @@
 class CouncilorsDatatable
   include Rails.application.routes.url_helpers
-  delegate :params, :link_to, :current_user, :content_tag, to: :@view
+  delegate :params, :link_to, :current_user, :content_tag,
+    :edit_councilor_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -20,18 +21,17 @@ class CouncilorsDatatable
   def data
     paginated_councilors.map do |p|
       [
-        p.full_name,
+        full_name(p),
         p.phone,
         p.email,
-        format_periods(p.periodos),
-        edit_button(p)
+        format_periods(p.periodos)
       ]
     end
   end
 
-  def edit_button(councilor)
-    link_to edit_councilor_path(councilor), class: 'btn btn-warning', title: 'Editar Concejal' do
-      content_tag 'i', '', class: 'fa fa-pencil-square-o'
+  def full_name(person)
+    content_tag :div, class: 'text-center current-url', 'data-url': edit_councilor_path(person) do
+      "#{person.surname}, #{person.name}"
     end
   end
 
@@ -40,7 +40,7 @@ class CouncilorsDatatable
   end
 
   def columns
-    %w(fullname cuit domicilio telefono email periods false)
+    %w(fullname cuit domicilio telefono email periods)
   end
 
   def sort_column(column)

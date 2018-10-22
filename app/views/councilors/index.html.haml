@@ -7,17 +7,15 @@
       = render 'header_buttons'
 
     .box-body
-      .row
-        .col-md-12
-          %table.table.table-striped#councilors-table.table-hover{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
-            %thead
-              %tr
-                %th= t('.fullname')
-                %th= t('.phone')
-                %th= t('.email')
-                %th= t('.period')
-                %th
-            %tbody
+      .col-md-12
+        %table.table.table-striped#councilors-table.table-hover{ style: 'table-layout: fixed; word-wrap: break-word;', 'data-source': councilors_path(format: :json) }
+          %thead
+            %tr
+              %th= t('.fullname')
+              %th= t('.phone')
+              %th= t('.email')
+              %th= t('.period')
+          %tbody
 
 :javascript
   Councilors.IndexDataTable.init();

@@ -31,7 +31,10 @@ $(document).ready(function() {
         processing: "<div></div><div></div><div></div><div></div><div></div>",
         emptyTable: "No se encontraron expedientes relacionados a su búsqueda."
       },
-      "columnDefs": [{ className: "dt-head-center", targets: [0, 1, 2, 3, 4] },
+      "columnDefs": [{
+        className: "dt-head-center",
+        "orderable": false,
+        targets: [0, 1, 2, 3, 4] },
       {
         'targets': [3, 4],
         'createdCell':  function (td, cellData, rowData, row, col) {

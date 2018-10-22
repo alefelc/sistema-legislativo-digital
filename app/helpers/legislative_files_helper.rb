@@ -80,10 +80,10 @@ module LegislativeFilesHelper
   end
 
   def build_small_state_procedure(state)
-    if state.initialized? || state.dispatched?
-      # content_tag :small do
-      #   link_to "Trámite #{state.procedure}", state.procedure
-      # end
+    if state.dispatched?
+      content_tag :div do
+        link_to state.procedure, state.procedure, class: 'label label-primary'
+      end
     elsif state.legislative_session.present?
       text = "Sesión #{state.legislative_session}"
       content_tag :div do

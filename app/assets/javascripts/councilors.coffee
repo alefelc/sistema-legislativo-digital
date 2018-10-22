@@ -16,7 +16,6 @@ Councilors.IndexDataTable = do ->
         { orderable: false },
         { orderable: false },
         { orderable: false,  width: '18%' },
-        { orderable: false, width: '6%' }
       ]
       initComplete: () ->
         $('#councilors-table').on 'ajax:success', '.councilor-edit', (XHR, data, status) ->

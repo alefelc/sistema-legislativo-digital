@@ -15,12 +15,14 @@ class LegislativeFileService
       ActiveRecord::Base.transaction do
         @file.save!
         @loop.save!
+        max_procedure_date = nil
         if @loop.origin_procedures.present?
           @loop.origin_procedures.each do |proc|
+            max_procedure_date = proc.created_at if max_procedure_date.nil? || max_procedure_date < proc.created_at
             proc.update(topic: @file.topic) if proc.topic.blank?
           end
         end
-        @state = @file.legislative_file_states.build
+        @state = @file.legislative_file_states.build loop: @loop, date_at: @loop.date
         @state.save!
       end
       true
@@ -32,6 +34,8 @@ class LegislativeFileService
   def update!
     @file.update @params.slice(:sheets, :topic, :observations, :year, :date, :uploads)
     @file.first_loop.update @params.slice(:sheets, :topic, :observations, :year, :date, :origin_procedure_ids)
+    initial_state = @file.legislative_file_states.initialized.first
+    initial_state.update date_at: @file.date
   end
 
   def instance
