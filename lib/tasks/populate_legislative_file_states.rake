@@ -1,6 +1,6 @@
 ##  This population is used only for legislative files that missing
 ## its initial state.
-## to-run: 
+## to-run:
 ##   bundle exec rake populate:legislative_file_states
 
 namespace :populate do
@@ -25,6 +25,24 @@ namespace :populate do
       end
     end
     puts "\n\n- - - - - - Initial Legislative File States added successfully!!"
+    puts "\n #{records_updated} records updated. \n"
+  end
+
+  desc "Corrige fecha inicial para los expedientes legislativos"
+  task fix_state_date: :environment do
+    puts "Fixing initial states!!!!\n"
+    records_updated = 0
+    LegislativeFile.all.each do |file|
+      initial_state = file.legislative_file_states.initialized.first
+      if initial_state.blank?
+        puts "\nSomething wrong with legislative file #{file.id}\n"
+      else
+        initial_state.update date_at: file.date
+        records_updated = records_updated + 1
+        print "."
+      end
+    end
+    puts "\n\n- - - - - - Fixing initial states finish successfully!!!!\n"
     puts "\n #{records_updated} records updated. \n"
   end
 end
