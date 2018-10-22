@@ -4,7 +4,7 @@ class Law < ActiveRecord::Base
   has_many :uploads
   belongs_to :legislative_session
   belongs_to :municipal_gazette
-  belongs_to :enactment_decree_upload, :enactment_decree_upload
+  belongs_to :enactment_decree_upload, class_name: 'Upload'
 
   # == Nested attributes
   accepts_nested_attributes_for :municipal_gazette, reject_if: :all_blank

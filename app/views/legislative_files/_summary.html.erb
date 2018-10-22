@@ -79,9 +79,7 @@
                           <%= build_small_state_procedure state %>
                           <% if state.initialized? %>
                             <% @loop.first_loop.origin_procedures.each do |proc| %>
-                              <div>
-                              <%= link_to proc, proc, class: 'label label-primary' %>
-                              </div>
+                              <div> <%= link_to proc, proc, class: 'label label-primary' %> </div>
                             <% end %>
                           <% end %>
                         </td>
@@ -127,7 +125,7 @@
                           <% end %>
                         </td>
                         <td class="pull-right">
-                          <% unless state.dispatched? %>
+                          <% unless state.initialized? || state.dispatched? %>
                             <%= link_to '', edit_legislative_file_state_path(state),
                               class: 'edit-state-btn btn btn-warning btn-lg fa fa-pencil fa-lg',
                               remote: true %>

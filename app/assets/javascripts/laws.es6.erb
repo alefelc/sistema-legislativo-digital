@@ -33,6 +33,9 @@ class Law {
            $(td).attr('onclick', 'preventRedirection();');
            $(td).attr('class', 'display-inline');
         }
+      }, {
+        orderable: false,
+        targets: [0, 1, 2, 3, 4, 5]
       }]
     });
   }

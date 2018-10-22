@@ -47,13 +47,13 @@ class LegislativeFileDatatable
   def file_number(file)
     file_url = legislative_file_path(file)
     file_url = edit_legislative_file_path(file) if current_user.belongs_to_area? :legislative_secretary
-      
+
     number = file.number.present? ? "##{file.number}" : 'S/N'
     content_tag :b, number, 'data-url': file_url, class: 'current-url'
   end
 
   def created_at(file)
-    content_tag :div, file.created_at.to_date, style: "white-space:nowrap;"
+    content_tag :div, file.date.to_date, style: "white-space:nowrap;"
   end
 
   def origin_procedures(file)
