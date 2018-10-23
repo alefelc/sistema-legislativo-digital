@@ -78,9 +78,9 @@ class CouncilorsDatatable
 
   def effective_time(councilor)
     if councilor.effective_time_to.blank?
-      "No hay periodo asociado"
+      'No hay periodo asociado'
     elsif Date.current > councilor.effective_time_to
-      "Mandato cumplido"
+      'Mandato cumplido'
     else
       councilor.effective_time_to
     end
