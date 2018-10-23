@@ -15,6 +15,7 @@ Councilors.IndexDataTable = do ->
         { orderable: false },
         { orderable: false },
         { orderable: false },
+        { orderable: false },
         { orderable: false,  width: '18%' },
       ]
       initComplete: () ->
