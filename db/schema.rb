@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181022024119) do
+ActiveRecord::Schema.define(version: 20181023055619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -553,13 +553,15 @@ ActiveRecord::Schema.define(version: 20181022024119) do
     t.string   "email"
     t.string   "address"
     t.integer  "bloque_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "type"
     t.string   "position"
     t.datetime "withdrawn"
     t.integer  "picture_id"
     t.integer  "cv_id"
+    t.date     "effective_time_from"
+    t.date     "effective_time_to"
   end
 
   add_index "people", ["bloque_id"], name: "index_people_on_bloque_id", using: :btree
