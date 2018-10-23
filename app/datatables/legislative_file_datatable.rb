@@ -53,7 +53,7 @@ class LegislativeFileDatatable
   end
 
   def created_at(file)
-    content_tag :div, file.date.to_date, style: "white-space:nowrap;"
+    content_tag :div, file.date.try(:to_date), style: "white-space:nowrap;"
   end
 
   def origin_procedures(file)
