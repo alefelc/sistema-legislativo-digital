@@ -22,11 +22,16 @@ class CouncilorsDatatable
     paginated_councilors.map do |p|
       [
         full_name(p),
+        current_block(p),
         p.phone,
         p.email,
         format_periods(p.periodos)
       ]
     end
+  end
+
+  def current_block(person)
+    person.bloque.to_s
   end
 
   def full_name(person)
