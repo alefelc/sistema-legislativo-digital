@@ -35,7 +35,7 @@ module LegislativeFileStatesHelper
 
   def session_number(state)
     options_for_select [
-      [state.try(:session), state.try(:session_id)]
+      [state.legislative_session, state.legislative_session_id]
     ]
   end
 
