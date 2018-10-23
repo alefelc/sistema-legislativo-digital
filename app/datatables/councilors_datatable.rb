@@ -25,7 +25,7 @@ class CouncilorsDatatable
         current_block(p),
         p.phone,
         p.email,
-        format_periods(p.periodos)
+        effective_time(p)
       ]
     end
   end
@@ -76,8 +76,13 @@ class CouncilorsDatatable
     params[:start].to_i / per_page + 1
   end
 
-  def format_periods(periods)
-    ## link_to coming soon...
-    periods.collect(&:format).join('\n')
+  def effective_time(councilor)
+    if councilor.effective_time_to.blank?
+      'No hay periodo asociado'
+    elsif Date.current > councilor.effective_time_to
+      'Mandato cumplido'
+    else
+      councilor.effective_time_to
+    end
   end
 end

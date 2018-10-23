@@ -49,6 +49,16 @@
           <%= f.label :cv %>
           <%= f.text_field :cv, type: :file %>
         </div>
+
+        <div class="form-group col-md-6">
+          <%= f.label :effective_time_from, 'Vigencia desde' %>
+          <%= f.text_field :effective_time_from, type: :date, class: 'form-control' %>
+        </div>
+
+        <div class="form-group col-md-6">
+          <%= f.label :effective_time_to, 'Vigencia hasta' %>
+          <%= f.text_field :effective_time_to, type: :date, class: 'form-control' %>
+        </div>
       </div>
 
       <div class="box-footer">

@@ -43,7 +43,8 @@ class CouncilorsController < ApplicationController
   private
 
   def councilors_params
-    params.require(:councilor).permit(:name, :surname, :cuit_or_dni, :phone,
-      :email, :address, :bloque_id)
+    params.require(:councilor).permit :name, :surname, :cuit_or_dni, :phone,
+                                      :email, :address, :bloque_id,
+                                      :effective_time_from, :effective_time_to
   end
 end
