@@ -16,6 +16,7 @@ class Person < ActiveRecord::Base
            source: :process
 
   belongs_to :picture, class_name: 'Upload'
+  belongs_to :cv, class_name: 'Upload'
 
   def full_name
     if self.type == 'Concejal'

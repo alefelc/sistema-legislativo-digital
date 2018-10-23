@@ -16,6 +16,10 @@ class Bloque < ActiveRecord::Base
   end
 
   def text
-    denominacion
+    self.denominacion
+  end
+
+  def to_s
+    self.denominacion
   end
 end
