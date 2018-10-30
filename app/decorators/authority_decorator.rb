@@ -42,7 +42,7 @@ class AuthorityDecorator < Draper::Decorator
   def authority_positions
     h.options_for_select(
       [
-        ['Presidencia', :president],
+        ['Presidente', :president],
         ['Vicepresidente Primero', :first_vicepresident],
         ['Vicepresidente Segundo', :second_vicepresident],
         ['Vicepresidente Tercero', :third_vicepresident],

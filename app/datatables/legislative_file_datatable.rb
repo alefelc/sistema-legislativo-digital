@@ -56,7 +56,7 @@ class LegislativeFileDatatable
     if file.date.blank?
       'Fecha sin especificar'
     else
-      content_tag :div, file.date.try(:to_date), style: "white-space:nowrap;"
+      content_tag :div, file.date.to_date, style: "white-space:nowrap;"
     end
   end
 

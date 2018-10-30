@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181023055619) do
+ActiveRecord::Schema.define(version: 20181023155449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -562,6 +562,7 @@ ActiveRecord::Schema.define(version: 20181023055619) do
     t.integer  "cv_id"
     t.date     "effective_time_from"
     t.date     "effective_time_to"
+    t.integer  "ddjj_id"
   end
 
   add_index "people", ["bloque_id"], name: "index_people_on_bloque_id", using: :btree
