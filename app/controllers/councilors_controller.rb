@@ -45,6 +45,7 @@ class CouncilorsController < ApplicationController
   def councilors_params
     params.require(:councilor).permit :name, :surname, :cuit_or_dni, :phone,
                                       :email, :address, :bloque_id,
-                                      :effective_time_from, :effective_time_to
+                                      :effective_time_from, :effective_time_to,
+                                      :picture_file, :cv_file, :ddjj_file
   end
 end

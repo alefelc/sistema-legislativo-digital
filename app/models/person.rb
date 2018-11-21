@@ -17,6 +17,7 @@ class Person < ActiveRecord::Base
 
   belongs_to :picture, class_name: 'Upload'
   belongs_to :cv, class_name: 'Upload'
+  belongs_to :ddjj, class_name: 'Upload'
 
   def full_name
     if self.type == 'Concejal'
@@ -51,4 +52,20 @@ class Person < ActiveRecord::Base
       full_name
     end
   end
+
+  def picture_file=(photo)
+    update picture: Upload.create(file: photo)
+  end
+
+  def cv_file=(file)
+    update cv: Upload.create(file: file)
+  end
+
+  def ddjj_file=(file)
+    update ddjj: Upload.create(file: file)
+  end
+
+  def picture_file; end
+  def cv_file; end
+  def ddjj_file; end
 end
