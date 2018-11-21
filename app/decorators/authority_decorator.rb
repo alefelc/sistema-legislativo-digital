@@ -26,9 +26,15 @@ class AuthorityDecorator < Draper::Decorator
   end
 
   def picture
-    h.image_tag h.image_path('no_image.jpg'),
+    if object.person.picture.present?
+      h.image_tag h.image_path('no_image.jpg'),
+        class: 'profile-user-img img-responsive img-circle',
+        alt: 'User profile picture'
+    else
+      h.image_tag h.image_path('no_image.jpg'),
       class: 'profile-user-img img-responsive img-circle',
       alt: 'User profile picture'
+    end
   end
 
   def assumption_date
