@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181023155449) do
+ActiveRecord::Schema.define(version: 20181113050140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,6 +212,20 @@ ActiveRecord::Schema.define(version: 20181023155449) do
     t.text     "signatory"
     t.text     "generator"
   end
+
+  create_table "day_plan_legislative_files", force: :cascade do |t|
+    t.integer  "day_plan_id"
+    t.integer  "loop_id"
+    t.integer  "order"
+    t.integer  "state",       default: 0
+    t.integer  "position"
+    t.text     "description"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "day_plan_legislative_files", ["day_plan_id"], name: "index_day_plan_legislative_files_on_day_plan_id", using: :btree
+  add_index "day_plan_legislative_files", ["loop_id"], name: "index_day_plan_legislative_files_on_loop_id", using: :btree
 
   create_table "day_plans", force: :cascade do |t|
     t.datetime "created_at", null: false

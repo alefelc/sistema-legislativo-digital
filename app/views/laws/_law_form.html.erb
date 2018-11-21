@@ -11,23 +11,7 @@
     <%= f.label :year %>
     <%= f.text_field :year, type: :number, class: 'form-control input-lg', value: Date.current.year %>
   </div>
-</div>
-<hr>
-
-<div class="row">
-  <div class="form-group-lg col-md-3">
-    <%= f.label :legislative_session_id, 'Ap. sesión nro' %>
-    <%= f.select :legislative_session_id, {}, {}, class: 'form-control input-lg' do %>
-      <% if f.object.legislative_session.present? %>
-        <option value="<%= f.object.legislative_session_id %>"> <%= f.object.legislative_session %> </option>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="form-group-lg col-md-5">
-    <%= label_tag "legislative_file_ids[]", 'Expedientes Legislativos' %>
-    <%= select_tag "legislative_file_ids[]", {}, multiple: true, class: 'form-control input-lg' %>
-  </div>
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-3">
     <%= label_tag 'uploads[]', 'Adjunte Norma' %>
     <%= file_field_tag 'uploads[]', type: :file, multiple: true %>
     <% f.object.uploads.each do |upload| %>
@@ -41,6 +25,64 @@
     <% end %>
   </div>
 </div>
+<hr>
+
+<div class="row">
+  <div class="form-group-lg col-md-3">
+    <%= f.label :legislative_session_id, 'Aprobado en sesión nro' %>
+    <%= f.select :legislative_session_id, {}, {}, class: 'form-control input-lg' do %>
+      <% if f.object.legislative_session.present? %>
+        <option value="<%= f.object.legislative_session_id %>"> <%= f.object.legislative_session %> </option>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="form-group col-md-3">
+    <%= label_tag 'state[date_at]', 'Fecha de sesión' %>
+    <%= text_field_tag 'state[date_at]', nil, type: 'date', class: 'input-lg form-control' %>
+  </div>
+
+  <div class="form-group-lg col-md-6">
+    <%= label_tag "legislative_file_ids[]", 'Expedientes Legislativos' %>
+    <%= select_tag "legislative_file_ids[]", {}, multiple: true, class: 'form-control input-lg' %>
+  </div>
+
+</div>
+<div class="row">
+  <div class="form-group session col-md-4">
+    <%= label_tag 'state[sanction_specified]', 'Especifique tipo de sanción' %>
+    <%= select_tag 'state[sanction_specified]', sancion_options1, class: 'input-lg form-control' %>
+  </div>
+
+  <div class="form-group session col-md-4" style="margin-top: 25px;">
+    <%= select_tag 'state[sanction_type]', sancion_options2, class: 'input-lg form-control' %>
+  </div>
+</div>
+
+<% if f.object.legislative_file_states.present? %>
+  <table class="col-md-10 text-center table table-striped table-hover">
+    <thead>
+      <tr>
+        <th> Expediente </th>
+        <th> Fecha </th>
+        <th> Sanción </th>
+        <th> </th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% f.object.legislative_file_states.each do |state| %>
+      <tr>
+        <td> <%= state.legislative_file %> </td>
+        <td> <%= state.date_at %> </td>
+        <td> <%= state.sanction_specified %> </td>
+        <td> <%= state.sanction_type %> </td>
+        <td> <%= link_to state, class: 'btn btn-sm btn-danger btn-remove-state', method: 'delete', remote: true do %> <i class="fa fa-trash"></i> <% end %> </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 <hr>
 
 <div class="hide-by-law-type">
@@ -85,3 +127,11 @@
     <% end %>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  $('.btn-remove-state').on('click', function() {
+    location.reload();
+  })
+})
+</script>

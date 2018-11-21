@@ -14,7 +14,7 @@ class AuthoritiesController < ApplicationController
   end
 
   def create
-    @authority = Authority.new authority_params
+    @authority = Authority.new(authority_params).decorate
     if @authority.save
       redirect_to authorities_path
     else
